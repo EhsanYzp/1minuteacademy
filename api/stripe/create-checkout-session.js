@@ -74,7 +74,9 @@ export default async function handler(req, res) {
   const inferredSiteUrl = forwardedHost
     ? `${forwardedProto || 'https'}://${forwardedHost}`
     : req.headers.origin;
-  const siteUrl = normalizeSiteUrl(inferredSiteUrl) || normalizeSiteUrl(process.env.SITE_URL);
+  // Prefer the configured canonical origin so users don't bounce between apex/www
+  // (which would lose Supabase session stored per-origin).
+  const siteUrl = normalizeSiteUrl(process.env.SITE_URL) || normalizeSiteUrl(inferredSiteUrl);
   if (!siteUrl) return json(res, 500, { error: 'Missing SITE_URL' });
 
   const stripe = process.env.STRIPE_API_VERSION

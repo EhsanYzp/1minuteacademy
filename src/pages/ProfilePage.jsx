@@ -97,7 +97,7 @@ function computeFallbackPeriodEnd(createdIso, planInterval) {
 }
 
 export default function ProfilePage() {
-  const { user, refreshSession, loading: authLoading } = useAuth();
+  const { user, refreshSession, reloadUser, loading: authLoading } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const contentSource = getContentSource();
@@ -175,7 +175,7 @@ export default function ProfilePage() {
       while (subRetryRef.current.tries < 8) {
         try {
           try {
-            if (user) await refreshSession();
+            if (user) await reloadUser();
           } catch {
             // ignore
           }
@@ -277,14 +277,14 @@ export default function ProfilePage() {
     // Then clean the URL.
     (async () => {
       try {
-        if (user) await refreshSession();
+        if (user) await reloadUser();
       } catch {
         // ignore
       }
       await reloadSubscription();
       navigate('/me', { replace: true });
     })();
-  }, [portalReturn, authLoading, user, refreshSession, navigate]);
+  }, [portalReturn, authLoading, user, reloadUser, navigate]);
 
   async function onManageSubscription() {
     try {
@@ -314,8 +314,7 @@ export default function ProfilePage() {
         const remaining = Math.max(0, Math.ceil((maxMs - (Date.now() - startedAt)) / 1000));
         setCheckoutBannerText(`Payment received — activating Pro… (${remaining}s)`);
         try {
-          const data = await refreshSession();
-          const nextUser = data?.session?.user;
+          const nextUser = await reloadUser();
           if (getCurrentTier(nextUser) === 'pro') {
             setCheckoutBannerText('Pro is active. Enjoy!');
             // Clear ?checkout=success from the URL.
@@ -339,7 +338,7 @@ export default function ProfilePage() {
     return () => {
       canceled = true;
     };
-  }, [checkoutState, authLoading, user, refreshSession, navigate]);
+  }, [checkoutState, authLoading, user, reloadUser, navigate]);
 
   const topicById = useMemo(() => {
     const map = new Map();

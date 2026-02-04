@@ -38,7 +38,7 @@ function formatPercent(value) {
 }
 
 export default function UpgradePage() {
-  const { user, refreshSession, loading } = useAuth();
+  const { user, refreshSession, reloadUser, loading } = useAuth();
   const navigate = useNavigate();
   const tier = getCurrentTier(user);
   const planInterval = String(user?.user_metadata?.plan_interval ?? '').toLowerCase();
@@ -85,8 +85,7 @@ export default function UpgradePage() {
         if (!canceled) setBannerText(`Payment received — activating Pro… (${remaining}s)`);
 
         try {
-          const data = await refreshSession();
-          const nextUser = data?.session?.user;
+            const nextUser = await reloadUser();
           const nextTier = getCurrentTier(nextUser);
           if (!canceled && nextTier === 'pro') {
             setBannerText('Pro is active. Enjoy!');
@@ -115,7 +114,7 @@ export default function UpgradePage() {
       setBanner('cancel');
       setBannerText('Checkout canceled. No charge was made.');
     }
-  }, [checkoutState, refreshSession, user, loading, navigate]);
+  }, [checkoutState, reloadUser, user, loading, navigate]);
 
   async function onCheckout(interval) {
     if (!user) {

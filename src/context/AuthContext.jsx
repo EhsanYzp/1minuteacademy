@@ -9,6 +9,31 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [authError, setAuthError] = useState(null);
 
+  const reloadUser = useCallback(async () => {
+    if (!isSupabaseConfigured) return null;
+    setAuthError(null);
+
+    const { data: sessionData, error: sessionErr } = await supabase.auth.getSession();
+    if (sessionErr) {
+      setAuthError(sessionErr);
+      throw sessionErr;
+    }
+
+    const currentSession = sessionData?.session ?? null;
+    if (!currentSession) return null;
+
+    const { data: userData, error: userErr } = await supabase.auth.getUser();
+    if (userErr) {
+      setAuthError(userErr);
+      throw userErr;
+    }
+
+    const nextUser = userData?.user ?? currentSession.user ?? null;
+    setSession({ ...currentSession, user: nextUser ?? currentSession.user });
+    setUser(nextUser);
+    return nextUser;
+  }, []);
+
   const refreshSession = useCallback(async () => {
     if (!isSupabaseConfigured) return null;
     setAuthError(null);
@@ -123,12 +148,13 @@ export function AuthProvider({ children }) {
       loading,
       authError,
       refreshSession,
+      reloadUser,
       signUpWithPassword,
       signInWithPassword,
       signInWithOtp,
       signOut,
     }),
-    [session, user, loading, authError, refreshSession, signUpWithPassword, signInWithPassword, signInWithOtp, signOut]
+    [session, user, loading, authError, refreshSession, reloadUser, signUpWithPassword, signInWithPassword, signInWithOtp, signOut]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
