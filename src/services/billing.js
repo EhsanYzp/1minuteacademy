@@ -1,5 +1,31 @@
 import { supabase, isSupabaseConfigured } from '../lib/supabaseClient';
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function getAccessToken({ allowRefresh = true } = {}) {
+  // Supabase can briefly report a null session while hydrating
+  // from storage after redirects/page-load. Retry + refresh.
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const { data } = await supabase.auth.getSession();
+    const token = data?.session?.access_token;
+    if (token) return token;
+
+    if (attempt === 1 && allowRefresh) {
+      try {
+        await supabase.auth.refreshSession();
+      } catch {
+        // ignore
+      }
+    }
+
+    await sleep(150);
+  }
+
+  return null;
+}
+
 async function postJson(url, body, accessToken) {
   const res = await fetch(url, {
     method: 'POST',
@@ -50,8 +76,7 @@ async function getJson(url, accessToken) {
 
 export async function startProCheckout({ interval }) {
   if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
-  const { data } = await supabase.auth.getSession();
-  const accessToken = data?.session?.access_token;
+  const accessToken = await getAccessToken();
   if (!accessToken) throw new Error('Please sign in to upgrade');
 
   const payload = { interval };
@@ -63,8 +88,7 @@ export async function startProCheckout({ interval }) {
 
 export async function openCustomerPortal({ returnPath = '/me' } = {}) {
   if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
-  const { data } = await supabase.auth.getSession();
-  const accessToken = data?.session?.access_token;
+  const accessToken = await getAccessToken();
   if (!accessToken) throw new Error('Please sign in first');
 
   const dataJson = await postJson('/api/stripe/create-portal-session', { returnPath }, accessToken);
@@ -75,8 +99,7 @@ export async function openCustomerPortal({ returnPath = '/me' } = {}) {
 
 export async function getSubscriptionStatus() {
   if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
-  const { data } = await supabase.auth.getSession();
-  const accessToken = data?.session?.access_token;
+  const accessToken = await getAccessToken();
   if (!accessToken) throw new Error('Please sign in first');
 
   return await getJson('/api/stripe/subscription-status', accessToken);
