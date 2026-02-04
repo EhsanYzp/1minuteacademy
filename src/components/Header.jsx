@@ -78,6 +78,9 @@ function Header() {
         <Link to="/topics" className="nav-item link browse" style={{ textDecoration: 'none' }}>
           🧭 Browse
         </Link>
+        <Link to="/pricing" className="nav-item link" style={{ textDecoration: 'none' }}>
+          💳 Pricing
+        </Link>
         {user ? (
           <>
             <Link to="/me" className="nav-item link" style={{ textDecoration: 'none' }}>

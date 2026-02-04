@@ -23,6 +23,7 @@ function App() {
               <Route path="/topics" element={<TopicsBrowserPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/upgrade" element={<UpgradePage />} />
+              <Route path="/pricing" element={<UpgradePage />} />
               <Route
                 path="/me"
                 element={
