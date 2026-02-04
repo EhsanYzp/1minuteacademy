@@ -171,6 +171,18 @@ $$;
 revoke all on function public.complete_topic(text, integer, integer) from public;
 grant execute on function public.complete_topic(text, integer, integer) to authenticated;
 
+-- -----------------------------------------------------------------------------
+-- CONTENT SEEDS (DAY 0 ONLY)
+--
+-- These inserts are meant for initial bootstrapping / examples.
+-- For ongoing content work (adding/editing modules), avoid re-running this file
+-- as your workflow. Instead, author JSON in content/topics/** and publish with:
+--   npm run content:sync -- --topic <topicId>
+--
+-- The sync script is version-gated by lesson.version to avoid accidental
+-- overwrites of manual Supabase edits.
+-- -----------------------------------------------------------------------------
+
 -- Seed: blockchain topic (data-driven lesson)
 insert into public.topics (id, subject, title, emoji, color, description, difficulty, lesson, published)
 values (

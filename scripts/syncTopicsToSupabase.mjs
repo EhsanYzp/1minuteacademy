@@ -40,9 +40,49 @@ async function readJson(filePath) {
   return JSON.parse(raw);
 }
 
+function parseArgs(argv) {
+  const args = { topics: null, dryRun: false, force: false, insertOnly: false };
+
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i];
+    if (a === '--dry-run') args.dryRun = true;
+    else if (a === '--force') args.force = true;
+    else if (a === '--insert-only') args.insertOnly = true;
+    else if (a === '--topic') {
+      const v = argv[i + 1];
+      if (!v || v.startsWith('--')) throw new Error('Missing value for --topic <topicId[,topicId2,...]>.');
+      i++;
+      args.topics = v
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean);
+      if (args.topics.length === 0) throw new Error('Empty --topic list.');
+    } else if (a === '--help' || a === '-h') {
+      console.log(`\nUsage: npm run content:sync -- [--topic <id[,id2]>] [--dry-run] [--force] [--insert-only]\n\nDefaults:\n- Inserts new topics\n- Updates existing topics ONLY when local lesson.version > remote lesson.version\n\nFlags:\n- --topic <id[,id2]>   Sync only specific topic IDs\n- --dry-run            Print what would change; write nothing\n- --force              Update even if version isn't higher\n- --insert-only        Only insert new topics; never update existing\n\nTip: Bump lesson.version in your local JSON to intentionally publish changes.\n`);
+      process.exit(0);
+    } else {
+      throw new Error(`Unknown arg: ${a}`);
+    }
+  }
+
+  if (args.force && args.insertOnly) {
+    throw new Error('Invalid flags: --force and --insert-only cannot be used together.');
+  }
+
+  return args;
+}
+
+function getLessonVersion(lesson) {
+  const raw = lesson && typeof lesson === 'object' ? lesson.version : undefined;
+  const n = Number(raw);
+  return Number.isFinite(n) ? n : 0;
+}
+
 async function main() {
   // Guardrails: prevent accidentally leaking the service role key to the frontend
   forbidEnv('VITE_SUPABASE_SERVICE_ROLE_KEY');
+
+  const args = parseArgs(process.argv.slice(2));
 
   const url = requiredEnv('VITE_SUPABASE_URL');
 
@@ -59,10 +99,10 @@ async function main() {
     process.exit(0);
   }
 
-  const rows = [];
+  const localById = new Map();
   for (const file of files) {
     const t = await readJson(file);
-    rows.push({
+    const row = {
       id: t.id,
       subject: t.subject,
       title: t.title,
@@ -72,13 +112,105 @@ async function main() {
       difficulty: t.difficulty,
       lesson: t.lesson,
       published: Boolean(t.published),
-    });
+    };
+    if (!row.id) throw new Error(`Missing required field 'id' in ${file}`);
+    localById.set(row.id, row);
   }
 
-  const { error } = await supabase.from('topics').upsert(rows, { onConflict: 'id' });
-  if (error) throw error;
+  if (args.topics) {
+    const missing = args.topics.filter((id) => !localById.has(id));
+    if (missing.length > 0) {
+      throw new Error(`--topic not found in content/topics/: ${missing.join(', ')}`);
+    }
+    for (const id of Array.from(localById.keys())) {
+      if (!args.topics.includes(id)) localById.delete(id);
+    }
+  }
 
-  console.log(`✅ Synced ${rows.length} topic(s) to Supabase.`);
+  const ids = Array.from(localById.keys()).sort();
+  if (ids.length === 0) {
+    console.log('No topics to sync.');
+    process.exit(0);
+  }
+
+  // Fetch remote versions to prevent accidental overwrites.
+  const remoteById = new Map();
+  const { data: remoteRows, error: remoteErr } = await supabase
+    .from('topics')
+    .select('id, lesson')
+    .in('id', ids);
+
+  if (remoteErr) throw remoteErr;
+  for (const r of remoteRows ?? []) remoteById.set(r.id, r);
+
+  const toInsert = [];
+  const toUpdate = [];
+  const skipped = [];
+
+  for (const id of ids) {
+    const local = localById.get(id);
+    const remote = remoteById.get(id);
+
+    if (!remote) {
+      toInsert.push(local);
+      continue;
+    }
+
+    if (args.insertOnly) {
+      skipped.push({ id, reason: 'exists (insert-only)' });
+      continue;
+    }
+
+    const lv = getLessonVersion(local.lesson);
+    const rv = getLessonVersion(remote.lesson);
+
+    if (args.force) {
+      toUpdate.push(local);
+      continue;
+    }
+
+    if (lv > rv) {
+      toUpdate.push(local);
+    } else {
+      skipped.push({ id, reason: `version not higher (local ${lv} <= remote ${rv})` });
+    }
+  }
+
+  const summaryLines = [];
+  summaryLines.push(`Topics considered: ${ids.length}`);
+  summaryLines.push(`Will insert: ${toInsert.length}`);
+  summaryLines.push(`Will update: ${toUpdate.length}${args.force ? ' (forced)' : ''}`);
+  summaryLines.push(`Will skip: ${skipped.length}`);
+  console.log(summaryLines.join('\n'));
+
+  if (skipped.length > 0) {
+    const show = skipped.slice(0, 8);
+    console.log('\nSkipped:');
+    for (const s of show) console.log(`- ${s.id}: ${s.reason}`);
+    if (skipped.length > show.length) console.log(`- …and ${skipped.length - show.length} more`);
+  }
+
+  if (args.dryRun) {
+    console.log('\n🧪 Dry run: no changes written.');
+    return;
+  }
+
+  if (toInsert.length === 0 && toUpdate.length === 0) {
+    console.log('\nNo changes to apply.');
+    return;
+  }
+
+  if (toInsert.length > 0) {
+    const { error: insErr } = await supabase.from('topics').insert(toInsert);
+    if (insErr) throw insErr;
+  }
+
+  if (toUpdate.length > 0) {
+    const { error: updErr } = await supabase.from('topics').upsert(toUpdate, { onConflict: 'id' });
+    if (updErr) throw updErr;
+  }
+
+  console.log(`\n✅ Synced ${toInsert.length + toUpdate.length} topic(s) to Supabase.`);
 }
 
 main().catch((e) => {

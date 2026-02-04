@@ -7,7 +7,7 @@ Instead, each topic/module is **data** stored in Supabase (`public.topics.lesson
 
 - `content/topics/<Subject>/<topicId>.topic.json`
   - Source-of-truth JSON for topics you want to publish.
-  - Example: `content/topics/Technology/blockchain.topic.json`
+  - Example: `content/topics/Blockchain & Web3/blockchain.topic.json`
 
 - `content/schema/`
   - JSON Schemas used to validate topic/lesson shape before syncing.

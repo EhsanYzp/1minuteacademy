@@ -13,7 +13,7 @@ A module = one row in Supabase `public.topics` (or one local JSON file that can 
 ### Local authoring (recommended for drafting)
 
 - `content/topics/<Subject>/<topicId>.topic.json`
-  - Example: `content/topics/Technology/quantum.topic.json`
+  - Example: `content/topics/Quantum & Physics/quantum.topic.json`
 
 Draft-only (ignored by git):
 - `content/_drafts/`
@@ -73,14 +73,37 @@ Tip: after completing a lesson, check `/me` (Profile) and the landing page badge
 
 1. Ensure JSON validates (`npm run content:validate`)
 2. Set `SUPABASE_SERVICE_ROLE_KEY` in `.env.local` (scripts only)
-3. Run: `npm run content:sync`
+3. Run one of:
+  - Sync a single topic (recommended): `npm run content:sync -- --topic <topicId>`
+  - Bulk sync (safe by default): `npm run content:sync`
 
-This bulk upserts all topic JSON files into `public.topics`.
+By default, the sync script is *safe*:
+- Inserts new topics
+- Updates existing topics **only when** `lesson.version` in local JSON is **higher** than what’s already in Supabase
+
+This prevents accidental overwrites if you made manual edits in Supabase.
+
+To intentionally publish edits to an existing module:
+- Bump `lesson.version` in the local topic JSON, then re-run sync.
+
+Advanced flags:
+- Preview without writing: `npm run content:sync -- --dry-run`
+- Force an update regardless of version: `npm run content:sync -- --topic <id> --force`
+- Only insert new topics (never update): `npm run content:sync -- --insert-only`
 
 Notes:
 - The sync script auto-loads `.env.local`.
 - Find the key in Supabase Dashboard → Project Settings → API → Project API keys → `service_role`.
 - Guardrail: the sync script refuses to run if `VITE_SUPABASE_SERVICE_ROLE_KEY` is set.
+
+## Important: don’t use SQL as your content workflow
+
+Use [supabase/001_init.sql](supabase/001_init.sql) for schema/RLS/RPC. Avoid adding new modules by editing the SQL file.
+
+Instead:
+- Draft new modules in `content/topics/**`
+- Preview with `npm run dev:local`
+- Publish with `npm run content:sync -- --topic <id>`
 
 ## Content guidelines (so it fits in 60 seconds)
 

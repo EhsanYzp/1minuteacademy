@@ -71,9 +71,14 @@ See: `docs/content-generation.md` for the content playbook.
 ### Content tooling
 
 - Validate topic JSON: `npm run content:validate`
-- Bulk sync to Supabase: `npm run content:sync`
+
+- Publish topic JSON to Supabase (recommended per-module):
+  - `npm run content:sync -- --topic <topicId>`
+
+- Bulk sync to Supabase (safe by default): `npm run content:sync`
 	- Requires `SUPABASE_SERVICE_ROLE_KEY` in `.env.local` (scripts only; never ship to browser)
 	- The sync script loads `.env.local` automatically
+	- Updates existing topics only if local `lesson.version` is higher (prevents accidental overwrites)
 
 ### Troubleshooting progress not saving
 
@@ -92,6 +97,8 @@ In this mode:
 - `/lesson/:topicId` does not require login
 
 When you’re happy, publish to Supabase with `npm run content:sync`.
+
+Tip: prefer `npm run content:sync -- --topic <id>` so publishing a new module only touches that one module.
 
 ## 📚 Available Modules
 
