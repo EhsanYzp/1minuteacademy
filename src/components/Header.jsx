@@ -81,6 +81,9 @@ function Header() {
         <Link to="/pricing" className="nav-item link" style={{ textDecoration: 'none' }}>
           💳 Pricing
         </Link>
+        <Link to="/faq" className="nav-item link" style={{ textDecoration: 'none' }}>
+          ❓ FAQ
+        </Link>
         {user ? (
           <>
             <Link to="/me" className="nav-item link" style={{ textDecoration: 'none' }}>

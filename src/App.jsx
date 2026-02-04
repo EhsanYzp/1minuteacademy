@@ -9,6 +9,7 @@ import UpgradePage from './pages/UpgradePage';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import CookiesPage from './pages/CookiesPage';
+import FaqPage from './pages/FaqPage';
 import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
 import { AuthProvider } from './context/AuthContext';
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/upgrade" element={<UpgradePage />} />
                 <Route path="/pricing" element={<UpgradePage />} />
+                <Route path="/faq" element={<FaqPage />} />
                 <Route path="/privacy" element={<PrivacyPage />} />
                 <Route path="/terms" element={<TermsPage />} />
                 <Route path="/cookies" element={<CookiesPage />} />
