@@ -6,10 +6,14 @@ import TopicPage from './pages/TopicPage';
 import LessonPage from './pages/LessonPage';
 import ReviewPage from './pages/ReviewPage';
 import UpgradePage from './pages/UpgradePage';
+import PrivacyPage from './pages/PrivacyPage';
+import TermsPage from './pages/TermsPage';
+import CookiesPage from './pages/CookiesPage';
 import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import Footer from './components/Footer';
 import './App.css';
 
 function App() {
@@ -17,26 +21,33 @@ function App() {
     <AuthProvider>
       <Router>
         <div className="app">
-          <AnimatePresence mode="wait">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/topics" element={<TopicsBrowserPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/upgrade" element={<UpgradePage />} />
-              <Route path="/pricing" element={<UpgradePage />} />
-              <Route
-                path="/me"
-                element={
-                  <ProtectedRoute>
-                    <ProfilePage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="/topic/:topicId" element={<TopicPage />} />
-              <Route path="/lesson/:topicId" element={<LessonPage />} />
-              <Route path="/review/:topicId" element={<ReviewPage />} />
-            </Routes>
-          </AnimatePresence>
+          <div className="app-content">
+            <AnimatePresence mode="wait">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/topics" element={<TopicsBrowserPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/upgrade" element={<UpgradePage />} />
+                <Route path="/pricing" element={<UpgradePage />} />
+                <Route path="/privacy" element={<PrivacyPage />} />
+                <Route path="/terms" element={<TermsPage />} />
+                <Route path="/cookies" element={<CookiesPage />} />
+                <Route
+                  path="/me"
+                  element={
+                    <ProtectedRoute>
+                      <ProfilePage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="/topic/:topicId" element={<TopicPage />} />
+                <Route path="/lesson/:topicId" element={<LessonPage />} />
+                <Route path="/review/:topicId" element={<ReviewPage />} />
+              </Routes>
+            </AnimatePresence>
+          </div>
+
+          <Footer />
         </div>
       </Router>
     </AuthProvider>

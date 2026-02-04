@@ -139,10 +139,6 @@ function Home() {
           </div>
         </motion.section>
       </main>
-
-      <footer className="home-footer">
-        <p>Made with 💖 for curious minds</p>
-      </footer>
     </motion.div>
   );
 }
