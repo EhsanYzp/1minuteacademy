@@ -1,40 +1,26 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { getUserStats } from '../services/progress';
 import { getContentSource } from '../services/_contentSource';
 import './Header.css';
 
 function Header() {
   const { user, isSupabaseConfigured, signOut } = useAuth();
-  const [stats, setStats] = useState({ xp: 0, streak: 0 });
   const contentSource = getContentSource();
+  const [busy, setBusy] = useState(false);
 
   async function onSignOut() {
+    if (busy) return;
+    setBusy(true);
     try {
       await signOut();
     } catch {
       // ignore
+    } finally {
+      setBusy(false);
     }
   }
-
-  useEffect(() => {
-    let mounted = true;
-    async function load() {
-      if (!isSupabaseConfigured || !user) return;
-      try {
-        const s = await getUserStats();
-        if (mounted) setStats({ xp: s.xp ?? 0, streak: s.streak ?? 0 });
-      } catch {
-        // ignore header stats errors
-      }
-    }
-    load();
-    return () => {
-      mounted = false;
-    };
-  }, [isSupabaseConfigured, user]);
 
   return (
     <motion.header 
@@ -70,28 +56,11 @@ function Header() {
         </Link>
         {user ? (
           <>
-            <motion.div 
-              className="nav-item streak"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              title="Daily streak"
-            >
-              🔥 {stats.streak} Day Streak
-            </motion.div>
-            <motion.div 
-              className="nav-item points"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              title="Total XP"
-            >
-              ⭐ {stats.xp} XP
-            </motion.div>
-
             <Link to="/me" className="nav-item link" style={{ textDecoration: 'none' }}>
               👤 Profile
             </Link>
-            <button className="nav-item button" type="button" onClick={onSignOut}>
-              Sign out
+            <button className="nav-item button" type="button" onClick={onSignOut} disabled={busy}>
+              {busy ? 'Signing out…' : 'Sign out'}
             </button>
           </>
         ) : (
