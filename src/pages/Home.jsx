@@ -4,6 +4,51 @@ import Header from '../components/Header';
 import './Home.css';
 
 function Home() {
+  const howSteps = [
+    {
+      n: '01',
+      icon: '🧭',
+      title: 'Pick a topic',
+      body: 'Browse subjects or search for exactly what you want to learn.',
+      meta: 'Start free',
+    },
+    {
+      n: '02',
+      icon: '⏱️',
+      title: '60-second sprint',
+      body: 'Hit Start. The timer is strict — no pause — so you stay focused.',
+      meta: 'No doomscrolling',
+    },
+    {
+      n: '03',
+      icon: '🎯',
+      title: 'Interactive steps',
+      body: 'Tap, choose, build, and reveal. You learn by doing, not reading walls of text.',
+      meta: 'Hands-on',
+    },
+    {
+      n: '04',
+      icon: '🔁',
+      title: 'Review & keep it',
+      body: 'After the sprint you can review calmly. Pro unlocks saved takeaways + advanced topics.',
+      meta: 'Optional review',
+    },
+  ];
+
+  const howContainer = {
+    hidden: { opacity: 0, y: 10 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { staggerChildren: 0.08, delayChildren: 0.05 },
+    },
+  };
+
+  const howItem = {
+    hidden: { opacity: 0, y: 14 },
+    show: { opacity: 1, y: 0 },
+  };
+
   return (
     <motion.div
       className="home"
@@ -53,25 +98,38 @@ function Home() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="section-title">🎮 How It Works</h2>
-          <div className="steps-container">
-            <div className="step">
-              <div className="step-icon">1️⃣</div>
-              <h3>Pick a Topic</h3>
-              <p>Browse categories or search</p>
-            </div>
-            <div className="step-arrow">→</div>
-            <div className="step">
-              <div className="step-icon">2️⃣</div>
-              <h3>Hit Start</h3>
-              <p>Start the 60-second timer</p>
-            </div>
-            <div className="step-arrow">→</div>
-            <div className="step">
-              <div className="step-icon">3️⃣</div>
-              <h3>Learn & Play</h3>
-              <p>Interactive steps, then earn XP</p>
-            </div>
+          <div className="how-header">
+            <h2 className="section-title">How it works</h2>
+            <p className="section-subtitle">
+              Designed for momentum: one focused minute, then optional review.
+            </p>
+          </div>
+
+          <motion.div
+            className="how-grid"
+            variants={howContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-20% 0px' }}
+          >
+            {howSteps.map((s) => (
+              <motion.div key={s.n} className="how-card" variants={howItem}>
+                <div className="how-top">
+                  <div className="how-num" aria-hidden="true">{s.n}</div>
+                  <div className="how-icon" aria-hidden="true">{s.icon}</div>
+                </div>
+                <h3 className="how-title">{s.title}</h3>
+                <p className="how-body">{s.body}</p>
+                <div className="how-meta" aria-label="Key benefit">{s.meta}</div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <div className="how-notes" aria-label="Key principles">
+            <div className="how-chip">No pause timer</div>
+            <div className="how-chip">Short + interactive</div>
+            <div className="how-chip">Review after (calm)</div>
+            <div className="how-chip">Progress when signed in</div>
           </div>
 
           <div className="how-cta">
