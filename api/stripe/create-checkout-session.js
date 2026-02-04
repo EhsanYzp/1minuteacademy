@@ -92,7 +92,7 @@ export default async function handler(req, res) {
       mode: 'subscription',
       allow_promotion_codes: true,
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: new URL('/pricing?checkout=success', siteUrl).toString(),
+      success_url: new URL('/me?checkout=success', siteUrl).toString(),
       cancel_url: new URL('/pricing?checkout=cancel', siteUrl).toString(),
       client_reference_id: user.id,
       customer_email: user.email || undefined,

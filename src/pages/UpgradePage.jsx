@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Header from '../components/Header';
 import { useAuth } from '../context/AuthContext';
@@ -38,8 +38,17 @@ function formatPercent(value) {
 }
 
 export default function UpgradePage() {
-  const { user, refreshSession } = useAuth();
+  const { user, refreshSession, loading } = useAuth();
+  const navigate = useNavigate();
   const tier = getCurrentTier(user);
+  const planInterval = String(user?.user_metadata?.plan_interval ?? '').toLowerCase();
+  const planLabel = tier === 'pro'
+    ? (planInterval === 'year' || planInterval === 'yearly' || planInterval === 'annual')
+      ? 'Pro (Yearly)'
+      : (planInterval === 'month' || planInterval === 'monthly')
+        ? 'Pro (Monthly)'
+        : 'Pro'
+    : formatTierLabel(tier);
   const [busy, setBusy] = useState(null); // 'month' | 'year' | null
   const [banner, setBanner] = useState(null); // 'success' | 'cancel' | 'error' | null
   const [bannerText, setBannerText] = useState('');
@@ -55,13 +64,12 @@ export default function UpgradePage() {
 
   useEffect(() => {
     if (checkoutState === 'success') {
+      if (loading) return;
       if (activationStartedRef.current) return;
       activationStartedRef.current = true;
 
       setBanner('success');
 
-      // If the user was redirected to a different origin (or storage was cleared),
-      // they’ll appear logged out. In that case, we can’t refresh the session.
       if (!user) {
         setBannerText('Payment received. Please sign in again to activate Pro on your account.');
         return;
@@ -82,6 +90,9 @@ export default function UpgradePage() {
           const nextTier = getCurrentTier(nextUser);
           if (!canceled && nextTier === 'pro') {
             setBannerText('Pro is active. Enjoy!');
+            setTimeout(() => {
+              if (!canceled) navigate('/me', { replace: true });
+            }, 900);
             return;
           }
         } catch {
@@ -104,7 +115,7 @@ export default function UpgradePage() {
       setBanner('cancel');
       setBannerText('Checkout canceled. No charge was made.');
     }
-  }, [checkoutState, refreshSession, user]);
+  }, [checkoutState, refreshSession, user, loading, navigate]);
 
   async function onCheckout(interval) {
     if (!user) {
@@ -153,9 +164,30 @@ export default function UpgradePage() {
             <div>
               <h1>Pricing</h1>
               <p>Three tiers: Guest, Free account, and Pro.</p>
-              <div className="upgrade-tier">Current: <strong>{formatTierLabel(tier)}</strong></div>
+              <div className="upgrade-tier">Your current plan: <strong>{planLabel}</strong></div>
             </div>
           </div>
+
+          {banner && (
+            <div className={`upgrade-banner ${banner}`} role="status">
+              <div className="upgrade-banner-text">{bannerText}</div>
+              {banner === 'success' && !user && (
+                <Link className="upgrade-banner-btn" to="/login">
+                  Sign in
+                </Link>
+              )}
+              {banner === 'success' && user && tier !== 'pro' && (
+                <button className="upgrade-banner-btn" type="button" onClick={() => refreshSession()}>
+                  Refresh
+                </button>
+              )}
+              {banner === 'success' && tier === 'pro' && (
+                <Link className="upgrade-banner-btn" to="/me">
+                  Go to profile
+                </Link>
+              )}
+            </div>
+          )}
 
           <div className="upgrade-section">
             <div className="upgrade-section-title">What you get</div>
@@ -307,22 +339,6 @@ export default function UpgradePage() {
               </button>
             </div>
           </div>
-
-          {banner && (
-            <div className={`upgrade-banner ${banner}`} role="status">
-              <div className="upgrade-banner-text">{bannerText}</div>
-              {banner === 'success' && !user && (
-                <Link className="upgrade-banner-btn" to="/login">
-                  Sign in
-                </Link>
-              )}
-              {banner === 'success' && user && tier !== 'pro' && (
-                <button className="upgrade-banner-btn" type="button" onClick={() => refreshSession()}>
-                  Refresh
-                </button>
-              )}
-            </div>
-          )}
 
           {!user ? (
             <div className="upgrade-foot">

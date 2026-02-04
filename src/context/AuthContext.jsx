@@ -17,8 +17,18 @@ export function AuthProvider({ children }) {
       setAuthError(error);
       throw error;
     }
-    setSession(data?.session ?? null);
-    setUser(data?.session?.user ?? null);
+    // refreshSession() does not always reflect server-side user_metadata changes immediately.
+    // Fetch the user explicitly so entitlements update without requiring logout/login.
+    let nextUser = data?.session?.user ?? null;
+    try {
+      const { data: userData } = await supabase.auth.getUser();
+      if (userData?.user) nextUser = userData.user;
+    } catch {
+      // ignore
+    }
+
+    setSession(data?.session ? { ...data.session, user: nextUser ?? data.session.user } : null);
+    setUser(nextUser);
     return data;
   }, []);
 

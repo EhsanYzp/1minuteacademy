@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
 import Header from '../components/Header';
 import { useAuth } from '../context/AuthContext';
@@ -50,12 +50,25 @@ function formatPlanForProfile(user, tier) {
 }
 
 export default function ProfilePage() {
-  const { user } = useAuth();
+  const { user, refreshSession, loading: authLoading } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
   const contentSource = getContentSource();
   const tier = getCurrentTier(user);
   const planLabel = formatPlanForProfile(user, tier);
   const showTakeaways = canSeeTakeaways(tier);
   const showReview = canReview(tier);
+
+  const checkoutState = useMemo(() => {
+    try {
+      return new URLSearchParams(location.search).get('checkout');
+    } catch {
+      return null;
+    }
+  }, [location.search]);
+
+  const [checkoutBanner, setCheckoutBanner] = useState(null); // 'success' | 'error' | null
+  const [checkoutBannerText, setCheckoutBannerText] = useState('');
 
   const [stats, setStats] = useState({ xp: 0, streak: 0, last_completed_date: null });
   const [progressRows, setProgressRows] = useState([]);
@@ -105,6 +118,53 @@ export default function ProfilePage() {
       mounted = false;
     };
   }, [contentSource, showTakeaways]);
+
+  useEffect(() => {
+    if (checkoutState !== 'success') return;
+    if (authLoading) return;
+    let canceled = false;
+
+    async function run() {
+      if (!user) {
+        setCheckoutBanner('error');
+        setCheckoutBannerText('Payment received. Please sign in again to activate Pro on your account.');
+        return;
+      }
+
+      setCheckoutBanner('success');
+      const startedAt = Date.now();
+      const maxMs = 25_000;
+
+      while (!canceled && Date.now() - startedAt < maxMs) {
+        const remaining = Math.max(0, Math.ceil((maxMs - (Date.now() - startedAt)) / 1000));
+        setCheckoutBannerText(`Payment received — activating Pro… (${remaining}s)`);
+        try {
+          const data = await refreshSession();
+          const nextUser = data?.session?.user;
+          if (getCurrentTier(nextUser) === 'pro') {
+            setCheckoutBannerText('Pro is active. Enjoy!');
+            // Clear ?checkout=success from the URL.
+            navigate('/me', { replace: true });
+            return;
+          }
+        } catch {
+          // ignore
+        }
+        // eslint-disable-next-line no-await-in-loop
+        await new Promise((r) => setTimeout(r, 2000));
+      }
+
+      if (!canceled) {
+        setCheckoutBanner('error');
+        setCheckoutBannerText('Payment received. Pro may still be activating — check Stripe webhook delivery and try refreshing.');
+      }
+    }
+
+    run();
+    return () => {
+      canceled = true;
+    };
+  }, [checkoutState, authLoading, user, refreshSession, navigate]);
 
   const topicById = useMemo(() => {
     const map = new Map();
@@ -235,6 +295,13 @@ export default function ProfilePage() {
                   </Link>
                 )}
               </div>
+            </div>
+          )}
+
+          {checkoutBanner && (
+            <div className={`profile-note ${checkoutBanner === 'error' ? 'profile-checkout-error' : 'profile-checkout-success'}`} style={{ marginBottom: 12 }}>
+              <strong>{checkoutBanner === 'error' ? 'Checkout' : 'Checkout success'}</strong>
+              <div>{checkoutBannerText}</div>
             </div>
           )}
 
