@@ -1,6 +1,6 @@
 import { isSupabaseConfigured, supabase } from '../lib/supabaseClient';
 import { getContentSource } from './_contentSource';
-import { completeLocalTopic, getLocalUserStats } from './progress.local';
+import { completeLocalTopic, getLocalTopicProgress, getLocalUserStats } from './progress.local';
 
 export async function getUserStats() {
   if (getContentSource() === 'local') {
@@ -35,4 +35,21 @@ export async function completeTopic({ topicId, xp = 50, seconds = 60 }) {
   // Supabase returns an array for table returns
   const row = Array.isArray(data) ? data[0] : data;
   return row;
+}
+
+export async function listUserTopicProgress() {
+  if (getContentSource() === 'local') {
+    return getLocalTopicProgress();
+  }
+
+  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+  const { data, error } = await supabase
+    .from('user_topic_progress')
+    .select(
+      'topic_id, best_seconds, completed_count, last_completed_at, topics ( id, title, emoji, color, subject )'
+    )
+    .order('last_completed_at', { ascending: false });
+
+  if (error) throw error;
+  return data ?? [];
 }

@@ -70,6 +70,8 @@ When you add thousands of modules, you mostly add JSON files/rows — the engine
 1. `npm run content:sync` (bulk upsert to `public.topics`)
 2. Run the normal app (`npm run dev` or production) to verify DB-backed behavior
 
+Note: the sync script loads `.env.local` automatically (keep the service role key out of any `VITE_...` variable).
+
 Result: adding/updating modules does **not** require a frontend build/deploy.
 
 ## When you need new code

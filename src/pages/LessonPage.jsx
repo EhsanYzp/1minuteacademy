@@ -1,10 +1,11 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useParams, useNavigate } from 'react-router-dom';
 import Timer from '../components/Timer';
 import LessonRenderer from '../engine/LessonRenderer';
 import { getTopic } from '../services/topics';
 import { completeTopic } from '../services/progress';
+import { getContentSource } from '../services/_contentSource';
 import './LessonPage.css';
 
 function getLessonDefaults() {
@@ -14,6 +15,7 @@ function getLessonDefaults() {
 function LessonPage() {
   const { topicId } = useParams();
   const navigate = useNavigate();
+  const contentSource = getContentSource();
   const [isStarted, setIsStarted] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(60);
@@ -22,7 +24,8 @@ function LessonPage() {
   const [topicError, setTopicError] = useState(null);
   const [completionResult, setCompletionResult] = useState(null);
   const [completionError, setCompletionError] = useState(null);
-  const [submittedCompletion, setSubmittedCompletion] = useState(false);
+  const [submittingCompletion, setSubmittingCompletion] = useState(false);
+  const submittedCompletionRef = useRef(false);
 
   const lesson = useMemo(() => topicRow?.lesson ?? getLessonDefaults(), [topicRow]);
   const totalSeconds = useMemo(() => Number(lesson?.totalSeconds ?? 60), [lesson]);
@@ -63,7 +66,8 @@ function LessonPage() {
       setIsCompleted(false);
       setCompletionResult(null);
       setCompletionError(null);
-      setSubmittedCompletion(false);
+      submittedCompletionRef.current = false;
+      setSubmittingCompletion(false);
     }
   }, [totalSeconds, isStarted]);
 
@@ -85,18 +89,22 @@ function LessonPage() {
 
   useEffect(() => {
     if (!isStarted || !isCompleted) return;
-    if (submittedCompletion) return;
     if (!topicRow) return;
+
+    if (submittedCompletionRef.current) return;
+    submittedCompletionRef.current = true;
 
     let mounted = true;
     async function submit() {
       try {
-        setSubmittedCompletion(true);
+        setSubmittingCompletion(true);
         setCompletionError(null);
         const result = await completeTopic({ topicId, xp: xpAward, seconds: totalSeconds });
         if (mounted) setCompletionResult(result);
       } catch (e) {
         if (mounted) setCompletionError(e);
+      } finally {
+        if (mounted) setSubmittingCompletion(false);
       }
     }
 
@@ -104,7 +112,7 @@ function LessonPage() {
     return () => {
       mounted = false;
     };
-  }, [isStarted, isCompleted, submittedCompletion, topicRow, topicId, xpAward, totalSeconds]);
+  }, [isStarted, isCompleted, topicRow, topicId, xpAward, totalSeconds]);
 
   // Calculate progress based on time elapsed
   const progress = totalSeconds > 0 ? ((totalSeconds - timeRemaining) / totalSeconds) * 100 : 0;
@@ -218,11 +226,29 @@ function LessonPage() {
               </div>
             </div>
 
-            {completionError && (
-              <div className="lesson-error" style={{ marginTop: 12 }}>
-                <p style={{ margin: 0 }}>Couldn’t save progress.</p>
-              </div>
-            )}
+            <div className="lesson-error" style={{ marginTop: 12 }}>
+              {submittingCompletion ? (
+                <p style={{ margin: 0 }}>Saving your progress…</p>
+              ) : completionError ? (
+                <>
+                  <p style={{ margin: 0 }}>Couldn’t save progress.</p>
+                  <p style={{ margin: '6px 0 0', opacity: 0.8, fontSize: 14 }}>
+                    {completionError?.message ?? String(completionError)}
+                  </p>
+                  <p style={{ margin: '6px 0 0', opacity: 0.75, fontSize: 13 }}>
+                    Content source: <strong>{contentSource}</strong>
+                  </p>
+                </>
+              ) : completionResult ? (
+                <p style={{ margin: 0 }}>
+                  ✅ Progress saved {contentSource === 'local' ? 'locally' : 'to Supabase'}.
+                </p>
+              ) : (
+                <p style={{ margin: 0, opacity: 0.8 }}>
+                  Content source: <strong>{contentSource}</strong>
+                </p>
+              )}
+            </div>
 
             <div className="completion-actions">
               <motion.button

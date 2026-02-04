@@ -1,4 +1,5 @@
 const STATS_KEY = 'oma_local_user_stats_v1';
+const TOPIC_PROGRESS_KEY = 'oma_local_topic_progress_v1';
 
 function todayISO() {
   return new Date().toISOString().slice(0, 10);
@@ -23,11 +24,37 @@ function writeStats(stats) {
   localStorage.setItem(STATS_KEY, JSON.stringify(stats));
 }
 
+function readTopicProgress() {
+  try {
+    const raw = localStorage.getItem(TOPIC_PROGRESS_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === 'object' ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function writeTopicProgress(map) {
+  localStorage.setItem(TOPIC_PROGRESS_KEY, JSON.stringify(map));
+}
+
 export async function getLocalUserStats() {
   return readStats();
 }
 
-export async function completeLocalTopic({ xp = 50 }) {
+export async function getLocalTopicProgress() {
+  const map = readTopicProgress();
+  return Object.entries(map).map(([topic_id, v]) => ({
+    topic_id,
+    best_seconds: v?.best_seconds ?? null,
+    completed_count: Number(v?.completed_count ?? 0),
+    last_completed_at: v?.last_completed_at ?? null,
+    topics: null,
+  }));
+}
+
+export async function completeLocalTopic({ topicId, xp = 50, seconds = 60 }) {
   const stats = readStats();
   const today = todayISO();
 
@@ -50,5 +77,25 @@ export async function completeLocalTopic({ xp = 50 }) {
   };
 
   writeStats(next);
+
+  if (typeof topicId === 'string' && topicId.length > 0) {
+    const map = readTopicProgress();
+    const prev = map[topicId] ?? {};
+    const prevBest = typeof prev.best_seconds === 'number' ? prev.best_seconds : null;
+    const s = Number(seconds);
+    const best_seconds = Number.isFinite(s)
+      ? prevBest == null
+        ? s
+        : Math.min(prevBest, s)
+      : prevBest;
+
+    map[topicId] = {
+      completed_count: Number(prev.completed_count ?? 0) + 1,
+      best_seconds,
+      last_completed_at: new Date().toISOString(),
+    };
+    writeTopicProgress(map);
+  }
+
   return { xp: next.xp, streak: next.streak };
 }

@@ -124,10 +124,10 @@ begin
   values (v_user_id)
   on conflict (user_id) do nothing;
 
-  select last_completed_date, streak, xp
+  select us.last_completed_date, us.streak, us.xp
   into v_last, v_streak, v_xp
-  from public.user_stats
-  where user_id = v_user_id
+  from public.user_stats as us
+  where us.user_id = v_user_id
   for update;
 
   -- Streak logic

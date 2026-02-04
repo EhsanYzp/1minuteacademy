@@ -75,6 +75,11 @@ In local preview:
 
 This bulk upserts all topic JSON files into `public.topics`.
 
+Notes:
+- The sync script auto-loads `.env.local`.
+- Find the key in Supabase Dashboard → Project Settings → API → Project API keys → `service_role`.
+- Guardrail: the sync script refuses to run if `VITE_SUPABASE_SERVICE_ROLE_KEY` is set.
+
 ## Content guidelines (so it fits in 60 seconds)
 
 - Keep text short; prefer 1–2 sentences per step.

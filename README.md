@@ -38,7 +38,7 @@ npm run build
 
 1. Create a Supabase project
 2. In Supabase SQL Editor, run the schema in `supabase/001_init.sql`
-3. Create a `.env` file (Vite) using `.env.example` and fill:
+3. Create a `.env.local` file (recommended) using `.env.example` and fill:
 
 ```bash
 VITE_SUPABASE_URL=...
@@ -66,7 +66,8 @@ See: `docs/content-generation.md` for the content playbook.
 
 - Validate topic JSON: `npm run content:validate`
 - Bulk sync to Supabase: `npm run content:sync`
-	- Requires `SUPABASE_SERVICE_ROLE_KEY` in your local env (scripts only; never ship to browser)
+	- Requires `SUPABASE_SERVICE_ROLE_KEY` in `.env.local` (scripts only; never ship to browser)
+	- The sync script loads `.env.local` automatically
 
 ### Local Preview (no Supabase push while iterating)
 
@@ -85,10 +86,11 @@ When you’re happy, publish to Supabase with `npm run content:sync`.
 
 ### Currently Available:
 - 🔗 **What is Blockchain?** - Learn how blockchain technology works
+- ⚛️ **Quantum Computing (in 60s)** - Qubits, superposition, entanglement
+- 🤖 **AI Agents (in 60s)** - Tools + memory + loops (agent basics)
 
 ### Coming Soon:
-- 🤖 What is AI?
-- ⚛️ Quantum Computing
+- 🧠 What is AI?
 - 💰 Cryptocurrency
 
 ## 🎨 Design System
@@ -102,7 +104,7 @@ The app uses a custom design system with:
 
 ## 🛠️ Tech Stack
 
-- **React 18** - UI library
+- **React 19** - UI library
 - **Vite** - Build tool & dev server
 - **Framer Motion** - Animations
 - **React Router** - Navigation

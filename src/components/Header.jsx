@@ -7,9 +7,17 @@ import { getContentSource } from '../services/_contentSource';
 import './Header.css';
 
 function Header() {
-  const { user, isSupabaseConfigured } = useAuth();
+  const { user, isSupabaseConfigured, signOut } = useAuth();
   const [stats, setStats] = useState({ xp: 0, streak: 0 });
   const contentSource = getContentSource();
+
+  async function onSignOut() {
+    try {
+      await signOut();
+    } catch {
+      // ignore
+    }
+  }
 
   useEffect(() => {
     let mounted = true;
@@ -75,6 +83,13 @@ function Header() {
             >
               ⭐ {stats.xp} XP
             </motion.div>
+
+            <Link to="/me" className="nav-item link" style={{ textDecoration: 'none' }}>
+              👤 Profile
+            </Link>
+            <button className="nav-item button" type="button" onClick={onSignOut}>
+              Sign out
+            </button>
           </>
         ) : (
           <Link to="/login" className="nav-item points" style={{ textDecoration: 'none' }}>

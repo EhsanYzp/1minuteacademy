@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import TopicPage from './pages/TopicPage';
 import LessonPage from './pages/LessonPage';
 import LoginPage from './pages/LoginPage';
+import ProfilePage from './pages/ProfilePage';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import './App.css';
@@ -17,6 +18,14 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route
+                path="/me"
+                element={
+                  <ProtectedRoute>
+                    <ProfilePage />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/topic/:topicId" element={<TopicPage />} />
               <Route
                 path="/lesson/:topicId"

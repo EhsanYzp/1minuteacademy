@@ -24,6 +24,11 @@ Instead, each topic/module is **data** stored in Supabase (`public.topics.lesson
 - Set `SUPABASE_SERVICE_ROLE_KEY` in `.env.local` (scripts only)
 - Run: `npm run content:sync`
 
+Notes:
+- The sync script auto-loads `.env.local` (you do not need to export env vars manually).
+- Find the service role key in Supabase Dashboard → Project Settings → API → Project API keys → `service_role`.
+- Never put the service role key in any `VITE_...` variable.
+
 ## Notes
 
 - The app itself uses the **anon key** and only reads published topics.
