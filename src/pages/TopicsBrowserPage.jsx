@@ -251,6 +251,39 @@ export default function TopicsBrowserPage() {
                 Showing <strong>{visibleTopics.length}</strong> topic(s)
                 {contentSource === 'local' ? ' (Local Preview)' : user ? '' : ' (sign in to track completion)'}
               </div>
+
+              <div className="mobile-controls" aria-label="Browse controls">
+                <div className="chip-row" aria-label="Categories">
+                  {categories.map((c) => (
+                    <button
+                      key={`chip-${c}`}
+                      type="button"
+                      className={c === activeCategory ? 'chip active' : 'chip'}
+                      onClick={() => setActiveCategory(c)}
+                      title={`${c} (${categoryCounts.get(c) ?? 0})`}
+                    >
+                      <span className="chip-name">{c}</span>
+                      <span className="chip-count">{categoryCounts.get(c) ?? 0}</span>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="chip-row" aria-label="Filters">
+                  <button type="button" className={filter === 'all' ? 'chip active' : 'chip'} onClick={() => setFilter('all')}>
+                    All
+                  </button>
+                  <button
+                    type="button"
+                    className={filter === 'completed' ? 'chip active' : 'chip'}
+                    onClick={() => setFilter('completed')}
+                  >
+                    Completed
+                  </button>
+                  <button type="button" className={filter === 'new' ? 'chip active' : 'chip'} onClick={() => setFilter('new')}>
+                    New
+                  </button>
+                </div>
+              </div>
             </div>
 
             {loading ? (
