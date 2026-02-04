@@ -7,6 +7,13 @@ function json(res, statusCode, body) {
   res.end(JSON.stringify(body));
 }
 
+function normalizeSiteUrl(input) {
+  const raw = String(input ?? '').trim();
+  if (!raw) return null;
+  const withScheme = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+  return withScheme.replace(/\/+$/, '');
+}
+
 async function readJsonBody(req) {
   const chunks = [];
   for await (const chunk of req) chunks.push(chunk);
@@ -54,7 +61,12 @@ export default async function handler(req, res) {
     });
   }
 
-  const siteUrl = process.env.SITE_URL || req.headers.origin;
+  const forwardedProto = req.headers['x-forwarded-proto'];
+  const forwardedHost = req.headers['x-forwarded-host'] || req.headers.host;
+  const inferredSiteUrl = forwardedHost
+    ? `${forwardedProto || 'https'}://${forwardedHost}`
+    : req.headers.origin;
+  const siteUrl = normalizeSiteUrl(process.env.SITE_URL) || normalizeSiteUrl(inferredSiteUrl);
   if (!siteUrl) return json(res, 500, { error: 'Missing SITE_URL' });
 
   const stripe = process.env.STRIPE_API_VERSION

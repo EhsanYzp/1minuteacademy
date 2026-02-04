@@ -47,7 +47,14 @@ export async function handler(event) {
     };
   }
 
-  const siteUrl = process.env.SITE_URL || event.headers?.origin;
+  const normalizeSiteUrl = (input) => {
+    const raw = String(input || '').trim();
+    if (!raw) return null;
+    const withScheme = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+    return withScheme.replace(/\/+$/, '');
+  };
+
+  const siteUrl = normalizeSiteUrl(process.env.SITE_URL) || normalizeSiteUrl(event.headers?.origin);
   if (!siteUrl) return { statusCode: 500, body: JSON.stringify({ error: 'Missing SITE_URL' }) };
 
   const stripe = process.env.STRIPE_API_VERSION
