@@ -71,6 +71,10 @@ export default function ProfilePage() {
   const showTakeaways = canSeeTakeaways(tier);
   const showReview = canReview(tier);
 
+  const hasStripeCustomer = Boolean(user?.user_metadata?.stripe_customer_id);
+  const hasStripeSubscription = Boolean(user?.user_metadata?.stripe_subscription_id);
+  const showSubscriptionBox = contentSource !== 'local' && Boolean(user) && (hasStripeCustomer || hasStripeSubscription);
+
   const checkoutState = useMemo(() => {
     try {
       return new URLSearchParams(location.search).get('checkout');
@@ -138,7 +142,7 @@ export default function ProfilePage() {
     let mounted = true;
     async function loadSub() {
       if (contentSource === 'local') return;
-      if (tier !== 'pro') return;
+      if (!showSubscriptionBox) return;
       try {
         setSubLoading(true);
         setSubError(null);
@@ -156,7 +160,7 @@ export default function ProfilePage() {
     return () => {
       mounted = false;
     };
-  }, [contentSource, tier]);
+  }, [contentSource, showSubscriptionBox]);
 
   async function onManageSubscription() {
     try {
@@ -343,13 +347,15 @@ export default function ProfilePage() {
                 )}
               </div>
 
-              {tier === 'pro' && (
+              {showSubscriptionBox && (
                 <div className="profile-sub-box">
                   <div className="profile-sub-head">
                     <div className="profile-sub-title">Subscription</div>
-                    <button className="profile-sub-btn" type="button" onClick={onManageSubscription}>
-                      Manage subscription
-                    </button>
+                    {hasStripeCustomer && (
+                      <button className="profile-sub-btn" type="button" onClick={onManageSubscription}>
+                        Manage subscription
+                      </button>
+                    )}
                   </div>
 
                   {subLoading ? (
@@ -357,12 +363,18 @@ export default function ProfilePage() {
                   ) : subError ? (
                     <div className="profile-sub-row profile-sub-error">{subError.message ?? 'Could not load subscription details.'}</div>
                   ) : subStatus ? (
+                    (() => {
+                      const endsLabel = subStatus.cancel_at_period_end || subStatus.status === 'canceled' ? 'Ends' : 'Renews';
+                      const endsDate = subStatus.cancel_at || subStatus.current_period_end;
+                      return (
                     <div className="profile-sub-grid">
                       <div className="profile-sub-item"><span>Status</span><strong>{subStatus.status ?? '—'}</strong></div>
-                      <div className="profile-sub-item"><span>Renews</span><strong>{fmtShortDate(subStatus.current_period_end)}</strong></div>
+                      <div className="profile-sub-item"><span>{endsLabel}</span><strong>{fmtShortDate(endsDate)}</strong></div>
                       <div className="profile-sub-item"><span>Started</span><strong>{fmtShortDate(subStatus.created)}</strong></div>
                       <div className="profile-sub-item"><span>Canceling</span><strong>{subStatus.cancel_at_period_end ? 'Yes' : 'No'}</strong></div>
                     </div>
+                      );
+                    })()
                   ) : (
                     <div className="profile-sub-row">No subscription details found yet.</div>
                   )}

@@ -144,7 +144,7 @@ export default function UpgradePage() {
       return;
     }
     try {
-      await openCustomerPortal({ returnPath: '/pricing' });
+      await openCustomerPortal({ returnPath: '/me' });
     } catch (e) {
       setBanner('error');
       setBannerText(e?.message || 'Could not open Stripe portal');

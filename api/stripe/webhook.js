@@ -72,7 +72,8 @@ export default async function handler(req, res) {
         await supabaseAdmin.auth.admin.updateUserById(userId, {
           user_metadata: {
             plan: 'free',
-            stripe_subscription_id: null,
+            // Keep the subscription id so the app can still show status/history.
+            stripe_subscription_id: subscription?.id || null,
             plan_interval: null,
             stripe_price_id: null,
           },
