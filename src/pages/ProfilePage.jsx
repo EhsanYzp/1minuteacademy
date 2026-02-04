@@ -88,6 +88,9 @@ export default function ProfilePage() {
   const hasStripeSubscription = Boolean(user?.user_metadata?.stripe_subscription_id);
   const showSubscriptionBox = contentSource !== 'local' && Boolean(user) && (hasStripeCustomer || hasStripeSubscription);
 
+  const stripeCustomerId = user?.user_metadata?.stripe_customer_id ?? null;
+  const stripeSubscriptionId = user?.user_metadata?.stripe_subscription_id ?? null;
+
   const checkoutState = useMemo(() => {
     try {
       return new URLSearchParams(location.search).get('checkout');
@@ -125,6 +128,11 @@ export default function ProfilePage() {
     try {
       setSubLoading(true);
       setSubError(null);
+      try {
+        if (user) await refreshSession();
+      } catch {
+        // ignore
+      }
       const data = await getSubscriptionStatus();
       setSubStatus(data);
     } catch (e) {
@@ -196,7 +204,7 @@ export default function ProfilePage() {
     return () => {
       mounted = false;
     };
-  }, [contentSource, showSubscriptionBox]);
+  }, [contentSource, showSubscriptionBox, stripeCustomerId, stripeSubscriptionId]);
 
   useEffect(() => {
     if (portalReturn !== 'return') return;

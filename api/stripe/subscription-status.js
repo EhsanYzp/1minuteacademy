@@ -34,15 +34,46 @@ export default async function handler(req, res) {
 
   const user = userData.user;
   const subscriptionId = user?.user_metadata?.stripe_subscription_id;
+  const customerId = user?.user_metadata?.stripe_customer_id;
   const planInterval = user?.user_metadata?.plan_interval ?? null;
 
+  async function shape(sub) {
+    return {
+      subscription_id: sub?.id ?? null,
+      active: sub?.status === 'active' || sub?.status === 'trialing' || sub?.status === 'past_due',
+      status: sub?.status ?? null,
+      current_period_end: sub?.current_period_end ? new Date(sub.current_period_end * 1000).toISOString() : null,
+      cancel_at_period_end: Boolean(sub?.cancel_at_period_end),
+      cancel_at: sub?.cancel_at ? new Date(sub.cancel_at * 1000).toISOString() : null,
+      canceled_at: sub?.canceled_at ? new Date(sub.canceled_at * 1000).toISOString() : null,
+      ended_at: sub?.ended_at ? new Date(sub.ended_at * 1000).toISOString() : null,
+      created: sub?.created ? new Date(sub.created * 1000).toISOString() : null,
+      plan_interval: planInterval,
+    };
+  }
+
   if (!subscriptionId) {
+    // Some users may have stripe_customer_id but not stripe_subscription_id
+    // (e.g. if metadata propagation was delayed). Infer the latest subscription.
+    if (customerId) {
+      try {
+        const list = await stripe.subscriptions.list({ customer: customerId, status: 'all', limit: 1 });
+        const sub = Array.isArray(list?.data) && list.data.length > 0 ? list.data[0] : null;
+        if (sub) return json(res, 200, await shape(sub));
+      } catch {
+        // fall through
+      }
+    }
+
     return json(res, 200, {
+      subscription_id: null,
       active: false,
       status: null,
       current_period_end: null,
       cancel_at_period_end: null,
       cancel_at: null,
+      canceled_at: null,
+      ended_at: null,
       created: null,
       plan_interval: planInterval,
     });
@@ -51,17 +82,7 @@ export default async function handler(req, res) {
   try {
     const sub = await stripe.subscriptions.retrieve(subscriptionId);
 
-    return json(res, 200, {
-      active: sub.status === 'active' || sub.status === 'trialing' || sub.status === 'past_due',
-      status: sub.status,
-      current_period_end: sub.current_period_end ? new Date(sub.current_period_end * 1000).toISOString() : null,
-      cancel_at_period_end: Boolean(sub.cancel_at_period_end),
-      cancel_at: sub.cancel_at ? new Date(sub.cancel_at * 1000).toISOString() : null,
-      canceled_at: sub.canceled_at ? new Date(sub.canceled_at * 1000).toISOString() : null,
-      ended_at: sub.ended_at ? new Date(sub.ended_at * 1000).toISOString() : null,
-      created: sub.created ? new Date(sub.created * 1000).toISOString() : null,
-      plan_interval: planInterval,
-    });
+    return json(res, 200, await shape(sub));
   } catch (e) {
     return json(res, 500, { error: e?.message || 'Stripe error' });
   }
