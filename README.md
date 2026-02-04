@@ -52,6 +52,19 @@ Notes:
 - The `/lesson/:topicId` route requires authentication (email/password or magic link).
 - Topics are loaded from the `topics` table; the seeded `blockchain` topic is included in the SQL.
 
+### Supabase Auth redirect URLs (fix email links going to localhost)
+
+If Supabase emails (magic link / confirm signup / reset password) send you back to `http://localhost:5173`, update your Supabase Auth URL configuration:
+
+1. Supabase Dashboard → **Authentication** → **URL Configuration**
+2. Set **Site URL** to your production domain:
+	- `https://1minuteacademy.vercel.app`
+3. Add **Redirect URLs** for every origin you use:
+	- `https://1minuteacademy.vercel.app/**`
+	- `http://localhost:5173/**`
+
+Then request a new email link (old emails will keep the old redirect).
+
 ### Profile + progress
 
 - After signing in, open `/me` (or click **Profile** in the header).

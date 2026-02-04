@@ -25,7 +25,13 @@ export function AuthProvider({ children }) {
   const signUpWithPassword = useCallback(async (email, password) => {
     if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
     setAuthError(null);
-    const { data, error } = await supabase.auth.signUp({ email, password });
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: window.location.origin,
+      },
+    });
     if (error) {
       setAuthError(error);
       throw error;
