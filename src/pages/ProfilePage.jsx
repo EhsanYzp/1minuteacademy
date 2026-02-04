@@ -74,6 +74,28 @@ function formatStripeStatus(status) {
   return s;
 }
 
+function computeFallbackPeriodEnd(createdIso, planInterval) {
+  if (!createdIso) return null;
+  const interval = String(planInterval ?? '').toLowerCase();
+  if (interval !== 'month' && interval !== 'monthly' && interval !== 'year' && interval !== 'yearly' && interval !== 'annual') return null;
+
+  const created = new Date(createdIso);
+  if (Number.isNaN(created.getTime())) return null;
+
+  const now = new Date();
+  const d = new Date(created);
+
+  // Advance periods until we land in the future.
+  // Cap iterations to avoid infinite loops if the date is weird.
+  for (let i = 0; i < 36; i += 1) {
+    if (interval === 'month' || interval === 'monthly') d.setMonth(d.getMonth() + 1);
+    else d.setFullYear(d.getFullYear() + 1);
+    if (d.getTime() > now.getTime()) return d.toISOString();
+  }
+
+  return null;
+}
+
 export default function ProfilePage() {
   const { user, refreshSession, loading: authLoading } = useAuth();
   const location = useLocation();
@@ -472,11 +494,13 @@ export default function ProfilePage() {
                       const hasCancelAt = Boolean(subStatus.cancel_at);
                       const isScheduledCancel = Boolean(subStatus.cancel_at_period_end) || (!isCanceled && hasCancelAt);
 
-                      const periodDate = subStatus.current_period_end || subStatus.cancel_at;
+                      const fallbackPeriodEnd = computeFallbackPeriodEnd(subStatus.created, subStatus.plan_interval);
+                      const periodDate = subStatus.current_period_end || fallbackPeriodEnd;
+                      const scheduledEndDate = subStatus.cancel_at || subStatus.current_period_end || fallbackPeriodEnd;
                       const endedDate = subStatus.ended_at || subStatus.canceled_at || subStatus.cancel_at || subStatus.current_period_end;
 
                       const dateLabel = isCanceled ? 'Ended' : isScheduledCancel ? 'Ends' : 'Renews';
-                      const dateValue = isCanceled ? endedDate : periodDate;
+                      const dateValue = isCanceled ? endedDate : isScheduledCancel ? scheduledEndDate : periodDate;
 
                       const cancellationLabel = isCanceled
                         ? 'Canceled'

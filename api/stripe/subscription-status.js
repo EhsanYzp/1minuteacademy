@@ -45,16 +45,23 @@ export default async function handler(req, res) {
       sub?.cancel_at ??
       null;
 
+    const epochPeriodStart = sub?.current_period_start ?? null;
+    const epochBillingAnchor = sub?.billing_cycle_anchor ?? null;
+    const epochTrialEnd = sub?.trial_end ?? null;
+
     return {
       subscription_id: sub?.id ?? null,
       active: sub?.status === 'active' || sub?.status === 'trialing' || sub?.status === 'past_due',
       status: sub?.status ?? null,
-      current_period_end: epochPeriodEnd ? new Date(epochPeriodEnd * 1000).toISOString() : null,
+      current_period_start: epochPeriodStart != null ? new Date(epochPeriodStart * 1000).toISOString() : null,
+      current_period_end: epochPeriodEnd != null ? new Date(epochPeriodEnd * 1000).toISOString() : null,
       cancel_at_period_end: Boolean(sub?.cancel_at_period_end),
-      cancel_at: sub?.cancel_at ? new Date(sub.cancel_at * 1000).toISOString() : null,
-      canceled_at: sub?.canceled_at ? new Date(sub.canceled_at * 1000).toISOString() : null,
-      ended_at: sub?.ended_at ? new Date(sub.ended_at * 1000).toISOString() : null,
-      created: sub?.created ? new Date(sub.created * 1000).toISOString() : null,
+      cancel_at: sub?.cancel_at != null ? new Date(sub.cancel_at * 1000).toISOString() : null,
+      canceled_at: sub?.canceled_at != null ? new Date(sub.canceled_at * 1000).toISOString() : null,
+      ended_at: sub?.ended_at != null ? new Date(sub.ended_at * 1000).toISOString() : null,
+      billing_cycle_anchor: epochBillingAnchor != null ? new Date(epochBillingAnchor * 1000).toISOString() : null,
+      trial_end: epochTrialEnd != null ? new Date(epochTrialEnd * 1000).toISOString() : null,
+      created: sub?.created != null ? new Date(sub.created * 1000).toISOString() : null,
       plan_interval: planInterval,
     };
   }
