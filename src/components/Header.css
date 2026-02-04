@@ -1,0 +1,97 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md) var(--space-xl);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.logo-icon {
+  font-size: 2rem;
+}
+
+.logo-text {
+  display: flex;
+  align-items: baseline;
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.logo-number {
+  font-size: 2rem;
+  color: var(--color-primary);
+}
+
+.logo-minute {
+  font-size: 1.5rem;
+  color: var(--color-secondary);
+}
+
+.logo-academy {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-left: 4px;
+}
+
+.nav {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.nav-item.streak {
+  background: linear-gradient(135deg, #FFF0E0 0%, #FFE0C0 100%);
+  color: var(--color-orange-dark);
+}
+
+.nav-item.points {
+  background: linear-gradient(135deg, #FFF9E0 0%, #FFF0A3 100%);
+  color: #B8860B;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: var(--space-md);
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+  
+  .nav {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .logo-text {
+    font-size: 0.9rem;
+  }
+  
+  .logo-number {
+    font-size: 1.5rem;
+  }
+  
+  .logo-minute, .logo-academy {
+    font-size: 1.2rem;
+  }
+}
