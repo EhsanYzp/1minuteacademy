@@ -47,7 +47,6 @@ function SubjectCard({ subject, index }) {
             <p className="card-description">{description}</p>
             <div className="card-footer">
               <span className="difficulty-badge">{difficulty}</span>
-              {completed && <span className="completed-badge">✅ Completed</span>}
             </div>
             <motion.div 
               className="play-hint"

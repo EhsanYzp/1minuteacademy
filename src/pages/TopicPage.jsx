@@ -3,6 +3,9 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
 import Header from '../components/Header';
 import { getTopic } from '../services/topics';
+import { listUserTopicProgress } from '../services/progress';
+import { getContentSource } from '../services/_contentSource';
+import { useAuth } from '../context/AuthContext';
 import './TopicPage.css';
 
 const fallbackTopics = {
@@ -47,9 +50,12 @@ function normalizeTopic(topicRow, topicId) {
 function TopicPage() {
   const { topicId } = useParams();
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
+  const contentSource = getContentSource();
   const [topicRow, setTopicRow] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [completedCount, setCompletedCount] = useState(0);
 
   useEffect(() => {
     let mounted = true;
@@ -72,10 +78,38 @@ function TopicPage() {
     };
   }, [topicId]);
 
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadProgress() {
+      try {
+        setCompletedCount(0);
+
+        const canReadProgress =
+          contentSource === 'local' || (!authLoading && Boolean(user));
+        if (!canReadProgress) return;
+
+        const rows = await listUserTopicProgress();
+        if (!mounted) return;
+        const row = (Array.isArray(rows) ? rows : []).find((r) => r?.topic_id === topicId) ?? null;
+        setCompletedCount(Number(row?.completed_count ?? 0));
+      } catch {
+        // Topic pages should not hard-fail if progress can't be read.
+      }
+    }
+
+    loadProgress();
+    return () => {
+      mounted = false;
+    };
+  }, [topicId, contentSource, user, authLoading]);
+
   const topic = useMemo(() => {
     const row = topicRow ?? fallbackTopics[topicId];
     return row ? normalizeTopic(row, topicId) : null;
   }, [topicRow, topicId]);
+
+  const isCompleted = Number(completedCount) > 0;
 
   if (!topic && loading) {
     return (
@@ -201,32 +235,54 @@ function TopicPage() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            <motion.button
-              className="start-button"
-              onClick={() => navigate(`/lesson/${topicId}`)}
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: '0 10px 40px rgba(255, 107, 107, 0.4)'
-              }}
-              whileTap={{ scale: 0.95 }}
-              animate={{
-                boxShadow: [
-                  '0 5px 20px rgba(255, 107, 107, 0.3)',
-                  '0 5px 30px rgba(255, 107, 107, 0.5)',
-                  '0 5px 20px rgba(255, 107, 107, 0.3)'
-                ]
-              }}
-              transition={{
-                boxShadow: { duration: 2, repeat: Infinity }
-              }}
-            >
-              <span className="button-icon">🚀</span>
-              <span className="button-text">Start Learning!</span>
-              <span className="button-timer">60s</span>
-            </motion.button>
+            {isCompleted ? (
+              <div className="topic-actions">
+                <motion.button
+                  className="topic-action-btn primary"
+                  onClick={() => navigate(`/review/${topicId}`)}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
+                >
+                  📚 Review (no timer)
+                </motion.button>
+
+                <motion.button
+                  className="topic-action-btn secondary"
+                  onClick={() => navigate(`/lesson/${topicId}`)}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
+                >
+                  🔄 Restart from scratch
+                </motion.button>
+              </div>
+            ) : (
+              <motion.button
+                className="start-button"
+                onClick={() => navigate(`/lesson/${topicId}`)}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: '0 10px 40px rgba(255, 107, 107, 0.4)'
+                }}
+                whileTap={{ scale: 0.95 }}
+                animate={{
+                  boxShadow: [
+                    '0 5px 20px rgba(255, 107, 107, 0.3)',
+                    '0 5px 30px rgba(255, 107, 107, 0.5)',
+                    '0 5px 20px rgba(255, 107, 107, 0.3)'
+                  ]
+                }}
+                transition={{
+                  boxShadow: { duration: 2, repeat: Infinity }
+                }}
+              >
+                <span className="button-icon">🚀</span>
+                <span className="button-text">Start Learning!</span>
+                <span className="button-timer">60s</span>
+              </motion.button>
+            )}
             
             <p className="start-hint">
-              Ready? Click above to begin your 60-second adventure! 🎮
+              {isCompleted ? '' : 'Ready? Click above to begin your 60-second adventure! 🎮'}
             </p>
           </motion.div>
         </div>

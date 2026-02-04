@@ -53,3 +53,31 @@ export async function getTopic(topicId) {
   if (error) throw error;
   return data;
 }
+
+export async function listTopicsByIds(topicIds, { includeLesson = false } = {}) {
+  const ids = Array.isArray(topicIds) ? topicIds.filter(Boolean) : [];
+  const uniq = Array.from(new Set(ids.map(String)));
+  if (uniq.length === 0) return [];
+
+  if (getContentSource() === 'local') {
+    const topics = listLocalTopics();
+    const byId = new Map(topics.map((t) => [t.id, t]));
+    const out = uniq.map((id) => byId.get(id)).filter(Boolean);
+    if (!includeLesson) return out.map(({ lesson, ...rest }) => rest);
+    return out;
+  }
+
+  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+
+  const columns = includeLesson
+    ? 'id, subject, title, emoji, color, description, difficulty, lesson'
+    : 'id, subject, title, emoji, color, description, difficulty';
+
+  const { data, error } = await supabase
+    .from('topics')
+    .select(columns)
+    .in('id', uniq);
+
+  if (error) throw error;
+  return data ?? [];
+}

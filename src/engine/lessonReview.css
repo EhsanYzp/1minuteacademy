@@ -1,0 +1,196 @@
+.lesson-review {
+  min-height: 100vh;
+  background: var(--bg-gradient);
+  display: flex;
+  flex-direction: column;
+}
+
+.review-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 120;
+  display: grid;
+  grid-template-columns: 120px 1fr 120px;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.review-back {
+  justify-self: start;
+  border: none;
+  background: rgba(0,0,0,0.05);
+  padding: 10px 14px;
+  border-radius: var(--radius-full);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.review-back:hover {
+  background: rgba(0,0,0,0.08);
+}
+
+.review-title {
+  justify-self: center;
+  text-align: center;
+  font-weight: 950;
+  letter-spacing: -0.02em;
+}
+
+.review-sub {
+  margin-top: 2px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.review-spacer {
+  width: 1px;
+  height: 1px;
+}
+
+.review-progress {
+  padding: var(--space-md) var(--space-lg);
+}
+
+.review-progress-bar {
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.review-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+}
+
+.review-progress-text {
+  margin-top: var(--space-xs);
+  color: var(--text-secondary);
+  font-weight: 800;
+  text-align: center;
+}
+
+.review-steppicker {
+  display: flex;
+  gap: var(--space-sm);
+  padding: 0 var(--space-lg);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.review-chip {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  max-width: 340px;
+  border: 2px solid rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.7);
+  border-radius: var(--radius-full);
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.review-chip:hover {
+  border-color: rgba(0,0,0,0.14);
+}
+
+.review-chip.active {
+  border-color: rgba(78, 205, 196, 0.55);
+  background: rgba(78, 205, 196, 0.12);
+}
+
+.review-chip.done {
+  border-color: rgba(46, 204, 113, 0.55);
+}
+
+.review-chip-num {
+  display: inline-flex;
+  width: 26px;
+  height: 26px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.06);
+  font-weight: 950;
+}
+
+.review-chip-title {
+  font-weight: 850;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.review-step {
+  flex: 1;
+  display: flex;
+  padding: var(--space-lg);
+}
+
+.review-step-inner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.review-nav {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+}
+
+.review-nav-btn {
+  border: none;
+  cursor: pointer;
+  padding: var(--space-md) var(--space-xl);
+  border-radius: var(--radius-full);
+  background: rgba(0,0,0,0.06);
+  font-weight: 900;
+}
+
+.review-nav-btn.primary {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: white;
+}
+
+.review-nav-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.review-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xl);
+  text-align: center;
+}
+
+.review-empty p {
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .review-topbar {
+    grid-template-columns: 100px 1fr 40px;
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .review-chip {
+    max-width: 260px;
+  }
+
+  .review-step {
+    padding: var(--space-md);
+  }
+}

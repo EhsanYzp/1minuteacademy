@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useParams, useNavigate } from 'react-router-dom';
 import Timer from '../components/Timer';
 import LessonRenderer from '../engine/LessonRenderer';
+import LessonReview from '../engine/LessonReview';
 import { getTopic } from '../services/topics';
 import { completeTopic } from '../services/progress';
 import { getContentSource } from '../services/_contentSource';
@@ -18,6 +19,7 @@ function LessonPage() {
   const contentSource = getContentSource();
   const [isStarted, setIsStarted] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
+  const [isReviewing, setIsReviewing] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(60);
   const [topicRow, setTopicRow] = useState(null);
   const [topicLoading, setTopicLoading] = useState(true);
@@ -64,6 +66,7 @@ function LessonPage() {
     if (!isStarted) {
       setTimeRemaining(totalSeconds);
       setIsCompleted(false);
+      setIsReviewing(false);
       setCompletionResult(null);
       setCompletionError(null);
       submittedCompletionRef.current = false;
@@ -170,6 +173,7 @@ function LessonPage() {
               <div className="tip">👀 Watch closely</div>
               <div className="tip">🖱️ Interact with elements</div>
               <div className="tip">🧠 Have fun learning!</div>
+              <div className="tip">📚 Review after (no timer)</div>
             </motion.div>
 
             <motion.button
@@ -191,6 +195,12 @@ function LessonPage() {
             </motion.button>
           </motion.div>
         </motion.div>
+      ) : isReviewing ? (
+        <LessonReview
+          lesson={lesson}
+          title={topicRow?.title ?? ''}
+          onExit={() => setIsReviewing(false)}
+        />
       ) : isCompleted ? (
         <motion.div 
           className="completion-screen"
@@ -256,6 +266,7 @@ function LessonPage() {
                 onClick={() => {
                   setIsStarted(false);
                   setIsCompleted(false);
+                  setIsReviewing(false);
                   setTimeRemaining(totalSeconds);
                 }}
                 whileHover={{ scale: 1.05 }}
@@ -263,6 +274,16 @@ function LessonPage() {
               >
                 🔄 Try Again
               </motion.button>
+
+              <motion.button
+                className="action-button secondary"
+                onClick={() => setIsReviewing(true)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                📚 Review what you learned
+              </motion.button>
+
               <motion.button
                 className="action-button secondary"
                 onClick={() => navigate('/')}
@@ -270,6 +291,15 @@ function LessonPage() {
                 whileTap={{ scale: 0.95 }}
               >
                 🏠 More Topics
+              </motion.button>
+
+              <motion.button
+                className="action-button secondary"
+                onClick={() => navigate('/me')}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                🧑‍🚀 Your learning summary
               </motion.button>
             </div>
           </motion.div>
