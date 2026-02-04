@@ -8,9 +8,17 @@ function json(res, statusCode, body) {
 }
 
 function normalizeSiteUrl(input) {
-  const raw = String(input ?? '').trim();
+  let raw = String(input ?? '').trim();
   if (!raw) return null;
-  const withScheme = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+
+  // Fix common env-var typos like `https;//example.com` or `https:;//example.com`
+  raw = raw.replace(/^https?;\/\//i, 'https://');
+  raw = raw.replace(/^https?:;\/\//i, 'https://');
+  raw = raw.replace(/^http;\/\//i, 'http://');
+  raw = raw.replace(/^https?:\/\/\//i, (m) => m.slice(0, 8)); // collapse `https:////` -> `https://`
+
+  const hasScheme = /^[a-z][a-z0-9+.-]*:\/\//i.test(raw);
+  const withScheme = hasScheme ? raw : `https://${raw}`;
   return withScheme.replace(/\/+$/, '');
 }
 
@@ -66,7 +74,7 @@ export default async function handler(req, res) {
   const inferredSiteUrl = forwardedHost
     ? `${forwardedProto || 'https'}://${forwardedHost}`
     : req.headers.origin;
-  const siteUrl = normalizeSiteUrl(process.env.SITE_URL) || normalizeSiteUrl(inferredSiteUrl);
+  const siteUrl = normalizeSiteUrl(inferredSiteUrl) || normalizeSiteUrl(process.env.SITE_URL);
   if (!siteUrl) return json(res, 500, { error: 'Missing SITE_URL' });
 
   const stripe = process.env.STRIPE_API_VERSION
@@ -84,8 +92,8 @@ export default async function handler(req, res) {
       mode: 'subscription',
       allow_promotion_codes: true,
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${siteUrl}/pricing?checkout=success`,
-      cancel_url: `${siteUrl}/pricing?checkout=cancel`,
+      success_url: new URL('/pricing?checkout=success', siteUrl).toString(),
+      cancel_url: new URL('/pricing?checkout=cancel', siteUrl).toString(),
       client_reference_id: user.id,
       customer_email: user.email || undefined,
       metadata: {

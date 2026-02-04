@@ -48,13 +48,20 @@ export async function handler(event) {
   }
 
   const normalizeSiteUrl = (input) => {
-    const raw = String(input || '').trim();
+    let raw = String(input || '').trim();
     if (!raw) return null;
-    const withScheme = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
+
+    raw = raw.replace(/^https?;\/\//i, 'https://');
+    raw = raw.replace(/^https?:;\/\//i, 'https://');
+    raw = raw.replace(/^http;\/\//i, 'http://');
+    raw = raw.replace(/^https?:\/\/\//i, (m) => m.slice(0, 8));
+
+    const hasScheme = /^[a-z][a-z0-9+.-]*:\/\//i.test(raw);
+    const withScheme = hasScheme ? raw : `https://${raw}`;
     return withScheme.replace(/\/+$/, '');
   };
 
-  const siteUrl = normalizeSiteUrl(process.env.SITE_URL) || normalizeSiteUrl(event.headers?.origin);
+    const siteUrl = normalizeSiteUrl(event.headers?.origin) || normalizeSiteUrl(process.env.SITE_URL);
   if (!siteUrl) return { statusCode: 500, body: JSON.stringify({ error: 'Missing SITE_URL' }) };
 
   const stripe = process.env.STRIPE_API_VERSION
@@ -72,8 +79,8 @@ export async function handler(event) {
       mode: 'subscription',
       allow_promotion_codes: true,
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${siteUrl}/pricing?checkout=success`,
-      cancel_url: `${siteUrl}/pricing?checkout=cancel`,
+      success_url: new URL('/pricing?checkout=success', siteUrl).toString(),
+      cancel_url: new URL('/pricing?checkout=cancel', siteUrl).toString(),
       client_reference_id: user.id,
       customer_email: user.email || undefined,
       metadata: { user_id: user.id },

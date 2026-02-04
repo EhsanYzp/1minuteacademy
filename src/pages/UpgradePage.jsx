@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Header from '../components/Header';
 import { useAuth } from '../context/AuthContext';
 import { formatTierLabel, getCurrentTier } from '../services/entitlements';
@@ -43,6 +43,7 @@ export default function UpgradePage() {
   const [busy, setBusy] = useState(null); // 'month' | 'year' | null
   const [banner, setBanner] = useState(null); // 'success' | 'cancel' | 'error' | null
   const [bannerText, setBannerText] = useState('');
+  const activationStartedRef = useRef(false);
 
   const checkoutState = useMemo(() => {
     try {
@@ -54,16 +55,56 @@ export default function UpgradePage() {
 
   useEffect(() => {
     if (checkoutState === 'success') {
+      if (activationStartedRef.current) return;
+      activationStartedRef.current = true;
+
       setBanner('success');
-      setBannerText('Payment received — activating Pro…');
-      refreshSession()
-        .then(() => setBannerText('Pro is active. Enjoy!'))
-        .catch(() => setBannerText('Payment received. If Pro doesn’t show yet, refresh in a few seconds.'));
+
+      // If the user was redirected to a different origin (or storage was cleared),
+      // they’ll appear logged out. In that case, we can’t refresh the session.
+      if (!user) {
+        setBannerText('Payment received. Please sign in again to activate Pro on your account.');
+        return;
+      }
+
+      let canceled = false;
+      const startedAt = Date.now();
+      const maxMs = 30_000;
+
+      async function poll() {
+        const elapsed = Date.now() - startedAt;
+        const remaining = Math.max(0, Math.ceil((maxMs - elapsed) / 1000));
+        if (!canceled) setBannerText(`Payment received — activating Pro… (${remaining}s)`);
+
+        try {
+          const data = await refreshSession();
+          const nextUser = data?.session?.user;
+          const nextTier = getCurrentTier(nextUser);
+          if (!canceled && nextTier === 'pro') {
+            setBannerText('Pro is active. Enjoy!');
+            return;
+          }
+        } catch {
+          // Ignore and keep polling; user can always sign back in.
+        }
+
+        if (Date.now() - startedAt >= maxMs) {
+          if (!canceled) setBannerText('Payment received. Pro may still be activating — try Refresh, or check that the Stripe webhook is configured.');
+          return;
+        }
+
+        setTimeout(poll, 2500);
+      }
+
+      poll();
+      return () => {
+        canceled = true;
+      };
     } else if (checkoutState === 'cancel') {
       setBanner('cancel');
       setBannerText('Checkout canceled. No charge was made.');
     }
-  }, [checkoutState, refreshSession]);
+  }, [checkoutState, refreshSession, user]);
 
   async function onCheckout(interval) {
     if (!user) {
@@ -270,7 +311,12 @@ export default function UpgradePage() {
           {banner && (
             <div className={`upgrade-banner ${banner}`} role="status">
               <div className="upgrade-banner-text">{bannerText}</div>
-              {banner === 'success' && tier !== 'pro' && (
+              {banner === 'success' && !user && (
+                <Link className="upgrade-banner-btn" to="/login">
+                  Sign in
+                </Link>
+              )}
+              {banner === 'success' && user && tier !== 'pro' && (
                 <button className="upgrade-banner-btn" type="button" onClick={() => refreshSession()}>
                   Refresh
                 </button>
