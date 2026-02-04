@@ -34,6 +34,39 @@ npm run dev
 npm run build
 ```
 
+### Supabase Setup (Required for Lessons + XP/Streak)
+
+1. Create a Supabase project
+2. In Supabase SQL Editor, run the schema in `supabase/001_init.sql`
+3. Create a `.env` file (Vite) using `.env.example` and fill:
+
+```bash
+VITE_SUPABASE_URL=...
+VITE_SUPABASE_ANON_KEY=...
+```
+
+4. Run `npm run dev`
+
+Notes:
+- The `/lesson/:topicId` route requires authentication (email/password or magic link).
+- Topics are loaded from the `topics` table; the seeded `blockchain` topic is included in the SQL.
+
+## 🧩 Scaling to Thousands of Modules
+
+This project scales by treating each module/topic as **data**, not code.
+
+- Topic content lives in Supabase: `public.topics.lesson` (JSON)
+- The frontend renders lessons via a small set of reusable “step types” in `src/engine/stepTypes/`
+- Optional local authoring lives in `content/topics/**` and can be validated/synced in bulk
+
+See: `docs/architecture.md` for the full platform layout.
+
+### Content tooling
+
+- Validate topic JSON: `npm run content:validate`
+- Bulk sync to Supabase: `npm run content:sync`
+	- Requires `SUPABASE_SERVICE_ROLE_KEY` in your local env (scripts only; never ship to browser)
+
 ## 📚 Available Modules
 
 ### Currently Available:
@@ -60,6 +93,7 @@ The app uses a custom design system with:
 - **Framer Motion** - Animations
 - **React Router** - Navigation
 - **CSS Modules** - Styling
+- **Supabase (Auth + Postgres + RLS + RPC)** - Accounts, topics, XP/streak/progress
 
 ## 📁 Project Structure
 
@@ -69,13 +103,18 @@ src/
 │   ├── Header.jsx
 │   ├── SubjectCard.jsx
 │   └── Timer.jsx
+│   └── auth/        # Route guards
 ├── pages/          # Page components
 │   ├── Home.jsx
 │   ├── TopicPage.jsx
 │   └── LessonPage.jsx
-├── modules/        # Learning module content
-│   └── BlockchainLesson.jsx
+├── context/        # Auth session provider
+├── services/       # Supabase queries + progress RPC
+├── engine/         # JSON-driven lesson renderer
 └── App.jsx         # Main app component
+
+supabase/
+└── 001_init.sql     # Tables, RLS, RPC + seed content
 ```
 
 ## 🎯 How It Works
@@ -87,11 +126,11 @@ src/
 
 ## 🤝 Contributing
 
-Contributions are welcome! To add a new learning module:
+Contributions are welcome! To add a new topic:
 
-1. Create a new component in `src/modules/`
-2. Add the topic data to the home page
-3. Register the component in `LessonPage.jsx`
+1. Insert a row into `topics` (see the seeded `blockchain` example)
+2. Provide a `lesson` JSON with `totalSeconds`, `xp`, and `steps`
+3. Reuse existing step types (`intro`, `tapReveal`, `buildChain`, `summary`) or add new step components under `src/engine/steps/`
 
 ## 📝 License
 

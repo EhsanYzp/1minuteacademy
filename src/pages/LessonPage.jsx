@@ -1,23 +1,32 @@
-import { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import { useParams, useNavigate } from 'react-router-dom';
 import Timer from '../components/Timer';
-import BlockchainLesson from '../modules/BlockchainLesson';
+import LessonRenderer from '../engine/LessonRenderer';
+import { getTopic } from '../services/topics';
+import { completeTopic } from '../services/progress';
 import './LessonPage.css';
 
-const lessonComponents = {
-  blockchain: BlockchainLesson,
-};
+function getLessonDefaults() {
+  return { totalSeconds: 60, xp: 50, steps: [] };
+}
 
 function LessonPage() {
   const { topicId } = useParams();
   const navigate = useNavigate();
   const [isStarted, setIsStarted] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(60);
+  const [topicRow, setTopicRow] = useState(null);
+  const [topicLoading, setTopicLoading] = useState(true);
+  const [topicError, setTopicError] = useState(null);
+  const [completionResult, setCompletionResult] = useState(null);
+  const [completionError, setCompletionError] = useState(null);
+  const [submittedCompletion, setSubmittedCompletion] = useState(false);
 
-  const LessonComponent = lessonComponents[topicId];
+  const lesson = useMemo(() => topicRow?.lesson ?? getLessonDefaults(), [topicRow]);
+  const totalSeconds = useMemo(() => Number(lesson?.totalSeconds ?? 60), [lesson]);
+  const xpAward = useMemo(() => Number(lesson?.xp ?? 50), [lesson]);
 
   const handleComplete = useCallback(() => {
     setIsCompleted(true);
@@ -26,6 +35,37 @@ function LessonPage() {
   const handleTimeUp = useCallback(() => {
     setIsCompleted(true);
   }, []);
+
+  useEffect(() => {
+    let mounted = true;
+    async function load() {
+      try {
+        setTopicLoading(true);
+        setTopicError(null);
+        const row = await getTopic(topicId);
+        if (mounted) setTopicRow(row);
+      } catch (e) {
+        if (mounted) setTopicError(e);
+      } finally {
+        if (mounted) setTopicLoading(false);
+      }
+    }
+
+    load();
+    return () => {
+      mounted = false;
+    };
+  }, [topicId]);
+
+  useEffect(() => {
+    if (!isStarted) {
+      setTimeRemaining(totalSeconds);
+      setIsCompleted(false);
+      setCompletionResult(null);
+      setCompletionError(null);
+      setSubmittedCompletion(false);
+    }
+  }, [totalSeconds, isStarted]);
 
   useEffect(() => {
     if (isStarted && !isCompleted && timeRemaining > 0) {
@@ -43,15 +83,49 @@ function LessonPage() {
     }
   }, [isStarted, isCompleted, timeRemaining, handleTimeUp]);
 
-  // Calculate progress based on time elapsed
-  const progress = ((60 - timeRemaining) / 60) * 100;
+  useEffect(() => {
+    if (!isStarted || !isCompleted) return;
+    if (submittedCompletion) return;
+    if (!topicRow) return;
 
-  if (!LessonComponent) {
+    let mounted = true;
+    async function submit() {
+      try {
+        setSubmittedCompletion(true);
+        setCompletionError(null);
+        const result = await completeTopic({ topicId, xp: xpAward, seconds: totalSeconds });
+        if (mounted) setCompletionResult(result);
+      } catch (e) {
+        if (mounted) setCompletionError(e);
+      }
+    }
+
+    submit();
+    return () => {
+      mounted = false;
+    };
+  }, [isStarted, isCompleted, submittedCompletion, topicRow, topicId, xpAward, totalSeconds]);
+
+  // Calculate progress based on time elapsed
+  const progress = totalSeconds > 0 ? ((totalSeconds - timeRemaining) / totalSeconds) * 100 : 0;
+
+  if (topicError) {
     return (
       <div className="lesson-page">
         <div className="lesson-error">
-          <h2>🚧 Lesson not found!</h2>
+          <h2>⚠️ Couldn’t load lesson</h2>
+          <p style={{ opacity: 0.8 }}>Make sure Supabase is configured and the topic exists.</p>
           <button onClick={() => navigate('/')}>Go Home</button>
+        </div>
+      </div>
+    );
+  }
+
+  if (topicLoading) {
+    return (
+      <div className="lesson-page">
+        <div className="lesson-error">
+          <h2>Loading…</h2>
         </div>
       </div>
     );
@@ -131,18 +205,24 @@ function LessonPage() {
               🎉
             </motion.div>
             <h1>Congratulations!</h1>
-            <p>You just learned about Blockchain in 60 seconds!</p>
+            <p>You just learned about {topicRow?.title ?? 'this topic'} in {totalSeconds} seconds!</p>
             
             <div className="completion-stats">
               <div className="stat">
-                <span className="stat-value">+50</span>
+                <span className="stat-value">+{xpAward}</span>
                 <span className="stat-label">XP Earned</span>
               </div>
               <div className="stat">
-                <span className="stat-value">🔥</span>
-                <span className="stat-label">Streak!</span>
+                <span className="stat-value">🔥 {completionResult?.streak ?? '—'}</span>
+                <span className="stat-label">Streak</span>
               </div>
             </div>
+
+            {completionError && (
+              <div className="lesson-error" style={{ marginTop: 12 }}>
+                <p style={{ margin: 0 }}>Couldn’t save progress.</p>
+              </div>
+            )}
 
             <div className="completion-actions">
               <motion.button
@@ -150,8 +230,7 @@ function LessonPage() {
                 onClick={() => {
                   setIsStarted(false);
                   setIsCompleted(false);
-                  setTimeRemaining(60);
-                  setCurrentStep(0);
+                  setTimeRemaining(totalSeconds);
                 }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -217,12 +296,7 @@ function LessonPage() {
           </div>
 
           <div className="lesson-content">
-            <LessonComponent 
-              currentStep={currentStep}
-              setCurrentStep={setCurrentStep}
-              timeRemaining={timeRemaining}
-              onComplete={handleComplete}
-            />
+            <LessonRenderer lesson={lesson} timeRemaining={timeRemaining} onComplete={handleComplete} />
           </div>
         </div>
       )}

@@ -1,32 +1,94 @@
 import { motion } from 'framer-motion';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
 import Header from '../components/Header';
+import { getTopic } from '../services/topics';
 import './TopicPage.css';
 
-const topicsData = {
+const fallbackTopics = {
   blockchain: {
+    id: 'blockchain',
     title: 'What is Blockchain?',
     emoji: '🔗',
     color: '#4ECDC4',
-    description: 'Discover how blockchain technology works and why it\'s revolutionizing the digital world!',
-    duration: '60 seconds',
+    description: 'Connect Supabase to load topics from the database.',
+    lesson: { totalSeconds: 60, steps: [] },
     difficulty: 'Beginner',
-    learningPoints: [
-      '🧱 What blocks actually are',
-      '⛓️ How chains connect them',
-      '🔒 Why it\'s super secure',
-      '🌐 Real-world examples'
-    ],
-    funFact: 'The first blockchain was conceptualized in 2008 by Satoshi Nakamoto!'
-  }
+  },
 };
+
+function normalizeTopic(topicRow, topicId) {
+  const lesson = topicRow?.lesson ?? {};
+  const steps = Array.isArray(lesson?.steps) ? lesson.steps : [];
+  const learningPoints = steps
+    .slice(0, 4)
+    .map((s) => (typeof s.title === 'string' ? s.title : null))
+    .filter(Boolean);
+
+  return {
+    id: topicRow?.id ?? topicId,
+    title: topicRow?.title ?? 'Topic',
+    emoji: topicRow?.emoji ?? '🎯',
+    color: topicRow?.color ?? '#4ECDC4',
+    description: topicRow?.description ?? 'No description yet.',
+    duration: `${Number(lesson?.totalSeconds ?? 60)} seconds`,
+    difficulty: topicRow?.difficulty ?? 'Beginner',
+    learningPoints:
+      learningPoints.length > 0
+        ? learningPoints
+        : ['⏱️ Designed to fit in 60 seconds', '🎮 Interactive, game-like steps', '🏁 Finish and earn XP'],
+    funFact:
+      typeof lesson?.version === 'string'
+        ? `Lesson version: ${lesson.version}`
+        : 'Each lesson here is tuned to fit in one minute!',
+  };
+}
 
 function TopicPage() {
   const { topicId } = useParams();
   const navigate = useNavigate();
-  const topic = topicsData[topicId];
+  const [topicRow, setTopicRow] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  if (!topic) {
+  useEffect(() => {
+    let mounted = true;
+    async function load() {
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await getTopic(topicId);
+        if (mounted) setTopicRow(data);
+      } catch (e) {
+        if (mounted) setError(e);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    }
+
+    load();
+    return () => {
+      mounted = false;
+    };
+  }, [topicId]);
+
+  const topic = useMemo(() => {
+    const row = topicRow ?? fallbackTopics[topicId];
+    return row ? normalizeTopic(row, topicId) : null;
+  }, [topicRow, topicId]);
+
+  if (!topic && loading) {
+    return (
+      <div className="topic-page">
+        <Header />
+        <div className="topic-not-found">
+          <h2>Loading…</h2>
+        </div>
+      </div>
+    );
+  }
+
+  if (!topic && !loading) {
     return (
       <div className="topic-page">
         <Header />
@@ -67,6 +129,18 @@ function TopicPage() {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.2, type: 'spring' }}
           >
+            {error && (
+              <div className="topic-not-found" style={{ marginBottom: 12 }}>
+                <h2 style={{ margin: 0 }}>⚠️ Couldn’t load from Supabase</h2>
+                <div style={{ opacity: 0.8 }}>Showing fallback content.</div>
+              </div>
+            )}
+            {loading && (
+              <div className="topic-not-found" style={{ marginBottom: 12 }}>
+                <h2 style={{ margin: 0 }}>Loading…</h2>
+              </div>
+            )}
+
             <motion.div 
               className="topic-emoji"
               animate={{ 

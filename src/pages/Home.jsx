@@ -1,44 +1,18 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import SubjectCard from '../components/SubjectCard';
+import { useEffect, useMemo, useState } from 'react';
+import { listTopics } from '../services/topics';
 import './Home.css';
 
-const subjects = [
+const fallbackSubjects = [
   {
     id: 'blockchain',
     title: 'What is Blockchain?',
     emoji: '🔗',
     color: '#4ECDC4',
-    description: 'Learn how blockchain technology works in 60 seconds!',
+    description: 'Connect Supabase to load topics from the database.',
     difficulty: 'Beginner',
-  },
-  {
-    id: 'ai',
-    title: 'What is AI?',
-    emoji: '🤖',
-    color: '#A06CD5',
-    description: 'Understand artificial intelligence basics quickly!',
-    difficulty: 'Beginner',
-    comingSoon: true,
-  },
-  {
-    id: 'quantum',
-    title: 'Quantum Computing',
-    emoji: '⚛️',
-    color: '#FF6B6B',
-    description: 'Quantum computers explained simply!',
-    difficulty: 'Intermediate',
-    comingSoon: true,
-  },
-  {
-    id: 'crypto',
-    title: 'Cryptocurrency',
-    emoji: '💰',
-    color: '#FF9F43',
-    description: 'Digital money made easy to understand!',
-    difficulty: 'Beginner',
-    comingSoon: true,
   },
 ];
 
@@ -65,6 +39,34 @@ const itemVariants = {
 };
 
 function Home() {
+  const [topics, setTopics] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let mounted = true;
+    async function load() {
+      try {
+        setLoading(true);
+        const data = await listTopics();
+        if (mounted) setTopics(data);
+      } catch (e) {
+        if (mounted) setError(e);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    }
+    load();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const subjects = useMemo(() => {
+    if (topics.length > 0) return topics;
+    return fallbackSubjects;
+  }, [topics]);
+
   return (
     <motion.div
       className="home"
@@ -107,6 +109,18 @@ function Home() {
           <motion.h2 className="section-title" variants={itemVariants}>
             🎯 Choose Your Adventure
           </motion.h2>
+
+          {error && (
+            <motion.div className="home-error" variants={itemVariants}>
+              <strong>Couldn’t load topics from Supabase.</strong>
+              <div className="home-error-sub">Set env vars from `.env.example` and run Supabase SQL in `supabase/001_init.sql`.</div>
+            </motion.div>
+          )}
+          {loading && (
+            <motion.div className="home-loading" variants={itemVariants}>
+              Loading topics…
+            </motion.div>
+          )}
           
           <div className="subjects-grid">
             {subjects.map((subject, index) => (
