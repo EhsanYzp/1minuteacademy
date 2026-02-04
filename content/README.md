@@ -33,3 +33,7 @@ Notes:
 
 - The app itself uses the **anon key** and only reads published topics.
 - The sync script uses **service role** and must never be bundled into the frontend.
+
+After syncing, verify:
+- Landing page shows your published topics.
+- After completing a lesson, `/me` and the landing page should reflect **✅ Completed**.

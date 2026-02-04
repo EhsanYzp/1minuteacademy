@@ -39,6 +39,21 @@ When you add thousands of modules, you mostly add JSON files/rows — the engine
   - `public.user_topic_progress` (completed count, best seconds)
 - Completion is written atomically via RPC `public.complete_topic(...)`
 
+#### User experience surfaces
+
+- Profile route: `/me`
+  - Shows XP/streak + per-topic progress.
+- Landing page topic cards
+  - Shows a **✅ Completed** badge when `user_topic_progress.completed_count > 0` for that topic.
+
+#### Progress data sources
+
+- Supabase mode (`npm run dev` / production)
+  - Writes: RPC `public.complete_topic(...)`
+  - Reads: `public.user_stats` + `public.user_topic_progress` (joined with `public.topics`)
+- Local Preview mode (`npm run dev:local`)
+  - Writes/reads progress from browser storage (localStorage)
+
 ## Suggested repo layout
 
 - `src/`

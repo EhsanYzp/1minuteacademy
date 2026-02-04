@@ -67,6 +67,8 @@ In local preview:
 - `/lesson/:topicId` does not require login
 - Header shows a `LOCAL PREVIEW` badge
 
+Tip: after completing a lesson, check `/me` (Profile) and the landing page badges to verify progress behavior.
+
 ### Publish to Supabase (production)
 
 1. Ensure JSON validates (`npm run content:validate`)

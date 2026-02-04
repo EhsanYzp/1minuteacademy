@@ -13,6 +13,7 @@
 - **🎨 Beautiful Design** - Warm, playful UI with smooth animations
 - **📱 Responsive** - Works on all devices
 - **🎯 Interactive Content** - Click, tap, and explore to learn
+- **👤 Accounts + Profile** - Sign in, view your profile, and track XP/progress
 
 ## 🚀 Getting Started
 
@@ -51,6 +52,11 @@ Notes:
 - The `/lesson/:topicId` route requires authentication (email/password or magic link).
 - Topics are loaded from the `topics` table; the seeded `blockchain` topic is included in the SQL.
 
+### Profile + progress
+
+- After signing in, open `/me` (or click **Profile** in the header).
+- Landing page shows a **✅ Completed** badge for topics you’ve completed.
+
 ## 🧩 Scaling to Thousands of Modules
 
 This project scales by treating each module/topic as **data**, not code.
@@ -68,6 +74,11 @@ See: `docs/content-generation.md` for the content playbook.
 - Bulk sync to Supabase: `npm run content:sync`
 	- Requires `SUPABASE_SERVICE_ROLE_KEY` in `.env.local` (scripts only; never ship to browser)
 	- The sync script loads `.env.local` automatically
+
+### Troubleshooting progress not saving
+
+- If lesson completion shows an RPC error, re-run the SQL in [supabase/001_init.sql](supabase/001_init.sql) to update `public.complete_topic(...)`.
+- Ensure you are running `npm run dev` (Supabase mode), not `npm run dev:local` (Local Preview).
 
 ### Local Preview (no Supabase push while iterating)
 
