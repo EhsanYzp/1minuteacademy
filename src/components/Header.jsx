@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { getContentSource } from '../services/_contentSource';
+import { formatTierLabel, getCurrentTier, setDevTierOverride } from '../services/entitlements';
 import './Header.css';
 
 function Header() {
   const { user, isSupabaseConfigured, signOut } = useAuth();
   const contentSource = getContentSource();
   const [busy, setBusy] = useState(false);
+  const tier = getCurrentTier(user);
 
   async function onSignOut() {
     if (busy) return;
@@ -48,6 +50,28 @@ function Header() {
         <div className="env-badge" title="Topics come from content/topics/** (no Supabase)">
           LOCAL PREVIEW
         </div>
+      )}
+
+      {import.meta.env.DEV && (
+        <label
+          className="dev-tier"
+          title="Dev-only: switch tiers without Stripe. Stored in localStorage."
+        >
+          <span className="dev-tier-label">Tier</span>
+          <select
+            className="dev-tier-select"
+            value={tier}
+            onChange={(e) => {
+              setDevTierOverride(e.target.value);
+              window.location.reload();
+            }}
+            aria-label="Developer tier override"
+          >
+            <option value="guest">{formatTierLabel('guest')}</option>
+            <option value="free">{formatTierLabel('free')}</option>
+            <option value="pro">{formatTierLabel('pro')}</option>
+          </select>
+        </label>
       )}
       
       <nav className="nav">

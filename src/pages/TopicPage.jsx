@@ -6,6 +6,7 @@ import { getTopic } from '../services/topics';
 import { listUserTopicProgress } from '../services/progress';
 import { getContentSource } from '../services/_contentSource';
 import { useAuth } from '../context/AuthContext';
+import { canReview, canStartTopic, formatTierLabel, getCurrentTier, isBeginnerTopic } from '../services/entitlements';
 import './TopicPage.css';
 
 const fallbackTopics = {
@@ -52,6 +53,7 @@ function TopicPage() {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const contentSource = getContentSource();
+  const tier = getCurrentTier(user);
   const [topicRow, setTopicRow] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -110,6 +112,9 @@ function TopicPage() {
   }, [topicRow, topicId]);
 
   const isCompleted = Number(completedCount) > 0;
+  const beginner = useMemo(() => isBeginnerTopic(topicRow ?? fallbackTopics[topicId]), [topicRow, topicId]);
+  const canStart = useMemo(() => canStartTopic({ tier, topicRow: topicRow ?? fallbackTopics[topicId] }), [tier, topicRow, topicId]);
+  const canUseReview = canReview(tier);
 
   if (!topic && loading) {
     return (
@@ -235,7 +240,7 @@ function TopicPage() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            {isCompleted ? (
+            {isCompleted && canUseReview ? (
               <div className="topic-actions">
                 <motion.button
                   className="topic-action-btn primary"
@@ -255,7 +260,7 @@ function TopicPage() {
                   🔄 Restart from scratch
                 </motion.button>
               </div>
-            ) : (
+            ) : canStart ? (
               <motion.button
                 className="start-button"
                 onClick={() => navigate(`/lesson/${topicId}`)}
@@ -276,13 +281,39 @@ function TopicPage() {
                 }}
               >
                 <span className="button-icon">🚀</span>
-                <span className="button-text">Start Learning!</span>
+                <span className="button-text">{isCompleted ? 'Restart Lesson' : 'Start Learning!'}</span>
                 <span className="button-timer">60s</span>
               </motion.button>
+            ) : (
+              <div className="topic-actions">
+                <motion.button
+                  className="topic-action-btn primary"
+                  onClick={() => navigate('/upgrade')}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
+                >
+                  🔒 Upgrade to start
+                </motion.button>
+
+                {!user && (
+                  <motion.button
+                    className="topic-action-btn secondary"
+                    onClick={() => navigate('/login')}
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.96 }}
+                  >
+                    👤 Create free account
+                  </motion.button>
+                )}
+              </div>
             )}
             
             <p className="start-hint">
-              {isCompleted ? '' : 'Ready? Click above to begin your 60-second adventure! 🎮'}
+              {!canStart
+                ? `${beginner ? '' : 'This lesson is Pro-only. '}Your plan: ${formatTierLabel(tier)}.`
+                : isCompleted && !canUseReview
+                  ? 'Review mode is Pro-only.'
+                  : 'Ready? Click above to begin your 60-second adventure! 🎮'}
             </p>
           </motion.div>
         </div>

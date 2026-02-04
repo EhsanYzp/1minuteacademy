@@ -3,6 +3,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import LessonReview from '../engine/LessonReview';
 import { getTopic } from '../services/topics';
+import { useAuth } from '../context/AuthContext';
+import { canReview, formatTierLabel, getCurrentTier } from '../services/entitlements';
 import './ReviewPage.css';
 
 function getLessonDefaults() {
@@ -12,6 +14,9 @@ function getLessonDefaults() {
 export default function ReviewPage() {
   const { topicId } = useParams();
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const tier = getCurrentTier(user);
+  const allowed = canReview(tier);
 
   const [topicRow, setTopicRow] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -33,13 +38,28 @@ export default function ReviewPage() {
       }
     }
 
-    load();
+    if (allowed) load();
     return () => {
       mounted = false;
     };
-  }, [topicId]);
+  }, [topicId, allowed]);
 
   const lesson = useMemo(() => topicRow?.lesson ?? getLessonDefaults(), [topicRow]);
+
+  if (!allowed) {
+    return (
+      <div className="review-page">
+        <div className="review-error">
+          <h2>🔒 Review mode is Pro-only</h2>
+          <p style={{ opacity: 0.8 }}>Your plan: <strong>{formatTierLabel(tier)}</strong></p>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
+            <button type="button" onClick={() => navigate('/upgrade')}>Upgrade</button>
+            <button type="button" onClick={() => navigate(-1)}>← Back</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (

@@ -7,16 +7,30 @@ import LessonReview from '../engine/LessonReview';
 import { getTopic } from '../services/topics';
 import { completeTopic } from '../services/progress';
 import { getContentSource } from '../services/_contentSource';
+import { useAuth } from '../context/AuthContext';
+import { canReview, canSeeTakeaways, canStartTopic, canTrackProgress, formatTierLabel, getCurrentTier } from '../services/entitlements';
 import './LessonPage.css';
 
 function getLessonDefaults() {
   return { totalSeconds: 60, xp: 50, steps: [] };
 }
 
+function getSummaryPointsFromLesson(lesson) {
+  const steps = Array.isArray(lesson?.steps) ? lesson.steps : [];
+  const summary = steps.find((s) => s?.type === 'summary') ?? null;
+  const points = Array.isArray(summary?.points) ? summary.points : [];
+  return points.filter((p) => typeof p === 'string' && p.trim().length > 0);
+}
+
 function LessonPage() {
   const { topicId } = useParams();
   const navigate = useNavigate();
   const contentSource = getContentSource();
+  const { user } = useAuth();
+  const tier = getCurrentTier(user);
+  const canUseReview = canReview(tier);
+  const canSaveProgress = canTrackProgress(tier);
+  const canShowTakeaways = canSeeTakeaways(tier);
   const [isStarted, setIsStarted] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isReviewing, setIsReviewing] = useState(false);
@@ -32,6 +46,9 @@ function LessonPage() {
   const lesson = useMemo(() => topicRow?.lesson ?? getLessonDefaults(), [topicRow]);
   const totalSeconds = useMemo(() => Number(lesson?.totalSeconds ?? 60), [lesson]);
   const xpAward = useMemo(() => Number(lesson?.xp ?? 50), [lesson]);
+  const summaryPoints = useMemo(() => getSummaryPointsFromLesson(lesson), [lesson]);
+
+  const canStart = useMemo(() => canStartTopic({ tier, topicRow }), [tier, topicRow]);
 
   const handleComplete = useCallback(() => {
     setIsCompleted(true);
@@ -94,6 +111,8 @@ function LessonPage() {
     if (!isStarted || !isCompleted) return;
     if (!topicRow) return;
 
+    if (!canSaveProgress) return;
+
     if (submittedCompletionRef.current) return;
     submittedCompletionRef.current = true;
 
@@ -137,6 +156,23 @@ function LessonPage() {
       <div className="lesson-page">
         <div className="lesson-error">
           <h2>Loading…</h2>
+        </div>
+      </div>
+    );
+  }
+
+  if (!canStart) {
+    return (
+      <div className="lesson-page">
+        <div className="lesson-error">
+          <h2>🔒 Pro-only lesson</h2>
+          <p style={{ opacity: 0.85, maxWidth: 520 }}>
+            Your plan: <strong>{formatTierLabel(tier)}</strong>. Upgrade to Pro to start this module.
+          </p>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
+            <button onClick={() => navigate('/upgrade')}>Upgrade</button>
+            <button onClick={() => navigate(`/topic/${topicId}`)}>Back to topic</button>
+          </div>
         </div>
       </div>
     );
@@ -237,7 +273,9 @@ function LessonPage() {
             </div>
 
             <div className="lesson-error" style={{ marginTop: 12 }}>
-              {submittingCompletion ? (
+              {!canSaveProgress ? (
+                <p style={{ margin: 0 }}>✅ Completed. Sign in to track progress.</p>
+              ) : submittingCompletion ? (
                 <p style={{ margin: 0 }}>Saving your progress…</p>
               ) : completionError ? (
                 <>
@@ -260,6 +298,26 @@ function LessonPage() {
               )}
             </div>
 
+            {summaryPoints.length > 0 && (
+              <div className="lesson-error" style={{ marginTop: 12, textAlign: 'left', maxWidth: 520 }}>
+                <p style={{ margin: 0, fontWeight: 900 }}>Key takeaways</p>
+                <ul style={{ margin: '8px 0 0', paddingLeft: 18, opacity: 0.9 }}>
+                  {summaryPoints.slice(0, 5).map((pt, idx) => (
+                    <li key={idx} style={{ margin: '6px 0' }}>
+                      {pt}
+                    </li>
+                  ))}
+                </ul>
+
+                {!canShowTakeaways && (
+                  <div style={{ marginTop: 10, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                    <button onClick={() => navigate('/upgrade')}>Unlock saved takeaways</button>
+                    {!user && <button onClick={() => navigate('/login')}>Create free account</button>}
+                  </div>
+                )}
+              </div>
+            )}
+
             <div className="completion-actions">
               <motion.button
                 className="action-button primary"
@@ -275,14 +333,25 @@ function LessonPage() {
                 🔄 Try Again
               </motion.button>
 
-              <motion.button
-                className="action-button secondary"
-                onClick={() => setIsReviewing(true)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                📚 Review what you learned
-              </motion.button>
+              {canUseReview ? (
+                <motion.button
+                  className="action-button secondary"
+                  onClick={() => setIsReviewing(true)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  📚 Review what you learned
+                </motion.button>
+              ) : (
+                <motion.button
+                  className="action-button secondary"
+                  onClick={() => navigate('/upgrade')}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  🔒 Unlock review mode
+                </motion.button>
+              )}
 
               <motion.button
                 className="action-button secondary"

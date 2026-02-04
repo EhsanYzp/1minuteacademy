@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { listTopics, listTopicsByIds } from '../services/topics';
 import { getContentSource } from '../services/_contentSource';
 import { getUserStats, listUserTopicProgress } from '../services/progress';
+import { canReview, canSeeTakeaways, canStartTopic, formatTierLabel, getCurrentTier } from '../services/entitlements';
 import './ProfilePage.css';
 
 function fmtDate(iso) {
@@ -40,6 +41,9 @@ function getLessonTotalSeconds(lesson) {
 export default function ProfilePage() {
   const { user } = useAuth();
   const contentSource = getContentSource();
+  const tier = getCurrentTier(user);
+  const showTakeaways = canSeeTakeaways(tier);
+  const showReview = canReview(tier);
 
   const [stats, setStats] = useState({ xp: 0, streak: 0, last_completed_date: null });
   const [progressRows, setProgressRows] = useState([]);
@@ -71,7 +75,9 @@ export default function ProfilePage() {
           .filter((r) => Number(r.completed_count ?? 0) > 0)
           .map((r) => r.topic_id);
 
-        const withLessons = await listTopicsByIds(completedIds, { includeLesson: true });
+        const withLessons = showTakeaways
+          ? await listTopicsByIds(completedIds, { includeLesson: true })
+          : [];
         if (!mounted) return;
         setTopicsWithLessons(Array.isArray(withLessons) ? withLessons : []);
       } catch (e) {
@@ -86,7 +92,7 @@ export default function ProfilePage() {
     return () => {
       mounted = false;
     };
-  }, [contentSource]);
+  }, [contentSource, showTakeaways]);
 
   const topicById = useMemo(() => {
     const map = new Map();
@@ -238,6 +244,17 @@ export default function ProfilePage() {
             <div className="profile-section-sub">Progress + takeaways in one place.</div>
           </div>
 
+          {!showTakeaways && (
+            <div className="profile-note" style={{ marginBottom: 12 }}>
+              <strong>Free plan</strong>
+              <div>
+                Your current plan is <strong>{formatTierLabel(tier)}</strong>. Upgrade to unlock review mode + saved takeaways.
+                {' '}
+                <Link to="/upgrade">Upgrade</Link>
+              </div>
+            </div>
+          )}
+
           <div className="profile-progress-toolbar">
             <div className="profile-toggle">
               <button
@@ -301,8 +318,8 @@ export default function ProfilePage() {
                         const totalSecs = getLessonTotalSeconds(lesson);
                         const bestSecs = Number(p.bestSeconds);
                         const showBest = Number.isFinite(bestSecs) && Math.round(bestSecs) !== Math.round(totalSecs);
-                        const takeaways = takeawaysCountByTopicId.get(p.topicId) ?? 0;
-                        const points = takeawaysByTopicId.get(p.topicId) ?? [];
+                        const takeaways = showTakeaways ? (takeawaysCountByTopicId.get(p.topicId) ?? 0) : 0;
+                        const points = showTakeaways ? (takeawaysByTopicId.get(p.topicId) ?? []) : [];
                         const completed = Number(p.completed ?? 0) > 0;
 
                         return (
@@ -320,7 +337,11 @@ export default function ProfilePage() {
 
                               <div className="progress-right">
                                 <div className="pill">✅ {p.completed}</div>
-                                {takeaways > 0 && <div className="pill">🧠 {takeaways} takeaways</div>}
+                                {showTakeaways ? (
+                                  takeaways > 0 ? <div className="pill">🧠 {takeaways} takeaways</div> : null
+                                ) : (
+                                  <div className="pill">🔒 takeaways</div>
+                                )}
                                 {showBest && <div className="pill">⏱️ best {fmtSeconds(bestSecs)}</div>}
                                 <div className="pill faint">🕒 {fmtDate(p.lastCompletedAt)}</div>
                               </div>
@@ -329,9 +350,15 @@ export default function ProfilePage() {
                             <div className="progress-expand">
                               {completed && (
                                 <div className="progress-actions">
-                                  <Link className="action-pill" to={`/review/${p.topicId}`}>
-                                    📚 Review
-                                  </Link>
+                                  {showReview ? (
+                                    <Link className="action-pill" to={`/review/${p.topicId}`}>
+                                      📚 Review
+                                    </Link>
+                                  ) : (
+                                    <Link className="action-pill" to="/upgrade">
+                                      🔒 Unlock review
+                                    </Link>
+                                  )}
                                   <Link className="action-pill secondary" to={`/lesson/${p.topicId}`}>
                                     🔄 Restart
                                   </Link>
@@ -339,14 +366,20 @@ export default function ProfilePage() {
                               )}
 
                               {completed ? (
-                                points.length > 0 ? (
+                                showTakeaways ? (
+                                  points.length > 0 ? (
                                   <ul className="progress-takeaways">
                                     {points.slice(0, 6).map((pt, idx) => (
                                       <li key={idx}>{pt}</li>
                                     ))}
                                   </ul>
+                                  ) : (
+                                    <div className="progress-takeaways-empty">No summary points for this topic yet.</div>
+                                  )
                                 ) : (
-                                  <div className="progress-takeaways-empty">No summary points for this topic yet.</div>
+                                  <div className="progress-takeaways-empty">
+                                    🔒 Takeaways are Pro-only. <Link to="/upgrade">Upgrade</Link>
+                                  </div>
                                 )
                               ) : (
                                 <div className="progress-takeaways-empty">Finish this topic to unlock review + takeaways.</div>
@@ -367,8 +400,8 @@ export default function ProfilePage() {
                 const totalSecs = getLessonTotalSeconds(lesson);
                 const bestSecs = Number(p.bestSeconds);
                 const showBest = Number.isFinite(bestSecs) && Math.round(bestSecs) !== Math.round(totalSecs);
-                const takeaways = takeawaysCountByTopicId.get(p.topicId) ?? 0;
-                const points = takeawaysByTopicId.get(p.topicId) ?? [];
+                const takeaways = showTakeaways ? (takeawaysCountByTopicId.get(p.topicId) ?? 0) : 0;
+                const points = showTakeaways ? (takeawaysByTopicId.get(p.topicId) ?? []) : [];
                 const completed = Number(p.completed ?? 0) > 0;
 
                 return (
@@ -386,7 +419,11 @@ export default function ProfilePage() {
 
                       <div className="progress-right">
                         <div className="pill">✅ {p.completed}</div>
-                        {takeaways > 0 && <div className="pill">🧠 {takeaways} takeaways</div>}
+                        {showTakeaways ? (
+                          takeaways > 0 ? <div className="pill">🧠 {takeaways} takeaways</div> : null
+                        ) : (
+                          <div className="pill">🔒 takeaways</div>
+                        )}
                         {showBest && <div className="pill">⏱️ best {fmtSeconds(bestSecs)}</div>}
                         <div className="pill faint">🕒 {fmtDate(p.lastCompletedAt)}</div>
                       </div>
@@ -395,9 +432,15 @@ export default function ProfilePage() {
                     <div className="progress-expand">
                       {completed && (
                         <div className="progress-actions">
-                          <Link className="action-pill" to={`/review/${p.topicId}`}>
-                            📚 Review
-                          </Link>
+                          {showReview ? (
+                            <Link className="action-pill" to={`/review/${p.topicId}`}>
+                              📚 Review
+                            </Link>
+                          ) : (
+                            <Link className="action-pill" to="/upgrade">
+                              🔒 Unlock review
+                            </Link>
+                          )}
                           <Link className="action-pill secondary" to={`/lesson/${p.topicId}`}>
                             🔄 Restart
                           </Link>
@@ -405,14 +448,20 @@ export default function ProfilePage() {
                       )}
 
                       {completed ? (
-                        points.length > 0 ? (
+                        showTakeaways ? (
+                          points.length > 0 ? (
                           <ul className="progress-takeaways">
                             {points.slice(0, 6).map((pt, idx) => (
                               <li key={idx}>{pt}</li>
                             ))}
                           </ul>
+                          ) : (
+                            <div className="progress-takeaways-empty">No summary points for this topic yet.</div>
+                          )
                         ) : (
-                          <div className="progress-takeaways-empty">No summary points for this topic yet.</div>
+                          <div className="progress-takeaways-empty">
+                            🔒 Takeaways are Pro-only. <Link to="/upgrade">Upgrade</Link>
+                          </div>
                         )
                       ) : (
                         <div className="progress-takeaways-empty">Finish this topic to unlock review + takeaways.</div>

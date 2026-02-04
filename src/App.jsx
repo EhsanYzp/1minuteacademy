@@ -5,6 +5,7 @@ import TopicsBrowserPage from './pages/TopicsBrowserPage';
 import TopicPage from './pages/TopicPage';
 import LessonPage from './pages/LessonPage';
 import ReviewPage from './pages/ReviewPage';
+import UpgradePage from './pages/UpgradePage';
 import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
 import { AuthProvider } from './context/AuthContext';
@@ -21,6 +22,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/topics" element={<TopicsBrowserPage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/upgrade" element={<UpgradePage />} />
               <Route
                 path="/me"
                 element={
@@ -30,14 +32,7 @@ function App() {
                 }
               />
               <Route path="/topic/:topicId" element={<TopicPage />} />
-              <Route
-                path="/lesson/:topicId"
-                element={
-                  <ProtectedRoute>
-                    <LessonPage />
-                  </ProtectedRoute>
-                }
-              />
+              <Route path="/lesson/:topicId" element={<LessonPage />} />
               <Route path="/review/:topicId" element={<ReviewPage />} />
             </Routes>
           </AnimatePresence>
