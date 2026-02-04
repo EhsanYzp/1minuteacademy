@@ -7,6 +7,7 @@ import { listTopics, listTopicsByIds } from '../services/topics';
 import { getContentSource } from '../services/_contentSource';
 import { getUserStats, listUserTopicProgress } from '../services/progress';
 import { canReview, canSeeTakeaways, canStartTopic, formatTierLabel, getCurrentTier } from '../services/entitlements';
+import { getSubscriptionStatus, openCustomerPortal } from '../services/billing';
 import './ProfilePage.css';
 
 function fmtDate(iso) {
@@ -49,6 +50,17 @@ function formatPlanForProfile(user, tier) {
   return 'Free (Guest)';
 }
 
+function fmtShortDate(iso) {
+  if (!iso) return '—';
+  try {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return '—';
+    return d.toLocaleDateString();
+  } catch {
+    return '—';
+  }
+}
+
 export default function ProfilePage() {
   const { user, refreshSession, loading: authLoading } = useAuth();
   const location = useLocation();
@@ -78,6 +90,9 @@ export default function ProfilePage() {
   const [error, setError] = useState(null);
   const [progressView, setProgressView] = useState('subjects'); // subjects | recent
   const [progressQuery, setProgressQuery] = useState('');
+  const [subStatus, setSubStatus] = useState(null);
+  const [subLoading, setSubLoading] = useState(false);
+  const [subError, setSubError] = useState(null);
 
   useEffect(() => {
     let mounted = true;
@@ -118,6 +133,38 @@ export default function ProfilePage() {
       mounted = false;
     };
   }, [contentSource, showTakeaways]);
+
+  useEffect(() => {
+    let mounted = true;
+    async function loadSub() {
+      if (contentSource === 'local') return;
+      if (tier !== 'pro') return;
+      try {
+        setSubLoading(true);
+        setSubError(null);
+        const data = await getSubscriptionStatus();
+        if (!mounted) return;
+        setSubStatus(data);
+      } catch (e) {
+        if (!mounted) return;
+        setSubError(e);
+      } finally {
+        if (mounted) setSubLoading(false);
+      }
+    }
+    loadSub();
+    return () => {
+      mounted = false;
+    };
+  }, [contentSource, tier]);
+
+  async function onManageSubscription() {
+    try {
+      await openCustomerPortal({ returnPath: '/me' });
+    } catch (e) {
+      setSubError(e);
+    }
+  }
 
   useEffect(() => {
     if (checkoutState !== 'success') return;
@@ -295,6 +342,34 @@ export default function ProfilePage() {
                   </Link>
                 )}
               </div>
+
+              {tier === 'pro' && (
+                <div className="profile-sub-box">
+                  <div className="profile-sub-head">
+                    <div className="profile-sub-title">Subscription</div>
+                    <button className="profile-sub-btn" type="button" onClick={onManageSubscription}>
+                      Manage subscription
+                    </button>
+                  </div>
+
+                  {subLoading ? (
+                    <div className="profile-sub-row">Loading subscription details…</div>
+                  ) : subError ? (
+                    <div className="profile-sub-row profile-sub-error">{subError.message ?? 'Could not load subscription details.'}</div>
+                  ) : subStatus ? (
+                    <div className="profile-sub-grid">
+                      <div className="profile-sub-item"><span>Status</span><strong>{subStatus.status ?? '—'}</strong></div>
+                      <div className="profile-sub-item"><span>Renews</span><strong>{fmtShortDate(subStatus.current_period_end)}</strong></div>
+                      <div className="profile-sub-item"><span>Started</span><strong>{fmtShortDate(subStatus.created)}</strong></div>
+                      <div className="profile-sub-item"><span>Canceling</span><strong>{subStatus.cancel_at_period_end ? 'Yes' : 'No'}</strong></div>
+                    </div>
+                  ) : (
+                    <div className="profile-sub-row">No subscription details found yet.</div>
+                  )}
+
+                  <div className="profile-sub-foot">Cancel, update card, or see invoices in Stripe Portal.</div>
+                </div>
+              )}
             </div>
           )}
 

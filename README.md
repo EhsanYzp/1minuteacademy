@@ -121,6 +121,8 @@ This repo includes a Stripe Checkout + webhook flow for Pro.
 
 - Create Checkout Session: `POST /api/stripe/create-checkout-session`
 - Stripe Webhook: `POST /api/stripe/webhook`
+- Create Customer Portal Session: `POST /api/stripe/create-portal-session`
+- Subscription status (for UI): `GET /api/stripe/subscription-status`
 
 These endpoints work on:
 
@@ -157,6 +159,16 @@ When Stripe confirms checkout, the webhook updates Supabase Auth user metadata:
 - `user_metadata.plan = "pro"`
 
 The client reads this field to unlock Pro features.
+
+### Cancel / manage subscription
+
+Users manage their subscription via the Stripe Customer Portal (recommended). From **Profile**, Pro users can open the portal to:
+
+- Cancel subscription
+- Update payment method
+- View invoices and renewal dates
+
+In Stripe Dashboard, make sure Customer Portal is enabled and cancellation is allowed.
 
 ## 📚 Available Modules
 

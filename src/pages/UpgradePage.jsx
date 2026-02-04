@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Header from '../components/Header';
 import { useAuth } from '../context/AuthContext';
 import { formatTierLabel, getCurrentTier } from '../services/entitlements';
-import { startProCheckout } from '../services/billing';
+import { openCustomerPortal, startProCheckout } from '../services/billing';
 import './UpgradePage.css';
 
 const DEFAULT_PRICE_MONTH = import.meta.env.VITE_PRICE_MONTH ?? '$7.99';
@@ -137,6 +137,20 @@ export default function UpgradePage() {
     }
   }
 
+  async function onManageSubscription() {
+    if (!user) {
+      setBanner('error');
+      setBannerText('Please sign in to manage your subscription.');
+      return;
+    }
+    try {
+      await openCustomerPortal({ returnPath: '/pricing' });
+    } catch (e) {
+      setBanner('error');
+      setBannerText(e?.message || 'Could not open Stripe portal');
+    }
+  }
+
   const monthPriceNumber = parsePriceNumber(DEFAULT_PRICE_MONTH);
   const yearPriceNumber = parsePriceNumber(DEFAULT_PRICE_YEAR);
   const currencySymbol = getCurrencySymbol(DEFAULT_PRICE_MONTH) || getCurrencySymbol(DEFAULT_PRICE_YEAR);
@@ -165,6 +179,13 @@ export default function UpgradePage() {
               <h1>Pricing</h1>
               <p>Three tiers: Guest, Free account, and Pro.</p>
               <div className="upgrade-tier">Your current plan: <strong>{planLabel}</strong></div>
+              {tier === 'pro' && (
+                <div className="upgrade-tier-actions">
+                  <button className="upgrade-manage-btn" type="button" onClick={onManageSubscription}>
+                    Manage subscription
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
