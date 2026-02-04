@@ -242,3 +242,79 @@ on conflict (id) do update set
   difficulty = excluded.difficulty,
   lesson = excluded.lesson,
   published = excluded.published;
+
+-- Seed: quantum topic (data-driven lesson)
+insert into public.topics (id, subject, title, emoji, color, description, difficulty, lesson, published)
+values (
+  'quantum',
+  'Technology',
+  'Quantum Computing (in 60s)',
+  '⚛️',
+  '#A06CD5',
+  'A friendly, game-like intro to qubits, superposition, and why quantum is special.',
+  'Beginner',
+  jsonb_build_object(
+    'version', 1,
+    'totalSeconds', 60,
+    'xp', 60,
+    'steps', jsonb_build_array(
+      jsonb_build_object(
+        'id', 'intro',
+        'type', 'intro',
+        'seconds', 10,
+        'title', 'Quantum = Weird (and useful)',
+        'emoji', '⚛️',
+        'text', 'Quantum computers use qubits—tiny systems that behave in surprising ways.'
+      ),
+      jsonb_build_object(
+        'id', 'qubit',
+        'type', 'tapReveal',
+        'seconds', 16,
+        'title', 'Qubit (vs bit)',
+        'prompt', 'Tap to reveal the difference!',
+        'successText', '✅ You got the qubit idea.',
+        'items', jsonb_build_array(
+          jsonb_build_object('icon','0️⃣','text','A bit is 0 OR 1'),
+          jsonb_build_object('icon','🌀','text','A qubit can be a mix (superposition)'),
+          jsonb_build_object('icon','📏','text','Measuring forces a single result')
+        )
+      ),
+      jsonb_build_object(
+        'id', 'entangle',
+        'type', 'tapReveal',
+        'seconds', 16,
+        'title', 'Entanglement',
+        'prompt', 'Tap to reveal the magic link!',
+        'successText', '✅ Entangled = correlated, not telepathy.',
+        'items', jsonb_build_array(
+          jsonb_build_object('icon','🔗','text','Two qubits can share one combined state'),
+          jsonb_build_object('icon','🎲','text','Outcomes are correlated when measured'),
+          jsonb_build_object('icon','🚫','text','No faster-than-light messaging')
+        )
+      ),
+      jsonb_build_object(
+        'id', 'summary',
+        'type', 'summary',
+        'seconds', 18,
+        'title', 'So what’s it good for?',
+        'points', jsonb_build_array(
+          '⚛️ Qubits can be superposed',
+          '🔗 Entanglement creates correlations',
+          '🧮 Some problems get big speedups'
+        ),
+        'uses', jsonb_build_array('🔐','🧪','📈','🧠'),
+        'congrats', '🎉 Quantum Curious! 🎉'
+      )
+    )
+  ),
+  true
+)
+on conflict (id) do update set
+  subject = excluded.subject,
+  title = excluded.title,
+  emoji = excluded.emoji,
+  color = excluded.color,
+  description = excluded.description,
+  difficulty = excluded.difficulty,
+  lesson = excluded.lesson,
+  published = excluded.published;

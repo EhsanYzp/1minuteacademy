@@ -15,6 +15,9 @@ export default function BuildChainStep({ step, onInteract, interacted }) {
     if (next >= target) onInteract?.();
   }
 
+  const addButtonLabel = step.addButtonLabel ?? '➕ Add';
+  const successText = step.successText ?? '✅ Nice! You built the sequence.';
+
   return (
     <div className="step step-chain">
       <h2 className="step-title">{step.title}</h2>
@@ -47,10 +50,10 @@ export default function BuildChainStep({ step, onInteract, interacted }) {
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.98 }}
         >
-          ➕ Add Block ({remaining} left)
+          {addButtonLabel} ({remaining} left)
         </motion.button>
       ) : (
-        <div className="step-success">✅ Chain built! Tampering breaks the links.</div>
+        <div className="step-success">{successText}</div>
       )}
     </div>
   );

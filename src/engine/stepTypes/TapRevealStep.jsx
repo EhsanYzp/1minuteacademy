@@ -12,6 +12,7 @@ export default function TapRevealStep({ step, onInteract, interacted }) {
   }
 
   const items = Array.isArray(step.items) ? step.items : [];
+  const successText = step.successText ?? '✅ Nice!';
 
   return (
     <div className="step step-reveal">
@@ -43,7 +44,7 @@ export default function TapRevealStep({ step, onInteract, interacted }) {
         )}
       </motion.div>
 
-      {open && <div className="step-success">✅ Nice! That’s the core of a block.</div>}
+      {open && <div className="step-success">{successText}</div>}
     </div>
   );
 }
