@@ -24,9 +24,17 @@ export default function SummaryStep({ step }) {
         <div className="summary-uses">
           <div className="uses-label">Used for:</div>
           <div className="uses-icons">
-            {uses.map((u, i) => (
-              <span key={i} className="use-icon">{u}</span>
-            ))}
+            {uses.map((u, i) => {
+              const icon = typeof u === 'string' ? u : (u?.icon ?? '✨');
+              const text = typeof u === 'string' ? '' : (u?.text ?? '');
+
+              return (
+                <span key={i} className="use-chip" title={text || undefined}>
+                  <span className="use-icon">{icon}</span>
+                  {text ? <span className="use-text">{text}</span> : null}
+                </span>
+              );
+            })}
           </div>
         </div>
       )}

@@ -8,7 +8,7 @@
   "difficulty": "Beginner",
   "published": true,
   "lesson": {
-    "version": 1,
+    "version": 2,
     "totalSeconds": 60,
     "xp": 50,
     "steps": [
@@ -21,38 +21,58 @@
         "text": "Everyone can read it, nobody can cheat."
       },
       {
-        "id": "block",
-        "type": "tapReveal",
-        "seconds": 16,
-        "title": "What is a Block?",
-        "prompt": "Tap to open the block!",
+        "id": "open",
+        "type": "recipe",
+        "recipeId": "tapReveal_envelope_07",
+        "seconds": 14,
+        "title": "Open a block",
+        "prompt": "Tap to open the envelope!",
         "items": [
           { "icon": "📝", "text": "Data" },
-          { "icon": "🔢", "text": "Unique ID" },
-          { "icon": "🔙", "text": "Link to previous" }
-        ]
+          { "icon": "#️⃣", "text": "Hash (unique fingerprint)" },
+          { "icon": "🔙", "text": "Prev hash (links the chain)" }
+        ],
+        "successText": "✅ Block opened."
       },
       {
-        "id": "chain",
-        "type": "buildChain",
-        "seconds": 18,
-        "title": "Chaining Blocks",
+        "id": "mine",
+        "type": "recipe",
+        "recipeId": "tapSprint_battery_02",
+        "seconds": 14,
+        "title": "Mine it (fast)",
+        "prompt": "Tap to do the work!",
+        "targetTaps": 9,
+        "buttonLabel": "MINE",
+        "successText": "✅ Block mined!"
+      },
+      {
+        "id": "link",
+        "type": "recipe",
+        "recipeId": "buildChain_link_37",
+        "seconds": 14,
+        "title": "Link blocks",
         "target": 2,
         "genesisLabel": "Genesis",
         "blockLabel": "Block",
-        "hint": "Add 2 blocks to build the chain!"
+        "hint": "Tap to add 2 blocks to the chain.",
+        "successText": "✅ Chain formed."
       },
       {
         "id": "summary",
         "type": "summary",
-        "seconds": 18,
+        "seconds": 10,
         "title": "You Did It!",
         "points": [
           "🧱 Blocks store data",
           "⛓️ Blocks link together",
           "🔒 Tampering breaks the chain"
         ],
-        "uses": ["💰", "🗳️", "📋", "🏥"],
+        "uses": [
+          { "icon": "💰", "text": "Payments" },
+          { "icon": "🗳️", "text": "Voting" },
+          { "icon": "📋", "text": "Audit trails" },
+          { "icon": "🏥", "text": "Health records" }
+        ],
         "congrats": "🎉 Blockchain Expert! 🎉"
       }
     ]

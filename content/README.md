@@ -37,3 +37,9 @@ Notes:
 After syncing, verify:
 - Landing page shows your published topics.
 - After completing a lesson, `/me` and the landing page should reflect **✅ Completed**.
+
+## Scaffold (auto-pick steps)
+
+To create a new module with an automatically selected 4–5 step mix (from the recipe pool):
+
+- `npm run content:scaffold -- --id <topicId> --subject "<Subject>" --title "<Title>" --description "<One-liner>"`

@@ -8,48 +8,63 @@
   "difficulty": "Beginner",
   "published": true,
   "lesson": {
-    "version": 1,
+    "version": 2,
     "totalSeconds": 60,
     "xp": 60,
     "steps": [
       {
         "id": "intro",
         "type": "intro",
-        "seconds": 10,
+        "seconds": 8,
         "title": "Agent = AI with a mission",
         "emoji": "🤖",
         "text": "Not just chatting — it can plan, use tools, and take actions to reach a goal."
       },
       {
-        "id": "parts",
-        "type": "tapReveal",
-        "seconds": 16,
-        "title": "What makes it an agent?",
-        "prompt": "Tap to reveal the secret sauce!",
-        "successText": "✅ You’ve met the agent recipe.",
+        "id": "scan",
+        "type": "recipe",
+        "recipeId": "tapReveal_xray_02",
+        "seconds": 14,
+        "title": "X-ray an agent",
+        "prompt": "Tap to scan its parts!",
+        "successText": "✅ Agent ingredients found.",
         "items": [
-          { "icon": "🧠", "text": "Brain: an LLM that reasons" },
-          { "icon": "🧰", "text": "Tools: search, APIs, database, code" },
-          { "icon": "📝", "text": "Memory: notes + context across steps" },
+          { "icon": "🧠", "text": "Brain (LLM): reasons" },
+          { "icon": "🧰", "text": "Tools: can take actions" },
+          { "icon": "📝", "text": "Memory: keeps context" },
           { "icon": "🔁", "text": "Loop: try → check → retry" }
         ]
       },
       {
-        "id": "build",
-        "type": "buildChain",
-        "seconds": 16,
-        "title": "Build a tiny agent",
-        "target": 2,
+        "id": "loop",
+        "type": "recipe",
+        "recipeId": "buildChain_pipeline_11",
+        "seconds": 14,
+        "title": "Build the agent loop",
+        "target": 3,
         "genesisLabel": "Goal",
-        "blockLabel": "Tool",
-        "addButtonLabel": "➕ Add tool",
-        "hint": "Pick tools that help achieve your goal.",
-        "successText": "✅ Nice. Now it can actually *do* things."
+        "blockLabel": "Step",
+        "hint": "Tap to add steps: Plan → Tool → Check",
+        "successText": "✅ Now it can iterate."
+      },
+      {
+        "id": "myth",
+        "type": "recipe",
+        "recipeId": "eitherOr_mythFact_23",
+        "seconds": 14,
+        "title": "Myth vs Fact",
+        "prompt": "Agents are just chatbots with fancy branding.",
+        "options": [
+          { "id": "myth", "icon": "🧨", "text": "Myth", "correct": true },
+          { "id": "fact", "icon": "✅", "text": "Fact" }
+        ],
+        "successText": "✅ Myth.",
+        "explain": "Agents can actually *do* tasks via tools + loops, not just reply."
       },
       {
         "id": "summary",
         "type": "summary",
-        "seconds": 18,
+        "seconds": 10,
         "title": "Where agents shine",
         "points": [
           "📬 Handle repetitive workflows",
@@ -57,7 +72,12 @@
           "🧩 Connect apps via tools",
           "🧠 Keep context across steps"
         ],
-        "uses": ["🔎", "📧", "📊", "🧾"],
+        "uses": [
+          { "icon": "🔎", "text": "Research" },
+          { "icon": "📧", "text": "Inbox / outreach" },
+          { "icon": "📊", "text": "Reporting" },
+          { "icon": "🧾", "text": "Ops automation" }
+        ],
         "congrats": "🎉 Agent Apprentice! 🎉"
       }
     ]

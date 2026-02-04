@@ -4,6 +4,9 @@ import IntroStep from './stepTypes/IntroStep';
 import TapRevealStep from './stepTypes/TapRevealStep';
 import BuildChainStep from './stepTypes/BuildChainStep';
 import SummaryStep from './stepTypes/SummaryStep';
+import EitherOrStep from './stepTypes/EitherOrStep';
+import TapSprintStep from './stepTypes/TapSprintStep';
+import RecipeStep from './stepTypes/RecipeStep';
 import './lessonRenderer.css';
 
 const stepComponents = {
@@ -11,6 +14,9 @@ const stepComponents = {
   tapReveal: TapRevealStep,
   buildChain: BuildChainStep,
   summary: SummaryStep,
+  eitherOr: EitherOrStep,
+  tapSprint: TapSprintStep,
+  recipe: RecipeStep,
 };
 
 function getActiveStepIndex(steps, totalSeconds, timeRemaining) {

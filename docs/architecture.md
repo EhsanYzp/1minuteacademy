@@ -27,8 +27,8 @@ Use these for experiments you don’t want in git:
 ### 2) Engine (small, stable code)
 - Folder: `src/engine/`
 - `LessonRenderer` selects the active step based on time remaining.
-- `src/engine/stepTypes/` contains a *small set* of reusable step types:
-  - `intro`, `tapReveal`, `buildChain`, `summary`
+- `src/engine/stepTypes/` contains a *small set* of reusable primitives (interaction patterns).
+- For variety at scale, lessons can also use `type: recipe` + `recipeId` to select from a large recipe catalog.
 
 When you add thousands of modules, you mostly add JSON files/rows — the engine code stays almost constant.
 

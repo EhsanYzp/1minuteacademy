@@ -45,8 +45,22 @@ Current supported step types:
 - `tapReveal`
 - `buildChain`
 - `summary`
+ - `eitherOr` (one-tap snap choice)
+ - `tapSprint` (6–12 fast taps)
+ - `recipe` (wraps a recipeId into one of the primitives)
 
 These are implemented in `src/engine/stepTypes/` and mapped in `src/engine/LessonRenderer.jsx`.
+
+### Step recipes (200+ options without 200 components)
+
+Instead of creating hundreds of React step components, we keep a **small primitive set** and a large **recipe catalog**.
+
+Use this in topic JSON:
+- `type: "recipe"`
+- `recipeId: "eitherOr_thisOrThat_01"` (pick from the catalog)
+
+Catalog:
+- See [step-recipes.md](step-recipes.md)
 
 ### Rule of thumb
 
@@ -68,6 +82,17 @@ In local preview:
 - Header shows a `LOCAL PREVIEW` badge
 
 Tip: after completing a lesson, check `/me` (Profile) and the landing page badges to verify progress behavior.
+
+### Scaffold a new module automatically (picks 4–5 steps)
+
+This creates a new `content/topics/<Subject>/<id>.topic.json` and automatically picks a diverse mix of fast steps from the recipe pool.
+
+- `npm run content:scaffold -- --id <topicId> --subject "<Subject>" --title "<Title>" --description "<One-liner>"`
+
+Optional:
+- `--steps 4` or `--steps 5`
+- `--seed <any>` to make the chosen recipe mix deterministic
+- `--dry-run` to print JSON without writing a file
 
 ### Publish to Supabase (production)
 

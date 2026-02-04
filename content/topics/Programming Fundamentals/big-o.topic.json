@@ -8,23 +8,24 @@
   "difficulty": "Beginner",
   "published": true,
   "lesson": {
-    "version": 3,
+    "version": 4,
     "totalSeconds": 60,
     "xp": 60,
     "steps": [
       {
         "id": "intro",
         "type": "intro",
-        "seconds": 10,
+        "seconds": 8,
         "title": "Big-O = growth rate",
         "emoji": "📈",
         "text": "Big-O describes how work grows when input size (n) grows. It’s about the trend, not exact time."
       },
       {
-        "id": "shapes",
-        "type": "tapReveal",
-        "seconds": 18,
-        "title": "Common Big-O shapes",
+        "id": "reveal",
+        "type": "recipe",
+        "recipeId": "tapReveal_curtain_02",
+        "seconds": 14,
+        "title": "Pull the curtain",
         "prompt": "Tap to reveal the usual suspects!",
         "successText": "✅ Faster growth = worse scaling.",
         "items": [
@@ -35,26 +36,47 @@
         ]
       },
       {
-        "id": "runtime",
-        "type": "buildChain",
+        "id": "myth",
+        "type": "recipe",
+        "recipeId": "eitherOr_mythFact_08",
+        "seconds": 14,
+        "title": "Myth vs Fact",
+        "prompt": "Big-O tells the exact runtime in seconds.",
+        "options": [
+          { "id": "myth", "icon": "🧨", "text": "Myth", "correct": true },
+          { "id": "fact", "icon": "✅", "text": "Fact" }
+        ],
+        "successText": "✅ Myth.",
+        "explain": "Big-O compares growth trends as n grows; constants/hardware vary."
+      },
+      {
+        "id": "build",
+        "type": "recipe",
+        "recipeId": "buildChain_stack_18",
         "seconds": 14,
         "title": "Build the runtime",
         "target": 3,
         "genesisLabel": "Input n",
         "blockLabel": "Loop",
-        "hint": "Each loop usually multiplies work by n. Add 3 loops."
+        "hint": "Tap to add 3 loops. More loops → faster growth.",
+        "successText": "✅ That’s the Big-O vibe."
       },
       {
         "id": "summary",
         "type": "summary",
-        "seconds": 18,
+        "seconds": 10,
         "title": "How to use it",
         "points": [
           "📈 Compare scaling, not seconds",
           "🔁 One loop ≈ O(n), two loops ≈ O(n²)",
           "✅ Prefer lower growth for big inputs"
         ],
-        "uses": ["🧠", "🧮", "⚡️", "🛠️"],
+        "uses": [
+          { "icon": "🧠", "text": "Choose algorithms" },
+          { "icon": "🧮", "text": "Estimate cost" },
+          { "icon": "⚡️", "text": "Optimize" },
+          { "icon": "🛠️", "text": "Engineering" }
+        ],
         "congrats": "🎉 Big-O unlocked! 🎉"
       }
     ]

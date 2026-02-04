@@ -8,55 +8,74 @@
   "difficulty": "Beginner",
   "published": true,
   "lesson": {
-    "version": 1,
+    "version": 2,
     "totalSeconds": 60,
     "xp": 60,
     "steps": [
       {
         "id": "intro",
         "type": "intro",
-        "seconds": 10,
+        "seconds": 8,
         "title": "Quantum = Weird (and useful)",
         "emoji": "⚛️",
         "text": "Quantum computers use qubits—tiny systems that behave in surprising ways."
       },
       {
-        "id": "qubit",
-        "type": "tapReveal",
-        "seconds": 16,
-        "title": "Qubit (vs bit)",
-        "prompt": "Tap to reveal the difference!",
-        "successText": "✅ You got the qubit idea.",
+        "id": "pick",
+        "type": "recipe",
+        "recipeId": "eitherOr_thisOrThat_04",
+        "seconds": 14,
+        "title": "Quick pick",
+        "prompt": "A classical bit can be…",
+        "options": [
+          { "id": "either", "icon": "0️⃣", "text": "0 OR 1", "correct": true },
+          { "id": "mix", "icon": "🌀", "text": "a mix at once" }
+        ],
+        "successText": "✅ Yep.",
+        "explain": "Qubits can be a mix (superposition) until measured."
+      },
+      {
+        "id": "peek",
+        "type": "recipe",
+        "recipeId": "tapReveal_peel_04",
+        "seconds": 14,
+        "title": "Peel the qubit layer",
+        "prompt": "Tap to peel!",
+        "successText": "✅ Qubit basics revealed.",
         "items": [
-          { "icon": "0️⃣", "text": "A bit is 0 OR 1" },
-          { "icon": "🌀", "text": "A qubit can be a mix (superposition)" },
-          { "icon": "📏", "text": "Measuring forces a single result" }
+          { "icon": "🌀", "text": "Superposition: mix of states" },
+          { "icon": "📏", "text": "Measurement: forces one result" },
+          { "icon": "🎯", "text": "Probability: outcomes have odds" }
         ]
       },
       {
-        "id": "entangle",
-        "type": "tapReveal",
-        "seconds": 16,
-        "title": "Entanglement",
-        "prompt": "Tap to reveal the magic link!",
-        "successText": "✅ Entangled = correlated, not telepathy.",
-        "items": [
-          { "icon": "🔗", "text": "Two qubits can share one combined state" },
-          { "icon": "🎲", "text": "Outcomes are correlated when measured" },
-          { "icon": "🚫", "text": "No faster-than-light messaging" }
-        ]
+        "id": "circuit",
+        "type": "recipe",
+        "recipeId": "buildChain_ladder_40",
+        "seconds": 14,
+        "title": "Build a tiny circuit",
+        "target": 2,
+        "genesisLabel": "Qubit",
+        "blockLabel": "Gate",
+        "hint": "Tap to add 2 gates: Mix → Measure",
+        "successText": "✅ Circuit complete."
       },
       {
         "id": "summary",
         "type": "summary",
-        "seconds": 18,
+        "seconds": 10,
         "title": "So what’s it good for?",
         "points": [
           "⚛️ Qubits can be superposed",
           "🔗 Entanglement creates correlations",
           "🧮 Some problems get big speedups"
         ],
-        "uses": ["🔐", "🧪", "📈", "🧠"],
+        "uses": [
+          { "icon": "🔐", "text": "Cryptography" },
+          { "icon": "🧪", "text": "Chemistry sim" },
+          { "icon": "📈", "text": "Optimization" },
+          { "icon": "🧠", "text": "Machine learning" }
+        ],
         "congrats": "🎉 Quantum Curious! 🎉"
       }
     ]
