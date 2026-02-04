@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './SubjectCard.css';
 
 function SubjectCard({ subject, index }) {
-  const { id, title, emoji, color, description, difficulty, comingSoon } = subject;
+  const { id, title, emoji, color, description, difficulty, comingSoon, completed } = subject;
 
   return (
     <motion.div
@@ -35,6 +35,7 @@ function SubjectCard({ subject, index }) {
       ) : (
         <Link to={`/topic/${id}`} className="card-link">
           <div className="card-content">
+            {completed && <div className="completed-ribbon" title="Completed">✅ Completed</div>}
             <motion.div 
               className="card-emoji"
               animate={{ y: [0, -5, 0] }}
@@ -46,7 +47,7 @@ function SubjectCard({ subject, index }) {
             <p className="card-description">{description}</p>
             <div className="card-footer">
               <span className="difficulty-badge">{difficulty}</span>
-              <span className="duration-badge">⏱️ 60s</span>
+              {completed && <span className="completed-badge">✅ Completed</span>}
             </div>
             <motion.div 
               className="play-hint"

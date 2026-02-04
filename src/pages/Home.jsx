@@ -3,6 +3,9 @@ import Header from '../components/Header';
 import SubjectCard from '../components/SubjectCard';
 import { useEffect, useMemo, useState } from 'react';
 import { listTopics } from '../services/topics';
+import { listUserTopicProgress } from '../services/progress';
+import { useAuth } from '../context/AuthContext';
+import { getContentSource } from '../services/_contentSource';
 import './Home.css';
 
 const fallbackSubjects = [
@@ -13,6 +16,7 @@ const fallbackSubjects = [
     color: '#4ECDC4',
     description: 'Connect Supabase to load topics from the database.',
     difficulty: 'Beginner',
+    completed: false,
   },
 ];
 
@@ -39,7 +43,11 @@ const itemVariants = {
 };
 
 function Home() {
+  const { user, isSupabaseConfigured } = useAuth();
+  const contentSource = getContentSource();
+
   const [topics, setTopics] = useState([]);
+  const [completedIds, setCompletedIds] = useState(() => new Set());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -62,10 +70,51 @@ function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadProgress() {
+      // In Supabase mode, only load per-user progress if signed in.
+      if (contentSource !== 'local') {
+        if (!isSupabaseConfigured || !user) {
+          setCompletedIds(new Set());
+          return;
+        }
+      }
+
+      try {
+        const rows = await listUserTopicProgress();
+        if (!mounted) return;
+
+        const ids = new Set(
+          (Array.isArray(rows) ? rows : [])
+            .filter((r) => Number(r?.completed_count ?? 0) > 0)
+            .map((r) => r.topic_id)
+        );
+        setCompletedIds(ids);
+      } catch {
+        // Ignore progress errors on landing; topics should still show.
+        if (mounted) setCompletedIds(new Set());
+      }
+    }
+
+    loadProgress();
+    return () => {
+      mounted = false;
+    };
+  }, [contentSource, isSupabaseConfigured, user]);
+
   const subjects = useMemo(() => {
     if (topics.length > 0) return topics;
     return fallbackSubjects;
   }, [topics]);
+
+  const subjectsWithProgress = useMemo(() => {
+    return subjects.map((s) => ({
+      ...s,
+      completed: completedIds.has(s.id),
+    }));
+  }, [subjects, completedIds]);
 
   // When topics load asynchronously, new cards can mount after the parent
   // variant animation already completed. Keying the section forces a re-run
@@ -129,7 +178,7 @@ function Home() {
           )}
           
           <div className="subjects-grid">
-            {subjects.map((subject, index) => (
+            {subjectsWithProgress.map((subject, index) => (
               <motion.div key={subject.id} variants={itemVariants}>
                 <SubjectCard subject={subject} index={index} />
               </motion.div>
