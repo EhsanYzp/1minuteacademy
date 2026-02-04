@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Header from '../components/Header';
 import { useAuth } from '../context/AuthContext';
 import { listTopics, listTopicsByIds } from '../services/topics';
@@ -122,9 +122,25 @@ export default function ProfilePage() {
   const [subLoading, setSubLoading] = useState(false);
   const [subError, setSubError] = useState(null);
 
+  const subReqIdRef = useRef(0);
+  const subRetryRef = useRef({ tries: 0, timer: null });
+
+  function isTransientAuthError(e) {
+    const msg = String(e?.message ?? e ?? '').toLowerCase();
+    return msg.includes('please sign in first') || msg.includes('missing authorization') || msg.includes('invalid supabase session');
+  }
+
   async function reloadSubscription() {
     if (contentSource === 'local') return;
     if (!showSubscriptionBox) return;
+
+    // Cancel any pending retry
+    if (subRetryRef.current.timer) {
+      clearTimeout(subRetryRef.current.timer);
+      subRetryRef.current.timer = null;
+    }
+
+    const reqId = (subReqIdRef.current += 1);
     try {
       setSubLoading(true);
       setSubError(null);
@@ -134,11 +150,21 @@ export default function ProfilePage() {
         // ignore
       }
       const data = await getSubscriptionStatus();
-      setSubStatus(data);
+      if (subReqIdRef.current === reqId) setSubStatus(data);
     } catch (e) {
-      setSubError(e);
+      // Right after returning from Stripe Portal, Supabase can briefly report no session.
+      // Treat that as transient and retry a few times instead of showing an error.
+      if (user && isTransientAuthError(e) && subRetryRef.current.tries < 4) {
+        subRetryRef.current.tries += 1;
+        subRetryRef.current.timer = setTimeout(() => {
+          reloadSubscription();
+        }, 650);
+        return;
+      }
+
+      if (subReqIdRef.current === reqId) setSubError(e);
     } finally {
-      setSubLoading(false);
+      if (subReqIdRef.current === reqId) setSubLoading(false);
     }
   }
 
@@ -190,9 +216,7 @@ export default function ProfilePage() {
       try {
         setSubLoading(true);
         setSubError(null);
-        const data = await getSubscriptionStatus();
-        if (!mounted) return;
-        setSubStatus(data);
+        await reloadSubscription();
       } catch (e) {
         if (!mounted) return;
         setSubError(e);
@@ -205,6 +229,10 @@ export default function ProfilePage() {
       mounted = false;
     };
   }, [contentSource, showSubscriptionBox, stripeCustomerId, stripeSubscriptionId]);
+
+  useEffect(() => () => {
+    if (subRetryRef.current.timer) clearTimeout(subRetryRef.current.timer);
+  }, []);
 
   useEffect(() => {
     if (portalReturn !== 'return') return;
@@ -428,8 +456,10 @@ export default function ProfilePage() {
                       const statusLabel = formatStripeStatus(subStatus.status);
                       const rawStatus = String(subStatus.status ?? '').toLowerCase();
                       const isCanceled = rawStatus === 'canceled';
-                      const isScheduledCancel = Boolean(subStatus.cancel_at_period_end);
-                      const periodDate = subStatus.current_period_end;
+                      const hasCancelAt = Boolean(subStatus.cancel_at);
+                      const isScheduledCancel = Boolean(subStatus.cancel_at_period_end) || (!isCanceled && hasCancelAt);
+
+                      const periodDate = subStatus.current_period_end || subStatus.cancel_at;
                       const endedDate = subStatus.ended_at || subStatus.canceled_at || subStatus.cancel_at || subStatus.current_period_end;
 
                       const dateLabel = isCanceled ? 'Ended' : isScheduledCancel ? 'Ends' : 'Renews';

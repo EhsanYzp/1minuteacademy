@@ -38,11 +38,18 @@ export default async function handler(req, res) {
   const planInterval = user?.user_metadata?.plan_interval ?? null;
 
   async function shape(sub) {
+    const epochPeriodEnd =
+      sub?.current_period_end ??
+      // Some portal flows set a specific cancellation time (cancel_at)
+      // while current_period_end can be absent in some edge cases.
+      sub?.cancel_at ??
+      null;
+
     return {
       subscription_id: sub?.id ?? null,
       active: sub?.status === 'active' || sub?.status === 'trialing' || sub?.status === 'past_due',
       status: sub?.status ?? null,
-      current_period_end: sub?.current_period_end ? new Date(sub.current_period_end * 1000).toISOString() : null,
+      current_period_end: epochPeriodEnd ? new Date(epochPeriodEnd * 1000).toISOString() : null,
       cancel_at_period_end: Boolean(sub?.cancel_at_period_end),
       cancel_at: sub?.cancel_at ? new Date(sub.cancel_at * 1000).toISOString() : null,
       canceled_at: sub?.canceled_at ? new Date(sub.canceled_at * 1000).toISOString() : null,
