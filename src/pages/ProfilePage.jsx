@@ -97,7 +97,7 @@ export default function ProfilePage() {
 
       <main className="profile-main">
         <div className="profile-top">
-          <Link className="profile-back" to="/">
+          <Link className="profile-back" to="/topics">
             ← Back to topics
           </Link>
         </div>
@@ -153,7 +153,7 @@ export default function ProfilePage() {
             <div className="profile-loading">Loading…</div>
           ) : progress.length === 0 ? (
             <div className="profile-empty">
-              No completed topics yet. Pick one on the home page and finish the 60 seconds.
+              No completed topics yet. Browse a topic and finish the 60 seconds.
             </div>
           ) : (
             <div className="progress-list">

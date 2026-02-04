@@ -65,6 +65,9 @@ function Header() {
       )}
       
       <nav className="nav">
+        <Link to="/topics" className="nav-item link browse" style={{ textDecoration: 'none' }}>
+          🧭 Browse
+        </Link>
         {user ? (
           <>
             <motion.div 

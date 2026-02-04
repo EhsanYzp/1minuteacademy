@@ -53,6 +53,42 @@
   line-height: 1.8;
 }
 
+.hero-cta {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-display);
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.cta:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.cta.primary {
+  color: var(--text-primary);
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-orange) 100%);
+}
+
+.cta.secondary {
+  color: var(--text-primary);
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
 /* Subjects Section */
 .subjects-section {
   padding: var(--space-2xl) 0;
@@ -99,6 +135,12 @@
 /* How It Works */
 .how-it-works {
   padding: var(--space-3xl) 0;
+}
+
+.how-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-xl);
 }
 
 .steps-container {
@@ -170,5 +212,9 @@
   
   .hero-subtitle {
     font-size: 1rem;
+  }
+
+  .hero-cta {
+    gap: var(--space-sm);
   }
 }

@@ -10,7 +10,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const fromPath = useMemo(() => location.state?.from?.pathname ?? '/', [location.state]);
+  const fromPath = useMemo(() => location.state?.from?.pathname ?? '/topics', [location.state]);
 
   const [mode, setMode] = useState('signin'); // signin | signup | magic
   const [email, setEmail] = useState('');
@@ -100,7 +100,7 @@ export default function LoginPage() {
           </form>
 
           <div className="login-footer">
-            <Link to="/">← Back home</Link>
+            <Link to="/topics">← Back to topics</Link>
           </div>
         </motion.div>
       </main>

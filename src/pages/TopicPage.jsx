@@ -94,7 +94,7 @@ function TopicPage() {
         <Header />
         <div className="topic-not-found">
           <h2>🔍 Topic not found!</h2>
-          <Link to="/">Go back home</Link>
+          <Link to="/topics">Go back to topics</Link>
         </div>
       </div>
     );
@@ -116,7 +116,7 @@ function TopicPage() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1 }}
         >
-          <Link to="/" className="back-button">
+          <Link to="/topics" className="back-button">
             ← Back to Topics
           </Link>
         </motion.div>

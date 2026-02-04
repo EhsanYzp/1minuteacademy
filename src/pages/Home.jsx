@@ -1,126 +1,9 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
-import SubjectCard from '../components/SubjectCard';
-import { useEffect, useMemo, useState } from 'react';
-import { listTopics } from '../services/topics';
-import { listUserTopicProgress } from '../services/progress';
-import { useAuth } from '../context/AuthContext';
-import { getContentSource } from '../services/_contentSource';
 import './Home.css';
 
-const fallbackSubjects = [
-  {
-    id: 'blockchain',
-    title: 'What is Blockchain?',
-    emoji: '🔗',
-    color: '#4ECDC4',
-    description: 'Connect Supabase to load topics from the database.',
-    difficulty: 'Beginner',
-    completed: false,
-  },
-];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      type: 'spring',
-      stiffness: 100,
-    },
-  },
-};
-
 function Home() {
-  const { user, isSupabaseConfigured } = useAuth();
-  const contentSource = getContentSource();
-
-  const [topics, setTopics] = useState([]);
-  const [completedIds, setCompletedIds] = useState(() => new Set());
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    let mounted = true;
-    async function load() {
-      try {
-        setLoading(true);
-        const data = await listTopics();
-        if (mounted) setTopics(data);
-      } catch (e) {
-        if (mounted) setError(e);
-      } finally {
-        if (mounted) setLoading(false);
-      }
-    }
-    load();
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    let mounted = true;
-
-    async function loadProgress() {
-      // In Supabase mode, only load per-user progress if signed in.
-      if (contentSource !== 'local') {
-        if (!isSupabaseConfigured || !user) {
-          setCompletedIds(new Set());
-          return;
-        }
-      }
-
-      try {
-        const rows = await listUserTopicProgress();
-        if (!mounted) return;
-
-        const ids = new Set(
-          (Array.isArray(rows) ? rows : [])
-            .filter((r) => Number(r?.completed_count ?? 0) > 0)
-            .map((r) => r.topic_id)
-        );
-        setCompletedIds(ids);
-      } catch {
-        // Ignore progress errors on landing; topics should still show.
-        if (mounted) setCompletedIds(new Set());
-      }
-    }
-
-    loadProgress();
-    return () => {
-      mounted = false;
-    };
-  }, [contentSource, isSupabaseConfigured, user]);
-
-  const subjects = useMemo(() => {
-    if (topics.length > 0) return topics;
-    return fallbackSubjects;
-  }, [topics]);
-
-  const subjectsWithProgress = useMemo(() => {
-    return subjects.map((s) => ({
-      ...s,
-      completed: completedIds.has(s.id),
-    }));
-  }, [subjects, completedIds]);
-
-  // When topics load asynchronously, new cards can mount after the parent
-  // variant animation already completed. Keying the section forces a re-run
-  // so newly added cards (like "quantum") don’t remain invisible.
-  const subjectsKey = useMemo(() => subjects.map((s) => s.id).join('|'), [subjects]);
-
   return (
     <motion.div
       className="home"
@@ -142,51 +25,28 @@ function Home() {
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            ⏱️ Just 60 Seconds!
+            ⏱️ Strictly 60 seconds (no pause)
           </motion.div>
           <h1 className="hero-title">
             Learn Anything in <span className="highlight">One Minute</span>
           </h1>
           <p className="hero-subtitle">
-            Pick a topic, hit start, and become smarter in 60 seconds! 
-            <br />
-            Learning has never been this fun! 🎮
+            Fast, interactive lessons that fit into your day.
+            <br />No doomscrolling — just one minute of progress.
           </p>
+
+          <motion.div className="hero-cta" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+            <Link className="cta primary" to="/topics">
+              🚀 Start
+            </Link>
+            <a className="cta secondary" href="#how-it-works">
+              How it works
+            </a>
+          </motion.div>
         </motion.div>
 
         <motion.section 
-          key={subjectsKey}
-          className="subjects-section"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <motion.h2 className="section-title" variants={itemVariants}>
-            🎯 Choose Your Adventure
-          </motion.h2>
-
-          {error && (
-            <motion.div className="home-error" variants={itemVariants}>
-              <strong>Couldn’t load topics from Supabase.</strong>
-              <div className="home-error-sub">Set env vars from `.env.example` and run Supabase SQL in `supabase/001_init.sql`.</div>
-            </motion.div>
-          )}
-          {loading && (
-            <motion.div className="home-loading" variants={itemVariants}>
-              Loading topics…
-            </motion.div>
-          )}
-          
-          <div className="subjects-grid">
-            {subjectsWithProgress.map((subject, index) => (
-              <motion.div key={subject.id} variants={itemVariants}>
-                <SubjectCard subject={subject} index={index} />
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
-
-        <motion.section 
+          id="how-it-works"
           className="how-it-works"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -198,20 +58,26 @@ function Home() {
             <div className="step">
               <div className="step-icon">1️⃣</div>
               <h3>Pick a Topic</h3>
-              <p>Choose what you want to learn</p>
+              <p>Browse categories or search</p>
             </div>
             <div className="step-arrow">→</div>
             <div className="step">
               <div className="step-icon">2️⃣</div>
               <h3>Hit Start</h3>
-              <p>Begin your 60-second journey</p>
+              <p>Start the 60-second timer</p>
             </div>
             <div className="step-arrow">→</div>
             <div className="step">
               <div className="step-icon">3️⃣</div>
               <h3>Learn & Play</h3>
-              <p>Interactive fun learning!</p>
+              <p>Interactive steps, then earn XP</p>
             </div>
+          </div>
+
+          <div className="how-cta">
+            <Link className="cta primary" to="/topics">
+              Browse topics
+            </Link>
           </div>
         </motion.section>
       </main>
