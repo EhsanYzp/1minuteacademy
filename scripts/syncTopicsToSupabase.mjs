@@ -2,11 +2,26 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createClient } from '@supabase/supabase-js';
 import { TOPICS_DIR } from './_contentPaths.mjs';
+import dotenv from 'dotenv';
+
+// Node scripts do not automatically load Vite env files.
+// Load local developer secrets for sync (gitignored).
+dotenv.config({ path: '.env.local' });
+dotenv.config({ path: '.env' });
 
 function requiredEnv(name) {
   const v = process.env[name];
   if (!v) throw new Error(`Missing env var: ${name}`);
   return v;
+}
+
+function forbidEnv(name) {
+  const v = process.env[name];
+  if (v) {
+    throw new Error(
+      `Refusing to run: ${name} is set. Never expose the service role key in any VITE_ variable (it would be bundled into the browser). Use SUPABASE_SERVICE_ROLE_KEY instead.`
+    );
+  }
 }
 
 async function listTopicFiles(dir) {
@@ -26,6 +41,9 @@ async function readJson(filePath) {
 }
 
 async function main() {
+  // Guardrails: prevent accidentally leaking the service role key to the frontend
+  forbidEnv('VITE_SUPABASE_SERVICE_ROLE_KEY');
+
   const url = requiredEnv('VITE_SUPABASE_URL');
 
   // IMPORTANT: use service role for bulk upserts in scripts (never expose in the browser)
