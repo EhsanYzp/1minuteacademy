@@ -47,6 +47,18 @@ export function AuthProvider({ children }) {
       user,
       loading,
       authError,
+      async refreshSession() {
+        if (!isSupabaseConfigured) return null;
+        setAuthError(null);
+        const { data, error } = await supabase.auth.refreshSession();
+        if (error) {
+          setAuthError(error);
+          throw error;
+        }
+        setSession(data?.session ?? null);
+        setUser(data?.session?.user ?? null);
+        return data;
+      },
       async signUpWithPassword(email, password) {
         if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
         setAuthError(null);

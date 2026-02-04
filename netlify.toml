@@ -2,6 +2,17 @@
   command = "npm run build"
   publish = "dist"
 
+# API -> Netlify Functions
+[[redirects]]
+  from = "/api/stripe/create-checkout-session"
+  to = "/.netlify/functions/stripe-create-checkout-session"
+  status = 200
+
+[[redirects]]
+  from = "/api/stripe/webhook"
+  to = "/.netlify/functions/stripe-webhook"
+  status = 200
+
 # SPA fallback for React Router
 [[redirects]]
   from = "/*"

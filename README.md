@@ -100,6 +100,51 @@ When you’re happy, publish to Supabase with `npm run content:sync`.
 
 Tip: prefer `npm run content:sync -- --topic <id>` so publishing a new module only touches that one module.
 
+## 💳 Stripe Integration (Pro subscriptions)
+
+This repo includes a Stripe Checkout + webhook flow for Pro.
+
+### Endpoints
+
+- Create Checkout Session: `POST /api/stripe/create-checkout-session`
+- Stripe Webhook: `POST /api/stripe/webhook`
+
+These endpoints work on:
+
+- **Vercel** via the serverless handlers in `api/stripe/*`
+- **Netlify** via functions in `netlify/functions/*` (rewired from `/api/stripe/*` in `netlify.toml` + `public/_redirects`)
+
+### Setup
+
+1. In Stripe, create a Product (e.g. “1MinuteAcademy Pro”) and two recurring Prices (monthly + yearly).
+2. Set environment variables on your deploy target (Vercel/Netlify):
+
+	- `STRIPE_SECRET_KEY`
+	- `STRIPE_WEBHOOK_SECRET`
+	- `STRIPE_PRICE_ID_MONTHLY`
+	- `STRIPE_PRICE_ID_YEARLY`
+	- `SITE_URL` (e.g. `https://your-domain.com`)
+	- `SUPABASE_URL` (same as `VITE_SUPABASE_URL`)
+	- `SUPABASE_ANON_KEY` (same as `VITE_SUPABASE_ANON_KEY`)
+	- `SUPABASE_SERVICE_ROLE_KEY` (server-only)
+
+	See `.env.example` for a template.
+
+3. Add a Stripe webhook endpoint:
+
+	- URL: `https://your-domain.com/api/stripe/webhook`
+	- Events:
+	  - `checkout.session.completed`
+	  - `customer.subscription.deleted`
+
+### How Pro is activated
+
+When Stripe confirms checkout, the webhook updates Supabase Auth user metadata:
+
+- `user_metadata.plan = "pro"`
+
+The client reads this field to unlock Pro features.
+
 ## 📚 Available Modules
 
 ### Currently Available:

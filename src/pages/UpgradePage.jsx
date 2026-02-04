@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
 import Header from '../components/Header';
 import { useAuth } from '../context/AuthContext';
 import { formatTierLabel, getCurrentTier } from '../services/entitlements';
+import { startProCheckout } from '../services/billing';
 import './UpgradePage.css';
 
 const DEFAULT_PRICE_MONTH = import.meta.env.VITE_PRICE_MONTH ?? '$7.99';
@@ -36,8 +38,52 @@ function formatPercent(value) {
 }
 
 export default function UpgradePage() {
-  const { user } = useAuth();
+  const { user, refreshSession } = useAuth();
   const tier = getCurrentTier(user);
+  const [busy, setBusy] = useState(null); // 'month' | 'year' | null
+  const [banner, setBanner] = useState(null); // 'success' | 'cancel' | 'error' | null
+  const [bannerText, setBannerText] = useState('');
+
+  const checkoutState = useMemo(() => {
+    try {
+      return new URLSearchParams(window.location.search).get('checkout');
+    } catch {
+      return null;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (checkoutState === 'success') {
+      setBanner('success');
+      setBannerText('Payment received — activating Pro…');
+      refreshSession()
+        .then(() => setBannerText('Pro is active. Enjoy!'))
+        .catch(() => setBannerText('Payment received. If Pro doesn’t show yet, refresh in a few seconds.'));
+    } else if (checkoutState === 'cancel') {
+      setBanner('cancel');
+      setBannerText('Checkout canceled. No charge was made.');
+    }
+  }, [checkoutState, refreshSession]);
+
+  async function onCheckout(interval) {
+    if (!user) {
+      setBanner('error');
+      setBannerText('Please sign in to upgrade.');
+      return;
+    }
+    if (tier === 'pro') return;
+
+    setBanner(null);
+    setBannerText('');
+    setBusy(interval);
+    try {
+      await startProCheckout({ interval });
+    } catch (e) {
+      setBanner('error');
+      setBannerText(e?.message || 'Could not start checkout');
+      setBusy(null);
+    }
+  }
 
   const monthPriceNumber = parsePriceNumber(DEFAULT_PRICE_MONTH);
   const yearPriceNumber = parsePriceNumber(DEFAULT_PRICE_YEAR);
@@ -180,8 +226,14 @@ export default function UpgradePage() {
                 <li>Saved takeaways in your profile</li>
                 <li>Progress tracking</li>
               </ul>
-              <button className="plan-cta" type="button" disabled title="Payment integration coming next">
-                Continue (coming soon)
+              <button
+                className="plan-cta"
+                type="button"
+                onClick={() => onCheckout('month')}
+                disabled={!user || tier === 'pro' || busy !== null}
+                title={!user ? 'Sign in to upgrade' : tier === 'pro' ? 'You are already Pro' : 'Start Stripe checkout'}
+              >
+                {tier === 'pro' ? 'You’re Pro' : busy === 'month' ? 'Redirecting…' : 'Continue'}
               </button>
             </div>
 
@@ -203,11 +255,28 @@ export default function UpgradePage() {
                 <li>Everything in Monthly</li>
                 <li>Lower effective monthly cost</li>
               </ul>
-              <button className="plan-cta" type="button" disabled title="Payment integration coming next">
-                Continue (coming soon)
+              <button
+                className="plan-cta"
+                type="button"
+                onClick={() => onCheckout('year')}
+                disabled={!user || tier === 'pro' || busy !== null}
+                title={!user ? 'Sign in to upgrade' : tier === 'pro' ? 'You are already Pro' : 'Start Stripe checkout'}
+              >
+                {tier === 'pro' ? 'You’re Pro' : busy === 'year' ? 'Redirecting…' : 'Continue'}
               </button>
             </div>
           </div>
+
+          {banner && (
+            <div className={`upgrade-banner ${banner}`} role="status">
+              <div className="upgrade-banner-text">{bannerText}</div>
+              {banner === 'success' && tier !== 'pro' && (
+                <button className="upgrade-banner-btn" type="button" onClick={() => refreshSession()}>
+                  Refresh
+                </button>
+              )}
+            </div>
+          )}
 
           {!user ? (
             <div className="upgrade-foot">
@@ -216,7 +285,7 @@ export default function UpgradePage() {
             </div>
           ) : (
             <div className="upgrade-foot">
-              <div className="upgrade-foot-text">Payment integration is next. For now, we can manually set your plan in Supabase user metadata.</div>
+              <div className="upgrade-foot-text">Your plan is tied to your account. After checkout, we’ll activate Pro automatically.</div>
               <div className="upgrade-foot-actions">
                 <Link className="upgrade-link" to="/topics">Back to topics</Link>
                 <Link className="upgrade-link secondary" to="/me">Go to profile</Link>
