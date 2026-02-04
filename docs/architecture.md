@@ -9,10 +9,20 @@ You do *not* create React components per module.
 - Stored in Supabase table: `public.topics`
   - `id`, `subject`, `title`, `emoji`, `color`, `description`, `difficulty`, `published`
   - `lesson` (JSON): `{ totalSeconds, xp, steps: [...] }`
-- Optional local authoring source-of-truth:
-  - `content/topics/<Subject>/<topicId>.topic.json`
-  - Validated with JSON schema in `content/schema/`
-  - Bulk synced with `npm run content:sync`
+
+#### Content sources (dev vs prod)
+
+- **Production source of truth:** Supabase `public.topics`.
+- **Local iteration source:** JSON files under `content/topics/**`.
+  - Validate: `npm run content:validate`
+  - Preview in-app without Supabase pushes: `npm run dev:local`
+  - Publish to Supabase when ready: `npm run content:sync`
+
+#### Drafts (not committed)
+
+Use these for experiments you don’t want in git:
+- `content/_drafts/`
+- `content/_local/`
 
 ### 2) Engine (small, stable code)
 - Folder: `src/engine/`
@@ -50,10 +60,17 @@ When you add thousands of modules, you mostly add JSON files/rows — the engine
   - `syncTopicsToSupabase.mjs` (bulk upsert)
 
 ## Adding 1,000 modules – the actual process
-1. Create `content/topics/<Subject>/<id>.topic.json`
+
+### Fast iteration loop (no Supabase)
+1. Create/edit `content/topics/<Subject>/<id>.topic.json`
 2. `npm run content:validate`
-3. `npm run content:sync`
-4. App instantly serves the new module (no frontend build needed)
+3. `npm run dev:local` and test the lesson UI instantly
+
+### Publish loop (Supabase)
+1. `npm run content:sync` (bulk upsert to `public.topics`)
+2. Run the normal app (`npm run dev` or production) to verify DB-backed behavior
+
+Result: adding/updating modules does **not** require a frontend build/deploy.
 
 ## When you need new code
 Only when you want a **new step type** (a new interaction pattern).
@@ -61,3 +78,5 @@ Then you:
 - Add a component under `src/engine/stepTypes/`
 - Add the mapping in `src/engine/LessonRenderer.jsx`
 - Expand the allowed `type` enum in `content/schema/step.schema.json`
+
+This is the only time you need to rebuild/redeploy the frontend.

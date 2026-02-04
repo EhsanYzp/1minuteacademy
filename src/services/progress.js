@@ -1,6 +1,12 @@
 import { isSupabaseConfigured, supabase } from '../lib/supabaseClient';
+import { getContentSource } from './_contentSource';
+import { completeLocalTopic, getLocalUserStats } from './progress.local';
 
 export async function getUserStats() {
+  if (getContentSource() === 'local') {
+    return getLocalUserStats();
+  }
+
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
   const { data, error } = await supabase
     .from('user_stats')
@@ -13,6 +19,10 @@ export async function getUserStats() {
 }
 
 export async function completeTopic({ topicId, xp = 50, seconds = 60 }) {
+  if (getContentSource() === 'local') {
+    return completeLocalTopic({ topicId, xp, seconds });
+  }
+
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
   const { data, error } = await supabase.rpc('complete_topic', {
     p_topic_id: topicId,

@@ -60,12 +60,26 @@ This project scales by treating each module/topic as **data**, not code.
 - Optional local authoring lives in `content/topics/**` and can be validated/synced in bulk
 
 See: `docs/architecture.md` for the full platform layout.
+See: `docs/content-generation.md` for the content playbook.
 
 ### Content tooling
 
 - Validate topic JSON: `npm run content:validate`
 - Bulk sync to Supabase: `npm run content:sync`
 	- Requires `SUPABASE_SERVICE_ROLE_KEY` in your local env (scripts only; never ship to browser)
+
+### Local Preview (no Supabase push while iterating)
+
+When you’re drafting a new module, you can run the app using local JSON from `content/topics/**`:
+
+- `npm run dev:local`
+
+In this mode:
+- Topics/lessons come from `content/topics/**` (bundled by Vite)
+- XP/streak are stored in `localStorage`
+- `/lesson/:topicId` does not require login
+
+When you’re happy, publish to Supabase with `npm run content:sync`.
 
 ## 📚 Available Modules
 
@@ -130,7 +144,7 @@ Contributions are welcome! To add a new topic:
 
 1. Insert a row into `topics` (see the seeded `blockchain` example)
 2. Provide a `lesson` JSON with `totalSeconds`, `xp`, and `steps`
-3. Reuse existing step types (`intro`, `tapReveal`, `buildChain`, `summary`) or add new step components under `src/engine/steps/`
+3. Reuse existing step types (`intro`, `tapReveal`, `buildChain`, `summary`) or add new step components under `src/engine/stepTypes/`
 
 ## 📝 License
 

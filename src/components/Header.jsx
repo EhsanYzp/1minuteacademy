@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { getUserStats } from '../services/progress';
+import { getContentSource } from '../services/_contentSource';
 import './Header.css';
 
 function Header() {
   const { user, isSupabaseConfigured } = useAuth();
   const [stats, setStats] = useState({ xp: 0, streak: 0 });
+  const contentSource = getContentSource();
 
   useEffect(() => {
     let mounted = true;
@@ -47,6 +49,12 @@ function Header() {
           <span className="logo-academy">Academy</span>
         </span>
       </Link>
+
+      {contentSource === 'local' && (
+        <div className="env-badge" title="Topics come from content/topics/** (no Supabase)">
+          LOCAL PREVIEW
+        </div>
+      )}
       
       <nav className="nav">
         {user ? (
