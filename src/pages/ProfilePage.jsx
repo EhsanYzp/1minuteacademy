@@ -123,48 +123,69 @@ export default function ProfilePage() {
   const [subError, setSubError] = useState(null);
 
   const subReqIdRef = useRef(0);
-  const subRetryRef = useRef({ tries: 0, timer: null });
+  const subRetryRef = useRef({ tries: 0 });
+  const subInFlightRef = useRef(null);
 
   function isTransientAuthError(e) {
     const msg = String(e?.message ?? e ?? '').toLowerCase();
     return msg.includes('please sign in first') || msg.includes('missing authorization') || msg.includes('invalid supabase session');
   }
 
+  function sleep(ms) {
+    return new Promise((r) => setTimeout(r, ms));
+  }
+
   async function reloadSubscription() {
     if (contentSource === 'local') return;
     if (!showSubscriptionBox) return;
 
-    // Cancel any pending retry
-    if (subRetryRef.current.timer) {
-      clearTimeout(subRetryRef.current.timer);
-      subRetryRef.current.timer = null;
-    }
+    // Dedupe concurrent calls (portal return + metadata change effects can overlap)
+    if (subInFlightRef.current) return subInFlightRef.current;
 
+    subRetryRef.current.tries = 0;
     const reqId = (subReqIdRef.current += 1);
-    try {
+
+    const work = (async () => {
       setSubLoading(true);
       setSubError(null);
-      try {
-        if (user) await refreshSession();
-      } catch {
-        // ignore
-      }
-      const data = await getSubscriptionStatus();
-      if (subReqIdRef.current === reqId) setSubStatus(data);
-    } catch (e) {
-      // Right after returning from Stripe Portal, Supabase can briefly report no session.
-      // Treat that as transient and retry a few times instead of showing an error.
-      if (user && isTransientAuthError(e) && subRetryRef.current.tries < 4) {
-        subRetryRef.current.tries += 1;
-        subRetryRef.current.timer = setTimeout(() => {
-          reloadSubscription();
-        }, 650);
-        return;
+
+      // Up to ~6 seconds total, aimed at post-portal-return session hydration.
+      while (subRetryRef.current.tries < 8) {
+        try {
+          try {
+            if (user) await refreshSession();
+          } catch {
+            // ignore
+          }
+
+          const data = await getSubscriptionStatus();
+          if (subReqIdRef.current === reqId) setSubStatus(data);
+          return;
+        } catch (e) {
+          if (user && isTransientAuthError(e)) {
+            subRetryRef.current.tries += 1;
+            // backoff: 250ms, 350ms, 500ms, ...
+            // eslint-disable-next-line no-await-in-loop
+            await sleep(200 + subRetryRef.current.tries * 150);
+            continue;
+          }
+          if (subReqIdRef.current === reqId) setSubError(e);
+          return;
+        }
       }
 
-      if (subReqIdRef.current === reqId) setSubError(e);
+      // If we timed out, keep the last known status and show a softer message.
+      if (subReqIdRef.current === reqId) {
+        setSubError(new Error('Refreshing your session… please wait a moment and refresh.'));
+      }
+    })();
+
+    subInFlightRef.current = work;
+    try {
+      await work;
     } finally {
       if (subReqIdRef.current === reqId) setSubLoading(false);
+      subInFlightRef.current = null;
     }
   }
 
@@ -214,14 +235,10 @@ export default function ProfilePage() {
       if (contentSource === 'local') return;
       if (!showSubscriptionBox) return;
       try {
-        setSubLoading(true);
-        setSubError(null);
         await reloadSubscription();
       } catch (e) {
         if (!mounted) return;
         setSubError(e);
-      } finally {
-        if (mounted) setSubLoading(false);
       }
     }
     loadSub();
@@ -229,10 +246,6 @@ export default function ProfilePage() {
       mounted = false;
     };
   }, [contentSource, showSubscriptionBox, stripeCustomerId, stripeSubscriptionId]);
-
-  useEffect(() => () => {
-    if (subRetryRef.current.timer) clearTimeout(subRetryRef.current.timer);
-  }, []);
 
   useEffect(() => {
     if (portalReturn !== 'return') return;

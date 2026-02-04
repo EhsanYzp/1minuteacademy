@@ -7,12 +7,12 @@ function sleep(ms) {
 async function getAccessToken({ allowRefresh = true } = {}) {
   // Supabase can briefly report a null session while hydrating
   // from storage after redirects/page-load. Retry + refresh.
-  for (let attempt = 0; attempt < 3; attempt += 1) {
+  for (let attempt = 0; attempt < 8; attempt += 1) {
     const { data } = await supabase.auth.getSession();
     const token = data?.session?.access_token;
     if (token) return token;
 
-    if (attempt === 1 && allowRefresh) {
+    if ((attempt === 1 || attempt === 4) && allowRefresh) {
       try {
         await supabase.auth.refreshSession();
       } catch {
@@ -20,7 +20,8 @@ async function getAccessToken({ allowRefresh = true } = {}) {
       }
     }
 
-    await sleep(150);
+    // Backoff up to ~1s
+    await sleep(Math.min(1000, 150 + attempt * 150));
   }
 
   return null;
