@@ -67,6 +67,11 @@ function Home() {
     return fallbackSubjects;
   }, [topics]);
 
+  // When topics load asynchronously, new cards can mount after the parent
+  // variant animation already completed. Keying the section forces a re-run
+  // so newly added cards (like "quantum") don’t remain invisible.
+  const subjectsKey = useMemo(() => subjects.map((s) => s.id).join('|'), [subjects]);
+
   return (
     <motion.div
       className="home"
@@ -101,6 +106,7 @@ function Home() {
         </motion.div>
 
         <motion.section 
+          key={subjectsKey}
           className="subjects-section"
           variants={containerVariants}
           initial="hidden"

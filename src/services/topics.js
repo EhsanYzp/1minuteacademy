@@ -10,7 +10,9 @@ export async function listTopics() {
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
   const { data, error } = await supabase
     .from('topics')
-    .select('id, subject, title, emoji, color, description, difficulty')
+    // Keep this select resilient: older DB schemas may not have every column
+    // (e.g. `subject`). The landing page only needs a minimal card payload.
+    .select('id, title, emoji, color, description, difficulty')
     .eq('published', true)
     .order('title', { ascending: true });
 
