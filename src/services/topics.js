@@ -8,16 +8,31 @@ export async function listTopics() {
   }
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
-  const { data, error } = await supabase
-    .from('topics')
-    // Keep this select resilient: older DB schemas may not have every column
-    // (e.g. `subject`). The landing page only needs a minimal card payload.
-    .select('id, title, emoji, color, description, difficulty')
-    .eq('published', true)
-    .order('title', { ascending: true });
 
-  if (error) throw error;
-  return data ?? [];
+  // The topics browser needs `subject` for categories.
+  // Keep this resilient: if an older schema lacks a column, retry with a minimal select.
+  const fullSelect = 'id, subject, title, emoji, color, description, difficulty';
+  const minimalSelect = 'id, title, emoji, color, description, difficulty';
+
+  const run = async (columns) => {
+    return supabase
+      .from('topics')
+      .select(columns)
+      .eq('published', true)
+      .order('title', { ascending: true });
+  };
+
+  const first = await run(fullSelect);
+  if (!first.error) return first.data ?? [];
+
+  // Only fall back for schema-ish errors; otherwise surface the real error.
+  const msg = String(first.error?.message ?? '').toLowerCase();
+  const looksLikeMissingColumn = msg.includes('column') && msg.includes('does not exist');
+  if (!looksLikeMissingColumn) throw first.error;
+
+  const second = await run(minimalSelect);
+  if (second.error) throw second.error;
+  return second.data ?? [];
 }
 
 export async function getTopic(topicId) {

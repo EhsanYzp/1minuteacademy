@@ -8,6 +8,22 @@ import { useAuth } from '../context/AuthContext';
 import { getContentSource } from '../services/_contentSource';
 import './TopicsBrowserPage.css';
 
+const CANONICAL_CATEGORIES = [
+  'AI & Agents',
+  'Programming Fundamentals',
+  'Web & Mobile Development',
+  'Data & Analytics',
+  'Cloud & DevOps',
+  'Cybersecurity',
+  'Blockchain & Web3',
+  'Quantum & Physics',
+  'Product & Startups',
+  'Design & UX',
+  'Finance & Economics',
+  'Career & Communication',
+  'General',
+];
+
 function norm(s) {
   return String(s ?? '').trim();
 }
@@ -86,10 +102,34 @@ export default function TopicsBrowserPage() {
     };
   }, [contentSource, isSupabaseConfigured, user]);
 
+  const categoryCounts = useMemo(() => {
+    const counts = new Map();
+
+    // Seed canonical categories so they exist even if empty.
+    for (const c of CANONICAL_CATEGORIES) counts.set(c, 0);
+
+    for (const t of topics) {
+      const c = norm(t.subject) || 'General';
+      counts.set(c, (counts.get(c) ?? 0) + 1);
+    }
+
+    counts.set('All', topics.length);
+    return counts;
+  }, [topics]);
+
   const categories = useMemo(() => {
-    const set = new Set(['All']);
-    for (const t of topics) set.add(norm(t.subject) || 'General');
-    return Array.from(set);
+    const discovered = new Set();
+    for (const t of topics) discovered.add(norm(t.subject) || 'General');
+
+    const out = ['All', ...CANONICAL_CATEGORIES];
+
+    const canonicalSet = new Set(CANONICAL_CATEGORIES);
+    const extra = Array.from(discovered)
+      .filter((c) => c && !canonicalSet.has(c))
+      .sort((a, b) => String(a).localeCompare(String(b)));
+
+    out.push(...extra);
+    return out;
   }, [topics]);
 
   useEffect(() => {
@@ -151,7 +191,8 @@ export default function TopicsBrowserPage() {
                     className={c === activeCategory ? 'cat active' : 'cat'}
                     onClick={() => setActiveCategory(c)}
                   >
-                    {c}
+                    <span className="cat-name">{c}</span>
+                    <span className="cat-count">{categoryCounts.get(c) ?? 0}</span>
                   </button>
                 ))}
               </div>
@@ -199,7 +240,7 @@ export default function TopicsBrowserPage() {
                   <select value={activeCategory} onChange={(e) => setActiveCategory(e.target.value)} aria-label="Category">
                     {categories.map((c) => (
                       <option key={c} value={c}>
-                        {c}
+                        {c} ({categoryCounts.get(c) ?? 0})
                       </option>
                     ))}
                   </select>

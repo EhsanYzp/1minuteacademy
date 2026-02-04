@@ -175,7 +175,7 @@ grant execute on function public.complete_topic(text, integer, integer) to authe
 insert into public.topics (id, subject, title, emoji, color, description, difficulty, lesson, published)
 values (
   'blockchain',
-  'Technology',
+  'Blockchain & Web3',
   'What is Blockchain?',
   '🔗',
   '#4ECDC4',
@@ -247,7 +247,7 @@ on conflict (id) do update set
 insert into public.topics (id, subject, title, emoji, color, description, difficulty, lesson, published)
 values (
   'quantum',
-  'Technology',
+  'Quantum & Physics',
   'Quantum Computing (in 60s)',
   '⚛️',
   '#A06CD5',
