@@ -57,6 +57,8 @@ export default async function handler(req, res) {
       current_period_end: sub.current_period_end ? new Date(sub.current_period_end * 1000).toISOString() : null,
       cancel_at_period_end: Boolean(sub.cancel_at_period_end),
       cancel_at: sub.cancel_at ? new Date(sub.cancel_at * 1000).toISOString() : null,
+      canceled_at: sub.canceled_at ? new Date(sub.canceled_at * 1000).toISOString() : null,
+      ended_at: sub.ended_at ? new Date(sub.ended_at * 1000).toISOString() : null,
       created: sub.created ? new Date(sub.created * 1000).toISOString() : null,
       plan_interval: planInterval,
     });

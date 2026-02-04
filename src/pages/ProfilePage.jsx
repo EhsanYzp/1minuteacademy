@@ -61,6 +61,19 @@ function fmtShortDate(iso) {
   }
 }
 
+function formatStripeStatus(status) {
+  const s = String(status ?? '').toLowerCase();
+  if (!s) return '—';
+  if (s === 'trialing') return 'Trial';
+  if (s === 'active') return 'Active';
+  if (s === 'past_due') return 'Past due';
+  if (s === 'unpaid') return 'Unpaid';
+  if (s === 'canceled') return 'Canceled';
+  if (s === 'incomplete') return 'Incomplete';
+  if (s === 'incomplete_expired') return 'Expired';
+  return s;
+}
+
 export default function ProfilePage() {
   const { user, refreshSession, loading: authLoading } = useAuth();
   const location = useLocation();
@@ -83,6 +96,14 @@ export default function ProfilePage() {
     }
   }, [location.search]);
 
+  const portalReturn = useMemo(() => {
+    try {
+      return new URLSearchParams(location.search).get('portal');
+    } catch {
+      return null;
+    }
+  }, [location.search]);
+
   const [checkoutBanner, setCheckoutBanner] = useState(null); // 'success' | 'error' | null
   const [checkoutBannerText, setCheckoutBannerText] = useState('');
 
@@ -97,6 +118,21 @@ export default function ProfilePage() {
   const [subStatus, setSubStatus] = useState(null);
   const [subLoading, setSubLoading] = useState(false);
   const [subError, setSubError] = useState(null);
+
+  async function reloadSubscription() {
+    if (contentSource === 'local') return;
+    if (!showSubscriptionBox) return;
+    try {
+      setSubLoading(true);
+      setSubError(null);
+      const data = await getSubscriptionStatus();
+      setSubStatus(data);
+    } catch (e) {
+      setSubError(e);
+    } finally {
+      setSubLoading(false);
+    }
+  }
 
   useEffect(() => {
     let mounted = true;
@@ -162,9 +198,26 @@ export default function ProfilePage() {
     };
   }, [contentSource, showSubscriptionBox]);
 
+  useEffect(() => {
+    if (portalReturn !== 'return') return;
+    if (authLoading) return;
+
+    // Returning from Stripe portal: refresh auth + re-fetch Stripe status.
+    // Then clean the URL.
+    (async () => {
+      try {
+        if (user) await refreshSession();
+      } catch {
+        // ignore
+      }
+      await reloadSubscription();
+      navigate('/me', { replace: true });
+    })();
+  }, [portalReturn, authLoading, user, refreshSession, navigate]);
+
   async function onManageSubscription() {
     try {
-      await openCustomerPortal({ returnPath: '/me' });
+      await openCustomerPortal({ returnPath: '/me?portal=return' });
     } catch (e) {
       setSubError(e);
     }
@@ -364,14 +417,28 @@ export default function ProfilePage() {
                     <div className="profile-sub-row profile-sub-error">{subError.message ?? 'Could not load subscription details.'}</div>
                   ) : subStatus ? (
                     (() => {
-                      const endsLabel = subStatus.cancel_at_period_end || subStatus.status === 'canceled' ? 'Ends' : 'Renews';
-                      const endsDate = subStatus.cancel_at || subStatus.current_period_end;
+                      const statusLabel = formatStripeStatus(subStatus.status);
+                      const rawStatus = String(subStatus.status ?? '').toLowerCase();
+                      const isCanceled = rawStatus === 'canceled';
+                      const isScheduledCancel = Boolean(subStatus.cancel_at_period_end);
+                      const periodDate = subStatus.current_period_end;
+                      const endedDate = subStatus.ended_at || subStatus.canceled_at || subStatus.cancel_at || subStatus.current_period_end;
+
+                      const dateLabel = isCanceled ? 'Ended' : isScheduledCancel ? 'Ends' : 'Renews';
+                      const dateValue = isCanceled ? endedDate : periodDate;
+
+                      const cancellationLabel = isCanceled
+                        ? 'Canceled'
+                        : isScheduledCancel
+                          ? 'Scheduled'
+                          : 'Not scheduled';
+
                       return (
                     <div className="profile-sub-grid">
-                      <div className="profile-sub-item"><span>Status</span><strong>{subStatus.status ?? '—'}</strong></div>
-                      <div className="profile-sub-item"><span>{endsLabel}</span><strong>{fmtShortDate(endsDate)}</strong></div>
+                      <div className="profile-sub-item"><span>Status</span><strong>{statusLabel}</strong></div>
+                      <div className="profile-sub-item"><span>{dateLabel}</span><strong>{fmtShortDate(dateValue)}</strong></div>
                       <div className="profile-sub-item"><span>Started</span><strong>{fmtShortDate(subStatus.created)}</strong></div>
-                      <div className="profile-sub-item"><span>Canceling</span><strong>{subStatus.cancel_at_period_end ? 'Yes' : 'No'}</strong></div>
+                      <div className="profile-sub-item"><span>Cancellation</span><strong>{cancellationLabel}</strong></div>
                     </div>
                       );
                     })()
