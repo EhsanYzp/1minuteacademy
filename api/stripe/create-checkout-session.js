@@ -98,10 +98,14 @@ export default async function handler(req, res) {
       customer_email: user.email || undefined,
       metadata: {
         user_id: user.id,
+        interval,
+        price_id: priceId,
       },
       subscription_data: {
         metadata: {
           user_id: user.id,
+          interval,
+          price_id: priceId,
         },
       },
     });

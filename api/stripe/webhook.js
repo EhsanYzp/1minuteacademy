@@ -49,6 +49,8 @@ export default async function handler(req, res) {
       const userId = session?.client_reference_id || session?.metadata?.user_id;
       const subscriptionId = session?.subscription;
       const customerId = session?.customer;
+      const interval = session?.metadata?.interval;
+      const priceId = session?.metadata?.price_id;
 
       if (userId) {
         await supabaseAdmin.auth.admin.updateUserById(userId, {
@@ -56,6 +58,8 @@ export default async function handler(req, res) {
             plan: 'pro',
             stripe_customer_id: customerId || undefined,
             stripe_subscription_id: subscriptionId || undefined,
+            plan_interval: typeof interval === 'string' ? interval : undefined,
+            stripe_price_id: typeof priceId === 'string' ? priceId : undefined,
           },
         });
       }
@@ -69,6 +73,8 @@ export default async function handler(req, res) {
           user_metadata: {
             plan: 'free',
             stripe_subscription_id: null,
+            plan_interval: null,
+            stripe_price_id: null,
           },
         });
       }

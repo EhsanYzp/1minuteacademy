@@ -38,10 +38,22 @@ function getLessonTotalSeconds(lesson) {
   return Number.isFinite(n) && n > 0 ? n : 60;
 }
 
+function formatPlanForProfile(user, tier) {
+  if (tier === 'pro') {
+    const interval = String(user?.user_metadata?.plan_interval ?? '').toLowerCase();
+    if (interval === 'year' || interval === 'yearly' || interval === 'annual') return 'Pro (Yearly)';
+    if (interval === 'month' || interval === 'monthly') return 'Pro (Monthly)';
+    return 'Pro';
+  }
+  if (tier === 'free') return 'Free (Account)';
+  return 'Free (Guest)';
+}
+
 export default function ProfilePage() {
   const { user } = useAuth();
   const contentSource = getContentSource();
   const tier = getCurrentTier(user);
+  const planLabel = formatPlanForProfile(user, tier);
   const showTakeaways = canSeeTakeaways(tier);
   const showReview = canReview(tier);
 
@@ -215,6 +227,14 @@ export default function ProfilePage() {
             <div className="profile-note">
               <strong>Signed in</strong>
               <div className="profile-email">{user?.email ?? '—'}</div>
+              <div className="profile-plan-row">
+                <span>Plan: <strong>{planLabel}</strong></span>
+                {tier !== 'pro' && (
+                  <Link className="profile-upgrade-btn" to="/upgrade">
+                    Upgrade
+                  </Link>
+                )}
+              </div>
             </div>
           )}
 
@@ -247,10 +267,11 @@ export default function ProfilePage() {
           {!showTakeaways && (
             <div className="profile-note" style={{ marginBottom: 12 }}>
               <strong>Free plan</strong>
-              <div>
-                Your current plan is <strong>{formatTierLabel(tier)}</strong>. Upgrade to unlock review mode + saved takeaways.
-                {' '}
-                <Link to="/upgrade">Upgrade</Link>
+              <div className="profile-note-row">
+                <div>
+                  Your current plan is <strong>{planLabel}</strong>. Upgrade to unlock review mode + saved takeaways.
+                </div>
+                <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
               </div>
             </div>
           )}
@@ -378,7 +399,7 @@ export default function ProfilePage() {
                                   )
                                 ) : (
                                   <div className="progress-takeaways-empty">
-                                    🔒 Takeaways are Pro-only. <Link to="/upgrade">Upgrade</Link>
+                                    🔒 Takeaways are Pro-only. <Link className="profile-upgrade-inline" to="/upgrade">Upgrade</Link>
                                   </div>
                                 )
                               ) : (
@@ -460,7 +481,7 @@ export default function ProfilePage() {
                           )
                         ) : (
                           <div className="progress-takeaways-empty">
-                            🔒 Takeaways are Pro-only. <Link to="/upgrade">Upgrade</Link>
+                            🔒 Takeaways are Pro-only. <Link className="profile-upgrade-inline" to="/upgrade">Upgrade</Link>
                           </div>
                         )
                       ) : (
