@@ -77,12 +77,11 @@ drop policy if exists "topics_select_all" on public.topics;
 create policy "topics_select_all" on public.topics
 for select using (published = true);
 
--- (Day 0) allow authenticated users to insert/update topics (tighten later to admin role)
-drop policy if exists "topics_write_authed" on public.topics;
-create policy "topics_write_authed" on public.topics
-for all to authenticated
-using (true)
-with check (true);
+-- IMPORTANT (Security): do NOT allow normal authenticated users to write topics.
+-- Content is production-critical and should only be written by trusted admin paths.
+-- Recommended options:
+--   1) Use the service role key from server-side code / scripts (bypasses RLS)
+--   2) Add an explicit admin-only policy (see supabase/003_lockdown_topics_rls.sql)
 
 -- Stats/progress: only owner
 drop policy if exists "user_stats_owner" on public.user_stats;
