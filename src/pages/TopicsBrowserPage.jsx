@@ -389,7 +389,7 @@ export default function TopicsBrowserPage() {
 
     out.push(...extra);
     return out;
-  }, [topics]);
+  }, [sidebarCounts]);
 
   useEffect(() => {
     if (!categories.includes(activeCategory)) setActiveCategory('All');
@@ -611,6 +611,23 @@ export default function TopicsBrowserPage() {
                     </button>
                   ))}
                 </div>
+
+                {activeCategory !== 'All' && subcategories.length > 1 && (
+                  <div className="chip-row" aria-label="Subcategories">
+                    {subcategories.map((sc) => (
+                      <button
+                        key={`subchip-${activeCategory}:${sc}`}
+                        type="button"
+                        className={sc === activeSubcategory ? 'chip active' : 'chip'}
+                        onClick={() => setActiveSubcategory(sc)}
+                        title={`${sc} (${subcategoryCounts.get(sc) ?? 0})`}
+                      >
+                        <span className="chip-name">{sc}</span>
+                        <span className="chip-count">{subcategoryCounts.get(sc) ?? 0}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
 
                 <div className="chip-row" aria-label="Filters">
                   <button type="button" className={filter === 'all' ? 'chip active' : 'chip'} onClick={() => setFilter('all')}>
