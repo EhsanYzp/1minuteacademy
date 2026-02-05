@@ -59,6 +59,8 @@ function LessonPage() {
   const [ratingError, setRatingError] = useState(null);
   const submittedCompletionRef = useRef(false);
 
+  const canStart = useMemo(() => canStartTopic({ tier, topicRow }), [tier, topicRow]);
+
   const lesson = useMemo(() => topicRow?.lesson ?? getLessonDefaults(), [topicRow]);
   const totalSeconds = useMemo(() => Number(lesson?.totalSeconds ?? 60), [lesson]);
   const summaryPoints = useMemo(() => getSummaryPointsFromLesson(lesson), [lesson]);
@@ -272,8 +274,6 @@ function LessonPage() {
     navigate,
     topicId,
   ]);
-
-  const canStart = useMemo(() => canStartTopic({ tier, topicRow }), [tier, topicRow]);
 
   const handleComplete = useCallback(() => {
     setIsCompleted(true);
