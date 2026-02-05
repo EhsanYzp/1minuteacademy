@@ -301,7 +301,6 @@ async function main() {
     lesson: {
       version: 1,
       totalSeconds: 60,
-      xp: 60,
       steps,
     },
   };

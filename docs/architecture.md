@@ -8,7 +8,7 @@ You do *not* create React components per module.
 ### 1) Content (thousands of modules)
 - Stored in Supabase table: `public.topics`
   - `id`, `subject`, `title`, `emoji`, `color`, `description`, `difficulty`, `published`
-  - `lesson` (JSON): `{ totalSeconds, xp, steps: [...] }`
+  - `lesson` (JSON): `{ totalSeconds, steps: [...] }`
 
 #### Content sources (dev vs prod)
 
@@ -35,14 +35,14 @@ When you add thousands of modules, you mostly add JSON files/rows — the engine
 ### 3) Accounts + progress
 - Auth: Supabase Auth
 - Progress tables:
-  - `public.user_stats` (xp, streak)
+  - `public.user_stats` (one_ma_balance, streak)
   - `public.user_topic_progress` (completed count, best seconds)
 - Completion is written atomically via RPC `public.complete_topic(...)`
 
 #### User experience surfaces
 
 - Profile route: `/me`
-  - Shows XP/streak + per-topic progress.
+  - Shows 1MA balance/streak + per-topic progress.
 - Landing page topic cards
   - Shows a **✅ Completed** badge when `user_topic_progress.completed_count > 0` for that topic.
 

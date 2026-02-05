@@ -11,10 +11,11 @@ import { useAuth } from '../context/AuthContext';
 import { canReview, canSeeTakeaways, canStartTopic, canTrackProgress, formatTierLabel, getCurrentTier } from '../services/entitlements';
 import StarRating from '../components/StarRating';
 import { getMyTopicRating, setMyTopicRating } from '../services/ratings';
+import OneMAIcon from '../components/OneMAIcon';
 import './LessonPage.css';
 
 function getLessonDefaults() {
-  return { totalSeconds: 60, xp: 50, steps: [] };
+  return { totalSeconds: 60, steps: [] };
 }
 
 function getSummaryPointsFromLesson(lesson) {
@@ -51,7 +52,6 @@ function LessonPage() {
 
   const lesson = useMemo(() => topicRow?.lesson ?? getLessonDefaults(), [topicRow]);
   const totalSeconds = useMemo(() => Number(lesson?.totalSeconds ?? 60), [lesson]);
-  const xpAward = useMemo(() => Number(lesson?.xp ?? 50), [lesson]);
   const summaryPoints = useMemo(() => getSummaryPointsFromLesson(lesson), [lesson]);
 
   const canStart = useMemo(() => canStartTopic({ tier, topicRow }), [tier, topicRow]);
@@ -175,7 +175,7 @@ function LessonPage() {
       try {
         setSubmittingCompletion(true);
         setCompletionError(null);
-        const result = await completeTopic({ topicId, xp: xpAward, seconds: totalSeconds });
+        const result = await completeTopic({ topicId, seconds: totalSeconds });
         if (mounted) setCompletionResult(result);
       } catch (e) {
         if (mounted) setCompletionError(e);
@@ -188,7 +188,7 @@ function LessonPage() {
     return () => {
       mounted = false;
     };
-  }, [isStarted, isCompleted, topicRow, topicId, xpAward, totalSeconds, canAttemptSaveProgress]);
+  }, [isStarted, isCompleted, topicRow, topicId, totalSeconds, canAttemptSaveProgress]);
 
   // Calculate progress based on time elapsed
   const progress = totalSeconds > 0 ? ((totalSeconds - timeRemaining) / totalSeconds) * 100 : 0;
@@ -334,14 +334,55 @@ function LessonPage() {
             
             <div className="completion-stats">
               <div className="stat">
-                <span className="stat-value">+{xpAward}</span>
-                <span className="stat-label">XP Earned</span>
+                <span className="stat-value">
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                      <OneMAIcon size={18} />
+                      <span>
+                        +{Number(completionResult?.awarded_one_ma ?? 0) || 0}
+                      </span>
+                    </span>
+                  </span>
+                </span>
+                <span className="stat-label">1MA Collected</span>
               </div>
               <div className="stat">
                 <span className="stat-value">🔥 {completionResult?.streak ?? '—'}</span>
                 <span className="stat-label">Streak</span>
               </div>
             </div>
+
+            {tier !== 'pro' && (
+              <div className="completion-panel" style={{ marginTop: 12 }}>
+                <p style={{ margin: 0 }}>
+                  <strong>Pro perk:</strong> collect <strong>1MA</strong> every time you finish a module.
+                </p>
+                <p style={{ margin: '8px 0 0', opacity: 0.85 }}>
+                  Upgrade to start stacking 1MA collectibles.
+                </p>
+                <div style={{ marginTop: 10, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                  <button onClick={() => navigate('/upgrade')}>Unlock 1MA (Pro)</button>
+                </div>
+              </div>
+            )}
+
+            {tier === 'pro' && completionResult && Number(completionResult?.awarded_one_ma ?? 0) > 0 && (
+              <motion.div
+                className="completion-panel"
+                initial={{ scale: 0.98, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.25 }}
+                style={{ marginTop: 12 }}
+              >
+                <p style={{ margin: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <OneMAIcon size={18} />
+                  <strong>+1 1MA</strong> added to your balance.
+                </p>
+                <p style={{ margin: '8px 0 0', opacity: 0.85 }}>
+                  Balance: <strong>{Number(completionResult?.one_ma_balance ?? 0)}</strong>
+                </p>
+              </motion.div>
+            )}
 
             <div className="completion-panel completion-progress">
               {!canSaveProgress || !user ? (

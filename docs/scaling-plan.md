@@ -311,7 +311,7 @@ Notes
 - JSONB lesson storage is fine now, but step-level analytics and recommendations become difficult if everything is opaque JSON.
 
 **What to change**
-- Keep JSONB for rendering, but denormalize important fields into columns (duration, step_count, xp, version).
+- Keep JSONB for rendering, but denormalize important fields into columns (duration, step_count, one_ma_balance, version).
 - Only extract steps into separate tables if/when you need step-level querying.
 
 **Acceptance criteria**

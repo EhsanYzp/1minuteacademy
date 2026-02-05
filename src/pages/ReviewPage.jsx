@@ -8,7 +8,7 @@ import { canReview, formatTierLabel, getCurrentTier } from '../services/entitlem
 import './ReviewPage.css';
 
 function getLessonDefaults() {
-  return { totalSeconds: 60, xp: 50, steps: [] };
+  return { totalSeconds: 60, steps: [] };
 }
 
 export default function ReviewPage() {

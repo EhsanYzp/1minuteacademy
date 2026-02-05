@@ -13,7 +13,7 @@
 - **🎨 Beautiful Design** - Warm, playful UI with smooth animations
 - **📱 Responsive** - Works on all devices
 - **🎯 Interactive Content** - Click, tap, and explore to learn
-- **👤 Accounts + Profile** - Sign in, view your profile, and track XP/progress
+- **👤 Accounts + Profile** - Sign in, view your profile, and track your 1MA balance/progress
 
 ## 🚀 Getting Started
 
@@ -35,7 +35,7 @@ npm run dev
 npm run build
 ```
 
-### Supabase Setup (Required for Lessons + XP/Streak)
+### Supabase Setup (Required for Lessons + 1MA/Streak)
 
 1. Create a Supabase project
 2. In Supabase SQL Editor, run the schema in `supabase/001_init.sql`
@@ -96,6 +96,7 @@ See: `docs/content-generation.md` for the content playbook.
 ### Troubleshooting progress not saving
 
 - If lesson completion shows an RPC error, re-run the SQL in [supabase/001_init.sql](supabase/001_init.sql) to update `public.complete_topic(...)`.
+- If your Supabase project was created before the 1MA change, also apply [supabase/010_one_ma_collectible.sql](supabase/010_one_ma_collectible.sql).
 - Ensure you are running `npm run dev` (Supabase mode), not `npm run dev:local` (Local Preview).
 
 ### Local Preview (no Supabase push while iterating)
@@ -106,7 +107,7 @@ When you’re drafting a new module, you can run the app using local JSON from `
 
 In this mode:
 - Topics/lessons come from `content/topics/**` (bundled by Vite)
-- XP/streak are stored in `localStorage`
+- 1MA balance/streak are stored in `localStorage` (1MA awarding is Pro-only)
 - `/lesson/:topicId` does not require login
 
 When you’re happy, publish to Supabase with `npm run content:sync`.
@@ -197,7 +198,7 @@ The app uses a custom design system with:
 - **Framer Motion** - Animations
 - **React Router** - Navigation
 - **CSS Modules** - Styling
-- **Supabase (Auth + Postgres + RLS + RPC)** - Accounts, topics, XP/streak/progress
+- **Supabase (Auth + Postgres + RLS + RPC)** - Accounts, topics, 1MA balance/streak/progress
 
 ## 📁 Project Structure
 
@@ -226,14 +227,14 @@ supabase/
 1. **Choose a Topic** - Browse available subjects on the home page
 2. **Review & Start** - See what you'll learn and hit the start button
 3. **Learn Interactively** - Engage with animated, interactive content for 60 seconds
-4. **Celebrate!** - Get your achievement and XP rewards
+4. **Celebrate!** - Get your achievement (and collect 1MA if you're Pro)
 
 ## 🤝 Contributing
 
 Contributions are welcome! To add a new topic:
 
 1. Insert a row into `topics` (see the seeded `blockchain` example)
-2. Provide a `lesson` JSON with `totalSeconds`, `xp`, and `steps`
+2. Provide a `lesson` JSON with `totalSeconds` and `steps`
 3. Reuse existing step types (`intro`, `tapReveal`, `buildChain`, `summary`) or add new step components under `src/engine/stepTypes/`
 
 ## 📝 License

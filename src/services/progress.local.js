@@ -1,5 +1,17 @@
 const STATS_KEY = 'oma_local_user_stats_v1';
 const TOPIC_PROGRESS_KEY = 'oma_local_topic_progress_v1';
+const DEV_TIER_KEY = 'oma_dev_tier';
+
+function getDevTier() {
+  try {
+    const raw = localStorage.getItem(DEV_TIER_KEY);
+    const v = String(raw ?? '').toLowerCase();
+    if (v === 'guest' || v === 'free' || v === 'pro') return v;
+  } catch {
+    // ignore
+  }
+  return 'guest';
+}
 
 function todayISO() {
   return new Date().toISOString().slice(0, 10);
@@ -8,15 +20,15 @@ function todayISO() {
 function readStats() {
   try {
     const raw = localStorage.getItem(STATS_KEY);
-    if (!raw) return { xp: 0, streak: 0, last_completed_date: null };
+    if (!raw) return { one_ma_balance: 0, streak: 0, last_completed_date: null };
     const parsed = JSON.parse(raw);
     return {
-      xp: Number(parsed.xp ?? 0),
+      one_ma_balance: Number(parsed.one_ma_balance ?? parsed.xp ?? 0),
       streak: Number(parsed.streak ?? 0),
       last_completed_date: parsed.last_completed_date ?? null,
     };
   } catch {
-    return { xp: 0, streak: 0, last_completed_date: null };
+    return { one_ma_balance: 0, streak: 0, last_completed_date: null };
   }
 }
 
@@ -54,7 +66,7 @@ export async function getLocalTopicProgress() {
   }));
 }
 
-export async function completeLocalTopic({ topicId, xp = 50, seconds = 60 }) {
+export async function completeLocalTopic({ topicId, seconds = 60 }) {
   const stats = readStats();
   const today = todayISO();
 
@@ -70,8 +82,11 @@ export async function completeLocalTopic({ topicId, xp = 50, seconds = 60 }) {
     streak = last === yesterday ? streak + 1 : 1;
   }
 
+  const tier = getDevTier();
+  const awarded_one_ma = tier === 'pro' ? 1 : 0;
+
   const next = {
-    xp: (stats.xp ?? 0) + Number(xp ?? 0),
+    one_ma_balance: (stats.one_ma_balance ?? 0) + awarded_one_ma,
     streak,
     last_completed_date: today,
   };
@@ -97,5 +112,5 @@ export async function completeLocalTopic({ topicId, xp = 50, seconds = 60 }) {
     writeTopicProgress(map);
   }
 
-  return { xp: next.xp, streak: next.streak };
+  return { one_ma_balance: next.one_ma_balance, streak: next.streak, awarded_one_ma };
 }

@@ -11,6 +11,7 @@ import { getSubscriptionStatus, openCustomerPortal } from '../services/billing';
 import { deleteAccount, pauseAccount, resumeAccount } from '../services/account';
 import StarRating from '../components/StarRating';
 import { listMyTopicRatings, setMyTopicRating } from '../services/ratings';
+import OneMAIcon from '../components/OneMAIcon';
 import './ProfilePage.css';
 
 function fmtDate(iso) {
@@ -137,7 +138,7 @@ export default function ProfilePage() {
   const [checkoutBanner, setCheckoutBanner] = useState(null); // 'success' | 'error' | null
   const [checkoutBannerText, setCheckoutBannerText] = useState('');
 
-  const [stats, setStats] = useState({ xp: 0, streak: 0, last_completed_date: null });
+  const [stats, setStats] = useState({ one_ma_balance: 0, streak: 0, last_completed_date: null });
   const [progressRows, setProgressRows] = useState([]);
   const [topics, setTopics] = useState([]);
   const [topicsWithLessons, setTopicsWithLessons] = useState([]);
@@ -629,7 +630,7 @@ export default function ProfilePage() {
             <div className="profile-emoji">🧑‍🚀</div>
             <div>
               <h1>Your profile</h1>
-              <p>Track your XP, streak, and completed topics.</p>
+              <p>Track your 1MA balance, streak, and completed topics.</p>
             </div>
           </div>
 
@@ -653,8 +654,13 @@ export default function ProfilePage() {
 
               <div className="profile-stats">
                 <div className="profile-stat">
-                  <div className="profile-stat-label">⭐ XP</div>
-                  <div className="profile-stat-value">{Number(stats?.xp ?? 0)}</div>
+                  <div className="profile-stat-label">
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                      <OneMAIcon size={16} />
+                      1MA
+                    </span>
+                  </div>
+                  <div className="profile-stat-value">{Number(stats?.one_ma_balance ?? 0)}</div>
                 </div>
                 <div className="profile-stat">
                   <div className="profile-stat-label">🔥 Streak</div>
@@ -665,6 +671,18 @@ export default function ProfilePage() {
                   <div className="profile-stat-value small">{stats?.last_completed_date ?? '—'}</div>
                 </div>
               </div>
+
+              {tier !== 'pro' && contentSource !== 'local' && (
+                <div className="profile-note" style={{ margin: '12px 0 0' }}>
+                  <strong>Collect 1MA with Pro</strong>
+                  <div className="profile-note-row">
+                    <div>
+                      Pro members earn <strong>1MA</strong> every time they complete a module — a collectible you can stack.
+                    </div>
+                    <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
+                  </div>
+                </div>
+              )}
 
               <div className="profile-section-header">
                 <h2>Your learning</h2>

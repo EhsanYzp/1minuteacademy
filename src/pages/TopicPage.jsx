@@ -42,7 +42,7 @@ function normalizeTopic(topicRow, topicId) {
     learningPoints:
       learningPoints.length > 0
         ? learningPoints
-        : ['⏱️ Designed to fit in 60 seconds', '🎮 Interactive, game-like steps', '🏁 Finish and earn XP'],
+        : ['⏱️ Designed to fit in 60 seconds', '🎮 Interactive, game-like steps', '🪙 Finish and collect 1MA (Pro)'],
     funFact:
       typeof lesson?.version === 'string'
         ? `Lesson version: ${lesson.version}`

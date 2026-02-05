@@ -30,7 +30,7 @@ Required fields:
 - `id`: stable slug (used in URLs like `/topic/:id` and `/lesson/:id`)
 - `subject`: category grouping (e.g. `Technology`)
 - `title`, `emoji`, `color`, `description`, `difficulty`, `published`
-- `lesson`: `{ version, totalSeconds, xp, steps: [...] }`
+- `lesson`: `{ version, totalSeconds, steps: [...] }`
 
 Validation:
 - Schemas live in `content/schema/`
@@ -77,7 +77,7 @@ Catalog:
 
 In local preview:
 - The app reads topics/lessons from `content/topics/**`
-- XP/streak are stored in `localStorage`
+- 1MA balance/streak are stored in `localStorage`
 - `/lesson/:topicId` does not require login
 - Header shows a `LOCAL PREVIEW` badge
 

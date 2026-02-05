@@ -35,10 +35,10 @@ create trigger trg_topics_updated_at
 before update on public.topics
 for each row execute procedure public.set_updated_at();
 
--- User stats (xp + streak)
+-- User stats (1MA balance + streak)
 create table if not exists public.user_stats (
   user_id uuid primary key references auth.users(id) on delete cascade,
-  xp integer not null default 0,
+  one_ma_balance integer not null default 0,
   streak integer not null default 0,
   last_completed_date date,
   created_at timestamptz not null default now(),
@@ -100,13 +100,12 @@ for all to authenticated
 using (user_id = auth.uid())
 with check (user_id = auth.uid());
 
--- RPC: complete a topic => award XP + update streak + progress, atomically
+-- RPC: complete a topic => award 1MA (Pro only) + update streak + progress, atomically
 create or replace function public.complete_topic(
   p_topic_id text,
-  p_xp integer,
   p_seconds integer
 )
-returns table (xp integer, streak integer)
+returns table (one_ma_balance integer, streak integer, awarded_one_ma integer)
 language plpgsql
 security definer
 set search_path = public
@@ -116,7 +115,11 @@ declare
   v_today date := current_date;
   v_last date;
   v_streak integer;
-  v_xp integer;
+  v_balance integer;
+  v_awarded integer := 0;
+  v_plan text;
+  v_paused boolean;
+  v_is_pro boolean;
 begin
   if v_user_id is null then
     raise exception 'Not authenticated';
@@ -127,8 +130,8 @@ begin
   values (v_user_id)
   on conflict (user_id) do nothing;
 
-  select us.last_completed_date, us.streak, us.xp
-  into v_last, v_streak, v_xp
+  select us.last_completed_date, us.streak, us.one_ma_balance
+  into v_last, v_streak, v_balance
   from public.user_stats as us
   where us.user_id = v_user_id
   for update;
@@ -145,10 +148,20 @@ begin
     v_streak := 1;
   end if;
 
-  v_xp := coalesce(v_xp, 0) + coalesce(p_xp, 0);
+  -- Determine tier from auth metadata (mirrors frontend entitlements)
+  select
+    lower(coalesce(au.raw_user_meta_data->>'plan', au.raw_app_meta_data->>'plan', 'free')),
+    coalesce((au.raw_user_meta_data->>'paused')::boolean, false)
+  into v_plan, v_paused
+  from auth.users au
+  where au.id = v_user_id;
+
+  v_is_pro := (v_plan in ('pro', 'premium')) and not v_paused;
+  v_awarded := case when v_is_pro then 1 else 0 end;
+  v_balance := coalesce(v_balance, 0) + v_awarded;
 
   update public.user_stats
-    set xp = v_xp,
+    set one_ma_balance = v_balance,
         streak = v_streak,
         last_completed_date = v_today
   where user_id = v_user_id;
@@ -166,13 +179,13 @@ begin
     completed_count = public.user_topic_progress.completed_count + 1,
     last_completed_at = now();
 
-  return query select v_xp as xp, v_streak as streak;
+  return query select v_balance as one_ma_balance, v_streak as streak, v_awarded as awarded_one_ma;
 end;
 $$;
 
 -- Allow authenticated users to call the RPC
-revoke all on function public.complete_topic(text, integer, integer) from public;
-grant execute on function public.complete_topic(text, integer, integer) to authenticated;
+revoke all on function public.complete_topic(text, integer) from public;
+grant execute on function public.complete_topic(text, integer) to authenticated;
 
 -- -----------------------------------------------------------------------------
 -- CONTENT SEEDS (DAY 0 ONLY)
@@ -199,7 +212,6 @@ values (
   jsonb_build_object(
     'version', 1,
     'totalSeconds', 60,
-    'xp', 50,
     'steps', jsonb_build_array(
       jsonb_build_object(
         'id', 'intro',
@@ -271,7 +283,6 @@ values (
   jsonb_build_object(
     'version', 1,
     'totalSeconds', 60,
-    'xp', 60,
     'steps', jsonb_build_array(
       jsonb_build_object(
         'id', 'intro',
