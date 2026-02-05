@@ -95,11 +95,19 @@
 
 .profile-title h1 {
   margin: 0;
+  font-size: 2.2rem;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .profile-title p {
   margin: 6px 0 0;
   color: var(--text-secondary);
+  font-weight: 650;
 }
 
 .profile-note {
@@ -439,28 +447,30 @@
   }
 }
 
-.stat {
-  background: rgba(160, 108, 213, 0.08);
+.profile-stat {
+  background: linear-gradient(135deg, rgba(160, 108, 213, 0.08) 0%, rgba(78, 205, 196, 0.07) 100%);
   border-radius: var(--radius-lg);
   padding: var(--space-md);
-  border: 2px solid rgba(160, 108, 213, 0.15);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.05);
 }
 
-.stat-label {
-  font-weight: 700;
+.profile-stat-label {
+  font-weight: 850;
   color: var(--text-secondary);
   font-size: 0.95rem;
 }
 
-.stat-value {
-  margin-top: 4px;
-  font-size: 1.6rem;
-  font-weight: 800;
+.profile-stat-value {
+  margin-top: 6px;
+  font-size: 1.75rem;
+  font-weight: 950;
+  letter-spacing: -0.01em;
 }
 
-.stat-value.small {
+.profile-stat-value.small {
   font-size: 1.05rem;
-  font-weight: 700;
+  font-weight: 750;
   color: var(--text-primary);
 }
 
@@ -470,6 +480,10 @@
   align-items: baseline;
   gap: var(--space-md);
   margin-bottom: var(--space-md);
+}
+
+.profile-section-header-spaced {
+  margin-top: 22px;
 }
 
 .profile-section-header h2 {
@@ -562,6 +576,53 @@
 .ratings-list {
   display: grid;
   gap: 10px;
+}
+
+.ratings-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.ratings-count {
+  color: var(--text-secondary);
+  font-weight: 750;
+}
+
+.ratings-search {
+  flex: 1;
+  min-width: 240px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.ratings-search-icon {
+  opacity: 0.65;
+}
+
+.ratings-search input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.ratings-clear {
+  border: none;
+  background: transparent;
+  color: rgba(45, 52, 54, 0.65);
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .rating-row {

@@ -329,6 +329,11 @@ export default function UpgradePage() {
             <div className="tier-rule">Rule of thumb: only <strong>Beginner</strong> topics are available without Pro.</div>
           </div>
 
+          <div className="upgrade-section upgrade-section-spaced">
+            <div className="upgrade-section-title">Pick a Pro plan</div>
+            <div className="upgrade-section-sub">Cancel anytime in Stripe Portal. Pro unlocks advanced modules, review mode, saved takeaways, and ratings.</div>
+          </div>
+
           <div className="upgrade-grid" id="pro-plans">
             <div className={`plan ${tier === 'pro' && proInterval === 'month' ? 'current' : ''}`}>
               <div className="plan-title">Monthly</div>
@@ -338,6 +343,7 @@ export default function UpgradePage() {
                 <li>Review mode (no timer)</li>
                 <li>Saved takeaways in your profile</li>
                 <li>Progress tracking</li>
+                <li>Rate modules with stars</li>
               </ul>
               <button
                 className="plan-cta"
