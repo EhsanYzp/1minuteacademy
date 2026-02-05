@@ -190,7 +190,7 @@ function LessonPage() {
             </>
           ) : completionResult ? (
             <p style={{ margin: 0 }}>
-              ✅ Progress saved {contentSource === 'local' ? 'locally' : 'to Supabase'}.
+              ✅ Progress saved.
             </p>
           ) : (
             <p style={{ margin: 0, opacity: 0.8 }}>✅ Completed.</p>
