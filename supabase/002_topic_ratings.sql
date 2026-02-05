@@ -11,6 +11,9 @@ create table if not exists public.topic_ratings (
   primary key (user_id, topic_id)
 );
 
+-- New installs: ensure topic_id lookups are fast (no need for CONCURRENTLY here)
+create index if not exists topic_ratings_topic_id_idx on public.topic_ratings(topic_id);
+
 drop trigger if exists trg_topic_ratings_updated_at on public.topic_ratings;
 create trigger trg_topic_ratings_updated_at
 before update on public.topic_ratings

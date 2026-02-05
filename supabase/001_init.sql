@@ -62,6 +62,10 @@ create table if not exists public.user_topic_progress (
   primary key (user_id, topic_id)
 );
 
+-- New installs: speed up profile ordering queries (no need for CONCURRENTLY here)
+create index if not exists user_topic_progress_user_last_idx
+on public.user_topic_progress(user_id, last_completed_at desc);
+
 drop trigger if exists trg_user_topic_progress_updated_at on public.user_topic_progress;
 create trigger trg_user_topic_progress_updated_at
 before update on public.user_topic_progress

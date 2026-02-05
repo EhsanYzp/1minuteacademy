@@ -172,7 +172,7 @@ Notes
 
 ---
 
-### P1.3 Add missing indexes (ratings + progress)
+### P1.3 Add missing indexes (ratings + progress) ✅ DONE
 
 **Why it matters**
 - Ratings aggregation filters by `topic_id`, but the table’s primary key is `(user_id, topic_id)`. That’s not optimal for `WHERE topic_id = ...`.
@@ -187,6 +187,20 @@ Notes
 **Acceptance criteria**
 - Ratings summaries remain fast as ratings volume grows.
 - Profile progress loads fast for heavy users.
+
+**Status**
+- ✅ Implemented in this repo.
+
+**What I changed**
+- Added index `topic_ratings_topic_id_idx` on `public.topic_ratings(topic_id)`.
+- Added index `user_topic_progress_user_last_idx` on `public.user_topic_progress(user_id, last_completed_at desc)`.
+
+**How to apply (existing Supabase project)**
+- Run `supabase/008_indexes_ratings_progress.sql` in Supabase SQL editor.
+
+Notes
+- Supabase SQL editor runs in a transaction, so this migration avoids `CONCURRENTLY`.
+- If you need non-blocking index builds on a busy production DB, run the commented `CONCURRENTLY` statements from that file via `psql` (outside a transaction).
 
 ---
 
