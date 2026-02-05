@@ -1,17 +1,13 @@
 import { motion } from 'framer-motion';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import LessonReview from '../engine/LessonReview';
+import { StoryReview } from '../engine/story';
 import { getTopic } from '../services/topics';
 import { useAuth } from '../context/AuthContext';
 import { canReview, formatTierLabel, getCurrentTier } from '../services/entitlements';
 import { compileJourneyFromTopic } from '../engine/journey/compileJourney';
 import JourneyBlocks from '../engine/journey/JourneyBlocks';
 import './ReviewPage.css';
-
-function getLessonDefaults() {
-  return { totalSeconds: 60, steps: [] };
-}
 
 function normalizeTierForJourney(tier) {
   if (tier === 'pro' || tier === 'paused') return tier;
@@ -53,11 +49,12 @@ export default function ReviewPage() {
     };
   }, [topicId]);
 
-  const lesson = useMemo(() => topicRow?.lesson ?? getLessonDefaults(), [topicRow]);
+  // Story-based content (4 beats + quiz)
+  const hasStory = useMemo(() => Boolean(topicRow?.story && topicRow?.quiz), [topicRow]);
 
   const journey = useMemo(
-    () => compileJourneyFromTopic(topicRow ?? { lesson }),
-    [topicRow, lesson]
+    () => compileJourneyFromTopic(topicRow),
+    [topicRow]
   );
 
   const journeyCtx = useMemo(() => {
@@ -116,18 +113,25 @@ export default function ReviewPage() {
             </div>
           );
         }
+        // Use StoryReview for story-based content
+        if (!hasStory) {
+          return (
+            <div className="review-error">
+              <h2>⚠️ No story content</h2>
+              <p style={{ opacity: 0.8 }}>This topic doesn't have story-based content to review.</p>
+            </div>
+          );
+        }
         return (
-          <LessonReview
-            lesson={lesson}
+          <StoryReview
+            story={topicRow}
             title={topicRow?.title ?? ''}
             onExit={() => navigate(`/topic/${topicId}`)}
-            showTopbar={false}
-            embedded
           />
         );
       },
     };
-  }, [allowed, user, tier, topicRow?.title, loading, error, lesson, navigate, topicId]);
+  }, [allowed, user, tier, topicRow, hasStory, loading, error, navigate, topicId]);
 
   return (
     <motion.div className="review-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>

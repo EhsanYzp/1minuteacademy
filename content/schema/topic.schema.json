@@ -4,7 +4,7 @@
   "title": "1MinuteAcademy Topic",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "subject", "title", "emoji", "color", "description", "difficulty", "published", "lesson"],
+  "required": ["id", "subject", "title", "emoji", "color", "description", "difficulty", "published", "story", "quiz"],
   "properties": {
     "id": { "type": "string", "minLength": 1 },
     "subject": { "type": "string", "minLength": 1 },
@@ -14,7 +14,8 @@
     "description": { "type": "string" },
     "difficulty": { "type": "string", "enum": ["Beginner", "Intermediate", "Advanced"] },
     "published": { "type": "boolean" },
-    "lesson": { "$ref": "lesson.schema.json" },
+    "story": { "$ref": "story.schema.json" },
+    "quiz": { "type": "object" },
     "journey": { "$ref": "journey.schema.json" }
   }
 }

@@ -14,7 +14,8 @@ function normalizeTopic(t) {
     description: t.description,
     difficulty: t.difficulty,
     published: Boolean(t.published),
-    lesson: t.lesson,
+    story: t.story,
+    quiz: t.quiz,
     journey: t.journey,
   };
 }

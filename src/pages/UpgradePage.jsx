@@ -227,7 +227,6 @@ export default function UpgradePage() {
                   <li>Beginner topics only</li>
                   <li>No progress tracking</li>
                   <li>No Review mode</li>
-                  <li>No saved takeaways</li>
                 </ul>
                 <div className="tier-actions">
                   <Link className="upgrade-link secondary" to="/topics">Browse free topics</Link>
@@ -243,7 +242,6 @@ export default function UpgradePage() {
                   <li>Progress tracking</li>
                   <li>Rate modules with stars</li>
                   <li>Review mode (locked)</li>
-                  <li>Saved takeaways (locked)</li>
                 </ul>
                 <div className="tier-actions">
                   {!user ? (
@@ -262,7 +260,6 @@ export default function UpgradePage() {
                 <ul className="tier-bullets">
                   <li>All modules (not just Beginner)</li>
                   <li>Review mode (no timer)</li>
-                  <li>Saved takeaways in your profile</li>
                   <li>Progress tracking</li>
                   <li>Rate modules with stars</li>
                   <li>Earn +1 minute (1MA) per completion</li>
@@ -321,13 +318,6 @@ export default function UpgradePage() {
               </div>
 
               <div className="compare-row">
-                <div className="compare-feature">Saved takeaways</div>
-                <div className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></div>
-                <div className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></div>
-                <div className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></div>
-              </div>
-
-              <div className="compare-row">
                 <div className="compare-feature">Rate modules with stars</div>
                 <div className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></div>
                 <div className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></div>
@@ -339,7 +329,7 @@ export default function UpgradePage() {
 
           <div className="upgrade-section upgrade-section-spaced">
             <div className="upgrade-section-title">Pick a Pro plan</div>
-            <div className="upgrade-section-sub">Cancel anytime in Stripe Portal. Pro unlocks advanced modules, review mode, saved takeaways, ratings, and 1MA minutes (your minutes completed).</div>
+            <div className="upgrade-section-sub">Cancel anytime in Stripe Portal. Pro unlocks advanced modules, review mode, ratings, and 1MA minutes (your minutes completed).</div>
           </div>
 
           <div className="upgrade-grid" id="pro-plans">
@@ -349,7 +339,6 @@ export default function UpgradePage() {
               <ul className="plan-bullets">
                 <li>All modules (not just Beginner)</li>
                 <li>Review mode (no timer)</li>
-                <li>Saved takeaways in your profile</li>
                 <li>Progress tracking</li>
                 <li>Rate modules with stars</li>
                 <li>Earn +1 minute (1MA) per completion</li>

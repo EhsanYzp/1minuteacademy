@@ -1,0 +1,187 @@
+/* Story Review Styles - matches StoryRenderer */
+.story-review {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #FFF9F0 0%, #FFE8D6 100%);
+  z-index: 1000;
+}
+
+.story-review .review-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.story-review .review-back {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-primary, #4ECDC4);
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.story-review .review-title {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-primary, #333);
+}
+
+.story-review .review-sub {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--text-secondary, #666);
+  margin-top: 0.25rem;
+}
+
+.story-review .review-spacer {
+  width: 60px;
+}
+
+.story-review .review-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary, #666);
+}
+
+/* Content area - full screen centered like StoryRenderer */
+.story-review-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  gap: 1.5rem;
+}
+
+.story-review-visual {
+  font-size: 5rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.15));
+}
+
+.story-review-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: rgba(0, 0, 0, 0.4);
+  font-weight: 600;
+}
+
+.story-review-text {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0;
+  max-width: 85%;
+  color: #2d3436;
+  letter-spacing: -0.02em;
+}
+
+/* Quiz view */
+.story-review-question {
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 0;
+  max-width: 85%;
+  color: #2d3436;
+  letter-spacing: -0.01em;
+}
+
+.story-review-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.story-review-option {
+  padding: 1.25rem 1.5rem;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  color: #2d3436;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: left;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.story-review-option.correct {
+  background: rgba(46, 204, 113, 0.2);
+  border-color: #2ecc71;
+}
+
+.story-review-option .correct-mark {
+  color: #27ae60;
+  font-weight: 700;
+  margin-right: 0.5rem;
+}
+
+/* Navigation - bottom fixed */
+.story-review-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem 2rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(255, 249, 240, 1) 50%, transparent);
+}
+
+.review-nav-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary, #333);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.review-nav-btn:hover:not(:disabled) {
+  border-color: var(--color-primary, #4ECDC4);
+  background: rgba(255, 255, 255, 1);
+}
+
+.review-nav-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.review-nav-count {
+  font-size: 0.9rem;
+  color: var(--text-secondary, #666);
+  font-weight: 500;
+}

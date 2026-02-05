@@ -20,20 +20,13 @@ const fallbackTopics = {
     emoji: '🔗',
     color: '#4ECDC4',
     description: 'Connect Supabase to load topics from the database.',
-    lesson: { totalSeconds: 60, steps: [] },
     difficulty: 'Beginner',
   },
 };
 
 function normalizeTopic(topicRow, topicId) {
-  const lesson = topicRow?.lesson ?? {};
-  const steps = Array.isArray(lesson?.steps) ? lesson.steps : [];
   const journey = compileJourneyFromTopic(topicRow);
   const learningPoints = getTopicStartLearningPoints(journey);
-  const fallbackLearningPoints = steps
-    .slice(0, 4)
-    .map((s) => (typeof s.title === 'string' ? s.title : null))
-    .filter(Boolean);
 
   return {
     id: topicRow?.id ?? topicId,
@@ -41,18 +34,13 @@ function normalizeTopic(topicRow, topicId) {
     emoji: topicRow?.emoji ?? '🎯',
     color: topicRow?.color ?? '#4ECDC4',
     description: topicRow?.description ?? 'No description yet.',
-    duration: `${Number(lesson?.totalSeconds ?? 60)} seconds`,
+    duration: '60 seconds',
     difficulty: topicRow?.difficulty ?? 'Beginner',
     learningPoints:
       learningPoints.length > 0
         ? learningPoints
-        : fallbackLearningPoints.length > 0
-          ? fallbackLearningPoints
-        : ['⏱️ Designed to fit in 60 seconds', '🎮 Interactive, game-like steps', '🪙 Finish and add +1 minute (1MA, Pro)'],
-    funFact:
-      typeof lesson?.version === 'string'
-        ? `Lesson version: ${lesson.version}`
-        : 'Each lesson here is tuned to fit in one minute!',
+        : ['⏱️ Designed to fit in 60 seconds', '🎮 Interactive story + quiz', '🪙 Finish and add +1 minute (1MA, Pro)'],
+    funFact: 'Each lesson here is tuned to fit in one minute!',
   };
 }
 

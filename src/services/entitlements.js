@@ -3,9 +3,9 @@ import { getContentSource } from './_contentSource';
 const DEV_TIER_KEY = 'oma_dev_tier';
 
 // Tiers:
-// - guest: not signed in (web), can play Beginner only, no progress, no review, no takeaways
-// - free: signed in but not Pro, can play Beginner only, progress enabled, no review, no takeaways
-// - pro: signed in and Pro, can play all, progress enabled, review + takeaways enabled
+// - guest: not signed in (web), can play Beginner only, no progress, no review
+// - free: signed in but not Pro, can play Beginner only, progress enabled, no review
+// - pro: signed in and Pro, can play all, progress enabled, review enabled
 
 export function getTierFromUser(user) {
   if (!user) return 'guest';
@@ -69,11 +69,6 @@ export function canTrackProgress(tier) {
 }
 
 export function canReview(tier) {
-  if (tier === 'paused') return false;
-  return tier === 'pro';
-}
-
-export function canSeeTakeaways(tier) {
   if (tier === 'paused') return false;
   return tier === 'pro';
 }

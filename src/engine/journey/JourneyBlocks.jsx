@@ -103,24 +103,6 @@ export default function JourneyBlocks({ blocks, ctx, allowedTypes = null }) {
             );
           }
 
-          if (type === 'takeaways') {
-            const points = (Array.isArray(b.points) ? b.points : []).map((t) => interpolate(String(t), ctx?.vars));
-            if (points.length === 0) return null;
-            return (
-              <div key={key} className={ctx?.takeawaysClassName ?? 'journey-panel'}>
-                <p className={ctx?.panelTitleClassName ?? 'journey-panel-title'}>
-                  {interpolate(String(b.title ?? 'Key takeaways'), ctx?.vars)}
-                </p>
-                <ul className={ctx?.takeawaysListClassName ?? 'journey-takeaways'}>
-                  {points.slice(0, 5).map((pt, i) => (
-                    <li key={`${key}:pt:${i}`}>{pt}</li>
-                  ))}
-                </ul>
-                {ctx?.renderTakeawaysGating ? ctx.renderTakeawaysGating() : null}
-              </div>
-            );
-          }
-
           if (type === 'ratingPrompt') {
             return ctx?.renderRating ? (
               <div key={key} className={ctx?.ratingClassName ?? 'journey-panel'}>

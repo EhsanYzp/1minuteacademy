@@ -23,7 +23,6 @@ export default function PrivacyPage() {
           <ul>
             <li><strong>Account data:</strong> if you sign in, we store your login identity (e.g. email) via our auth provider.</li>
             <li><strong>Learning progress:</strong> topics you started/completed and basic progress stats.</li>
-            <li><strong>Takeaways (Pro):</strong> saved takeaways derived from lesson summaries (if enabled for your plan).</li>
             <li><strong>Basic technical data:</strong> approximate device/browser information needed for security and reliability.</li>
           </ul>
 
@@ -40,7 +39,7 @@ export default function PrivacyPage() {
           <ul>
             <li>To provide the service (run lessons, sync progress).</li>
             <li>To improve reliability and prevent abuse.</li>
-            <li>To provide plan-specific features (e.g. saved takeaways for Pro).</li>
+            <li>To provide plan-specific features (e.g. review mode for Pro).</li>
           </ul>
 
           <h2>Data retention</h2>

@@ -4,14 +4,6 @@ function nonEmptyStrings(items) {
     .filter(Boolean);
 }
 
-function getLegacyLearningPointsFromLesson(lesson) {
-  const steps = Array.isArray(lesson?.steps) ? lesson.steps : [];
-  return steps
-    .map((s) => (typeof s?.title === 'string' ? s.title.trim() : ''))
-    .filter(Boolean)
-    .slice(0, 4);
-}
-
 function findFirstBulletsBlockItems(blocks) {
   for (const b of Array.isArray(blocks) ? blocks : []) {
     if (b?.type === 'bullets') return nonEmptyStrings(b?.items);
@@ -23,13 +15,6 @@ export function compileJourneyFromTopic(topicRow) {
   const authored = topicRow?.journey;
   if (authored && typeof authored === 'object') return authored;
 
-  const legacyLearningPoints = getLegacyLearningPointsFromLesson(topicRow?.lesson);
-  const summaryPoints = (() => {
-    const steps = Array.isArray(topicRow?.lesson?.steps) ? topicRow.lesson.steps : [];
-    const summary = steps.find((s) => s?.type === 'summary') ?? null;
-    return nonEmptyStrings(summary?.points).slice(0, 5);
-  })();
-
   const title = typeof topicRow?.title === 'string' && topicRow.title.trim() ? topicRow.title.trim() : 'Topic';
   const emoji = typeof topicRow?.emoji === 'string' && topicRow.emoji.trim() ? topicRow.emoji.trim() : '🎯';
   const description =
@@ -37,10 +22,7 @@ export function compileJourneyFromTopic(topicRow) {
       ? topicRow.description.trim()
       : 'No description yet.';
 
-  const learningItems =
-    legacyLearningPoints.length > 0
-      ? legacyLearningPoints
-      : ['⏱️ Designed to fit in 60 seconds', '🎮 Interactive, game-like steps', '🪙 Finish and add +1 minute (1MA, Pro)'];
+  const learningItems = ['⏱️ Designed to fit in 60 seconds', '🎮 Interactive story + quiz', '🪙 Finish and add +1 minute (1MA, Pro)'];
 
   return {
     version: 1,
@@ -77,7 +59,6 @@ export function compileJourneyFromTopic(topicRow) {
         { type: 'proPerkPanel', when: { tier: ['guest', 'free', 'starter', 'basic', 'paused'] } },
         { type: 'oneMaAwardPanel', when: { tier: 'pro' } },
         { type: 'completionProgress' },
-        ...(summaryPoints.length > 0 ? [{ type: 'takeaways', title: 'Key takeaways', points: summaryPoints }] : []),
         { type: 'ratingPrompt', title: 'Rate this module' },
         {
           type: 'ctaRow',

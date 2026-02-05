@@ -22,15 +22,15 @@ function Home() {
     {
       n: '03',
       icon: '🎯',
-      title: 'Interactive steps',
-      body: 'Tap, choose, build, and reveal. You learn by doing, not reading walls of text.',
-      meta: 'Hands-on',
+      title: 'Story + quiz',
+      body: 'Experience a 4-beat narrative then test yourself with a quick quiz.',
+      meta: 'Engaging',
     },
     {
       n: '04',
       icon: '🔁',
       title: 'Review & keep it',
-      body: 'After the sprint you can review calmly. Pro unlocks saved takeaways + advanced topics.',
+      body: 'After the sprint you can review calmly. Pro unlocks advanced topics + review mode.',
       meta: 'Optional review',
     },
   ];

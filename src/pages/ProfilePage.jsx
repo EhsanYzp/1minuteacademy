@@ -3,10 +3,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Header from '../components/Header';
 import { useAuth } from '../context/AuthContext';
-import { listTopics, listTopicsByIds } from '../services/topics';
+import { listTopics } from '../services/topics';
 import { getContentSource } from '../services/_contentSource';
 import { getUserStats, listUserTopicProgress } from '../services/progress';
-import { canReview, canSeeTakeaways, canStartTopic, formatTierLabel, getCurrentTier } from '../services/entitlements';
+import { canReview, canStartTopic, formatTierLabel, getCurrentTier } from '../services/entitlements';
 import { getSubscriptionStatus, openCustomerPortal } from '../services/billing';
 import { deleteAccount, pauseAccount, resumeAccount } from '../services/account';
 import StarRating from '../components/StarRating';
@@ -29,18 +29,6 @@ function fmtSeconds(s) {
   const n = Number(s);
   if (!Number.isFinite(n)) return '—';
   return `${Math.max(0, Math.round(n))}s`;
-}
-
-function getSummaryPointsFromLesson(lesson) {
-  const steps = Array.isArray(lesson?.steps) ? lesson.steps : [];
-  const summary = steps.find((s) => s?.type === 'summary') ?? null;
-  const points = Array.isArray(summary?.points) ? summary.points : [];
-  return points.filter((p) => typeof p === 'string' && p.trim().length > 0);
-}
-
-function getLessonTotalSeconds(lesson) {
-  const n = Number(lesson?.totalSeconds ?? 60);
-  return Number.isFinite(n) && n > 0 ? n : 60;
 }
 
 function formatPlanForProfile(user, tier) {
@@ -109,7 +97,6 @@ export default function ProfilePage() {
   const tier = getCurrentTier(user);
   const isPaused = tier === 'paused';
   const planLabel = formatPlanForProfile(user, tier);
-  const showTakeaways = canSeeTakeaways(tier);
   const showReview = canReview(tier);
 
   const hasStripeCustomer = Boolean(user?.user_metadata?.stripe_customer_id);
@@ -141,7 +128,6 @@ export default function ProfilePage() {
   const [stats, setStats] = useState({ one_ma_balance: 0, streak: 0, last_completed_date: null });
   const [progressRows, setProgressRows] = useState([]);
   const [topics, setTopics] = useState([]);
-  const [topicsWithLessons, setTopicsWithLessons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [progressView, setProgressView] = useState('subjects'); // subjects | recent
@@ -241,18 +227,6 @@ export default function ProfilePage() {
         setStats(s);
         setProgressRows(Array.isArray(p) ? p : []);
         setTopics(Array.isArray(t) ? t : []);
-
-        // For the learning recap we want the lesson JSON (summary points).
-        // In Supabase mode, listTopics doesn't include lesson, so we fetch on-demand by ids.
-        const completedIds = (Array.isArray(p) ? p : [])
-          .filter((r) => Number(r.completed_count ?? 0) > 0)
-          .map((r) => r.topic_id);
-
-        const withLessons = showTakeaways
-          ? await listTopicsByIds(completedIds, { includeLesson: true })
-          : [];
-        if (!mounted) return;
-        setTopicsWithLessons(Array.isArray(withLessons) ? withLessons : []);
       } catch (e) {
         if (!mounted) return;
         setError(e);
@@ -265,7 +239,7 @@ export default function ProfilePage() {
     return () => {
       mounted = false;
     };
-  }, [contentSource, showTakeaways]);
+  }, [contentSource]);
 
   useEffect(() => {
     let mounted = true;
@@ -501,28 +475,6 @@ export default function ProfilePage() {
     return map;
   }, [topics]);
 
-  const lessonByTopicId = useMemo(() => {
-    const map = new Map();
-    for (const t of topicsWithLessons) map.set(t.id, t?.lesson ?? null);
-    return map;
-  }, [topicsWithLessons]);
-
-  const takeawaysCountByTopicId = useMemo(() => {
-    const map = new Map();
-    for (const [topicId, lesson] of lessonByTopicId.entries()) {
-      map.set(topicId, getSummaryPointsFromLesson(lesson).length);
-    }
-    return map;
-  }, [lessonByTopicId]);
-
-  const takeawaysByTopicId = useMemo(() => {
-    const map = new Map();
-    for (const [topicId, lesson] of lessonByTopicId.entries()) {
-      map.set(topicId, getSummaryPointsFromLesson(lesson));
-    }
-    return map;
-  }, [lessonByTopicId]);
-
   const progress = useMemo(() => {
     const rows = Array.isArray(progressRows) ? progressRows : [];
     return rows
@@ -686,15 +638,15 @@ export default function ProfilePage() {
 
               <div className="profile-section-header">
                 <h2>Your learning</h2>
-                <div className="profile-section-sub">Progress + takeaways in one place.</div>
+                <div className="profile-section-sub">Your progress in one place.</div>
               </div>
 
-              {contentSource !== 'local' && !showTakeaways && (
+              {contentSource !== 'local' && !showReview && (
                 <div className="profile-note" style={{ marginBottom: 12 }}>
                   <strong>Free plan</strong>
                   <div className="profile-note-row">
                     <div>
-                      Your current plan is <strong>{planLabel}</strong>. Upgrade to unlock review mode + saved takeaways.
+                      Your current plan is <strong>{planLabel}</strong>. Upgrade to unlock review mode.
                     </div>
                     <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
                   </div>
@@ -738,7 +690,7 @@ export default function ProfilePage() {
               {loading ? (
             <div className="profile-loading">Loading…</div>
           ) : progress.length === 0 ? (
-            <div className="profile-empty">No activity yet. Finish a topic to unlock review + takeaways.</div>
+            <div className="profile-empty">No activity yet. Finish a topic to see your progress.</div>
           ) : progressView === 'subjects' ? (
             <div className="subject-progress">
               {progressBySubject.map((group) => {
@@ -760,12 +712,8 @@ export default function ProfilePage() {
 
                     <div className="progress-list" style={{ marginTop: 10 }}>
                       {group.rows.map((p) => {
-                        const lesson = lessonByTopicId.get(p.topicId) ?? null;
-                        const totalSecs = getLessonTotalSeconds(lesson);
                         const bestSecs = Number(p.bestSeconds);
-                        const showBest = Number.isFinite(bestSecs) && Math.round(bestSecs) !== Math.round(totalSecs);
-                        const takeaways = showTakeaways ? (takeawaysCountByTopicId.get(p.topicId) ?? 0) : 0;
-                        const points = showTakeaways ? (takeawaysByTopicId.get(p.topicId) ?? []) : [];
+                        const showBest = Number.isFinite(bestSecs);
                         const completed = Number(p.completed ?? 0) > 0;
 
                         return (
@@ -783,11 +731,6 @@ export default function ProfilePage() {
 
                               <div className="progress-right">
                                 <div className="pill">✅ {p.completed}</div>
-                                {showTakeaways ? (
-                                  takeaways > 0 ? <div className="pill">🧠 {takeaways} takeaways</div> : null
-                                ) : (
-                                  <div className="pill">🔒 takeaways</div>
-                                )}
                                 {showBest && <div className="pill">⏱️ best {fmtSeconds(bestSecs)}</div>}
                                 <div className="pill faint">🕒 {fmtDate(p.lastCompletedAt)}</div>
                               </div>
@@ -810,26 +753,6 @@ export default function ProfilePage() {
                                   </Link>
                                 </div>
                               )}
-
-                              {completed ? (
-                                showTakeaways ? (
-                                  points.length > 0 ? (
-                                  <ul className="progress-takeaways">
-                                    {points.slice(0, 6).map((pt, idx) => (
-                                      <li key={idx}>{pt}</li>
-                                    ))}
-                                  </ul>
-                                  ) : (
-                                    <div className="progress-takeaways-empty">No summary points for this topic yet.</div>
-                                  )
-                                ) : (
-                                  <div className="progress-takeaways-empty">
-                                    🔒 Takeaways are Pro-only. <Link className="profile-upgrade-inline" to="/upgrade">Upgrade</Link>
-                                  </div>
-                                )
-                              ) : (
-                                <div className="progress-takeaways-empty">Finish this topic to unlock review + takeaways.</div>
-                              )}
                             </div>
                           </details>
                         );
@@ -842,12 +765,8 @@ export default function ProfilePage() {
           ) : (
             <div className="progress-list">
               {progressFiltered.map((p) => {
-                const lesson = lessonByTopicId.get(p.topicId) ?? null;
-                const totalSecs = getLessonTotalSeconds(lesson);
                 const bestSecs = Number(p.bestSeconds);
-                const showBest = Number.isFinite(bestSecs) && Math.round(bestSecs) !== Math.round(totalSecs);
-                const takeaways = showTakeaways ? (takeawaysCountByTopicId.get(p.topicId) ?? 0) : 0;
-                const points = showTakeaways ? (takeawaysByTopicId.get(p.topicId) ?? []) : [];
+                const showBest = Number.isFinite(bestSecs);
                 const completed = Number(p.completed ?? 0) > 0;
 
                 return (
@@ -865,11 +784,6 @@ export default function ProfilePage() {
 
                       <div className="progress-right">
                         <div className="pill">✅ {p.completed}</div>
-                        {showTakeaways ? (
-                          takeaways > 0 ? <div className="pill">🧠 {takeaways} takeaways</div> : null
-                        ) : (
-                          <div className="pill">🔒 takeaways</div>
-                        )}
                         {showBest && <div className="pill">⏱️ best {fmtSeconds(bestSecs)}</div>}
                         <div className="pill faint">🕒 {fmtDate(p.lastCompletedAt)}</div>
                       </div>
@@ -891,26 +805,6 @@ export default function ProfilePage() {
                             🔄 Restart
                           </Link>
                         </div>
-                      )}
-
-                      {completed ? (
-                        showTakeaways ? (
-                          points.length > 0 ? (
-                          <ul className="progress-takeaways">
-                            {points.slice(0, 6).map((pt, idx) => (
-                              <li key={idx}>{pt}</li>
-                            ))}
-                          </ul>
-                          ) : (
-                            <div className="progress-takeaways-empty">No summary points for this topic yet.</div>
-                          )
-                        ) : (
-                          <div className="progress-takeaways-empty">
-                            🔒 Takeaways are Pro-only. <Link className="profile-upgrade-inline" to="/upgrade">Upgrade</Link>
-                          </div>
-                        )
-                      ) : (
-                        <div className="progress-takeaways-empty">Finish this topic to unlock review + takeaways.</div>
                       )}
                     </div>
                   </details>

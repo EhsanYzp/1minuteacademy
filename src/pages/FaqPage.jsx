@@ -40,7 +40,7 @@ export default function FaqPage() {
               <ul>
                 <li><strong>Guest:</strong> Beginner topics only, no progress tracking.</li>
                 <li><strong>Free account:</strong> Beginner topics + progress tracking (sign in required).</li>
-                <li><strong>Pro:</strong> All topics + review mode + saved takeaways + 1MA minutes.</li>
+                <li><strong>Pro:</strong> All topics + review mode + 1MA minutes.</li>
               </ul>
               <p>
                 See the full comparison on the Pricing page.
@@ -73,11 +73,6 @@ export default function FaqPage() {
               </p>
             </FaqItem>
 
-            <FaqItem q="Do you save my takeaways?">
-              <p>
-                Takeaways are derived from each lesson’s Summary step. Saved takeaways are a Pro feature.
-              </p>
-            </FaqItem>
 
             <FaqItem q="How does progress tracking work?">
               <p>

@@ -2,30 +2,18 @@ import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useParams, useNavigate } from 'react-router-dom';
 import Timer from '../components/Timer';
-import LessonRenderer from '../engine/LessonRenderer';
-import LessonReview from '../engine/LessonReview';
+import { StoryRenderer, StoryReview } from '../engine/story';
 import { getTopic } from '../services/topics';
 import { completeTopic } from '../services/progress';
 import { getContentSource } from '../services/_contentSource';
 import { useAuth } from '../context/AuthContext';
-import { canReview, canSeeTakeaways, canStartTopic, canTrackProgress, formatTierLabel, getCurrentTier } from '../services/entitlements';
+import { canReview, canStartTopic, canTrackProgress, formatTierLabel, getCurrentTier } from '../services/entitlements';
 import StarRating from '../components/StarRating';
 import { getMyTopicRating, setMyTopicRating } from '../services/ratings';
 import OneMAIcon from '../components/OneMAIcon';
 import { compileJourneyFromTopic } from '../engine/journey/compileJourney';
 import JourneyBlocks from '../engine/journey/JourneyBlocks';
 import './LessonPage.css';
-
-function getLessonDefaults() {
-  return { totalSeconds: 60, steps: [] };
-}
-
-function getSummaryPointsFromLesson(lesson) {
-  const steps = Array.isArray(lesson?.steps) ? lesson.steps : [];
-  const summary = steps.find((s) => s?.type === 'summary') ?? null;
-  const points = Array.isArray(summary?.points) ? summary.points : [];
-  return points.filter((p) => typeof p === 'string' && p.trim().length > 0);
-}
 
 function normalizeTierForJourney(tier) {
   if (tier === 'pro' || tier === 'paused') return tier;
@@ -43,7 +31,6 @@ function LessonPage() {
   const canUseReview = canReview(tier);
   const canSaveProgress = canTrackProgress(tier);
   const canAttemptSaveProgress = canSaveProgress && Boolean(user);
-  const canShowTakeaways = canSeeTakeaways(tier);
   const [isStarted, setIsStarted] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isReviewing, setIsReviewing] = useState(false);
@@ -61,9 +48,8 @@ function LessonPage() {
 
   const canStart = useMemo(() => canStartTopic({ tier, topicRow }), [tier, topicRow]);
 
-  const lesson = useMemo(() => topicRow?.lesson ?? getLessonDefaults(), [topicRow]);
-  const totalSeconds = useMemo(() => Number(lesson?.totalSeconds ?? 60), [lesson]);
-  const summaryPoints = useMemo(() => getSummaryPointsFromLesson(lesson), [lesson]);
+  // Fixed 60 seconds for story-based lessons
+  const totalSeconds = 60;
 
   const journey = useMemo(() => compileJourneyFromTopic(topicRow), [topicRow]);
   const journeyCtx = useMemo(() => {
@@ -197,17 +183,7 @@ function LessonPage() {
           )}
         </div>
       ),
-      takeawaysClassName: 'completion-panel',
       panelTitleClassName: 'completion-panel-title',
-      takeawaysListClassName: null,
-      renderTakeawaysGating: () => (
-        !canShowTakeaways ? (
-          <div style={{ marginTop: 10, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <button onClick={() => navigate('/upgrade')}>Unlock saved takeaways</button>
-            {!user && <button onClick={() => navigate('/login')}>Create free account</button>}
-          </div>
-        ) : null
-      ),
       ratingClassName: 'completion-panel completion-rating',
       renderRating: ({ title } = {}) => (
         <>
@@ -266,7 +242,6 @@ function LessonPage() {
     submittingCompletion,
     completionError,
     contentSource,
-    canShowTakeaways,
     myRating,
     ratingBusy,
     ratingError,
@@ -522,8 +497,8 @@ function LessonPage() {
           </motion.div>
         </motion.div>
       ) : isReviewing ? (
-        <LessonReview
-          lesson={lesson}
+        <StoryReview
+          story={topicRow}
           title={topicRow?.title ?? ''}
           onExit={() => setIsReviewing(false)}
         />
@@ -551,7 +526,7 @@ function LessonPage() {
                 'proPerkPanel',
                 'oneMaAwardPanel',
                 'completionProgress',
-                'takeaways',
+
                 'ratingPrompt',
                 'cta',
                 'ctaRow',
@@ -607,7 +582,7 @@ function LessonPage() {
           </div>
 
           <div className="lesson-content">
-            <LessonRenderer lesson={lesson} timeRemaining={timeRemaining} onComplete={handleComplete} />
+            <StoryRenderer story={topicRow} timeRemaining={timeRemaining} onComplete={handleComplete} />
           </div>
         </div>
       )}
