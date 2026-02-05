@@ -42,6 +42,13 @@ export default function UpgradePage() {
   const navigate = useNavigate();
   const tier = getCurrentTier(user);
   const planInterval = String(user?.user_metadata?.plan_interval ?? '').toLowerCase();
+  const proInterval = (planInterval === 'year' || planInterval === 'yearly' || planInterval === 'annual')
+    ? 'year'
+    : (planInterval === 'month' || planInterval === 'monthly')
+      ? 'month'
+      : null;
+
+  const currentTierKey = !user ? 'guest' : tier === 'pro' ? 'pro' : 'free';
   const planLabel = tier === 'pro'
     ? (planInterval === 'year' || planInterval === 'yearly' || planInterval === 'annual')
       ? 'Pro (Yearly)'
@@ -212,7 +219,8 @@ export default function UpgradePage() {
           <div className="upgrade-section">
             <div className="upgrade-section-title">What you get</div>
             <div className="tier-grid">
-              <div className="tier-card">
+              <div className={`tier-card ${currentTierKey === 'guest' ? 'current' : ''}`}>
+                {currentTierKey === 'guest' && <div className="tier-current-badge">You already have this plan</div>}
                 <div className="tier-name">Guest</div>
                 <div className="tier-price">$0</div>
                 <div className="tier-note">No account required</div>
@@ -227,7 +235,8 @@ export default function UpgradePage() {
                 </div>
               </div>
 
-              <div className="tier-card">
+              <div className={`tier-card ${currentTierKey === 'free' ? 'current' : ''}`}>
+                {currentTierKey === 'free' && <div className="tier-current-badge">You already have this plan</div>}
                 <div className="tier-name">Free account</div>
                 <div className="tier-price">$0</div>
                 <div className="tier-note">Sign in to save progress</div>
@@ -246,8 +255,9 @@ export default function UpgradePage() {
                 </div>
               </div>
 
-              <div className="tier-card featured">
+              <div className={`tier-card featured ${currentTierKey === 'pro' ? 'current' : ''}`}>
                 <div className="tier-badge">Best for serious learners</div>
+                {currentTierKey === 'pro' && <div className="tier-current-badge">You already have this plan</div>}
                 <div className="tier-name">Pro</div>
                 <div className="tier-price">All access</div>
                 <div className="tier-note">Beginner → Advanced</div>
@@ -258,7 +268,11 @@ export default function UpgradePage() {
                   <li>Progress tracking</li>
                 </ul>
                 <div className="tier-actions">
-                  <a className="upgrade-link" href="#pro-plans">See Pro plans</a>
+                  {tier === 'pro' ? (
+                    <button className="upgrade-link" type="button" onClick={onManageSubscription}>Manage subscription</button>
+                  ) : (
+                    <a className="upgrade-link" href="#pro-plans">See Pro plans</a>
+                  )}
                 </div>
               </div>
             </div>
@@ -310,7 +324,8 @@ export default function UpgradePage() {
           </div>
 
           <div className="upgrade-grid" id="pro-plans">
-            <div className="plan">
+            <div className={`plan ${tier === 'pro' && proInterval === 'month' ? 'current' : ''}`}>
+              {tier === 'pro' && proInterval === 'month' && <div className="plan-current-badge">Current plan</div>}
               <div className="plan-title">Monthly</div>
               <div className="plan-price">{DEFAULT_PRICE_MONTH}<span className="plan-sub">/month</span></div>
               <ul className="plan-bullets">
@@ -326,12 +341,17 @@ export default function UpgradePage() {
                 disabled={!user || tier === 'pro' || busy !== null}
                 title={!user ? 'Sign in to upgrade' : tier === 'pro' ? 'You are already Pro' : 'Start Stripe checkout'}
               >
-                {tier === 'pro' ? 'You’re Pro' : busy === 'month' ? 'Redirecting…' : 'Continue'}
+                {tier === 'pro'
+                  ? (proInterval === 'month' ? 'Current plan' : 'You’re Pro')
+                  : busy === 'month'
+                    ? 'Redirecting…'
+                    : 'Continue'}
               </button>
             </div>
 
-            <div className="plan featured">
+            <div className={`plan featured ${tier === 'pro' && proInterval === 'year' ? 'current' : ''}`}>
               <div className="plan-badge">Best value</div>
+              {tier === 'pro' && proInterval === 'year' && <div className="plan-current-badge">Current plan</div>}
               <div className="plan-title">Yearly</div>
               <div className="plan-price">{DEFAULT_PRICE_YEAR}<span className="plan-sub">/year</span></div>
               <div className="plan-note">
@@ -355,7 +375,11 @@ export default function UpgradePage() {
                 disabled={!user || tier === 'pro' || busy !== null}
                 title={!user ? 'Sign in to upgrade' : tier === 'pro' ? 'You are already Pro' : 'Start Stripe checkout'}
               >
-                {tier === 'pro' ? 'You’re Pro' : busy === 'year' ? 'Redirecting…' : 'Continue'}
+                {tier === 'pro'
+                  ? (proInterval === 'year' ? 'Current plan' : 'You’re Pro')
+                  : busy === 'year'
+                    ? 'Redirecting…'
+                    : 'Continue'}
               </button>
             </div>
           </div>
