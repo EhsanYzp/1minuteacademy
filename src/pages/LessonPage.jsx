@@ -68,7 +68,7 @@ function LessonPage() {
         topicTitle: String(topicRow?.title ?? ''),
         totalSeconds: String(totalSeconds),
       },
-      containerClassName: 'completion-content',
+      containerClassName: 'journey-blocks',
       buttonClassName: 'action-button',
       isActionDisabled: (action) => {
         if (!action || typeof action !== 'object') return false;
