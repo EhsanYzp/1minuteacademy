@@ -251,7 +251,7 @@ function TopicPage() {
               )}
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginTop: 10 }}>
+            <div className="topic-rating-row">
               <span style={{ color: 'var(--text-secondary)', fontWeight: 800 }}>Your rating</span>
               {user && (
                 <span style={{ color: 'var(--text-secondary)', opacity: 0.85, fontWeight: 700, fontSize: 13 }}>
@@ -267,9 +267,8 @@ function TopicPage() {
               />
               {!user && (
                 <motion.button
-                  className="topic-action-btn secondary"
+                  className="topic-action-btn secondary topic-rate-signin"
                   onClick={() => navigate('/login')}
-                  whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.96 }}
                 >
                   Sign in to rate

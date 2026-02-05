@@ -40,10 +40,24 @@ export default function FaqPage() {
               <ul>
                 <li><strong>Guest:</strong> Beginner topics only, no progress tracking.</li>
                 <li><strong>Free account:</strong> Beginner topics + progress tracking (sign in required).</li>
-                <li><strong>Pro:</strong> All topics + review mode + saved takeaways.</li>
+                <li><strong>Pro:</strong> All topics + review mode + saved takeaways + 1MA minutes.</li>
               </ul>
               <p>
                 See the full comparison on the Pricing page.
+              </p>
+            </FaqItem>
+
+            <FaqItem q="What are 1MA minutes?">
+              <p>
+                <strong>1MA minutes</strong> are a simple collectible that tracks how many one-minute modules you’ve completed.
+                Think of it as “minutes completed on the platform”.
+              </p>
+            </FaqItem>
+
+            <FaqItem q="How do I earn 1MA minutes?">
+              <p>
+                Each completed module adds <strong>+1 minute (1MA)</strong> to your balance — <strong>Pro-only</strong>.
+                Free and Guest users can still complete modules, but they don’t earn 1MA minutes.
               </p>
             </FaqItem>
 
@@ -72,12 +86,40 @@ export default function FaqPage() {
               </p>
             </FaqItem>
 
-            <FaqItem q="Are payments live?">
+            <FaqItem q="What is a streak?">
               <p>
-                Not yet. The Pro checkout buttons are labeled “coming soon”. Once payments are wired (Stripe),
-                Pro access will be enabled automatically for subscribers.
+                Your <strong>streak</strong> is the number of consecutive days you’ve completed at least one module.
+                Completing multiple modules in the same day won’t increase the streak beyond that day.
               </p>
             </FaqItem>
+
+            <FaqItem q="Can I rate modules?">
+              <p>
+                Yes — ratings are available when you’re signed in. On module pages you can leave a star rating and change it anytime.
+              </p>
+            </FaqItem>
+
+            <FaqItem q="Are payments live?">
+              <p>
+                Yes. Pro subscriptions are available via Stripe Checkout. After you subscribe, Pro features unlock
+                automatically for your account.
+              </p>
+            </FaqItem>
+
+            <FaqItem q="How do I cancel or manage my Pro subscription?">
+              <p>
+                If you’re Pro, open your <strong>Profile</strong> page and use the subscription management button.
+                It takes you to the Stripe Customer Portal where you can cancel, update payment method, and view invoices.
+              </p>
+            </FaqItem>
+
+            <FaqItem q="What does “Account paused” mean?">
+              <p>
+                If your account is paused, Pro features are temporarily disabled until you resume.
+                You can manage this from your Profile.
+              </p>
+            </FaqItem>
+
 
             <FaqItem q="How can I contact you?">
               <p>

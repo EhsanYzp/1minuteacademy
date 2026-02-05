@@ -26,7 +26,7 @@ export default function Footer() {
 
         <div className="footer-meta">
           <div className="footer-copy">© {year} 1MinuteAcademy</div>
-          <div className="footer-fineprint">Pro payments are coming soon. Until then, access is managed via your account plan.</div>
+          <div className="footer-fineprint">Pro subscriptions are live — upgrade anytime from the Pricing page.</div>
         </div>
       </div>
     </footer>
