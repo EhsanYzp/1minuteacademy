@@ -58,7 +58,7 @@ function parseArgs(argv) {
         .filter(Boolean);
       if (args.topics.length === 0) throw new Error('Empty --topic list.');
     } else if (a === '--help' || a === '-h') {
-      console.log(`\nUsage: npm run content:sync -- [--topic <id[,id2]>] [--dry-run] [--force] [--insert-only]\n\nDefaults:\n- Inserts new topics\n- Updates existing topics ONLY when local lesson.version > remote lesson.version\n\nFlags:\n- --topic <id[,id2]>   Sync only specific topic IDs\n- --dry-run            Print what would change; write nothing\n- --force              Update even if version isn't higher\n- --insert-only        Only insert new topics; never update existing\n\nTip: Bump lesson.version in your local JSON to intentionally publish changes.\n`);
+      console.log(`\nUsage: npm run content:sync -- [--topic <id[,id2]>] [--dry-run] [--force] [--insert-only]\n\nDefaults:\n- Inserts new topics\n- Updates existing topics when:\n  - local lesson.version > remote lesson.version, OR\n  - local journey differs from remote journey\n\nFlags:\n- --topic <id[,id2]>   Sync only specific topic IDs\n- --dry-run            Print what would change; write nothing\n- --force              Update even if version isn't higher\n- --insert-only        Only insert new topics; never update existing\n\nTip: Bump lesson.version in your local JSON to intentionally publish changes.\n`);
       process.exit(0);
     } else {
       throw new Error(`Unknown arg: ${a}`);
@@ -76,6 +76,35 @@ function getLessonVersion(lesson) {
   const raw = lesson && typeof lesson === 'object' ? lesson.version : undefined;
   const n = Number(raw);
   return Number.isFinite(n) ? n : 0;
+}
+
+function stableStringify(value) {
+  const seen = new WeakSet();
+
+  function normalize(v) {
+    if (v === null) return null;
+    const t = typeof v;
+    if (t === 'string' || t === 'number' || t === 'boolean') return v;
+    if (t !== 'object') return null;
+
+    if (seen.has(v)) throw new Error('Cannot stableStringify circular structure.');
+    seen.add(v);
+
+    if (Array.isArray(v)) return v.map(normalize);
+
+    const out = {};
+    for (const k of Object.keys(v).sort()) out[k] = normalize(v[k]);
+    return out;
+  }
+
+  return JSON.stringify(normalize(value));
+}
+
+function journeysEqual(a, b) {
+  if (a === b) return true;
+  if (a == null && b == null) return true;
+  if (a == null || b == null) return false;
+  return stableStringify(a) === stableStringify(b);
 }
 
 async function main() {
@@ -138,7 +167,7 @@ async function main() {
   const remoteById = new Map();
   const { data: remoteRows, error: remoteErr } = await supabase
     .from('topics')
-    .select('id, lesson')
+    .select('id, lesson, journey')
     .in('id', ids);
 
   if (remoteErr) throw remoteErr;
@@ -165,6 +194,8 @@ async function main() {
     const lv = getLessonVersion(local.lesson);
     const rv = getLessonVersion(remote.lesson);
 
+    const journeyChanged = !journeysEqual(local.journey ?? null, remote.journey ?? null);
+
     if (args.force) {
       toUpdate.push(local);
       continue;
@@ -172,8 +203,13 @@ async function main() {
 
     if (lv > rv) {
       toUpdate.push(local);
+    } else if (journeyChanged) {
+      toUpdate.push(local);
     } else {
-      skipped.push({ id, reason: `version not higher (local ${lv} <= remote ${rv})` });
+      skipped.push({
+        id,
+        reason: `no changes (version ${lv} <= ${rv}, journey unchanged)`,
+      });
     }
   }
 
