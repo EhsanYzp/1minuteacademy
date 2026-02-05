@@ -85,6 +85,40 @@ export async function getMyTopicRating(topicId) {
   return clampRating(data?.rating);
 }
 
+export async function listMyTopicRatings() {
+  if (getContentSource() === 'local') {
+    const local = readLocal();
+    return Object.entries(local)
+      .map(([topic_id, rating]) => ({
+        topic_id: String(topic_id),
+        rating: clampRating(rating),
+        updated_at: null,
+      }))
+      .filter((r) => Boolean(r.topic_id) && Boolean(r.rating))
+      .sort((a, b) => String(a.topic_id).localeCompare(String(b.topic_id)));
+  }
+
+  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+
+  const { data: sessionData } = await supabase.auth.getSession();
+  if (!sessionData?.session) return [];
+
+  const { data, error } = await supabase
+    .from('topic_ratings')
+    .select('topic_id, rating, updated_at')
+    .order('updated_at', { ascending: false });
+
+  if (error) throw error;
+
+  return (Array.isArray(data) ? data : [])
+    .map((row) => ({
+      topic_id: String(row.topic_id),
+      rating: clampRating(row.rating),
+      updated_at: row.updated_at ?? null,
+    }))
+    .filter((r) => Boolean(r.topic_id) && Boolean(r.rating));
+}
+
 export async function setMyTopicRating(topicId, rating) {
   const id = String(topicId ?? '').trim();
   const r = clampRating(rating);

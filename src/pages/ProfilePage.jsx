@@ -9,6 +9,8 @@ import { getUserStats, listUserTopicProgress } from '../services/progress';
 import { canReview, canSeeTakeaways, canStartTopic, formatTierLabel, getCurrentTier } from '../services/entitlements';
 import { getSubscriptionStatus, openCustomerPortal } from '../services/billing';
 import { deleteAccount, pauseAccount, resumeAccount } from '../services/account';
+import StarRating from '../components/StarRating';
+import { listMyTopicRatings, setMyTopicRating } from '../services/ratings';
 import './ProfilePage.css';
 
 function fmtDate(iso) {
@@ -151,6 +153,11 @@ export default function ProfilePage() {
   const [accountError, setAccountError] = useState(null);
   const [accountNotice, setAccountNotice] = useState('');
 
+  const [myRatings, setMyRatings] = useState([]);
+  const [ratingsLoading, setRatingsLoading] = useState(false);
+  const [ratingsError, setRatingsError] = useState(null);
+  const [ratingBusyTopicId, setRatingBusyTopicId] = useState(null);
+
   const subReqIdRef = useRef(0);
   const subRetryRef = useRef({ tries: 0 });
   const subInFlightRef = useRef(null);
@@ -257,6 +264,76 @@ export default function ProfilePage() {
       mounted = false;
     };
   }, [contentSource, showTakeaways]);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadRatings() {
+      setRatingsError(null);
+
+      const canReadRatings = contentSource === 'local' || Boolean(user);
+      if (!canReadRatings) {
+        setMyRatings([]);
+        return;
+      }
+
+      try {
+        setRatingsLoading(true);
+        const rows = await listMyTopicRatings();
+        if (!mounted) return;
+        setMyRatings(Array.isArray(rows) ? rows : []);
+      } catch (e) {
+        if (!mounted) return;
+        setRatingsError(e);
+        setMyRatings([]);
+      } finally {
+        if (mounted) setRatingsLoading(false);
+      }
+    }
+
+    loadRatings();
+    return () => {
+      mounted = false;
+    };
+  }, [contentSource, user]);
+
+  async function onUpdateRating(topicId, nextRating) {
+    const canEdit = contentSource === 'local' || Boolean(user);
+    if (!canEdit) return;
+    if (!topicId) return;
+    if (ratingBusyTopicId) return;
+
+    const id = String(topicId);
+    const prev = myRatings;
+
+    setRatingBusyTopicId(id);
+    setRatingsError(null);
+
+    const optimistic = (() => {
+      const nowIso = new Date().toISOString();
+      const next = Array.isArray(prev) ? [...prev] : [];
+      const idx = next.findIndex((r) => String(r?.topic_id) === id);
+      if (idx >= 0) next[idx] = { ...next[idx], rating: nextRating, updated_at: nowIso };
+      else next.unshift({ topic_id: id, rating: nextRating, updated_at: nowIso });
+
+      next.sort((a, b) => String(b?.updated_at ?? '').localeCompare(String(a?.updated_at ?? '')));
+      return next;
+    })();
+
+    setMyRatings(optimistic);
+
+    try {
+      await setMyTopicRating(id, nextRating);
+      // Refresh from source to keep ordering and timestamps correct.
+      const rows = await listMyTopicRatings();
+      setMyRatings(Array.isArray(rows) ? rows : optimistic);
+    } catch (e) {
+      setRatingsError(e);
+      setMyRatings(prev);
+    } finally {
+      setRatingBusyTopicId(null);
+    }
+  }
 
   useEffect(() => {
     let mounted = true;
@@ -499,6 +576,24 @@ export default function ProfilePage() {
       return { subject, rows, completedTopics, total };
     });
   }, [progressFiltered, subjectTotals]);
+
+  const myRatingsEnriched = useMemo(() => {
+    const rows = Array.isArray(myRatings) ? myRatings : [];
+    return rows
+      .map((r) => {
+        const id = String(r?.topic_id ?? '').trim();
+        const topic = topicById.get(id) ?? null;
+        return {
+          topicId: id,
+          rating: Number(r?.rating ?? 0),
+          updatedAt: r?.updated_at ?? null,
+          title: topic?.title ?? id,
+          emoji: topic?.emoji ?? '🎯',
+          subject: topic?.subject ?? 'General',
+        };
+      })
+      .filter((r) => r.topicId);
+  }, [myRatings, topicById]);
 
   return (
     <motion.div className="profile-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
@@ -787,6 +882,58 @@ export default function ProfilePage() {
               })}
             </div>
           )}
+
+              <div className="profile-section-header" style={{ marginTop: 22 }}>
+                <h2>Your ratings</h2>
+                <div className="profile-section-sub">Change your stars anytime.</div>
+              </div>
+
+              {contentSource !== 'local' && !user ? (
+                <div className="profile-empty">
+                  Sign in to see and edit your ratings.
+                </div>
+              ) : ratingsLoading ? (
+                <div className="profile-loading">Loading your ratings…</div>
+              ) : myRatingsEnriched.length === 0 ? (
+                <div className="profile-empty">No ratings yet. Finish a module and rate it.</div>
+              ) : (
+                <div className="ratings-list" aria-label="Your module ratings">
+                  {myRatingsEnriched.map((r) => {
+                    const canEdit = contentSource === 'local' || Boolean(user);
+                    const busy = ratingBusyTopicId === r.topicId;
+                    return (
+                      <div key={r.topicId} className="rating-row">
+                        <Link className="rating-title-link" to={`/topic/${r.topicId}`}>
+                          <div className="rating-emoji" aria-hidden="true">{r.emoji}</div>
+                          <div className="rating-meta">
+                            <div className="rating-title">{r.title}</div>
+                            <div className="rating-sub">
+                              {r.subject}{r.updatedAt ? ` • updated ${fmtShortDate(r.updatedAt)}` : ''}
+                            </div>
+                          </div>
+                        </Link>
+
+                        <div className="rating-actions">
+                          <StarRating
+                            value={Number(r.rating ?? 0)}
+                            onChange={canEdit ? (next) => onUpdateRating(r.topicId, next) : undefined}
+                            readOnly={!canEdit || busy}
+                            size="md"
+                            label={`Your rating for ${r.title}`}
+                          />
+                          {busy && <span className="rating-saving">Saving…</span>}
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                  {ratingsError && (
+                    <div className="ratings-error">
+                      {ratingsError?.message ?? String(ratingsError)}
+                    </div>
+                  )}
+                </div>
+              )}
 
             </div>
 
