@@ -204,7 +204,7 @@ Notes
 
 ---
 
-### P1.4 Make search server-side
+### P1.4 Make search server-side ✅ DONE
 
 **Why it matters**
 - Client-side `.includes()` search requires downloading everything first.
@@ -216,6 +216,17 @@ Notes
 
 **Acceptance criteria**
 - Search results appear without downloading the full catalog.
+
+**Status**
+- ✅ Implemented in this repo.
+
+**What I changed**
+- Added a GIN full-text search index on `public.topics` (published-only).
+- Added an RPC `public.search_topics_page(query, subject, limit, offset)` that returns paginated results plus `total_count`.
+- Updated the browse UI to use server-side search (debounced) when a query is present.
+
+**How to apply (existing Supabase project)**
+- Run `supabase/009_server_side_search.sql` in Supabase SQL editor.
 
 ---
 

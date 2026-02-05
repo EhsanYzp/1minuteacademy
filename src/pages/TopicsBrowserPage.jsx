@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Header from '../components/Header';
 import SubjectCard from '../components/SubjectCard';
-import { getTopicCategoryCounts, listTopicsPage } from '../services/topics';
+import { getTopicCategoryCounts, listTopicsPage, searchTopicsPage } from '../services/topics';
 import { listUserTopicProgress } from '../services/progress';
 import { getTopicRatingSummaries } from '../services/ratings';
 import { useAuth } from '../context/AuthContext';
@@ -49,13 +49,22 @@ export default function TopicsBrowserPage() {
   const [completedIds, setCompletedIds] = useState(() => new Set());
   const [activeCategory, setActiveCategory] = useState('All');
   const [query, setQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
   const [filter, setFilter] = useState('all'); // all | completed | new
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const mountedRef = useRef(false);
+  const requestIdRef = useRef(0);
+  const activeQueryRef = useRef('');
+  const activeSubjectRef = useRef(null);
 
   const PAGE_SIZE = 36;
+
+  useEffect(() => {
+    const handle = setTimeout(() => setDebouncedQuery(query), 250);
+    return () => clearTimeout(handle);
+  }, [query]);
 
   async function mergeRatingsForRows(rows) {
     const ids = (Array.isArray(rows) ? rows : []).map((t) => t.id).filter(Boolean);
@@ -73,12 +82,15 @@ export default function TopicsBrowserPage() {
     }
   }
 
-  async function loadPage({ offset, append }) {
-    const subject = activeCategory === 'All' ? null : activeCategory;
-    const page = await listTopicsPage({ limit: PAGE_SIZE, offset, subject });
+  async function loadPage({ offset, append, subject, searchQuery, requestId }) {
+    const q = String(searchQuery ?? '').trim();
+    const page = q
+      ? await searchTopicsPage({ query: q, limit: PAGE_SIZE, offset, subject })
+      : await listTopicsPage({ limit: PAGE_SIZE, offset, subject });
     const rows = Array.isArray(page?.items) ? page.items : [];
 
     if (!mountedRef.current) return;
+    if (typeof requestId === 'number' && requestIdRef.current !== requestId) return;
 
     setTotalTopics(typeof page?.total === 'number' ? page.total : null);
     setNextOffset(typeof page?.nextOffset === 'number' ? page.nextOffset : offset + rows.length);
@@ -102,7 +114,13 @@ export default function TopicsBrowserPage() {
     if (!hasMore) return;
     try {
       setLoadingMore(true);
-      await loadPage({ offset: nextOffset, append: true });
+      await loadPage({
+        offset: nextOffset,
+        append: true,
+        subject: activeSubjectRef.current,
+        searchQuery: activeQueryRef.current,
+        requestId: requestIdRef.current,
+      });
     } catch {
       // ignore
     } finally {
@@ -113,31 +131,51 @@ export default function TopicsBrowserPage() {
   useEffect(() => {
     mountedRef.current = true;
 
+    let mounted = true;
+
+    async function loadCountsOnce() {
+      try {
+        const { counts, total } = await getTopicCategoryCounts();
+        if (!mounted) return;
+        const next = new Map(counts);
+        next.set(
+          'All',
+          typeof total === 'number' ? total : Array.from(counts.values()).reduce((a, b) => a + (Number(b) || 0), 0)
+        );
+        setCategoryCounts(next);
+      } catch {
+        if (mounted) setCategoryCounts(new Map([['All', 0]]));
+      }
+    }
+
+    loadCountsOnce();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    mountedRef.current = true;
+
     async function load() {
       try {
+        const requestId = (requestIdRef.current += 1);
         setLoading(true);
         setError(null);
         setRatingMap(new Map());
 
-        // Accurate sidebar totals (do not depend on pagination).
-        try {
-          const { counts, total } = await getTopicCategoryCounts();
-          if (mountedRef.current) {
-            const next = new Map(counts);
-            next.set('All', typeof total === 'number' ? total : Array.from(counts.values()).reduce((a, b) => a + (Number(b) || 0), 0));
-            setCategoryCounts(next);
-          }
-        } catch {
-          // fall back to loaded topics-based counts
-          if (mountedRef.current) setCategoryCounts(new Map([['All', 0]]));
-        }
+        const subject = activeCategory === 'All' ? null : activeCategory;
+        const q = String(debouncedQuery ?? '').trim();
+        activeSubjectRef.current = subject;
+        activeQueryRef.current = q;
 
-        // First page for the active category.
+        // First page for the active category/search.
         setTopics([]);
         setTotalTopics(null);
         setNextOffset(0);
         setHasMore(false);
-        await loadPage({ offset: 0, append: false });
+        await loadPage({ offset: 0, append: false, subject, searchQuery: q, requestId });
       } catch (e) {
         if (!mountedRef.current) return;
         setError(e);
@@ -150,7 +188,7 @@ export default function TopicsBrowserPage() {
     return () => {
       mountedRef.current = false;
     };
-  }, [activeCategory]);
+  }, [activeCategory, debouncedQuery]);
 
   useEffect(() => {
     let mounted = true;
@@ -226,6 +264,7 @@ export default function TopicsBrowserPage() {
 
   const visibleTopics = useMemo(() => {
     const q = query.trim();
+    const shouldClientFilterQuery = contentSource === 'local';
 
     let out = topics
       .map((t) => {
@@ -237,7 +276,7 @@ export default function TopicsBrowserPage() {
           ratingCount: summary?.ratings_count ?? 0,
         };
       })
-      .filter((t) => includesQuery(t, q));
+      .filter((t) => (shouldClientFilterQuery ? includesQuery(t, q) : true));
 
     if (activeCategory !== 'All') {
       out = out.filter((t) => (norm(t.subject) || 'General') === activeCategory);
@@ -256,6 +295,17 @@ export default function TopicsBrowserPage() {
 
     return out;
   }, [topics, ratingMap, completedIds, activeCategory, query, filter]);
+
+  const searchUiState = useMemo(() => {
+    const q = String(query ?? '').trim();
+    const dq = String(debouncedQuery ?? '').trim();
+    const serverMode = contentSource !== 'local';
+
+    if (!serverMode || !q) return 'idle';
+    if (q !== dq) return 'debouncing';
+    if (loading) return 'loading';
+    return 'idle';
+  }, [contentSource, query, debouncedQuery, loading]);
 
   return (
     <motion.div className="topics-browser" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
@@ -325,6 +375,14 @@ export default function TopicsBrowserPage() {
                     placeholder="Search topics (e.g., quantum, blockchain, agents…)"
                     aria-label="Search topics"
                   />
+
+                  {searchUiState !== 'idle' && (
+                    <span className="search-status" aria-live="polite">
+                      <span className={searchUiState === 'loading' ? 'search-spinner' : 'search-spinner subtle'} aria-hidden="true" />
+                      <span className="search-status-text">{searchUiState === 'loading' ? 'Searching' : '…'}</span>
+                    </span>
+                  )}
+
                   {query && (
                     <button type="button" className="clear" onClick={() => setQuery('')} aria-label="Clear search">
                       ✕

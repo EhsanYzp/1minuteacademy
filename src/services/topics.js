@@ -2,6 +2,13 @@ import { isSupabaseConfigured, supabase } from '../lib/supabaseClient';
 import { getContentSource } from './_contentSource';
 import { getLocalTopic, listLocalTopics } from './topics.local';
 
+function includesQueryLocal(topic, q) {
+  const query = String(q ?? '').trim().toLowerCase();
+  if (!query) return true;
+  const hay = `${topic?.title ?? ''} ${topic?.description ?? ''} ${topic?.subject ?? ''}`.toLowerCase();
+  return hay.includes(query);
+}
+
 export async function getTopicCategoryCounts() {
   const counts = new Map();
 
@@ -99,6 +106,52 @@ export async function listTopicsPage({ limit = 30, offset = 0, subject = null } 
     total,
     nextOffset,
     hasMore: total == null ? items.length === safeLimit : nextOffset < total,
+  };
+}
+
+export async function searchTopicsPage({ query = '', limit = 30, offset = 0, subject = null } = {}) {
+  const safeLimit = Math.min(200, Math.max(1, Number(limit) || 30));
+  const safeOffset = Math.max(0, Number(offset) || 0);
+  const subjectFilter = typeof subject === 'string' && subject.trim() ? subject.trim() : null;
+  const q = typeof query === 'string' ? query.trim() : String(query ?? '').trim();
+
+  if (getContentSource() === 'local') {
+    let all = listLocalTopics();
+    if (subjectFilter && subjectFilter !== 'All') {
+      all = all.filter((t) => (String(t?.subject ?? '').trim() || 'General') === subjectFilter);
+    }
+    if (q) all = all.filter((t) => includesQueryLocal(t, q));
+
+    const items = all.slice(safeOffset, safeOffset + safeLimit);
+    const nextOffset = safeOffset + items.length;
+    return {
+      items,
+      total: all.length,
+      nextOffset,
+      hasMore: nextOffset < all.length,
+    };
+  }
+
+  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+
+  const { data, error } = await supabase.rpc('search_topics_page', {
+    p_query: q,
+    p_subject: subjectFilter,
+    p_limit: safeLimit,
+    p_offset: safeOffset,
+  });
+  if (error) throw error;
+
+  const rows = Array.isArray(data) ? data : [];
+  const total = rows.length > 0 ? Number(rows[0]?.total_count ?? 0) : 0;
+  const items = rows.map(({ total_count, ...rest }) => rest);
+
+  const nextOffset = safeOffset + items.length;
+  return {
+    items,
+    total,
+    nextOffset,
+    hasMore: nextOffset < total,
   };
 }
 
