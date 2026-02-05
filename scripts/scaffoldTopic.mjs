@@ -118,12 +118,16 @@ async function main() {
         text: '🪝 Hook: Start with a surprising fact or question that grabs attention.',
         visual: args.emoji,
       },
+      buildup: {
+        text: '🔧 Buildup: Add context or tension to the hook.',
+        visual: '⚙️',
+      },
       discovery: {
         text: '💡 Discovery: Reveal the core concept or "aha" moment.',
         visual: '🔍',
       },
-      action: {
-        text: '⚡ Action: Show a real-world application or example.',
+      twist: {
+        text: '🔄 Twist: Show a real-world application or surprising detail.',
         visual: '🎯',
       },
       punchline: {
@@ -163,7 +167,7 @@ async function main() {
   await fs.writeFile(outPath, JSON.stringify(topic, null, 2) + '\n', 'utf8');
   console.log(`✅ Scaffolded story-based topic: ${path.relative(process.cwd(), outPath)}`);
   console.log(`\nNext steps:`);
-  console.log(`1. Edit story.hook, story.discovery, story.action, story.punchline`);
+  console.log(`1. Edit story.hook, story.buildup, story.discovery, story.twist, story.punchline`);
   console.log(`2. Edit quiz question and options`);
   console.log(`3. Test with: npm run dev:local`);
 }

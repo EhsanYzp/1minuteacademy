@@ -3,14 +3,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Timer from '../../components/Timer';
 import './story.css';
 
-const BEAT_DURATION = 12000; // 12 seconds per beat
+const BEAT_DURATION = 10000; // 10 seconds per beat
+const QUIZ_AUTO_REVEAL_AT = 4; // Auto-reveal answer when 4 seconds remaining
 
 export default function StoryRenderer({ story, timeRemaining, onComplete }) {
-  const beats = ['hook', 'discovery', 'action', 'punchline'];
+  const beats = ['hook', 'buildup', 'discovery', 'twist', 'punchline'];
   const [currentBeat, setCurrentBeat] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [answered, setAnswered] = useState(false);
+  const [autoRevealed, setAutoRevealed] = useState(false);
   const [progress, setProgress] = useState(0);
   const [waitingForTimer, setWaitingForTimer] = useState(false);
 
@@ -55,6 +57,15 @@ export default function StoryRenderer({ story, timeRemaining, onComplete }) {
       onComplete?.();
     }
   }, [waitingForTimer, timeRemaining, onComplete]);
+
+  // Auto-reveal quiz answer in the last 4 seconds if not answered
+  useEffect(() => {
+    if (showQuiz && !answered && timeRemaining <= QUIZ_AUTO_REVEAL_AT && timeRemaining > 0) {
+      setAutoRevealed(true);
+      setAnswered(true);
+      setWaitingForTimer(true);
+    }
+  }, [showQuiz, answered, timeRemaining]);
 
   const getOptionClass = (index) => {
     if (!answered) return '';
@@ -129,11 +140,15 @@ export default function StoryRenderer({ story, timeRemaining, onComplete }) {
 
             {answered && (
               <motion.p
-                className={`quiz-feedback ${selectedAnswer === story.quiz.correct ? 'correct' : 'incorrect'}`}
+                className={`quiz-feedback ${autoRevealed ? 'auto-revealed' : selectedAnswer === story.quiz.correct ? 'correct' : 'incorrect'}`}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                {selectedAnswer === story.quiz.correct ? '✓ Correct!' : '✗ Not quite'}
+                {autoRevealed
+                  ? '⏱️ Time\'s up! Here\'s the answer'
+                  : selectedAnswer === story.quiz.correct
+                    ? '✓ Correct!'
+                    : '✗ Not quite'}
               </motion.p>
             )}
           </motion.div>
