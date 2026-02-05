@@ -630,7 +630,7 @@ export default function ProfilePage() {
             <div className="profile-emoji">🧑‍🚀</div>
             <div>
               <h1>Your profile</h1>
-              <p>Track your 1MA balance, streak, and completed topics.</p>
+              <p>Track your 1MA minutes (minutes completed), streak, and completed topics.</p>
             </div>
           </div>
 
@@ -657,7 +657,7 @@ export default function ProfilePage() {
                   <div className="profile-stat-label">
                     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
                       <OneMAIcon size={16} />
-                      1MA
+                      1MA minutes
                     </span>
                   </div>
                   <div className="profile-stat-value">{Number(stats?.one_ma_balance ?? 0)}</div>
@@ -674,10 +674,10 @@ export default function ProfilePage() {
 
               {tier !== 'pro' && contentSource !== 'local' && (
                 <div className="profile-note" style={{ margin: '12px 0 0' }}>
-                  <strong>Collect 1MA with Pro</strong>
+                  <strong>Unlock 1MA minutes with Pro</strong>
                   <div className="profile-note-row">
                     <div>
-                      Pro members earn <strong>1MA</strong> every time they complete a module — a collectible you can stack.
+                      Pro members earn <strong>+1</strong> to their <strong>1MA minutes</strong> each time they complete a module.
                     </div>
                     <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
                   </div>

@@ -344,7 +344,7 @@ function LessonPage() {
                     </span>
                   </span>
                 </span>
-                <span className="stat-label">1MA Collected</span>
+                <span className="stat-label">1MA Minutes</span>
               </div>
               <div className="stat">
                 <span className="stat-value">🔥 {completionResult?.streak ?? '—'}</span>
@@ -355,13 +355,13 @@ function LessonPage() {
             {tier !== 'pro' && (
               <div className="completion-panel" style={{ marginTop: 12 }}>
                 <p style={{ margin: 0 }}>
-                  <strong>Pro perk:</strong> collect <strong>1MA</strong> every time you finish a module.
+                  <strong>Pro perk:</strong> each completed module adds <strong>+1</strong> to your <strong>1MA minutes</strong>.
                 </p>
                 <p style={{ margin: '8px 0 0', opacity: 0.85 }}>
-                  Upgrade to start stacking 1MA collectibles.
+                  Your 1MA minutes equal the number of minutes you’ve completed on the platform.
                 </p>
                 <div style={{ marginTop: 10, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                  <button onClick={() => navigate('/upgrade')}>Unlock 1MA (Pro)</button>
+                  <button onClick={() => navigate('/upgrade')}>Unlock 1MA minutes (Pro)</button>
                 </div>
               </div>
             )}
@@ -376,10 +376,10 @@ function LessonPage() {
               >
                 <p style={{ margin: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
                   <OneMAIcon size={18} />
-                  <strong>+1 1MA</strong> added to your balance.
+                  <strong>+1</strong> added to your 1MA minutes.
                 </p>
                 <p style={{ margin: '8px 0 0', opacity: 0.85 }}>
-                  Balance: <strong>{Number(completionResult?.one_ma_balance ?? 0)}</strong>
+                  Total 1MA minutes: <strong>{Number(completionResult?.one_ma_balance ?? 0)}</strong>
                 </p>
               </motion.div>
             )}

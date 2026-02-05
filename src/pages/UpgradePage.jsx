@@ -5,7 +5,6 @@ import Header from '../components/Header';
 import { useAuth } from '../context/AuthContext';
 import { formatTierLabel, getCurrentTier } from '../services/entitlements';
 import { openCustomerPortal, startProCheckout } from '../services/billing';
-import OneMAIcon from '../components/OneMAIcon';
 import './UpgradePage.css';
 
 const DEFAULT_PRICE_MONTH = import.meta.env.VITE_PRICE_MONTH ?? '$7.99';
@@ -243,11 +242,6 @@ export default function UpgradePage() {
                   <li>Beginner topics only</li>
                   <li>Progress tracking</li>
                   <li>Rate modules with stars</li>
-                  <li>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-                      <OneMAIcon size={16} /> 1MA collectibles (Pro-only)
-                    </span>
-                  </li>
                   <li>Review mode (locked)</li>
                   <li>Saved takeaways (locked)</li>
                 </ul>
@@ -271,11 +265,7 @@ export default function UpgradePage() {
                   <li>Saved takeaways in your profile</li>
                   <li>Progress tracking</li>
                   <li>Rate modules with stars</li>
-                  <li>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-                      <OneMAIcon size={16} /> Collect 1MA every completion
-                    </span>
-                  </li>
+                  <li>Earn +1 minute (1MA) per completion</li>
                 </ul>
                 <div className="tier-actions">
                   {tier === 'pro' ? (
@@ -317,11 +307,7 @@ export default function UpgradePage() {
               </div>
 
               <div className="compare-row">
-                <div className="compare-feature">
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-                    <OneMAIcon size={16} /> 1MA collectible rewards
-                  </span>
-                </div>
+                <div className="compare-feature">1MA minutes (1 minute per completion)</div>
                 <div className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></div>
                 <div className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></div>
                 <div className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></div>
@@ -353,7 +339,7 @@ export default function UpgradePage() {
 
           <div className="upgrade-section upgrade-section-spaced">
             <div className="upgrade-section-title">Pick a Pro plan</div>
-            <div className="upgrade-section-sub">Cancel anytime in Stripe Portal. Pro unlocks advanced modules, review mode, saved takeaways, ratings, and 1MA collectibles.</div>
+            <div className="upgrade-section-sub">Cancel anytime in Stripe Portal. Pro unlocks advanced modules, review mode, saved takeaways, ratings, and 1MA minutes (your minutes completed).</div>
           </div>
 
           <div className="upgrade-grid" id="pro-plans">
@@ -366,11 +352,7 @@ export default function UpgradePage() {
                 <li>Saved takeaways in your profile</li>
                 <li>Progress tracking</li>
                 <li>Rate modules with stars</li>
-                <li>
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-                    <OneMAIcon size={16} /> Collect 1MA every completion
-                  </span>
-                </li>
+                <li>Earn +1 minute (1MA) per completion</li>
               </ul>
               <button
                 className="plan-cta"

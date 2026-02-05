@@ -50,7 +50,7 @@ export default function LoginPage() {
           <div className="login-title">
             <div className="login-emoji">🧙‍♂️</div>
             <h1>Welcome back</h1>
-            <p>Sign in to track your 1MA balance, streaks, and progress.</p>
+            <p>Sign in to track your 1MA minutes (minutes completed), streaks, and progress.</p>
           </div>
 
           {!isSupabaseConfigured && (
