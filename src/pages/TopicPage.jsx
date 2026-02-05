@@ -350,7 +350,7 @@ function TopicPage() {
               </span>
             </div>
 
-            <div className="learning-points">
+            <div className="topic-learning-points">
               <h3>What You'll Learn:</h3>
               <ul>
                 {topic.learningPoints.map((point, index) => (
