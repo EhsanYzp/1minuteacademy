@@ -204,6 +204,13 @@ export async function getTopic(topicId) {
     .single();
 
   if (error) throw error;
+  
+  // Normalize: extract story/quiz from lesson if not at top level
+  if (data && data.lesson && !data.story) {
+    data.story = data.lesson.story;
+    data.quiz = data.lesson.quiz;
+  }
+  
   return data;
 }
 

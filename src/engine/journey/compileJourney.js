@@ -48,6 +48,13 @@ export function compileJourneyFromTopic(topicRow) {
         }
       ]
     },
+    lesson: {
+      blocks: [
+        { type: 'lessonTopbar' },
+        { type: 'storyBeats' },
+        { type: 'storyQuiz' }
+      ]
+    },
     completion: {
       blocks: [
         {

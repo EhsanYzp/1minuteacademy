@@ -5,7 +5,7 @@ import './story.css';
 const BEAT_DURATION = 8000; // 8 seconds per beat
 const QUIZ_AUTO_REVEAL_AT = 4; // Auto-reveal answer when 4 seconds remaining
 
-export default function StoryRenderer({ story, topicTitle, timeRemaining, onComplete, onClose }) {
+export default function StoryRenderer({ story, topicTitle, timeRemaining, onComplete, onClose, hideTopbar = false }) {
   const beats = ['hook', 'buildup', 'discovery', 'twist', 'climax', 'punchline'];
   const [currentBeat, setCurrentBeat] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
@@ -75,22 +75,24 @@ export default function StoryRenderer({ story, topicTitle, timeRemaining, onComp
 
   return (
     <div className="story-renderer">
-      {/* Topbar */}
-      <div className="story-topbar">
-        <button className="story-close-btn" onClick={onClose} aria-label="Close">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-        <div className="story-topic-title">
-          <span className="story-topic-emoji">{story?.emoji || '📚'}</span>
-          <span className="story-topic-name">{topicTitle || 'Learning...'}</span>
+      {/* Topbar - can be hidden when rendered via journey blocks */}
+      {!hideTopbar && (
+        <div className="story-topbar">
+          <button className="story-close-btn" onClick={onClose} aria-label="Close">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          <div className="story-topic-title">
+            <span className="story-topic-emoji">{story?.emoji || '📚'}</span>
+            <span className="story-topic-name">{topicTitle || 'Learning...'}</span>
+          </div>
+          <div className="story-timer-large">
+            <span className="story-timer-value">{Math.floor(timeRemaining / 60)}:{(timeRemaining % 60).toString().padStart(2, '0')}</span>
+          </div>
         </div>
-        <div className="story-timer-large">
-          <span className="story-timer-value">{Math.floor(timeRemaining / 60)}:{(timeRemaining % 60).toString().padStart(2, '0')}</span>
-        </div>
-      </div>
+      )}
 
       <AnimatePresence mode="wait">
         {!showQuiz ? (

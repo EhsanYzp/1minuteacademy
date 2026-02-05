@@ -131,6 +131,18 @@ export default function JourneyBlocks({ blocks, ctx, allowedTypes = null }) {
             return ctx?.renderReviewLesson ? <div key={key}>{ctx.renderReviewLesson()}</div> : null;
           }
 
+          if (type === 'lessonTopbar') {
+            return ctx?.renderLessonTopbar ? <div key={key}>{ctx.renderLessonTopbar()}</div> : null;
+          }
+
+          if (type === 'storyBeats') {
+            return ctx?.renderStoryBeats ? <div key={key}>{ctx.renderStoryBeats()}</div> : null;
+          }
+
+          if (type === 'storyQuiz') {
+            return ctx?.renderStoryQuiz ? <div key={key}>{ctx.renderStoryQuiz()}</div> : null;
+          }
+
           return null;
         })}
     </div>

@@ -51,6 +51,10 @@ function LessonPage() {
   // Fixed 60 seconds for story-based lessons
   const totalSeconds = 60;
 
+  const handleComplete = useCallback(() => {
+    setIsCompleted(true);
+  }, []);
+
   const journey = useMemo(() => compileJourneyFromTopic(topicRow), [topicRow]);
   const journeyCtx = useMemo(() => {
     const normalizedTier = normalizeTierForJourney(tier);
@@ -228,6 +232,35 @@ function LessonPage() {
           )}
         </>
       ),
+      // Lesson page block renderers
+      renderLessonTopbar: () => (
+        <div className="story-topbar">
+          <button className="story-close-btn" onClick={() => navigate(`/topic/${topicId}`)} aria-label="Close">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          <div className="story-topic-title">
+            <span className="story-topic-emoji">{topicRow?.emoji || '📚'}</span>
+            <span className="story-topic-name">{topicRow?.title || 'Learning...'}</span>
+          </div>
+          <div className="story-timer-large">
+            <span className="story-timer-value">{Math.floor(timeRemaining / 60)}:{(timeRemaining % 60).toString().padStart(2, '0')}</span>
+          </div>
+        </div>
+      ),
+      renderStoryBeats: () => (
+        <StoryRenderer
+          story={topicRow}
+          topicTitle={topicRow?.title}
+          timeRemaining={timeRemaining}
+          onComplete={handleComplete}
+          onClose={() => navigate(`/topic/${topicId}`)}
+          hideTopbar={true}
+        />
+      ),
+      renderStoryQuiz: () => null, // Quiz is rendered within StoryRenderer
     };
   }, [
     tier,
@@ -235,7 +268,7 @@ function LessonPage() {
     canStart,
     canUseReview,
     user,
-    topicRow?.title,
+    topicRow,
     totalSeconds,
     completionResult,
     canSaveProgress,
@@ -248,11 +281,9 @@ function LessonPage() {
     onRate,
     navigate,
     topicId,
+    timeRemaining,
+    handleComplete,
   ]);
-
-  const handleComplete = useCallback(() => {
-    setIsCompleted(true);
-  }, []);
 
   const handleTimeUp = useCallback(() => {
     setIsCompleted(true);
@@ -515,35 +546,11 @@ function LessonPage() {
         </motion.div>
       ) : (
         <div className="lesson-container">
-          <div className="lesson-header">
-            <Timer timeRemaining={timeRemaining} />
-            <div className="progress-container">
-              <div className="progress-bar">
-                <motion.div 
-                  className="progress-fill"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${progress}%` }}
-                />
-              </div>
-              <span className="progress-text">{Math.round(progress)}% Complete</span>
-            </div>
-            <button 
-              className="exit-button"
-              onClick={() => navigate(`/topic/${topicId}`)}
-            >
-              ✕
-            </button>
-          </div>
-
-          <div className="lesson-content">
-            <StoryRenderer 
-              story={topicRow} 
-              topicTitle={topicRow?.title}
-              timeRemaining={timeRemaining} 
-              onComplete={handleComplete}
-              onClose={() => navigate(`/topic/${topicId}`)}
-            />
-          </div>
+          <JourneyBlocks
+            blocks={journey?.lesson?.blocks}
+            ctx={journeyCtx}
+            allowedTypes={['lessonTopbar', 'storyBeats', 'storyQuiz']}
+          />
         </div>
       )}
     </motion.div>

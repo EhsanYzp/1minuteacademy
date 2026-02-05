@@ -131,6 +131,15 @@ async function main() {
   const localById = new Map();
   for (const file of files) {
     const t = await readJson(file);
+    // Build the lesson object from story + quiz if lesson is not provided directly
+    let lesson = t.lesson;
+    if (!lesson && (t.story || t.quiz)) {
+      lesson = {
+        version: t.version ?? 1,
+        story: t.story,
+        quiz: t.quiz,
+      };
+    }
     const row = {
       id: t.id,
       subject: t.subject,
@@ -139,11 +148,12 @@ async function main() {
       color: t.color,
       description: t.description,
       difficulty: t.difficulty,
-      lesson: t.lesson,
+      lesson: lesson,
       journey: t.journey ?? null,
       published: Boolean(t.published),
     };
     if (!row.id) throw new Error(`Missing required field 'id' in ${file}`);
+    if (!row.lesson) throw new Error(`Missing 'lesson' or 'story'+'quiz' in ${file}`);
     localById.set(row.id, row);
   }
 
