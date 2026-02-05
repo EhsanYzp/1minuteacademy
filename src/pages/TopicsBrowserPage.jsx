@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Header from '../components/Header';
 import SubjectCard from '../components/SubjectCard';
-import { listTopics } from '../services/topics';
+import { listTopicsPage } from '../services/topics';
 import { listUserTopicProgress } from '../services/progress';
 import { getTopicRatingSummaries } from '../services/ratings';
 import { useAuth } from '../context/AuthContext';
@@ -40,6 +40,10 @@ export default function TopicsBrowserPage() {
   const contentSource = getContentSource();
 
   const [topics, setTopics] = useState([]);
+  const [totalTopics, setTotalTopics] = useState(null);
+  const [nextOffset, setNextOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [ratingMap, setRatingMap] = useState(() => new Map());
   const [completedIds, setCompletedIds] = useState(() => new Set());
   const [activeCategory, setActiveCategory] = useState('All');
@@ -48,35 +52,82 @@ export default function TopicsBrowserPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const mountedRef = useRef(false);
+
+  const PAGE_SIZE = 36;
+
+  async function mergeRatingsForRows(rows) {
+    const ids = (Array.isArray(rows) ? rows : []).map((t) => t.id).filter(Boolean);
+    if (ids.length === 0) return;
+    try {
+      const map = await getTopicRatingSummaries(ids);
+      if (!mountedRef.current) return;
+      setRatingMap((prev) => {
+        const next = new Map(prev);
+        for (const [k, v] of map.entries()) next.set(k, v);
+        return next;
+      });
+    } catch {
+      // ignore
+    }
+  }
+
+  async function loadPage({ offset, append }) {
+    const page = await listTopicsPage({ limit: PAGE_SIZE, offset });
+    const rows = Array.isArray(page?.items) ? page.items : [];
+
+    if (!mountedRef.current) return;
+
+    setTotalTopics(typeof page?.total === 'number' ? page.total : null);
+    setNextOffset(typeof page?.nextOffset === 'number' ? page.nextOffset : offset + rows.length);
+    setHasMore(Boolean(page?.hasMore));
+
+    setTopics((prev) => {
+      if (!append) return rows;
+      const seen = new Set(prev.map((t) => t.id));
+      const merged = prev.slice();
+      for (const r of rows) {
+        if (r?.id && !seen.has(r.id)) merged.push(r);
+      }
+      return merged;
+    });
+
+    await mergeRatingsForRows(rows);
+  }
+
+  async function handleLoadMore() {
+    if (loadingMore || loading) return;
+    if (!hasMore) return;
+    try {
+      setLoadingMore(true);
+      await loadPage({ offset: nextOffset, append: true });
+    } catch {
+      // ignore
+    } finally {
+      setLoadingMore(false);
+    }
+  }
+
   useEffect(() => {
-    let mounted = true;
+    mountedRef.current = true;
 
     async function load() {
       try {
         setLoading(true);
         setError(null);
-        const data = await listTopics();
-        if (!mounted) return;
-        const rows = Array.isArray(data) ? data : [];
-        setTopics(rows);
-
-        try {
-          const map = await getTopicRatingSummaries(rows.map((t) => t.id));
-          if (mounted) setRatingMap(map);
-        } catch {
-          if (mounted) setRatingMap(new Map());
-        }
+        setRatingMap(new Map());
+        await loadPage({ offset: 0, append: false });
       } catch (e) {
-        if (!mounted) return;
+        if (!mountedRef.current) return;
         setError(e);
       } finally {
-        if (mounted) setLoading(false);
+        if (mountedRef.current) setLoading(false);
       }
     }
 
     load();
     return () => {
-      mounted = false;
+      mountedRef.current = false;
     };
   }, []);
 
@@ -266,7 +317,14 @@ export default function TopicsBrowserPage() {
               </div>
 
               <div className="toolbar-sub">
-                Showing <strong>{visibleTopics.length}</strong> topic(s)
+                Showing <strong>{visibleTopics.length}</strong> result(s)
+                {typeof totalTopics === 'number' ? (
+                  <>
+                    {' '}• Loaded <strong>{topics.length}</strong> / <strong>{totalTopics}</strong>
+                  </>
+                ) : (
+                  <> • Loaded <strong>{topics.length}</strong></>
+                )}
                 {contentSource === 'local' ? ' (Local Preview)' : user ? '' : ' (sign in to track completion)'}
               </div>
 
@@ -309,13 +367,24 @@ export default function TopicsBrowserPage() {
             ) : visibleTopics.length === 0 ? (
               <div className="topics-empty">No topics match your search/filter. Try a different keyword.</div>
             ) : (
-              <div className="topics-grid">
-                {visibleTopics.map((t, idx) => (
-                  <motion.div key={t.id} initial={{ y: 8, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: Math.min(0.2, idx * 0.02) }}>
-                    <SubjectCard subject={t} index={idx} />
-                  </motion.div>
-                ))}
-              </div>
+              <>
+                <div className="topics-grid">
+                  {visibleTopics.map((t, idx) => (
+                    <motion.div key={t.id} initial={{ y: 8, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: Math.min(0.2, idx * 0.02) }}>
+                      <SubjectCard subject={t} index={idx} />
+                    </motion.div>
+                  ))}
+                </div>
+
+                {hasMore && (
+                  <div className="topics-loadmore">
+                    <button type="button" className="loadmore-btn" onClick={handleLoadMore} disabled={loadingMore}>
+                      {loadingMore ? 'Loading…' : 'Load more topics'}
+                    </button>
+                    <div className="loadmore-sub">Load more to expand your results without downloading everything.</div>
+                  </div>
+                )}
+              </>
             )}
           </section>
         </div>

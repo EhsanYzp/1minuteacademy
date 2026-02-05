@@ -113,7 +113,7 @@ Notes
 
 ## P1 — First scaling bottlenecks (performance + cost)
 
-### P1.1 Stop loading “all topics” on browse; add pagination (or infinite scroll)
+### P1.1 Stop loading “all topics” on browse; add pagination (or infinite scroll) ✅ DONE
 
 **Why it matters**
 - Current browse behavior loads every topic and then does client-side filtering/search. With thousands of topics, initial load becomes slow and expensive.
@@ -122,6 +122,16 @@ Notes
 - Add server-side pagination for topics list:
   - `limit` + cursor (preferred) or `limit` + `offset`.
 - Only render a page of topics at a time.
+
+**Status**
+- ✅ Implemented in this repo.
+
+**What I changed**
+- Added a paginated topics fetch helper `listTopicsPage({ limit, offset })` that uses Supabase `range()` + `count`.
+- Updated the browse UI to load the first page only and let users fetch more via “Load more topics”.
+
+**Notes**
+- Search/filter currently operates on the loaded subset of topics; P1.4 (server-side search) is the follow-up for searching the full catalog.
 
 **Acceptance criteria**
 - Topics page loads quickly even with 10,000+ topics.
