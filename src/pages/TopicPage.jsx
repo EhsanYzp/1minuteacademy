@@ -338,31 +338,6 @@ function TopicPage() {
               </span>
             </div>
 
-            <div className="topic-learning-points">
-              <h3>What You'll Learn:</h3>
-              <ul>
-                {topic.learningPoints.map((point, index) => (
-                  <motion.li 
-                    key={index}
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.4 + index * 0.1 }}
-                  >
-                    {point}
-                  </motion.li>
-                ))}
-              </ul>
-            </div>
-
-            <motion.div 
-              className="fun-fact"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-            >
-              <span className="fun-fact-label">💡 Fun Fact:</span>
-              <p>{topic.funFact}</p>
-            </motion.div>
           </motion.div>
 
           <motion.div 

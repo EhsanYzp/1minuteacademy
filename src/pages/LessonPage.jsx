@@ -31,7 +31,7 @@ function LessonPage() {
   const canUseReview = canReview(tier);
   const canSaveProgress = canTrackProgress(tier);
   const canAttemptSaveProgress = canSaveProgress && Boolean(user);
-  const [isStarted, setIsStarted] = useState(false);
+  const [isStarted, setIsStarted] = useState(true);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isReviewing, setIsReviewing] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(60);
@@ -450,53 +450,7 @@ function LessonPage() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      {!isStarted ? (
-        <motion.div 
-          className="countdown-screen"
-          initial={{ scale: 0.8 }}
-          animate={{ scale: 1 }}
-        >
-          <motion.div
-            className="countdown-content"
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-          >
-            <h1>Ready to Learn? 🎓</h1>
-            <p>You have 60 seconds to master this topic!</p>
-            
-            <motion.div 
-              className="countdown-tips"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-            >
-              <div className="tip">👀 Watch closely</div>
-              <div className="tip">🖱️ Interact with elements</div>
-              <div className="tip">🧠 Have fun learning!</div>
-              <div className="tip">📚 Review after (no timer)</div>
-            </motion.div>
-
-            <motion.button
-              className="begin-button"
-              onClick={() => setIsStarted(true)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              animate={{
-                boxShadow: [
-                  '0 0 0 0 rgba(78, 205, 196, 0.4)',
-                  '0 0 0 20px rgba(78, 205, 196, 0)',
-                ]
-              }}
-              transition={{
-                boxShadow: { duration: 1.5, repeat: Infinity }
-              }}
-            >
-              🚀 Begin Now!
-            </motion.button>
-          </motion.div>
-        </motion.div>
-      ) : isReviewing ? (
+      {isReviewing ? (
         <StoryReview
           story={topicRow}
           title={topicRow?.title ?? ''}
