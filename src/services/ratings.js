@@ -48,16 +48,23 @@ export async function getTopicRatingSummaries(topicIds) {
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
-  const { data, error } = await supabase.rpc('get_topic_rating_summaries', { topic_ids: uniq });
-  if (error) throw error;
-
+  const CHUNK = 75;
   const map = new Map();
-  for (const row of Array.isArray(data) ? data : []) {
-    map.set(String(row.topic_id), {
-      avg_rating: row.avg_rating,
-      ratings_count: row.ratings_count,
-    });
+
+  for (let i = 0; i < uniq.length; i += CHUNK) {
+    const slice = uniq.slice(i, i + CHUNK);
+    // eslint-disable-next-line no-await-in-loop
+    const { data, error } = await supabase.rpc('get_topic_rating_summaries', { topic_ids: slice });
+    if (error) throw error;
+
+    for (const row of Array.isArray(data) ? data : []) {
+      map.set(String(row.topic_id), {
+        avg_rating: row.avg_rating,
+        ratings_count: row.ratings_count,
+      });
+    }
   }
+
   return map;
 }
 

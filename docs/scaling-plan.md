@@ -143,7 +143,7 @@ Notes
 
 ---
 
-### P1.2 Stop aggregating ratings for every topic on browse
+### P1.2 Stop aggregating ratings for every topic on browse ✅ DONE
 
 **Why it matters**
 - `get_topic_rating_summaries(topic_ids[])` over thousands of IDs becomes a large request and a heavy DB aggregate.
@@ -153,6 +153,18 @@ Notes
 - Add caching and/or precomputed aggregates:
   - Option A: materialized view refreshed periodically
   - Option B: `topic_rating_summaries` table updated by trigger
+
+**Status**
+- ✅ Implemented in this repo.
+
+**What I changed**
+- Browse ratings are fetched per page (not for the entire catalog).
+- Added a precomputed summary table `public.topic_rating_summaries` maintained by triggers.
+- Updated `public.get_topic_rating_summaries(topic_ids)` to read from the summary table (cheap lookups).
+- Added RPC chunking in the client so even accidental large calls stay bounded.
+
+**How to apply (existing Supabase project)**
+- Run `supabase/007_topic_rating_summaries.sql` in Supabase SQL editor.
 
 **Acceptance criteria**
 - Ratings still appear quickly.
