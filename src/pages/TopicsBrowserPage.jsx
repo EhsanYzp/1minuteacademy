@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Header from '../components/Header';
 import SubjectCard from '../components/SubjectCard';
-import { listTopicsPage } from '../services/topics';
+import { getTopicCategoryCounts, listTopicsPage } from '../services/topics';
 import { listUserTopicProgress } from '../services/progress';
 import { getTopicRatingSummaries } from '../services/ratings';
 import { useAuth } from '../context/AuthContext';
@@ -44,6 +44,7 @@ export default function TopicsBrowserPage() {
   const [nextOffset, setNextOffset] = useState(0);
   const [hasMore, setHasMore] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [categoryCounts, setCategoryCounts] = useState(() => new Map([['All', 0]]));
   const [ratingMap, setRatingMap] = useState(() => new Map());
   const [completedIds, setCompletedIds] = useState(() => new Set());
   const [activeCategory, setActiveCategory] = useState('All');
@@ -73,7 +74,8 @@ export default function TopicsBrowserPage() {
   }
 
   async function loadPage({ offset, append }) {
-    const page = await listTopicsPage({ limit: PAGE_SIZE, offset });
+    const subject = activeCategory === 'All' ? null : activeCategory;
+    const page = await listTopicsPage({ limit: PAGE_SIZE, offset, subject });
     const rows = Array.isArray(page?.items) ? page.items : [];
 
     if (!mountedRef.current) return;
@@ -116,6 +118,25 @@ export default function TopicsBrowserPage() {
         setLoading(true);
         setError(null);
         setRatingMap(new Map());
+
+        // Accurate sidebar totals (do not depend on pagination).
+        try {
+          const { counts, total } = await getTopicCategoryCounts();
+          if (mountedRef.current) {
+            const next = new Map(counts);
+            next.set('All', typeof total === 'number' ? total : Array.from(counts.values()).reduce((a, b) => a + (Number(b) || 0), 0));
+            setCategoryCounts(next);
+          }
+        } catch {
+          // fall back to loaded topics-based counts
+          if (mountedRef.current) setCategoryCounts(new Map([['All', 0]]));
+        }
+
+        // First page for the active category.
+        setTopics([]);
+        setTotalTopics(null);
+        setNextOffset(0);
+        setHasMore(false);
         await loadPage({ offset: 0, append: false });
       } catch (e) {
         if (!mountedRef.current) return;
@@ -129,7 +150,7 @@ export default function TopicsBrowserPage() {
     return () => {
       mountedRef.current = false;
     };
-  }, []);
+  }, [activeCategory]);
 
   useEffect(() => {
     let mounted = true;
@@ -163,24 +184,30 @@ export default function TopicsBrowserPage() {
     };
   }, [contentSource, isSupabaseConfigured, user]);
 
-  const categoryCounts = useMemo(() => {
+  const sidebarCounts = useMemo(() => {
     const counts = new Map();
 
     // Seed canonical categories so they exist even if empty.
     for (const c of CANONICAL_CATEGORIES) counts.set(c, 0);
 
-    for (const t of topics) {
-      const c = norm(t.subject) || 'General';
-      counts.set(c, (counts.get(c) ?? 0) + 1);
+    for (const [k, v] of categoryCounts.entries()) counts.set(k, v);
+
+    // Ensure All exists.
+    if (!counts.has('All')) {
+      const total = Array.from(counts.entries())
+        .filter(([k]) => k !== 'All')
+        .reduce((acc, [, v]) => acc + (Number(v) || 0), 0);
+      counts.set('All', total);
     }
 
-    counts.set('All', topics.length);
     return counts;
-  }, [topics]);
+  }, [categoryCounts]);
 
   const categories = useMemo(() => {
     const discovered = new Set();
-    for (const t of topics) discovered.add(norm(t.subject) || 'General');
+    for (const k of sidebarCounts.keys()) {
+      if (k !== 'All') discovered.add(k);
+    }
 
     const out = ['All', ...CANONICAL_CATEGORIES];
 
@@ -261,7 +288,7 @@ export default function TopicsBrowserPage() {
                     onClick={() => setActiveCategory(c)}
                   >
                     <span className="cat-name">{c}</span>
-                    <span className="cat-count">{categoryCounts.get(c) ?? 0}</span>
+                    <span className="cat-count">{sidebarCounts.get(c) ?? 0}</span>
                   </button>
                 ))}
               </div>
@@ -309,7 +336,7 @@ export default function TopicsBrowserPage() {
                   <select value={activeCategory} onChange={(e) => setActiveCategory(e.target.value)} aria-label="Category">
                     {categories.map((c) => (
                       <option key={c} value={c}>
-                        {c} ({categoryCounts.get(c) ?? 0})
+                        {c} ({sidebarCounts.get(c) ?? 0})
                       </option>
                     ))}
                   </select>
@@ -318,13 +345,19 @@ export default function TopicsBrowserPage() {
 
               <div className="toolbar-sub">
                 Showing <strong>{visibleTopics.length}</strong> result(s)
-                {typeof totalTopics === 'number' ? (
-                  <>
-                    {' '}• Loaded <strong>{topics.length}</strong> / <strong>{totalTopics}</strong>
-                  </>
-                ) : (
-                  <> • Loaded <strong>{topics.length}</strong></>
-                )}
+                {(() => {
+                  const fallbackTotal = sidebarCounts.get(activeCategory) ?? null;
+                  const displayTotal = typeof totalTopics === 'number' ? totalTopics : fallbackTotal;
+                  if (typeof displayTotal === 'number') {
+                    return (
+                      <>
+                        {' '}• Loaded <strong>{topics.length}</strong> / <strong>{displayTotal}</strong>
+                        {activeCategory !== 'All' ? <> in <strong>{activeCategory}</strong></> : null}
+                      </>
+                    );
+                  }
+                  return <>{' '}• Loaded <strong>{topics.length}</strong></>;
+                })()}
                 {contentSource === 'local' ? ' (Local Preview)' : user ? '' : ' (sign in to track completion)'}
               </div>
 
@@ -336,10 +369,10 @@ export default function TopicsBrowserPage() {
                       type="button"
                       className={c === activeCategory ? 'chip active' : 'chip'}
                       onClick={() => setActiveCategory(c)}
-                      title={`${c} (${categoryCounts.get(c) ?? 0})`}
+                      title={`${c} (${sidebarCounts.get(c) ?? 0})`}
                     >
                       <span className="chip-name">{c}</span>
-                      <span className="chip-count">{categoryCounts.get(c) ?? 0}</span>
+                      <span className="chip-count">{sidebarCounts.get(c) ?? 0}</span>
                     </button>
                   ))}
                 </div>

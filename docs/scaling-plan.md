@@ -127,11 +127,15 @@ Notes
 - ✅ Implemented in this repo.
 
 **What I changed**
-- Added a paginated topics fetch helper `listTopicsPage({ limit, offset })` that uses Supabase `range()` + `count`.
-- Updated the browse UI to load the first page only and let users fetch more via “Load more topics”.
+- Added a paginated topics fetch helper `listTopicsPage({ limit, offset, subject })` that uses Supabase `range()` + `count`.
+- Updated the browse UI to load the first page (currently 36 topics) and fetch more via “Load more topics”.
+- Pagination is category-aware: selecting a category triggers a paginated server-side `subject` filter.
+- Added an RPC for accurate category totals (sidebar counts) without loading all topics: `public.get_topic_category_counts()`.
 
 **Notes**
 - Search/filter currently operates on the loaded subset of topics; P1.4 (server-side search) is the follow-up for searching the full catalog.
+- Sidebar counts are now accurate immediately because they come from the RPC (not from the currently loaded page).
+- If you’re applying this to an existing Supabase project, run `supabase/006_topic_category_counts.sql`.
 
 **Acceptance criteria**
 - Topics page loads quickly even with 10,000+ topics.

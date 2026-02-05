@@ -2,12 +2,47 @@ import { isSupabaseConfigured, supabase } from '../lib/supabaseClient';
 import { getContentSource } from './_contentSource';
 import { getLocalTopic, listLocalTopics } from './topics.local';
 
-export async function listTopicsPage({ limit = 30, offset = 0 } = {}) {
-  const safeLimit = Math.min(200, Math.max(1, Number(limit) || 30));
-  const safeOffset = Math.max(0, Number(offset) || 0);
+export async function getTopicCategoryCounts() {
+  const counts = new Map();
 
   if (getContentSource() === 'local') {
     const all = listLocalTopics();
+    for (const t of all) {
+      const subject = String(t?.subject ?? '').trim() || 'General';
+      counts.set(subject, (counts.get(subject) ?? 0) + 1);
+    }
+    return {
+      counts,
+      total: all.length,
+    };
+  }
+
+  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+
+  const { data, error } = await supabase.rpc('get_topic_category_counts');
+  if (error) throw error;
+
+  let total = 0;
+  for (const row of Array.isArray(data) ? data : []) {
+    const subject = String(row?.subject ?? '').trim() || 'General';
+    const n = Number(row?.topic_count ?? 0) || 0;
+    counts.set(subject, n);
+    total += n;
+  }
+
+  return { counts, total };
+}
+
+export async function listTopicsPage({ limit = 30, offset = 0, subject = null } = {}) {
+  const safeLimit = Math.min(200, Math.max(1, Number(limit) || 30));
+  const safeOffset = Math.max(0, Number(offset) || 0);
+  const subjectFilter = typeof subject === 'string' && subject.trim() ? subject.trim() : null;
+
+  if (getContentSource() === 'local') {
+    let all = listLocalTopics();
+    if (subjectFilter && subjectFilter !== 'All') {
+      all = all.filter((t) => (String(t?.subject ?? '').trim() || 'General') === subjectFilter);
+    }
     const items = all.slice(safeOffset, safeOffset + safeLimit);
     const nextOffset = safeOffset + items.length;
     return {
@@ -26,12 +61,15 @@ export async function listTopicsPage({ limit = 30, offset = 0 } = {}) {
   const minimalSelect = 'id, title, emoji, color, description, difficulty';
 
   const run = async (columns) => {
-    return supabase
+    let q = supabase
       .from('topics')
       .select(columns, { count: 'exact' })
       .eq('published', true)
-      .order('title', { ascending: true })
-      .range(safeOffset, safeOffset + safeLimit - 1);
+      .order('title', { ascending: true });
+
+    if (subjectFilter && subjectFilter !== 'All') q = q.eq('subject', subjectFilter);
+
+    return q.range(safeOffset, safeOffset + safeLimit - 1);
   };
 
   const first = await run(fullSelect);
