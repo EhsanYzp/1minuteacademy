@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { Analytics } from '@vercel/analytics/react';
 import Home from './pages/Home';
 import TopicsBrowserPage from './pages/TopicsBrowserPage';
 import TopicPage from './pages/TopicPage';
@@ -50,6 +51,7 @@ function App() {
           </div>
 
           <Footer />
+          <Analytics />
         </div>
       </Router>
     </AuthProvider>
