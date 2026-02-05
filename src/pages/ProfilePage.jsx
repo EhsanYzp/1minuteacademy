@@ -101,7 +101,7 @@ function computeFallbackPeriodEnd(createdIso, planInterval) {
 }
 
 export default function ProfilePage() {
-  const { user, signOut, reloadUser, loading: authLoading } = useAuth();
+  const { user, signOut, reloadUser, refreshSession, loading: authLoading } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const contentSource = getContentSource();
@@ -460,6 +460,14 @@ export default function ProfilePage() {
         const remaining = Math.max(0, Math.ceil((maxMs - (Date.now() - startedAt)) / 1000));
         setCheckoutBannerText(`Payment received — activating Pro… (${remaining}s)`);
         try {
+          // Stripe webhooks update user_metadata server-side. The client may need a token refresh
+          // to see updated claims immediately (otherwise it can look like Pro isn't active until re-login).
+          try {
+            await refreshSession();
+          } catch {
+            // ignore
+          }
+
           const nextUser = await reloadUser();
           if (getCurrentTier(nextUser) === 'pro') {
             setCheckoutBannerText('Pro is active. Enjoy!');
@@ -484,7 +492,7 @@ export default function ProfilePage() {
     return () => {
       canceled = true;
     };
-  }, [checkoutState, authLoading, user, reloadUser, navigate]);
+  }, [checkoutState, authLoading, user, reloadUser, refreshSession, navigate]);
 
   const topicById = useMemo(() => {
     const map = new Map();

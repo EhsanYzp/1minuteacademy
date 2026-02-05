@@ -5,6 +5,23 @@ function isProSubscriptionStatus(status) {
   return status === 'active' || status === 'trialing' || status === 'past_due';
 }
 
+async function updateUserMetadataMerged(supabaseAdmin, userId, patch) {
+  const safePatch = patch && typeof patch === 'object' ? patch : {};
+  try {
+    const { data } = await supabaseAdmin.auth.admin.getUserById(userId);
+    const existing = data?.user?.user_metadata && typeof data.user.user_metadata === 'object'
+      ? data.user.user_metadata
+      : {};
+    await supabaseAdmin.auth.admin.updateUserById(userId, {
+      user_metadata: { ...existing, ...safePatch },
+    });
+  } catch {
+    await supabaseAdmin.auth.admin.updateUserById(userId, {
+      user_metadata: safePatch,
+    });
+  }
+}
+
 async function resolveUserIdFromStripe({ supabaseAdmin, metadataUserId, customerId, subscriptionId }) {
   const direct = typeof metadataUserId === 'string' && metadataUserId.trim() ? metadataUserId.trim() : null;
   if (direct) return direct;
@@ -89,28 +106,44 @@ export async function handler(event) {
       const userId = session?.client_reference_id || session?.metadata?.user_id;
       const subscriptionId = session?.subscription;
       const customerId = session?.customer;
-      const interval = session?.metadata?.interval;
-      const priceId = session?.metadata?.price_id;
+      const metaInterval = session?.metadata?.interval;
+      const metaPriceId = session?.metadata?.price_id;
+
+      let sub = null;
+      if (subscriptionId) {
+        try {
+          sub = await stripe.subscriptions.retrieve(String(subscriptionId));
+        } catch {
+          sub = null;
+        }
+      }
+
+      const subStatus = sub?.status ?? 'checkout_completed';
+      const priceId = sub?.items?.data?.[0]?.price?.id ?? metaPriceId ?? null;
+      const interval = sub?.items?.data?.[0]?.price?.recurring?.interval ?? metaInterval ?? null;
+      const cpe = sub?.current_period_end
+        ? new Date(sub.current_period_end * 1000).toISOString()
+        : null;
 
       await upsertStripeCustomerMapping({
         supabaseAdmin,
         customerId,
         userId: typeof userId === 'string' ? userId : null,
         subscriptionId,
-        status: 'checkout_completed',
+        status: subStatus,
         priceId,
         interval,
+        currentPeriodEnd: cpe,
       });
 
       if (userId) {
-        await supabaseAdmin.auth.admin.updateUserById(userId, {
-          user_metadata: {
-            plan: 'pro',
-            stripe_customer_id: customerId || undefined,
-            stripe_subscription_id: subscriptionId || undefined,
-            plan_interval: typeof interval === 'string' ? interval : undefined,
-            stripe_price_id: typeof priceId === 'string' ? priceId : undefined,
-          },
+        const isPro = isProSubscriptionStatus(String(sub?.status ?? 'active'));
+        await updateUserMetadataMerged(supabaseAdmin, userId, {
+          plan: isPro ? 'pro' : 'free',
+          stripe_customer_id: customerId || undefined,
+          stripe_subscription_id: subscriptionId || undefined,
+          plan_interval: typeof interval === 'string' ? interval : undefined,
+          stripe_price_id: typeof priceId === 'string' ? priceId : undefined,
         });
       }
     }
@@ -148,14 +181,12 @@ export async function handler(event) {
 
       if (userId) {
         const isPro = isProSubscriptionStatus(String(status ?? ''));
-        await supabaseAdmin.auth.admin.updateUserById(userId, {
-          user_metadata: {
-            plan: isPro ? 'pro' : 'free',
-            stripe_customer_id: customerId || undefined,
-            stripe_subscription_id: subscriptionId || undefined,
-            plan_interval: interval || null,
-            stripe_price_id: priceId || null,
-          },
+        await updateUserMetadataMerged(supabaseAdmin, userId, {
+          plan: isPro ? 'pro' : 'free',
+          stripe_customer_id: customerId || undefined,
+          stripe_subscription_id: subscriptionId || undefined,
+          plan_interval: interval || null,
+          stripe_price_id: priceId || null,
         });
       }
     }
@@ -182,13 +213,11 @@ export async function handler(event) {
       });
 
       if (userId) {
-        await supabaseAdmin.auth.admin.updateUserById(userId, {
-          user_metadata: {
-            plan: 'free',
-            stripe_subscription_id: subscription?.id || null,
-            plan_interval: null,
-            stripe_price_id: null,
-          },
+        await updateUserMetadataMerged(supabaseAdmin, userId, {
+          plan: 'free',
+          stripe_subscription_id: subscription?.id || null,
+          plan_interval: null,
+          stripe_price_id: null,
         });
       }
     }
