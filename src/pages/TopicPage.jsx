@@ -9,6 +9,8 @@ import { useAuth } from '../context/AuthContext';
 import { canReview, canStartTopic, formatTierLabel, getCurrentTier, isBeginnerTopic } from '../services/entitlements';
 import StarRating from '../components/StarRating';
 import { getMyTopicRating, getTopicRatingSummaries, setMyTopicRating } from '../services/ratings';
+import { compileJourneyFromTopic, getTopicStartLearningPoints } from '../engine/journey/compileJourney';
+import JourneyBlocks from '../engine/journey/JourneyBlocks';
 import './TopicPage.css';
 
 const fallbackTopics = {
@@ -26,7 +28,9 @@ const fallbackTopics = {
 function normalizeTopic(topicRow, topicId) {
   const lesson = topicRow?.lesson ?? {};
   const steps = Array.isArray(lesson?.steps) ? lesson.steps : [];
-  const learningPoints = steps
+  const journey = compileJourneyFromTopic(topicRow);
+  const learningPoints = getTopicStartLearningPoints(journey);
+  const fallbackLearningPoints = steps
     .slice(0, 4)
     .map((s) => (typeof s.title === 'string' ? s.title : null))
     .filter(Boolean);
@@ -42,12 +46,22 @@ function normalizeTopic(topicRow, topicId) {
     learningPoints:
       learningPoints.length > 0
         ? learningPoints
+        : fallbackLearningPoints.length > 0
+          ? fallbackLearningPoints
         : ['⏱️ Designed to fit in 60 seconds', '🎮 Interactive, game-like steps', '🪙 Finish and add +1 minute (1MA, Pro)'],
     funFact:
       typeof lesson?.version === 'string'
         ? `Lesson version: ${lesson.version}`
         : 'Each lesson here is tuned to fit in one minute!',
   };
+}
+
+function normalizeTierForJourney(tier) {
+  // Keep the schema's tier list stable even if entitlements evolve.
+  if (tier === 'pro' || tier === 'paused') return tier;
+  if (!tier || tier === 'guest') return 'guest';
+  if (tier === 'free') return 'free';
+  return String(tier);
 }
 
 function TopicPage() {
@@ -155,6 +169,50 @@ function TopicPage() {
   const beginner = useMemo(() => isBeginnerTopic(topicRow ?? fallbackTopics[topicId]), [topicRow, topicId]);
   const canStart = useMemo(() => canStartTopic({ tier, topicRow: topicRow ?? fallbackTopics[topicId] }), [tier, topicRow, topicId]);
   const canUseReview = canReview(tier);
+
+  const journey = useMemo(() => compileJourneyFromTopic(topicRow ?? fallbackTopics[topicId]), [topicRow, topicId]);
+  const journeyCtx = useMemo(() => {
+    const normalizedTier = normalizeTierForJourney(tier);
+    const startLabel = isCompleted ? 'Restart Lesson' : 'Start Learning!';
+
+    return {
+      completed: isCompleted,
+      canStart,
+      canReview: canUseReview,
+      loggedIn: Boolean(user),
+      tier: normalizedTier,
+      vars: {
+        topicTitle: String(topic?.title ?? ''),
+        startLabel,
+      },
+      buttonClassName: 'topic-action-btn',
+      containerClassName: 'topic-actions',
+      isActionDisabled: (action) => {
+        if (!action || typeof action !== 'object') return false;
+        if (action.type === 'startLesson') return !canStart;
+        if (action.type === 'goToReview') return !(isCompleted && canUseReview);
+        return false;
+      },
+      onAction: (action) => {
+        if (!action || typeof action !== 'object') return;
+        if (action.type === 'startLesson') {
+          navigate(`/lesson/${topicId}`);
+        } else if (action.type === 'goToTopics') {
+          navigate('/topics');
+        } else if (action.type === 'goToUpgrade') {
+          navigate('/upgrade');
+        } else if (action.type === 'goToProfile') {
+          navigate('/me');
+        } else if (action.type === 'goToLogin') {
+          navigate('/login');
+        } else if (action.type === 'goToReview') {
+          navigate(`/review/${topicId}`);
+        } else if (action.type === 'goToTopic') {
+          navigate(`/topic/${topicId}`);
+        }
+      },
+    };
+  }, [tier, isCompleted, canStart, canUseReview, user, topic?.title, navigate, topicId]);
 
   if (!topic && loading) {
     return (
@@ -325,84 +383,11 @@ function TopicPage() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            {isCompleted && canUseReview ? (
-              <div className="topic-actions">
-                <motion.button
-                  className="topic-action-btn primary"
-                  onClick={() => navigate(`/review/${topicId}`)}
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.96 }}
-                >
-                  📚 Review (no timer)
-                </motion.button>
-
-                <motion.button
-                  className="topic-action-btn secondary"
-                  onClick={() => navigate(`/lesson/${topicId}`)}
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.96 }}
-                >
-                  🔄 Restart from scratch
-                </motion.button>
-              </div>
-            ) : canStart ? (
-              <motion.button
-                className="start-button"
-                onClick={() => navigate(`/lesson/${topicId}`)}
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: '0 10px 40px rgba(255, 107, 107, 0.4)'
-                }}
-                whileTap={{ scale: 0.95 }}
-                animate={{
-                  boxShadow: [
-                    '0 5px 20px rgba(255, 107, 107, 0.3)',
-                    '0 5px 30px rgba(255, 107, 107, 0.5)',
-                    '0 5px 20px rgba(255, 107, 107, 0.3)'
-                  ]
-                }}
-                transition={{
-                  boxShadow: { duration: 2, repeat: Infinity }
-                }}
-              >
-                <span className="button-icon">🚀</span>
-                <span className="button-text">{isCompleted ? 'Restart Lesson' : 'Start Learning!'}</span>
-                <span className="button-timer">60s</span>
-              </motion.button>
-            ) : (
-              <div className="topic-actions">
-                {tier === 'paused' ? (
-                  <motion.button
-                    className="topic-action-btn primary"
-                    onClick={() => navigate('/me')}
-                    whileHover={{ scale: 1.04 }}
-                    whileTap={{ scale: 0.96 }}
-                  >
-                    ⏸️ Account paused
-                  </motion.button>
-                ) : (
-                  <motion.button
-                    className="topic-action-btn primary"
-                    onClick={() => navigate('/upgrade')}
-                    whileHover={{ scale: 1.04 }}
-                    whileTap={{ scale: 0.96 }}
-                  >
-                    🔒 Upgrade to start
-                  </motion.button>
-                )}
-
-                {!user && (
-                  <motion.button
-                    className="topic-action-btn secondary"
-                    onClick={() => navigate('/login')}
-                    whileHover={{ scale: 1.04 }}
-                    whileTap={{ scale: 0.96 }}
-                  >
-                    👤 Create free account
-                  </motion.button>
-                )}
-              </div>
-            )}
+            <JourneyBlocks
+              blocks={journey?.topicStart?.blocks}
+              ctx={journeyCtx}
+              allowedTypes={['cta', 'ctaRow']}
+            />
             
             <p className="start-hint">
               {!canStart

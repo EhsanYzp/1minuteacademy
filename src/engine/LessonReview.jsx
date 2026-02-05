@@ -25,7 +25,7 @@ function normalizeLesson(lesson) {
   return { totalSeconds, steps };
 }
 
-export default function LessonReview({ lesson, title, onExit }) {
+export default function LessonReview({ lesson, title, onExit, showTopbar = true, embedded = false }) {
   const { steps } = useMemo(() => normalizeLesson(lesson), [lesson]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [interactions, setInteractions] = useState({});
@@ -43,16 +43,20 @@ export default function LessonReview({ lesson, title, onExit }) {
     setInteractions((prev) => ({ ...prev, [stepId]: true }));
   }
 
+  const rootClassName = 'lesson-review' + (embedded ? ' embedded' : '');
+
   if (!lesson || steps.length === 0 || !activeStep || !Step) {
     return (
-      <div className="lesson-review">
-        <div className="review-topbar">
-          <button type="button" className="review-back" onClick={onExit}>
-            ← Back
-          </button>
-          <div className="review-title">Review</div>
-          <div className="review-spacer" />
-        </div>
+      <div className={rootClassName}>
+        {showTopbar && (
+          <div className="review-topbar">
+            <button type="button" className="review-back" onClick={onExit}>
+              ← Back
+            </button>
+            <div className="review-title">Review</div>
+            <div className="review-spacer" />
+          </div>
+        )}
         <div className="review-empty">
           <h2>Nothing to review yet</h2>
           <p>This lesson doesn't have steps.</p>
@@ -62,17 +66,19 @@ export default function LessonReview({ lesson, title, onExit }) {
   }
 
   return (
-    <div className="lesson-review">
-      <div className="review-topbar">
-        <button type="button" className="review-back" onClick={onExit}>
-          ← Back
-        </button>
-        <div className="review-title">
-          Review{title ? `: ${title}` : ''}
-          <div className="review-sub">No timer. Go at your pace.</div>
+    <div className={rootClassName}>
+      {showTopbar && (
+        <div className="review-topbar">
+          <button type="button" className="review-back" onClick={onExit}>
+            ← Back
+          </button>
+          <div className="review-title">
+            Review{title ? `: ${title}` : ''}
+            <div className="review-sub">No timer. Go at your pace.</div>
+          </div>
+          <div className="review-spacer" />
         </div>
-        <div className="review-spacer" />
-      </div>
+      )}
 
       <div className="review-progress">
         <div className="review-progress-bar" aria-label="review progress">
@@ -91,11 +97,7 @@ export default function LessonReview({ lesson, title, onExit }) {
             <button
               key={s.id}
               type="button"
-              className={
-                'review-chip' +
-                (isActive ? ' active' : '') +
-                (isDone ? ' done' : '')
-              }
+              className={'review-chip' + (isActive ? ' active' : '') + (isDone ? ' done' : '')}
               title={s.title}
               onClick={() => setActiveIndex(i)}
             >

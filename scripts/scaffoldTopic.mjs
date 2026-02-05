@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { TOPICS_DIR } from './_contentPaths.mjs';
 import { STEP_RECIPES } from '../src/engine/stepRecipes.js';
+import { compileJourneyFromTopic } from '../src/engine/journey/compileJourney.js';
 
 function parseArgs(argv) {
   const args = {
@@ -304,6 +305,10 @@ async function main() {
       steps,
     },
   };
+
+  // Schema-first journey spec (deterministic layout across modules).
+  // Authors can refine copy later without changing the app.
+  topic.journey = compileJourneyFromTopic(topic);
 
   const outDir = path.join(TOPICS_DIR, args.subject);
   const outPath = path.join(outDir, `${args.id}.topic.json`);

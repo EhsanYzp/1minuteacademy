@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://1minuteacademy.dev/schemas/journey.schema.json",
+  "title": "1MinuteAcademy Journey Spec",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "topicStart", "completion"],
+  "properties": {
+    "version": { "type": "integer", "const": 1 },
+    "topicStart": { "$ref": "#/$defs/page" },
+    "completion": { "$ref": "#/$defs/page" },
+    "review": { "$ref": "#/$defs/page" }
+  },
+  "$defs": {
+    "page": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["blocks"],
+      "properties": {
+        "blocks": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "block.schema.json" }
+        }
+      }
+    }
+  }
+}

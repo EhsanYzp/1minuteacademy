@@ -12,6 +12,8 @@ import { canReview, canSeeTakeaways, canStartTopic, canTrackProgress, formatTier
 import StarRating from '../components/StarRating';
 import { getMyTopicRating, setMyTopicRating } from '../services/ratings';
 import OneMAIcon from '../components/OneMAIcon';
+import { compileJourneyFromTopic } from '../engine/journey/compileJourney';
+import JourneyBlocks from '../engine/journey/JourneyBlocks';
 import './LessonPage.css';
 
 function getLessonDefaults() {
@@ -23,6 +25,13 @@ function getSummaryPointsFromLesson(lesson) {
   const summary = steps.find((s) => s?.type === 'summary') ?? null;
   const points = Array.isArray(summary?.points) ? summary.points : [];
   return points.filter((p) => typeof p === 'string' && p.trim().length > 0);
+}
+
+function normalizeTierForJourney(tier) {
+  if (tier === 'pro' || tier === 'paused') return tier;
+  if (!tier || tier === 'guest') return 'guest';
+  if (tier === 'free') return 'free';
+  return String(tier);
 }
 
 function LessonPage() {
@@ -53,6 +62,216 @@ function LessonPage() {
   const lesson = useMemo(() => topicRow?.lesson ?? getLessonDefaults(), [topicRow]);
   const totalSeconds = useMemo(() => Number(lesson?.totalSeconds ?? 60), [lesson]);
   const summaryPoints = useMemo(() => getSummaryPointsFromLesson(lesson), [lesson]);
+
+  const journey = useMemo(() => compileJourneyFromTopic(topicRow), [topicRow]);
+  const journeyCtx = useMemo(() => {
+    const normalizedTier = normalizeTierForJourney(tier);
+    return {
+      completed: isCompleted,
+      canStart,
+      canReview: canUseReview,
+      loggedIn: Boolean(user),
+      tier: normalizedTier,
+      vars: {
+        topicTitle: String(topicRow?.title ?? ''),
+        totalSeconds: String(totalSeconds),
+      },
+      containerClassName: 'completion-content',
+      buttonClassName: 'action-button',
+      isActionDisabled: (action) => {
+        if (!action || typeof action !== 'object') return false;
+        if (action.type === 'openReview') return !canUseReview;
+        return false;
+      },
+      onAction: (action) => {
+        if (!action || typeof action !== 'object') return;
+        if (action.type === 'tryAgain') {
+          setIsStarted(false);
+          setIsCompleted(false);
+          setIsReviewing(false);
+          setTimeRemaining(totalSeconds);
+          return;
+        }
+        if (action.type === 'openReview') {
+          setIsReviewing(true);
+          return;
+        }
+        if (action.type === 'goToUpgrade') {
+          navigate('/upgrade');
+          return;
+        }
+        if (action.type === 'goToTopics') {
+          navigate('/topics');
+          return;
+        }
+        if (action.type === 'goToProfile') {
+          navigate('/me');
+          return;
+        }
+        if (action.type === 'goToLogin') {
+          navigate('/login');
+          return;
+        }
+        if (action.type === 'goToReview') {
+          navigate(`/review/${topicId}`);
+          return;
+        }
+        if (action.type === 'goToTopic') {
+          navigate(`/topic/${topicId}`);
+        }
+      },
+      renderCompletionStats: () => (
+        <div className="completion-stats">
+          <div className="stat">
+            <span className="stat-value">
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                  <OneMAIcon size={18} />
+                  <span>+{Number(completionResult?.awarded_one_ma ?? 0) || 0}</span>
+                </span>
+              </span>
+            </span>
+            <span className="stat-label">1MA Minutes</span>
+          </div>
+          <div className="stat">
+            <span className="stat-value">🔥 {completionResult?.streak ?? '—'}</span>
+            <span className="stat-label">Streak</span>
+          </div>
+        </div>
+      ),
+      renderProPerkPanel: () => (
+        tier !== 'pro' ? (
+          <div className="completion-panel" style={{ marginTop: 12 }}>
+            <p style={{ margin: 0 }}>
+              <strong>Pro perk:</strong> each completed module adds <strong>+1</strong> to your <strong>1MA minutes</strong>.
+            </p>
+            <p style={{ margin: '8px 0 0', opacity: 0.85 }}>
+              Your 1MA minutes equal the number of minutes you’ve completed on the platform.
+            </p>
+            <div style={{ marginTop: 10, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+              <button onClick={() => navigate('/upgrade')}>Unlock 1MA minutes (Pro)</button>
+            </div>
+          </div>
+        ) : null
+      ),
+      renderOneMaAwardPanel: () => (
+        tier === 'pro' && completionResult && Number(completionResult?.awarded_one_ma ?? 0) > 0 ? (
+          <motion.div
+            className="completion-panel"
+            initial={{ scale: 0.98, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.25 }}
+            style={{ marginTop: 12 }}
+          >
+            <p style={{ margin: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
+              <OneMAIcon size={18} />
+              <strong>+1</strong> added to your 1MA minutes.
+            </p>
+            <p style={{ margin: '8px 0 0', opacity: 0.85 }}>
+              Total 1MA minutes: <strong>{Number(completionResult?.one_ma_balance ?? 0)}</strong>
+            </p>
+          </motion.div>
+        ) : null
+      ),
+      renderCompletionProgress: () => (
+        <div className="completion-panel completion-progress">
+          {!canSaveProgress || !user ? (
+            <p style={{ margin: 0 }}>✅ Completed. Sign in to track progress.</p>
+          ) : submittingCompletion ? (
+            <p style={{ margin: 0 }}>Saving your progress…</p>
+          ) : completionError ? (
+            <>
+              <p style={{ margin: 0 }}>Couldn’t save progress.</p>
+              <p style={{ margin: '6px 0 0', opacity: 0.8, fontSize: 14 }}>
+                {completionError?.message ?? String(completionError)}
+              </p>
+            </>
+          ) : completionResult ? (
+            <p style={{ margin: 0 }}>
+              ✅ Progress saved {contentSource === 'local' ? 'locally' : 'to Supabase'}.
+            </p>
+          ) : (
+            <p style={{ margin: 0, opacity: 0.8 }}>✅ Completed.</p>
+          )}
+        </div>
+      ),
+      takeawaysClassName: 'completion-panel',
+      panelTitleClassName: 'completion-panel-title',
+      takeawaysListClassName: null,
+      renderTakeawaysGating: () => (
+        !canShowTakeaways ? (
+          <div style={{ marginTop: 10, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            <button onClick={() => navigate('/upgrade')}>Unlock saved takeaways</button>
+            {!user && <button onClick={() => navigate('/login')}>Create free account</button>}
+          </div>
+        ) : null
+      ),
+      ratingClassName: 'completion-panel completion-rating',
+      renderRating: ({ title } = {}) => (
+        <>
+          <div className="completion-rating-header">
+            <div>
+              <p className="completion-panel-title">{String(title ?? 'Rate this module')}</p>
+              <p className="completion-panel-subtitle">
+                {user ? 'Tap a star to rate (you can change it later).' : 'Rating is disabled until you sign in.'}
+              </p>
+            </div>
+            {!user && (
+              <button className="completion-signin" onClick={() => navigate('/login')}>
+                Sign in to rate
+              </button>
+            )}
+          </div>
+
+          <div className="completion-rating-body">
+            <StarRating
+              value={Number(myRating ?? 0)}
+              onChange={user ? onRate : undefined}
+              readOnly={!user || ratingBusy}
+              size="lg"
+              label="Rate this module"
+            />
+
+            <div className="completion-rating-meta" aria-live="polite">
+              {ratingBusy
+                ? 'Saving…'
+                : myRating
+                  ? `Your rating: ${myRating}/5`
+                  : user
+                    ? 'Choose a rating'
+                    : 'Sign in to enable rating'}
+            </div>
+          </div>
+
+          {user && ratingError && (
+            <div className="completion-panel-error">
+              {ratingError?.message ?? String(ratingError)}
+            </div>
+          )}
+        </>
+      ),
+    };
+  }, [
+    tier,
+    isCompleted,
+    canStart,
+    canUseReview,
+    user,
+    topicRow?.title,
+    totalSeconds,
+    completionResult,
+    canSaveProgress,
+    submittingCompletion,
+    completionError,
+    contentSource,
+    canShowTakeaways,
+    myRating,
+    ratingBusy,
+    ratingError,
+    onRate,
+    navigate,
+    topicId,
+  ]);
 
   const canStart = useMemo(() => canStartTopic({ tier, topicRow }), [tier, topicRow]);
 
@@ -314,212 +533,30 @@ function LessonPage() {
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
         >
-          <motion.div
-            className="completion-content"
-            initial={{ y: 50 }}
-            animate={{ y: 0 }}
-          >
-            <motion.div 
+          <motion.div className="completion-content" initial={{ y: 50 }} animate={{ y: 0 }}>
+            <motion.div
               className="completion-emoji"
-              animate={{ 
-                scale: [1, 1.2, 1],
-                rotate: [0, 10, -10, 0]
-              }}
+              animate={{ scale: [1, 1.2, 1], rotate: [0, 10, -10, 0] }}
               transition={{ duration: 0.5, repeat: 3 }}
             >
               🎉
             </motion.div>
-            <h1>Congratulations!</h1>
-            <p>You just learned about {topicRow?.title ?? 'this topic'} in {totalSeconds} seconds!</p>
-            
-            <div className="completion-stats">
-              <div className="stat">
-                <span className="stat-value">
-                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-                      <OneMAIcon size={18} />
-                      <span>
-                        +{Number(completionResult?.awarded_one_ma ?? 0) || 0}
-                      </span>
-                    </span>
-                  </span>
-                </span>
-                <span className="stat-label">1MA Minutes</span>
-              </div>
-              <div className="stat">
-                <span className="stat-value">🔥 {completionResult?.streak ?? '—'}</span>
-                <span className="stat-label">Streak</span>
-              </div>
-            </div>
 
-            {tier !== 'pro' && (
-              <div className="completion-panel" style={{ marginTop: 12 }}>
-                <p style={{ margin: 0 }}>
-                  <strong>Pro perk:</strong> each completed module adds <strong>+1</strong> to your <strong>1MA minutes</strong>.
-                </p>
-                <p style={{ margin: '8px 0 0', opacity: 0.85 }}>
-                  Your 1MA minutes equal the number of minutes you’ve completed on the platform.
-                </p>
-                <div style={{ marginTop: 10, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                  <button onClick={() => navigate('/upgrade')}>Unlock 1MA minutes (Pro)</button>
-                </div>
-              </div>
-            )}
-
-            {tier === 'pro' && completionResult && Number(completionResult?.awarded_one_ma ?? 0) > 0 && (
-              <motion.div
-                className="completion-panel"
-                initial={{ scale: 0.98, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.25 }}
-                style={{ marginTop: 12 }}
-              >
-                <p style={{ margin: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <OneMAIcon size={18} />
-                  <strong>+1</strong> added to your 1MA minutes.
-                </p>
-                <p style={{ margin: '8px 0 0', opacity: 0.85 }}>
-                  Total 1MA minutes: <strong>{Number(completionResult?.one_ma_balance ?? 0)}</strong>
-                </p>
-              </motion.div>
-            )}
-
-            <div className="completion-panel completion-progress">
-              {!canSaveProgress || !user ? (
-                <p style={{ margin: 0 }}>✅ Completed. Sign in to track progress.</p>
-              ) : submittingCompletion ? (
-                <p style={{ margin: 0 }}>Saving your progress…</p>
-              ) : completionError ? (
-                <>
-                  <p style={{ margin: 0 }}>Couldn’t save progress.</p>
-                  <p style={{ margin: '6px 0 0', opacity: 0.8, fontSize: 14 }}>
-                    {completionError?.message ?? String(completionError)}
-                  </p>
-                </>
-              ) : completionResult ? (
-                <p style={{ margin: 0 }}>
-                  ✅ Progress saved {contentSource === 'local' ? 'locally' : 'to Supabase'}.
-                </p>
-              ) : (
-                <p style={{ margin: 0, opacity: 0.8 }}>✅ Completed.</p>
-              )}
-            </div>
-
-            {summaryPoints.length > 0 && (
-              <div className="completion-panel">
-                <p className="completion-panel-title">Key takeaways</p>
-                <ul style={{ margin: '8px 0 0', paddingLeft: 18, opacity: 0.9 }}>
-                  {summaryPoints.slice(0, 5).map((pt, idx) => (
-                    <li key={idx} style={{ margin: '6px 0' }}>
-                      {pt}
-                    </li>
-                  ))}
-                </ul>
-
-                {!canShowTakeaways && (
-                  <div style={{ marginTop: 10, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                    <button onClick={() => navigate('/upgrade')}>Unlock saved takeaways</button>
-                    {!user && <button onClick={() => navigate('/login')}>Create free account</button>}
-                  </div>
-                )}
-              </div>
-            )}
-
-            <div className="completion-panel completion-rating">
-              <div className="completion-rating-header">
-                <div>
-                  <p className="completion-panel-title">Rate this module</p>
-                  <p className="completion-panel-subtitle">
-                    {user ? 'Tap a star to rate (you can change it later).' : 'Rating is disabled until you sign in.'}
-                  </p>
-                </div>
-                {!user && (
-                  <button className="completion-signin" onClick={() => navigate('/login')}>
-                    Sign in to rate
-                  </button>
-                )}
-              </div>
-
-              <div className="completion-rating-body">
-                <StarRating
-                  value={Number(myRating ?? 0)}
-                  onChange={user ? onRate : undefined}
-                  readOnly={!user || ratingBusy}
-                  size="lg"
-                  label="Rate this module"
-                />
-
-                <div className="completion-rating-meta" aria-live="polite">
-                  {ratingBusy
-                    ? 'Saving…'
-                    : myRating
-                      ? `Your rating: ${myRating}/5`
-                      : user
-                        ? 'Choose a rating'
-                        : 'Sign in to enable rating'}
-                </div>
-              </div>
-
-              {user && ratingError && (
-                <div className="completion-panel-error">
-                  {ratingError?.message ?? String(ratingError)}
-                </div>
-              )}
-            </div>
-
-            <div className="completion-actions">
-              <motion.button
-                className="action-button primary"
-                onClick={() => {
-                  setIsStarted(false);
-                  setIsCompleted(false);
-                  setIsReviewing(false);
-                  setTimeRemaining(totalSeconds);
-                }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                🔄 Try Again
-              </motion.button>
-
-              {canUseReview ? (
-                <motion.button
-                  className="action-button secondary"
-                  onClick={() => setIsReviewing(true)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  📚 Review what you learned
-                </motion.button>
-              ) : (
-                <motion.button
-                  className="action-button secondary"
-                  onClick={() => navigate('/upgrade')}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  🔒 Unlock review mode
-                </motion.button>
-              )}
-
-              <motion.button
-                className="action-button secondary"
-                onClick={() => navigate('/')}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                🏠 More Topics
-              </motion.button>
-
-              <motion.button
-                className="action-button secondary"
-                onClick={() => navigate('/me')}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                🧑‍🚀 Your learning summary
-              </motion.button>
-            </div>
+            <JourneyBlocks
+              blocks={journey?.completion?.blocks}
+              ctx={journeyCtx}
+              allowedTypes={[
+                'hero',
+                'completionStats',
+                'proPerkPanel',
+                'oneMaAwardPanel',
+                'completionProgress',
+                'takeaways',
+                'ratingPrompt',
+                'cta',
+                'ctaRow',
+              ]}
+            />
           </motion.div>
           
           {/* Confetti Effect */}

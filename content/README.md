@@ -3,6 +3,31 @@
 This repo is designed so you **do not create per-topic React components**.
 Instead, each topic/module is **data** stored in Supabase (`public.topics.lesson`) and rendered by the lesson engine.
 
+Optionally, a topic can include a **schema-first** `journey` spec (see `content/schema/journey.schema.json`) to make the Topic Start / Completion / Review pages deterministic and consistent across modules.
+
+## Journey (schema-first pages)
+
+If `journey` is present on a topic JSON, the app will use it to render:
+- Topic Start CTAs (start/upgrade/review)
+- Lesson Completion panels + actions
+
+`journey` is validated by `npm run content:validate`.
+
+### Actions
+
+CTA blocks support these `action.type` values:
+- `startLesson` → `/lesson/:topicId`
+- `goToReview` → `/review/:topicId`
+- `goToTopics` → `/topics` (topics browser)
+- `goToUpgrade` → `/upgrade`
+- `goToProfile` → `/me`
+- `goToLogin` → `/login`
+- `tryAgain` / `openReview` are used on the in-lesson completion screen
+
+### Syncing to Supabase
+
+To persist `journey` in Supabase, apply the migration in `supabase/011_topic_journey_spec.sql` and then run `npm run content:sync`.
+
 ## Folder layout
 
 - `content/topics/<Subject>/<topicId>.topic.json`

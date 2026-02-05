@@ -111,6 +111,7 @@ async function main() {
       description: t.description,
       difficulty: t.difficulty,
       lesson: t.lesson,
+      journey: t.journey ?? null,
       published: Boolean(t.published),
     };
     if (!row.id) throw new Error(`Missing required field 'id' in ${file}`);

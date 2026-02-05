@@ -5,10 +5,19 @@ import LessonReview from '../engine/LessonReview';
 import { getTopic } from '../services/topics';
 import { useAuth } from '../context/AuthContext';
 import { canReview, formatTierLabel, getCurrentTier } from '../services/entitlements';
+import { compileJourneyFromTopic } from '../engine/journey/compileJourney';
+import JourneyBlocks from '../engine/journey/JourneyBlocks';
 import './ReviewPage.css';
 
 function getLessonDefaults() {
   return { totalSeconds: 60, steps: [] };
+}
+
+function normalizeTierForJourney(tier) {
+  if (tier === 'pro' || tier === 'paused') return tier;
+  if (!tier || tier === 'guest') return 'guest';
+  if (tier === 'free') return 'free';
+  return String(tier);
 }
 
 export default function ReviewPage() {
@@ -38,63 +47,94 @@ export default function ReviewPage() {
       }
     }
 
-    if (allowed) load();
+    load();
     return () => {
       mounted = false;
     };
-  }, [topicId, allowed]);
+  }, [topicId]);
 
   const lesson = useMemo(() => topicRow?.lesson ?? getLessonDefaults(), [topicRow]);
 
-  if (!allowed) {
-    return (
-      <div className="review-page">
-        <div className="review-error">
-          <h2>{tier === 'paused' ? '⏸️ Account paused' : '🔒 Review mode is Pro-only'}</h2>
-          <p style={{ opacity: 0.8 }}>
-            {tier === 'paused'
-              ? 'Resume your account to access review mode.'
-              : <>Your plan: <strong>{formatTierLabel(tier)}</strong></>}
-          </p>
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
-            {tier === 'paused'
-              ? <button type="button" onClick={() => navigate('/me')}>Go to Profile</button>
-              : <button type="button" onClick={() => navigate('/upgrade')}>Upgrade</button>}
-            <button type="button" onClick={() => navigate(-1)}>← Back</button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const journey = useMemo(
+    () => compileJourneyFromTopic(topicRow ?? { lesson }),
+    [topicRow, lesson]
+  );
 
-  if (loading) {
-    return (
-      <div className="review-page">
-        <div className="review-loading">Loading review…</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="review-page">
-        <div className="review-error">
-          <h2>⚠️ Couldn’t load review</h2>
-          <p style={{ opacity: 0.8 }}>{error?.message ?? String(error)}</p>
-          <button type="button" onClick={() => navigate(-1)}>
-            ← Back
-          </button>
-        </div>
-      </div>
-    );
-  }
+  const journeyCtx = useMemo(() => {
+    const normalizedTier = normalizeTierForJourney(tier);
+    return {
+      canReview: allowed,
+      loggedIn: Boolean(user),
+      tier: normalizedTier,
+      vars: {
+        topicTitle: String(topicRow?.title ?? ''),
+        tierLabel: formatTierLabel(tier),
+      },
+      containerClassName: 'review-journey',
+      buttonClassName: 'journey-btn',
+      onAction: (action) => {
+        if (!action || typeof action !== 'object') return;
+        if (action.type === 'goToTopic') {
+          navigate(`/topic/${topicId}`);
+          return;
+        }
+        if (action.type === 'startLesson') {
+          navigate(`/lesson/${topicId}`);
+          return;
+        }
+        if (action.type === 'goToReview') {
+          navigate(`/review/${topicId}`);
+          return;
+        }
+        if (action.type === 'goToUpgrade') {
+          navigate('/upgrade');
+          return;
+        }
+        if (action.type === 'goToProfile') {
+          navigate('/me');
+          return;
+        }
+        if (action.type === 'goToLogin') {
+          navigate('/login');
+          return;
+        }
+        if (action.type === 'goToTopics') {
+          navigate('/topics');
+          return;
+        }
+      },
+      renderReviewLesson: () => {
+        if (!allowed) return null;
+        if (loading) {
+          return <div className="review-loading">Loading review…</div>;
+        }
+        if (error) {
+          return (
+            <div className="review-error">
+              <h2>⚠️ Couldn’t load review</h2>
+              <p style={{ opacity: 0.8 }}>{error?.message ?? String(error)}</p>
+            </div>
+          );
+        }
+        return (
+          <LessonReview
+            lesson={lesson}
+            title={topicRow?.title ?? ''}
+            onExit={() => navigate(`/topic/${topicId}`)}
+            showTopbar={false}
+            embedded
+          />
+        );
+      },
+    };
+  }, [allowed, user, tier, topicRow?.title, loading, error, lesson, navigate, topicId]);
 
   return (
     <motion.div className="review-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <LessonReview
-        lesson={lesson}
-        title={topicRow?.title ?? ''}
-        onExit={() => navigate(-1)}
+      <JourneyBlocks
+        blocks={journey?.review?.blocks}
+        ctx={journeyCtx}
+        allowedTypes={['hero', 'info', 'divider', 'cta', 'ctaRow', 'reviewLesson']}
       />
     </motion.div>
   );

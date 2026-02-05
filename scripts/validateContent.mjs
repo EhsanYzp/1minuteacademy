@@ -27,10 +27,14 @@ async function main() {
   const ajv = new Ajv2020({ allErrors: true, strict: false });
   addFormats(ajv);
 
+  const blockSchema = await readJson(path.join(SCHEMA_DIR, 'block.schema.json'));
+  const journeySchema = await readJson(path.join(SCHEMA_DIR, 'journey.schema.json'));
   const stepSchema = await readJson(path.join(SCHEMA_DIR, 'step.schema.json'));
   const lessonSchema = await readJson(path.join(SCHEMA_DIR, 'lesson.schema.json'));
   const topicSchema = await readJson(path.join(SCHEMA_DIR, 'topic.schema.json'));
 
+  ajv.addSchema(blockSchema, 'block.schema.json');
+  ajv.addSchema(journeySchema, 'journey.schema.json');
   ajv.addSchema(stepSchema, 'step.schema.json');
   ajv.addSchema(lessonSchema, 'lesson.schema.json');
   const validateTopic = ajv.compile(topicSchema);
