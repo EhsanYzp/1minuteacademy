@@ -493,6 +493,7 @@ function LessonPage() {
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
         >
+          <div className="completion-backdrop" aria-hidden="true" />
           <motion.div className="completion-content" initial={{ y: 50 }} animate={{ y: 0 }}>
             <motion.div
               className="completion-emoji"
@@ -519,25 +520,29 @@ function LessonPage() {
             />
           </motion.div>
           
-          {/* Confetti Effect */}
+          {/* Confetti Effect (lightweight) */}
           <div className="confetti-container">
-            {[...Array(20)].map((_, i) => (
+            {[...Array(12)].map((_, i) => (
               <motion.div
                 key={i}
                 className="confetti"
                 style={{
-                  left: `${Math.random() * 100}%`,
-                  backgroundColor: ['#FF6B6B', '#4ECDC4', '#FFE66D', '#A06CD5', '#FF9F43'][i % 5]
+                  left: `${(i * 8 + 6) % 100}%`,
+                  width: `${8 + (i % 4) * 4}px`,
+                  height: `${8 + ((i + 2) % 4) * 4}px`,
+                  borderRadius: i % 3 === 0 ? '999px' : '6px',
+                  backgroundColor: ['#FF6B6B', '#4ECDC4', '#FFE66D', '#A06CD5', '#FF9F43'][i % 5],
+                  opacity: 0.85,
                 }}
                 initial={{ y: -20, opacity: 1 }}
                 animate={{ 
                   y: '100vh',
-                  rotate: Math.random() * 720,
+                  rotate: 180 + i * 90,
                   opacity: 0
                 }}
                 transition={{
-                  duration: 2 + Math.random() * 2,
-                  delay: Math.random() * 0.5,
+                  duration: 2.4 + (i % 4) * 0.35,
+                  delay: (i % 6) * 0.08,
                   ease: 'easeOut'
                 }}
               />

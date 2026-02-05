@@ -247,13 +247,14 @@ function TopicPage() {
         </motion.div>
 
         <div className="topic-content">
-          <motion.div 
-            className="topic-card"
-            style={{ '--topic-color': topic.color }}
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2, type: 'spring' }}
-          >
+          <div className="topic-hero-grid">
+            <motion.div 
+              className="topic-card topic-card--hero"
+              style={{ '--topic-color': topic.color }}
+              initial={{ y: 14, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.15, type: 'spring' }}
+            >
             {error && (
               <div className="topic-not-found" style={{ marginBottom: 12 }}>
                 <h2 style={{ margin: 0 }}>⚠️ Couldn’t load from Supabase</h2>
@@ -338,30 +339,54 @@ function TopicPage() {
               </span>
             </div>
 
-          </motion.div>
+            </motion.div>
 
-          <motion.div 
-            className="start-section"
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            <JourneyBlocks
-              blocks={journey?.topicStart?.blocks}
-              ctx={journeyCtx}
-              allowedTypes={['cta', 'ctaRow']}
-            />
-            
-            <p className="start-hint">
-              {!canStart
-                ? (tier === 'paused'
-                  ? 'Your account is paused. Resume it to start lessons.'
-                  : `${beginner ? '' : 'This lesson is Pro-only. '}Your plan: ${formatTierLabel(tier)}.`)
-                : isCompleted && !canUseReview
-                  ? 'Review mode is Pro-only.'
-                  : 'Ready? Click above to begin your 60-second adventure! 🎮'}
-            </p>
-          </motion.div>
+            <motion.div
+              className="topic-start-card"
+              initial={{ y: 18, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.25, type: 'spring' }}
+            >
+              <div className="topic-start-kicker">Your 60-second lesson</div>
+              <h2 className="topic-start-title">Start when you’re ready</h2>
+              <p className="topic-start-sub">
+                6 beats (48s) + a quick quiz (12s). Built for momentum.
+              </p>
+
+              <div className="topic-start-chips" aria-label="Lesson breakdown">
+                <span className="topic-chip">⏱️ 60s total</span>
+                <span className="topic-chip">🎬 6 beats</span>
+                <span className="topic-chip">✅ 1 quiz</span>
+              </div>
+
+              <div className="topic-start-panel">
+                <div className="topic-start-panel-title">What you’ll get</div>
+                <ul className="topic-start-points">
+                  {(Array.isArray(topic.learningPoints) ? topic.learningPoints : []).slice(0, 4).map((p, i) => (
+                    <li key={`lp-${i}`}>{p}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="topic-start-actions">
+                <JourneyBlocks
+                  blocks={journey?.topicStart?.blocks}
+                  ctx={journeyCtx}
+                  allowedTypes={['cta', 'ctaRow']}
+                />
+              </div>
+
+              <p className="start-hint">
+                {!canStart
+                  ? (tier === 'paused'
+                    ? 'Your account is paused. Resume it to start lessons.'
+                    : `${beginner ? '' : 'This lesson is Pro-only. '}Your plan: ${formatTierLabel(tier)}.`)
+                  : isCompleted && !canUseReview
+                    ? 'Review mode is Pro-only.'
+                    : 'Tip: find a quiet 60 seconds, then press Start.'}
+              </p>
+            </motion.div>
+          </div>
         </div>
       </main>
     </motion.div>
