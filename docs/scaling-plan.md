@@ -81,7 +81,7 @@ Notes
 
 ---
 
-### P0.3 Rate limiting + abuse controls on serverless endpoints
+### P0.3 Rate limiting + abuse controls on serverless endpoints ✅ DONE
 
 **Why it matters**
 - Stripe endpoints and account endpoints are prime targets for abuse.
@@ -89,6 +89,21 @@ Notes
 **What to change**
 - Add basic rate limits / bot protection (Vercel Firewall / Edge middleware / simple IP-based throttling).
 - Add idempotency for Stripe session creation and webhook event processing.
+
+**Status**
+- ✅ Implemented in this repo.
+
+**What I changed**
+- Added DB-backed rate limiting primitives: `public.api_rate_limits` + `public.rate_limit_check(key, window_seconds, max_count)`.
+- Added webhook replay protection: `public.stripe_webhook_events` + `public.claim_stripe_webhook_event(event_id, event_type)`.
+- Added Checkout-session idempotency cache table: `public.stripe_checkout_session_cache`.
+- Wired rate limiting into:
+  - Stripe: create checkout session, create portal session, subscription status.
+  - Account: pause, resume, delete.
+- Wired webhook idempotency into Stripe webhook handlers (Vercel + Netlify).
+
+**How to apply (existing Supabase project)**
+- Run `supabase/005_rate_limit_idempotency.sql` in Supabase SQL editor.
 
 **Acceptance criteria**
 - Repeated calls don’t create repeated Stripe sessions / inconsistent state.

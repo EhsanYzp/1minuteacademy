@@ -116,6 +116,19 @@ export default async function handler(req, res) {
 
   const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey);
 
+  // Webhook idempotency: claim event id before processing.
+  try {
+    const { data, error } = await supabaseAdmin.rpc('claim_stripe_webhook_event', {
+      event_id: event.id,
+      event_type: event.type,
+    });
+    if (!error && data === false) {
+      return text(res, 200, 'ok');
+    }
+  } catch {
+    // If idempotency storage is down, fail-open.
+  }
+
   try {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
@@ -239,8 +252,25 @@ export default async function handler(req, res) {
       }
     }
 
+    try {
+      await supabaseAdmin
+        .from('stripe_webhook_events')
+        .update({ status: 'succeeded', processed_at: new Date().toISOString(), last_seen_at: new Date().toISOString() })
+        .eq('event_id', event.id);
+    } catch {
+      // ignore
+    }
+
     return text(res, 200, 'ok');
   } catch (e) {
+    try {
+      await supabaseAdmin
+        .from('stripe_webhook_events')
+        .update({ status: 'failed', last_error: String(e?.message || e || 'Server error'), last_seen_at: new Date().toISOString() })
+        .eq('event_id', event.id);
+    } catch {
+      // ignore
+    }
     return text(res, 500, e?.message || 'Server error');
   }
 }

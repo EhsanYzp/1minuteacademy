@@ -1,4 +1,4 @@
-import { createSupabaseAdmin, getBearerToken, getUserFromToken, json } from './_utils.js';
+import { createSupabaseAdmin, enforceRateLimit, getBearerToken, getClientIp, getUserFromToken, json } from './_utils.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return json(res, 405, { error: 'Method not allowed' });
@@ -15,6 +15,10 @@ export default async function handler(req, res) {
 
   try {
     const user = await getUserFromToken(supabaseAdmin, token);
+
+    const ip = getClientIp(req) || 'unknown';
+    await enforceRateLimit({ supabaseAdmin, key: `account:resume:ip:${ip}`, windowSeconds: 60, maxCount: 20 });
+    await enforceRateLimit({ supabaseAdmin, key: `account:resume:user:${user.id}`, windowSeconds: 300, maxCount: 10 });
 
     const { data: existing } = await supabaseAdmin.auth.admin.getUserById(user.id);
     const prevMeta = existing?.user?.user_metadata ?? user?.user_metadata ?? {};

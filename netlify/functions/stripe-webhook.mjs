@@ -100,6 +100,19 @@ export async function handler(event) {
 
   const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey);
 
+  // Webhook idempotency: claim event id before processing.
+  try {
+    const { data, error } = await supabaseAdmin.rpc('claim_stripe_webhook_event', {
+      event_id: stripeEvent.id,
+      event_type: stripeEvent.type,
+    });
+    if (!error && data === false) {
+      return { statusCode: 200, body: 'ok' };
+    }
+  } catch {
+    // fail-open
+  }
+
   try {
     if (stripeEvent.type === 'checkout.session.completed') {
       const session = stripeEvent.data.object;
@@ -222,8 +235,25 @@ export async function handler(event) {
       }
     }
 
+    try {
+      await supabaseAdmin
+        .from('stripe_webhook_events')
+        .update({ status: 'succeeded', processed_at: new Date().toISOString(), last_seen_at: new Date().toISOString() })
+        .eq('event_id', stripeEvent.id);
+    } catch {
+      // ignore
+    }
+
     return { statusCode: 200, body: 'ok' };
   } catch (e) {
+    try {
+      await supabaseAdmin
+        .from('stripe_webhook_events')
+        .update({ status: 'failed', last_error: String(e?.message || e || 'Server error'), last_seen_at: new Date().toISOString() })
+        .eq('event_id', stripeEvent.id);
+    } catch {
+      // ignore
+    }
     return { statusCode: 500, body: e?.message || 'Server error' };
   }
 }

@@ -46,6 +46,31 @@ export function createStripeClient() {
     : new Stripe(stripeKey);
 }
 
+export function getClientIp(req) {
+  const xff = req.headers['x-forwarded-for'];
+  if (typeof xff === 'string' && xff.trim()) return xff.split(',')[0].trim();
+  return req.socket?.remoteAddress || null;
+}
+
+export async function enforceRateLimit({ supabaseAdmin, key, windowSeconds, maxCount }) {
+  const { data, error } = await supabaseAdmin.rpc('rate_limit_check', {
+    key,
+    window_seconds: windowSeconds,
+    max_count: maxCount,
+  });
+
+  // If rate limiting is not set up yet, fail-open so critical account actions still work.
+  if (error) return;
+
+  const row = Array.isArray(data) ? data[0] : data;
+  if (row && row.allowed === false) {
+    const err = new Error('Too many requests. Please wait and try again.');
+    err.status = 429;
+    err.resetAt = row.reset_at || null;
+    throw err;
+  }
+}
+
 export async function getUserFromToken(supabaseAdmin, token) {
   const { data, error } = await supabaseAdmin.auth.getUser(token);
   if (error || !data?.user) {

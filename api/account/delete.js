@@ -1,4 +1,13 @@
-import { createStripeClient, createSupabaseAdmin, getBearerToken, getUserFromToken, json, readJsonBody } from './_utils.js';
+import {
+  createStripeClient,
+  createSupabaseAdmin,
+  enforceRateLimit,
+  getBearerToken,
+  getClientIp,
+  getUserFromToken,
+  json,
+  readJsonBody,
+} from './_utils.js';
 
 function isActiveLikeStripeStatus(status) {
   const s = String(status ?? '').toLowerCase();
@@ -60,6 +69,10 @@ export default async function handler(req, res) {
 
   try {
     const authedUser = await getUserFromToken(supabaseAdmin, token);
+
+    const ip = getClientIp(req) || 'unknown';
+    await enforceRateLimit({ supabaseAdmin, key: `account:delete:ip:${ip}`, windowSeconds: 60, maxCount: 6 });
+    await enforceRateLimit({ supabaseAdmin, key: `account:delete:user:${authedUser.id}`, windowSeconds: 3600, maxCount: 3 });
 
     // Get the authoritative metadata from the admin view.
     const { data: existing, error: existingErr } = await supabaseAdmin.auth.admin.getUserById(authedUser.id);
