@@ -4,13 +4,15 @@ import './storyReview.css';
 
 const beatLabels = {
   hook: 'The Hook',
+  buildup: 'Buildup',
   discovery: 'Discovery',
-  action: 'Action',
+  twist: 'The Twist',
+  climax: 'Climax',
   punchline: 'Key Insight'
 };
 
 export default function StoryReview({ story, title, onExit }) {
-  const beats = ['hook', 'discovery', 'action', 'punchline'];
+  const beats = ['hook', 'buildup', 'discovery', 'twist', 'climax', 'punchline'];
   const [activeIndex, setActiveIndex] = useState(0);
 
   const storyData = story?.story;

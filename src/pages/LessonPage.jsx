@@ -536,7 +536,13 @@ function LessonPage() {
           </div>
 
           <div className="lesson-content">
-            <StoryRenderer story={topicRow} timeRemaining={timeRemaining} onComplete={handleComplete} />
+            <StoryRenderer 
+              story={topicRow} 
+              topicTitle={topicRow?.title}
+              timeRemaining={timeRemaining} 
+              onComplete={handleComplete}
+              onClose={() => navigate(`/topic/${topicId}`)}
+            />
           </div>
         </div>
       )}
