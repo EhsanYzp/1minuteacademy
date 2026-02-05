@@ -241,6 +241,7 @@ export default function UpgradePage() {
                 <ul className="tier-bullets">
                   <li>Beginner topics only</li>
                   <li>Progress tracking</li>
+                  <li>Rate modules with stars</li>
                   <li>Review mode (locked)</li>
                   <li>Saved takeaways (locked)</li>
                 </ul>
@@ -263,6 +264,7 @@ export default function UpgradePage() {
                   <li>Review mode (no timer)</li>
                   <li>Saved takeaways in your profile</li>
                   <li>Progress tracking</li>
+                  <li>Rate modules with stars</li>
                 </ul>
                 <div className="tier-actions">
                   {tier === 'pro' ? (
@@ -314,6 +316,13 @@ export default function UpgradePage() {
                 <div className="compare-feature">Saved takeaways</div>
                 <div className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></div>
                 <div className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></div>
+                <div className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></div>
+              </div>
+
+              <div className="compare-row">
+                <div className="compare-feature">Rate modules with stars</div>
+                <div className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></div>
+                <div className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></div>
                 <div className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></div>
               </div>
             </div>

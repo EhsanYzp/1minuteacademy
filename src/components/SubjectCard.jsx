@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import StarRating from './StarRating';
 import './SubjectCard.css';
 
 function SubjectCard({ subject, index }) {
-  const { id, title, emoji, color, description, difficulty, comingSoon, completed } = subject;
+  const { id, title, emoji, color, description, difficulty, comingSoon, completed, ratingAvg, ratingCount } = subject;
+  const hasRating = Number(ratingCount ?? 0) > 0 && Number.isFinite(Number(ratingAvg));
 
   return (
     <motion.div
@@ -47,6 +49,12 @@ function SubjectCard({ subject, index }) {
             <p className="card-description">{description}</p>
             <div className="card-footer">
               <span className="difficulty-badge">{difficulty}</span>
+              {hasRating && (
+                <span className="rating-badge" title={`${Number(ratingAvg).toFixed(1)} / 5 (${Number(ratingCount)} ratings)`}>
+                  <StarRating value={Number(ratingAvg)} readOnly size="sm" />
+                  <span className="rating-text">{Number(ratingAvg).toFixed(1)} ({Number(ratingCount)})</span>
+                </span>
+              )}
             </div>
             <motion.div 
               className="play-hint"

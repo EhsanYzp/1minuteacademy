@@ -7,6 +7,8 @@ import { listUserTopicProgress } from '../services/progress';
 import { getContentSource } from '../services/_contentSource';
 import { useAuth } from '../context/AuthContext';
 import { canReview, canStartTopic, formatTierLabel, getCurrentTier, isBeginnerTopic } from '../services/entitlements';
+import StarRating from '../components/StarRating';
+import { getMyTopicRating, getTopicRatingSummaries, setMyTopicRating } from '../services/ratings';
 import './TopicPage.css';
 
 const fallbackTopics = {
@@ -58,6 +60,10 @@ function TopicPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [completedCount, setCompletedCount] = useState(0);
+  const [ratingSummary, setRatingSummary] = useState(null);
+  const [myRating, setMyRating] = useState(null);
+  const [ratingBusy, setRatingBusy] = useState(false);
+  const [ratingError, setRatingError] = useState(null);
 
   useEffect(() => {
     let mounted = true;
@@ -67,6 +73,20 @@ function TopicPage() {
         setError(null);
         const data = await getTopic(topicId);
         if (mounted) setTopicRow(data);
+
+        try {
+          const map = await getTopicRatingSummaries([topicId]);
+          if (mounted) setRatingSummary(map.get(topicId) ?? null);
+        } catch {
+          if (mounted) setRatingSummary(null);
+        }
+
+        try {
+          const r = await getMyTopicRating(topicId);
+          if (mounted) setMyRating(r);
+        } catch {
+          if (mounted) setMyRating(null);
+        }
       } catch (e) {
         if (mounted) setError(e);
       } finally {
@@ -79,6 +99,26 @@ function TopicPage() {
       mounted = false;
     };
   }, [topicId]);
+
+  async function onRate(next) {
+    if (!user) {
+      setRatingError(new Error('Sign in to rate modules with stars.'));
+      return;
+    }
+    if (ratingBusy) return;
+    setRatingBusy(true);
+    setRatingError(null);
+    try {
+      setMyRating(next);
+      await setMyTopicRating(topicId, next);
+      const map = await getTopicRatingSummaries([topicId]);
+      setRatingSummary(map.get(topicId) ?? null);
+    } catch (e) {
+      setRatingError(e);
+    } finally {
+      setRatingBusy(false);
+    }
+  }
 
   useEffect(() => {
     let mounted = true;
@@ -197,6 +237,52 @@ function TopicPage() {
             
             <h1 className="topic-title">{topic.title}</h1>
             <p className="topic-description">{topic.description}</p>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginTop: 10 }}>
+              {ratingSummary && Number(ratingSummary?.ratings_count ?? 0) > 0 ? (
+                <>
+                  <StarRating value={Number(ratingSummary.avg_rating)} readOnly size="md" />
+                  <span style={{ color: 'var(--text-secondary)', fontWeight: 800 }}>
+                    {Number(ratingSummary.avg_rating).toFixed(1)} ({Number(ratingSummary.ratings_count)})
+                  </span>
+                </>
+              ) : (
+                <span style={{ color: 'var(--text-secondary)', fontWeight: 800 }}>No ratings yet</span>
+              )}
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginTop: 10 }}>
+              <span style={{ color: 'var(--text-secondary)', fontWeight: 800 }}>Your rating</span>
+              {user && (
+                <span style={{ color: 'var(--text-secondary)', opacity: 0.85, fontWeight: 700, fontSize: 13 }}>
+                  (you can change this anytime)
+                </span>
+              )}
+              <StarRating
+                value={Number(myRating ?? 0)}
+                onChange={user ? onRate : undefined}
+                readOnly={!user || ratingBusy}
+                size="md"
+                label="Your rating"
+              />
+              {!user && (
+                <motion.button
+                  className="topic-action-btn secondary"
+                  onClick={() => navigate('/login')}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
+                >
+                  Sign in to rate
+                </motion.button>
+              )}
+              {ratingBusy && <span style={{ opacity: 0.7, fontWeight: 750 }}>Saving…</span>}
+            </div>
+
+            {ratingError && (
+              <div style={{ marginTop: 8, color: '#b91c1c', fontWeight: 750 }}>
+                {ratingError?.message ?? String(ratingError)}
+              </div>
+            )}
             
             <div className="topic-meta">
               <span className="meta-badge duration">

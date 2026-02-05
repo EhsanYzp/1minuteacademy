@@ -9,6 +9,8 @@ import { completeTopic } from '../services/progress';
 import { getContentSource } from '../services/_contentSource';
 import { useAuth } from '../context/AuthContext';
 import { canReview, canSeeTakeaways, canStartTopic, canTrackProgress, formatTierLabel, getCurrentTier } from '../services/entitlements';
+import StarRating from '../components/StarRating';
+import { getMyTopicRating, setMyTopicRating } from '../services/ratings';
 import './LessonPage.css';
 
 function getLessonDefaults() {
@@ -30,6 +32,7 @@ function LessonPage() {
   const tier = getCurrentTier(user);
   const canUseReview = canReview(tier);
   const canSaveProgress = canTrackProgress(tier);
+  const canAttemptSaveProgress = canSaveProgress && Boolean(user);
   const canShowTakeaways = canSeeTakeaways(tier);
   const [isStarted, setIsStarted] = useState(false);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -41,6 +44,9 @@ function LessonPage() {
   const [completionResult, setCompletionResult] = useState(null);
   const [completionError, setCompletionError] = useState(null);
   const [submittingCompletion, setSubmittingCompletion] = useState(false);
+  const [myRating, setMyRating] = useState(null);
+  const [ratingBusy, setRatingBusy] = useState(false);
+  const [ratingError, setRatingError] = useState(null);
   const submittedCompletionRef = useRef(false);
 
   const lesson = useMemo(() => topicRow?.lesson ?? getLessonDefaults(), [topicRow]);
@@ -88,8 +94,54 @@ function LessonPage() {
       setCompletionError(null);
       submittedCompletionRef.current = false;
       setSubmittingCompletion(false);
+      setMyRating(null);
+      setRatingBusy(false);
+      setRatingError(null);
     }
   }, [totalSeconds, isStarted]);
+
+  useEffect(() => {
+    let mounted = true;
+    async function loadMyRating() {
+      if (!isCompleted) return;
+      if (!topicId) return;
+      try {
+        setRatingError(null);
+        const r = await getMyTopicRating(topicId);
+        if (mounted) setMyRating(r);
+      } catch (e) {
+        if (mounted) setRatingError(e);
+      }
+    }
+    loadMyRating();
+    return () => {
+      mounted = false;
+    };
+  }, [isCompleted, topicId]);
+
+  async function onRate(next) {
+    if (!user) {
+      setRatingError(new Error('Sign in to rate modules with stars.'));
+      return;
+    }
+    if (ratingBusy) return;
+    setRatingBusy(true);
+    setRatingError(null);
+    try {
+      setMyRating(next);
+      await setMyTopicRating(topicId, next);
+    } catch (e) {
+      setRatingError(e);
+      try {
+        const r = await getMyTopicRating(topicId);
+        setMyRating(r);
+      } catch {
+        // ignore
+      }
+    } finally {
+      setRatingBusy(false);
+    }
+  }
 
   useEffect(() => {
     if (isStarted && !isCompleted && timeRemaining > 0) {
@@ -111,7 +163,9 @@ function LessonPage() {
     if (!isStarted || !isCompleted) return;
     if (!topicRow) return;
 
-    if (!canSaveProgress) return;
+    // Never attempt Supabase writes without an authenticated user.
+    // This also prevents confusing errors when using dev tier overrides.
+    if (!canAttemptSaveProgress) return;
 
     if (submittedCompletionRef.current) return;
     submittedCompletionRef.current = true;
@@ -134,7 +188,7 @@ function LessonPage() {
     return () => {
       mounted = false;
     };
-  }, [isStarted, isCompleted, topicRow, topicId, xpAward, totalSeconds]);
+  }, [isStarted, isCompleted, topicRow, topicId, xpAward, totalSeconds, canAttemptSaveProgress]);
 
   // Calculate progress based on time elapsed
   const progress = totalSeconds > 0 ? ((totalSeconds - timeRemaining) / totalSeconds) * 100 : 0;
@@ -289,8 +343,8 @@ function LessonPage() {
               </div>
             </div>
 
-            <div className="lesson-error" style={{ marginTop: 12 }}>
-              {!canSaveProgress ? (
+            <div className="completion-panel completion-progress">
+              {!canSaveProgress || !user ? (
                 <p style={{ margin: 0 }}>✅ Completed. Sign in to track progress.</p>
               ) : submittingCompletion ? (
                 <p style={{ margin: 0 }}>Saving your progress…</p>
@@ -300,24 +354,19 @@ function LessonPage() {
                   <p style={{ margin: '6px 0 0', opacity: 0.8, fontSize: 14 }}>
                     {completionError?.message ?? String(completionError)}
                   </p>
-                  <p style={{ margin: '6px 0 0', opacity: 0.75, fontSize: 13 }}>
-                    Content source: <strong>{contentSource}</strong>
-                  </p>
                 </>
               ) : completionResult ? (
                 <p style={{ margin: 0 }}>
                   ✅ Progress saved {contentSource === 'local' ? 'locally' : 'to Supabase'}.
                 </p>
               ) : (
-                <p style={{ margin: 0, opacity: 0.8 }}>
-                  Content source: <strong>{contentSource}</strong>
-                </p>
+                <p style={{ margin: 0, opacity: 0.8 }}>✅ Completed.</p>
               )}
             </div>
 
             {summaryPoints.length > 0 && (
-              <div className="lesson-error" style={{ marginTop: 12, textAlign: 'left', maxWidth: 520 }}>
-                <p style={{ margin: 0, fontWeight: 900 }}>Key takeaways</p>
+              <div className="completion-panel">
+                <p className="completion-panel-title">Key takeaways</p>
                 <ul style={{ margin: '8px 0 0', paddingLeft: 18, opacity: 0.9 }}>
                   {summaryPoints.slice(0, 5).map((pt, idx) => (
                     <li key={idx} style={{ margin: '6px 0' }}>
@@ -334,6 +383,48 @@ function LessonPage() {
                 )}
               </div>
             )}
+
+            <div className="completion-panel completion-rating">
+              <div className="completion-rating-header">
+                <div>
+                  <p className="completion-panel-title">Rate this module</p>
+                  <p className="completion-panel-subtitle">
+                    {user ? 'Tap a star to rate (you can change it later).' : 'Rating is disabled until you sign in.'}
+                  </p>
+                </div>
+                {!user && (
+                  <button className="completion-signin" onClick={() => navigate('/login')}>
+                    Sign in to rate
+                  </button>
+                )}
+              </div>
+
+              <div className="completion-rating-body">
+                <StarRating
+                  value={Number(myRating ?? 0)}
+                  onChange={user ? onRate : undefined}
+                  readOnly={!user || ratingBusy}
+                  size="lg"
+                  label="Rate this module"
+                />
+
+                <div className="completion-rating-meta" aria-live="polite">
+                  {ratingBusy
+                    ? 'Saving…'
+                    : myRating
+                      ? `Your rating: ${myRating}/5`
+                      : user
+                        ? 'Choose a rating'
+                        : 'Sign in to enable rating'}
+                </div>
+              </div>
+
+              {user && ratingError && (
+                <div className="completion-panel-error">
+                  {ratingError?.message ?? String(ratingError)}
+                </div>
+              )}
+            </div>
 
             <div className="completion-actions">
               <motion.button

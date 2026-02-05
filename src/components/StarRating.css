@@ -1,0 +1,54 @@
+.star-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.star-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.star {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: transform 120ms ease, opacity 120ms ease;
+  color: rgba(45, 52, 54, 0.35);
+}
+
+.star.on {
+  color: #f59e0b; /* amber */
+}
+
+.star:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.star:not(:disabled):hover {
+  transform: translateY(-1px) scale(1.06);
+}
+
+.star-rating.sm .star { font-size: 16px; }
+.star-rating.md .star { font-size: 20px; }
+.star-rating.lg .star { font-size: 26px; }
+
+.star-meta {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  color: rgba(45, 52, 54, 0.65);
+  font-weight: 750;
+}
+
+.star-value {
+  font-variant-numeric: tabular-nums;
+}
+
+.star-count {
+  font-size: 0.95rem;
+}

@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import SubjectCard from '../components/SubjectCard';
 import { listTopics } from '../services/topics';
 import { listUserTopicProgress } from '../services/progress';
+import { getTopicRatingSummaries } from '../services/ratings';
 import { useAuth } from '../context/AuthContext';
 import { getContentSource } from '../services/_contentSource';
 import './TopicsBrowserPage.css';
@@ -39,6 +40,7 @@ export default function TopicsBrowserPage() {
   const contentSource = getContentSource();
 
   const [topics, setTopics] = useState([]);
+  const [ratingMap, setRatingMap] = useState(() => new Map());
   const [completedIds, setCompletedIds] = useState(() => new Set());
   const [activeCategory, setActiveCategory] = useState('All');
   const [query, setQuery] = useState('');
@@ -55,7 +57,15 @@ export default function TopicsBrowserPage() {
         setError(null);
         const data = await listTopics();
         if (!mounted) return;
-        setTopics(Array.isArray(data) ? data : []);
+        const rows = Array.isArray(data) ? data : [];
+        setTopics(rows);
+
+        try {
+          const map = await getTopicRatingSummaries(rows.map((t) => t.id));
+          if (mounted) setRatingMap(map);
+        } catch {
+          if (mounted) setRatingMap(new Map());
+        }
       } catch (e) {
         if (!mounted) return;
         setError(e);
@@ -140,7 +150,15 @@ export default function TopicsBrowserPage() {
     const q = query.trim();
 
     let out = topics
-      .map((t) => ({ ...t, completed: completedIds.has(t.id) }))
+      .map((t) => {
+        const summary = ratingMap.get(t.id) ?? null;
+        return {
+          ...t,
+          completed: completedIds.has(t.id),
+          ratingAvg: summary?.avg_rating ?? null,
+          ratingCount: summary?.ratings_count ?? 0,
+        };
+      })
       .filter((t) => includesQuery(t, q));
 
     if (activeCategory !== 'All') {
@@ -159,7 +177,7 @@ export default function TopicsBrowserPage() {
     });
 
     return out;
-  }, [topics, completedIds, activeCategory, query, filter]);
+  }, [topics, ratingMap, completedIds, activeCategory, query, filter]);
 
   return (
     <motion.div className="topics-browser" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
