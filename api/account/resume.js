@@ -1,0 +1,33 @@
+import { createSupabaseAdmin, getBearerToken, getUserFromToken, json } from './_utils.js';
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return json(res, 405, { error: 'Method not allowed' });
+
+  const token = getBearerToken(req);
+  if (!token) return json(res, 401, { error: 'Missing Authorization bearer token' });
+
+  let supabaseAdmin;
+  try {
+    supabaseAdmin = createSupabaseAdmin();
+  } catch (e) {
+    return json(res, 500, { error: e?.message || 'Server not configured' });
+  }
+
+  try {
+    const user = await getUserFromToken(supabaseAdmin, token);
+
+    const { data: existing } = await supabaseAdmin.auth.admin.getUserById(user.id);
+    const prevMeta = existing?.user?.user_metadata ?? user?.user_metadata ?? {};
+
+    const nextMeta = {
+      ...prevMeta,
+      paused: false,
+      paused_at: null,
+    };
+
+    await supabaseAdmin.auth.admin.updateUserById(user.id, { user_metadata: nextMeta });
+    return json(res, 200, { ok: true });
+  } catch (e) {
+    return json(res, e?.status || 500, { error: e?.message || 'Server error' });
+  }
+}

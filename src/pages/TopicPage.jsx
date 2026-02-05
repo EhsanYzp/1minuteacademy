@@ -286,14 +286,25 @@ function TopicPage() {
               </motion.button>
             ) : (
               <div className="topic-actions">
-                <motion.button
-                  className="topic-action-btn primary"
-                  onClick={() => navigate('/upgrade')}
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.96 }}
-                >
-                  🔒 Upgrade to start
-                </motion.button>
+                {tier === 'paused' ? (
+                  <motion.button
+                    className="topic-action-btn primary"
+                    onClick={() => navigate('/me')}
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.96 }}
+                  >
+                    ⏸️ Account paused
+                  </motion.button>
+                ) : (
+                  <motion.button
+                    className="topic-action-btn primary"
+                    onClick={() => navigate('/upgrade')}
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.96 }}
+                  >
+                    🔒 Upgrade to start
+                  </motion.button>
+                )}
 
                 {!user && (
                   <motion.button
@@ -310,7 +321,9 @@ function TopicPage() {
             
             <p className="start-hint">
               {!canStart
-                ? `${beginner ? '' : 'This lesson is Pro-only. '}Your plan: ${formatTierLabel(tier)}.`
+                ? (tier === 'paused'
+                  ? 'Your account is paused. Resume it to start lessons.'
+                  : `${beginner ? '' : 'This lesson is Pro-only. '}Your plan: ${formatTierLabel(tier)}.`)
                 : isCompleted && !canUseReview
                   ? 'Review mode is Pro-only.'
                   : 'Ready? Click above to begin your 60-second adventure! 🎮'}

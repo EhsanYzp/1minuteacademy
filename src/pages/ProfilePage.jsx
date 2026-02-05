@@ -8,6 +8,7 @@ import { getContentSource } from '../services/_contentSource';
 import { getUserStats, listUserTopicProgress } from '../services/progress';
 import { canReview, canSeeTakeaways, canStartTopic, formatTierLabel, getCurrentTier } from '../services/entitlements';
 import { getSubscriptionStatus, openCustomerPortal } from '../services/billing';
+import { deleteAccount, pauseAccount, resumeAccount } from '../services/account';
 import './ProfilePage.css';
 
 function fmtDate(iso) {
@@ -40,6 +41,7 @@ function getLessonTotalSeconds(lesson) {
 }
 
 function formatPlanForProfile(user, tier) {
+  if (tier === 'paused') return 'Paused';
   if (tier === 'pro') {
     const interval = String(user?.user_metadata?.plan_interval ?? '').toLowerCase();
     if (interval === 'year' || interval === 'yearly' || interval === 'annual') return 'Pro (Yearly)';
@@ -97,11 +99,12 @@ function computeFallbackPeriodEnd(createdIso, planInterval) {
 }
 
 export default function ProfilePage() {
-  const { user, refreshSession, reloadUser, loading: authLoading } = useAuth();
+  const { user, signOut, reloadUser, loading: authLoading } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const contentSource = getContentSource();
   const tier = getCurrentTier(user);
+  const isPaused = tier === 'paused';
   const planLabel = formatPlanForProfile(user, tier);
   const showTakeaways = canSeeTakeaways(tier);
   const showReview = canReview(tier);
@@ -143,6 +146,10 @@ export default function ProfilePage() {
   const [subStatus, setSubStatus] = useState(null);
   const [subLoading, setSubLoading] = useState(false);
   const [subError, setSubError] = useState(null);
+
+  const [accountBusy, setAccountBusy] = useState(null); // 'pause' | 'resume' | 'delete' | null
+  const [accountError, setAccountError] = useState(null);
+  const [accountNotice, setAccountNotice] = useState('');
 
   const subReqIdRef = useRef(0);
   const subRetryRef = useRef({ tries: 0 });
@@ -291,6 +298,67 @@ export default function ProfilePage() {
       await openCustomerPortal({ returnPath: '/me?portal=return' });
     } catch (e) {
       setSubError(e);
+    }
+  }
+
+  async function onPauseAccount() {
+    if (contentSource === 'local') return;
+    const ok = window.confirm('Pause your account? You will not be able to start lessons until you resume. (Billing is not changed by pausing.)');
+    if (!ok) return;
+
+    setAccountBusy('pause');
+    setAccountError(null);
+    setAccountNotice('');
+    try {
+      await pauseAccount();
+      await reloadUser();
+      setAccountNotice('Your account is paused.');
+    } catch (e) {
+      setAccountError(e);
+    } finally {
+      setAccountBusy(null);
+    }
+  }
+
+  async function onResumeAccount() {
+    if (contentSource === 'local') return;
+    setAccountBusy('resume');
+    setAccountError(null);
+    setAccountNotice('');
+    try {
+      await resumeAccount();
+      await reloadUser();
+      setAccountNotice('Your account is active again.');
+    } catch (e) {
+      setAccountError(e);
+    } finally {
+      setAccountBusy(null);
+    }
+  }
+
+  async function onDeleteAccount() {
+    if (contentSource === 'local') return;
+
+    const typed = window.prompt(
+      'This permanently deletes your account and progress.\n\nIf you have an active subscription, we will attempt to cancel it first.\n\nType DELETE to confirm.'
+    );
+    if (String(typed ?? '').trim() !== 'DELETE') return;
+
+    setAccountBusy('delete');
+    setAccountError(null);
+    setAccountNotice('');
+    try {
+      await deleteAccount({ confirmation: 'DELETE' });
+      try {
+        await signOut();
+      } catch {
+        // ignore
+      }
+      navigate('/?account=deleted', { replace: true });
+    } catch (e) {
+      setAccountError(e);
+    } finally {
+      setAccountBusy(null);
     }
   }
 
@@ -523,6 +591,60 @@ export default function ProfilePage() {
                   <div className="profile-sub-foot">Cancel, update card, or see invoices in Stripe Portal.</div>
                 </div>
               )}
+
+              <div className="profile-account-box">
+                <div className="profile-account-head">
+                  <div className="profile-account-title">Account</div>
+                  {isPaused ? (
+                    <div className="profile-account-pill">Paused</div>
+                  ) : (
+                    <div className="profile-account-pill active">Active</div>
+                  )}
+                </div>
+
+                {accountNotice && <div className="profile-account-row profile-account-notice">{accountNotice}</div>}
+                {accountError && <div className="profile-account-row profile-account-error">{accountError.message ?? String(accountError)}</div>}
+
+                <div className="profile-account-actions">
+                  {isPaused ? (
+                    <button
+                      className="profile-account-btn"
+                      type="button"
+                      onClick={onResumeAccount}
+                      disabled={accountBusy !== null}
+                      title="Resume your account"
+                    >
+                      {accountBusy === 'resume' ? 'Resuming…' : 'Resume account'}
+                    </button>
+                  ) : (
+                    <button
+                      className="profile-account-btn secondary"
+                      type="button"
+                      onClick={onPauseAccount}
+                      disabled={accountBusy !== null}
+                      title="Pause your account"
+                    >
+                      {accountBusy === 'pause' ? 'Pausing…' : 'Pause account'}
+                    </button>
+                  )}
+
+                  <button
+                    className="profile-account-btn danger"
+                    type="button"
+                    onClick={onDeleteAccount}
+                    disabled={accountBusy !== null}
+                    title="Delete your account"
+                  >
+                    {accountBusy === 'delete' ? 'Deleting…' : 'Delete account'}
+                  </button>
+                </div>
+
+                <div className="profile-account-foot">
+                  {isPaused
+                    ? 'Paused accounts cannot start lessons. Resume to continue.'
+                    : 'Pausing disables learning access without changing billing.'}
+                </div>
+              </div>
             </div>
           )}
 

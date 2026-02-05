@@ -50,10 +50,16 @@ export default function ReviewPage() {
     return (
       <div className="review-page">
         <div className="review-error">
-          <h2>🔒 Review mode is Pro-only</h2>
-          <p style={{ opacity: 0.8 }}>Your plan: <strong>{formatTierLabel(tier)}</strong></p>
+          <h2>{tier === 'paused' ? '⏸️ Account paused' : '🔒 Review mode is Pro-only'}</h2>
+          <p style={{ opacity: 0.8 }}>
+            {tier === 'paused'
+              ? 'Resume your account to access review mode.'
+              : <>Your plan: <strong>{formatTierLabel(tier)}</strong></>}
+          </p>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
-            <button type="button" onClick={() => navigate('/upgrade')}>Upgrade</button>
+            {tier === 'paused'
+              ? <button type="button" onClick={() => navigate('/me')}>Go to Profile</button>
+              : <button type="button" onClick={() => navigate('/upgrade')}>Upgrade</button>}
             <button type="button" onClick={() => navigate(-1)}>← Back</button>
           </div>
         </div>

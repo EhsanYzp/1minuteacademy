@@ -162,6 +162,23 @@ function LessonPage() {
   }
 
   if (!canStart) {
+    if (tier === 'paused') {
+      return (
+        <div className="lesson-page">
+          <div className="lesson-error">
+            <h2>⏸️ Account paused</h2>
+            <p style={{ opacity: 0.85, maxWidth: 520 }}>
+              Your account is paused. Resume it to start lessons.
+            </p>
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
+              <button onClick={() => navigate('/me')}>Go to Profile</button>
+              <button onClick={() => navigate(`/topic/${topicId}`)}>Back to topic</button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="lesson-page">
         <div className="lesson-error">

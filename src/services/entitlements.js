@@ -9,6 +9,8 @@ const DEV_TIER_KEY = 'oma_dev_tier';
 
 export function getTierFromUser(user) {
   if (!user) return 'guest';
+  const paused = Boolean(user?.user_metadata?.paused);
+  if (paused) return 'paused';
   const plan = String(user?.user_metadata?.plan ?? user?.app_metadata?.plan ?? 'free').toLowerCase();
   if (plan === 'pro' || plan === 'premium') return 'pro';
   return 'free';
@@ -56,19 +58,23 @@ export function isBeginnerTopic(topicRow) {
 }
 
 export function canStartTopic({ tier, topicRow }) {
+  if (tier === 'paused') return false;
   if (tier === 'pro') return true;
   return isBeginnerTopic(topicRow);
 }
 
 export function canTrackProgress(tier) {
+  if (tier === 'paused') return false;
   return tier === 'free' || tier === 'pro';
 }
 
 export function canReview(tier) {
+  if (tier === 'paused') return false;
   return tier === 'pro';
 }
 
 export function canSeeTakeaways(tier) {
+  if (tier === 'paused') return false;
   return tier === 'pro';
 }
 
@@ -76,5 +82,6 @@ export function formatTierLabel(tier) {
   if (tier === 'guest') return 'Free (Guest)';
   if (tier === 'free') return 'Free (Account)';
   if (tier === 'pro') return 'Pro';
+  if (tier === 'paused') return 'Paused';
   return String(tier ?? '');
 }
