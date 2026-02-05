@@ -220,7 +220,7 @@ export default function UpgradePage() {
             <div className="upgrade-section-title">What you get</div>
             <div className="tier-grid">
               <div className={`tier-card ${currentTierKey === 'guest' ? 'current' : ''}`}>
-                {currentTierKey === 'guest' && <div className="tier-current-badge">You already have this plan</div>}
+                {currentTierKey === 'guest' && <div className="tier-current-badge" title="You already have this plan">Current plan</div>}
                 <div className="tier-name">Guest</div>
                 <div className="tier-price">$0</div>
                 <div className="tier-note">No account required</div>
@@ -236,7 +236,7 @@ export default function UpgradePage() {
               </div>
 
               <div className={`tier-card ${currentTierKey === 'free' ? 'current' : ''}`}>
-                {currentTierKey === 'free' && <div className="tier-current-badge">You already have this plan</div>}
+                {currentTierKey === 'free' && <div className="tier-current-badge" title="You already have this plan">Current plan</div>}
                 <div className="tier-name">Free account</div>
                 <div className="tier-price">$0</div>
                 <div className="tier-note">Sign in to save progress</div>
@@ -257,7 +257,7 @@ export default function UpgradePage() {
 
               <div className={`tier-card featured ${currentTierKey === 'pro' ? 'current' : ''}`}>
                 <div className="tier-badge">Best for serious learners</div>
-                {currentTierKey === 'pro' && <div className="tier-current-badge">You already have this plan</div>}
+                {currentTierKey === 'pro' && <div className="tier-current-badge" title="You already have this plan">Current plan</div>}
                 <div className="tier-name">Pro</div>
                 <div className="tier-price">All access</div>
                 <div className="tier-note">Beginner → Advanced</div>
