@@ -13,6 +13,61 @@ async function readRawBody(req) {
   return Buffer.concat(chunks);
 }
 
+function isProSubscriptionStatus(status) {
+  return status === 'active' || status === 'trialing' || status === 'past_due';
+}
+
+async function resolveUserIdFromStripe({ supabaseAdmin, metadataUserId, customerId, subscriptionId }) {
+  const direct = typeof metadataUserId === 'string' && metadataUserId.trim() ? metadataUserId.trim() : null;
+  if (direct) return direct;
+
+  if (customerId) {
+    const { data, error } = await supabaseAdmin
+      .from('stripe_customers')
+      .select('user_id')
+      .eq('customer_id', String(customerId))
+      .maybeSingle();
+    if (!error && data?.user_id) return String(data.user_id);
+  }
+
+  if (subscriptionId) {
+    const { data, error } = await supabaseAdmin
+      .from('stripe_customers')
+      .select('user_id')
+      .eq('subscription_id', String(subscriptionId))
+      .maybeSingle();
+    if (!error && data?.user_id) return String(data.user_id);
+  }
+
+  return null;
+}
+
+async function upsertStripeCustomerMapping({
+  supabaseAdmin,
+  customerId,
+  userId,
+  subscriptionId,
+  status,
+  priceId,
+  interval,
+  currentPeriodEnd,
+}) {
+  const cid = typeof customerId === 'string' || typeof customerId === 'number' ? String(customerId) : null;
+  if (!cid) return;
+
+  const payload = { customer_id: cid };
+  if (userId) payload.user_id = userId;
+  if (subscriptionId) payload.subscription_id = String(subscriptionId);
+  if (status) payload.status = String(status);
+  if (priceId) payload.price_id = String(priceId);
+  if (interval) payload.interval = String(interval);
+  if (currentPeriodEnd) payload.current_period_end = currentPeriodEnd;
+
+  await supabaseAdmin
+    .from('stripe_customers')
+    .upsert(payload, { onConflict: 'customer_id' });
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return text(res, 405, 'Method not allowed');
 
@@ -52,6 +107,16 @@ export default async function handler(req, res) {
       const interval = session?.metadata?.interval;
       const priceId = session?.metadata?.price_id;
 
+      await upsertStripeCustomerMapping({
+        supabaseAdmin,
+        customerId,
+        userId: typeof userId === 'string' ? userId : null,
+        subscriptionId,
+        status: 'checkout_completed',
+        priceId,
+        interval,
+      });
+
       if (userId) {
         await supabaseAdmin.auth.admin.updateUserById(userId, {
           user_metadata: {
@@ -65,9 +130,72 @@ export default async function handler(req, res) {
       }
     }
 
+    if (event.type === 'customer.subscription.updated') {
+      const subscription = event.data.object;
+      const subscriptionId = subscription?.id;
+      const customerId = subscription?.customer;
+      const status = subscription?.status;
+      const metadataUserId = subscription?.metadata?.user_id;
+
+      const priceId = subscription?.items?.data?.[0]?.price?.id ?? null;
+      const interval = subscription?.items?.data?.[0]?.price?.recurring?.interval ?? null;
+      const cpe = subscription?.current_period_end
+        ? new Date(subscription.current_period_end * 1000).toISOString()
+        : null;
+
+      const userId = await resolveUserIdFromStripe({
+        supabaseAdmin,
+        metadataUserId,
+        customerId,
+        subscriptionId,
+      });
+
+      await upsertStripeCustomerMapping({
+        supabaseAdmin,
+        customerId,
+        userId,
+        subscriptionId,
+        status,
+        priceId,
+        interval,
+        currentPeriodEnd: cpe,
+      });
+
+      if (userId) {
+        const isPro = isProSubscriptionStatus(String(status ?? ''));
+        await supabaseAdmin.auth.admin.updateUserById(userId, {
+          user_metadata: {
+            plan: isPro ? 'pro' : 'free',
+            stripe_customer_id: customerId || undefined,
+            stripe_subscription_id: subscriptionId || undefined,
+            plan_interval: interval || null,
+            stripe_price_id: priceId || null,
+          },
+        });
+      }
+    }
+
     if (event.type === 'customer.subscription.deleted') {
       const subscription = event.data.object;
-      const userId = subscription?.metadata?.user_id;
+      const subscriptionId = subscription?.id;
+      const customerId = subscription?.customer;
+      const metadataUserId = subscription?.metadata?.user_id;
+
+      const userId = await resolveUserIdFromStripe({
+        supabaseAdmin,
+        metadataUserId,
+        customerId,
+        subscriptionId,
+      });
+
+      await upsertStripeCustomerMapping({
+        supabaseAdmin,
+        customerId,
+        userId,
+        subscriptionId,
+        status: subscription?.status || 'deleted',
+      });
+
       if (userId) {
         await supabaseAdmin.auth.admin.updateUserById(userId, {
           user_metadata: {

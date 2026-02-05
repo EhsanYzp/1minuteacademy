@@ -52,7 +52,7 @@ Notes
 
 ---
 
-### P0.2 Fix Stripe → user mapping durability (prevent “stuck Pro”)
+### P0.2 Fix Stripe → user mapping durability (prevent “stuck Pro”) ✅ DONE
 
 **Why it matters**
 - Webhook handling currently depends on `subscription.metadata.user_id`. In real Stripe lifecycles, metadata is often missing or inconsistent.
@@ -67,6 +67,17 @@ Notes
 **Acceptance criteria**
 - When a subscription is canceled/expired, user metadata is updated correctly every time.
 - If metadata is missing, the system still downgrades reliably.
+
+**Status**
+- ✅ Implemented in this repo.
+
+**What I changed**
+- Added a server-only mapping table `public.stripe_customers` via `supabase/004_stripe_customers.sql`.
+- Updated Stripe webhooks to resolve the user by `customer_id` / `subscription_id` (fallback) instead of relying only on Stripe metadata.
+- Added handling for `customer.subscription.updated` (so plan changes propagate without waiting for deletion).
+
+**How to apply (existing Supabase project)**
+- Run `supabase/004_stripe_customers.sql` in Supabase SQL editor.
 
 ---
 
@@ -249,7 +260,7 @@ Notes
 3) P1.1 Pagination + P1.2 ratings-per-page
 4) P1.4 Server-side search
 5) P3.1 Batch sync
-6) P0.2 Stripe mapping table + webhook hardening
+6) P0.2 Stripe mapping table + webhook hardening ✅ DONE
 7) P2.1 Code splitting + P2.2 virtualization
 
 ---
