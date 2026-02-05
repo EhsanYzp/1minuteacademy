@@ -28,10 +28,22 @@
         "prompt": "Tap to reveal the usual suspects!",
         "successText": "✅ Faster growth = worse scaling.",
         "items": [
-          { "icon": "🟢", "text": "O(1) — constant" },
-          { "icon": "🟡", "text": "O(log n) — grows slowly" },
-          { "icon": "🟠", "text": "O(n) — linear" },
-          { "icon": "🔴", "text": "O(n²) — quadratic" }
+          {
+            "icon": "🟢",
+            "text": "O(1) — constant"
+          },
+          {
+            "icon": "🟡",
+            "text": "O(log n) — grows slowly"
+          },
+          {
+            "icon": "🟠",
+            "text": "O(n) — linear"
+          },
+          {
+            "icon": "🔴",
+            "text": "O(n²) — quadratic"
+          }
         ]
       },
       {
@@ -42,8 +54,17 @@
         "title": "Myth vs Fact",
         "prompt": "Big-O tells the exact runtime in seconds.",
         "options": [
-          { "id": "myth", "icon": "🧨", "text": "Myth", "correct": true },
-          { "id": "fact", "icon": "✅", "text": "Fact" }
+          {
+            "id": "myth",
+            "icon": "🧨",
+            "text": "Myth",
+            "correct": true
+          },
+          {
+            "id": "fact",
+            "icon": "✅",
+            "text": "Fact"
+          }
         ],
         "successText": "✅ Myth.",
         "explain": "Big-O compares growth trends as n grows; constants/hardware vary."
@@ -71,13 +92,306 @@
           "✅ Prefer lower growth for big inputs"
         ],
         "uses": [
-          { "icon": "🧠", "text": "Choose algorithms" },
-          { "icon": "🧮", "text": "Estimate cost" },
-          { "icon": "⚡️", "text": "Optimize" },
-          { "icon": "🛠️", "text": "Engineering" }
+          {
+            "icon": "🧠",
+            "text": "Choose algorithms"
+          },
+          {
+            "icon": "🧮",
+            "text": "Estimate cost"
+          },
+          {
+            "icon": "⚡️",
+            "text": "Optimize"
+          },
+          {
+            "icon": "🛠️",
+            "text": "Engineering"
+          }
         ],
         "congrats": "🎉 Big-O unlocked! 🎉"
       }
     ]
+  },
+  "journey": {
+    "version": 1,
+    "topicStart": {
+      "blocks": [
+        {
+          "type": "hero",
+          "title": "📈 {topicTitle}",
+          "subtitle": "Learn Big-O: a quick way to compare how algorithms scale as input grows."
+        },
+        {
+          "type": "bullets",
+          "title": "What you'll learn",
+          "items": [
+            "Big-O = growth rate",
+            "Pull the curtain",
+            "Myth vs Fact",
+            "Build the runtime"
+          ]
+        },
+        {
+          "type": "ctaRow",
+          "items": [
+            {
+              "label": "📚 Review (no timer)",
+              "variant": "primary",
+              "action": {
+                "type": "goToReview"
+              },
+              "when": {
+                "completed": true,
+                "canReview": true
+              }
+            },
+            {
+              "label": "🔄 Restart from scratch",
+              "variant": "secondary",
+              "action": {
+                "type": "startLesson"
+              },
+              "when": {
+                "completed": true,
+                "canReview": true,
+                "canStart": true
+              }
+            },
+            {
+              "label": "{startLabel}",
+              "variant": "primary",
+              "action": {
+                "type": "startLesson"
+              },
+              "when": {
+                "canStart": true,
+                "canReview": false
+              }
+            },
+            {
+              "label": "{startLabel}",
+              "variant": "primary",
+              "action": {
+                "type": "startLesson"
+              },
+              "when": {
+                "canStart": true,
+                "canReview": true,
+                "completed": false
+              }
+            },
+            {
+              "label": "⏸️ Account paused",
+              "variant": "primary",
+              "action": {
+                "type": "goToProfile"
+              },
+              "when": {
+                "tier": "paused"
+              }
+            },
+            {
+              "label": "🔒 Upgrade to start",
+              "variant": "primary",
+              "action": {
+                "type": "goToUpgrade"
+              },
+              "when": {
+                "canStart": false,
+                "tier": [
+                  "free",
+                  "guest",
+                  "starter",
+                  "basic"
+                ]
+              }
+            },
+            {
+              "label": "👤 Create free account",
+              "variant": "secondary",
+              "action": {
+                "type": "goToLogin"
+              },
+              "when": {
+                "loggedIn": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "completion": {
+      "blocks": [
+        {
+          "type": "hero",
+          "title": "Congratulations!",
+          "subtitle": "You just learned about {topicTitle} in {totalSeconds} seconds!"
+        },
+        {
+          "type": "completionStats"
+        },
+        {
+          "type": "proPerkPanel",
+          "when": {
+            "tier": [
+              "guest",
+              "free",
+              "starter",
+              "basic",
+              "paused"
+            ]
+          }
+        },
+        {
+          "type": "oneMaAwardPanel",
+          "when": {
+            "tier": "pro"
+          }
+        },
+        {
+          "type": "completionProgress"
+        },
+        {
+          "type": "takeaways",
+          "title": "Key takeaways",
+          "points": [
+            "📈 Compare scaling, not seconds",
+            "🔁 One loop ≈ O(n), two loops ≈ O(n²)",
+            "✅ Prefer lower growth for big inputs"
+          ]
+        },
+        {
+          "type": "ratingPrompt",
+          "title": "Rate this module"
+        },
+        {
+          "type": "ctaRow",
+          "items": [
+            {
+              "label": "🔄 Try Again",
+              "variant": "primary",
+              "action": {
+                "type": "tryAgain"
+              }
+            },
+            {
+              "label": "📚 Review what you learned",
+              "variant": "secondary",
+              "action": {
+                "type": "openReview"
+              },
+              "when": {
+                "canReview": true
+              }
+            },
+            {
+              "label": "🔒 Unlock review mode",
+              "variant": "secondary",
+              "action": {
+                "type": "goToUpgrade"
+              },
+              "when": {
+                "canReview": false
+              }
+            },
+            {
+              "label": "🏠 More Topics",
+              "variant": "secondary",
+              "action": {
+                "type": "goToTopics"
+              }
+            },
+            {
+              "label": "🧑‍🚀 Your learning summary",
+              "variant": "secondary",
+              "action": {
+                "type": "goToProfile"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "review": {
+      "blocks": [
+        {
+          "type": "hero",
+          "title": "🧠 Review: {topicTitle}",
+          "subtitle": "No timer. Go at your pace."
+        },
+        {
+          "type": "info",
+          "text": "Reinforce the key ideas in under a minute."
+        },
+        {
+          "type": "reviewLesson",
+          "when": {
+            "canReview": true
+          }
+        },
+        {
+          "type": "info",
+          "text": "⏸️ Your account is paused. Resume to access review mode.",
+          "when": {
+            "canReview": false,
+            "tier": "paused"
+          }
+        },
+        {
+          "type": "info",
+          "text": "🔒 Review mode is Pro-only. Your plan: {tierLabel}",
+          "when": {
+            "canReview": false,
+            "tier": [
+              "guest",
+              "free",
+              "starter",
+              "basic",
+              "pro"
+            ]
+          }
+        },
+        {
+          "type": "ctaRow",
+          "items": [
+            {
+              "label": "Upgrade",
+              "variant": "primary",
+              "action": {
+                "type": "goToUpgrade"
+              },
+              "when": {
+                "canReview": false,
+                "tier": [
+                  "guest",
+                  "free",
+                  "starter",
+                  "basic"
+                ]
+              }
+            },
+            {
+              "label": "Go to Profile",
+              "variant": "primary",
+              "action": {
+                "type": "goToProfile"
+              },
+              "when": {
+                "canReview": false,
+                "tier": "paused"
+              }
+            },
+            {
+              "label": "← Back to module",
+              "variant": "secondary",
+              "action": {
+                "type": "goToTopic"
+              }
+            }
+          ]
+        }
+      ]
+    }
   }
 }
