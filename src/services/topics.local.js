@@ -8,6 +8,7 @@ function normalizeTopic(t) {
   return {
     id: t.id,
     subject: t.subject,
+    subcategory: t.subcategory,
     title: t.title,
     emoji: t.emoji,
     color: t.color,

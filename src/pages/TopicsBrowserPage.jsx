@@ -29,9 +29,14 @@ function norm(s) {
   return String(s ?? '').trim();
 }
 
+function normSubcategory(topic) {
+  const v = norm(topic?.subcategory);
+  return v || 'General';
+}
+
 function includesQuery(topic, q) {
   if (!q) return true;
-  const hay = `${topic.title ?? ''} ${topic.description ?? ''} ${topic.subject ?? ''}`.toLowerCase();
+  const hay = `${topic.title ?? ''} ${topic.description ?? ''} ${topic.subject ?? ''} ${topic.subcategory ?? ''}`.toLowerCase();
   return hay.includes(q.toLowerCase());
 }
 
@@ -48,6 +53,7 @@ export default function TopicsBrowserPage() {
   const [ratingMap, setRatingMap] = useState(() => new Map());
   const [completedIds, setCompletedIds] = useState(() => new Set());
   const [activeCategory, setActiveCategory] = useState('All');
+  const [activeSubcategory, setActiveSubcategory] = useState('All');
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [filter, setFilter] = useState('all'); // all | completed | new
@@ -314,6 +320,10 @@ export default function TopicsBrowserPage() {
   }, [activeCategory, debouncedQuery]);
 
   useEffect(() => {
+    setActiveSubcategory('All');
+  }, [activeCategory]);
+
+  useEffect(() => {
     let mounted = true;
 
     async function loadProgress() {
@@ -405,6 +415,10 @@ export default function TopicsBrowserPage() {
       out = out.filter((t) => (norm(t.subject) || 'General') === activeCategory);
     }
 
+    if (activeCategory !== 'All' && activeSubcategory !== 'All') {
+      out = out.filter((t) => normSubcategory(t) === activeSubcategory);
+    }
+
     if (filter === 'completed') out = out.filter((t) => t.completed);
     if (filter === 'new') out = out.filter((t) => !t.completed);
 
@@ -417,7 +431,30 @@ export default function TopicsBrowserPage() {
     });
 
     return out;
-  }, [topics, ratingMap, completedIds, activeCategory, query, filter]);
+  }, [topics, ratingMap, completedIds, activeCategory, activeSubcategory, query, filter, contentSource]);
+
+  const subcategoryCounts = useMemo(() => {
+    if (activeCategory === 'All') return new Map([['All', 0]]);
+
+    const counts = new Map();
+    counts.set('All', 0);
+
+    for (const t of Array.isArray(topics) ? topics : []) {
+      if ((norm(t?.subject) || 'General') !== activeCategory) continue;
+      const sc = normSubcategory(t);
+      counts.set(sc, (counts.get(sc) ?? 0) + 1);
+      counts.set('All', (counts.get('All') ?? 0) + 1);
+    }
+
+    return counts;
+  }, [topics, activeCategory]);
+
+  const subcategories = useMemo(() => {
+    if (activeCategory === 'All') return [];
+    const keys = Array.from(subcategoryCounts.keys()).filter((k) => k && k !== 'All');
+    keys.sort((a, b) => String(a).localeCompare(String(b)));
+    return ['All', ...keys];
+  }, [subcategoryCounts, activeCategory]);
 
   const searchUiState = useMemo(() => {
     const q = String(query ?? '').trim();
@@ -454,15 +491,32 @@ export default function TopicsBrowserPage() {
 
               <div className="categories-list">
                 {categories.map((c) => (
-                  <button
-                    key={c}
-                    type="button"
-                    className={c === activeCategory ? 'cat active' : 'cat'}
-                    onClick={() => setActiveCategory(c)}
-                  >
-                    <span className="cat-name">{c}</span>
-                    <span className="cat-count">{sidebarCounts.get(c) ?? 0}</span>
-                  </button>
+                  <div key={c} className="cat-row">
+                    <button
+                      type="button"
+                      className={c === activeCategory ? 'cat active' : 'cat'}
+                      onClick={() => setActiveCategory(c)}
+                    >
+                      <span className="cat-name">{c}</span>
+                      <span className="cat-count">{sidebarCounts.get(c) ?? 0}</span>
+                    </button>
+
+                    {c === activeCategory && c !== 'All' && subcategories.length > 1 && (
+                      <div className="subcategories-list" aria-label={`${c} subcategories`}>
+                        {subcategories.map((sc) => (
+                          <button
+                            key={`${c}:${sc}`}
+                            type="button"
+                            className={sc === activeSubcategory ? 'subcat active' : 'subcat'}
+                            onClick={() => setActiveSubcategory(sc)}
+                          >
+                            <span className="subcat-name">{sc}</span>
+                            <span className="subcat-count">{subcategoryCounts.get(sc) ?? 0}</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
             </div>

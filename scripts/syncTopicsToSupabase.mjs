@@ -143,6 +143,7 @@ async function main() {
     const row = {
       id: t.id,
       subject: t.subject,
+      subcategory: t.subcategory ?? null,
       title: t.title,
       emoji: t.emoji,
       color: t.color,
@@ -177,7 +178,7 @@ async function main() {
   const remoteById = new Map();
   const { data: remoteRows, error: remoteErr } = await supabase
     .from('topics')
-    .select('id, lesson, journey')
+    .select('id, lesson, journey, subcategory')
     .in('id', ids);
 
   if (remoteErr) throw remoteErr;
@@ -205,6 +206,7 @@ async function main() {
     const rv = getLessonVersion(remote.lesson);
 
     const journeyChanged = !journeysEqual(local.journey ?? null, remote.journey ?? null);
+    const subcategoryChanged = (local.subcategory ?? null) !== (remote.subcategory ?? null);
 
     if (args.force) {
       toUpdate.push(local);
@@ -214,6 +216,8 @@ async function main() {
     if (lv > rv) {
       toUpdate.push(local);
     } else if (journeyChanged) {
+      toUpdate.push(local);
+    } else if (subcategoryChanged) {
       toUpdate.push(local);
     } else {
       skipped.push({
