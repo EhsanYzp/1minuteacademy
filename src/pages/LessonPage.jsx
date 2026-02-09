@@ -531,7 +531,7 @@ function LessonPage() {
                   width: `${8 + (i % 4) * 4}px`,
                   height: `${8 + ((i + 2) % 4) * 4}px`,
                   borderRadius: i % 3 === 0 ? '999px' : '6px',
-                  backgroundColor: ['#FF6B6B', '#4ECDC4', '#FFE66D', '#A06CD5', '#FF9F43'][i % 5],
+                  backgroundColor: ['#2563EB', '#4ECDC4', '#FFE66D', '#0EA5E9', '#FF9F43'][i % 5],
                   opacity: 0.85,
                 }}
                 initial={{ y: -20, opacity: 1 }}
