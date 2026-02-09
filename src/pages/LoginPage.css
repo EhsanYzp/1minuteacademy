@@ -85,6 +85,74 @@
   gap: var(--space-md);
 }
 
+.login-social {
+  margin: 0 0 var(--space-lg) 0;
+}
+
+.login-social-label {
+  text-align: center;
+  color: var(--text-secondary);
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: var(--space-sm);
+}
+
+.login-social-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-sm);
+}
+
+.login-social-btn {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-full);
+  background: var(--social-btn-bg, #ffffff);
+  border: 2px solid var(--social-btn-border, #e5e7eb);
+  color: var(--social-btn-fg, #111827);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.login-social-btn:hover {
+  border-color: var(--social-btn-border-hover, #cbd5e1);
+  transform: translateY(-1px);
+}
+
+.login-social-btn:focus-visible {
+  outline: 3px solid rgba(78, 205, 196, 0.35);
+  outline-offset: 2px;
+}
+
+.login-social-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.login-social-icon {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+  color: var(--social-icon-color, currentColor);
+}
+
+.login-social-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.login-social-btn--google {
+  --social-icon-color: unset;
+}
+
+.login-social-btn--github {
+  --social-icon-color: #111827;
+}
+
 .login-forgot {
   justify-self: end;
   font-weight: 700;
@@ -165,6 +233,10 @@
   }
 
   .login-modes {
+    grid-template-columns: 1fr;
+  }
+
+  .login-social-buttons {
     grid-template-columns: 1fr;
   }
 }

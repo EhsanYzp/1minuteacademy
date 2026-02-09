@@ -96,6 +96,29 @@ export function AuthProvider({ children }) {
     return data;
   }, []);
 
+  const signInWithOAuth = useCallback(async (provider, redirectTo, options) => {
+    if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
+    if (!provider) throw new Error('OAuth provider is required');
+    setAuthError(null);
+
+    const nextOptions = {
+      ...(options && typeof options === 'object' ? options : null),
+      ...(redirectTo ? { redirectTo } : null),
+    };
+
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: Object.keys(nextOptions).length ? nextOptions : undefined,
+    });
+
+    if (error) {
+      setAuthError(error);
+      throw error;
+    }
+
+    return data;
+  }, []);
+
   const signOut = useCallback(async () => {
     if (!isSupabaseConfigured) return;
     setAuthError(null);
@@ -148,10 +171,11 @@ export function AuthProvider({ children }) {
       reloadUser,
       signUpWithPassword,
       signInWithPassword,
+      signInWithOAuth,
       requestPasswordReset,
       signOut,
     }),
-    [session, user, loading, authError, refreshSession, reloadUser, signUpWithPassword, signInWithPassword, requestPasswordReset, signOut]
+    [session, user, loading, authError, refreshSession, reloadUser, signUpWithPassword, signInWithPassword, signInWithOAuth, requestPasswordReset, signOut]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

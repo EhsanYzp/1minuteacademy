@@ -21,10 +21,10 @@ Non-goals (for now):
 
 Primary files:
 - [src/context/AuthContext.jsx](../src/context/AuthContext.jsx)
-  - `signUpWithPassword`, `signInWithPassword`, `signInWithOtp` (magic link), `signOut`
+   - `signUpWithPassword`, `signInWithPassword`, `signInWithOAuth`, `requestPasswordReset`, `signOut`
   - `getSession`, `onAuthStateChange`, `refreshSession`
 - [src/pages/LoginPage.jsx](../src/pages/LoginPage.jsx)
-  - modes: `signin | signup | magic`
+   - modes: `signin | signup | forgot`
 - [src/lib/supabaseClient.js](../src/lib/supabaseClient.js)
   - `persistSession: true`, `autoRefreshToken: true`, `detectSessionInUrl: true`
 
@@ -254,8 +254,8 @@ Acceptance:
 
 ---
 
-### Phase 3 — Social login (Google, GitHub, X)
-1. Add buttons on Login page: “Continue with Google/GitHub/X”.
+### Phase 3 — Social login (Google, GitHub)
+1. Add buttons on Login page: “Continue with Google/GitHub”.
 2. Implement `signInWithOAuth(provider)` in AuthContext:
    - `supabase.auth.signInWithOAuth({ provider, options: { redirectTo } })`
    - redirectTo: `${origin}/auth/callback`
@@ -263,9 +263,20 @@ Acceptance:
    - show “Signing you in…”
    - after session established, navigate to `fromPath` if present.
 
+Status: implemented (Google + GitHub)
+- Added OAuth buttons on the Login page for Google and GitHub.
+- Implemented `signInWithOAuth(provider, redirectTo)` in AuthContext.
+- OAuth redirects return to `/auth/callback?from=<path>` and then navigate to `from` (default: `/topics`).
+
+Provider notes:
+- **GitHub email:** GitHub may not return an email unless the app requests the `user:email` scope. We request `read:user user:email` so Supabase can fetch a verified email even if the user keeps their email private.
+- If a provider still returns no email (rare, but possible), we should prompt the user to add an email address after login.
+
 Acceptance:
 - Clicking provider button opens provider auth.
 - Returning to `/auth/callback` logs user in and returns them to the intended page.
+
+Note: X (Twitter) OAuth is intentionally disabled in the UI for now while provider setup is finalized.
 
 ---
 
