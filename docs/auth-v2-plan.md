@@ -324,6 +324,14 @@ Client-side only (Supabase enforces server rules too, but we’ll improve UX):
   - block common passwords (lightweight list)
 - On signup and reset password, require strength threshold.
 
+Status: implemented
+- Added a password strength meter + checklist on password signup and reset pages.
+- Enforced minimum strength on the client before calling Supabase:
+   - at least 10 characters
+   - includes uppercase + lowercase + number + symbol
+   - blocks a small set of common passwords
+   - blocks passwords containing the user’s email local-part
+
 Acceptance:
 - Weak passwords are blocked with clear, actionable feedback.
 

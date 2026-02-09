@@ -4,6 +4,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaGithub } from 'react-icons/fa6';
 import Header from '../components/Header';
 import { useAuth } from '../context/AuthContext';
+import PasswordStrengthMeter from '../components/auth/PasswordStrengthMeter';
+import { evaluatePasswordStrength, passwordStrengthErrorMessage } from '../lib/passwordStrength';
 import './LoginPage.css';
 
 function GoogleGIcon(props) {
@@ -43,6 +45,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
   const [info, setInfo] = useState(null);
+  const [localError, setLocalError] = useState(null);
 
   useEffect(() => {
     // If the user is already authenticated but not verified, guide them to verify
@@ -65,6 +68,7 @@ export default function LoginPage() {
   async function onOAuth(provider) {
     setBusy(true);
     setInfo(null);
+    setLocalError(null);
     try {
       const redirectTo = `${window.location.origin}/auth/callback?from=${encodeURIComponent(fromPath)}`;
       const options = provider === 'github' ? { scopes: 'read:user user:email' } : undefined;
@@ -81,6 +85,7 @@ export default function LoginPage() {
     if (!email) return;
     setBusy(true);
     setInfo(null);
+    setLocalError(null);
     try {
       await resendVerificationEmail(email, `${window.location.origin}/auth/callback`);
       setInfo("Verification email sent. Please check your inbox.");
@@ -95,9 +100,15 @@ export default function LoginPage() {
     e.preventDefault();
     setBusy(true);
     setInfo(null);
+    setLocalError(null);
 
     try {
       if (mode === 'signup') {
+        const strength = evaluatePasswordStrength(password, { email });
+        if (!strength.ok) {
+          setLocalError(new Error(passwordStrengthErrorMessage(strength)));
+          return;
+        }
         const result = await signUpWithPassword(email, password);
         if (result?.session) {
           navigate(fromPath, { replace: true });
@@ -194,9 +205,11 @@ export default function LoginPage() {
             {mode !== 'forgot' && mode !== 'verify' && (
               <label>
                 Password
-                <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="••••••••" required minLength={6} />
+                <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="••••••••" required minLength={mode === 'signup' ? 10 : 6} />
               </label>
             )}
+
+            {mode === 'signup' && <PasswordStrengthMeter password={password} email={email} />}
 
             {mode === 'signin' && (
               <button
@@ -240,6 +253,7 @@ export default function LoginPage() {
               </div>
             )}
 
+            {localError && <div className="login-error">{localError.message}</div>}
             {authError && <div className="login-error">{authError.message}</div>}
             {info && <div className="login-info">{info}</div>}
 

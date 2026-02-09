@@ -4,6 +4,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import { supabase } from '../lib/supabaseClient';
 import { useAuth } from '../context/AuthContext';
+import PasswordStrengthMeter from '../components/auth/PasswordStrengthMeter';
+import { evaluatePasswordStrength, passwordStrengthErrorMessage } from '../lib/passwordStrength';
 import './LoginPage.css';
 
 function safeFromPath(raw) {
@@ -44,8 +46,9 @@ export default function ResetPasswordPage() {
     setError(null);
     setInfo(null);
 
-    if (password.length < 6) {
-      setError(new Error('Password must be at least 6 characters.'));
+    const strength = evaluatePasswordStrength(password, { email: user?.email });
+    if (!strength.ok) {
+      setError(new Error(passwordStrengthErrorMessage(strength)));
       return;
     }
     if (password !== confirm) {
@@ -88,12 +91,14 @@ export default function ResetPasswordPage() {
           <form className="login-form" onSubmit={onSubmit}>
             <label>
               New password
-              <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="••••••••" required minLength={6} />
+              <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="••••••••" required minLength={10} />
             </label>
+
+            <PasswordStrengthMeter password={password} email={user?.email} />
 
             <label>
               Confirm password
-              <input value={confirm} onChange={(e) => setConfirm(e.target.value)} type="password" placeholder="••••••••" required minLength={6} />
+              <input value={confirm} onChange={(e) => setConfirm(e.target.value)} type="password" placeholder="••••••••" required minLength={10} />
             </label>
 
             {error && <div className="login-error">{String(error?.message ?? error)}</div>}
