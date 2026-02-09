@@ -90,6 +90,13 @@ Namecheap UI note:
 - Some Namecheap accounts don’t show **MX Record** under **Host Records**.
 - In that case, add MX records under **Advanced DNS → Mail Settings → Custom MX** (this is still DNS; it’s just a different section in Namecheap).
 
+Important: **Namecheap “Mail Settings” controls your domain’s inbound email (MX at `@`)**.
+- If you switch **Mail Settings** to **Email Forwarding**, Namecheap will typically change your `@` MX records to their forwarding service.
+- This is fine if you want forwarding-only mailboxes (e.g. `support@1minute.academy`), but it can break any other inbound email service you were using via Custom MX.
+- Resend sending/verification is primarily driven by SPF/DKIM records and (sometimes) an MX for a **subdomain** like `send.1minute.academy`.
+   - If your Resend MX is created as a *subdomain MX* (host `send`), switching Mail Settings shouldn’t affect it.
+   - If you had to add Resend’s MX inside **Mail Settings → Custom MX**, double-check Resend’s domain status after switching to Email Forwarding (you may need to re-add that `send` MX in a place that persists).
+
 About Resend’s MX record (e.g. `Type: MX`, `Host: send`, `Value: feedback-smtp...amazonses.com`):
 - This usually creates an MX record for a **subdomain** (e.g. `send.1minute.academy`) used as the envelope/return-path (“MAIL FROM”) domain.
 - It typically **does not** affect your normal inbound email MX at `@`.
@@ -115,7 +122,7 @@ If you already have an SPF TXT record:
 - Namecheap → Advanced DNS → Add New Record
    - Type: `TXT Record`
    - Host: `_dmarc`
-   - Value (starter): `v=DMARC1; p=none; rua=mailto:dmarc@1minute.academy; fo=1;`
+   - Value (starter): `v=DMARC1; p=none; rua=mailto:support@1minute.academy; fo=1;`
 
 **5) Verify domain in Resend**
 - Back in Resend → Domains → click **Verify**.
@@ -150,6 +157,8 @@ If you already have an SPF TXT record:
       - Reset password
       - (and any other templates you enable)
    - Update the **Body** to remove any Supabase-branded footer lines.
+
+Optional: a ready-to-paste, branded reset-password template lives at [docs/email-templates/reset-password.html](email-templates/reset-password.html).
 
 **9) Test**
 - Trigger a password reset from the Login page.
