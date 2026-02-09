@@ -6,13 +6,13 @@ import { useAuth } from '../context/AuthContext';
 import './LoginPage.css';
 
 export default function LoginPage() {
-  const { signInWithPassword, signUpWithPassword, signInWithOtp, authError, isSupabaseConfigured } = useAuth();
+  const { signInWithPassword, signUpWithPassword, authError, isSupabaseConfigured } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   const fromPath = useMemo(() => location.state?.from?.pathname ?? '/topics', [location.state]);
 
-  const [mode, setMode] = useState('signin'); // signin | signup | magic
+  const [mode, setMode] = useState('signin'); // signin | signup
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
@@ -27,9 +27,6 @@ export default function LoginPage() {
       if (mode === 'signup') {
         await signUpWithPassword(email, password);
         setInfo('Check your inbox to verify your email (if enabled). Then sign in.');
-      } else if (mode === 'magic') {
-        await signInWithOtp(email);
-        setInfo('Magic link sent. Check your email!');
       } else {
         await signInWithPassword(email, password);
         navigate(fromPath, { replace: true });
@@ -67,9 +64,6 @@ export default function LoginPage() {
             <button className={mode === 'signup' ? 'active' : ''} onClick={() => setMode('signup')} type="button">
               Sign Up
             </button>
-            <button className={mode === 'magic' ? 'active' : ''} onClick={() => setMode('magic')} type="button">
-              Magic Link
-            </button>
           </div>
 
           <form className="login-form" onSubmit={onSubmit}>
@@ -78,12 +72,10 @@ export default function LoginPage() {
               <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="you@cool.com" required />
             </label>
 
-            {mode !== 'magic' && (
-              <label>
-                Password
-                <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="••••••••" required minLength={6} />
-              </label>
-            )}
+            <label>
+              Password
+              <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="••••••••" required minLength={6} />
+            </label>
 
             {authError && <div className="login-error">{authError.message}</div>}
             {info && <div className="login-info">{info}</div>}
@@ -95,7 +87,7 @@ export default function LoginPage() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              {busy ? 'Working…' : mode === 'signup' ? 'Create Account' : mode === 'magic' ? 'Send Magic Link' : 'Sign In'}
+              {busy ? 'Working…' : mode === 'signup' ? 'Create Account' : 'Sign In'}
             </motion.button>
           </form>
 

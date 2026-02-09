@@ -12,6 +12,8 @@ import TermsPage from './pages/TermsPage';
 import CookiesPage from './pages/CookiesPage';
 import FaqPage from './pages/FaqPage';
 import LoginPage from './pages/LoginPage';
+import AuthCallbackPage from './pages/AuthCallbackPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 import ProfilePage from './pages/ProfilePage';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -31,6 +33,8 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/topics" element={<TopicsBrowserPage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/auth/callback" element={<AuthCallbackPage />} />
+                <Route path="/auth/reset" element={<ResetPasswordPage />} />
                 <Route path="/upgrade" element={<UpgradePage />} />
                 <Route path="/pricing" element={<UpgradePage />} />
                 <Route path="/faq" element={<FaqPage />} />
