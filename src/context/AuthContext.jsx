@@ -85,6 +85,17 @@ export function AuthProvider({ children }) {
     return data;
   }, []);
 
+  const requestPasswordReset = useCallback(async (email, redirectTo) => {
+    if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
+    setAuthError(null);
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
+    if (error) {
+      setAuthError(error);
+      throw error;
+    }
+    return data;
+  }, []);
+
   const signOut = useCallback(async () => {
     if (!isSupabaseConfigured) return;
     setAuthError(null);
@@ -137,9 +148,10 @@ export function AuthProvider({ children }) {
       reloadUser,
       signUpWithPassword,
       signInWithPassword,
+      requestPasswordReset,
       signOut,
     }),
-    [session, user, loading, authError, refreshSession, reloadUser, signUpWithPassword, signInWithPassword, signOut]
+    [session, user, loading, authError, refreshSession, reloadUser, signUpWithPassword, signInWithPassword, requestPasswordReset, signOut]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

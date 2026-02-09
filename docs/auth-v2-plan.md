@@ -115,6 +115,11 @@ Acceptance:
    - allow user to set a new password
    - call `supabase.auth.updateUser({ password: newPassword })`
 
+Status: implemented
+- Login supports a “Forgot password?” mode that requests a reset email.
+- Reset emails use `redirectTo: ${origin}/auth/reset?from=<path>` to return users to their intended page.
+- Reset page updates password via `supabase.auth.updateUser({ password })` and redirects back to `from` (default: `/topics`).
+
 Edge cases:
 - expired reset link
 - user already logged in

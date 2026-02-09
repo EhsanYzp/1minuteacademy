@@ -32,6 +32,8 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState(null);
   const [info, setInfo] = useState(null);
 
+  const canSubmit = Boolean(user) && !loading && !busy;
+
   useEffect(() => {
     // Ensure any PASSWORD_RECOVERY session in the URL is captured in context.
     reloadUser().catch(() => {});
@@ -78,8 +80,8 @@ export default function ResetPasswordPage() {
 
           {!loading && !user && (
             <div className="login-warning">
-              <strong>No recovery session found.</strong>
-              <div>Please use the reset link from your email again.</div>
+              <strong>Reset link is missing or expired.</strong>
+              <div>Please request a new password reset email and try again.</div>
             </div>
           )}
 
@@ -97,8 +99,8 @@ export default function ResetPasswordPage() {
             {error && <div className="login-error">{String(error?.message ?? error)}</div>}
             {info && <div className="login-info">{info}</div>}
 
-            <motion.button className="login-submit" type="submit" disabled={busy} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              {busy ? 'Updating…' : 'Update password'}
+            <motion.button className="login-submit" type="submit" disabled={!canSubmit} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              {busy ? 'Updating…' : loading ? 'Loading…' : 'Update password'}
             </motion.button>
           </form>
 

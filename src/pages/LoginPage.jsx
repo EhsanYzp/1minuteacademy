@@ -6,13 +6,13 @@ import { useAuth } from '../context/AuthContext';
 import './LoginPage.css';
 
 export default function LoginPage() {
-  const { signInWithPassword, signUpWithPassword, authError, isSupabaseConfigured } = useAuth();
+  const { signInWithPassword, signUpWithPassword, requestPasswordReset, authError, isSupabaseConfigured } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   const fromPath = useMemo(() => location.state?.from?.pathname ?? '/topics', [location.state]);
 
-  const [mode, setMode] = useState('signin'); // signin | signup
+  const [mode, setMode] = useState('signin'); // signin | signup | forgot
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
@@ -27,6 +27,10 @@ export default function LoginPage() {
       if (mode === 'signup') {
         await signUpWithPassword(email, password);
         setInfo('Check your inbox to verify your email (if enabled). Then sign in.');
+      } else if (mode === 'forgot') {
+        const redirectTo = `${window.location.origin}/auth/reset?from=${encodeURIComponent(fromPath)}`;
+        await requestPasswordReset(email, redirectTo);
+        setInfo("If an account exists for that email, you'll receive a reset link shortly.");
       } else {
         await signInWithPassword(email, password);
         navigate(fromPath, { replace: true });
@@ -58,10 +62,24 @@ export default function LoginPage() {
           )}
 
           <div className="login-modes">
-            <button className={mode === 'signin' ? 'active' : ''} onClick={() => setMode('signin')} type="button">
+            <button
+              className={mode === 'signin' || mode === 'forgot' ? 'active' : ''}
+              onClick={() => {
+                setMode('signin');
+                setInfo(null);
+              }}
+              type="button"
+            >
               Sign In
             </button>
-            <button className={mode === 'signup' ? 'active' : ''} onClick={() => setMode('signup')} type="button">
+            <button
+              className={mode === 'signup' ? 'active' : ''}
+              onClick={() => {
+                setMode('signup');
+                setInfo(null);
+              }}
+              type="button"
+            >
               Sign Up
             </button>
           </div>
@@ -72,10 +90,32 @@ export default function LoginPage() {
               <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="you@cool.com" required />
             </label>
 
-            <label>
-              Password
-              <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="••••••••" required minLength={6} />
-            </label>
+            {mode !== 'forgot' && (
+              <label>
+                Password
+                <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="••••••••" required minLength={6} />
+              </label>
+            )}
+
+            {mode === 'signin' && (
+              <button
+                type="button"
+                className="login-forgot"
+                onClick={() => {
+                  setMode('forgot');
+                  setPassword('');
+                  setInfo(null);
+                }}
+              >
+                Forgot password?
+              </button>
+            )}
+
+            {mode === 'forgot' && (
+              <div className="login-info">
+                Enter your email and we’ll send a reset link.
+              </div>
+            )}
 
             {authError && <div className="login-error">{authError.message}</div>}
             {info && <div className="login-info">{info}</div>}
@@ -87,7 +127,7 @@ export default function LoginPage() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              {busy ? 'Working…' : mode === 'signup' ? 'Create Account' : 'Sign In'}
+              {busy ? 'Working…' : mode === 'signup' ? 'Create Account' : mode === 'forgot' ? 'Send reset email' : 'Sign In'}
             </motion.button>
           </form>
 
