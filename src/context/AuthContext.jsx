@@ -1,5 +1,5 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { isSupabaseConfigured, supabase } from '../lib/supabaseClient';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { getRememberMePreference, isSupabaseConfigured, setRememberMePreference, supabase } from '../lib/supabaseClient';
 
 const AuthContext = createContext(null);
 
@@ -8,6 +8,11 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [authError, setAuthError] = useState(null);
+  const [rememberMe, setRememberMeState] = useState(() => getRememberMePreference());
+  const [sessionExpired, setSessionExpired] = useState(false);
+
+  const manualSignOutRef = useRef(false);
+  const hadSessionRef = useRef(false);
 
   const reloadUser = useCallback(async () => {
     if (!isSupabaseConfigured) return null;
@@ -60,6 +65,7 @@ export function AuthProvider({ children }) {
   const signUpWithPassword = useCallback(async (email, password) => {
     if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
     setAuthError(null);
+    setSessionExpired(false);
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -78,6 +84,7 @@ export function AuthProvider({ children }) {
     if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
     if (!email) throw new Error('Email is required');
     setAuthError(null);
+    setSessionExpired(false);
 
     const { data, error } = await supabase.auth.resend({
       type: 'signup',
@@ -96,6 +103,7 @@ export function AuthProvider({ children }) {
   const signInWithPassword = useCallback(async (email, password) => {
     if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
     setAuthError(null);
+    setSessionExpired(false);
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
       setAuthError(error);
@@ -107,6 +115,7 @@ export function AuthProvider({ children }) {
   const requestPasswordReset = useCallback(async (email, redirectTo) => {
     if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
     setAuthError(null);
+    setSessionExpired(false);
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
     if (error) {
       setAuthError(error);
@@ -119,6 +128,7 @@ export function AuthProvider({ children }) {
     if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
     if (!provider) throw new Error('OAuth provider is required');
     setAuthError(null);
+    setSessionExpired(false);
 
     const nextOptions = {
       ...(options && typeof options === 'object' ? options : null),
@@ -141,11 +151,20 @@ export function AuthProvider({ children }) {
   const signOut = useCallback(async () => {
     if (!isSupabaseConfigured) return;
     setAuthError(null);
+    manualSignOutRef.current = true;
     const { error } = await supabase.auth.signOut();
     if (error) {
       setAuthError(error);
+      manualSignOutRef.current = false;
       throw error;
     }
+    manualSignOutRef.current = false;
+  }, []);
+
+  const setRememberMe = useCallback(async (nextRememberMe) => {
+    const next = Boolean(nextRememberMe);
+    setRememberMeState(next);
+    await setRememberMePreference(next);
   }, []);
 
   useEffect(() => {
@@ -162,11 +181,24 @@ export function AuthProvider({ children }) {
 
       setSession(data?.session ?? null);
       setUser(data?.session?.user ?? null);
+      hadSessionRef.current = Boolean(data?.session);
       setLoading(false);
 
       const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+        const hadSession = hadSessionRef.current;
+        const hasSessionNow = Boolean(nextSession);
+
         setSession(nextSession);
         setUser(nextSession?.user ?? null);
+
+        if (hasSessionNow) {
+          setSessionExpired(false);
+        } else if (_event === 'SIGNED_OUT' && hadSession && !manualSignOutRef.current) {
+          setSessionExpired(true);
+          setAuthError(new Error('Your session expired. Please sign in again.'));
+        }
+
+        hadSessionRef.current = hasSessionNow;
       });
 
       unsub = () => listener?.subscription?.unsubscribe();
@@ -182,6 +214,9 @@ export function AuthProvider({ children }) {
   const value = useMemo(
     () => ({
       isSupabaseConfigured,
+      rememberMe,
+      setRememberMe,
+      sessionExpired,
       session,
       user,
       loading,
@@ -195,7 +230,7 @@ export function AuthProvider({ children }) {
       requestPasswordReset,
       signOut,
     }),
-    [session, user, loading, authError, refreshSession, reloadUser, signUpWithPassword, resendVerificationEmail, signInWithPassword, signInWithOAuth, requestPasswordReset, signOut]
+    [rememberMe, setRememberMe, sessionExpired, session, user, loading, authError, refreshSession, reloadUser, signUpWithPassword, resendVerificationEmail, signInWithPassword, signInWithOAuth, requestPasswordReset, signOut]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

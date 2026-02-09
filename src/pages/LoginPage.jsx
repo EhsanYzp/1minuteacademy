@@ -32,7 +32,7 @@ function GoogleGIcon(props) {
 }
 
 export default function LoginPage() {
-  const { user, signInWithPassword, signUpWithPassword, resendVerificationEmail, signInWithOAuth, requestPasswordReset, authError, isSupabaseConfigured } = useAuth();
+  const { user, rememberMe, setRememberMe, signInWithPassword, signUpWithPassword, resendVerificationEmail, signInWithOAuth, requestPasswordReset, authError, isSupabaseConfigured } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -63,6 +63,12 @@ export default function LoginPage() {
       setPassword('');
       setInfo('Please verify your email to access that page. Check your inbox, or use “Resend verification email”.');
     }
+
+    if (reason === 'session_expired') {
+      setMode('signin');
+      setPassword('');
+      setInfo('Your session expired. Please sign in again.');
+    }
   }, [user?.email, isVerified, reason]);
 
   async function onOAuth(provider) {
@@ -70,6 +76,7 @@ export default function LoginPage() {
     setInfo(null);
     setLocalError(null);
     try {
+      await setRememberMe(rememberMe);
       const redirectTo = `${window.location.origin}/auth/callback?from=${encodeURIComponent(fromPath)}`;
       const options = provider === 'github' ? { scopes: 'read:user user:email' } : undefined;
       await signInWithOAuth(provider, redirectTo, options);
@@ -104,6 +111,7 @@ export default function LoginPage() {
 
     try {
       if (mode === 'signup') {
+        await setRememberMe(rememberMe);
         const strength = evaluatePasswordStrength(password, { email });
         if (!strength.ok) {
           setLocalError(new Error(passwordStrengthErrorMessage(strength)));
@@ -124,6 +132,7 @@ export default function LoginPage() {
       } else if (mode === 'verify') {
         await onResendVerification();
       } else {
+        await setRememberMe(rememberMe);
         await signInWithPassword(email, password);
         navigate(fromPath, { replace: true });
       }
@@ -206,6 +215,18 @@ export default function LoginPage() {
               <label>
                 Password
                 <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="••••••••" required minLength={mode === 'signup' ? 10 : 6} />
+              </label>
+            )}
+
+            {(mode === 'signin' || mode === 'signup') && (
+              <label className="login-remember">
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  disabled={busy}
+                />
+                <span>Remember me</span>
               </label>
             )}
 

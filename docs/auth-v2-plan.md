@@ -346,6 +346,14 @@ Acceptance:
 3. Session expiry UX:
    - if refresh fails, redirect to login with a message.
 
+Status: implemented
+- Login page includes a “Remember me” checkbox (stored in localStorage).
+- Supabase auth client switches between:
+  - persistent sessions (`persistSession: true`) when Remember me is ON
+  - in-memory sessions (`persistSession: false`) when Remember me is OFF
+- When Remember me is OFF we also clear any previously-stored local session defensively, so a past Remember-me session can’t auto-restore on restart.
+- If an existing authenticated session expires and the user hits a gated route, they are redirected to login with a “session expired” message.
+
 Acceptance:
 - Remember-me OFF logs you out on browser restart.
 - Remember-me ON persists.

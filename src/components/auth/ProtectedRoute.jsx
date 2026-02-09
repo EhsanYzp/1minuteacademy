@@ -3,7 +3,7 @@ import { useAuth } from '../../context/AuthContext';
 import { getContentSource } from '../../services/_contentSource';
 
 export default function ProtectedRoute({ children, requireVerified = false }) {
-  const { user, loading, isSupabaseConfigured } = useAuth();
+  const { user, loading, isSupabaseConfigured, sessionExpired } = useAuth();
   const location = useLocation();
 
   if (getContentSource() === 'local') {
@@ -23,6 +23,9 @@ export default function ProtectedRoute({ children, requireVerified = false }) {
   if (loading) return null;
 
   if (!user) {
+    if (sessionExpired) {
+      return <Navigate to="/login" replace state={{ from: location, reason: 'session_expired' }} />;
+    }
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
