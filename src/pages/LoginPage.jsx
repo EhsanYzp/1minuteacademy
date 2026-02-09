@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaGithub } from 'react-icons/fa6';
@@ -30,17 +30,37 @@ function GoogleGIcon(props) {
 }
 
 export default function LoginPage() {
-  const { signInWithPassword, signUpWithPassword, signInWithOAuth, requestPasswordReset, authError, isSupabaseConfigured } = useAuth();
+  const { user, signInWithPassword, signUpWithPassword, resendVerificationEmail, signInWithOAuth, requestPasswordReset, authError, isSupabaseConfigured } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   const fromPath = useMemo(() => location.state?.from?.pathname ?? '/topics', [location.state]);
+  const reason = useMemo(() => location.state?.reason ?? null, [location.state]);
+  const isVerified = Boolean(user?.email_confirmed_at || user?.confirmed_at);
 
-  const [mode, setMode] = useState('signin'); // signin | signup | forgot
+  const [mode, setMode] = useState('signin'); // signin | signup | forgot | verify
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
   const [info, setInfo] = useState(null);
+
+  useEffect(() => {
+    // If the user is already authenticated but not verified, guide them to verify
+    // instead of asking them to sign in again.
+    if (user?.email && !isVerified) {
+      setMode('verify');
+      setEmail((prev) => prev || user.email);
+      setPassword('');
+      setInfo('Verify your email to unlock your profile and progress tracking.');
+      return;
+    }
+
+    if (reason === 'verify_email') {
+      setMode('signin');
+      setPassword('');
+      setInfo('Please verify your email to access that page. Check your inbox, or use “Resend verification email”.');
+    }
+  }, [user?.email, isVerified, reason]);
 
   async function onOAuth(provider) {
     setBusy(true);
@@ -57,6 +77,20 @@ export default function LoginPage() {
     }
   }
 
+  async function onResendVerification() {
+    if (!email) return;
+    setBusy(true);
+    setInfo(null);
+    try {
+      await resendVerificationEmail(email, `${window.location.origin}/auth/callback`);
+      setInfo("Verification email sent. Please check your inbox.");
+    } catch {
+      // handled by context
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function onSubmit(e) {
     e.preventDefault();
     setBusy(true);
@@ -64,12 +98,20 @@ export default function LoginPage() {
 
     try {
       if (mode === 'signup') {
-        await signUpWithPassword(email, password);
-        setInfo('Check your inbox to verify your email (if enabled). Then sign in.');
+        const result = await signUpWithPassword(email, password);
+        if (result?.session) {
+          navigate(fromPath, { replace: true });
+        } else {
+          setPassword('');
+          setMode('verify');
+          setInfo(`We sent a verification link to ${email}. Click it to activate your account.`);
+        }
       } else if (mode === 'forgot') {
         const redirectTo = `${window.location.origin}/auth/reset?from=${encodeURIComponent(fromPath)}`;
         await requestPasswordReset(email, redirectTo);
         setInfo("If an account exists for that email, you'll receive a reset link shortly.");
+      } else if (mode === 'verify') {
+        await onResendVerification();
       } else {
         await signInWithPassword(email, password);
         navigate(fromPath, { replace: true });
@@ -112,7 +154,7 @@ export default function LoginPage() {
               Sign In
             </button>
             <button
-              className={mode === 'signup' ? 'active' : ''}
+              className={mode === 'signup' || mode === 'verify' ? 'active' : ''}
               onClick={() => {
                 setMode('signup');
                 setInfo(null);
@@ -123,7 +165,7 @@ export default function LoginPage() {
             </button>
           </div>
 
-          {mode !== 'forgot' && (
+          {mode === 'signin' && (
             <div className="login-social" aria-label="Social sign-in">
               <div className="login-social-label">Or continue with</div>
               <div className="login-social-buttons">
@@ -149,7 +191,7 @@ export default function LoginPage() {
               <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="you@cool.com" required />
             </label>
 
-            {mode !== 'forgot' && (
+            {mode !== 'forgot' && mode !== 'verify' && (
               <label>
                 Password
                 <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="••••••••" required minLength={6} />
@@ -176,6 +218,28 @@ export default function LoginPage() {
               </div>
             )}
 
+            {mode === 'verify' && (
+              <div className="login-verify">
+                <div className="login-info">
+                  Verify your email to finish creating your account.
+                </div>
+                <button type="button" className="login-secondary" onClick={onResendVerification} disabled={busy || !isSupabaseConfigured}>
+                  {busy ? 'Sending…' : 'Resend verification email'}
+                </button>
+                <button
+                  type="button"
+                  className="login-secondary"
+                  onClick={() => {
+                    setMode('signin');
+                    setInfo(null);
+                  }}
+                  disabled={busy}
+                >
+                  Back to sign in
+                </button>
+              </div>
+            )}
+
             {authError && <div className="login-error">{authError.message}</div>}
             {info && <div className="login-info">{info}</div>}
 
@@ -186,7 +250,7 @@ export default function LoginPage() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              {busy ? 'Working…' : mode === 'signup' ? 'Create Account' : mode === 'forgot' ? 'Send reset email' : 'Sign In'}
+              {busy ? 'Working…' : mode === 'signup' ? 'Create Account' : mode === 'forgot' ? 'Send reset email' : mode === 'verify' ? 'Resend verification email' : 'Sign In'}
             </motion.button>
           </form>
 

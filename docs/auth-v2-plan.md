@@ -159,6 +159,7 @@ If you already have an SPF TXT record:
    - Update the **Body** to remove any Supabase-branded footer lines.
 
 Optional: a ready-to-paste, branded reset-password template lives at [docs/email-templates/reset-password.html](email-templates/reset-password.html).
+Optional: a ready-to-paste, branded confirm-signup template lives at [docs/email-templates/confirm-signup.html](email-templates/confirm-signup.html).
 
 **9) Test**
 - Trigger a password reset from the Login page.
@@ -285,6 +286,29 @@ Note: X (Twitter) OAuth is intentionally disabled in the UI for now while provid
 2. Implement “resend verification email” (Supabase supports resend; exact API may depend on auth settings).
 3. Add “unverified banner”:
    - If user exists but `user.email_confirmed_at` is null, show banner and restrict gated features.
+
+Status: implemented
+- After password signup, if Supabase returns no session (email confirmation required), the Login page switches to a “Verify your email” state with a resend button.
+- Added `resendVerificationEmail(email, emailRedirectTo)` in AuthContext via `supabase.auth.resend({ type: 'signup', email, options: { emailRedirectTo } })`.
+- Added a persistent “Verify your email” banner in the header with a resend button.
+- Profile route (`/me`) requires a verified email (unverified users are redirected to login with a verification hint).
+
+Supabase setup needed (Phase 4)
+- Authentication → Providers → **Email**
+   - Ensure **Email confirmations** are set how you want:
+      - If ON, signup typically returns **no session** until the user clicks the email link (the app shows the “Verify your email” state).
+      - If OFF, users can be signed in immediately, but the app will still show the unverified banner and gate `/me` until confirmed.
+- Authentication → URL Configuration (wording varies by Supabase UI)
+   - Set **Site URL**: `https://1minute.academy`
+   - Add **Redirect URLs**:
+      - `http://localhost:5173/*`
+      - `https://1minute.academy/*`
+   - These must include `/auth/callback` (OAuth + verify links) and `/auth/reset` (password reset).
+- Authentication → Email Templates
+   - **Confirm signup**: ensure the button/link uses Supabase’s confirmation URL variable (so it lands back in the app after verification).
+   - (Optional) Remove Supabase branding by editing subject/body + using custom SMTP.
+- Authentication → SMTP (optional but recommended)
+   - Configure custom SMTP (e.g. Resend) so verification and reset emails have the right sender + deliverability.
 
 Acceptance:
 - Verified users can use the app normally.

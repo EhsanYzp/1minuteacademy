@@ -7,10 +7,28 @@ import { formatTierLabel, getCurrentTier, setDevTierOverride } from '../services
 import './Header.css';
 
 function Header() {
-  const { user, isSupabaseConfigured, signOut } = useAuth();
+  const { user, isSupabaseConfigured, signOut, resendVerificationEmail } = useAuth();
   const contentSource = getContentSource();
   const [busy, setBusy] = useState(false);
+  const [verifyBusy, setVerifyBusy] = useState(false);
+  const [verifySent, setVerifySent] = useState(false);
   const tier = getCurrentTier(user);
+
+  const isVerified = Boolean(user?.email_confirmed_at || user?.confirmed_at);
+  const showVerifyBanner = contentSource !== 'local' && isSupabaseConfigured && Boolean(user?.email) && !isVerified;
+
+  async function onResendVerification() {
+    if (!user?.email || verifyBusy) return;
+    setVerifyBusy(true);
+    try {
+      await resendVerificationEmail(user.email, `${window.location.origin}/auth/callback`);
+      setVerifySent(true);
+    } catch {
+      // ignore (AuthContext surfaces errors elsewhere)
+    } finally {
+      setVerifyBusy(false);
+    }
+  }
 
   async function onSignOut() {
     if (busy) return;
@@ -25,12 +43,13 @@ function Header() {
   }
 
   return (
-    <motion.header 
-      className="header"
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-    >
+    <>
+      <motion.header
+        className="header"
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+      >
       <Link to="/" className="logo">
         <motion.span 
           className="logo-icon"
@@ -99,7 +118,24 @@ function Header() {
           </Link>
         )}
       </nav>
-    </motion.header>
+      </motion.header>
+
+      {showVerifyBanner && (
+        <div className="verify-banner" role="status" aria-live="polite">
+          <div className="verify-banner-text">
+            <strong>Verify your email</strong>
+            <span>
+              {' '}
+              to unlock your profile and progress tracking.
+              {verifySent ? ' Verification email sent.' : ''}
+            </span>
+          </div>
+          <button className="verify-banner-btn" type="button" onClick={onResendVerification} disabled={verifyBusy}>
+            {verifyBusy ? 'Sending…' : 'Resend email'}
+          </button>
+        </div>
+      )}
+    </>
   );
 }
 

@@ -2,7 +2,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { getContentSource } from '../../services/_contentSource';
 
-export default function ProtectedRoute({ children }) {
+export default function ProtectedRoute({ children, requireVerified = false }) {
   const { user, loading, isSupabaseConfigured } = useAuth();
   const location = useLocation();
 
@@ -24,6 +24,13 @@ export default function ProtectedRoute({ children }) {
 
   if (!user) {
     return <Navigate to="/login" replace state={{ from: location }} />;
+  }
+
+  if (requireVerified) {
+    const isVerified = Boolean(user?.email_confirmed_at || user?.confirmed_at);
+    if (!isVerified) {
+      return <Navigate to="/login" replace state={{ from: location, reason: 'verify_email' }} />;
+    }
   }
 
   return children;

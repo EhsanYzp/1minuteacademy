@@ -64,13 +64,32 @@ export function AuthProvider({ children }) {
       email,
       password,
       options: {
-        emailRedirectTo: window.location.origin,
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
       },
     });
     if (error) {
       setAuthError(error);
       throw error;
     }
+    return data;
+  }, []);
+
+  const resendVerificationEmail = useCallback(async (email, emailRedirectTo) => {
+    if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
+    if (!email) throw new Error('Email is required');
+    setAuthError(null);
+
+    const { data, error } = await supabase.auth.resend({
+      type: 'signup',
+      email,
+      options: emailRedirectTo ? { emailRedirectTo } : undefined,
+    });
+
+    if (error) {
+      setAuthError(error);
+      throw error;
+    }
+
     return data;
   }, []);
 
@@ -170,12 +189,13 @@ export function AuthProvider({ children }) {
       refreshSession,
       reloadUser,
       signUpWithPassword,
+      resendVerificationEmail,
       signInWithPassword,
       signInWithOAuth,
       requestPasswordReset,
       signOut,
     }),
-    [session, user, loading, authError, refreshSession, reloadUser, signUpWithPassword, signInWithPassword, signInWithOAuth, requestPasswordReset, signOut]
+    [session, user, loading, authError, refreshSession, reloadUser, signUpWithPassword, resendVerificationEmail, signInWithPassword, signInWithOAuth, requestPasswordReset, signOut]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

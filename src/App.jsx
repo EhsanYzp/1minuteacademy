@@ -44,7 +44,7 @@ function App() {
                 <Route
                   path="/me"
                   element={
-                    <ProtectedRoute>
+                    <ProtectedRoute requireVerified>
                       <ProfilePage />
                     </ProtectedRoute>
                   }
