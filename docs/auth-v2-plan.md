@@ -159,6 +159,7 @@ If you already have an SPF TXT record:
    - Update the **Body** to remove any Supabase-branded footer lines.
 
 Optional: a ready-to-paste, branded reset-password template lives at [docs/email-templates/reset-password.html](email-templates/reset-password.html).
+If Yahoo (or other inboxes) renders the reset email poorly, use the more conservative, high-contrast template at [docs/email-templates/reset-password-safe.html](email-templates/reset-password-safe.html).
 Optional: a ready-to-paste, branded confirm-signup template lives at [docs/email-templates/confirm-signup.html](email-templates/confirm-signup.html).
 
 **9) Test**
