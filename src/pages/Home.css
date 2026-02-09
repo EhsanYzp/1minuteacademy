@@ -38,9 +38,49 @@
   line-height: 1.1;
 }
 
-.hero-title .highlight {
+.hero-title .accent {
   color: var(--color-primary-dark);
+  font-weight: 950;
 }
+
+.hero-title .one-minute {
+  position: relative;
+  display: inline-block;
+  padding: 0 0.06em 0.34em;
+  z-index: 0;
+}
+
+.hero-title .one-minute::after {
+  content: '';
+  position: absolute;
+  left: -0.10em;
+  right: -0.10em;
+  bottom: 0.02em;
+  height: 0.34em;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 52' preserveAspectRatio='none'><path d='M6 34 C 28 24, 52 42, 78 34 S 132 26, 160 34 S 214 44, 242 34 S 288 24, 314 34' fill='none' stroke='%232563eb' stroke-width='12' stroke-linecap='round' stroke-linejoin='round' opacity='0.96'/><path d='M8 36 C 30 26, 54 44, 80 36 S 134 28, 162 36 S 216 46, 244 36 S 290 26, 316 36' fill='none' stroke='%2360a5fa' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' opacity='0.38'/></svg>");
+  filter: drop-shadow(0 10px 16px rgba(37, 99, 235, 0.16)) drop-shadow(0 4px 10px rgba(0, 0, 0, 0.06));
+  transform-origin: left center;
+  transform: rotate(-1.6deg) scaleX(0);
+  z-index: -1;
+  animation: underline-draw 650ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both;
+}
+
+@keyframes underline-draw {
+  from { transform: rotate(-1.6deg) scaleX(0); }
+  to { transform: rotate(-1.6deg) scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-title .one-minute::after {
+    animation: none;
+    transform: rotate(-1.6deg) scaleX(1);
+  }
+}
+
+
 
 .hero-subtitle {
   font-size: 1.25rem;

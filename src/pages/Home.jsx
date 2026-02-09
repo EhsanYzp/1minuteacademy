@@ -73,11 +73,11 @@ function Home() {
             ⏱️ Strictly 60 seconds (no pause)
           </motion.div>
           <h1 className="hero-title">
-            Learn Anything in <span className="highlight">One Minute</span>
+            Learn <span className="accent">Anything</span> in <span className="one-minute accent">One Minute</span>
           </h1>
           <p className="hero-subtitle">
-            Fast, interactive lessons that fit into your day.
-            <br />No doomscrolling — just one minute of progress.
+            One minute. One story. One tiny win.
+            <br />No doomscrolling — just momentum.
           </p>
 
           <motion.div className="hero-cta" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
