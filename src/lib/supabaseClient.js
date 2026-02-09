@@ -31,7 +31,12 @@ export function getRememberMePreference() {
   return readRememberMePreference();
 }
 
-const supabasePersistent = isSupabaseConfigured
+export function setRememberMePreference(rememberMe) {
+  if (!isSupabaseConfigured) return;
+  writeRememberMePreference(Boolean(rememberMe));
+}
+
+export const supabasePersistent = isSupabaseConfigured
   ? createClient(supabaseUrl, supabaseAnonKey, {
       auth: {
         persistSession: true,
@@ -41,7 +46,7 @@ const supabasePersistent = isSupabaseConfigured
     })
   : null;
 
-const supabaseEphemeral = isSupabaseConfigured
+export const supabaseEphemeral = isSupabaseConfigured
   ? createClient(supabaseUrl, supabaseAnonKey, {
       auth: {
         persistSession: false,
@@ -51,30 +56,18 @@ const supabaseEphemeral = isSupabaseConfigured
     })
   : null;
 
-export let supabase = null;
-
-if (isSupabaseConfigured) {
-  supabase = readRememberMePreference() ? supabasePersistent : supabaseEphemeral;
+export function getSupabaseClient(rememberMe = readRememberMePreference()) {
+  if (!isSupabaseConfigured) return null;
+  return rememberMe ? supabasePersistent : supabaseEphemeral;
 }
 
-export async function setRememberMePreference(rememberMe) {
-  if (!isSupabaseConfigured) return;
-  const next = Boolean(rememberMe);
-  writeRememberMePreference(next);
-
-  if (!next) {
-    // Defensive: if a user previously used Remember Me ON, there may be a stored
-    // session in localStorage. Clear it so "Remember me OFF" never auto-logs-in
-    // after a browser restart.
-    try {
-      await supabasePersistent.auth.signOut({ scope: 'local' });
-    } catch {
-      // ignore
-    }
-    supabase = supabaseEphemeral;
-    return;
+export async function clearPersistentSupabaseSession() {
+  if (!isSupabaseConfigured || !supabasePersistent) return;
+  try {
+    // Clear local storage only (do not revoke server-side tokens).
+    await supabasePersistent.auth.signOut({ scope: 'local' });
+  } catch {
+    // ignore
   }
-
-  supabase = supabasePersistent;
 }
 

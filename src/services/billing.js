@@ -1,10 +1,12 @@
-import { supabase, isSupabaseConfigured } from '../lib/supabaseClient';
+import { getSupabaseClient, isSupabaseConfigured } from '../lib/supabaseClient';
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function getAccessToken({ allowRefresh = true } = {}) {
+  const supabase = getSupabaseClient();
+  if (!supabase) return null;
   // Supabase can briefly report a null session while hydrating
   // from storage after redirects/page-load. Retry + refresh.
   for (let attempt = 0; attempt < 8; attempt += 1) {

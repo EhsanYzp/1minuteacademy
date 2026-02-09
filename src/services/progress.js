@@ -1,13 +1,20 @@
-import { isSupabaseConfigured, supabase } from '../lib/supabaseClient';
+import { getSupabaseClient, isSupabaseConfigured } from '../lib/supabaseClient';
 import { getContentSource } from './_contentSource';
 import { completeLocalTopic, getLocalTopicProgress, getLocalUserStats } from './progress.local';
+
+function requireSupabase() {
+  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+  const supabase = getSupabaseClient();
+  if (!supabase) throw new Error('Supabase not configured');
+  return supabase;
+}
 
 export async function getUserStats() {
   if (getContentSource() === 'local') {
     return getLocalUserStats();
   }
 
-  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+  const supabase = requireSupabase();
   const { data, error } = await supabase
     .from('user_stats')
     .select('one_ma_balance, streak, last_completed_date')
@@ -23,7 +30,7 @@ export async function completeTopic({ topicId, seconds = 60 }) {
     return completeLocalTopic({ topicId, seconds });
   }
 
-  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+  const supabase = requireSupabase();
   const { data, error } = await supabase.rpc('complete_topic', {
     p_topic_id: topicId,
     p_seconds: seconds,
@@ -41,7 +48,7 @@ export async function listUserTopicProgress() {
     return getLocalTopicProgress();
   }
 
-  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+  const supabase = requireSupabase();
   const { data, error } = await supabase
     .from('user_topic_progress')
     .select(

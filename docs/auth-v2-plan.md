@@ -349,10 +349,15 @@ Acceptance:
 Status: implemented
 - Login page includes a “Remember me” checkbox (stored in localStorage).
 - Supabase auth client switches between:
-  - persistent sessions (`persistSession: true`) when Remember me is ON
-  - in-memory sessions (`persistSession: false`) when Remember me is OFF
-- When Remember me is OFF we also clear any previously-stored local session defensively, so a past Remember-me session can’t auto-restore on restart.
-- If an existing authenticated session expires and the user hits a gated route, they are redirected to login with a “session expired” message.
+   - persistent sessions (`persistSession: true`) when Remember me is ON
+   - in-memory sessions (`persistSession: false`) when Remember me is OFF
+- Implementation notes:
+   - The app no longer relies on a mutable, globally-exported `supabase` client. Instead, code asks for the active client at call-time.
+   - AuthContext re-subscribes to auth events when Remember me changes and migrates the active session across clients when toggling.
+   - When Remember me is OFF we clear any previously-stored persistent local session defensively, so a past Remember-me session can’t auto-restore on restart.
+- Session expiry UX:
+   - If an authenticated session becomes unauthenticated unexpectedly (e.g., `TOKEN_REFRESH_FAILED` / unexpected sign-out), gated routes redirect to login with a “session expired” message.
+   - If the app boots with no session but it previously had one (and the user didn’t manually sign out), we also show the “session expired” hint.
 
 Acceptance:
 - Remember-me OFF logs you out on browser restart.

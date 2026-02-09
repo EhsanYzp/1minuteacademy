@@ -1,5 +1,11 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { getRememberMePreference, isSupabaseConfigured, setRememberMePreference, supabase } from '../lib/supabaseClient';
+import {
+  clearPersistentSupabaseSession,
+  getRememberMePreference,
+  getSupabaseClient,
+  isSupabaseConfigured,
+  setRememberMePreference,
+} from '../lib/supabaseClient';
 
 const AuthContext = createContext(null);
 
@@ -13,11 +19,51 @@ export function AuthProvider({ children }) {
 
   const manualSignOutRef = useRef(false);
   const hadSessionRef = useRef(false);
+  const clientRef = useRef(isSupabaseConfigured ? getSupabaseClient(getRememberMePreference()) : null);
+
+  const LS_LAST_AUTHED_AT = '1ma.lastAuthedAt';
+  const LS_MANUAL_SIGNOUT_AT = '1ma.manualSignOutAt';
+
+  const markAuthed = useCallback(() => {
+    try {
+      window?.localStorage?.setItem(LS_LAST_AUTHED_AT, String(Date.now()));
+      window?.localStorage?.removeItem(LS_MANUAL_SIGNOUT_AT);
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const markManualSignOut = useCallback(() => {
+    try {
+      window?.localStorage?.setItem(LS_MANUAL_SIGNOUT_AT, String(Date.now()));
+      window?.localStorage?.removeItem(LS_LAST_AUTHED_AT);
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const shouldShowSessionExpiredOnBootstrap = useCallback(() => {
+    try {
+      const lastAuthedAt = window?.localStorage?.getItem(LS_LAST_AUTHED_AT);
+      const manualAt = window?.localStorage?.getItem(LS_MANUAL_SIGNOUT_AT);
+      // If we previously had a session and did not manually sign out, explain why they're back at login.
+      return Boolean(lastAuthedAt) && !manualAt;
+    } catch {
+      return false;
+    }
+  }, []);
+
+  const getClient = useCallback(() => {
+    if (!isSupabaseConfigured) return null;
+    if (!clientRef.current) clientRef.current = getSupabaseClient(getRememberMePreference());
+    return clientRef.current;
+  }, []);
 
   const reloadUser = useCallback(async () => {
     if (!isSupabaseConfigured) return null;
     setAuthError(null);
 
+    const supabase = getClient();
     const { data: sessionData, error: sessionErr } = await supabase.auth.getSession();
     if (sessionErr) {
       setAuthError(sessionErr);
@@ -42,6 +88,7 @@ export function AuthProvider({ children }) {
   const refreshSession = useCallback(async () => {
     if (!isSupabaseConfigured) return null;
     setAuthError(null);
+    const supabase = getClient();
     const { data, error } = await supabase.auth.refreshSession();
     if (error) {
       setAuthError(error);
@@ -66,6 +113,7 @@ export function AuthProvider({ children }) {
     if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
     setAuthError(null);
     setSessionExpired(false);
+    const supabase = getClient();
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -86,6 +134,7 @@ export function AuthProvider({ children }) {
     setAuthError(null);
     setSessionExpired(false);
 
+    const supabase = getClient();
     const { data, error } = await supabase.auth.resend({
       type: 'signup',
       email,
@@ -104,6 +153,7 @@ export function AuthProvider({ children }) {
     if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
     setAuthError(null);
     setSessionExpired(false);
+    const supabase = getClient();
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
       setAuthError(error);
@@ -116,6 +166,7 @@ export function AuthProvider({ children }) {
     if (!isSupabaseConfigured) throw new Error('Supabase is not configured');
     setAuthError(null);
     setSessionExpired(false);
+    const supabase = getClient();
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
     if (error) {
       setAuthError(error);
@@ -129,6 +180,8 @@ export function AuthProvider({ children }) {
     if (!provider) throw new Error('OAuth provider is required');
     setAuthError(null);
     setSessionExpired(false);
+
+    const supabase = getClient();
 
     const nextOptions = {
       ...(options && typeof options === 'object' ? options : null),
@@ -152,6 +205,8 @@ export function AuthProvider({ children }) {
     if (!isSupabaseConfigured) return;
     setAuthError(null);
     manualSignOutRef.current = true;
+    markManualSignOut();
+    const supabase = getClient();
     const { error } = await supabase.auth.signOut();
     if (error) {
       setAuthError(error);
@@ -159,16 +214,49 @@ export function AuthProvider({ children }) {
       throw error;
     }
     manualSignOutRef.current = false;
-  }, []);
+  }, [getClient, markManualSignOut]);
 
   const setRememberMe = useCallback(async (nextRememberMe) => {
+    if (!isSupabaseConfigured) return;
     const next = Boolean(nextRememberMe);
+
+    // Snapshot current session before switching clients.
+    const prevClient = clientRef.current ?? getSupabaseClient(getRememberMePreference());
+    const nextClient = getSupabaseClient(next);
+
     setRememberMeState(next);
-    await setRememberMePreference(next);
+    setRememberMePreference(next);
+
+    if (!prevClient || !nextClient || prevClient === nextClient) {
+      clientRef.current = nextClient;
+      return;
+    }
+
+    try {
+      const { data: prevSessionData } = await prevClient.auth.getSession();
+      const prevSession = prevSessionData?.session ?? null;
+      if (prevSession?.access_token && prevSession?.refresh_token) {
+        await nextClient.auth.setSession({
+          access_token: prevSession.access_token,
+          refresh_token: prevSession.refresh_token,
+        });
+      }
+    } catch {
+      // ignore
+    }
+
+    // If Remember me is turned OFF, clear any persisted storage so future restarts
+    // never auto-restore a previously persisted session.
+    if (!next) {
+      await clearPersistentSupabaseSession();
+    }
+
+    clientRef.current = nextClient;
   }, []);
 
   useEffect(() => {
     let unsub = null;
+    let cancelled = false;
 
     async function bootstrap() {
       if (!isSupabaseConfigured) {
@@ -176,26 +264,46 @@ export function AuthProvider({ children }) {
         return;
       }
 
+      const supabase = getSupabaseClient(rememberMe);
+      clientRef.current = supabase;
+
       const { data, error } = await supabase.auth.getSession();
+      if (cancelled) return;
       if (error) setAuthError(error);
 
-      setSession(data?.session ?? null);
-      setUser(data?.session?.user ?? null);
-      hadSessionRef.current = Boolean(data?.session);
+      const nextSession = data?.session ?? null;
+      setSession(nextSession);
+      setUser(nextSession?.user ?? null);
+      hadSessionRef.current = Boolean(nextSession);
+
+      if (nextSession) {
+        setSessionExpired(false);
+        markAuthed();
+      } else if (shouldShowSessionExpiredOnBootstrap()) {
+        setSessionExpired(true);
+      }
+
       setLoading(false);
 
-      const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      const { data: listener } = supabase.auth.onAuthStateChange((event, sessionNow) => {
         const hadSession = hadSessionRef.current;
-        const hasSessionNow = Boolean(nextSession);
+        const hasSessionNow = Boolean(sessionNow);
 
-        setSession(nextSession);
-        setUser(nextSession?.user ?? null);
+        setSession(sessionNow);
+        setUser(sessionNow?.user ?? null);
 
         if (hasSessionNow) {
           setSessionExpired(false);
-        } else if (_event === 'SIGNED_OUT' && hadSession && !manualSignOutRef.current) {
-          setSessionExpired(true);
-          setAuthError(new Error('Your session expired. Please sign in again.'));
+          markAuthed();
+        } else {
+          const looksLikeExpiry =
+            (event === 'SIGNED_OUT' && hadSession && !manualSignOutRef.current) ||
+            event === 'TOKEN_REFRESH_FAILED';
+
+          if (looksLikeExpiry) {
+            setSessionExpired(true);
+            setAuthError(new Error('Your session expired. Please sign in again.'));
+          }
         }
 
         hadSessionRef.current = hasSessionNow;
@@ -207,9 +315,10 @@ export function AuthProvider({ children }) {
     bootstrap();
 
     return () => {
+      cancelled = true;
       if (unsub) unsub();
     };
-  }, []);
+  }, [rememberMe, markAuthed, shouldShowSessionExpiredOnBootstrap]);
 
   const value = useMemo(
     () => ({

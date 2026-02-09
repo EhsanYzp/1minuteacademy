@@ -1,10 +1,12 @@
-import { supabase, isSupabaseConfigured } from '../lib/supabaseClient';
+import { getSupabaseClient, isSupabaseConfigured } from '../lib/supabaseClient';
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function getAccessToken({ allowRefresh = true } = {}) {
+  const supabase = getSupabaseClient();
+  if (!supabase) return null;
   for (let attempt = 0; attempt < 8; attempt += 1) {
     const { data } = await supabase.auth.getSession();
     const token = data?.session?.access_token;

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
-import { supabase } from '../lib/supabaseClient';
+import { getSupabaseClient } from '../lib/supabaseClient';
 import { useAuth } from '../context/AuthContext';
 import PasswordStrengthMeter from '../components/auth/PasswordStrengthMeter';
 import { evaluatePasswordStrength, passwordStrengthErrorMessage } from '../lib/passwordStrength';
@@ -58,6 +58,8 @@ export default function ResetPasswordPage() {
 
     setBusy(true);
     try {
+      const supabase = getSupabaseClient();
+      if (!supabase) throw new Error('Supabase is not configured');
       const { error: updateErr } = await supabase.auth.updateUser({ password });
       if (updateErr) throw updateErr;
       setInfo('Password updated. Redirecting…');

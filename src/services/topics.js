@@ -1,6 +1,13 @@
-import { isSupabaseConfigured, supabase } from '../lib/supabaseClient';
+import { getSupabaseClient, isSupabaseConfigured } from '../lib/supabaseClient';
 import { getContentSource } from './_contentSource';
 import { getLocalTopic, listLocalTopics } from './topics.local';
+
+function requireSupabase() {
+  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+  const supabase = getSupabaseClient();
+  if (!supabase) throw new Error('Supabase not configured');
+  return supabase;
+}
 
 function includesQueryLocal(topic, q) {
   const query = String(q ?? '').trim().toLowerCase();
@@ -25,6 +32,8 @@ export async function getTopicCategoryCounts() {
   }
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+
+  const supabase = requireSupabase();
 
   const { data, error } = await supabase.rpc('get_topic_category_counts');
   if (error) throw error;
@@ -61,6 +70,8 @@ export async function listTopicsPage({ limit = 30, offset = 0, subject = null } 
   }
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+
+  const supabase = requireSupabase();
 
   // The topics browser needs `subject` for categories.
   // Keep this resilient: if an older schema lacks a column, retry with a minimal select.
@@ -150,6 +161,8 @@ export async function searchTopicsPage({ query = '', limit = 30, offset = 0, sub
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
+  const supabase = requireSupabase();
+
   const { data, error } = await supabase.rpc('search_topics_page', {
     p_query: q,
     p_subject: subjectFilter,
@@ -212,6 +225,7 @@ export async function getTopic(topicId) {
   }
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+  const supabase = requireSupabase();
   const { data, error } = await supabase
     .from('topics')
     .select('*')
@@ -244,6 +258,8 @@ export async function listTopicsByIds(topicIds, { includeLesson = false } = {}) 
   }
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+
+  const supabase = requireSupabase();
 
   const columns = includeLesson
     ? 'id, subject, title, emoji, color, description, difficulty, lesson'

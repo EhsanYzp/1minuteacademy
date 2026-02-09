@@ -1,4 +1,4 @@
-import { isSupabaseConfigured, supabase } from '../lib/supabaseClient';
+import { getSupabaseClient, isSupabaseConfigured } from '../lib/supabaseClient';
 import { getContentSource } from './_contentSource';
 
 const LS_KEY = 'oma_topic_ratings_v1';
@@ -30,6 +30,13 @@ function writeLocal(obj) {
   }
 }
 
+function requireSupabase() {
+  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+  const supabase = getSupabaseClient();
+  if (!supabase) throw new Error('Supabase not configured');
+  return supabase;
+}
+
 export async function getTopicRatingSummaries(topicIds) {
   const ids = Array.isArray(topicIds) ? topicIds.map(String).filter(Boolean) : [];
   const uniq = Array.from(new Set(ids));
@@ -47,6 +54,8 @@ export async function getTopicRatingSummaries(topicIds) {
   }
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+
+  const supabase = requireSupabase();
 
   const CHUNK = 75;
   const map = new Map();
@@ -79,6 +88,8 @@ export async function getMyTopicRating(topicId) {
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
+  const supabase = requireSupabase();
+
   const { data: sessionData } = await supabase.auth.getSession();
   if (!sessionData?.session) return null;
 
@@ -106,6 +117,8 @@ export async function listMyTopicRatings() {
   }
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+
+  const supabase = requireSupabase();
 
   const { data: sessionData } = await supabase.auth.getSession();
   if (!sessionData?.session) return [];
@@ -140,6 +153,8 @@ export async function setMyTopicRating(topicId, rating) {
   }
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+
+  const supabase = requireSupabase();
 
   // Avoid relying on auth.uid() defaults; explicitly validate we have a real user.
   const { data: sessionData } = await supabase.auth.getSession();
