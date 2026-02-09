@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import './FaqPage.css';
 
-const SUPPORT_EMAIL = import.meta.env.VITE_SUPPORT_EMAIL || 'support@oneminuteacademy.com';
+const SUPPORT_EMAIL = import.meta.env.VITE_SUPPORT_EMAIL || 'support@1minute.academy';
 
 function FaqItem({ q, children, defaultOpen = false }) {
   return (

@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import './LegalPage.css';
 
-const SUPPORT_EMAIL = import.meta.env.VITE_SUPPORT_EMAIL || 'support@oneminuteacademy.com';
+const SUPPORT_EMAIL = import.meta.env.VITE_SUPPORT_EMAIL || 'support@1minute.academy';
 
 export default function PrivacyPage() {
   return (

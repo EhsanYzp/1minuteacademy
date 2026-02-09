@@ -67,6 +67,121 @@ Choose one:
   - `http://localhost:5173/*`
   - production domain(s): `https://your-domain/*`
 
+### 2.1.1 Email branding (make emails look like 1 Minute Academy)
+By default, Supabase’s hosted email service can show Supabase branding (subject like “Supabase Auth”, footer text, and sender identity). To make password reset / verification emails look like they come from **1 Minute Academy**, you generally need **custom SMTP** + **custom templates**.
+
+Recommended provider: **Resend** (simple setup + good deliverability). The steps below assume your domain is `1minute.academy` on Namecheap.
+
+#### Step-by-step: Resend + Namecheap DNS + Supabase Custom SMTP
+
+**1) Decide your sender address**
+- Use something like `no-reply@1minute.academy` (recommended for auth emails).
+- Optional: set up a human inbox like `support@1minute.academy` separately (Google Workspace / Namecheap Business Email), but keep auth mail on Resend.
+
+**2) Create a Resend account and add your domain**
+- In Resend Dashboard → Domains → **Add domain** → `1minute.academy`.
+- Resend will show a list of DNS records to add (SPF + DKIM, sometimes additional records). **Copy them exactly from Resend** (values can change).
+
+**3) Add Resend DNS records in Namecheap**
+- Namecheap → Domain List → `1minute.academy` → **Manage** → **Advanced DNS**.
+- Under **Host Records**, click **Add New Record** for each record Resend provides.
+
+Namecheap UI note:
+- Some Namecheap accounts don’t show **MX Record** under **Host Records**.
+- In that case, add MX records under **Advanced DNS → Mail Settings → Custom MX** (this is still DNS; it’s just a different section in Namecheap).
+
+About Resend’s MX record (e.g. `Type: MX`, `Host: send`, `Value: feedback-smtp...amazonses.com`):
+- This usually creates an MX record for a **subdomain** (e.g. `send.1minute.academy`) used as the envelope/return-path (“MAIL FROM”) domain.
+- It typically **does not** affect your normal inbound email MX at `@`.
+- Whether it’s required depends on Resend’s domain status:
+   - If Resend shows “Enable sending” as **pending** until you add it, then it’s required to complete verification.
+   - If your domain is already fully verified for sending, it’s optional but still recommended for best deliverability/diagnostics.
+
+What you’ll typically see (exact hosts/values come from Resend):
+- **SPF** (TXT)
+   - Type: `TXT Record`
+   - Host: `@`
+   - Value: (copy from Resend)
+- **DKIM** (usually CNAME)
+   - Type: `CNAME Record`
+   - Host: something like `resend._domainkey` (copy from Resend)
+   - Value: something like `...resend...` (copy from Resend)
+
+If you already have an SPF TXT record:
+- You must **merge** SPF entries into a single record (you can’t have multiple SPF records reliably).
+- Add Resend’s include to the existing record (based on Resend’s instructions).
+
+**4) Add a DMARC record (recommended, improves deliverability)**
+- Namecheap → Advanced DNS → Add New Record
+   - Type: `TXT Record`
+   - Host: `_dmarc`
+   - Value (starter): `v=DMARC1; p=none; rua=mailto:dmarc@1minute.academy; fo=1;`
+
+**5) Verify domain in Resend**
+- Back in Resend → Domains → click **Verify**.
+- DNS can take 5–60 minutes (sometimes longer). If verification fails, wait and retry.
+
+**6) Get Resend SMTP credentials (Resend uses an API key as the SMTP password)**
+- Resend does not always show a “create SMTP credentials” button.
+- Instead:
+   - Resend Dashboard → **API Keys** → **Create API key**
+   - Use that API key as the SMTP **Password**
+- SMTP values:
+   - Host: `smtp.resend.com`
+   - Port: `465` (implicit TLS) or `587` (STARTTLS)
+   - Username: `resend`
+   - Password: `YOUR_RESEND_API_KEY`
+
+**7) Configure Supabase to use Custom SMTP**
+- Supabase Dashboard → Authentication → Settings → SMTP → **Set up custom SMTP**
+- Fill values:
+   - Host: `smtp.resend.com`
+   - Port: `465` (recommended) or `587`
+   - Username: `resend`
+   - Password: (the Resend SMTP password)
+   - Sender name: `1 Minute Academy`
+   - Sender email: `no-reply@1minute.academy`
+- Save.
+
+**8) Remove “Supabase Auth” + remove Supabase footer text**
+- Supabase Dashboard → Authentication → Email Templates
+   - Update the **Subject** for:
+      - Confirm signup
+      - Reset password
+      - (and any other templates you enable)
+   - Update the **Body** to remove any Supabase-branded footer lines.
+
+**9) Test**
+- Trigger a password reset from the Login page.
+- Confirm:
+   - From: `1 Minute Academy <no-reply@1minute.academy>`
+   - Subject is your custom one (no “Supabase Auth”)
+   - Footer is your custom content
+   - Link opens `/auth/reset` and password update works
+
+Troubleshooting quick hits:
+- SMTP auth failures: double-check port + TLS mode and credentials.
+- “From address not allowed”: ensure the domain is verified in Resend and the sender matches that domain.
+- Still seeing Supabase branding: verify you edited the correct templates in Supabase.
+
+Setup (Supabase Dashboard):
+- Authentication → Email Templates
+   - For each template you use (typically **Confirm signup** and **Reset password**):
+     - Edit the **Subject** to your own, e.g. `1 Minute Academy — Reset your password` (this removes “Supabase Auth”).
+     - Edit the **Body** to remove any Supabase-branded lines/footers you don’t want.
+- Authentication → Settings (or Email / SMTP depending on UI) → SMTP
+   - Configure a custom SMTP provider (e.g. Resend, Postmark, SendGrid, Amazon SES).
+   - Set sender name: `1 Minute Academy`
+   - Set sender email: `no-reply@1minute.academy` (or similar)
+
+Domain prerequisites:
+- Use a domain you control (e.g. `1minute.academy`).
+- Configure SPF/DKIM (and ideally DMARC) for deliverability.
+
+Notes:
+- If you keep Supabase-hosted email (no custom SMTP), you may not be able to fully remove all Supabase branding (especially sender identity and any provider-injected footer).
+- After changing templates/SMTP, re-test both **signup verification** and **password reset** emails end-to-end.
+
 ### 2.2 Redirect handling
 We will standardize on these routes in the webapp:
 - `/auth/callback` (OAuth return handling / finalize session)
