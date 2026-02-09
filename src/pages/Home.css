@@ -60,34 +60,67 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 52' preserveAspectRatio='none'><path d='M6 34 C 28 24, 52 42, 78 34 S 132 26, 160 34 S 214 44, 242 34 S 288 24, 314 34' fill='none' stroke='%232563eb' stroke-width='12' stroke-linecap='round' stroke-linejoin='round' opacity='0.96'/><path d='M8 36 C 30 26, 54 44, 80 36 S 134 28, 162 36 S 216 46, 244 36 S 290 26, 316 36' fill='none' stroke='%2360a5fa' stroke-width='6' stroke-linecap='round' stroke-linejoin='round' opacity='0.38'/></svg>");
-  filter: drop-shadow(0 10px 16px rgba(37, 99, 235, 0.16)) drop-shadow(0 4px 10px rgba(0, 0, 0, 0.06));
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 52' preserveAspectRatio='none'><path d='M6 34 C 34 28, 54 40, 86 34 S 142 28, 160 34 S 218 40, 244 34 S 286 28, 314 34' fill='none' stroke='%232563eb' stroke-width='14' stroke-linecap='round' stroke-linejoin='round' opacity='0.92'/></svg>");
+  filter: drop-shadow(0 10px 16px rgba(37, 99, 235, 0.14)) drop-shadow(0 4px 10px rgba(0, 0, 0, 0.06));
   transform-origin: left center;
-  transform: rotate(-1.6deg) scaleX(0);
+  transform: rotate(-1.05deg) scaleX(0);
   z-index: -1;
   animation: underline-draw 650ms cubic-bezier(0.2, 0.9, 0.2, 1) 120ms both;
 }
 
 @keyframes underline-draw {
-  from { transform: rotate(-1.6deg) scaleX(0); }
-  to { transform: rotate(-1.6deg) scaleX(1); }
+  from { transform: rotate(-1.05deg) scaleX(0); }
+  to { transform: rotate(-1.05deg) scaleX(1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-title .one-minute::after {
     animation: none;
-    transform: rotate(-1.6deg) scaleX(1);
+    transform: rotate(-1.05deg) scaleX(1);
   }
 }
 
 
 
 .hero-subtitle {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   color: var(--text-secondary);
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.8;
+}
+
+.hero-hook,
+.hero-hook-sub {
+  display: block;
+}
+
+.hero-hook {
+  font-family: var(--font-hand);
+  font-size: 1.55rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: rgba(45, 52, 54, 0.92);
+  transform: rotate(-0.3deg);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.hero-hook-sub {
+  margin-top: 6px;
+  font-family: var(--font-hand);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: rgba(99, 110, 114, 0.95);
+}
+
+@media (max-width: 768px) {
+  .hero-hook {
+    font-size: 1.35rem;
+  }
+
+  .hero-hook-sub {
+    font-size: 1.1rem;
+  }
 }
 
 .hero-cta {

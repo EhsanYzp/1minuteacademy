@@ -76,8 +76,8 @@ function Home() {
             Learn <span className="accent">Anything</span> in <span className="one-minute accent">One Minute</span>
           </h1>
           <p className="hero-subtitle">
-            One minute. One story. One tiny win.
-            <br />No doomscrolling — just momentum.
+            <span className="hero-hook">One minute. One story. Real progress.</span>
+            <span className="hero-hook-sub">No doomscrolling — just focused momentum.</span>
           </p>
 
           <motion.div className="hero-cta" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
