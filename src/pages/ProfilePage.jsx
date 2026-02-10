@@ -12,6 +12,14 @@ import { deleteAccount, pauseAccount, resumeAccount } from '../services/account'
 import StarRating from '../components/StarRating';
 import { listMyTopicRatings, setMyTopicRating } from '../services/ratings';
 import OneMAIcon from '../components/OneMAIcon';
+import {
+  PRESENTATION_STYLES,
+  DEFAULT_PRESENTATION_STYLE,
+  canChoosePresentationStyle,
+  getLocalPresentationStyle,
+  normalizePresentationStyle,
+  saveStoryPresentationStyle,
+} from '../services/presentationStyle';
 import './ProfilePage.css';
 
 function fmtDate(iso) {
@@ -139,6 +147,52 @@ export default function ProfilePage() {
   const [accountBusy, setAccountBusy] = useState(null); // 'pause' | 'resume' | 'delete' | null
   const [accountError, setAccountError] = useState(null);
   const [accountNotice, setAccountNotice] = useState('');
+
+  const canChoosePresentation = canChoosePresentationStyle(tier);
+  const initialPresentationStyle = useMemo(() => {
+    const fromUser = normalizePresentationStyle(user?.user_metadata?.presentation_style);
+    const fromLocal = getLocalPresentationStyle();
+    return fromUser ?? fromLocal ?? DEFAULT_PRESENTATION_STYLE;
+  }, [user]);
+
+  const [presentationStyle, setPresentationStyle] = useState(initialPresentationStyle);
+  const [presentationBusy, setPresentationBusy] = useState(false);
+  const [presentationError, setPresentationError] = useState(null);
+  const [presentationNotice, setPresentationNotice] = useState('');
+
+  useEffect(() => {
+    setPresentationStyle(initialPresentationStyle);
+  }, [initialPresentationStyle]);
+
+  async function onChangePresentationStyle(e) {
+    const next = normalizePresentationStyle(e?.target?.value) ?? DEFAULT_PRESENTATION_STYLE;
+    setPresentationNotice('');
+    setPresentationError(null);
+
+    if (!canChoosePresentation) {
+      setPresentationStyle(DEFAULT_PRESENTATION_STYLE);
+      setPresentationNotice('Presentation styles are a Pro-only preference.');
+      return;
+    }
+
+    setPresentationStyle(next);
+    setPresentationBusy(true);
+    try {
+      const res = await saveStoryPresentationStyle({ user, style: next });
+      if (res?.saved === 'remote') {
+        try {
+          await reloadUser();
+        } catch {
+          // ignore
+        }
+      }
+      setPresentationNotice('Saved.');
+    } catch (e2) {
+      setPresentationError(e2);
+    } finally {
+      setPresentationBusy(false);
+    }
+  }
 
   const [myRatings, setMyRatings] = useState([]);
   const [ratingsLoading, setRatingsLoading] = useState(false);
@@ -635,6 +689,51 @@ export default function ProfilePage() {
                   </div>
                 </div>
               )}
+
+              <div className="profile-section-header profile-section-header-spaced">
+                <h2>Experience</h2>
+                <div className="profile-section-sub">Personalize how lesson pages look.</div>
+              </div>
+
+              <div className="profile-note" style={{ marginBottom: 12 }}>
+                <strong>Lesson presentation</strong>
+                <div className="profile-preference-row">
+                  <label className="profile-preference-label">
+                    Style
+                    <select
+                      className="profile-preference-select"
+                      value={presentationStyle}
+                      onChange={onChangePresentationStyle}
+                      disabled={!canChoosePresentation || presentationBusy}
+                      aria-label="Lesson presentation style"
+                    >
+                      {PRESENTATION_STYLES.map((s) => (
+                        <option key={s.id} value={s.id}>{s.label}</option>
+                      ))}
+                    </select>
+                  </label>
+
+                  {!canChoosePresentation && contentSource !== 'local' ? (
+                    <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
+                  ) : null}
+                </div>
+
+                <div className="profile-preference-help">
+                  {canChoosePresentation
+                    ? 'Applies to lessons and review mode.'
+                    : 'Pro members can choose different presentation styles.'}
+                </div>
+
+                {presentationNotice ? (
+                  <div className="profile-preference-note" aria-live="polite">{presentationNotice}</div>
+                ) : null}
+
+                {presentationError ? (
+                  <div className="profile-preference-error" aria-live="polite">
+                    {presentationError?.message ?? String(presentationError)}
+                  </div>
+                ) : null}
+              </div>
 
               <div className="profile-section-header">
                 <h2>Your learning</h2>

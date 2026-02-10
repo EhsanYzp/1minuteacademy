@@ -13,6 +13,13 @@ import { getMyTopicRating, setMyTopicRating } from '../services/ratings';
 import OneMAIcon from '../components/OneMAIcon';
 import { compileJourneyFromTopic } from '../engine/journey/compileJourney';
 import JourneyBlocks from '../engine/journey/JourneyBlocks';
+import {
+  PRESENTATION_STYLES,
+  canChoosePresentationStyle,
+  normalizePresentationStyle,
+  resolveStoryPresentationStyle,
+  saveStoryPresentationStyle,
+} from '../services/presentationStyle';
 import './LessonPage.css';
 
 function normalizeTierForJourney(tier) {
@@ -56,6 +63,30 @@ function LessonPage() {
   }, []);
 
   const journey = useMemo(() => compileJourneyFromTopic(topicRow), [topicRow]);
+  const canChoosePresentation = useMemo(() => canChoosePresentationStyle(tier), [tier]);
+  const resolvedStoryPresentationStyle = useMemo(
+    () => resolveStoryPresentationStyle({ user, tier, journey }),
+    [user, tier, journey]
+  );
+  const [storyPresentationStyle, setStoryPresentationStyle] = useState(resolvedStoryPresentationStyle);
+  const [storyStyleBusy, setStoryStyleBusy] = useState(false);
+
+  useEffect(() => {
+    setStoryPresentationStyle(resolvedStoryPresentationStyle);
+  }, [resolvedStoryPresentationStyle]);
+
+  async function onChangeStoryPresentationStyle(nextRaw) {
+    const next = normalizePresentationStyle(nextRaw) ?? resolvedStoryPresentationStyle;
+    if (!canChoosePresentation) return;
+
+    setStoryPresentationStyle(next);
+    setStoryStyleBusy(true);
+    try {
+      await saveStoryPresentationStyle({ user, style: next });
+    } finally {
+      setStoryStyleBusy(false);
+    }
+  }
   const journeyCtx = useMemo(() => {
     const normalizedTier = normalizeTierForJourney(tier);
     return {
@@ -245,8 +276,27 @@ function LessonPage() {
             <span className="story-topic-emoji">{topicRow?.emoji || '📚'}</span>
             <span className="story-topic-name">{topicRow?.title || 'Learning...'}</span>
           </div>
-          <div className="story-timer-large">
-            <span className="story-timer-value">{Math.floor(timeRemaining / 60)}:{(timeRemaining % 60).toString().padStart(2, '0')}</span>
+          <div className="story-topbar-right">
+            {canChoosePresentation ? (
+              <label className="story-style">
+                <span className="story-style-label">Style</span>
+                <select
+                  className="story-style-select"
+                  value={storyPresentationStyle}
+                  onChange={(e) => onChangeStoryPresentationStyle(e.target.value)}
+                  disabled={storyStyleBusy}
+                  aria-label="Lesson presentation style"
+                >
+                  {PRESENTATION_STYLES.map((s) => (
+                    <option key={s.id} value={s.id}>{s.label}</option>
+                  ))}
+                </select>
+              </label>
+            ) : null}
+
+            <div className="story-timer-large">
+              <span className="story-timer-value">{Math.floor(timeRemaining / 60)}:{(timeRemaining % 60).toString().padStart(2, '0')}</span>
+            </div>
           </div>
         </div>
       ),
@@ -258,6 +308,7 @@ function LessonPage() {
           onComplete={handleComplete}
           onClose={() => navigate(`/topic/${topicId}`)}
           hideTopbar={true}
+          presentationStyle={storyPresentationStyle}
         />
       ),
       renderStoryQuiz: () => null, // Quiz is rendered within StoryRenderer
@@ -283,6 +334,10 @@ function LessonPage() {
     topicId,
     timeRemaining,
     handleComplete,
+    storyPresentationStyle,
+    canChoosePresentation,
+    resolvedStoryPresentationStyle,
+    storyStyleBusy,
   ]);
 
   const handleTimeUp = useCallback(() => {
@@ -486,6 +541,10 @@ function LessonPage() {
           story={topicRow}
           title={topicRow?.title ?? ''}
           onExit={() => setIsReviewing(false)}
+          presentationStyle={storyPresentationStyle}
+          canChoosePresentationStyle={canChoosePresentation}
+          onChangePresentationStyle={onChangeStoryPresentationStyle}
+          presentationStyleOptions={PRESENTATION_STYLES}
         />
       ) : isCompleted ? (
         <motion.div 

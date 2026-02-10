@@ -26,6 +26,14 @@ export function compileJourneyFromTopic(topicRow) {
 
   return {
     version: 1,
+    protocol: {
+      presentation: {
+        // Supported renderer templates for story-based lessons.
+        // Pro users can pick a preferred style; non-Pro gets the default.
+        defaultStoryStyle: 'focus',
+        storyStyles: ['focus', 'cards', 'split', 'minimal', 'bold'],
+      },
+    },
     topicStart: {
       blocks: [
         { type: 'hero', title: `${emoji} {topicTitle}`, subtitle: description },

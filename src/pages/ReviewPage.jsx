@@ -7,6 +7,13 @@ import { useAuth } from '../context/AuthContext';
 import { canReview, formatTierLabel, getCurrentTier } from '../services/entitlements';
 import { compileJourneyFromTopic } from '../engine/journey/compileJourney';
 import JourneyBlocks from '../engine/journey/JourneyBlocks';
+import {
+  PRESENTATION_STYLES,
+  canChoosePresentationStyle,
+  normalizePresentationStyle,
+  resolveStoryPresentationStyle,
+  saveStoryPresentationStyle,
+} from '../services/presentationStyle';
 import './ReviewPage.css';
 
 function normalizeTierForJourney(tier) {
@@ -56,6 +63,31 @@ export default function ReviewPage() {
     () => compileJourneyFromTopic(topicRow),
     [topicRow]
   );
+
+  const canChoosePresentation = useMemo(() => canChoosePresentationStyle(tier), [tier]);
+  const resolvedStoryPresentationStyle = useMemo(
+    () => resolveStoryPresentationStyle({ user, tier, journey }),
+    [user, tier, journey]
+  );
+
+  const [storyPresentationStyle, setStoryPresentationStyle] = useState(resolvedStoryPresentationStyle);
+  const [storyStyleBusy, setStoryStyleBusy] = useState(false);
+
+  useEffect(() => {
+    setStoryPresentationStyle(resolvedStoryPresentationStyle);
+  }, [resolvedStoryPresentationStyle]);
+
+  async function onChangeStoryPresentationStyle(nextRaw) {
+    const next = normalizePresentationStyle(nextRaw) ?? resolvedStoryPresentationStyle;
+    if (!canChoosePresentation) return;
+    setStoryPresentationStyle(next);
+    setStoryStyleBusy(true);
+    try {
+      await saveStoryPresentationStyle({ user, style: next });
+    } finally {
+      setStoryStyleBusy(false);
+    }
+  }
 
   const journeyCtx = useMemo(() => {
     const normalizedTier = normalizeTierForJourney(tier);
@@ -127,11 +159,15 @@ export default function ReviewPage() {
             story={topicRow}
             title={topicRow?.title ?? ''}
             onExit={() => navigate(`/topic/${topicId}`)}
+            presentationStyle={storyPresentationStyle}
+            canChoosePresentationStyle={canChoosePresentation && !storyStyleBusy}
+            onChangePresentationStyle={onChangeStoryPresentationStyle}
+            presentationStyleOptions={PRESENTATION_STYLES}
           />
         );
       },
     };
-  }, [allowed, user, tier, topicRow, hasStory, loading, error, navigate, topicId]);
+  }, [allowed, user, tier, topicRow, hasStory, loading, error, navigate, topicId, storyPresentationStyle, canChoosePresentation, storyStyleBusy, resolvedStoryPresentationStyle]);
 
   return (
     <motion.div className="review-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>

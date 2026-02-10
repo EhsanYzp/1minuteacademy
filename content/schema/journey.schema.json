@@ -7,6 +7,27 @@
   "required": ["version", "topicStart", "lesson", "completion"],
   "properties": {
     "version": { "type": "integer", "const": 1 },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "presentation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "defaultStoryStyle": {
+              "type": "string",
+              "enum": ["focus", "cards", "split", "minimal", "bold"]
+            },
+            "storyStyles": {
+              "type": "array",
+              "items": { "type": "string", "enum": ["focus", "cards", "split", "minimal", "bold"] },
+              "minItems": 1
+            }
+          }
+        }
+      }
+    },
     "topicStart": { "$ref": "#/$defs/page" },
     "lesson": { "$ref": "#/$defs/page" },
     "completion": { "$ref": "#/$defs/page" },

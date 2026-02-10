@@ -11,9 +11,35 @@ const beatLabels = {
   punchline: 'Key Insight'
 };
 
-export default function StoryReview({ story, title, onExit }) {
+function coercePresentationStyle(raw) {
+  const s = String(raw ?? '').trim().toLowerCase();
+  if (s === 'cards' || s === 'split' || s === 'minimal' || s === 'bold') return s;
+  return 'focus';
+}
+
+export default function StoryReview({
+  story,
+  title,
+  onExit,
+  presentationStyle = 'focus',
+  canChoosePresentationStyle = false,
+  onChangePresentationStyle = null,
+  presentationStyleOptions = null,
+}) {
   const beats = ['hook', 'buildup', 'discovery', 'twist', 'climax', 'punchline'];
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const style = coercePresentationStyle(presentationStyle);
+
+  const options = Array.isArray(presentationStyleOptions) && presentationStyleOptions.length
+    ? presentationStyleOptions
+    : [
+        { id: 'focus', label: 'Focus (classic)' },
+        { id: 'cards', label: 'Cards (readable)' },
+        { id: 'split', label: 'Split (visual + text)' },
+        { id: 'minimal', label: 'Minimal (quiet)' },
+        { id: 'bold', label: 'Bold (punchy)' },
+      ];
 
   const storyData = story?.story;
   const quiz = story?.quiz;
@@ -42,7 +68,7 @@ export default function StoryReview({ story, title, onExit }) {
   const beatData = storyData[beatKey];
 
   return (
-    <div className="story-review">
+    <div className={`story-review style-${style}`}>
       {/* Top bar */}
       <div className="review-topbar">
         <button type="button" className="review-back" onClick={onExit}>
@@ -52,7 +78,27 @@ export default function StoryReview({ story, title, onExit }) {
           Review{title ? `: ${title}` : ''}
           <div className="review-sub">No timer. Go at your pace.</div>
         </div>
-        <div className="review-spacer" />
+        <div className="review-controls">
+          {canChoosePresentationStyle && typeof onChangePresentationStyle === 'function' ? (
+            <label className="review-style">
+              <span className="review-style-label">Style</span>
+              <select
+                className="review-style-select"
+                value={style}
+                onChange={(e) => onChangePresentationStyle(e.target.value)}
+                aria-label="Presentation style"
+              >
+                {options.map((opt) => (
+                  <option key={opt.id} value={String(opt.id)}>
+                    {String(opt.label ?? opt.id)}
+                  </option>
+                ))}
+              </select>
+            </label>
+          ) : (
+            <div className="review-spacer" />
+          )}
+        </div>
       </div>
 
       {/* Content - same layout as StoryRenderer */}
@@ -66,9 +112,11 @@ export default function StoryReview({ story, title, onExit }) {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="story-review-label">{beatLabels[beatKey]}</div>
-            <div className="story-review-visual">{beatData?.visual}</div>
-            <p className="story-review-text">{beatData?.text}</p>
+            <div className="story-review-inner">
+              <div className="story-review-label">{beatLabels[beatKey]}</div>
+              <div className="story-review-visual">{beatData?.visual}</div>
+              <p className="story-review-text">{beatData?.text}</p>
+            </div>
           </motion.div>
         ) : (
           <motion.div
@@ -79,18 +127,20 @@ export default function StoryReview({ story, title, onExit }) {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="story-review-label">Quiz Question</div>
-            <p className="story-review-question">{quiz.question}</p>
-            <div className="story-review-options">
-              {quiz.options.map((opt, i) => (
-                <div
-                  key={i}
-                  className={`story-review-option ${i === quiz.correct ? 'correct' : ''}`}
-                >
-                  {i === quiz.correct && <span className="correct-mark">✓</span>}
-                  {opt}
-                </div>
-              ))}
+            <div className="story-review-inner">
+              <div className="story-review-label">Quiz Question</div>
+              <p className="story-review-question">{quiz.question}</p>
+              <div className="story-review-options">
+                {quiz.options.map((opt, i) => (
+                  <div
+                    key={i}
+                    className={`story-review-option ${i === quiz.correct ? 'correct' : ''}`}
+                  >
+                    {i === quiz.correct && <span className="correct-mark">✓</span>}
+                    {opt}
+                  </div>
+                ))}
+              </div>
             </div>
           </motion.div>
         )}
