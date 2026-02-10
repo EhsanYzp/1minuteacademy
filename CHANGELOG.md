@@ -16,6 +16,9 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Added additional Pro-only lesson presentation styles: Paper / Terminal / Glass.
 - In-lesson presentation style switcher (available from lesson/review top bars).
 - Journey-level presentation protocol (`journey.protocol.presentation`) to define default and supported presentation styles.
+- SEO infrastructure: per-route meta tags (title/description/canonical/OG/Twitter) via a lightweight `Seo` component.
+- SEO assets: `robots.txt`, generated `sitemap.xml`, generated `llms.txt`, and a first-party `favicon.svg` + web manifest.
+- SEO implementation plan doc: `docs/seo-plan.md` with P0/P1/P2 tasks and pipeline guidance.
 
 ### Changed
 - Topics page polish: headline uses “1-minute”, Status labels are clearer (“To watch”/“Watched”), and the sticky filter bar now stays fully visible under the sticky header.

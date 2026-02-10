@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
+import Seo from '../components/Seo';
 import './FaqPage.css';
 
 const SUPPORT_EMAIL = import.meta.env.VITE_SUPPORT_EMAIL || 'support@1minute.academy';
@@ -16,6 +17,7 @@ function FaqItem({ q, children, defaultOpen = false }) {
 export default function FaqPage() {
   return (
     <motion.div className="faq-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <Seo title="FAQ" description="Quick answers about 1 Minute Academy." path="/faq" canonicalPath="/faq" />
       <Header />
 
       <main className="faq-main">

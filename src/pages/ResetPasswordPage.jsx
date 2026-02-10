@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import Seo from '../components/Seo';
 import { getSupabaseClient } from '../lib/supabaseClient';
 import { useAuth } from '../context/AuthContext';
 import PasswordStrengthMeter from '../components/auth/PasswordStrengthMeter';
@@ -73,6 +74,7 @@ export default function ResetPasswordPage() {
 
   return (
     <motion.div className="login-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <Seo title="Reset password" description="Reset your password." path="/auth/reset" canonicalPath="/auth/reset" noindex />
       <Header />
 
       <main className="login-main">

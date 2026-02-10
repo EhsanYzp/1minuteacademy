@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
+import Seo from '../components/Seo';
 import { useAuth } from '../context/AuthContext';
 import './LoginPage.css';
 
@@ -54,6 +55,7 @@ export default function AuthCallbackPage() {
 
   return (
     <motion.div className="login-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <Seo title="Auth callback" description="Completing authentication." path="/auth/callback" canonicalPath="/auth/callback" noindex />
       <Header />
 
       <main className="login-main">

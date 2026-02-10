@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
 import Header from '../components/Header';
+import Seo from '../components/Seo';
 import { getTopic } from '../services/topics';
 import { listUserTopicProgress } from '../services/progress';
 import { getContentSource } from '../services/_contentSource';
@@ -166,6 +167,13 @@ function TopicPage() {
   if (!loading && topic && topicGate?.locked && topicGate?.reason === 'pro') {
     return (
       <motion.div className="topic-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+        <Seo
+          title={topic?.title ? `${topic.title} (Pro)` : 'Pro-only topic'}
+          description={topic?.description || 'Upgrade to Pro to unlock this topic.'}
+          path={`/topic/${topicId}`}
+          canonicalPath={`/topic/${topicId}`}
+          noindex
+        />
         <Header />
         <main className="topic-main">
           <div className="topic-header">
@@ -242,6 +250,7 @@ function TopicPage() {
   if (!topic && loading) {
     return (
       <div className="topic-page">
+        <Seo title="Loading topic" description="Loading topic details." path={`/topic/${topicId}`} canonicalPath={`/topic/${topicId}`} />
         <Header />
         <div className="topic-not-found">
           <h2>Loading…</h2>
@@ -253,6 +262,7 @@ function TopicPage() {
   if (!topic && !loading) {
     return (
       <div className="topic-page">
+        <Seo title="Topic not found" description="This topic could not be found." path={`/topic/${topicId}`} canonicalPath={`/topic/${topicId}`} noindex />
         <Header />
         <div className="topic-not-found">
           <h2>🔍 Topic not found!</h2>
@@ -269,6 +279,12 @@ function TopicPage() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
+      <Seo
+        title={topic?.title || 'Topic'}
+        description={topic?.description || 'Learn this topic in 60 seconds.'}
+        path={`/topic/${topicId}`}
+        canonicalPath={`/topic/${topicId}`}
+      />
       <Header />
       
       <main className="topic-main">

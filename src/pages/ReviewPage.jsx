@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import Seo from '../components/Seo';
 import { StoryReview } from '../engine/story';
 import { getTopic } from '../services/topics';
 import { useAuth } from '../context/AuthContext';
@@ -181,6 +182,13 @@ export default function ReviewPage() {
 
   return (
     <motion.div className="review-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <Seo
+        title={topicRow?.title ? `Review: ${topicRow.title}` : 'Review'}
+        description="Review mode for a topic you've completed."
+        path={`/review/${topicId}`}
+        canonicalPath={`/topic/${topicId}`}
+        noindex
+      />
       <JourneyBlocks
         blocks={journey?.review?.blocks}
         ctx={journeyCtx}

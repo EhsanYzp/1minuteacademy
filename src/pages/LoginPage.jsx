@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaGithub } from 'react-icons/fa6';
 import Header from '../components/Header';
+import Seo from '../components/Seo';
 import { useAuth } from '../context/AuthContext';
 import PasswordStrengthMeter from '../components/auth/PasswordStrengthMeter';
 import { evaluatePasswordStrength, passwordStrengthErrorMessage } from '../lib/passwordStrength';
@@ -145,6 +146,7 @@ export default function LoginPage() {
 
   return (
     <motion.div className="login-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <Seo title="Sign in" description="Sign in to your account." path="/login" canonicalPath="/login" noindex />
       <Header />
 
       <main className="login-main">

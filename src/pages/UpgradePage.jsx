@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Header from '../components/Header';
+import Seo from '../components/Seo';
 import { useAuth } from '../context/AuthContext';
 import { formatTierLabel, getCurrentTier } from '../services/entitlements';
 import { openCustomerPortal, startProCheckout } from '../services/billing';
@@ -175,6 +176,12 @@ export default function UpgradePage() {
 
   return (
     <motion.div className="upgrade-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <Seo
+        title="Pricing"
+        description="Guest and Free let you start. Pro unlocks advanced topics, review mode, and more lesson styles."
+        path="/pricing"
+        canonicalPath="/pricing"
+      />
       <Header />
 
       <main className="upgrade-main">

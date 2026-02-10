@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
+import Seo from '../components/Seo';
 import './LegalPage.css';
 
 const SUPPORT_EMAIL = import.meta.env.VITE_SUPPORT_EMAIL || 'support@1minute.academy';
@@ -7,6 +8,7 @@ const SUPPORT_EMAIL = import.meta.env.VITE_SUPPORT_EMAIL || 'support@1minute.aca
 export default function TermsPage() {
   return (
     <motion.div className="legal-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <Seo title="Terms of Service" description="Terms of service for 1 Minute Academy." path="/terms" canonicalPath="/terms" />
       <Header />
 
       <main className="legal-main">

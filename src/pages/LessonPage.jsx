@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useParams, useNavigate } from 'react-router-dom';
+import Seo from '../components/Seo';
 import Timer from '../components/Timer';
 import { StoryRenderer, StoryReview } from '../engine/story';
 import { getTopic } from '../services/topics';
@@ -488,6 +489,7 @@ function LessonPage() {
   if (topicError) {
     return (
       <div className="lesson-page">
+        <Seo title="Lesson" description="Lesson content." path={`/lesson/${topicId}`} canonicalPath={`/topic/${topicId}`} noindex />
         <div className="lesson-error">
           <h2>⚠️ Couldn’t load lesson</h2>
           <p style={{ opacity: 0.8 }}>Make sure Supabase is configured and the topic exists.</p>
@@ -500,6 +502,7 @@ function LessonPage() {
   if (topicLoading) {
     return (
       <div className="lesson-page">
+        <Seo title="Loading lesson" description="Loading lesson." path={`/lesson/${topicId}`} canonicalPath={`/topic/${topicId}`} noindex />
         <div className="lesson-error">
           <h2>Loading…</h2>
         </div>
@@ -511,6 +514,7 @@ function LessonPage() {
     if (tier === 'paused') {
       return (
         <div className="lesson-page">
+          <Seo title="Lesson" description="Lesson content." path={`/lesson/${topicId}`} canonicalPath={`/topic/${topicId}`} noindex />
           <div className="lesson-error">
             <h2>⏸️ Account paused</h2>
             <p style={{ opacity: 0.85, maxWidth: 520 }}>
@@ -527,6 +531,7 @@ function LessonPage() {
 
     return (
       <div className="lesson-page">
+        <Seo title="Pro-only lesson" description="Upgrade to Pro to start this lesson." path={`/lesson/${topicId}`} canonicalPath={`/topic/${topicId}`} noindex />
         <div className="lesson-error">
           <h2>🔒 Pro-only lesson</h2>
           <p style={{ opacity: 0.85, maxWidth: 520 }}>
@@ -548,6 +553,13 @@ function LessonPage() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
+      <Seo
+        title={topicRow?.title ? `Lesson: ${topicRow.title}` : 'Lesson'}
+        description={topicRow?.description || 'A timed 60-second lesson.'}
+        path={`/lesson/${topicId}`}
+        canonicalPath={`/topic/${topicId}`}
+        noindex
+      />
       {isReviewing ? (
         <StoryReview
           story={topicRow}

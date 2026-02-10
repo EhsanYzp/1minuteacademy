@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion';
 import Header from '../components/Header';
+import Seo from '../components/Seo';
 import './LegalPage.css';
 
 export default function CookiesPage() {
   return (
     <motion.div className="legal-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <Seo title="Cookie Policy" description="Cookie policy for 1 Minute Academy." path="/cookies" canonicalPath="/cookies" />
       <Header />
 
       <main className="legal-main">

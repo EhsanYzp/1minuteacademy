@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Header from '../components/Header';
+import Seo from '../components/Seo';
 import { useAuth } from '../context/AuthContext';
 import { listTopics } from '../services/topics';
 import { getContentSource } from '../services/_contentSource';
@@ -697,6 +698,7 @@ export default function ProfilePage() {
 
   return (
     <motion.div className="profile-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <Seo title="Your profile" description="Manage your account and preferences." path="/me" canonicalPath="/me" noindex />
       <Header />
 
       <main className="profile-main">

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
+import Seo from '../components/Seo';
 import './Home.css';
 
 function Home() {
@@ -56,6 +57,25 @@ function Home() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
+      <Seo
+        title="Learn anything in one minute"
+        description="Learn anything in 60 seconds: story + quiz lessons that build real momentum."
+        path="/"
+        jsonLd={[
+          {
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            name: '1 Minute Academy',
+            url: typeof window !== 'undefined' ? window.location.origin : undefined,
+          },
+          {
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            name: '1 Minute Academy',
+            url: typeof window !== 'undefined' ? window.location.origin : undefined,
+          },
+        ]}
+      />
       <Header />
       
       <main className="home-main">

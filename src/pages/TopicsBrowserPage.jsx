@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Header from '../components/Header';
+import Seo from '../components/Seo';
 import SubjectCard from '../components/SubjectCard';
 import { getTopicCategoryCounts, listTopicsPage, searchTopicsPage } from '../services/topics';
 import { listUserTopicProgress } from '../services/progress';
@@ -551,6 +552,12 @@ export default function TopicsBrowserPage() {
 
   return (
     <motion.div className="topics-browser" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <Seo
+        title="Topics"
+        description="Browse 1-minute lessons by category, difficulty, and search."
+        path="/topics"
+        canonicalPath="/topics"
+      />
       <Header />
 
       <main className="topics-browser-main">
