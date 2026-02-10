@@ -57,10 +57,28 @@ export function isBeginnerTopic(topicRow) {
   return difficulty.toLowerCase() === 'beginner';
 }
 
+export function isProOnlyTopic(topicRow) {
+  return !isBeginnerTopic(topicRow);
+}
+
+export function getTopicGate({ tier, topicRow }) {
+  if (tier === 'paused') {
+    return { locked: true, reason: 'paused', label: 'Account paused' };
+  }
+
+  if (tier === 'pro') {
+    return { locked: false, reason: null, label: null };
+  }
+
+  if (isProOnlyTopic(topicRow)) {
+    return { locked: true, reason: 'pro', label: 'Pro only' };
+  }
+
+  return { locked: false, reason: null, label: null };
+}
+
 export function canStartTopic({ tier, topicRow }) {
-  if (tier === 'paused') return false;
-  if (tier === 'pro') return true;
-  return isBeginnerTopic(topicRow);
+  return !getTopicGate({ tier, topicRow })?.locked;
 }
 
 export function canTrackProgress(tier) {

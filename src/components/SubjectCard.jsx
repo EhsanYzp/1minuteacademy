@@ -3,22 +3,25 @@ import { Link } from 'react-router-dom';
 import StarRating from './StarRating';
 import './SubjectCard.css';
 
-function SubjectCard({ subject, index }) {
+function SubjectCard({ subject, index, gate }) {
   const { id, title, emoji, color, description, difficulty, comingSoon, completed, ratingAvg, ratingCount } = subject;
   const hasRating = Number(ratingCount ?? 0) > 0 && Number.isFinite(Number(ratingAvg));
+  const isLocked = Boolean(gate?.locked);
+  const lockLabel = String(gate?.label ?? 'Pro only');
 
   return (
     <motion.div
-      className={`subject-card ${comingSoon ? 'coming-soon' : ''}`}
+      className={`subject-card ${comingSoon ? 'coming-soon' : ''} ${isLocked ? 'locked' : ''}`}
       style={{ '--card-color': color }}
-      whileHover={!comingSoon ? { 
+      whileHover={!comingSoon && !isLocked ? { 
         scale: 1.03, 
         y: -5,
         boxShadow: `0 20px 40px ${color}40`
       } : {}}
-      whileTap={!comingSoon ? { scale: 0.98 } : {}}
+      whileTap={!comingSoon && !isLocked ? { scale: 0.98 } : {}}
+      aria-disabled={comingSoon || isLocked}
     >
-      {comingSoon ? (
+      {comingSoon || isLocked ? (
         <div className="card-content">
           <motion.div 
             className="card-emoji"
@@ -31,8 +34,20 @@ function SubjectCard({ subject, index }) {
           <p className="card-description">{description}</p>
           <div className="card-footer">
             <span className="difficulty-badge">{difficulty}</span>
-            <span className="coming-soon-badge">Coming Soon</span>
+            {comingSoon ? (
+              <span className="coming-soon-badge">Coming Soon</span>
+            ) : (
+              <span className="lock-badge" title={lockLabel}>
+                🔒 {lockLabel}
+              </span>
+            )}
           </div>
+
+          {isLocked && (
+            <div className="locked-hint">
+              Upgrade to unlock this topic.
+            </div>
+          )}
         </div>
       ) : (
         <Link to={`/topic/${id}`} className="card-link">

@@ -7,6 +7,7 @@ import { listUserTopicProgress } from '../services/progress';
 import { getTopicRatingSummaries } from '../services/ratings';
 import { useAuth } from '../context/AuthContext';
 import { getContentSource } from '../services/_contentSource';
+import { getCurrentTier, getTopicGate } from '../services/entitlements';
 import './TopicsBrowserPage.css';
 
 const CANONICAL_CATEGORIES = [
@@ -43,6 +44,7 @@ function includesQuery(topic, q) {
 export default function TopicsBrowserPage() {
   const { user, isSupabaseConfigured } = useAuth();
   const contentSource = getContentSource();
+  const tier = getCurrentTier(user);
 
   const [topics, setTopics] = useState([]);
   const [totalTopics, setTotalTopics] = useState(null);
@@ -658,6 +660,7 @@ export default function TopicsBrowserPage() {
                     <motion.div key={t.id} initial={{ y: 8, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: Math.min(0.2, idx * 0.02) }}>
                       <SubjectCard
                         subject={t}
+                        gate={getTopicGate({ tier, topicRow: t })}
                         index={idx}
                         devTestLabel={checkLoading && checkTopic?.id === t.id ? 'Testing…' : 'Test'}
                         onDevTest={isLocalDev && !t?.comingSoon ? () => runModuleCheck(t) : null}

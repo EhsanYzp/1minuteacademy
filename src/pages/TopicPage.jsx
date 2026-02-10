@@ -6,7 +6,7 @@ import { getTopic } from '../services/topics';
 import { listUserTopicProgress } from '../services/progress';
 import { getContentSource } from '../services/_contentSource';
 import { useAuth } from '../context/AuthContext';
-import { canReview, canStartTopic, formatTierLabel, getCurrentTier, isBeginnerTopic } from '../services/entitlements';
+import { canReview, canStartTopic, formatTierLabel, getCurrentTier, getTopicGate, isBeginnerTopic } from '../services/entitlements';
 import StarRating from '../components/StarRating';
 import { getMyTopicRating, getTopicRatingSummaries, setMyTopicRating } from '../services/ratings';
 import { compileJourneyFromTopic, getTopicStartLearningPoints } from '../engine/journey/compileJourney';
@@ -157,6 +157,43 @@ function TopicPage() {
   const beginner = useMemo(() => isBeginnerTopic(topicRow ?? fallbackTopics[topicId]), [topicRow, topicId]);
   const canStart = useMemo(() => canStartTopic({ tier, topicRow: topicRow ?? fallbackTopics[topicId] }), [tier, topicRow, topicId]);
   const canUseReview = canReview(tier);
+
+  const topicGate = useMemo(
+    () => getTopicGate({ tier, topicRow: topicRow ?? fallbackTopics[topicId] }),
+    [tier, topicRow, topicId]
+  );
+
+  if (!loading && topic && topicGate?.locked && topicGate?.reason === 'pro') {
+    return (
+      <motion.div className="topic-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+        <Header />
+        <main className="topic-main">
+          <div className="topic-header">
+            <Link to="/topics" className="back-button">← Back to Topics</Link>
+          </div>
+
+          <div className="topic-content">
+            <div className="topic-card" style={{ '--topic-color': topic?.color ?? '#4ECDC4' }}>
+              <div className="topic-emoji">🔒</div>
+              <h1 className="topic-title">Pro-only topic</h1>
+              <p className="topic-description">
+                Your plan: <strong>{formatTierLabel(tier)}</strong>. Upgrade to Pro to unlock <strong>{topic?.title}</strong>.
+              </p>
+              <div className="topic-meta">
+                <span className="meta-badge" style={{ background: 'rgba(245, 158, 11, 0.12)', color: 'rgba(120, 53, 15, 0.95)' }}>
+                  {topic?.difficulty ?? 'Intermediate'}
+                </span>
+              </div>
+              <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
+                <button type="button" onClick={() => navigate('/upgrade')}>Upgrade</button>
+                <button type="button" onClick={() => navigate('/topics')}>Browse beginner topics</button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </motion.div>
+    );
+  }
 
   const journey = useMemo(() => compileJourneyFromTopic(topicRow ?? fallbackTopics[topicId]), [topicRow, topicId]);
   const journeyCtx = useMemo(() => {
