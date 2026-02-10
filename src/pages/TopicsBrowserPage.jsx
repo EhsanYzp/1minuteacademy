@@ -240,6 +240,39 @@ export default function TopicsBrowserPage() {
     return () => clearTimeout(handle);
   }, [query]);
 
+  useEffect(() => {
+    // Keep the filter bar sticky *below* the sticky header.
+    const headerEl = document.querySelector('.header');
+    if (!headerEl) return;
+
+    const update = () => {
+      const h = Math.max(0, Math.ceil(headerEl.getBoundingClientRect().height || 0));
+      document.documentElement.style.setProperty('--oma-header-h', `${h}px`);
+    };
+
+    update();
+
+    let ro = null;
+    if (typeof window !== 'undefined' && 'ResizeObserver' in window) {
+      ro = new ResizeObserver(() => update());
+      try {
+        ro.observe(headerEl);
+      } catch {
+        // ignore
+      }
+    }
+
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('resize', update);
+      try {
+        ro?.disconnect?.();
+      } catch {
+        // ignore
+      }
+    };
+  }, []);
+
   async function mergeRatingsForRows(rows) {
     const ids = (Array.isArray(rows) ? rows : []).map((t) => t.id).filter(Boolean);
     if (ids.length === 0) return;
@@ -522,7 +555,7 @@ export default function TopicsBrowserPage() {
 
       <main className="topics-browser-main">
         <div className="topics-browser-hero">
-          <h1>Pick your next 60-second lesson</h1>
+          <h1>Pick your next 1-minute lesson</h1>
           <p>Browse by category, search, and jump right in.</p>
         </div>
 
@@ -623,8 +656,8 @@ export default function TopicsBrowserPage() {
                     aria-label="Status"
                   >
                     <option value="all">All</option>
-                    <option value="new">New</option>
-                    <option value="completed">Completed</option>
+                    <option value="new">To watch</option>
+                    <option value="completed">Watched</option>
                   </select>
                 </div>
 

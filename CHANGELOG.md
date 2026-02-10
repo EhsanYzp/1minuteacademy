@@ -14,6 +14,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Topics page redesigned with a minimal sticky filter bar (Search + Category + Subcategory + Difficulty + Status + Reset) for a cleaner desktop/mobile experience.
 
 ### Changed
+- Topics page polish: headline uses “1-minute”, Status labels are clearer (“To watch”/“Watched”), and the sticky filter bar now stays fully visible under the sticky header.
 - Centralized topic access gating in `src/services/entitlements.js` via `getTopicGate()`.
 
 ### Fixed
