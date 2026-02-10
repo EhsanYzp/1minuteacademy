@@ -634,6 +634,51 @@ export default function ProfilePage() {
     });
   }, [myRatingsEnriched, ratingsQuery]);
 
+  const visibleTabs = useMemo(() => {
+    const base = [
+      { id: 'overview', label: 'Overview' },
+      { id: 'preferences', label: 'Preferences' },
+      { id: 'progress', label: 'Progress' },
+      { id: 'ratings', label: 'Ratings' },
+    ];
+    if (contentSource !== 'local') base.push({ id: 'account', label: 'Account' });
+    return base;
+  }, [contentSource]);
+
+  const activeTab = useMemo(() => {
+    const allowed = new Set(visibleTabs.map((t) => t.id));
+    let raw = 'overview';
+    try {
+      raw = new URLSearchParams(location.search).get('tab') || 'overview';
+    } catch {
+      raw = 'overview';
+    }
+    const normalized = String(raw).trim().toLowerCase();
+    return allowed.has(normalized) ? normalized : 'overview';
+  }, [location.search, visibleTabs]);
+
+  function setActiveTab(next) {
+    const wanted = String(next ?? '').trim().toLowerCase();
+    const allowed = new Set(visibleTabs.map((t) => t.id));
+    const safe = allowed.has(wanted) ? wanted : 'overview';
+    const params = new URLSearchParams(location.search);
+    params.set('tab', safe);
+    navigate({ pathname: location.pathname, search: `?${params.toString()}` }, { replace: true });
+  }
+
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(location.search);
+      const hasTab = params.has('tab');
+      if (!hasTab && contentSource !== 'local' && (checkoutState || portalReturn)) {
+        params.set('tab', 'account');
+        navigate({ pathname: location.pathname, search: `?${params.toString()}` }, { replace: true });
+      }
+    } catch {
+      // ignore
+    }
+  }, [checkoutState, portalReturn, contentSource, location.pathname, location.search, navigate]);
+
   return (
     <motion.div className="profile-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Header />
@@ -654,7 +699,7 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          <div className="profile-layout">
+          <div className="profile-layout profile-layout--single">
             <div className="profile-left">
               {checkoutBanner && (
                 <div className={`profile-note ${checkoutBanner === 'error' ? 'profile-checkout-error' : 'profile-checkout-success'}`} style={{ marginBottom: 12 }}>
@@ -672,137 +717,162 @@ export default function ProfilePage() {
 
               {error && <div className="profile-error">{error.message ?? 'Failed to load profile.'}</div>}
 
-              <div className="profile-stats">
-                <div className="profile-stat">
-                  <div className="profile-stat-label">
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-                      <OneMAIcon size={16} />
-                      1MA minutes
-                    </span>
-                  </div>
-                  <div className="profile-stat-value">{Number(stats?.one_ma_balance ?? 0)}</div>
-                </div>
-                <div className="profile-stat">
-                  <div className="profile-stat-label">🔥 Streak</div>
-                  <div className="profile-stat-value">{Number(stats?.streak ?? 0)} days</div>
-                </div>
-                <div className="profile-stat">
-                  <div className="profile-stat-label">📅 Last completion</div>
-                  <div className="profile-stat-value small">{stats?.last_completed_date ?? '—'}</div>
-                </div>
-              </div>
-
-              {tier !== 'pro' && contentSource !== 'local' && (
-                <div className="profile-note" style={{ margin: '12px 0 0' }}>
-                  <strong>Unlock 1MA minutes with Pro</strong>
-                  <div className="profile-note-row">
-                    <div>
-                      Pro members earn <strong>+1</strong> to their <strong>1MA minutes</strong> each time they complete a module.
-                    </div>
-                    <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
-                  </div>
-                </div>
-              )}
-
-              <div className="profile-section-header profile-section-header-spaced">
-                <h2>Experience</h2>
-                <div className="profile-section-sub">Personalize how lesson pages look.</div>
-              </div>
-
-              <div className="profile-note" style={{ marginBottom: 12 }}>
-                <strong>Lesson presentation</strong>
-                <div className="profile-preference-row">
-                  <label className="profile-preference-label">
-                    Style
-                    <select
-                      className="profile-preference-select"
-                      value={presentationStyle}
-                      onChange={onChangePresentationStyle}
-                      disabled={!canChoosePresentation || presentationBusy}
-                      aria-label="Lesson presentation style"
-                    >
-                      {presentationStyleOptions.map((s) => (
-                        <option key={s.id} value={s.id} disabled={Boolean(s.disabled)}>{s.label}</option>
-                      ))}
-                    </select>
-                  </label>
-
-                  {tier !== 'pro' && tier !== 'paused' && contentSource !== 'local' ? (
-                    <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
-                  ) : null}
-                </div>
-
-                <div className="profile-preference-help">
-                  {tier === 'pro' || tier === 'paused'
-                    ? 'Applies to lessons and review mode.'
-                    : tier === 'free'
-                      ? 'Free members can choose Focus or Dark. Other styles are Pro-only.'
-                      : 'Sign in to choose Focus or Dark. Other styles are Pro-only.'}
-                </div>
-
-                {presentationNotice ? (
-                  <div className="profile-preference-note" aria-live="polite">{presentationNotice}</div>
-                ) : null}
-
-                {presentationError ? (
-                  <div className="profile-preference-error" aria-live="polite">
-                    {presentationError?.message ?? String(presentationError)}
-                  </div>
-                ) : null}
-              </div>
-
-              <div className="profile-section-header">
-                <h2>Your learning</h2>
-                <div className="profile-section-sub">Your progress in one place.</div>
-              </div>
-
-              {contentSource !== 'local' && !showReview && (
-                <div className="profile-note" style={{ marginBottom: 12 }}>
-                  <strong>Free plan</strong>
-                  <div className="profile-note-row">
-                    <div>
-                      Your current plan is <strong>{planLabel}</strong>. Upgrade to unlock review mode.
-                    </div>
-                    <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
-                  </div>
-                </div>
-              )}
-
-              <div className="profile-progress-toolbar">
-                <div className="profile-toggle">
+              <div className="profile-tabs" role="tablist" aria-label="Profile sections">
+                {visibleTabs.map((t) => (
                   <button
+                    key={t.id}
                     type="button"
-                    className={progressView === 'subjects' ? 'pt active' : 'pt'}
-                    onClick={() => setProgressView('subjects')}
+                    role="tab"
+                    className={activeTab === t.id ? 'profile-tab active' : 'profile-tab'}
+                    aria-selected={activeTab === t.id}
+                    onClick={() => setActiveTab(t.id)}
                   >
-                    By subject
+                    {t.label}
                   </button>
-                  <button
-                    type="button"
-                    className={progressView === 'recent' ? 'pt active' : 'pt'}
-                    onClick={() => setProgressView('recent')}
-                  >
-                    Recent
-                  </button>
-                </div>
+                ))}
+              </div>
 
-                <label className="profile-search">
-                  <span className="profile-search-icon">🔎</span>
-                  <input
-                    value={progressQuery}
-                    onChange={(e) => setProgressQuery(e.target.value)}
-                    placeholder="Search your progress…"
-                    aria-label="Search progress"
-                  />
-                  {progressQuery && (
-                    <button type="button" className="profile-clear" onClick={() => setProgressQuery('')} aria-label="Clear search">
-                      ✕
-                    </button>
+              {activeTab === 'overview' && (
+                <>
+                  <div className="profile-stats">
+                    <div className="profile-stat">
+                      <div className="profile-stat-label">
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                          <OneMAIcon size={16} />
+                          1MA minutes
+                        </span>
+                      </div>
+                      <div className="profile-stat-value">{Number(stats?.one_ma_balance ?? 0)}</div>
+                    </div>
+                    <div className="profile-stat">
+                      <div className="profile-stat-label">🔥 Streak</div>
+                      <div className="profile-stat-value">{Number(stats?.streak ?? 0)} days</div>
+                    </div>
+                    <div className="profile-stat">
+                      <div className="profile-stat-label">📅 Last completion</div>
+                      <div className="profile-stat-value small">{stats?.last_completed_date ?? '—'}</div>
+                    </div>
+                  </div>
+
+                  {tier !== 'pro' && contentSource !== 'local' && (
+                    <div className="profile-note" style={{ margin: '12px 0 0' }}>
+                      <strong>Unlock 1MA minutes with Pro</strong>
+                      <div className="profile-note-row">
+                        <div>
+                          Pro members earn <strong>+1</strong> to their <strong>1MA minutes</strong> each time they complete a module.
+                        </div>
+                        <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
+                      </div>
+                    </div>
                   )}
-                </label>
-              </div>
+                </>
+              )}
 
-              {loading ? (
+              {activeTab === 'preferences' && (
+                <>
+                  <div className="profile-section-header profile-section-header-spaced">
+                    <h2>Experience</h2>
+                    <div className="profile-section-sub">Personalize how lesson pages look.</div>
+                  </div>
+
+                  <div className="profile-note" style={{ marginBottom: 12 }}>
+                    <strong>Lesson presentation</strong>
+                    <div className="profile-preference-row">
+                      <label className="profile-preference-label">
+                        Style
+                        <select
+                          className="profile-preference-select"
+                          value={presentationStyle}
+                          onChange={onChangePresentationStyle}
+                          disabled={!canChoosePresentation || presentationBusy}
+                          aria-label="Lesson presentation style"
+                        >
+                          {presentationStyleOptions.map((s) => (
+                            <option key={s.id} value={s.id} disabled={Boolean(s.disabled)}>{s.label}</option>
+                          ))}
+                        </select>
+                      </label>
+
+                      {tier !== 'pro' && tier !== 'paused' && contentSource !== 'local' ? (
+                        <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
+                      ) : null}
+                    </div>
+
+                    <div className="profile-preference-help">
+                      {tier === 'pro' || tier === 'paused'
+                        ? 'Applies to lessons and review mode.'
+                        : tier === 'free'
+                          ? 'Free members can choose Focus or Dark. Other styles are Pro-only.'
+                          : 'Sign in to choose Focus or Dark. Other styles are Pro-only.'}
+                    </div>
+
+                    {presentationNotice ? (
+                      <div className="profile-preference-note" aria-live="polite">{presentationNotice}</div>
+                    ) : null}
+
+                    {presentationError ? (
+                      <div className="profile-preference-error" aria-live="polite">
+                        {presentationError?.message ?? String(presentationError)}
+                      </div>
+                    ) : null}
+                  </div>
+                </>
+              )}
+
+              {activeTab === 'progress' && (
+                <>
+                  <div className="profile-section-header">
+                    <h2>Your learning</h2>
+                    <div className="profile-section-sub">Your progress in one place.</div>
+                  </div>
+
+                  {contentSource !== 'local' && !showReview && (
+                    <div className="profile-note" style={{ marginBottom: 12 }}>
+                      <strong>Free plan</strong>
+                      <div className="profile-note-row">
+                        <div>
+                          Your current plan is <strong>{planLabel}</strong>. Upgrade to unlock review mode.
+                        </div>
+                        <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="profile-progress-toolbar">
+                    <div className="profile-toggle">
+                      <button
+                        type="button"
+                        className={progressView === 'subjects' ? 'pt active' : 'pt'}
+                        onClick={() => setProgressView('subjects')}
+                      >
+                        By subject
+                      </button>
+                      <button
+                        type="button"
+                        className={progressView === 'recent' ? 'pt active' : 'pt'}
+                        onClick={() => setProgressView('recent')}
+                      >
+                        Recent
+                      </button>
+                    </div>
+
+                    <label className="profile-search">
+                      <span className="profile-search-icon">🔎</span>
+                      <input
+                        value={progressQuery}
+                        onChange={(e) => setProgressQuery(e.target.value)}
+                        placeholder="Search your progress…"
+                        aria-label="Search progress"
+                      />
+                      {progressQuery && (
+                        <button type="button" className="profile-clear" onClick={() => setProgressQuery('')} aria-label="Clear search">
+                          ✕
+                        </button>
+                      )}
+                    </label>
+                  </div>
+
+                  {loading ? (
             <div className="profile-loading">Loading…</div>
           ) : progress.length === 0 ? (
             <div className="profile-empty">No activity yet. Finish a topic to see your progress.</div>
@@ -927,233 +997,244 @@ export default function ProfilePage() {
               })}
             </div>
           )}
+                </>
+              )}
 
-              <div className="profile-section-header profile-section-header-spaced">
-                <h2>Your ratings</h2>
-                <div className="profile-section-sub">Change your stars anytime.</div>
-              </div>
-
-              {contentSource !== 'local' && !user ? (
-                <div className="profile-empty">
-                  Sign in to see and edit your ratings.
-                </div>
-              ) : ratingsLoading ? (
-                <div className="profile-loading">Loading your ratings…</div>
-              ) : myRatingsEnriched.length === 0 ? (
-                <div className="profile-empty">No ratings yet. Finish a module and rate it.</div>
-              ) : (
+              {activeTab === 'ratings' && (
                 <>
-                  <div className="ratings-toolbar">
-                    <div className="ratings-count">
-                      {myRatingsFiltered.length} of {myRatingsEnriched.length}
-                    </div>
-
-                    <label className="ratings-search">
-                      <span className="ratings-search-icon">🔎</span>
-                      <input
-                        value={ratingsQuery}
-                        onChange={(e) => setRatingsQuery(e.target.value)}
-                        placeholder="Search your ratings…"
-                        aria-label="Search your ratings"
-                      />
-                      {ratingsQuery && (
-                        <button
-                          type="button"
-                          className="ratings-clear"
-                          onClick={() => setRatingsQuery('')}
-                          aria-label="Clear ratings search"
-                        >
-                          ✕
-                        </button>
-                      )}
-                    </label>
+                  <div className="profile-section-header profile-section-header-spaced">
+                    <h2>Your ratings</h2>
+                    <div className="profile-section-sub">Change your stars anytime.</div>
                   </div>
 
-                  {myRatingsFiltered.length === 0 ? (
-                    <div className="profile-empty">No matches.</div>
+                  {contentSource !== 'local' && !user ? (
+                    <div className="profile-empty">
+                      Sign in to see and edit your ratings.
+                    </div>
+                  ) : ratingsLoading ? (
+                    <div className="profile-loading">Loading your ratings…</div>
+                  ) : myRatingsEnriched.length === 0 ? (
+                    <div className="profile-empty">No ratings yet. Finish a module and rate it.</div>
                   ) : (
-                    <div className="ratings-list" aria-label="Your module ratings">
-                      {myRatingsFiltered.map((r) => {
-                        const canEdit = contentSource === 'local' || Boolean(user);
-                        const busy = ratingBusyTopicId === r.topicId;
-                        return (
-                          <div key={r.topicId} className="rating-row">
-                            <Link className="rating-title-link" to={`/topic/${r.topicId}`}>
-                              <div className="rating-emoji" aria-hidden="true">
-                                {r.emoji}
-                              </div>
-                              <div className="rating-meta">
-                                <div className="rating-title">{r.title}</div>
-                                <div className="rating-sub">
-                                  {r.subject}
-                                  {r.updatedAt ? ` • updated ${fmtShortDate(r.updatedAt)}` : ''}
+                    <>
+                      <div className="ratings-toolbar">
+                        <div className="ratings-count">
+                          {myRatingsFiltered.length} of {myRatingsEnriched.length}
+                        </div>
+
+                        <label className="ratings-search">
+                          <span className="ratings-search-icon">🔎</span>
+                          <input
+                            value={ratingsQuery}
+                            onChange={(e) => setRatingsQuery(e.target.value)}
+                            placeholder="Search your ratings…"
+                            aria-label="Search your ratings"
+                          />
+                          {ratingsQuery && (
+                            <button
+                              type="button"
+                              className="ratings-clear"
+                              onClick={() => setRatingsQuery('')}
+                              aria-label="Clear ratings search"
+                            >
+                              ✕
+                            </button>
+                          )}
+                        </label>
+                      </div>
+
+                      {myRatingsFiltered.length === 0 ? (
+                        <div className="profile-empty">No matches.</div>
+                      ) : (
+                        <div className="ratings-list" aria-label="Your module ratings">
+                          {myRatingsFiltered.map((r) => {
+                            const canEdit = contentSource === 'local' || Boolean(user);
+                            const busy = ratingBusyTopicId === r.topicId;
+                            return (
+                              <div key={r.topicId} className="rating-row">
+                                <Link className="rating-title-link" to={`/topic/${r.topicId}`}>
+                                  <div className="rating-emoji" aria-hidden="true">
+                                    {r.emoji}
+                                  </div>
+                                  <div className="rating-meta">
+                                    <div className="rating-title">{r.title}</div>
+                                    <div className="rating-sub">
+                                      {r.subject}
+                                      {r.updatedAt ? ` • updated ${fmtShortDate(r.updatedAt)}` : ''}
+                                    </div>
+                                  </div>
+                                </Link>
+
+                                <div className="rating-actions">
+                                  <StarRating
+                                    value={Number(r.rating ?? 0)}
+                                    onChange={canEdit ? (next) => onUpdateRating(r.topicId, next) : undefined}
+                                    readOnly={!canEdit || busy}
+                                    size="md"
+                                    label={`Your rating for ${r.title}`}
+                                  />
+                                  {busy && <span className="rating-saving">Saving…</span>}
                                 </div>
                               </div>
-                            </Link>
+                            );
+                          })}
+                        </div>
+                      )}
 
-                            <div className="rating-actions">
-                              <StarRating
-                                value={Number(r.rating ?? 0)}
-                                onChange={canEdit ? (next) => onUpdateRating(r.topicId, next) : undefined}
-                                readOnly={!canEdit || busy}
-                                size="md"
-                                label={`Your rating for ${r.title}`}
-                              />
-                              {busy && <span className="rating-saving">Saving…</span>}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-
-                  {ratingsError && (
-                    <div className="ratings-error">{ratingsError?.message ?? String(ratingsError)}</div>
+                      {ratingsError && (
+                        <div className="ratings-error">{ratingsError?.message ?? String(ratingsError)}</div>
+                      )}
+                    </>
                   )}
                 </>
               )}
 
-            </div>
+              {activeTab === 'account' && contentSource !== 'local' && (
+                <>
+                  <div className="profile-section-header profile-section-header-spaced">
+                    <h2>Account</h2>
+                    <div className="profile-section-sub">Plan, billing, and account controls.</div>
+                  </div>
 
-            {contentSource !== 'local' && (
-              <aside className="profile-right">
-                <div className="profile-side-card">
-                  <div className="profile-side-kicker">Signed in</div>
-                  <div className="profile-email">{user?.email ?? '—'}</div>
+                  <div className="profile-side-card">
+                    <div className="profile-side-kicker">Signed in</div>
+                    <div className="profile-email">{user?.email ?? '—'}</div>
 
-                  <div className="profile-plan-row" style={{ marginTop: 10 }}>
-                    <span>Plan: <strong>{planLabel}</strong></span>
-                    {tier !== 'pro' && (
-                      <Link className="profile-upgrade-btn" to="/upgrade">
-                        Upgrade
-                      </Link>
+                    <div className="profile-plan-row" style={{ marginTop: 10 }}>
+                      <span>Plan: <strong>{planLabel}</strong></span>
+                      {tier !== 'pro' && (
+                        <Link className="profile-upgrade-btn" to="/upgrade">
+                          Upgrade
+                        </Link>
+                      )}
+                    </div>
+
+                    {isPaused && (
+                      <div className="profile-paused-note">
+                        <strong>Paused</strong>
+                        <div>You can’t start lessons until you resume.</div>
+                      </div>
                     )}
                   </div>
 
-                  {isPaused && (
-                    <div className="profile-paused-note">
-                      <strong>Paused</strong>
-                      <div>You can’t start lessons until you resume.</div>
+                  {showSubscriptionBox && (
+                    <div className="profile-sub-box">
+                      <div className="profile-sub-head">
+                        <div className="profile-sub-title">Subscription</div>
+                        {hasStripeCustomer && (
+                          <button className="profile-sub-btn" type="button" onClick={onManageSubscription}>
+                            Manage
+                          </button>
+                        )}
+                      </div>
+
+                      {subLoading ? (
+                        <div className="profile-sub-row">Loading subscription details…</div>
+                      ) : subError ? (
+                        <div className="profile-sub-row profile-sub-error">{subError.message ?? 'Could not load subscription details.'}</div>
+                      ) : subStatus ? (
+                        (() => {
+                          const statusLabel = formatStripeStatus(subStatus.status);
+                          const rawStatus = String(subStatus.status ?? '').toLowerCase();
+                          const isCanceled = rawStatus === 'canceled';
+                          const hasCancelAt = Boolean(subStatus.cancel_at);
+                          const isScheduledCancel = Boolean(subStatus.cancel_at_period_end) || (!isCanceled && hasCancelAt);
+
+                          const fallbackPeriodEnd = computeFallbackPeriodEnd(subStatus.created, subStatus.plan_interval);
+                          const periodDate = subStatus.current_period_end || fallbackPeriodEnd;
+                          const scheduledEndDate = subStatus.cancel_at || subStatus.current_period_end || fallbackPeriodEnd;
+                          const endedDate = subStatus.ended_at || subStatus.canceled_at || subStatus.cancel_at || subStatus.current_period_end;
+
+                          const dateLabel = isCanceled ? 'Ended' : isScheduledCancel ? 'Ends' : 'Renews';
+                          const dateValue = isCanceled ? endedDate : isScheduledCancel ? scheduledEndDate : periodDate;
+
+                          const cancellationLabel = isCanceled
+                            ? 'Canceled'
+                            : isScheduledCancel
+                              ? 'Scheduled'
+                              : 'Not scheduled';
+
+                          return (
+                            <div className="profile-sub-grid">
+                              <div className="profile-sub-item"><span>Status</span><strong>{statusLabel}</strong></div>
+                              <div className="profile-sub-item"><span>{dateLabel}</span><strong>{fmtShortDate(dateValue)}</strong></div>
+                              <div className="profile-sub-item"><span>Started</span><strong>{fmtShortDate(subStatus.created)}</strong></div>
+                              <div className="profile-sub-item"><span>Cancellation</span><strong>{cancellationLabel}</strong></div>
+                            </div>
+                          );
+                        })()
+                      ) : (
+                        <div className="profile-sub-row">No subscription details found yet.</div>
+                      )}
+
+                      <div className="profile-sub-foot">Invoices and cancellation are in Stripe Portal.</div>
                     </div>
                   )}
-                </div>
 
-                {showSubscriptionBox && (
-                  <div className="profile-sub-box">
-                    <div className="profile-sub-head">
-                      <div className="profile-sub-title">Subscription</div>
-                      {hasStripeCustomer && (
-                        <button className="profile-sub-btn" type="button" onClick={onManageSubscription}>
-                          Manage
+                  <div className="profile-account-box">
+                    <div className="profile-account-head">
+                      <div className="profile-account-title">Account status</div>
+                      {isPaused ? (
+                        <div className="profile-account-pill">Paused</div>
+                      ) : (
+                        <div className="profile-account-pill active">Active</div>
+                      )}
+                    </div>
+
+                    {accountNotice && <div className="profile-account-row profile-account-notice">{accountNotice}</div>}
+                    {accountError && <div className="profile-account-row profile-account-error">{accountError.message ?? String(accountError)}</div>}
+
+                    <div className="profile-account-actions">
+                      {isPaused ? (
+                        <button
+                          className="profile-account-btn"
+                          type="button"
+                          onClick={onResumeAccount}
+                          disabled={accountBusy !== null}
+                          title="Resume your account"
+                        >
+                          {accountBusy === 'resume' ? 'Resuming…' : 'Resume'}
+                        </button>
+                      ) : (
+                        <button
+                          className="profile-account-btn secondary"
+                          type="button"
+                          onClick={onPauseAccount}
+                          disabled={accountBusy !== null}
+                          title="Pause your account"
+                        >
+                          {accountBusy === 'pause' ? 'Pausing…' : 'Pause'}
                         </button>
                       )}
                     </div>
 
-                    {subLoading ? (
-                      <div className="profile-sub-row">Loading subscription details…</div>
-                    ) : subError ? (
-                      <div className="profile-sub-row profile-sub-error">{subError.message ?? 'Could not load subscription details.'}</div>
-                    ) : subStatus ? (
-                      (() => {
-                        const statusLabel = formatStripeStatus(subStatus.status);
-                        const rawStatus = String(subStatus.status ?? '').toLowerCase();
-                        const isCanceled = rawStatus === 'canceled';
-                        const hasCancelAt = Boolean(subStatus.cancel_at);
-                        const isScheduledCancel = Boolean(subStatus.cancel_at_period_end) || (!isCanceled && hasCancelAt);
-
-                        const fallbackPeriodEnd = computeFallbackPeriodEnd(subStatus.created, subStatus.plan_interval);
-                        const periodDate = subStatus.current_period_end || fallbackPeriodEnd;
-                        const scheduledEndDate = subStatus.cancel_at || subStatus.current_period_end || fallbackPeriodEnd;
-                        const endedDate = subStatus.ended_at || subStatus.canceled_at || subStatus.cancel_at || subStatus.current_period_end;
-
-                        const dateLabel = isCanceled ? 'Ended' : isScheduledCancel ? 'Ends' : 'Renews';
-                        const dateValue = isCanceled ? endedDate : isScheduledCancel ? scheduledEndDate : periodDate;
-
-                        const cancellationLabel = isCanceled
-                          ? 'Canceled'
-                          : isScheduledCancel
-                            ? 'Scheduled'
-                            : 'Not scheduled';
-
-                        return (
-                          <div className="profile-sub-grid">
-                            <div className="profile-sub-item"><span>Status</span><strong>{statusLabel}</strong></div>
-                            <div className="profile-sub-item"><span>{dateLabel}</span><strong>{fmtShortDate(dateValue)}</strong></div>
-                            <div className="profile-sub-item"><span>Started</span><strong>{fmtShortDate(subStatus.created)}</strong></div>
-                            <div className="profile-sub-item"><span>Cancellation</span><strong>{cancellationLabel}</strong></div>
-                          </div>
-                        );
-                      })()
-                    ) : (
-                      <div className="profile-sub-row">No subscription details found yet.</div>
-                    )}
-
-                    <div className="profile-sub-foot">Invoices and cancellation are in Stripe Portal.</div>
-                  </div>
-                )}
-
-                <div className="profile-account-box">
-                  <div className="profile-account-head">
-                    <div className="profile-account-title">Account</div>
-                    {isPaused ? (
-                      <div className="profile-account-pill">Paused</div>
-                    ) : (
-                      <div className="profile-account-pill active">Active</div>
-                    )}
-                  </div>
-
-                  {accountNotice && <div className="profile-account-row profile-account-notice">{accountNotice}</div>}
-                  {accountError && <div className="profile-account-row profile-account-error">{accountError.message ?? String(accountError)}</div>}
-
-                  <div className="profile-account-actions">
-                    {isPaused ? (
-                      <button
-                        className="profile-account-btn"
-                        type="button"
-                        onClick={onResumeAccount}
-                        disabled={accountBusy !== null}
-                        title="Resume your account"
-                      >
-                        {accountBusy === 'resume' ? 'Resuming…' : 'Resume'}
-                      </button>
-                    ) : (
-                      <button
-                        className="profile-account-btn secondary"
-                        type="button"
-                        onClick={onPauseAccount}
-                        disabled={accountBusy !== null}
-                        title="Pause your account"
-                      >
-                        {accountBusy === 'pause' ? 'Pausing…' : 'Pause'}
-                      </button>
-                    )}
-                  </div>
-
-                  <div className="profile-account-foot">
-                    {isPaused
-                      ? 'Paused accounts cannot start lessons.'
-                      : 'Pausing disables learning access without changing billing.'}
-                  </div>
-
-                  <details className="profile-danger">
-                    <summary className="profile-danger-summary">Danger zone</summary>
-                    <div className="profile-danger-body">
-                      <div className="profile-danger-text">
-                        Permanently deletes your account and progress. If you have an active subscription, we’ll attempt to cancel it first.
-                      </div>
-                      <button
-                        className="profile-account-btn danger"
-                        type="button"
-                        onClick={onDeleteAccount}
-                        disabled={accountBusy !== null}
-                      >
-                        {accountBusy === 'delete' ? 'Deleting…' : 'Delete account'}
-                      </button>
+                    <div className="profile-account-foot">
+                      {isPaused
+                        ? 'Paused accounts cannot start lessons.'
+                        : 'Pausing disables learning access without changing billing.'}
                     </div>
-                  </details>
-                </div>
-              </aside>
-            )}
+
+                    <details className="profile-danger">
+                      <summary className="profile-danger-summary">Danger zone</summary>
+                      <div className="profile-danger-body">
+                        <div className="profile-danger-text">
+                          Permanently deletes your account and progress. If you have an active subscription, we’ll attempt to cancel it first.
+                        </div>
+                        <button
+                          className="profile-account-btn danger"
+                          type="button"
+                          onClick={onDeleteAccount}
+                          disabled={accountBusy !== null}
+                        >
+                          {accountBusy === 'delete' ? 'Deleting…' : 'Delete account'}
+                        </button>
+                      </div>
+                    </details>
+                  </div>
+                </>
+              )}
+
+            </div>
           </div>
         </motion.section>
       </main>
