@@ -370,24 +370,37 @@
 /* Split style: visual and text side-by-side on wide screens */
 .story-renderer.style-split .story-beat-inner {
   display: grid;
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
   align-items: center;
-  justify-items: center;
+  justify-items: stretch;
   gap: 2rem;
   padding: 0 1rem;
+  max-height: calc(100vh - 9rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+.story-renderer.style-split .story-beat-inner::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .story-renderer.style-split .story-visual {
-  font-size: 5.25rem;
+  font-size: clamp(4.5rem, 6vw, 5.25rem);
+  justify-self: center;
 }
 
 .story-renderer.style-split .story-text {
   max-width: 100%;
   text-align: left;
+  margin: 0;
+  font-size: clamp(1.75rem, 4.6vw, 3.2rem);
 }
 
 .story-renderer.style-split .story-beat {
   text-align: left;
+  overflow: hidden;
 }
 
 /* Highlight key words with gradient */
@@ -445,6 +458,7 @@
   .story-renderer.style-split .story-beat-inner {
     grid-template-columns: 1fr;
     text-align: center;
+    justify-items: center;
   }
   .story-renderer.style-split .story-text {
     text-align: center;

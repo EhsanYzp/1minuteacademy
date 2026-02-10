@@ -116,7 +116,7 @@ export default function StoryReview({
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="story-review-inner">
+            <div className="story-review-inner story-review-inner--beat">
               <div className="story-review-label">{beatLabels[beatKey]}</div>
               <div className="story-review-visual">{beatData?.visual}</div>
               <p className="story-review-text">{beatData?.text}</p>
@@ -131,7 +131,7 @@ export default function StoryReview({
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="story-review-inner">
+            <div className="story-review-inner story-review-inner--quiz">
               <div className="story-review-label">Quiz Question</div>
               <p className="story-review-question">{quiz.question}</p>
               <div className="story-review-options">

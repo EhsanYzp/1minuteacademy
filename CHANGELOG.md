@@ -26,3 +26,5 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 ### Fixed
 - Prevented the “click into Pro-only then discover it’s locked” UX for free users.
 - Dark (Spotlight) style: review-mode navigation bar is now visible.
+- Split (Visual + Text) style: improved alignment and reduced layout/scroll issues on long-content modules.
+- Split (Visual + Text) style: removed the thin vertical gutter line.
