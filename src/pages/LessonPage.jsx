@@ -14,7 +14,7 @@ import OneMAIcon from '../components/OneMAIcon';
 import { compileJourneyFromTopic } from '../engine/journey/compileJourney';
 import JourneyBlocks from '../engine/journey/JourneyBlocks';
 import {
-  PRESENTATION_STYLES,
+  buildPresentationStyleOptions,
   canChoosePresentationStyle,
   normalizePresentationStyle,
   resolveStoryPresentationStyle,
@@ -64,6 +64,15 @@ function LessonPage() {
 
   const journey = useMemo(() => compileJourneyFromTopic(topicRow), [topicRow]);
   const canChoosePresentation = useMemo(() => canChoosePresentationStyle(tier), [tier]);
+  const presentationStyleOptions = useMemo(
+    () => buildPresentationStyleOptions({ tier, journey }),
+    [tier, journey]
+  );
+  const presentationStyleOptionById = useMemo(() => {
+    const m = new Map();
+    for (const opt of presentationStyleOptions) m.set(String(opt.id), opt);
+    return m;
+  }, [presentationStyleOptions]);
   const resolvedStoryPresentationStyle = useMemo(
     () => resolveStoryPresentationStyle({ user, tier, journey }),
     [user, tier, journey]
@@ -78,11 +87,12 @@ function LessonPage() {
   async function onChangeStoryPresentationStyle(nextRaw) {
     const next = normalizePresentationStyle(nextRaw) ?? resolvedStoryPresentationStyle;
     if (!canChoosePresentation) return;
+    if (presentationStyleOptionById.get(String(next))?.disabled) return;
 
     setStoryPresentationStyle(next);
     setStoryStyleBusy(true);
     try {
-      await saveStoryPresentationStyle({ user, style: next });
+      await saveStoryPresentationStyle({ user, style: next, tier });
     } finally {
       setStoryStyleBusy(false);
     }
@@ -287,8 +297,8 @@ function LessonPage() {
                   disabled={storyStyleBusy}
                   aria-label="Lesson presentation style"
                 >
-                  {PRESENTATION_STYLES.map((s) => (
-                    <option key={s.id} value={s.id}>{s.label}</option>
+                  {presentationStyleOptions.map((s) => (
+                    <option key={s.id} value={s.id} disabled={Boolean(s.disabled)}>{s.label}</option>
                   ))}
                 </select>
               </label>
@@ -338,6 +348,8 @@ function LessonPage() {
     canChoosePresentation,
     resolvedStoryPresentationStyle,
     storyStyleBusy,
+    presentationStyleOptions,
+    presentationStyleOptionById,
   ]);
 
   const handleTimeUp = useCallback(() => {
@@ -544,7 +556,7 @@ function LessonPage() {
           presentationStyle={storyPresentationStyle}
           canChoosePresentationStyle={canChoosePresentation}
           onChangePresentationStyle={onChangeStoryPresentationStyle}
-          presentationStyleOptions={PRESENTATION_STYLES}
+          presentationStyleOptions={presentationStyleOptions}
         />
       ) : isCompleted ? (
         <motion.div 

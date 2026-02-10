@@ -12,13 +12,15 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Route-level Pro-only gate on the topic page to prevent direct URL access without Pro.
 - Difficulty filter on the Topics page: All / Beginner / Intermediate / Advanced (persisted in the URL via `?difficulty=` for shareable links).
 - Topics page redesigned with a minimal sticky filter bar (Search + Category + Subcategory + Difficulty + Status + Reset) for a cleaner desktop/mobile experience.
-- Multiple lesson presentation styles for story-based lessons (Focus/Cards/Split/Minimal/Bold/Dark), with a Pro-only preference selector in the profile.
-- Pro-only in-lesson presentation style switcher (available from lesson/review top bars).
+- Multiple lesson presentation styles for story-based lessons (Focus/Dark/Cards/Split/Minimal/Bold), with a preference selector in the profile.
+- In-lesson presentation style switcher (available from lesson/review top bars).
 - Journey-level presentation protocol (`journey.protocol.presentation`) to define default and supported presentation styles.
 
 ### Changed
 - Topics page polish: headline uses “1-minute”, Status labels are clearer (“To watch”/“Watched”), and the sticky filter bar now stays fully visible under the sticky header.
 - Centralized topic access gating in `src/services/entitlements.js` via `getTopicGate()`.
+- Presentation-style entitlements: Guest + Free users can choose Focus + Dark; other styles are marked Pro-only.
+- Pricing page updated to include lesson presentation styles and remove redundant Free-plan copy.
 
 ### Fixed
 - Prevented the “click into Pro-only then discover it’s locked” UX for free users.

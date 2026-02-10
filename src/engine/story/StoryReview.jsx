@@ -35,11 +35,11 @@ export default function StoryReview({
     ? presentationStyleOptions
     : [
         { id: 'focus', label: 'Focus (classic)' },
+        { id: 'dark', label: 'Dark (spotlight)' },
         { id: 'cards', label: 'Cards (readable)' },
         { id: 'split', label: 'Split (visual + text)' },
         { id: 'minimal', label: 'Minimal (quiet)' },
         { id: 'bold', label: 'Bold (punchy)' },
-          { id: 'dark', label: 'Dark (spotlight)' },
       ];
 
   const storyData = story?.story;
@@ -90,7 +90,7 @@ export default function StoryReview({
                 aria-label="Presentation style"
               >
                 {options.map((opt) => (
-                  <option key={opt.id} value={String(opt.id)}>
+                  <option key={opt.id} value={String(opt.id)} disabled={Boolean(opt.disabled)}>
                     {String(opt.label ?? opt.id)}
                   </option>
                 ))}

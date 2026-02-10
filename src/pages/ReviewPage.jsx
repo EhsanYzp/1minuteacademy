@@ -8,7 +8,7 @@ import { canReview, formatTierLabel, getCurrentTier } from '../services/entitlem
 import { compileJourneyFromTopic } from '../engine/journey/compileJourney';
 import JourneyBlocks from '../engine/journey/JourneyBlocks';
 import {
-  PRESENTATION_STYLES,
+  buildPresentationStyleOptions,
   canChoosePresentationStyle,
   normalizePresentationStyle,
   resolveStoryPresentationStyle,
@@ -65,6 +65,15 @@ export default function ReviewPage() {
   );
 
   const canChoosePresentation = useMemo(() => canChoosePresentationStyle(tier), [tier]);
+  const presentationStyleOptions = useMemo(
+    () => buildPresentationStyleOptions({ tier, journey }),
+    [tier, journey]
+  );
+  const presentationStyleOptionById = useMemo(() => {
+    const m = new Map();
+    for (const opt of presentationStyleOptions) m.set(String(opt.id), opt);
+    return m;
+  }, [presentationStyleOptions]);
   const resolvedStoryPresentationStyle = useMemo(
     () => resolveStoryPresentationStyle({ user, tier, journey }),
     [user, tier, journey]
@@ -80,10 +89,11 @@ export default function ReviewPage() {
   async function onChangeStoryPresentationStyle(nextRaw) {
     const next = normalizePresentationStyle(nextRaw) ?? resolvedStoryPresentationStyle;
     if (!canChoosePresentation) return;
+    if (presentationStyleOptionById.get(String(next))?.disabled) return;
     setStoryPresentationStyle(next);
     setStoryStyleBusy(true);
     try {
-      await saveStoryPresentationStyle({ user, style: next });
+      await saveStoryPresentationStyle({ user, style: next, tier });
     } finally {
       setStoryStyleBusy(false);
     }
@@ -162,12 +172,12 @@ export default function ReviewPage() {
             presentationStyle={storyPresentationStyle}
             canChoosePresentationStyle={canChoosePresentation && !storyStyleBusy}
             onChangePresentationStyle={onChangeStoryPresentationStyle}
-            presentationStyleOptions={PRESENTATION_STYLES}
+            presentationStyleOptions={presentationStyleOptions}
           />
         );
       },
     };
-  }, [allowed, user, tier, topicRow, hasStory, loading, error, navigate, topicId, storyPresentationStyle, canChoosePresentation, storyStyleBusy, resolvedStoryPresentationStyle]);
+  }, [allowed, user, tier, topicRow, hasStory, loading, error, navigate, topicId, storyPresentationStyle, canChoosePresentation, storyStyleBusy, resolvedStoryPresentationStyle, presentationStyleOptions]);
 
   return (
     <motion.div className="review-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>

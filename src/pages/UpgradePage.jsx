@@ -224,9 +224,8 @@ export default function UpgradePage() {
                 <div className="tier-price">$0</div>
                 <div className="tier-note">No account required</div>
                 <ul className="tier-bullets">
-                  <li>Beginner topics only</li>
-                  <li>No progress tracking</li>
-                  <li>No Review mode</li>
+                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Beginner topics</span></li>
+                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Lesson styles: Focus + Dark</span></li>
                 </ul>
                 <div className="tier-actions">
                   <Link className="upgrade-link secondary" to="/topics">Browse free topics</Link>
@@ -238,10 +237,10 @@ export default function UpgradePage() {
                 <div className="tier-price">$0</div>
                 <div className="tier-note">Sign in to save progress</div>
                 <ul className="tier-bullets">
-                  <li>Beginner topics only</li>
-                  <li>Progress tracking</li>
-                  <li>Rate modules with stars</li>
-                  <li>Review mode (locked)</li>
+                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Beginner topics</span></li>
+                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Progress tracking</span></li>
+                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Rate modules with stars</span></li>
+                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Lesson styles: Focus + Dark</span></li>
                 </ul>
                 <div className="tier-actions">
                   {!user ? (
@@ -258,11 +257,12 @@ export default function UpgradePage() {
                 <div className="tier-price">All access</div>
                 <div className="tier-note">Beginner → Advanced</div>
                 <ul className="tier-bullets">
-                  <li>All modules (not just Beginner)</li>
-                  <li>Review mode (no timer)</li>
-                  <li>Progress tracking</li>
-                  <li>Rate modules with stars</li>
-                  <li>Earn +1 minute (1MA) per completion</li>
+                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>All modules (not just Beginner)</span></li>
+                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Review mode (no timer)</span></li>
+                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>All lesson presentation styles</span></li>
+                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Progress tracking</span></li>
+                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Rate modules with stars</span></li>
+                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Earn +1 minute (1MA) per completion</span></li>
                 </ul>
                 <div className="tier-actions">
                   {tier === 'pro' ? (
@@ -318,6 +318,22 @@ export default function UpgradePage() {
               </div>
 
               <div className="compare-row">
+                <div className="compare-feature">Lesson presentation styles</div>
+                <div className="compare-cell compare-cell-stack">
+                  <span className="mark yes" aria-label="Available" title="Available">✓</span>
+                  <div className="compare-cell-note">Focus + Dark</div>
+                </div>
+                <div className="compare-cell compare-cell-stack">
+                  <span className="mark yes" aria-label="Available" title="Available">✓</span>
+                  <div className="compare-cell-note">Focus + Dark</div>
+                </div>
+                <div className="compare-cell compare-cell-stack">
+                  <span className="mark yes" aria-label="Available" title="Available">✓</span>
+                  <div className="compare-cell-note">All styles</div>
+                </div>
+              </div>
+
+              <div className="compare-row">
                 <div className="compare-feature">Rate modules with stars</div>
                 <div className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></div>
                 <div className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></div>
@@ -329,7 +345,7 @@ export default function UpgradePage() {
 
           <div className="upgrade-section upgrade-section-spaced">
             <div className="upgrade-section-title">Pick a Pro plan</div>
-            <div className="upgrade-section-sub">Cancel anytime in Stripe Portal. Pro unlocks advanced modules, review mode, ratings, and 1MA minutes (your minutes completed).</div>
+            <div className="upgrade-section-sub">Cancel anytime in Stripe Portal. Pro unlocks advanced modules, review mode, ratings, extra lesson presentation styles, and 1MA minutes (your minutes completed).</div>
           </div>
 
           <div className="upgrade-grid" id="pro-plans">

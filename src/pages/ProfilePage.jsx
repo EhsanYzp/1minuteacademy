@@ -13,11 +13,10 @@ import StarRating from '../components/StarRating';
 import { listMyTopicRatings, setMyTopicRating } from '../services/ratings';
 import OneMAIcon from '../components/OneMAIcon';
 import {
-  PRESENTATION_STYLES,
-  DEFAULT_PRESENTATION_STYLE,
+  buildPresentationStyleOptions,
   canChoosePresentationStyle,
-  getLocalPresentationStyle,
   normalizePresentationStyle,
+  resolveStoryPresentationStyle,
   saveStoryPresentationStyle,
 } from '../services/presentationStyle';
 import './ProfilePage.css';
@@ -149,11 +148,20 @@ export default function ProfilePage() {
   const [accountNotice, setAccountNotice] = useState('');
 
   const canChoosePresentation = canChoosePresentationStyle(tier);
-  const initialPresentationStyle = useMemo(() => {
-    const fromUser = normalizePresentationStyle(user?.user_metadata?.presentation_style);
-    const fromLocal = getLocalPresentationStyle();
-    return fromUser ?? fromLocal ?? DEFAULT_PRESENTATION_STYLE;
-  }, [user]);
+  const presentationStyleOptions = useMemo(
+    () => buildPresentationStyleOptions({ tier }),
+    [tier]
+  );
+  const presentationStyleOptionById = useMemo(() => {
+    const m = new Map();
+    for (const opt of presentationStyleOptions) m.set(String(opt.id), opt);
+    return m;
+  }, [presentationStyleOptions]);
+
+  const initialPresentationStyle = useMemo(
+    () => resolveStoryPresentationStyle({ user, tier, journey: null }),
+    [user, tier]
+  );
 
   const [presentationStyle, setPresentationStyle] = useState(initialPresentationStyle);
   const [presentationBusy, setPresentationBusy] = useState(false);
@@ -165,20 +173,26 @@ export default function ProfilePage() {
   }, [initialPresentationStyle]);
 
   async function onChangePresentationStyle(e) {
-    const next = normalizePresentationStyle(e?.target?.value) ?? DEFAULT_PRESENTATION_STYLE;
+    const next = normalizePresentationStyle(e?.target?.value) ?? initialPresentationStyle;
     setPresentationNotice('');
     setPresentationError(null);
 
     if (!canChoosePresentation) {
-      setPresentationStyle(DEFAULT_PRESENTATION_STYLE);
-      setPresentationNotice('Presentation styles are a Pro-only preference.');
+      setPresentationStyle(initialPresentationStyle);
+      setPresentationNotice('Sign in to choose your lesson style.');
+      return;
+    }
+
+    if (presentationStyleOptionById.get(String(next))?.disabled) {
+      setPresentationNotice('That style is a Pro feature.');
+      setPresentationStyle(initialPresentationStyle);
       return;
     }
 
     setPresentationStyle(next);
     setPresentationBusy(true);
     try {
-      const res = await saveStoryPresentationStyle({ user, style: next });
+      const res = await saveStoryPresentationStyle({ user, style: next, tier });
       if (res?.saved === 'remote') {
         try {
           await reloadUser();
@@ -707,21 +721,23 @@ export default function ProfilePage() {
                       disabled={!canChoosePresentation || presentationBusy}
                       aria-label="Lesson presentation style"
                     >
-                      {PRESENTATION_STYLES.map((s) => (
-                        <option key={s.id} value={s.id}>{s.label}</option>
+                      {presentationStyleOptions.map((s) => (
+                        <option key={s.id} value={s.id} disabled={Boolean(s.disabled)}>{s.label}</option>
                       ))}
                     </select>
                   </label>
 
-                  {!canChoosePresentation && contentSource !== 'local' ? (
+                  {tier !== 'pro' && tier !== 'paused' && contentSource !== 'local' ? (
                     <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
                   ) : null}
                 </div>
 
                 <div className="profile-preference-help">
-                  {canChoosePresentation
+                  {tier === 'pro' || tier === 'paused'
                     ? 'Applies to lessons and review mode.'
-                    : 'Pro members can choose different presentation styles.'}
+                    : tier === 'free'
+                      ? 'Free members can choose Focus or Dark. Other styles are Pro-only.'
+                      : 'Sign in to choose Focus or Dark. Other styles are Pro-only.'}
                 </div>
 
                 {presentationNotice ? (
