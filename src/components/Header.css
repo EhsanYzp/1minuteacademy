@@ -27,6 +27,16 @@
   font-weight: 700;
 }
 
+.logo-text-short {
+  display: none;
+}
+
+.logo-short {
+  font-size: 1.35rem;
+  color: var(--text-primary);
+  margin-left: 4px;
+}
+
 .logo-number {
   font-size: 2rem;
   color: var(--color-primary);
@@ -47,6 +57,22 @@
   display: flex;
   gap: var(--space-md);
   flex-wrap: wrap;
+}
+
+.nav-toggle {
+  display: none;
+  border-radius: var(--radius-full);
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  color: var(--text-primary);
+  font-weight: 900;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.nav-toggle:hover {
+  background: rgba(0, 0, 0, 0.08);
 }
 
 .env-badge {
@@ -143,32 +169,70 @@
 
 @media (max-width: 768px) {
   .header {
-    padding: var(--space-md);
-    flex-wrap: wrap;
-    gap: var(--space-md);
+    padding: 10px 12px;
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .env-badge,
+  .dev-tier {
+    display: none;
+  }
+
+  .logo-icon {
+    font-size: 1.55rem;
+  }
+
+  .logo-text-long {
+    display: none;
+  }
+
+  .logo-text-short {
+    display: inline-flex;
+    align-items: baseline;
+  }
+
+  .logo-number {
+    font-size: 1.45rem;
+  }
+
+  .logo-short {
+    font-size: 1.15rem;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
   }
   
   .nav {
-    width: 100%;
-    justify-content: center;
-    gap: var(--space-sm);
+    display: none;
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    top: calc(100% + 8px);
+    width: auto;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(12px);
+    z-index: 101;
+  }
+
+  .nav.nav-open {
+    display: flex;
   }
 
   .nav-item {
-    padding: 10px 12px;
-    font-size: 0.92rem;
-  }
-  
-  .logo-text {
-    font-size: 0.9rem;
-  }
-  
-  .logo-number {
-    font-size: 1.5rem;
-  }
-  
-  .logo-minute, .logo-academy {
-    font-size: 1.2rem;
+    justify-content: space-between;
+    padding: 12px 14px;
+    font-size: 0.95rem;
   }
 }
 

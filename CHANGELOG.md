@@ -24,6 +24,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Pricing page updated to include lesson presentation styles and remove redundant Free-plan copy.
 - Profile page reorganized into tabs (Overview / Preferences / Progress / Ratings / Account) to reduce clutter.
 - Profile page tabs are now sticky while scrolling.
+- Header: improved mobile topbar with a compact layout and hamburger menu.
 
 ### Fixed
 - Prevented the “click into Pro-only then discover it’s locked” UX for free users.

@@ -12,6 +12,7 @@ function Header() {
   const [busy, setBusy] = useState(false);
   const [verifyBusy, setVerifyBusy] = useState(false);
   const [verifySent, setVerifySent] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const tier = getCurrentTier(user);
 
   const isVerified = Boolean(user?.email_confirmed_at || user?.confirmed_at);
@@ -35,11 +36,16 @@ function Header() {
     setBusy(true);
     try {
       await signOut();
+      setMobileMenuOpen(false);
     } catch {
       // ignore
     } finally {
       setBusy(false);
     }
+  }
+
+  function closeMobileMenu() {
+    setMobileMenuOpen(false);
   }
 
   return (
@@ -50,7 +56,7 @@ function Header() {
         animate={{ y: 0 }}
         transition={{ type: 'spring', stiffness: 100, damping: 20 }}
       >
-      <Link to="/" className="logo">
+      <Link to="/" className="logo" aria-label="1 Minute Academy" onClick={closeMobileMenu}>
         <motion.span 
           className="logo-icon"
           animate={{ rotate: [0, 10, -10, 0] }}
@@ -58,10 +64,14 @@ function Header() {
         >
           ⏱️
         </motion.span>
-        <span className="logo-text">
+        <span className="logo-text logo-text-long" aria-hidden="true">
           <span className="logo-number">1</span>
           <span className="logo-minute">Minute</span>
           <span className="logo-academy">Academy</span>
+        </span>
+        <span className="logo-text logo-text-short" aria-hidden="true">
+          <span className="logo-number">1</span>
+          <span className="logo-short">MA</span>
         </span>
       </Link>
 
@@ -92,20 +102,31 @@ function Header() {
           </select>
         </label>
       )}
+
+      <button
+        type="button"
+        className="nav-toggle"
+        aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+        aria-expanded={mobileMenuOpen}
+        aria-controls="site-nav"
+        onClick={() => setMobileMenuOpen((v) => !v)}
+      >
+        {mobileMenuOpen ? '✕' : '☰'}
+      </button>
       
-      <nav className="nav">
-        <Link to="/topics" className="nav-item link browse" style={{ textDecoration: 'none' }}>
+      <nav id="site-nav" className={mobileMenuOpen ? 'nav nav-open' : 'nav'}>
+        <Link to="/topics" className="nav-item link browse" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
           🧭 Browse
         </Link>
-        <Link to="/pricing" className="nav-item link" style={{ textDecoration: 'none' }}>
+        <Link to="/pricing" className="nav-item link" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
           💳 Pricing
         </Link>
-        <Link to="/faq" className="nav-item link" style={{ textDecoration: 'none' }}>
+        <Link to="/faq" className="nav-item link" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
           ❓ FAQ
         </Link>
         {user ? (
           <>
-            <Link to="/me" className="nav-item link" style={{ textDecoration: 'none' }}>
+            <Link to="/me" className="nav-item link" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
               👤 Profile
             </Link>
             <button className="nav-item button" type="button" onClick={onSignOut} disabled={busy}>
@@ -113,7 +134,7 @@ function Header() {
             </button>
           </>
         ) : (
-          <Link to="/login" className="nav-item points" style={{ textDecoration: 'none' }}>
+          <Link to="/login" className="nav-item points" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
             Sign in
           </Link>
         )}
