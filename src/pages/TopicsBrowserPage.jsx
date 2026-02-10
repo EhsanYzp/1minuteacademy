@@ -67,6 +67,14 @@ export default function TopicsBrowserPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  function resetBrowseState() {
+    setActiveCategory('All');
+    setActiveSubcategory('All');
+    setFilter('all');
+    setDifficultyFilter('all');
+    setQuery('');
+  }
+
   const urlDifficulty = useMemo(() => {
     const raw = String(searchParams.get('difficulty') ?? 'all').toLowerCase();
     return DIFFICULTY_FILTERS.includes(raw) ? raw : 'all';
@@ -526,92 +534,8 @@ export default function TopicsBrowserPage() {
         )}
 
         <div className="topics-browser-layout">
-          <aside className="topics-sidebar">
-            <div className="sidebar-block">
-              <div className="sidebar-title">Categories</div>
-
-              <div className="categories-list">
-                {categories.map((c) => (
-                  <div key={c} className="cat-row">
-                    <button
-                      type="button"
-                      className={c === activeCategory ? 'cat active' : 'cat'}
-                      onClick={() => setActiveCategory(c)}
-                    >
-                      <span className="cat-name">{c}</span>
-                      <span className="cat-count">{sidebarCounts.get(c) ?? 0}</span>
-                    </button>
-
-                    {c === activeCategory && c !== 'All' && subcategories.length > 1 && (
-                      <div className="subcategories-list" aria-label={`${c} subcategories`}>
-                        {subcategories.map((sc) => (
-                          <button
-                            key={`${c}:${sc}`}
-                            type="button"
-                            className={sc === activeSubcategory ? 'subcat active' : 'subcat'}
-                            onClick={() => setActiveSubcategory(sc)}
-                          >
-                            <span className="subcat-name">{sc}</span>
-                            <span className="subcat-count">{subcategoryCounts.get(sc) ?? 0}</span>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="sidebar-block">
-              <div className="sidebar-title">Filters</div>
-              <div className="filters">
-                <button type="button" className={filter === 'all' ? 'f active' : 'f'} onClick={() => setFilter('all')}>
-                  All
-                </button>
-                <button
-                  type="button"
-                  className={filter === 'completed' ? 'f active' : 'f'}
-                  onClick={() => setFilter('completed')}
-                >
-                  Completed
-                </button>
-                <button type="button" className={filter === 'new' ? 'f active' : 'f'} onClick={() => setFilter('new')}>
-                  New
-                </button>
-              </div>
-
-              <div className="sidebar-title sidebar-title--sub">Difficulty</div>
-              <div className="filters" aria-label="Difficulty">
-                <button type="button" className={difficultyFilter === 'all' ? 'f active' : 'f'} onClick={() => setDifficultyFilter('all')}>
-                  All
-                </button>
-                <button
-                  type="button"
-                  className={difficultyFilter === 'beginner' ? 'f active' : 'f'}
-                  onClick={() => setDifficultyFilter('beginner')}
-                >
-                  Beginner
-                </button>
-                <button
-                  type="button"
-                  className={difficultyFilter === 'intermediate' ? 'f active' : 'f'}
-                  onClick={() => setDifficultyFilter('intermediate')}
-                >
-                  Intermediate
-                </button>
-                <button
-                  type="button"
-                  className={difficultyFilter === 'advanced' ? 'f active' : 'f'}
-                  onClick={() => setDifficultyFilter('advanced')}
-                >
-                  Advanced
-                </button>
-              </div>
-            </div>
-          </aside>
-
           <section className="topics-content">
-            <div className="topics-toolbar">
+            <div className="topics-toolbar topics-toolbar--sticky" role="region" aria-label="Topic filters">
               <div className="toolbar-row">
                 <label className="search">
                   <span className="search-icon">🔎</span>
@@ -635,16 +559,78 @@ export default function TopicsBrowserPage() {
                     </button>
                   )}
                 </label>
+              </div>
 
-                <div className="mobile-category">
-                  <select value={activeCategory} onChange={(e) => setActiveCategory(e.target.value)} aria-label="Category">
+              <div className="toolbar-filters" aria-label="Filters">
+                <div className="filter-group">
+                  <label className="filter-label" htmlFor="topics-filter-category">Category</label>
+                  <select
+                    id="topics-filter-category"
+                    value={activeCategory}
+                    onChange={(e) => setActiveCategory(e.target.value)}
+                    aria-label="Category"
+                  >
                     {categories.map((c) => (
                       <option key={c} value={c}>
-                        {c} ({sidebarCounts.get(c) ?? 0})
+                        {c}{typeof (sidebarCounts.get(c) ?? null) === 'number' ? ` (${sidebarCounts.get(c) ?? 0})` : ''}
                       </option>
                     ))}
                   </select>
                 </div>
+
+                <div className="filter-group">
+                  <label className="filter-label" htmlFor="topics-filter-subcategory">Subcategory</label>
+                  <select
+                    id="topics-filter-subcategory"
+                    value={activeSubcategory}
+                    onChange={(e) => setActiveSubcategory(e.target.value)}
+                    disabled={activeCategory === 'All' || subcategories.length === 0}
+                    aria-label="Subcategory"
+                  >
+                    {(activeCategory === 'All' || subcategories.length === 0) ? (
+                      <option value="All">All</option>
+                    ) : (
+                      subcategories.map((sc) => (
+                        <option key={sc} value={sc}>
+                          {sc}{typeof (subcategoryCounts.get(sc) ?? null) === 'number' ? ` (${subcategoryCounts.get(sc) ?? 0})` : ''}
+                        </option>
+                      ))
+                    )}
+                  </select>
+                </div>
+
+                <div className="filter-group">
+                  <label className="filter-label" htmlFor="topics-filter-difficulty">Difficulty</label>
+                  <select
+                    id="topics-filter-difficulty"
+                    value={difficultyFilter}
+                    onChange={(e) => setDifficultyFilter(e.target.value)}
+                    aria-label="Difficulty"
+                  >
+                    <option value="all">All</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                  </select>
+                </div>
+
+                <div className="filter-group">
+                  <label className="filter-label" htmlFor="topics-filter-status">Status</label>
+                  <select
+                    id="topics-filter-status"
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                    aria-label="Status"
+                  >
+                    <option value="all">All</option>
+                    <option value="new">New</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                </div>
+
+                <button type="button" className="toolbar-reset" onClick={resetBrowseState}>
+                  Reset
+                </button>
               </div>
 
               <div className="toolbar-sub">
@@ -662,87 +648,7 @@ export default function TopicsBrowserPage() {
                   }
                   return <>{' '}• Loaded <strong>{topics.length}</strong></>;
                 })()}
-                {difficultyFilter !== 'all' ? (
-                  <> • Difficulty: <strong>{difficultyFilter[0].toUpperCase() + difficultyFilter.slice(1)}</strong></>
-                ) : null}
                 {contentSource === 'local' ? ' (Local Preview)' : user ? '' : ' (sign in to track completion)'}
-              </div>
-
-              <div className="mobile-controls" aria-label="Browse controls">
-                <div className="chip-row" aria-label="Categories">
-                  {categories.map((c) => (
-                    <button
-                      key={`chip-${c}`}
-                      type="button"
-                      className={c === activeCategory ? 'chip active' : 'chip'}
-                      onClick={() => setActiveCategory(c)}
-                      title={`${c} (${sidebarCounts.get(c) ?? 0})`}
-                    >
-                      <span className="chip-name">{c}</span>
-                      <span className="chip-count">{sidebarCounts.get(c) ?? 0}</span>
-                    </button>
-                  ))}
-                </div>
-
-                {activeCategory !== 'All' && subcategories.length > 1 && (
-                  <div className="chip-row" aria-label="Subcategories">
-                    {subcategories.map((sc) => (
-                      <button
-                        key={`subchip-${activeCategory}:${sc}`}
-                        type="button"
-                        className={sc === activeSubcategory ? 'chip active' : 'chip'}
-                        onClick={() => setActiveSubcategory(sc)}
-                        title={`${sc} (${subcategoryCounts.get(sc) ?? 0})`}
-                      >
-                        <span className="chip-name">{sc}</span>
-                        <span className="chip-count">{subcategoryCounts.get(sc) ?? 0}</span>
-                      </button>
-                    ))}
-                  </div>
-                )}
-
-                <div className="chip-row" aria-label="Filters">
-                  <button type="button" className={filter === 'all' ? 'chip active' : 'chip'} onClick={() => setFilter('all')}>
-                    All
-                  </button>
-                  <button
-                    type="button"
-                    className={filter === 'completed' ? 'chip active' : 'chip'}
-                    onClick={() => setFilter('completed')}
-                  >
-                    Completed
-                  </button>
-                  <button type="button" className={filter === 'new' ? 'chip active' : 'chip'} onClick={() => setFilter('new')}>
-                    New
-                  </button>
-                </div>
-
-                <div className="chip-row" aria-label="Difficulty">
-                  <button type="button" className={difficultyFilter === 'all' ? 'chip active' : 'chip'} onClick={() => setDifficultyFilter('all')}>
-                    All
-                  </button>
-                  <button
-                    type="button"
-                    className={difficultyFilter === 'beginner' ? 'chip active' : 'chip'}
-                    onClick={() => setDifficultyFilter('beginner')}
-                  >
-                    Beginner
-                  </button>
-                  <button
-                    type="button"
-                    className={difficultyFilter === 'intermediate' ? 'chip active' : 'chip'}
-                    onClick={() => setDifficultyFilter('intermediate')}
-                  >
-                    Intermediate
-                  </button>
-                  <button
-                    type="button"
-                    className={difficultyFilter === 'advanced' ? 'chip active' : 'chip'}
-                    onClick={() => setDifficultyFilter('advanced')}
-                  >
-                    Advanced
-                  </button>
-                </div>
               </div>
             </div>
 
