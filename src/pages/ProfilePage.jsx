@@ -657,6 +657,22 @@ export default function ProfilePage() {
     return allowed.has(normalized) ? normalized : 'overview';
   }, [location.search, visibleTabs]);
 
+  const profileSubtitle = useMemo(() => {
+    switch (activeTab) {
+      case 'preferences':
+        return 'Personalize how lesson pages look.';
+      case 'progress':
+        return 'See your progress and completed topics.';
+      case 'ratings':
+        return 'View and update your module ratings.';
+      case 'account':
+        return 'Manage your plan, billing, and account.';
+      case 'overview':
+      default:
+        return 'Track your 1MA minutes (minutes completed), streak, and completed topics.';
+    }
+  }, [activeTab]);
+
   function setActiveTab(next) {
     const wanted = String(next ?? '').trim().toLowerCase();
     const allowed = new Set(visibleTabs.map((t) => t.id));
@@ -695,7 +711,7 @@ export default function ProfilePage() {
             <div className="profile-emoji">🧑‍🚀</div>
             <div>
               <h1>Your profile</h1>
-              <p>Track your 1MA minutes (minutes completed), streak, and completed topics.</p>
+              <p>{profileSubtitle}</p>
             </div>
           </div>
 
@@ -897,8 +913,6 @@ export default function ProfilePage() {
 
                     <div className="progress-list" style={{ marginTop: 10 }}>
                       {group.rows.map((p) => {
-                        const bestSecs = Number(p.bestSeconds);
-                        const showBest = Number.isFinite(bestSecs);
                         const completed = Number(p.completed ?? 0) > 0;
 
                         return (
@@ -916,7 +930,6 @@ export default function ProfilePage() {
 
                               <div className="progress-right">
                                 <div className="pill">✅ {p.completed}</div>
-                                {showBest && <div className="pill">⏱️ best {fmtSeconds(bestSecs)}</div>}
                                 <div className="pill faint">🕒 {fmtDate(p.lastCompletedAt)}</div>
                               </div>
                             </summary>
@@ -950,8 +963,6 @@ export default function ProfilePage() {
           ) : (
             <div className="progress-list">
               {progressFiltered.map((p) => {
-                const bestSecs = Number(p.bestSeconds);
-                const showBest = Number.isFinite(bestSecs);
                 const completed = Number(p.completed ?? 0) > 0;
 
                 return (
@@ -969,7 +980,6 @@ export default function ProfilePage() {
 
                       <div className="progress-right">
                         <div className="pill">✅ {p.completed}</div>
-                        {showBest && <div className="pill">⏱️ best {fmtSeconds(bestSecs)}</div>}
                         <div className="pill faint">🕒 {fmtDate(p.lastCompletedAt)}</div>
                       </div>
                     </summary>
