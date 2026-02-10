@@ -13,7 +13,7 @@ const beatLabels = {
 
 function coercePresentationStyle(raw) {
   const s = String(raw ?? '').trim().toLowerCase();
-  if (s === 'cards' || s === 'split' || s === 'minimal' || s === 'bold') return s;
+  if (s === 'cards' || s === 'split' || s === 'minimal' || s === 'bold' || s === 'dark') return s;
   return 'focus';
 }
 
@@ -39,6 +39,7 @@ export default function StoryReview({
         { id: 'split', label: 'Split (visual + text)' },
         { id: 'minimal', label: 'Minimal (quiet)' },
         { id: 'bold', label: 'Bold (punchy)' },
+          { id: 'dark', label: 'Dark (spotlight)' },
       ];
 
   const storyData = story?.story;

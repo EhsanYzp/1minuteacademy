@@ -13,7 +13,33 @@ function findFirstBulletsBlockItems(blocks) {
 
 export function compileJourneyFromTopic(topicRow) {
   const authored = topicRow?.journey;
-  if (authored && typeof authored === 'object') return authored;
+
+  const defaultProtocol = {
+    presentation: {
+      // Supported renderer templates for story-based lessons.
+      // Pro users can pick a preferred style; non-Pro gets the default.
+      defaultStoryStyle: 'focus',
+      storyStyles: ['focus', 'cards', 'split', 'minimal', 'bold', 'dark'],
+    },
+  };
+
+  if (authored && typeof authored === 'object') {
+    const a = authored;
+    const protocol = (a.protocol && typeof a.protocol === 'object') ? a.protocol : {};
+    const presentation = (protocol.presentation && typeof protocol.presentation === 'object') ? protocol.presentation : {};
+
+    return {
+      ...a,
+      protocol: {
+        ...defaultProtocol,
+        ...protocol,
+        presentation: {
+          ...defaultProtocol.presentation,
+          ...presentation,
+        },
+      },
+    };
+  }
 
   const title = typeof topicRow?.title === 'string' && topicRow.title.trim() ? topicRow.title.trim() : 'Topic';
   const emoji = typeof topicRow?.emoji === 'string' && topicRow.emoji.trim() ? topicRow.emoji.trim() : '🎯';
@@ -31,7 +57,7 @@ export function compileJourneyFromTopic(topicRow) {
         // Supported renderer templates for story-based lessons.
         // Pro users can pick a preferred style; non-Pro gets the default.
         defaultStoryStyle: 'focus',
-        storyStyles: ['focus', 'cards', 'split', 'minimal', 'bold'],
+        storyStyles: ['focus', 'cards', 'split', 'minimal', 'bold', 'dark'],
       },
     },
     topicStart: {

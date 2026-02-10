@@ -7,7 +7,7 @@ const QUIZ_AUTO_REVEAL_AT = 4; // Auto-reveal answer when 4 seconds remaining
 
 function coercePresentationStyle(raw) {
   const s = String(raw ?? '').trim().toLowerCase();
-  if (s === 'cards' || s === 'split' || s === 'minimal' || s === 'bold') return s;
+  if (s === 'cards' || s === 'split' || s === 'minimal' || s === 'bold' || s === 'dark') return s;
   return 'focus';
 }
 
