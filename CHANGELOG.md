@@ -10,6 +10,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 ### Added
 - Locked Pro-only topics (Intermediate/Advanced) on the Topics page for guest/free users (shows a lock badge and disables navigation).
 - Route-level Pro-only gate on the topic page to prevent direct URL access without Pro.
+- Difficulty filter on the Topics page: All / Beginner / Intermediate / Advanced (persisted in the URL via `?difficulty=` for shareable links).
 
 ### Changed
 - Centralized topic access gating in `src/services/entitlements.js` via `getTopicGate()`.

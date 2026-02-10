@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Header from '../components/Header';
 import SubjectCard from '../components/SubjectCard';
 import { getTopicCategoryCounts, listTopicsPage, searchTopicsPage } from '../services/topics';
@@ -41,10 +42,13 @@ function includesQuery(topic, q) {
   return hay.includes(q.toLowerCase());
 }
 
+const DIFFICULTY_FILTERS = ['all', 'beginner', 'intermediate', 'advanced'];
+
 export default function TopicsBrowserPage() {
   const { user, isSupabaseConfigured } = useAuth();
   const contentSource = getContentSource();
   const tier = getCurrentTier(user);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [topics, setTopics] = useState([]);
   const [totalTopics, setTotalTopics] = useState(null);
@@ -59,8 +63,39 @@ export default function TopicsBrowserPage() {
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [filter, setFilter] = useState('all'); // all | completed | new
+  const [difficultyFilter, setDifficultyFilter] = useState('all'); // all | beginner | intermediate | advanced
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const urlDifficulty = useMemo(() => {
+    const raw = String(searchParams.get('difficulty') ?? 'all').toLowerCase();
+    return DIFFICULTY_FILTERS.includes(raw) ? raw : 'all';
+  }, [searchParams]);
+
+  useEffect(() => {
+    // Sync UI state from URL (supports shareable links + browser back/forward).
+    setDifficultyFilter((prev) => (prev === urlDifficulty ? prev : urlDifficulty));
+  }, [urlDifficulty]);
+
+  useEffect(() => {
+    // Sync URL from UI state (without clobbering other query params).
+    const current = String(searchParams.get('difficulty') ?? 'all').toLowerCase();
+    const desired = String(difficultyFilter ?? 'all').toLowerCase();
+
+    const nextDesired = DIFFICULTY_FILTERS.includes(desired) ? desired : 'all';
+    if (nextDesired === 'all') {
+      if (!searchParams.has('difficulty')) return;
+      const next = new URLSearchParams(searchParams);
+      next.delete('difficulty');
+      setSearchParams(next, { replace: true });
+      return;
+    }
+
+    if (current === nextDesired) return;
+    const next = new URLSearchParams(searchParams);
+    next.set('difficulty', nextDesired);
+    setSearchParams(next, { replace: true });
+  }, [difficultyFilter, searchParams, setSearchParams]);
 
   const isLocalDev = import.meta.env.DEV && contentSource === 'local';
   const [checkOpen, setCheckOpen] = useState(false);
@@ -424,6 +459,10 @@ export default function TopicsBrowserPage() {
     if (filter === 'completed') out = out.filter((t) => t.completed);
     if (filter === 'new') out = out.filter((t) => !t.completed);
 
+    if (difficultyFilter !== 'all') {
+      out = out.filter((t) => String(t?.difficulty ?? 'Beginner').toLowerCase() === difficultyFilter);
+    }
+
     out.sort((a, b) => {
       // Completed first, then alphabetical
       const ac = a.completed ? 1 : 0;
@@ -433,7 +472,7 @@ export default function TopicsBrowserPage() {
     });
 
     return out;
-  }, [topics, ratingMap, completedIds, activeCategory, activeSubcategory, query, filter, contentSource]);
+  }, [topics, ratingMap, completedIds, activeCategory, activeSubcategory, query, filter, difficultyFilter, contentSource]);
 
   const subcategoryCounts = useMemo(() => {
     if (activeCategory === 'All') return new Map([['All', 0]]);
@@ -540,6 +579,34 @@ export default function TopicsBrowserPage() {
                   New
                 </button>
               </div>
+
+              <div className="sidebar-title sidebar-title--sub">Difficulty</div>
+              <div className="filters" aria-label="Difficulty">
+                <button type="button" className={difficultyFilter === 'all' ? 'f active' : 'f'} onClick={() => setDifficultyFilter('all')}>
+                  All
+                </button>
+                <button
+                  type="button"
+                  className={difficultyFilter === 'beginner' ? 'f active' : 'f'}
+                  onClick={() => setDifficultyFilter('beginner')}
+                >
+                  Beginner
+                </button>
+                <button
+                  type="button"
+                  className={difficultyFilter === 'intermediate' ? 'f active' : 'f'}
+                  onClick={() => setDifficultyFilter('intermediate')}
+                >
+                  Intermediate
+                </button>
+                <button
+                  type="button"
+                  className={difficultyFilter === 'advanced' ? 'f active' : 'f'}
+                  onClick={() => setDifficultyFilter('advanced')}
+                >
+                  Advanced
+                </button>
+              </div>
             </div>
           </aside>
 
@@ -595,6 +662,9 @@ export default function TopicsBrowserPage() {
                   }
                   return <>{' '}• Loaded <strong>{topics.length}</strong></>;
                 })()}
+                {difficultyFilter !== 'all' ? (
+                  <> • Difficulty: <strong>{difficultyFilter[0].toUpperCase() + difficultyFilter.slice(1)}</strong></>
+                ) : null}
                 {contentSource === 'local' ? ' (Local Preview)' : user ? '' : ' (sign in to track completion)'}
               </div>
 
@@ -644,6 +714,33 @@ export default function TopicsBrowserPage() {
                   </button>
                   <button type="button" className={filter === 'new' ? 'chip active' : 'chip'} onClick={() => setFilter('new')}>
                     New
+                  </button>
+                </div>
+
+                <div className="chip-row" aria-label="Difficulty">
+                  <button type="button" className={difficultyFilter === 'all' ? 'chip active' : 'chip'} onClick={() => setDifficultyFilter('all')}>
+                    All
+                  </button>
+                  <button
+                    type="button"
+                    className={difficultyFilter === 'beginner' ? 'chip active' : 'chip'}
+                    onClick={() => setDifficultyFilter('beginner')}
+                  >
+                    Beginner
+                  </button>
+                  <button
+                    type="button"
+                    className={difficultyFilter === 'intermediate' ? 'chip active' : 'chip'}
+                    onClick={() => setDifficultyFilter('intermediate')}
+                  >
+                    Intermediate
+                  </button>
+                  <button
+                    type="button"
+                    className={difficultyFilter === 'advanced' ? 'chip active' : 'chip'}
+                    onClick={() => setDifficultyFilter('advanced')}
+                  >
+                    Advanced
                   </button>
                 </div>
               </div>
