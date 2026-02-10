@@ -24,12 +24,17 @@ export default function Seo({
   canonicalPath,
   type = 'website',
   image,
+  twitterImage,
   noindex = false,
   jsonLd,
 }) {
   useEffect(() => {
     const nextTitle = buildTitle(title);
     const nextDescription = String(description ?? '').trim() || DEFAULT_DESCRIPTION;
+
+    const ogImage = image || '/og/og-image.png';
+    const twImage = twitterImage || ogImage;
+    const isSvg = (p) => String(p ?? '').toLowerCase().includes('.svg');
 
     const url = toAbsoluteUrl(path || (typeof window !== 'undefined' ? window.location.pathname : '/'));
     const canonicalUrl = toAbsoluteUrl(
@@ -48,13 +53,12 @@ export default function Seo({
     upsertMeta({ property: 'og:type', content: String(type ?? 'website') });
     upsertMeta({ property: 'og:url', content: url });
 
-    if (image) {
-      upsertMeta({ property: 'og:image', content: toAbsoluteUrl(image) });
-      upsertMeta({ name: 'twitter:image', content: toAbsoluteUrl(image) });
-    }
+    upsertMeta({ property: 'og:image', content: toAbsoluteUrl(ogImage) });
+    upsertMeta({ name: 'twitter:image', content: toAbsoluteUrl(twImage) });
 
     // Twitter/X cards
-    upsertMeta({ name: 'twitter:card', content: image ? 'summary_large_image' : 'summary' });
+    const card = (!isSvg(twImage) && !isSvg(ogImage)) ? 'summary_large_image' : 'summary';
+    upsertMeta({ name: 'twitter:card', content: card });
     upsertMeta({ name: 'twitter:title', content: nextTitle });
     upsertMeta({ name: 'twitter:description', content: nextDescription });
 
@@ -67,7 +71,7 @@ export default function Seo({
     } else if (jsonLd) {
       upsertJsonLd({ id: 'seo-jsonld-0', json: jsonLd });
     }
-  }, [title, description, path, canonicalPath, type, image, noindex, jsonLd]);
+  }, [title, description, path, canonicalPath, type, image, twitterImage, noindex, jsonLd]);
 
   return null;
 }

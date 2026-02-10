@@ -195,7 +195,8 @@ export async function listTopics() {
 
   // The topics browser needs `subject` for categories.
   // Keep this resilient: if an older schema lacks a column, retry with a minimal select.
-  const fullSelect = 'id, subject, title, emoji, color, description, difficulty';
+  const fullSelect = 'id, subject, subcategory, title, emoji, color, description, difficulty';
+  const noSubcategorySelect = 'id, subject, title, emoji, color, description, difficulty';
   const minimalSelect = 'id, title, emoji, color, description, difficulty';
 
   const run = async (columns) => {
@@ -214,9 +215,14 @@ export async function listTopics() {
   const looksLikeMissingColumn = msg.includes('column') && msg.includes('does not exist');
   if (!looksLikeMissingColumn) throw first.error;
 
-  const second = await run(minimalSelect);
-  if (second.error) throw second.error;
-  return second.data ?? [];
+  // Fall back 1: DB has `subject` but not `subcategory`.
+  const second = await run(noSubcategorySelect);
+  if (!second.error) return second.data ?? [];
+
+  // Fall back 2: older schema missing `subject` too.
+  const third = await run(minimalSelect);
+  if (third.error) throw third.error;
+  return third.data ?? [];
 }
 
 export async function getTopic(topicId) {

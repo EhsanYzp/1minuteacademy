@@ -20,6 +20,9 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - SEO assets: `robots.txt`, generated `sitemap.xml`, generated `llms.txt`, and a first-party `favicon.svg` + web manifest.
 - Build-time icon generation for a full favicon/PWA set (`favicon.ico`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`).
 - SEO implementation plan doc: `docs/seo-plan.md` with P0/P1/P2 tasks and pipeline guidance.
+- Default OpenGraph image at `/og/og-image.png` and build-time generation of topic-specific OG images under `/og/topics/`.
+- Structured data (JSON-LD): `ItemList` on Topics and `LearningResource` on Topic pages.
+- Topic pages now include a “Related topics” section to improve internal linking.
 
 ### Changed
 - Topics page polish: headline uses “1-minute”, Status labels are clearer (“To watch”/“Watched”), and the sticky filter bar now stays fully visible under the sticky header.
@@ -32,6 +35,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Profile page: tab-specific subtitle; progress list simplified; mobile header branding adjusted.
 - Netlify SPA routing now explicitly passes through SEO/static files (robots/sitemap/manifest/icons) to avoid being rewritten to `/index.html`.
 - Pricing page SEO now supports both `/pricing` and `/upgrade` paths while keeping the canonical URL on `/pricing`.
+- Topic page: refreshed “Related topics” section styling to be more noticeable and consistent with the rest of the page.
 
 ### Fixed
 - Prevented the “click into Pro-only then discover it’s locked” UX for free users.

@@ -10,6 +10,7 @@ import { getTopicRatingSummaries } from '../services/ratings';
 import { useAuth } from '../context/AuthContext';
 import { getContentSource } from '../services/_contentSource';
 import { getCurrentTier, getTopicGate } from '../services/entitlements';
+import { toAbsoluteUrl } from '../services/seo';
 import './TopicsBrowserPage.css';
 
 const CANONICAL_CATEGORIES = [
@@ -550,6 +551,24 @@ export default function TopicsBrowserPage() {
     return 'idle';
   }, [contentSource, query, debouncedQuery, loading]);
 
+  const itemListJsonLd = useMemo(() => {
+    const items = (Array.isArray(topics) ? topics : [])
+      .filter((t) => t && t.id && t.title)
+      .slice(0, 60);
+    if (items.length === 0) return null;
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: 'Topics',
+      itemListElement: items.map((t, idx) => ({
+        '@type': 'ListItem',
+        position: idx + 1,
+        name: String(t.title),
+        url: toAbsoluteUrl(`/topic/${encodeURIComponent(String(t.id))}`),
+      })),
+    };
+  }, [topics]);
+
   return (
     <motion.div className="topics-browser" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Seo
@@ -557,6 +576,7 @@ export default function TopicsBrowserPage() {
         description="Browse 1-minute lessons by category, difficulty, and search."
         path="/topics"
         canonicalPath="/topics"
+        jsonLd={itemListJsonLd}
       />
       <Header />
 

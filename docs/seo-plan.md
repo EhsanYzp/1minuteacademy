@@ -75,16 +75,19 @@ Recommended: set both to the same value, e.g. `https://1minute.academy`.
 ## P1 (high impact — better previews + rich results)
 
 1. **OG/Twitter images**
-   - Create a default `og-image.png` and reference it from `index.html`.
-   - Add **topic-specific OG images** (generated from topic title/emoji), served from a stable URL pattern.
+   - Implemented default OG image: `public/og/og-image.png` (referenced from `index.html` and used as the default in the `Seo` component).
+   - Implemented topic-specific OG images as SVGs generated at build time:
+     - Pattern: `/og/topics/<encodedTopicId>.svg`
+     - Generated from `content/topics/**/*.topic.json` (title/emoji/color)
+   - Note: some social platforms are inconsistent with SVG previews; we keep Twitter image pinned to the PNG default on topic pages as a safe fallback.
 
 2. **Structured data (JSON-LD)**
    - Home: `Organization` + `WebSite` (already added).
-   - Topics listing: `ItemList`.
-   - Topic page: `LearningResource` or `Article`-like schema with title/description/difficulty.
+   - Topics listing: `ItemList` (implemented; capped to the first ~60 loaded topics to avoid huge JSON payloads).
+   - Topic page: `LearningResource` with title/description/difficulty + `PT1M` timeRequired (implemented).
 
 3. **Internal linking improvements**
-   - Ensure topic pages link to related topics (same subject/subcategory) to strengthen crawl paths.
+   - Implemented a “Related topics” section on topic pages (same subject + subcategory when available).
 
 4. **Content snippets**
    - Add an indexable excerpt on topic pages (already has `description`).
