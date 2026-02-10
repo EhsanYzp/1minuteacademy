@@ -329,7 +329,7 @@ export default function UpgradePage() {
                 </div>
                 <div className="compare-cell compare-cell-stack">
                   <span className="mark yes" aria-label="Available" title="Available">✓</span>
-                  <div className="compare-cell-note">All styles</div>
+                  <div className="compare-cell-note">All styles (incl. Pro-only)</div>
                 </div>
               </div>
 

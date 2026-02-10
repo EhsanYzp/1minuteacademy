@@ -13,6 +13,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Difficulty filter on the Topics page: All / Beginner / Intermediate / Advanced (persisted in the URL via `?difficulty=` for shareable links).
 - Topics page redesigned with a minimal sticky filter bar (Search + Category + Subcategory + Difficulty + Status + Reset) for a cleaner desktop/mobile experience.
 - Multiple lesson presentation styles for story-based lessons (Focus/Dark/Cards/Split/Minimal/Bold), with a preference selector in the profile.
+- Added additional Pro-only lesson presentation styles: Paper / Terminal / Glass.
 - In-lesson presentation style switcher (available from lesson/review top bars).
 - Journey-level presentation protocol (`journey.protocol.presentation`) to define default and supported presentation styles.
 
@@ -24,3 +25,4 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 
 ### Fixed
 - Prevented the “click into Pro-only then discover it’s locked” UX for free users.
+- Dark (Spotlight) style: review-mode navigation bar is now visible.

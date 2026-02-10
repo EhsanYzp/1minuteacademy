@@ -19,7 +19,7 @@ export function compileJourneyFromTopic(topicRow) {
       // Supported renderer templates for story-based lessons.
       // Pro users can pick a preferred style; non-Pro gets the default.
       defaultStoryStyle: 'focus',
-      storyStyles: ['focus', 'cards', 'split', 'minimal', 'bold', 'dark'],
+      storyStyles: ['focus', 'dark', 'cards', 'split', 'minimal', 'bold', 'paper', 'terminal', 'glass'],
     },
   };
 
@@ -57,7 +57,7 @@ export function compileJourneyFromTopic(topicRow) {
         // Supported renderer templates for story-based lessons.
         // Pro users can pick a preferred style; non-Pro gets the default.
         defaultStoryStyle: 'focus',
-        storyStyles: ['focus', 'cards', 'split', 'minimal', 'bold', 'dark'],
+        storyStyles: ['focus', 'dark', 'cards', 'split', 'minimal', 'bold', 'paper', 'terminal', 'glass'],
       },
     },
     topicStart: {

@@ -9,6 +9,9 @@ export const PRESENTATION_STYLES = [
   { id: 'split', label: 'Split (visual + text)' },
   { id: 'minimal', label: 'Minimal (quiet)' },
   { id: 'bold', label: 'Bold (punchy)' },
+  { id: 'paper', label: 'Paper (warm)' },
+  { id: 'terminal', label: 'Terminal (code)' },
+  { id: 'glass', label: 'Glass (frosted)' },
 ];
 
 export const DEFAULT_PRESENTATION_STYLE = 'focus';
