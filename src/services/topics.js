@@ -191,6 +191,8 @@ export async function listTopics() {
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
+  const supabase = requireSupabase();
+
   // The topics browser needs `subject` for categories.
   // Keep this resilient: if an older schema lacks a column, retry with a minimal select.
   const fullSelect = 'id, subject, title, emoji, color, description, difficulty';

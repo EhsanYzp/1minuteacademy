@@ -30,3 +30,4 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Dark (Spotlight) style: review-mode navigation bar is now visible.
 - Split (Visual + Text) style: improved alignment and reduced layout/scroll issues on long-content modules.
 - Split (Visual + Text) style: removed the thin vertical gutter line.
+- Profile page: fixed a crash when loading topics from Supabase (undefined client reference).
