@@ -41,24 +41,36 @@ Recommended: set both to the same value, e.g. `https://1minute.academy`.
 ## P0 (must do first — indexability + hygiene)
 
 1. **Canonical URL source of truth**
-   - Ensure `VITE_SITE_URL` and `SITE_URL` are set in Netlify/Vercel env.
-   - Verify canonical tags output correct domain (no localhost).
+   - Set `VITE_SITE_URL` (client runtime) and `SITE_URL` (build-time generator) to the production origin, e.g. `https://1minute.academy`.
+   - Netlify: Site settings → Build & deploy → Environment.
+   - Vercel: Project → Settings → Environment Variables.
+   - Verify canonical tags output the correct domain (no localhost) on `/`, `/topics`, and a few `/topic/<id>` pages.
 
 2. **Sitemap + robots correctness**
    - Confirm `https://<domain>/robots.txt` and `https://<domain>/sitemap.xml` return 200.
+   - Netlify SPA note: explicit pass-through rules were added in [public/_redirects](../public/_redirects) to ensure these files are never rewritten to `/index.html`.
    - Confirm sitemap contains:
      - `/`, `/topics`, `/pricing`, `/faq`, legal pages
      - `/topic/<id>` for all `published: true` topics
+   - Generation is automated on build via `prebuild` (see `npm run seo:generate`).
 
 3. **Noindex for private/utility routes**
    - Keep `noindex` on: `/login`, `/auth/callback`, `/auth/reset`, `/me`, `/lesson/:id`, `/review/:id`.
+   - These are implemented via the [src/components/Seo.jsx](../src/components/Seo.jsx) component on each route.
 
 4. **Favicons + PWA basics**
-   - Add a full favicon set (optional but recommended): `favicon.ico`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`.
+   - A full icon set is generated automatically on build:
+     - `public/favicon.ico`
+     - `public/apple-touch-icon.png`
+     - `public/icons/icon-192.png`
+     - `public/icons/icon-512.png`
+   - Generator: [scripts/generateIcons.mjs](../scripts/generateIcons.mjs) (also runnable via `npm run icons:generate`).
+   - Manifest references these icons: [public/site.webmanifest](../public/site.webmanifest)
 
 5. **Search Console / Webmaster Tools**
    - Add the domain property in Google Search Console + Bing Webmaster Tools.
    - Submit sitemap and monitor coverage.
+   - Recommended: set up a simple recurring check (weekly) that `/sitemap.xml` continues returning 200 and includes the expected URL count.
 
 ## P1 (high impact — better previews + rich results)
 

@@ -18,6 +18,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Journey-level presentation protocol (`journey.protocol.presentation`) to define default and supported presentation styles.
 - SEO infrastructure: per-route meta tags (title/description/canonical/OG/Twitter) via a lightweight `Seo` component.
 - SEO assets: `robots.txt`, generated `sitemap.xml`, generated `llms.txt`, and a first-party `favicon.svg` + web manifest.
+- Build-time icon generation for a full favicon/PWA set (`favicon.ico`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`).
 - SEO implementation plan doc: `docs/seo-plan.md` with P0/P1/P2 tasks and pipeline guidance.
 
 ### Changed
@@ -29,6 +30,8 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Profile page tabs are now sticky while scrolling.
 - Header: improved mobile topbar with a compact layout and hamburger menu.
 - Profile page: tab-specific subtitle; progress list simplified; mobile header branding adjusted.
+- Netlify SPA routing now explicitly passes through SEO/static files (robots/sitemap/manifest/icons) to avoid being rewritten to `/index.html`.
+- Pricing page SEO now supports both `/pricing` and `/upgrade` paths while keeping the canonical URL on `/pricing`.
 
 ### Fixed
 - Prevented the “click into Pro-only then discover it’s locked” UX for free users.

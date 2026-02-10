@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
@@ -40,6 +40,7 @@ function formatPercent(value) {
 
 export default function UpgradePage() {
   const { user, refreshSession, reloadUser, loading } = useAuth();
+  const location = useLocation();
   const navigate = useNavigate();
   const tier = getCurrentTier(user);
   const planInterval = String(user?.user_metadata?.plan_interval ?? '').toLowerCase();
@@ -179,7 +180,7 @@ export default function UpgradePage() {
       <Seo
         title="Pricing"
         description="Guest and Free let you start. Pro unlocks advanced topics, review mode, and more lesson styles."
-        path="/pricing"
+        path={location?.pathname || '/pricing'}
         canonicalPath="/pricing"
       />
       <Header />

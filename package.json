@@ -6,9 +6,10 @@
   "scripts": {
     "dev": "vite",
     "dev:local": "VITE_CONTENT_SOURCE=local vite",
-    "prebuild": "node scripts/generateSeoAssets.mjs",
+    "prebuild": "node scripts/generateIcons.mjs && node scripts/generateSeoAssets.mjs",
     "build": "vite build",
     "seo:generate": "node scripts/generateSeoAssets.mjs",
+    "icons:generate": "node scripts/generateIcons.mjs",
     "content:scaffold": "node scripts/scaffoldTopic.mjs",
     "content:validate": "node scripts/validateContent.mjs",
     "journey:parity": "node scripts/journeyParity.mjs",
@@ -40,6 +41,8 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "pngjs": "^7.0.0",
+    "to-ico": "^1.1.5",
     "vite": "^7.2.4"
   }
 }
