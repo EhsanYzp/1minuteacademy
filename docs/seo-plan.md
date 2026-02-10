@@ -101,7 +101,10 @@ Recommended: set both to the same value, e.g. `https://1minute.academy`.
 
 2. **LLM discovery enhancements**
    - Keep `llms.txt` generated from published topics.
-   - Consider adding a short “data catalog” page (`/topics.txt` or `/topics.json`) containing clean titles/descriptions.
+   - Implemented a short “data catalog” output for clean titles/descriptions (generated at build time):
+     - `/topics.json` (machine-friendly JSON)
+     - `/topics.txt` (TSV, easy to grep/parse)
+   - Both are generated from `content/topics/**/*.topic.json` (published topics only) by `npm run seo:generate`.
 
 3. **Monitoring + regression prevention**
    - Add a CI step to verify:

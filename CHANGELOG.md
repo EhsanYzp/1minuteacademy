@@ -23,6 +23,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Default OpenGraph image at `/og/og-image.png` and build-time generation of topic-specific OG images under `/og/topics/`.
 - Structured data (JSON-LD): `ItemList` on Topics and `LearningResource` on Topic pages.
 - Topic pages now include a “Related topics” section to improve internal linking.
+- LLM/crawler-friendly topics catalog endpoints: `/topics.json` and `/topics.txt` (generated at build time from published topics).
 
 ### Changed
 - Topics page polish: headline uses “1-minute”, Status labels are clearer (“To watch”/“Watched”), and the sticky filter bar now stays fully visible under the sticky header.

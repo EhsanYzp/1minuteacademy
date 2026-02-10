@@ -245,6 +245,8 @@ async function main() {
       const stat = await fs.stat(file);
       topicRows.push({
         id: String(data.id),
+        subject: String(data.subject ?? ''),
+        subcategory: String(data.subcategory ?? ''),
         title: String(data.title ?? data.id),
         description: String(data.description ?? ''),
         emoji: String(data.emoji ?? ''),
@@ -366,7 +368,66 @@ async function main() {
 
   await writeFileEnsuringDir(path.join(publicDir, 'llms.txt'), llmsLines.join('\n'));
 
-  console.log(`✅ SEO assets generated: public/sitemap.xml, public/llms.txt, public/og/* (${topicRows.length} topics)`);
+  // Topics catalog: lightweight, crawler/LLM-friendly index of published modules.
+  {
+    const cleaned = topicRows.map((t) => {
+      const title = String(t.title ?? '').replace(/\s+/g, ' ').trim();
+      const description = String(t.description ?? '').replace(/\s+/g, ' ').trim();
+      const subject = String(t.subject ?? '').replace(/\s+/g, ' ').trim();
+      const subcategory = String(t.subcategory ?? '').replace(/\s+/g, ' ').trim();
+      const difficulty = String(t.difficulty ?? '').replace(/\s+/g, ' ').trim();
+      const urlPath = `/topic/${encodeURIComponent(String(t.id))}`;
+      return {
+        id: String(t.id),
+        title,
+        description,
+        subject: subject || null,
+        subcategory: subcategory || null,
+        difficulty: difficulty || null,
+        url: `${base}${urlPath}`,
+        path: urlPath,
+        updatedAt: new Date(t.updatedAt).toISOString(),
+      };
+    });
+
+    const json = JSON.stringify(
+      {
+        generatedAt: now.toISOString(),
+        site: base,
+        count: cleaned.length,
+        topics: cleaned,
+      },
+      null,
+      2,
+    );
+    await writeFileEnsuringDir(path.join(publicDir, 'topics.json'), `${json}\n`);
+
+    const lines = [];
+    lines.push('# 1 Minute Academy topics catalog');
+    lines.push(`# Generated: ${now.toISOString()}`);
+    lines.push(`# Site: ${base}`);
+    lines.push('# Format: TSV');
+    lines.push('id\ttitle\tdescription\turl\tsubject\tsubcategory\tdifficulty\tupdatedAt');
+    for (const t of cleaned) {
+      const row = [
+        t.id,
+        t.title || '',
+        t.description || '',
+        t.url,
+        t.subject || '',
+        t.subcategory || '',
+        t.difficulty || '',
+        t.updatedAt,
+      ]
+        .map((v) => String(v).replace(/\t/g, ' ').replace(/\r?\n/g, ' ').trim())
+        .join('\t');
+      lines.push(row);
+    }
+    lines.push('');
+    await writeFileEnsuringDir(path.join(publicDir, 'topics.txt'), lines.join('\n'));
+  }
+
+  console.log(`✅ SEO assets generated: public/sitemap.xml, public/llms.txt, public/topics.json, public/topics.txt, public/og/* (${topicRows.length} topics)`);
 }
 
 main().catch((e) => {
