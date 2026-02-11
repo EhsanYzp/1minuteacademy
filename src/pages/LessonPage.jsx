@@ -53,6 +53,8 @@ function LessonPage() {
   const [ratingBusy, setRatingBusy] = useState(false);
   const [ratingError, setRatingError] = useState(null);
   const submittedCompletionRef = useRef(false);
+  const timerDeadlineMsRef = useRef(null);
+  const timerCompletedRef = useRef(false);
 
   const canStart = useMemo(() => canStartTopic({ tier, topicRow }), [tier, topicRow]);
 
@@ -390,6 +392,9 @@ function LessonPage() {
       setMyRating(null);
       setRatingBusy(false);
       setRatingError(null);
+
+      timerDeadlineMsRef.current = null;
+      timerCompletedRef.current = false;
     }
   }, [totalSeconds, isStarted]);
 
@@ -437,20 +442,33 @@ function LessonPage() {
   }
 
   useEffect(() => {
-    if (isStarted && !isCompleted && timeRemaining > 0) {
-      const timer = setInterval(() => {
-        setTimeRemaining(prev => {
-          if (prev <= 1) {
-            handleTimeUp();
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-
-      return () => clearInterval(timer);
+    if (!isStarted || isCompleted) {
+      timerDeadlineMsRef.current = null;
+      timerCompletedRef.current = false;
+      return;
     }
-  }, [isStarted, isCompleted, timeRemaining, handleTimeUp]);
+
+    if (!timerDeadlineMsRef.current) {
+      timerDeadlineMsRef.current = Date.now() + Math.max(0, totalSeconds) * 1000;
+    }
+
+    function tick() {
+      const deadline = timerDeadlineMsRef.current;
+      if (!deadline) return;
+
+      const remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+      setTimeRemaining(remaining);
+
+      if (remaining <= 0 && !timerCompletedRef.current) {
+        timerCompletedRef.current = true;
+        handleTimeUp();
+      }
+    }
+
+    tick();
+    const timer = setInterval(tick, 1000);
+    return () => clearInterval(timer);
+  }, [isStarted, isCompleted, totalSeconds, handleTimeUp]);
 
   useEffect(() => {
     if (!isStarted || !isCompleted) return;

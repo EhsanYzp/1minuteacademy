@@ -105,11 +105,15 @@ There is no React `ErrorBoundary` anywhere in the component tree. A single uncau
 
 #### REL-02 · Timer drift when browser throttles background tabs
 
-**Where:** [src/components/Timer.jsx](../src/components/Timer.jsx)
+**Where:** [src/pages/LessonPage.jsx](../src/pages/LessonPage.jsx)
 
 The countdown timer decrements a counter inside a `setInterval`. Modern browsers throttle intervals in background tabs to 1 call/sec or less, causing the 60-second lesson to last much longer if the user switches tabs.
 
 **Fix:** Record `startTime = Date.now()` when the timer starts. On each tick compute `elapsed = Date.now() - startTime`. Derive remaining seconds from the wall clock, not from a decrementing counter.
+
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Replaced the decrementing `setInterval` countdown with a wall-clock deadline (`Date.now()`), so the timer stays accurate even when the tab is background-throttled.
 
 ---
 

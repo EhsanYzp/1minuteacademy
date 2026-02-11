@@ -49,3 +49,4 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Security: tightened API error handling to avoid echoing arbitrary exception messages to clients (logs server-side; client sees fixed safe messages).
 - Security: added a baseline Content-Security-Policy header for Netlify/Vercel deploys.
 - Reliability: added a top-level React ErrorBoundary to prevent white-screen crashes and provide a recovery UI.
+- Reliability: fixed lesson timer drift by basing the countdown on wall-clock time (accurate after background-tab throttling).
