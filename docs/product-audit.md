@@ -333,11 +333,15 @@ When the mobile hamburger menu is open, keyboard focus can tab behind the overla
 
 #### A11Y-05 · Quiz options lack proper semantics
 
-**Where:** Lesson engine quiz rendering
+**Where:** [src/engine/story/StoryRenderer.jsx](../src/engine/story/StoryRenderer.jsx)
 
 Quiz answer options use `<button>` elements but lack `role="radiogroup"` / `role="radio"` semantics. Screen readers don't announce this as a single-choice question set.
 
-**Fix:** Wrap options in a container with `role="radiogroup"` and `aria-label="Quiz answers"`. Each option gets `role="radio"` with `aria-checked`.
+**Fix:** Wrap options in a container with `role="radiogroup"` + `aria-labelledby` (the question). Each option gets `role="radio"` + `aria-checked` and roving `tabIndex`, with arrow-key navigation (`←/→/↑/↓`, `Home`, `End`) and `Space`/`Enter` to select.
+
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Updated `StoryRenderer` quiz options to use `radiogroup`/`radio` semantics with `aria-checked`, roving focus, and arrow-key navigation so screen readers announce the set as a single-choice question and keyboard users can navigate options predictably.
 
 ---
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './story.css';
 
@@ -23,12 +23,15 @@ export default function StoryRenderer({
   presentationStyle = 'focus',
   totalSeconds = 60,
 }) {
+  const quizQuestionId = useId();
   const [currentBeat, setCurrentBeat] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [answered, setAnswered] = useState(false);
   const [autoRevealed, setAutoRevealed] = useState(false);
   const [waitingForTimer, setWaitingForTimer] = useState(false);
+  const [activeOptionIndex, setActiveOptionIndex] = useState(0);
+  const quizOptionsRef = useRef(null);
 
   const isStoryComplete = currentBeat >= BEATS.length;
   const beatKey = BEATS[currentBeat];
@@ -70,10 +73,24 @@ export default function StoryRenderer({
 
   const handleAnswer = (index) => {
     if (answered) return;
+    setActiveOptionIndex(index);
     setSelectedAnswer(index);
     setAnswered(true);
     setWaitingForTimer(true);
   };
+
+  useEffect(() => {
+    if (!showQuiz) return;
+    setActiveOptionIndex(0);
+  }, [showQuiz]);
+
+  useEffect(() => {
+    if (!showQuiz) return;
+    if (!autoRevealed) return;
+    if (selectedAnswer != null) return;
+    const correctIndex = story?.quiz?.correct;
+    if (Number.isInteger(correctIndex)) setActiveOptionIndex(correctIndex);
+  }, [showQuiz, autoRevealed, selectedAnswer, story?.quiz?.correct]);
 
   // Wait for timer to hit 0 after answering
   useEffect(() => {
@@ -96,6 +113,44 @@ export default function StoryRenderer({
     if (index === story.quiz.correct) return 'correct';
     if (index === selectedAnswer && index !== story.quiz.correct) return 'incorrect';
     return 'dimmed';
+  };
+
+  const describedById = useMemo(() => {
+    if (!answered) return undefined;
+    return `${quizQuestionId}-feedback`;
+  }, [answered, quizQuestionId]);
+
+  const ariaCheckedIndex = useMemo(() => {
+    if (selectedAnswer != null) return selectedAnswer;
+    if (autoRevealed) return story?.quiz?.correct ?? null;
+    return null;
+  }, [selectedAnswer, autoRevealed, story?.quiz?.correct]);
+
+  const focusOptionAt = (index) => {
+    const root = quizOptionsRef.current;
+    if (!root) return;
+    const radios = root.querySelectorAll('[role="radio"]');
+    const target = radios?.[index];
+    if (target && typeof target.focus === 'function') target.focus();
+  };
+
+  const handleQuizOptionsKeyDown = (e) => {
+    if (answered) return;
+    const key = e.key;
+    if (key !== 'ArrowDown' && key !== 'ArrowUp' && key !== 'ArrowLeft' && key !== 'ArrowRight' && key !== 'Home' && key !== 'End') return;
+
+    const optionsCount = story?.quiz?.options?.length ?? 0;
+    if (optionsCount <= 0) return;
+    e.preventDefault();
+
+    let nextIndex = activeOptionIndex;
+    if (key === 'Home') nextIndex = 0;
+    else if (key === 'End') nextIndex = optionsCount - 1;
+    else if (key === 'ArrowUp' || key === 'ArrowLeft') nextIndex = (activeOptionIndex - 1 + optionsCount) % optionsCount;
+    else if (key === 'ArrowDown' || key === 'ArrowRight') nextIndex = (activeOptionIndex + 1) % optionsCount;
+
+    setActiveOptionIndex(nextIndex);
+    focusOptionAt(nextIndex);
   };
 
   const style = coercePresentationStyle(presentationStyle);
@@ -162,16 +217,36 @@ export default function StoryRenderer({
             transition={{ duration: 0.4 }}
           >
             <div className="story-quiz-inner">
-              <h2 className="quiz-question">{story.quiz.question}</h2>
+              <h2 id={quizQuestionId} className="quiz-question">{story.quiz.question}</h2>
 
-              <div className="quiz-options">
+              <div
+                ref={quizOptionsRef}
+                className="quiz-options"
+                role="radiogroup"
+                aria-labelledby={quizQuestionId}
+                aria-describedby={describedById}
+                aria-disabled={answered}
+                onKeyDown={handleQuizOptionsKeyDown}
+              >
                 {story.quiz.options.map((option, i) => (
                   <motion.button
                     key={i}
                     className={`quiz-option ${getOptionClass(i)}`}
                     onClick={() => handleAnswer(i)}
+                    onFocus={() => setActiveOptionIndex(i)}
+                    onKeyDown={(e) => {
+                      if (answered) return;
+                      if (e.key === ' ' || e.key === 'Enter') {
+                        e.preventDefault();
+                        handleAnswer(i);
+                      }
+                    }}
                     whileTap={{ scale: 0.98 }}
-                    disabled={answered}
+                    type="button"
+                    role="radio"
+                    aria-checked={ariaCheckedIndex === i}
+                    aria-disabled={answered}
+                    tabIndex={activeOptionIndex === i ? 0 : -1}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 * i }}
@@ -183,6 +258,7 @@ export default function StoryRenderer({
 
               {answered && (
                 <motion.p
+                  id={describedById}
                   className={`quiz-feedback ${autoRevealed ? 'auto-revealed' : selectedAnswer === story.quiz.correct ? 'correct' : 'incorrect'}`}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
