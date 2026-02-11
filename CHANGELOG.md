@@ -42,6 +42,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Performance: Topic page “Related topics” now uses a bounded query (subject/subcategory + limit) instead of downloading the full topics catalog.
 - Accessibility: restored visible keyboard focus by removing `outline: none` and adding a global `:focus-visible` outline.
 - Accessibility: added global `prefers-reduced-motion` support (reduced CSS transitions/animations + Framer Motion `reducedMotion="user"`).
+- Accessibility: lesson timer now includes screen reader announcements at key moments.
 
 ### Fixed
 - Prevented the “click into Pro-only then discover it’s locked” UX for free users.

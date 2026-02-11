@@ -245,6 +245,10 @@ The countdown timer is purely visual. Screen reader users have no awareness of t
 
 **Fix:** Add `role="timer"` and `aria-live="assertive"` to the timer element. Announce at key moments (30s, 10s, 5s) with a visually hidden live region.
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Updated the `Timer` component to add `role="timer"` semantics and a screen-reader-only live region that announces time remaining at key moments (30s, 10s, 5s, and 0).
+
 ---
 
 ---
