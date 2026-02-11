@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
 import { useAuth } from '../context/AuthContext';
-import { listTopics } from '../services/topics';
+import { getTopicCategoryCounts, listTopicsByIds } from '../services/topics';
 import { getContentSource } from '../services/_contentSource';
 import { getUserStats, listUserTopicProgress } from '../services/progress';
 import { canReview, canStartTopic, formatTierLabel, getCurrentTier } from '../services/entitlements';
@@ -136,6 +136,7 @@ export default function ProfilePage() {
   const [stats, setStats] = useState({ one_ma_balance: 0, streak: 0, last_completed_date: null });
   const [progressRows, setProgressRows] = useState([]);
   const [topics, setTopics] = useState([]);
+  const [topicCategoryCounts, setTopicCategoryCounts] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [progressView, setProgressView] = useState('subjects'); // subjects | recent
@@ -290,12 +291,42 @@ export default function ProfilePage() {
         setLoading(true);
         setError(null);
 
-        const [s, p, t] = await Promise.all([getUserStats(), listUserTopicProgress(), listTopics()]);
+        const [s, p, counts] = await Promise.all([getUserStats(), listUserTopicProgress(), getTopicCategoryCounts()]);
         if (!mounted) return;
 
         setStats(s);
-        setProgressRows(Array.isArray(p) ? p : []);
-        setTopics(Array.isArray(t) ? t : []);
+
+        const rows = Array.isArray(p) ? p : [];
+        setProgressRows(rows);
+
+        const nextCounts = (() => {
+          const m = counts?.counts;
+          if (m instanceof Map) return Object.fromEntries(m.entries());
+          if (m && typeof m === 'object') return m;
+          return {};
+        })();
+        setTopicCategoryCounts(nextCounts);
+
+        // Enrich topic metadata without downloading the full catalog.
+        // Remote progress rows already include a `topics (...)` join.
+        const fromJoin = [];
+        const missingIds = [];
+        for (const r of rows) {
+          const join = r?.topics && typeof r.topics === 'object' ? r.topics : null;
+          if (join?.id) fromJoin.push(join);
+          else if (r?.topic_id) missingIds.push(r.topic_id);
+        }
+
+        const fetched = missingIds.length > 0
+          ? await listTopicsByIds(missingIds)
+          : [];
+
+        const map = new Map();
+        for (const t of [...fromJoin, ...(Array.isArray(fetched) ? fetched : [])]) {
+          if (!t?.id) continue;
+          map.set(String(t.id), t);
+        }
+        setTopics(Array.from(map.values()));
       } catch (e) {
         if (!mounted) return;
         setError(e);
@@ -327,6 +358,27 @@ export default function ProfilePage() {
         const rows = await listMyTopicRatings();
         if (!mounted) return;
         setMyRatings(Array.isArray(rows) ? rows : []);
+
+        // Enrich ratings list titles/emojis without pulling the full catalog.
+        const ids = (Array.isArray(rows) ? rows : [])
+          .map((r) => String(r?.topic_id ?? '').trim())
+          .filter(Boolean);
+        const uniq = Array.from(new Set(ids));
+
+        if (uniq.length > 0) {
+          const extra = await listTopicsByIds(uniq);
+          if (!mounted) return;
+          setTopics((prev) => {
+            const m = new Map();
+            for (const t of Array.isArray(prev) ? prev : []) {
+              if (t?.id) m.set(String(t.id), t);
+            }
+            for (const t of Array.isArray(extra) ? extra : []) {
+              if (t?.id) m.set(String(t.id), t);
+            }
+            return Array.from(m.values());
+          });
+        }
       } catch (e) {
         if (!mounted) return;
         setRatingsError(e);
@@ -576,13 +628,15 @@ export default function ProfilePage() {
   }, [progress, progressQuery]);
 
   const subjectTotals = useMemo(() => {
+    const obj = topicCategoryCounts && typeof topicCategoryCounts === 'object' ? topicCategoryCounts : {};
     const totals = new Map();
-    for (const t of topics) {
-      const subject = t?.subject ?? 'General';
-      totals.set(subject, (totals.get(subject) ?? 0) + 1);
+    for (const [subjectRaw, nRaw] of Object.entries(obj)) {
+      const subject = String(subjectRaw ?? '').trim() || 'General';
+      const n = Number(nRaw ?? 0) || 0;
+      totals.set(subject, n);
     }
     return totals;
-  }, [topics]);
+  }, [topicCategoryCounts]);
 
   const progressBySubject = useMemo(() => {
     const buckets = new Map();

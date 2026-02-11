@@ -293,6 +293,10 @@ The profile page calls `listTopics()` just to enrich progress rows with topic ti
 
 **Fix:** Return enriched progress rows from a server-side query or RPC that joins `user_topic_progress` with `topics`.
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Removed the ProfilePage `listTopics()` full-catalog fetch; progress rows already include a `topics (...)` join, subject totals now use `getTopicCategoryCounts()`, and topic metadata for the Ratings tab is fetched via `listTopicsByIds()` (only the IDs needed).
+
 ---
 
 ### 🔒 Security

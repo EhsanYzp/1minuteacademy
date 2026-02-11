@@ -363,7 +363,8 @@ export async function listTopicsByIds(topicIds, { includeLesson = false } = {}) 
   const { data, error } = await supabase
     .from('topics')
     .select(columns)
-    .in('id', uniq);
+    .in('id', uniq)
+    .eq('published', true);
 
   if (error) throw error;
   return data ?? [];
