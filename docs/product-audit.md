@@ -309,6 +309,10 @@ The OAuth `redirectTo` is built from `window.location.origin`. In certain proxy/
 
 **Fix:** Use `import.meta.env.VITE_SITE_URL` as the base URL for OAuth redirects, with `window.location.origin` as a fallback only in dev mode.
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Centralized auth redirect URL construction in `AuthContext` so OAuth/signup/password-reset redirects use `VITE_SITE_URL` in production (and only fall back to `window.location.origin` in dev), preventing proxy/CDN origin manipulation from affecting redirect targets.
+
 ---
 
 ### ♿ Accessibility

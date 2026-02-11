@@ -9,6 +9,20 @@ import {
 
 const AuthContext = createContext(null);
 
+function getAuthRedirectBaseUrl() {
+  const isDev = (import.meta?.env?.DEV ?? false) === true;
+  const configured = String(import.meta?.env?.VITE_SITE_URL ?? '').trim();
+  if (configured) return configured.replace(/\/+$/, '');
+  if (isDev && typeof window !== 'undefined' && window?.location?.origin) return window.location.origin;
+  throw new Error('VITE_SITE_URL is required for auth redirects');
+}
+
+function buildAuthRedirectUrl(pathname) {
+  const base = getAuthRedirectBaseUrl();
+  const path = String(pathname ?? '').startsWith('/') ? String(pathname) : `/${String(pathname ?? '')}`;
+  return `${base}${path}`;
+}
+
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
   const [user, setUser] = useState(null);
@@ -118,7 +132,7 @@ export function AuthProvider({ children }) {
       email,
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        emailRedirectTo: buildAuthRedirectUrl('/auth/callback'),
       },
     });
     if (error) {
@@ -167,7 +181,8 @@ export function AuthProvider({ children }) {
     setAuthError(null);
     setSessionExpired(false);
     const supabase = getClient();
-    const { data, error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
+    const safeRedirectTo = redirectTo || buildAuthRedirectUrl('/auth/reset');
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: safeRedirectTo });
     if (error) {
       setAuthError(error);
       throw error;
@@ -183,9 +198,11 @@ export function AuthProvider({ children }) {
 
     const supabase = getClient();
 
+    const safeRedirectTo = redirectTo || buildAuthRedirectUrl('/auth/callback');
+
     const nextOptions = {
       ...(options && typeof options === 'object' ? options : null),
-      ...(redirectTo ? { redirectTo } : null),
+      ...(safeRedirectTo ? { redirectTo: safeRedirectTo } : null),
     };
 
     const { data, error } = await supabase.auth.signInWithOAuth({

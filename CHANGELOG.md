@@ -64,3 +64,4 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Build: fixed a production blank-screen boot crash caused by a circular chunk dependency (`vendor` ↔ `react`) by bundling React’s `scheduler` with the React chunk.
 - Build/Deploy: prevented SPA rewrites from swallowing missing `/assets/*` chunks and added cache headers (`index.html` no-cache; hashed assets immutable) to avoid stale HTML referencing non-existent lazy-route bundles.
 - UI: improved the ErrorBoundary message for lazy-route load failures (dynamic import/chunk fetch) to prompt “Reload to update”.
+- Security: OAuth/email auth redirect targets now use `VITE_SITE_URL` (origin fallback only in dev) to avoid proxy/CDN origin manipulation.
