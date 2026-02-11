@@ -185,6 +185,10 @@ The related-topics feature calls `listTopics()`, which does an unbounded `SELECT
 
 **Fix:** Add a server-side RPC (e.g., `get_related_topics(p_topic_id, p_limit)`) that filters by subject/subcategory in SQL and returns only the needed rows. Or use `listTopicsPage` with a subject filter and `limit: 6`.
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Replaced the Topic page “related topics” loader to use a bounded query (`listRelatedTopics`) that filters by subject/subcategory and limits results (default 6), avoiding a full catalog download.
+
 ---
 
 ### ♿ Accessibility

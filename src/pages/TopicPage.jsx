@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
-import { getTopic, listTopics } from '../services/topics';
+import { getTopic, listRelatedTopics } from '../services/topics';
 import { listUserTopicProgress } from '../services/progress';
 import { getContentSource } from '../services/_contentSource';
 import { useAuth } from '../context/AuthContext';
@@ -188,22 +188,15 @@ function TopicPage() {
       if (!subject) return;
 
       try {
-        const all = await listTopics();
+        const chosen = await listRelatedTopics({
+          topicId,
+          subject,
+          subcategory,
+          limit: 6,
+        });
         if (cancelled) return;
 
-        const candidates = (Array.isArray(all) ? all : [])
-          .filter((t) => t && t.id && t.id !== topicId)
-          .filter((t) => String(t.subject ?? '').trim() === subject);
-
-        const sameSubcategory = subcategory
-          ? candidates.filter((t) => String(t.subcategory ?? '').trim() === subcategory)
-          : [];
-
-        const chosen = (sameSubcategory.length > 0 ? sameSubcategory : candidates)
-          .sort((a, b) => String(a.title ?? '').localeCompare(String(b.title ?? '')))
-          .slice(0, 6);
-
-        setRelatedTopics(chosen);
+        setRelatedTopics(Array.isArray(chosen) ? chosen : []);
       } catch {
         if (!cancelled) setRelatedTopics([]);
       }

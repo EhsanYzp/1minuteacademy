@@ -225,6 +225,93 @@ export async function listTopics() {
   return third.data ?? [];
 }
 
+export async function listRelatedTopics({
+  topicId,
+  subject,
+  subcategory = null,
+  limit = 6,
+} = {}) {
+  const safeLimit = Math.min(24, Math.max(1, Number(limit) || 6));
+  const subjectFilter = typeof subject === 'string' && subject.trim() ? subject.trim() : null;
+  const subcategoryFilter = typeof subcategory === 'string' && subcategory.trim() ? subcategory.trim() : null;
+  const excludeId = topicId != null ? String(topicId) : null;
+
+  if (!subjectFilter) return [];
+
+  if (getContentSource() === 'local') {
+    const all = listLocalTopics();
+    const candidates = (Array.isArray(all) ? all : [])
+      .filter((t) => t && t.id && (!excludeId || String(t.id) !== excludeId))
+      .filter((t) => String(t.subject ?? '').trim() === subjectFilter);
+
+    const sameSubcategory = subcategoryFilter
+      ? candidates.filter((t) => String(t.subcategory ?? '').trim() === subcategoryFilter)
+      : [];
+
+    const chosen = (sameSubcategory.length > 0 ? sameSubcategory : candidates)
+      .sort((a, b) => String(a.title ?? '').localeCompare(String(b.title ?? '')))
+      .slice(0, safeLimit);
+
+    return chosen;
+  }
+
+  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+  const supabase = requireSupabase();
+
+  // Be resilient to schema drift (missing subcategory/subject columns).
+  const fullSelect = 'id, subject, subcategory, title, emoji, color, description, difficulty';
+  const noSubcategorySelect = 'id, subject, title, emoji, color, description, difficulty';
+  const minimalSelect = 'id, title, emoji, color, description, difficulty';
+
+  const looksLikeMissingColumn = (err) => {
+    const msg = String(err?.message ?? '').toLowerCase();
+    return msg.includes('column') && msg.includes('does not exist');
+  };
+
+  const run = async ({ columns, includeSubcategory }) => {
+    let q = supabase
+      .from('topics')
+      .select(columns)
+      .eq('published', true)
+      .order('title', { ascending: true })
+      .limit(safeLimit);
+
+    // If the DB is missing `subject`, this will error and we'll fall back.
+    q = q.eq('subject', subjectFilter);
+
+    if (excludeId) q = q.neq('id', excludeId);
+    if (includeSubcategory && subcategoryFilter) q = q.eq('subcategory', subcategoryFilter);
+
+    return q;
+  };
+
+  const tryFetch = async ({ includeSubcategory }) => {
+    const first = await run({ columns: fullSelect, includeSubcategory });
+    if (!first.error) return first.data ?? [];
+    if (!looksLikeMissingColumn(first.error)) throw first.error;
+
+    const second = await run({ columns: noSubcategorySelect, includeSubcategory: false });
+    if (!second.error) return second.data ?? [];
+    if (!looksLikeMissingColumn(second.error)) throw second.error;
+
+    const third = await run({ columns: minimalSelect, includeSubcategory: false });
+    if (third.error) throw third.error;
+    return third.data ?? [];
+  };
+
+  if (subcategoryFilter) {
+    try {
+      const same = await tryFetch({ includeSubcategory: true });
+      if (same.length > 0) return same;
+    } catch (e) {
+      // If `subcategory` doesn't exist, treat as a "no subcategory" schema and fall back.
+      if (!looksLikeMissingColumn(e)) throw e;
+    }
+  }
+
+  return tryFetch({ includeSubcategory: false });
+}
+
 export async function getTopic(topicId) {
   if (getContentSource() === 'local') {
     const local = getLocalTopic(topicId);

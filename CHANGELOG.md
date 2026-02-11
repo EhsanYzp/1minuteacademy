@@ -39,6 +39,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Topic page: refreshed “Related topics” section styling to be more noticeable and consistent with the rest of the page.
 - Performance: route-level code splitting for pages (React `lazy` + `Suspense`) and improved vendor chunking via Vite `manualChunks`.
 - Performance: moved Google Fonts loading from CSS `@import` to HTML `<link>` tags with `preconnect`.
+- Performance: Topic page “Related topics” now uses a bounded query (subject/subcategory + limit) instead of downloading the full topics catalog.
 
 ### Fixed
 - Prevented the “click into Pro-only then discover it’s locked” UX for free users.
