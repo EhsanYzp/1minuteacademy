@@ -44,6 +44,7 @@ export default function LoginPage() {
   const [mode, setMode] = useState('signin'); // signin | signup | forgot | verify
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [busy, setBusy] = useState(false);
   const [info, setInfo] = useState(null);
   const [localError, setLocalError] = useState(null);
@@ -71,6 +72,10 @@ export default function LoginPage() {
       setInfo('Your session expired. Please sign in again.');
     }
   }, [user?.email, isVerified, reason]);
+
+  useEffect(() => {
+    setShowPassword(false);
+  }, [mode]);
 
   async function onOAuth(provider) {
     setBusy(true);
@@ -216,7 +221,31 @@ export default function LoginPage() {
             {mode !== 'forgot' && mode !== 'verify' && (
               <label>
                 Password
-                <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="••••••••" required minLength={mode === 'signup' ? 10 : 6} />
+                <div className="login-password-field">
+                  <input
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="••••••••"
+                    required
+                    minLength={mode === 'signup' ? 10 : 6}
+                    autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
+                  />
+                  <button
+                    type="button"
+                    className="login-password-toggle"
+                    onClick={() => setShowPassword((v) => !v)}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                    aria-pressed={showPassword}
+                    title={showPassword ? 'Hide password' : 'Show password'}
+                    disabled={busy}
+                  >
+                    <span aria-hidden="true" className="login-password-toggle-icon">
+                      {showPassword ? '🙈' : '👁️'}
+                    </span>
+                    <span className="sr-only">{showPassword ? 'Hide password' : 'Show password'}</span>
+                  </button>
+                </div>
               </label>
             )}
 

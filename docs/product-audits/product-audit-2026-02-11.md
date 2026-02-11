@@ -361,17 +361,8 @@ The 3-column comparison grid is built with `<div>`s. Screen reader users cannot 
 
 ### 🎨 UX
 
-#### UX-01 · No dark mode support
 
-**Where:** All CSS files
-
-`prefers-color-scheme: dark` is never honored. Users with system dark mode get a full-white experience.
-
-**Fix:** Define CSS custom properties for foreground/background/card colors. Add a `@media (prefers-color-scheme: dark)` block in `index.css` that overrides them. (The lesson engine already has a "Dark" presentation style — this is about the rest of the app.)
-
----
-
-#### UX-02 · No "show password" toggle
+#### UX-01 · No "show password" toggle
 
 **Where:** [src/pages/LoginPage.jsx](../src/pages/LoginPage.jsx), sign-up form
 
@@ -379,9 +370,13 @@ Users can't verify what they've typed, leading to failed sign-in attempts, espec
 
 **Fix:** Add a visibility toggle button (eye icon) inside password input fields.
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Added an in-field show/hide password toggle to the password input on the sign-in/sign-up form, improving entry accuracy on mobile and reducing failed sign-ins from mistyped passwords.
+
 ---
 
-#### UX-03 · Post-checkout polling has no visual feedback
+#### UX-02 · Post-checkout polling has no visual feedback
 
 **Where:** [src/pages/ProfilePage.jsx](../src/pages/ProfilePage.jsx)
 
