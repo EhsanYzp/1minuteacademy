@@ -34,6 +34,8 @@ The `success_url` and `cancel_url` passed to Stripe are built from a `siteUrl` t
 
 **Summary:** Removed request-header inference (`Origin` / forwarded host) for redirect base URLs and now exclusively uses `process.env.SITE_URL` in both checkout and portal session endpoints.
 
+**Re-audit (2026-02-11):** ✅ Confirmed. Both `create-checkout-session.js` and `create-portal-session.js` derive `siteUrl` exclusively from `process.env.SITE_URL` via `normalizeSiteUrl()` and return 500 if it's missing. No `req.headers.origin` fallback exists. `success_url`, `cancel_url`, and `return_url` are all built with `new URL(path, siteUrl)`.
+
 ---
 
 #### SEC-02 · No CORS headers on API endpoints
@@ -50,6 +52,8 @@ None of the serverless functions set `Access-Control-Allow-Origin` or handle `OP
 
 **Summary:** Added a shared CORS helper for all Vercel `api/` routes that (1) returns `204` for allowed `OPTIONS` preflights, (2) sets `Access-Control-Allow-Origin` only for the configured `SITE_URL` origin (plus localhost in non-production), and (3) adds `Vary: Origin`.
 
+**Re-audit (2026-02-11):** ✅ Confirmed. `api/_cors.js` exports `applyCors()` which is imported and called at the top of every API handler (`create-checkout-session.js`, `create-portal-session.js`, `webhook.js`, and all `api/account/` handlers). The helper uses `SITE_URL` origin only (plus localhost in non-production), responds to `OPTIONS` with 204, and adds `Vary: Origin`.
+
 ---
 
 #### SEC-03 · Error responses can leak internals
@@ -63,6 +67,8 @@ Catch blocks return `e.message` directly to the client. If a Supabase/Stripe SDK
 **Status:** Implemented (2026-02-11)
 
 **Summary:** Tightened all Vercel `api/` routes to avoid echoing arbitrary exception messages to clients (including Stripe handlers). Errors are logged server-side; client responses use fixed, safe error strings.
+
+**Re-audit (2026-02-11):** ✅ Confirmed. `webhook.js` catch blocks log with `console.error` and return fixed `'Server error'` text. `create-checkout-session.js` returns `{ error: 'Server error' }` in the final catch. Rate-limit errors return a fixed user-friendly message. No `e.message` is forwarded to clients.
 
 ---
 
@@ -81,6 +87,8 @@ Tighten iteratively.
 **Status:** Implemented (2026-02-11)
 
 **Summary:** Added a baseline `Content-Security-Policy` response header for both Netlify and Vercel deploys (configured in `netlify.toml` and `vercel.json`) to reduce risk of script injection while allowing required fonts, Supabase connections, and Vercel Analytics.
+
+**Re-audit (2026-02-11):** ✅ Confirmed. Both `netlify.toml` (`[[headers]] for = "/*"`) and `vercel.json` (`source: "/(.*)"`)) set a `Content-Security-Policy` header with `default-src 'self'`, `script-src 'self' https://va.vercel-scripts.com`, `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`, `connect-src` for Supabase/Stripe/Vercel, `frame-ancestors 'none'`, `object-src 'none'`, and `base-uri 'self'`.
 
 ---
 
@@ -101,6 +109,8 @@ There is no React `ErrorBoundary` anywhere in the component tree. A single uncau
 
 **Summary:** Added a top-level UI error boundary that wraps the routing tree and renders a friendly recovery screen (Home + Reload) instead of a white screen on uncaught render errors.
 
+**Re-audit (2026-02-11):** ✅ Confirmed. `App.jsx` wraps `<Routes>` in an `<ErrorBoundary>` component. The fallback UI differentiates chunk-load errors ("Update needed — Reload to update") from generic errors ("Something went wrong"), provides Home + Reload buttons, and shows stack traces only in dev.
+
 ---
 
 #### REL-02 · Timer drift when browser throttles background tabs
@@ -115,6 +125,8 @@ The countdown timer decrements a counter inside a `setInterval`. Modern browsers
 
 **Summary:** Replaced the decrementing `setInterval` countdown with a wall-clock deadline (`Date.now()`), so the timer stays accurate even when the tab is background-throttled.
 
+**Re-audit (2026-02-11):** ✅ Confirmed. `LessonPage.jsx` sets a deadline via `Date.now() + durationMs` and each interval tick computes remaining time as `Math.ceil((deadline - Date.now()) / 1000)`. No decrementing counter exists.
+
 ---
 
 #### REL-03 · No navigation guard during active lesson
@@ -128,6 +140,8 @@ Users can accidentally navigate away or close the tab mid-lesson with no warning
 **Status:** Implemented (2026-02-11)
 
 **Summary:** Added a `beforeunload` guard and an in-app navigation blocker (React Router) while the lesson timer is active to warn users before leaving mid-lesson.
+
+**Re-audit (2026-02-11):** ✅ Confirmed. A `beforeunload` listener is added while `timerRunning` is true and cleaned up on unmount. `useBlocker` from React Router is used to intercept in-app navigation with `blocker.proceed()` / `blocker.reset()` via `window.confirm`.
 
 ---
 
@@ -175,6 +189,8 @@ This blocks rendering until the font CSS is downloaded and parsed.
 
 **Summary:** Removed the Google Fonts `@import` from `src/index.css` and added `preconnect` + `stylesheet` links in `index.html` to avoid render-blocking CSS imports.
 
+**Re-audit (2026-02-11):** ✅ Confirmed. `src/index.css` starts with `:root {` — no `@import` present. `index.html` has `<link rel="preconnect">` for `fonts.googleapis.com` and `fonts.gstatic.com`, plus a `<link rel="stylesheet">` with `display=swap`.
+
 ---
 
 #### PERF-03 · `listTopics()` downloads full catalog for 6 related items
@@ -188,7 +204,7 @@ The related-topics feature calls `listTopics()`, which does an unbounded `SELECT
 **Status:** Implemented (2026-02-11)
 
 **Summary:** Replaced the Topic page “related topics” loader to use a bounded query (`listRelatedTopics`) that filters by subject/subcategory and limits results (default 6), avoiding a full catalog download.
-
+**Re-audit (2026-02-11):** ✅ Confirmed. `TopicPage.jsx` imports `listRelatedTopics` (not `listTopics`). The underlying service function applies subject/subcategory filters and a `limit` parameter (default 6).
 ---
 
 ### ♿ Accessibility
@@ -214,6 +230,8 @@ Multiple CSS files contain `outline: none` on buttons/inputs. Only 2 elements in
 
 **Summary:** Removed `outline: none` from interactive controls and added a global `*:focus-visible` outline style to restore visible keyboard focus (WCAG 2.4.7).
 
+**Re-audit (2026-02-11):** ✅ Confirmed. Zero instances of `outline: none` or `outline: 0` remain in any CSS file under `src/`. A global `*:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }` rule exists in `src/index.css`.
+
 ---
 
 #### A11Y-02 · No global `prefers-reduced-motion` support
@@ -234,7 +252,7 @@ Also pass `reducedMotion="user"` to Framer Motion's `<LazyMotion>` or `<MotionCo
 **Status:** Implemented (2026-02-11)
 
 **Summary:** Added a global reduced-motion stylesheet fallback (disables most CSS transitions/animations and smooth scrolling) and wrapped the app in Framer Motion’s `MotionConfig` with `reducedMotion="user"` so motion respects the user preference.
-
+**Re-audit (2026-02-11):** ✅ Confirmed. `src/index.css` has a `@media (prefers-reduced-motion: reduce)` rule forcing near-zero `animation-duration` and `transition-duration` on `*`, `*::before`, `*::after`, plus `scroll-behavior: auto`. `App.jsx` wraps the tree in `<MotionConfig reducedMotion="user">`.
 ---
 
 #### A11Y-03 · Timer has no accessible announcement
@@ -248,6 +266,8 @@ The countdown timer is purely visual. Screen reader users have no awareness of t
 **Status:** Implemented (2026-02-11)
 
 **Summary:** Updated the `Timer` component to add `role="timer"` semantics and a screen-reader-only live region that announces time remaining at key moments (30s, 10s, 5s, and 0).
+
+**Re-audit (2026-02-11):** ✅ Confirmed. `Timer.jsx` renders the display with `role="timer"` and `aria-label` showing human-readable time. A separate `sr-only` div with `aria-live="assertive"` announces at 30, 10, 5, and 0 seconds.
 
 ---
 
@@ -269,6 +289,8 @@ A 50ms `setInterval` drives the story beat progress bar, firing ~20 state update
 
 **Summary:** Removed the 50ms progress ticker and now derives beat/quiz progression from the 1Hz lesson timer (`timeRemaining`), reducing StoryRenderer re-renders from ~20/sec to ~1/sec while preserving wall-clock catch-up behavior.
 
+**Re-audit (2026-02-11):** ✅ Confirmed. `StoryRenderer.jsx` has no `setInterval`; beat progression is derived from the `timeRemaining` prop (1 Hz updates from the parent). No 50 ms ticker exists anywhere in `src/engine/`.
+
 ---
 
 #### PERF-05 · SubjectCard infinite float animation on every card
@@ -283,6 +305,8 @@ Each topic card runs a perpetual Framer Motion spring animation on the emoji. On
 
 **Summary:** Removed the infinite Framer Motion emoji animation from `SubjectCard` and replaced it with a lightweight CSS `@keyframes` float that only runs on hover/focus (and is disabled for reduced motion), cutting idle CPU/GPU usage on the Topics grid.
 
+**Re-audit (2026-02-11):** ✅ Confirmed. `SubjectCard.jsx` renders the emoji in a plain `<span>` with className `subjectCard-emoji`. `SubjectCard.css` defines a CSS `@keyframes float` that activates only on `.subjectCard:hover .subjectCard-emoji` and is disabled inside `@media (prefers-reduced-motion: reduce)`. No Framer Motion animation import in the file.
+
 ---
 
 #### PERF-06 · ProfilePage downloads full topic catalog
@@ -296,6 +320,8 @@ The profile page calls `listTopics()` just to enrich progress rows with topic ti
 **Status:** Implemented (2026-02-11)
 
 **Summary:** Removed the ProfilePage `listTopics()` full-catalog fetch; progress rows already include a `topics (...)` join, subject totals now use `getTopicCategoryCounts()`, and topic metadata for the Ratings tab is fetched via `listTopicsByIds()` (only the IDs needed).
+
+**Re-audit (2026-02-11):** ✅ Confirmed. `ProfilePage.jsx` does not import or call `listTopics`. Subject counts come from `getTopicCategoryCounts()`. Topic metadata for the Ratings tab uses `listTopicsByIds()` with only the needed IDs. Progress rows include a `topics(title, emoji, subject, subcategory, slug)` join.
 
 ---
 
@@ -313,6 +339,8 @@ The OAuth `redirectTo` is built from `window.location.origin`. In certain proxy/
 
 **Summary:** Centralized auth redirect URL construction in `AuthContext` so OAuth/signup/password-reset redirects use `VITE_SITE_URL` in production (and only fall back to `window.location.origin` in dev), preventing proxy/CDN origin manipulation from affecting redirect targets.
 
+**Re-audit (2026-02-11):** ✅ Confirmed. `AuthContext.jsx` defines `getAuthRedirectBaseUrl()` which returns `import.meta.env.VITE_SITE_URL` when set, and only falls back to `window.location.origin` in development (`import.meta.env.DEV`). All `signUp`, `signInWithPassword`, `signInWithOAuth`, and `resetPasswordForEmail` calls use this function for `redirectTo`.
+
 ---
 
 ### ♿ Accessibility
@@ -329,6 +357,8 @@ When the mobile hamburger menu is open, keyboard focus can tab behind the overla
 
 **Summary:** Added a mobile-nav focus trap in `Header`: when the menu opens, focus moves into the menu; `Tab`/`Shift+Tab` wrap within the menu; `Escape` closes; and focus returns to the hamburger toggle on close.
 
+**Re-audit (2026-02-11):** ✅ Confirmed. `Header.jsx` has a `useEffect` that activates when `menuOpen` is true: it queries focusable elements inside `navRef`, traps Tab/Shift+Tab, and closes on Escape. Focus moves to the first menu link on open and returns to the hamburger `buttonRef` on close.
+
 ---
 
 #### A11Y-05 · Quiz options lack proper semantics
@@ -343,6 +373,8 @@ Quiz answer options use `<button>` elements but lack `role="radiogroup"` / `role
 
 **Summary:** Updated `StoryRenderer` quiz options to use `radiogroup`/`radio` semantics with `aria-checked`, roving focus, and arrow-key navigation so screen readers announce the set as a single-choice question and keyboard users can navigate options predictably.
 
+**Re-audit (2026-02-11):** ✅ Confirmed. `StoryRenderer.jsx` wraps quiz options in `role="radiogroup"` with `aria-labelledby` pointing to the question. Each option has `role="radio"`, `aria-checked`, and roving `tabIndex` (0 for focused, -1 for others). Arrow keys (Up/Down/Left/Right), Home, End, Space, and Enter are handled via `onKeyDown`.
+
 ---
 
 #### A11Y-06 · Pricing feature comparison uses divs instead of `<table>`
@@ -356,6 +388,8 @@ The 3-column comparison grid is built with `<div>`s. Screen reader users cannot 
 **Status:** Implemented (2026-02-11)
 
 **Summary:** Replaced the div-based comparison grid on the Pricing page with a semantic `<table>` (caption + `<thead>/<tbody>`, column headers via `<th scope="col">`, and feature names as row headers via `<th scope="row">`) so assistive tech can navigate the comparison as a real data table.
+
+**Re-audit (2026-02-11):** ✅ Confirmed. `UpgradePage.jsx` renders a `<table>` with `<caption>`, `<thead>` containing `<th scope="col">` for Free/Pro columns, and `<tbody>` rows using `<th scope="row">` for feature names. No `<div>`-based grid remains.
 
 ---
 
@@ -374,6 +408,8 @@ Users can't verify what they've typed, leading to failed sign-in attempts, espec
 
 **Summary:** Added an in-field show/hide password toggle to the password input on the sign-in/sign-up form, improving entry accuracy on mobile and reducing failed sign-ins from mistyped passwords.
 
+**Re-audit (2026-02-11):** ✅ Confirmed. `LoginPage.jsx` has a `showPassword` state toggle. The password `<input>` uses `type={showPassword ? 'text' : 'password'}`. The toggle button has `aria-label` ("Show password" / "Hide password"), `aria-pressed`, and an `autoComplete` hint. `LoginPage.css` has `.login-passwordToggle` styles.
+
 ---
 
 #### UX-02 · Post-checkout polling has no visual feedback
@@ -387,7 +423,7 @@ After Stripe checkout success, the app polls subscription status every 2.5s for 
 **Status:** Implemented (2026-02-11)
 
 **Summary:** Improved the post-checkout Pro activation banner with a lightweight progress indicator and a clear “taking longer than expected” hint after 10 seconds, so users aren’t staring at static text while polling completes.
-
+**Re-audit (2026-02-11):** ✅ Confirmed. `ProfilePage.jsx` has a `checkoutProgress` state incremented during polling (2.5 s interval, up to 30 s). A `.profile-checkout-progressTrack` / `.profile-checkout-progressBar` pair renders a visual progress bar. After ~10 s (progress > 33 %), a "taking longer than expected" message appears. `ProfilePage.css` includes the progress bar styles with a pulse animation.
 ---
 
 ### 📈 Scalability
@@ -404,6 +440,8 @@ Rate-limit rows accumulate indefinitely. Over months of traffic this becomes a s
 
 **Summary:** Added a TTL cleanup function and a best-effort daily pg_cron schedule (with a safe fallback to run the cleanup via an external cron) to prevent unbounded growth of `api_rate_limits`.
 
+**Re-audit (2026-02-11):** ✅ Confirmed. `supabase/013_rate_limit_ttl_cleanup.sql` creates `cleanup_api_rate_limits()` which deletes rows older than 1 day, and schedules a pg_cron job at `0 3 * * *`. Uses `$cmd$` inner quoting for compatibility.
+
 ---
 
 #### SCALE-02 · `stripe_webhook_events` table has no TTL
@@ -418,6 +456,8 @@ Webhook idempotency rows also grow unboundedly.
 
 **Summary:** Added a retention cleanup function for `stripe_webhook_events` (30-day default) with a best-effort daily pg_cron schedule and a safe fallback to run cleanup via an external cron.
 
+**Re-audit (2026-02-11):** ✅ Confirmed. `supabase/014_stripe_webhook_events_ttl_cleanup.sql` creates `cleanup_stripe_webhook_events(retention_days int default 30)` and schedules a pg_cron job at `10 3 * * *`. Uses `$cmd$` inner quoting for compatibility.
+
 ---
 
 ### 🧹 Code Quality
@@ -430,6 +470,8 @@ A single `useMemo` containing inline JSX factories for the completion screen, to
 
 **Fix:** Extract into separate components: `CompletionScreen`, `LessonTopbar`.
 
+**Re-audit (2026-02-11):** ❌ Not addressed. `LessonPage.jsx` is still ~695 lines with a ~255-line `useMemo` containing inline JSX for the completion screen and top bar. No `CompletionScreen` or `LessonTopbar` components have been extracted.
+
 ---
 
 #### CQ-02 · ProfilePage.jsx is 1,250+ lines
@@ -439,6 +481,8 @@ A single `useMemo` containing inline JSX factories for the completion screen, to
 Contains overview, preferences, progress, ratings, and account management all in one file.
 
 **Fix:** Split into per-tab components: `OverviewTab`, `PreferencesTab`, `ProgressTab`, `RatingsTab`, `AccountTab`.
+
+**Re-audit (2026-02-11):** ❌ Not addressed. `ProfilePage.jsx` is now ~1,335 lines. All five tabs (overview, preferences, progress, ratings, account) remain inline in the single file. No per-tab component extraction has been done.
 
 ---
 
@@ -450,6 +494,8 @@ Production UI and dev-only module-check feature (SSE, overrides, modal) are in o
 
 **Fix:** Extract the module-check feature into a separate `DevModuleCheck` component.
 
+**Re-audit (2026-02-11):** ❌ Not addressed. `TopicsBrowserPage.jsx` is still ~873 lines. The dev-only module-check feature (SSE stream, overrides, modal UI) remains inline in the production component.
+
 ---
 
 #### CQ-04 · Duplicated utility functions across API files
@@ -459,6 +505,8 @@ Production UI and dev-only module-check feature (SSE, overrides, modal) are in o
 `normalizeSiteUrl`, `getClientIp`, `enforceRateLimit`, `readJsonBody` are copy-pasted. A fix in one isn't propagated to the other.
 
 **Fix:** Import from the existing shared `api/account/_utils.js`, which already exports most of these.
+
+**Re-audit (2026-02-11):** ❌ Not addressed. `create-checkout-session.js` and `create-portal-session.js` still contain local copies of `normalizeSiteUrl`, `getClientIp`, `enforceRateLimit`, `readJsonBody`, and `json`. These are not imported from `api/account/_utils.js`. Additionally, `normalizeSiteUrl` is not yet exported from `_utils.js` and would need to be added there first.
 
 ---
 
@@ -475,6 +523,8 @@ There is no test runner configured (no Vitest, no Jest). Business-critical modul
 2. Write unit tests for: `entitlements.js`, `passwordStrength.js`, `compileJourney.js`, `topics.local.js`, `seo.js`.
 3. Add `"test": "vitest run"` to `package.json`.
 
+**Re-audit (2026-02-11):** ❌ Not addressed. No test runner (Vitest, Jest, or other) is configured. No `"test"` script exists in `package.json`. No test files (`*.test.js`, `*.spec.js`) exist anywhere in the project. The `tests/` directory contains only Playwright E2E tests, not unit tests.
+
 ---
 
 #### TEST-02 · Stripe webhook handler is untested
@@ -484,6 +534,8 @@ There is no test runner configured (no Vitest, no Jest). Business-critical modul
 Signature verification, user metadata updates, and idempotency logic are tested only by manual webhook sends. A bug here silently fails to activate Pro for paying customers — a direct revenue impact.
 
 **Fix:** Add unit tests with mocked Stripe events and Supabase responses.
+
+**Re-audit (2026-02-11):** ❌ Not addressed. No webhook test files exist. This is blocked by TEST-01 (no test runner configured).
 
 ---
 
