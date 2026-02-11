@@ -400,6 +400,10 @@ Rate-limit rows accumulate indefinitely. Over months of traffic this becomes a s
 
 **Fix:** Add a scheduled job (pg_cron or an external cron) to `DELETE FROM api_rate_limits WHERE window_start < now() - interval '1 day'`.
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Added a TTL cleanup function and a best-effort daily pg_cron schedule (with a safe fallback to run the cleanup via an external cron) to prevent unbounded growth of `api_rate_limits`.
+
 ---
 
 #### SCALE-02 · `stripe_webhook_events` table has no TTL

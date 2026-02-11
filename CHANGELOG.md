@@ -51,6 +51,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Accessibility: quiz answers are now exposed as a single-choice radio group (proper `radiogroup`/`radio` semantics with `aria-checked`) with arrow-key navigation.
 - Accessibility: pricing feature comparison is now a semantic `<table>` (screen readers can navigate rows/columns).
 - Profile: improved post-checkout Pro activation feedback with a progress indicator and a “taking longer than expected” hint.
+- Database: added TTL cleanup for `api_rate_limits` (daily schedule when pg_cron is available; external cron fallback).
 
 ### Fixed
 - Prevented the “click into Pro-only then discover it’s locked” UX for free users.
