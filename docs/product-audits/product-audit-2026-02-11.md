@@ -414,6 +414,10 @@ Webhook idempotency rows also grow unboundedly.
 
 **Fix:** Periodically purge events older than 30 days.
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Added a retention cleanup function for `stripe_webhook_events` (30-day default) with a best-effort daily pg_cron schedule and a safe fallback to run cleanup via an external cron.
+
 ---
 
 ### 🧹 Code Quality

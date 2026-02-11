@@ -49,6 +49,6 @@ begin
   perform cron.schedule(
     'cleanup_api_rate_limits_daily',
     '0 3 * * *',
-    $$select public.cleanup_api_rate_limits();$$
+    $cmd$select public.cleanup_api_rate_limits();$cmd$
   );
 end $$;
