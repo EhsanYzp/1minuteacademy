@@ -45,3 +45,4 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Split (Visual + Text) style: removed the thin vertical gutter line.
 - Profile page: fixed a crash when loading topics from Supabase (undefined client reference).
 - Security: hardened Stripe checkout success/cancel URLs and billing portal return URL to use `SITE_URL` only (prevents open redirect via forged request headers).
+- Security: added strict CORS headers + `OPTIONS` preflight handling for all `api/` endpoints (allows `SITE_URL` origin; no wildcard).

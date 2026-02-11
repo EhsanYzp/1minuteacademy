@@ -46,6 +46,10 @@ None of the serverless functions set `Access-Control-Allow-Origin` or handle `OP
 - Responds to `OPTIONS` with the allowed origin, methods, and headers.
 - Sets `Access-Control-Allow-Origin` on every response (use the configured `SITE_URL`, not `*`).
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Added a shared CORS helper for all Vercel `api/` routes that (1) returns `204` for allowed `OPTIONS` preflights, (2) sets `Access-Control-Allow-Origin` only for the configured `SITE_URL` origin (plus localhost in non-production), and (3) adds `Vary: Origin`.
+
 ---
 
 #### SEC-03 · Error responses can leak internals

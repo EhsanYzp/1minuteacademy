@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
+import { applyCors } from '../_cors.js';
 
 function json(res, statusCode, body) {
   res.statusCode = statusCode;
@@ -80,6 +81,7 @@ async function readJsonBody(req) {
 }
 
 export default async function handler(req, res) {
+  if (applyCors(req, res)) return;
   if (req.method !== 'POST') return json(res, 405, { error: 'Method not allowed' });
 
   const stripeKey = process.env.STRIPE_SECRET_KEY;

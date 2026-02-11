@@ -8,6 +8,7 @@ import {
   json,
   readJsonBody,
 } from './_utils.js';
+import { applyCors } from '../_cors.js';
 
 function isActiveLikeStripeStatus(status) {
   const s = String(status ?? '').toLowerCase();
@@ -43,6 +44,7 @@ async function cancelAnyActiveSubscriptions({ stripe, stripeCustomerId, stripeSu
 }
 
 export default async function handler(req, res) {
+  if (applyCors(req, res)) return;
   if (req.method !== 'POST') return json(res, 405, { error: 'Method not allowed' });
 
   const token = getBearerToken(req);
