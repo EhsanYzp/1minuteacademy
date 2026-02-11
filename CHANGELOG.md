@@ -37,6 +37,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Netlify SPA routing now explicitly passes through SEO/static files (robots/sitemap/manifest/icons) to avoid being rewritten to `/index.html`.
 - Pricing page SEO now supports both `/pricing` and `/upgrade` paths while keeping the canonical URL on `/pricing`.
 - Topic page: refreshed “Related topics” section styling to be more noticeable and consistent with the rest of the page.
+- Performance: route-level code splitting for pages (React `lazy` + `Suspense`) and improved vendor chunking via Vite `manualChunks`.
 
 ### Fixed
 - Prevented the “click into Pro-only then discover it’s locked” UX for free users.

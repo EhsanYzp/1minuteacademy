@@ -153,6 +153,10 @@ Every page is eagerly imported. The initial JS download includes code for the le
 
 **Impact:** Should cut the initial bundle from ~700 KB to ~200–300 KB.
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Added route-level code splitting via `React.lazy()` + `Suspense` in `src/App.jsx` with a lightweight `RouteLoading` fallback, and configured Vite/Rollup `manualChunks` to split key vendor libraries for improved caching.
+
 ---
 
 #### PERF-02 · Render-blocking Google Fonts `@import` in CSS
