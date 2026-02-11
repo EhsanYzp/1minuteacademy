@@ -265,6 +265,7 @@ export default async function handler(req, res) {
 
     return text(res, 200, 'ok');
   } catch (e) {
+    console.error('stripe:webhook processing error', e);
     try {
       await supabaseAdmin
         .from('stripe_webhook_events')
@@ -273,6 +274,6 @@ export default async function handler(req, res) {
     } catch {
       // ignore
     }
-    return text(res, 500, e?.message || 'Server error');
+    return text(res, 500, 'Server error');
   }
 }

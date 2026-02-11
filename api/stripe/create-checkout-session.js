@@ -201,6 +201,7 @@ export default async function handler(req, res) {
 
     return json(res, 200, { url: session.url });
   } catch (e) {
-    return json(res, 500, { error: e?.message || 'Stripe error' });
+    console.error('stripe:create-checkout-session error', e);
+    return json(res, 500, { error: 'Server error' });
   }
 }

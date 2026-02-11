@@ -60,6 +60,10 @@ Catch blocks return `e.message` directly to the client. If a Supabase/Stripe SDK
 
 **Fix:** Return a generic `"Server error"` message in 5xx responses; log the real error with `console.error`.
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Updated Stripe API endpoints to log full exceptions server-side but return only a generic `"Server error"` message on 5xx responses (prevents leaking internal error details).
+
 ---
 
 #### SEC-04 · Missing Content-Security-Policy header
