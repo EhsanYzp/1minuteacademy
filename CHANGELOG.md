@@ -48,3 +48,4 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Security: added strict CORS headers + `OPTIONS` preflight handling for all `api/` endpoints (allows `SITE_URL` origin; no wildcard).
 - Security: tightened API error handling to avoid echoing arbitrary exception messages to clients (logs server-side; client sees fixed safe messages).
 - Security: added a baseline Content-Security-Policy header for Netlify/Vercel deploys.
+- Reliability: added a top-level React ErrorBoundary to prevent white-screen crashes and provide a recovery UI.

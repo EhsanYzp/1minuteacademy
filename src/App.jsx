@@ -19,6 +19,7 @@ import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import ScrollToTop from './components/ScrollToTop';
 import Footer from './components/Footer';
+import ErrorBoundary from './components/ErrorBoundary';
 import './App.css';
 
 function App() {
@@ -29,30 +30,32 @@ function App() {
         <div className="app">
           <div className="app-content">
             <AnimatePresence mode="wait">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/topics" element={<TopicsBrowserPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/auth/callback" element={<AuthCallbackPage />} />
-                <Route path="/auth/reset" element={<ResetPasswordPage />} />
-                <Route path="/upgrade" element={<UpgradePage />} />
-                <Route path="/pricing" element={<UpgradePage />} />
-                <Route path="/faq" element={<FaqPage />} />
-                <Route path="/privacy" element={<PrivacyPage />} />
-                <Route path="/terms" element={<TermsPage />} />
-                <Route path="/cookies" element={<CookiesPage />} />
-                <Route
-                  path="/me"
-                  element={
-                    <ProtectedRoute requireVerified>
-                      <ProfilePage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path="/topic/:topicId" element={<TopicPage />} />
-                <Route path="/lesson/:topicId" element={<LessonPage />} />
-                <Route path="/review/:topicId" element={<ReviewPage />} />
-              </Routes>
+              <ErrorBoundary>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/topics" element={<TopicsBrowserPage />} />
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/auth/callback" element={<AuthCallbackPage />} />
+                  <Route path="/auth/reset" element={<ResetPasswordPage />} />
+                  <Route path="/upgrade" element={<UpgradePage />} />
+                  <Route path="/pricing" element={<UpgradePage />} />
+                  <Route path="/faq" element={<FaqPage />} />
+                  <Route path="/privacy" element={<PrivacyPage />} />
+                  <Route path="/terms" element={<TermsPage />} />
+                  <Route path="/cookies" element={<CookiesPage />} />
+                  <Route
+                    path="/me"
+                    element={
+                      <ProtectedRoute requireVerified>
+                        <ProfilePage />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route path="/topic/:topicId" element={<TopicPage />} />
+                  <Route path="/lesson/:topicId" element={<LessonPage />} />
+                  <Route path="/review/:topicId" element={<ReviewPage />} />
+                </Routes>
+              </ErrorBoundary>
             </AnimatePresence>
           </div>
 

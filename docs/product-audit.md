@@ -97,6 +97,10 @@ There is no React `ErrorBoundary` anywhere in the component tree. A single uncau
 2. Wrap `<Routes>` (or each route) in an `ErrorBoundary` with a user-friendly fallback ("Something went wrong — go back to Home").
 3. Optionally report errors to a monitoring service (Sentry, LogRocket).
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Added a top-level UI error boundary that wraps the routing tree and renders a friendly recovery screen (Home + Reload) instead of a white screen on uncaught render errors.
+
 ---
 
 #### REL-02 · Timer drift when browser throttles background tabs
