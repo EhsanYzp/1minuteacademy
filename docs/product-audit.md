@@ -210,6 +210,10 @@ Multiple CSS files contain `outline: none` on buttons/inputs. Only 2 elements in
    ```
 3. Use `:focus-visible` (not `:focus`) so mouse users don't see outlines.
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Removed `outline: none` from interactive controls and added a global `*:focus-visible` outline style to restore visible keyboard focus (WCAG 2.4.7).
+
 ---
 
 #### A11Y-02 · No global `prefers-reduced-motion` support
