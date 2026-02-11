@@ -1,10 +1,39 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { getContentSource } from '../services/_contentSource';
 import { formatTierLabel, getCurrentTier, setDevTierOverride } from '../services/entitlements';
 import './Header.css';
+
+function getAuthRedirectBaseUrl() {
+  const isDev = (import.meta?.env?.DEV ?? false) === true;
+  const configured = String(import.meta?.env?.VITE_SITE_URL ?? '').trim();
+  if (configured) return configured.replace(/\/+$/, '');
+  if (isDev && typeof window !== 'undefined' && window?.location?.origin) return window.location.origin;
+  throw new Error('VITE_SITE_URL is required for auth redirects');
+}
+
+function buildAuthRedirectUrl(pathname) {
+  const base = getAuthRedirectBaseUrl();
+  const path = String(pathname ?? '').startsWith('/') ? String(pathname) : `/${String(pathname ?? '')}`;
+  return `${base}${path}`;
+}
+
+function getFocusableElements(container) {
+  if (!container) return [];
+  const nodes = container.querySelectorAll(
+    'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+  );
+  return Array.from(nodes).filter((el) => {
+    if (!(el instanceof HTMLElement)) return false;
+    if (el.hasAttribute('disabled')) return false;
+    const style = window.getComputedStyle(el);
+    if (style.display === 'none' || style.visibility === 'hidden') return false;
+    if (el.getAttribute('aria-hidden') === 'true') return false;
+    return true;
+  });
+}
 
 function Header() {
   const { user, isSupabaseConfigured, signOut, resendVerificationEmail } = useAuth();
@@ -15,6 +44,18 @@ function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const tier = getCurrentTier(user);
 
+  const navRef = useRef(null);
+  const toggleRef = useRef(null);
+  const previouslyFocusedRef = useRef(null);
+
+  const isMobileViewport = useMemo(() => {
+    try {
+      return typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+    } catch {
+      return false;
+    }
+  }, []);
+
   const isVerified = Boolean(user?.email_confirmed_at || user?.confirmed_at);
   const showVerifyBanner = contentSource !== 'local' && isSupabaseConfigured && Boolean(user?.email) && !isVerified;
 
@@ -22,7 +63,7 @@ function Header() {
     if (!user?.email || verifyBusy) return;
     setVerifyBusy(true);
     try {
-      await resendVerificationEmail(user.email, `${window.location.origin}/auth/callback`);
+      await resendVerificationEmail(user.email, buildAuthRedirectUrl('/auth/callback'));
       setVerifySent(true);
     } catch {
       // ignore (AuthContext surfaces errors elsewhere)
@@ -47,6 +88,79 @@ function Header() {
   function closeMobileMenu() {
     setMobileMenuOpen(false);
   }
+
+  // Focus trap for the mobile nav overlay.
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    if (!isMobileViewport) return;
+
+    previouslyFocusedRef.current = document.activeElement;
+
+    // Move focus into the nav so keyboard users don't tab behind it.
+    const focusFirst = () => {
+      const focusables = getFocusableElements(navRef.current);
+      if (focusables.length > 0) focusables[0].focus();
+      else navRef.current?.focus?.();
+    };
+
+    // Let the menu render before focusing.
+    const raf = window.requestAnimationFrame(focusFirst);
+
+    const onKeyDown = (e) => {
+      if (!mobileMenuOpen) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setMobileMenuOpen(false);
+        return;
+      }
+
+      if (e.key !== 'Tab') return;
+
+      const focusables = getFocusableElements(navRef.current);
+      if (focusables.length === 0) {
+        e.preventDefault();
+        return;
+      }
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+
+      if (e.shiftKey) {
+        if (active === first || !navRef.current?.contains(active)) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (active === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      window.cancelAnimationFrame(raf);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [mobileMenuOpen, isMobileViewport]);
+
+  // Restore focus to the hamburger toggle when closing.
+  useEffect(() => {
+    if (mobileMenuOpen) return;
+    const prev = previouslyFocusedRef.current;
+    previouslyFocusedRef.current = null;
+    if (!prev) return;
+
+    // Prefer the toggle button to keep focus predictable.
+    if (toggleRef.current) {
+      toggleRef.current.focus();
+      return;
+    }
+
+    if (prev instanceof HTMLElement) prev.focus?.();
+  }, [mobileMenuOpen]);
 
   return (
     <>
@@ -110,11 +224,18 @@ function Header() {
         aria-expanded={mobileMenuOpen}
         aria-controls="site-nav"
         onClick={() => setMobileMenuOpen((v) => !v)}
+        ref={toggleRef}
       >
         {mobileMenuOpen ? '✕' : '☰'}
       </button>
       
-      <nav id="site-nav" className={mobileMenuOpen ? 'nav nav-open' : 'nav'}>
+      <nav
+        id="site-nav"
+        className={mobileMenuOpen ? 'nav nav-open' : 'nav'}
+        ref={navRef}
+        tabIndex={-1}
+        aria-label="Site navigation"
+      >
         <Link to="/topics" className="nav-item link browse" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
           🧭 Browse
         </Link>

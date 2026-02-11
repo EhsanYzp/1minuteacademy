@@ -46,6 +46,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Accessibility: restored visible keyboard focus by removing `outline: none` and adding a global `:focus-visible` outline.
 - Accessibility: added global `prefers-reduced-motion` support (reduced CSS transitions/animations + Framer Motion `reducedMotion="user"`).
 - Accessibility: lesson timer now includes screen reader announcements at key moments.
+- Accessibility: mobile hamburger menu now traps keyboard focus, closes on Escape, and restores focus to the toggle.
 
 ### Fixed
 - Prevented the “click into Pro-only then discover it’s locked” UX for free users.

@@ -325,6 +325,10 @@ When the mobile hamburger menu is open, keyboard focus can tab behind the overla
 
 **Fix:** Implement a focus trap inside the open nav menu. Close on `Escape`. Return focus to the hamburger button on close.
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Added a mobile-nav focus trap in `Header`: when the menu opens, focus moves into the menu; `Tab`/`Shift+Tab` wrap within the menu; `Escape` closes; and focus returns to the hamburger toggle on close.
+
 ---
 
 #### A11Y-05 · Quiz options lack proper semantics
