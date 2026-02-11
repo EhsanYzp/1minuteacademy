@@ -279,6 +279,10 @@ Each topic card runs a perpetual Framer Motion spring animation on the emoji. On
 
 **Fix:** Replace with a CSS `@keyframes` animation that pauses on `prefers-reduced-motion: reduce` and only activates on `:hover`.
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Removed the infinite Framer Motion emoji animation from `SubjectCard` and replaced it with a lightweight CSS `@keyframes` float that only runs on hover/focus (and is disabled for reduced motion), cutting idle CPU/GPU usage on the Topics grid.
+
 ---
 
 #### PERF-06 · ProfilePage downloads full topic catalog

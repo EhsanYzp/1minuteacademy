@@ -41,6 +41,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Performance: moved Google Fonts loading from CSS `@import` to HTML `<link>` tags with `preconnect`.
 - Performance: Topic page “Related topics” now uses a bounded query (subject/subcategory + limit) instead of downloading the full topics catalog.
 - Performance: reduced Story beat rendering overhead by removing the 50ms StoryRenderer progress ticker and deriving beat/quiz progression from the 1Hz lesson timer.
+- Performance: replaced SubjectCard’s always-on Framer Motion emoji float with a CSS hover/focus-only animation (disabled under reduced motion).
 - Accessibility: restored visible keyboard focus by removing `outline: none` and adding a global `:focus-visible` outline.
 - Accessibility: added global `prefers-reduced-motion` support (reduced CSS transitions/animations + Framer Motion `reducedMotion="user"`).
 - Accessibility: lesson timer now includes screen reader announcements at key moments.

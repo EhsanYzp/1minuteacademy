@@ -724,7 +724,6 @@ export default function TopicsBrowserPage() {
                       <SubjectCard
                         subject={t}
                         gate={getTopicGate({ tier, topicRow: t })}
-                        index={idx}
                         devTestLabel={checkLoading && checkTopic?.id === t.id ? 'Testing…' : 'Test'}
                         onDevTest={isLocalDev && !t?.comingSoon ? () => runModuleCheck(t) : null}
                       />

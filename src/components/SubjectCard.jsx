@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import StarRating from './StarRating';
 import './SubjectCard.css';
 
-function SubjectCard({ subject, index, gate }) {
+function SubjectCard({ subject, gate }) {
   const { id, title, emoji, color, description, difficulty, comingSoon, completed, ratingAvg, ratingCount } = subject;
   const hasRating = Number(ratingCount ?? 0) > 0 && Number.isFinite(Number(ratingAvg));
   const isLocked = Boolean(gate?.locked);
@@ -23,13 +23,9 @@ function SubjectCard({ subject, index, gate }) {
     >
       {comingSoon || isLocked ? (
         <div className="card-content">
-          <motion.div 
-            className="card-emoji"
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
-          >
+          <div className="card-emoji">
             {emoji}
-          </motion.div>
+          </div>
           <h3 className="card-title">{title}</h3>
           <p className="card-description">{description}</p>
           <div className="card-footer">
@@ -53,13 +49,9 @@ function SubjectCard({ subject, index, gate }) {
         <Link to={`/topic/${id}`} className="card-link">
           <div className="card-content">
             {completed && <div className="completed-ribbon" title="Completed">✅ Completed</div>}
-            <motion.div 
-              className="card-emoji"
-              animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
-            >
+            <div className="card-emoji">
               {emoji}
-            </motion.div>
+            </div>
             <h3 className="card-title">{title}</h3>
             <p className="card-description">{description}</p>
             <div className="card-footer">
