@@ -78,6 +78,10 @@ default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://
 ```
 Tighten iteratively.
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Added a baseline `Content-Security-Policy` response header for both Netlify and Vercel deploys (configured in `netlify.toml` and `vercel.json`) to reduce risk of script injection while allowing required fonts, Supabase connections, and Vercel Analytics.
+
 ---
 
 ### 🛡️ Reliability

@@ -47,3 +47,4 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Security: hardened Stripe checkout success/cancel URLs and billing portal return URL to use `SITE_URL` only (prevents open redirect via forged request headers).
 - Security: added strict CORS headers + `OPTIONS` preflight handling for all `api/` endpoints (allows `SITE_URL` origin; no wildcard).
 - Security: tightened API error handling to avoid echoing arbitrary exception messages to clients (logs server-side; client sees fixed safe messages).
+- Security: added a baseline Content-Security-Policy header for Netlify/Vercel deploys.
