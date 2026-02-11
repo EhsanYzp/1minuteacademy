@@ -5,6 +5,8 @@ import './story.css';
 const BEAT_DURATION = 8000; // 8 seconds per beat
 const QUIZ_AUTO_REVEAL_AT = 4; // Auto-reveal answer when 4 seconds remaining
 
+const BEATS = ['hook', 'buildup', 'discovery', 'twist', 'climax', 'punchline'];
+
 function coercePresentationStyle(raw) {
   const s = String(raw ?? '').trim().toLowerCase();
   if (s === 'cards' || s === 'split' || s === 'minimal' || s === 'bold' || s === 'dark' || s === 'paper' || s === 'terminal' || s === 'glass') return s;
@@ -19,43 +21,52 @@ export default function StoryRenderer({
   onClose,
   hideTopbar = false,
   presentationStyle = 'focus',
+  totalSeconds = 60,
 }) {
-  const beats = ['hook', 'buildup', 'discovery', 'twist', 'climax', 'punchline'];
   const [currentBeat, setCurrentBeat] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [answered, setAnswered] = useState(false);
   const [autoRevealed, setAutoRevealed] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [waitingForTimer, setWaitingForTimer] = useState(false);
 
-  const isStoryComplete = currentBeat >= beats.length;
-  const beatKey = beats[currentBeat];
+  const isStoryComplete = currentBeat >= BEATS.length;
+  const beatKey = BEATS[currentBeat];
   const beatData = story?.story?.[beatKey];
 
-  // Auto-advance through story beats
+  // Reset story state when the lesson restarts.
   useEffect(() => {
-    if (showQuiz || isStoryComplete) return;
+    if (timeRemaining !== totalSeconds) return;
+    if (currentBeat === 0 && !showQuiz && !answered && selectedAnswer == null) return;
 
-    const startTime = Date.now();
-    const interval = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const beatProgress = Math.min(elapsed / BEAT_DURATION, 1);
-      setProgress(((currentBeat + beatProgress) / beats.length) * 100);
+    setCurrentBeat(0);
+    setShowQuiz(false);
+    setSelectedAnswer(null);
+    setAnswered(false);
+    setAutoRevealed(false);
+    setWaitingForTimer(false);
+  }, [timeRemaining, totalSeconds, currentBeat, showQuiz, answered, selectedAnswer]);
 
-      if (elapsed >= BEAT_DURATION) {
-        if (currentBeat < beats.length - 1) {
-          setCurrentBeat(prev => prev + 1);
-        } else {
-          setShowQuiz(true);
-          setProgress(100);
-        }
-        clearInterval(interval);
-      }
-    }, 50);
+  // Derive story beat / quiz visibility from the 1Hz lesson timer.
+  // This keeps beats aligned to wall-clock time without a high-frequency interval.
+  useEffect(() => {
+    if (!Number.isFinite(totalSeconds) || totalSeconds <= 0) return;
 
-    return () => clearInterval(interval);
-  }, [currentBeat, showQuiz, isStoryComplete, beats.length]);
+    const beatDurationSeconds = BEAT_DURATION / 1000;
+    const totalBeatsSeconds = BEATS.length * beatDurationSeconds;
+    const elapsedSeconds = Math.max(0, totalSeconds - Math.max(0, timeRemaining));
+
+    if (elapsedSeconds >= totalBeatsSeconds) {
+      if (!showQuiz) setShowQuiz(true);
+      if (currentBeat !== BEATS.length) setCurrentBeat(BEATS.length);
+      return;
+    }
+
+    if (showQuiz) return;
+
+    const nextBeat = Math.min(BEATS.length - 1, Math.floor(elapsedSeconds / beatDurationSeconds));
+    if (nextBeat !== currentBeat) setCurrentBeat(nextBeat);
+  }, [timeRemaining, totalSeconds, currentBeat, showQuiz]);
 
   const handleAnswer = (index) => {
     if (answered) return;

@@ -259,11 +259,15 @@ The countdown timer is purely visual. Screen reader users have no awareness of t
 
 #### PERF-04 · LessonPage re-renders ~20× per second
 
-**Where:** [src/pages/LessonPage.jsx](../src/pages/LessonPage.jsx)
+**Where:** [src/engine/story/StoryRenderer.jsx](../src/engine/story/StoryRenderer.jsx)
 
 A 50ms `setInterval` drives the story beat progress bar, firing ~20 state updates per second. Each triggers a full component re-render.
 
 **Fix:** Use `requestAnimationFrame` with a CSS `transition` for the progress bar width. Or throttle state updates to 200–500ms (the visual difference is imperceptible).
+
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Removed the 50ms progress ticker and now derives beat/quiz progression from the 1Hz lesson timer (`timeRemaining`), reducing StoryRenderer re-renders from ~20/sec to ~1/sec while preserving wall-clock catch-up behavior.
 
 ---
 
