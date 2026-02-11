@@ -132,6 +132,7 @@ export default function ProfilePage() {
 
   const [checkoutBanner, setCheckoutBanner] = useState(null); // 'success' | 'error' | null
   const [checkoutBannerText, setCheckoutBannerText] = useState('');
+  const [checkoutProgress, setCheckoutProgress] = useState(null); // { elapsedMs: number, maxMs: number } | null
 
   const [stats, setStats] = useState({ one_ma_balance: 0, streak: 0, last_completed_date: null });
   const [progressRows, setProgressRows] = useState([]);
@@ -550,10 +551,13 @@ export default function ProfilePage() {
 
       setCheckoutBanner('success');
       const startedAt = Date.now();
-      const maxMs = 25_000;
+      const maxMs = 30_000;
+      setCheckoutProgress({ elapsedMs: 0, maxMs });
 
       while (!canceled && Date.now() - startedAt < maxMs) {
-        const remaining = Math.max(0, Math.ceil((maxMs - (Date.now() - startedAt)) / 1000));
+        const elapsedMs = Date.now() - startedAt;
+        const remaining = Math.max(0, Math.ceil((maxMs - elapsedMs) / 1000));
+        setCheckoutProgress({ elapsedMs, maxMs });
         setCheckoutBannerText(`Payment received — activating Pro… (${remaining}s)`);
         try {
           // Stripe webhooks update user_metadata server-side. The client may need a token refresh
@@ -567,6 +571,7 @@ export default function ProfilePage() {
           const nextUser = await reloadUser();
           if (getCurrentTier(nextUser) === 'pro') {
             setCheckoutBannerText('Pro is active. Enjoy!');
+            setCheckoutProgress(null);
             // Clear ?checkout=success from the URL.
             navigate('/me', { replace: true });
             return;
@@ -575,12 +580,13 @@ export default function ProfilePage() {
           // ignore
         }
         // eslint-disable-next-line no-await-in-loop
-        await new Promise((r) => setTimeout(r, 2000));
+        await new Promise((r) => setTimeout(r, 2500));
       }
 
       if (!canceled) {
         setCheckoutBanner('error');
         setCheckoutBannerText('Payment received. Pro may still be activating — check Stripe webhook delivery and try refreshing.');
+        setCheckoutProgress(null);
       }
     }
 
@@ -589,6 +595,13 @@ export default function ProfilePage() {
       canceled = true;
     };
   }, [checkoutState, authLoading, user, reloadUser, refreshSession, navigate]);
+
+  useEffect(() => {
+    if (checkoutState === 'success') return;
+    setCheckoutBanner(null);
+    setCheckoutBannerText('');
+    setCheckoutProgress(null);
+  }, [checkoutState]);
 
   const topicById = useMemo(() => {
     const map = new Map();
@@ -777,6 +790,19 @@ export default function ProfilePage() {
                 <div className={`profile-note ${checkoutBanner === 'error' ? 'profile-checkout-error' : 'profile-checkout-success'}`} style={{ marginBottom: 12 }}>
                   <strong>{checkoutBanner === 'error' ? 'Checkout' : 'Checkout success'}</strong>
                   <div>{checkoutBannerText}</div>
+                  {checkoutProgress && (
+                    <>
+                      <div className="profile-checkout-progressTrack" aria-hidden="true">
+                        <div
+                          className="profile-checkout-progressBar"
+                          style={{ width: `${Math.min(100, Math.max(6, Math.round((checkoutProgress.elapsedMs / checkoutProgress.maxMs) * 100)))}%` }}
+                        />
+                      </div>
+                      {checkoutProgress.elapsedMs >= 10_000 && (
+                        <div className="profile-checkout-slow">It’s taking longer than expected — you can refresh this page.</div>
+                      )}
+                    </>
+                  )}
                 </div>
               )}
 

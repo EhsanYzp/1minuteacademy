@@ -168,6 +168,50 @@
   background: rgba(220, 38, 38, 0.07);
 }
 
+.profile-checkout-progressTrack {
+  margin-top: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  animation: profileCheckoutPulse 1.15s ease-in-out infinite;
+}
+
+.profile-checkout-progressBar {
+  height: 100%;
+  border-radius: 999px;
+  background: rgba(22, 163, 74, 0.9);
+  transition: width 320ms ease;
+}
+
+.profile-checkout-error .profile-checkout-progressBar {
+  background: rgba(220, 38, 38, 0.85);
+}
+
+.profile-checkout-slow {
+  margin-top: 8px;
+  color: var(--text-secondary);
+  font-weight: 750;
+}
+
+@keyframes profileCheckoutPulse {
+  0% {
+    opacity: 0.65;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.65;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-checkout-progressTrack {
+    animation: none;
+  }
+}
+
 .profile-email {
   color: var(--text-secondary);
   word-break: break-word;

@@ -384,6 +384,10 @@ After Stripe checkout success, the app polls subscription status every 2.5s for 
 
 **Fix:** Add a progress bar or pulsing skeleton. Show "It's taking longer than expected — you can refresh the page" after 10s.
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Improved the post-checkout Pro activation banner with a lightweight progress indicator and a clear “taking longer than expected” hint after 10 seconds, so users aren’t staring at static text while polling completes.
+
 ---
 
 ### 📈 Scalability
