@@ -41,6 +41,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Performance: moved Google Fonts loading from CSS `@import` to HTML `<link>` tags with `preconnect`.
 - Performance: Topic page “Related topics” now uses a bounded query (subject/subcategory + limit) instead of downloading the full topics catalog.
 - Accessibility: restored visible keyboard focus by removing `outline: none` and adding a global `:focus-visible` outline.
+- Accessibility: added global `prefers-reduced-motion` support (reduced CSS transitions/animations + Framer Motion `reducedMotion="user"`).
 
 ### Fixed
 - Prevented the “click into Pro-only then discover it’s locked” UX for free users.

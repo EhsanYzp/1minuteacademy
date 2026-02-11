@@ -231,6 +231,10 @@ Multiple CSS files contain `outline: none` on buttons/inputs. Only 2 elements in
 ```
 Also pass `reducedMotion="user"` to Framer Motion's `<LazyMotion>` or `<MotionConfig>`.
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Added a global reduced-motion stylesheet fallback (disables most CSS transitions/animations and smooth scrolling) and wrapped the app in Framer Motion’s `MotionConfig` with `reducedMotion="user"` so motion respects the user preference.
+
 ---
 
 #### A11Y-03 · Timer has no accessible announcement
