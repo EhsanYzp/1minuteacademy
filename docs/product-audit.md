@@ -171,6 +171,10 @@ This blocks rendering until the font CSS is downloaded and parsed.
 
 **Fix:** Move to `<link rel="preconnect" href="https://fonts.googleapis.com">` + `<link rel="stylesheet" href="...">` with `display=swap` in `index.html`. Or self-host the fonts for zero external dependency.
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Removed the Google Fonts `@import` from `src/index.css` and added `preconnect` + `stylesheet` links in `index.html` to avoid render-blocking CSS imports.
+
 ---
 
 #### PERF-03 · `listTopics()` downloads full catalog for 6 related items
