@@ -63,7 +63,12 @@ export default async function handler(req, res) {
     await enforceRateLimit({ supabaseAdmin, key: `stripe:substatus:ip:${ip}`, windowSeconds: 60, maxCount: 60 });
     await enforceRateLimit({ supabaseAdmin, key: `stripe:substatus:user:${user.id}`, windowSeconds: 60, maxCount: 20 });
   } catch (e) {
-    return json(res, e?.statusCode || 429, { error: e?.message || 'Too many requests', reset_at: e?.resetAt || null });
+    const status = Number(e?.statusCode) || 429;
+    if (status >= 500) console.error('stripe:subscription-status rate-limit error', e);
+    return json(res, status, {
+      error: status === 429 ? 'Too many requests. Please wait and try again.' : 'Server error',
+      reset_at: e?.resetAt || null,
+    });
   }
   const subscriptionId = user?.user_metadata?.stripe_subscription_id;
   const customerId = user?.user_metadata?.stripe_customer_id;
@@ -130,6 +135,7 @@ export default async function handler(req, res) {
 
     return json(res, 200, await shape(sub));
   } catch (e) {
-    return json(res, 500, { error: e?.message || 'Stripe error' });
+    console.error('stripe:subscription-status error', e);
+    return json(res, 500, { error: 'Server error' });
   }
 }

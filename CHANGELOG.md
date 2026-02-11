@@ -46,4 +46,4 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Profile page: fixed a crash when loading topics from Supabase (undefined client reference).
 - Security: hardened Stripe checkout success/cancel URLs and billing portal return URL to use `SITE_URL` only (prevents open redirect via forged request headers).
 - Security: added strict CORS headers + `OPTIONS` preflight handling for all `api/` endpoints (allows `SITE_URL` origin; no wildcard).
-- Security: stopped returning raw exception messages from Stripe API endpoints in 5xx responses (logs server-side; client sees generic "Server error").
+- Security: tightened API error handling to avoid echoing arbitrary exception messages to clients (logs server-side; client sees fixed safe messages).

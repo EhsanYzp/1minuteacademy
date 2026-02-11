@@ -98,7 +98,12 @@ export default async function handler(req, res) {
     await enforceRateLimit({ supabaseAdmin, key: `stripe:portal:ip:${ip}`, windowSeconds: 60, maxCount: 30 });
     await enforceRateLimit({ supabaseAdmin, key: `stripe:portal:user:${user.id}`, windowSeconds: 300, maxCount: 10 });
   } catch (e) {
-    return json(res, e?.statusCode || 429, { error: e?.message || 'Too many requests', reset_at: e?.resetAt || null });
+    const status = Number(e?.statusCode) || 429;
+    if (status >= 500) console.error('stripe:create-portal-session rate-limit error', e);
+    return json(res, status, {
+      error: status === 429 ? 'Too many requests. Please wait and try again.' : 'Server error',
+      reset_at: e?.resetAt || null,
+    });
   }
 
   if (!customerId) {

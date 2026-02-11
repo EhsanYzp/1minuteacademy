@@ -141,7 +141,12 @@ export default async function handler(req, res) {
     await enforceRateLimit({ supabaseAdmin, key: `stripe:checkout:ip:${ip}`, windowSeconds: 60, maxCount: 12 });
     await enforceRateLimit({ supabaseAdmin, key: `stripe:checkout:user:${user.id}`, windowSeconds: 600, maxCount: 4 });
   } catch (e) {
-    return json(res, e?.statusCode || 429, { error: e?.message || 'Too many requests', reset_at: e?.resetAt || null });
+    const status = Number(e?.statusCode) || 429;
+    if (status >= 500) console.error('stripe:create-checkout-session rate-limit error', e);
+    return json(res, status, {
+      error: status === 429 ? 'Too many requests. Please wait and try again.' : 'Server error',
+      reset_at: e?.resetAt || null,
+    });
   }
 
   // Idempotency: reuse an existing open Checkout session for this user+plan.

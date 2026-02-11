@@ -62,7 +62,7 @@ Catch blocks return `e.message` directly to the client. If a Supabase/Stripe SDK
 
 **Status:** Implemented (2026-02-11)
 
-**Summary:** Updated Stripe API endpoints to log full exceptions server-side but return only a generic `"Server error"` message on 5xx responses (prevents leaking internal error details).
+**Summary:** Tightened all Vercel `api/` routes to avoid echoing arbitrary exception messages to clients (including Stripe handlers). Errors are logged server-side; client responses use fixed, safe error strings.
 
 ---
 

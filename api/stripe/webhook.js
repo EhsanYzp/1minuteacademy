@@ -113,7 +113,8 @@ export default async function handler(req, res) {
   try {
     event = stripe.webhooks.constructEvent(rawBody, signature, webhookSecret);
   } catch (err) {
-    return text(res, 400, `Webhook Error: ${err?.message || 'Invalid signature'}`);
+    console.error('stripe:webhook signature verification error', err);
+    return text(res, 400, 'Invalid signature');
   }
 
   const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey);

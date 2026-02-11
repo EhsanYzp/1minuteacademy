@@ -12,7 +12,8 @@ export default async function handler(req, res) {
   try {
     supabaseAdmin = createSupabaseAdmin();
   } catch (e) {
-    return json(res, 500, { error: e?.message || 'Server not configured' });
+    console.error('account:pause config error', e);
+    return json(res, 500, { error: 'Server error' });
   }
 
   try {
@@ -34,6 +35,15 @@ export default async function handler(req, res) {
     await supabaseAdmin.auth.admin.updateUserById(user.id, { user_metadata: nextMeta });
     return json(res, 200, { ok: true });
   } catch (e) {
-    return json(res, e?.status || 500, { error: e?.message || 'Server error' });
+    const status = Number(e?.status) || 500;
+    if (status >= 500) console.error('account:pause handler error', e);
+    const safeError =
+      status === 401 ? 'Unauthorized' :
+      status === 403 ? 'Forbidden' :
+      status === 404 ? 'Not found' :
+      status === 429 ? 'Too many requests. Please wait and try again.' :
+      status >= 500 ? 'Server error' :
+      'Request failed';
+    return json(res, status, { error: safeError });
   }
 }

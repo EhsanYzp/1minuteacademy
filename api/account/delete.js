@@ -66,7 +66,8 @@ export default async function handler(req, res) {
   try {
     supabaseAdmin = createSupabaseAdmin();
   } catch (e) {
-    return json(res, 500, { error: e?.message || 'Server not configured' });
+    console.error('account:delete config error', e);
+    return json(res, 500, { error: 'Server error' });
   }
 
   try {
@@ -90,24 +91,38 @@ export default async function handler(req, res) {
       try {
         stripe = createStripeClient();
       } catch (e) {
-        return json(res, 500, { error: e?.message || 'Billing not configured' });
+        console.error('account:delete billing config error', e);
+        return json(res, 500, { error: 'Server error' });
       }
 
       try {
         await cancelAnyActiveSubscriptions({ stripe, stripeCustomerId, stripeSubscriptionId });
       } catch (e) {
+        console.error('account:delete stripe cancellation error', e);
         return json(res, 409, {
           error: 'Could not cancel your active subscription automatically. Please cancel it in the billing portal, then try deleting again.',
-          details: e?.message || 'Stripe error',
         });
       }
     }
 
     const { error: delErr } = await supabaseAdmin.auth.admin.deleteUser(authedUser.id);
-    if (delErr) return json(res, 500, { error: delErr.message || 'Failed to delete user' });
+    if (delErr) {
+      console.error('account:delete supabase delete error', delErr);
+      return json(res, 500, { error: 'Server error' });
+    }
 
     return json(res, 200, { ok: true });
   } catch (e) {
-    return json(res, e?.status || 500, { error: e?.message || 'Server error' });
+    const status = Number(e?.status) || 500;
+    if (status >= 500) console.error('account:delete handler error', e);
+    const safeError =
+      status === 401 ? 'Unauthorized' :
+      status === 403 ? 'Forbidden' :
+      status === 404 ? 'Not found' :
+      status === 409 ? 'Conflict' :
+      status === 429 ? 'Too many requests. Please wait and try again.' :
+      status >= 500 ? 'Server error' :
+      'Request failed';
+    return json(res, status, { error: safeError });
   }
 }
