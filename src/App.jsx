@@ -12,6 +12,7 @@ import RouteLoading from './components/RouteLoading';
 import './App.css';
 
 const TopicsBrowserPage = lazy(() => import('./pages/TopicsBrowserPage'));
+const LearnPage = lazy(() => import('./pages/LearnPage'));
 const TopicPage = lazy(() => import('./pages/TopicPage'));
 const LessonPage = lazy(() => import('./pages/LessonPage'));
 const ReviewPage = lazy(() => import('./pages/ReviewPage'));
@@ -57,6 +58,7 @@ const router = createBrowserRouter([
     element: <AppFrame />,
     children: [
       { index: true, element: <Home /> },
+      { path: 'learn', element: <LearnPage /> },
       { path: 'topics', element: <TopicsBrowserPage /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'auth/callback', element: <AuthCallbackPage /> },

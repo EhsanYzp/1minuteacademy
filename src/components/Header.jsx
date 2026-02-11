@@ -236,8 +236,8 @@ function Header() {
         tabIndex={-1}
         aria-label="Site navigation"
       >
-        <Link to="/topics" className="nav-item link browse" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
-          🧭 Browse
+        <Link to="/learn" className="nav-item link browse" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
+          🧭 Learn
         </Link>
         <Link to="/pricing" className="nav-item link" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
           💳 Pricing

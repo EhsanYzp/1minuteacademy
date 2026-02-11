@@ -26,7 +26,7 @@ export default function ResetPasswordPage() {
 
   const fromPath = useMemo(() => {
     const qs = new URLSearchParams(location.search);
-    return safeFromPath(qs.get('from')) ?? '/topics';
+    return safeFromPath(qs.get('from')) ?? '/learn';
   }, [location.search]);
 
   const [password, setPassword] = useState('');

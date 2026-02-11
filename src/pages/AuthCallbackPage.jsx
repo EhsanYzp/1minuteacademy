@@ -25,7 +25,7 @@ export default function AuthCallbackPage() {
 
   const fromPath = useMemo(() => {
     const qs = new URLSearchParams(location.search);
-    return safeFromPath(qs.get('from')) ?? '/topics';
+    return safeFromPath(qs.get('from')) ?? '/learn';
   }, [location.search]);
 
   useEffect(() => {

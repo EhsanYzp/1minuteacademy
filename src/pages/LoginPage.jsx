@@ -37,7 +37,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const fromPath = useMemo(() => location.state?.from?.pathname ?? '/topics', [location.state]);
+  const fromPath = useMemo(() => location.state?.from?.pathname ?? '/learn', [location.state]);
   const reason = useMemo(() => location.state?.reason ?? null, [location.state]);
   const isVerified = Boolean(user?.email_confirmed_at || user?.confirmed_at);
 
@@ -321,7 +321,7 @@ export default function LoginPage() {
           </form>
 
           <div className="login-footer">
-            <Link to="/topics">← Back to topics</Link>
+            <Link to="/learn">← Back to learning</Link>
           </div>
         </motion.div>
       </main>

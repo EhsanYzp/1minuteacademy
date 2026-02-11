@@ -101,7 +101,7 @@ function Home() {
           </p>
 
           <motion.div className="hero-cta" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-            <Link className="cta primary" to="/topics">
+            <Link className="cta primary" to="/learn">
               🚀 Start
             </Link>
             <a className="cta secondary" href="#how-it-works">
@@ -153,7 +153,7 @@ function Home() {
           </div>
 
           <div className="how-cta">
-            <Link className="cta primary" to="/topics">
+            <Link className="cta primary" to="/learn">
               Browse topics
             </Link>
           </div>
