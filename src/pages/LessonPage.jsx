@@ -58,8 +58,7 @@ function LessonPage() {
 
   const isLessonActive = isStarted && !isCompleted && timeRemaining > 0;
 
-  const useBlocker = ReactRouterDom.useBlocker || ReactRouterDom.unstable_useBlocker;
-  const blocker = typeof useBlocker === 'function' ? useBlocker(isLessonActive) : null;
+  const blocker = typeof ReactRouterDom.useBlocker === 'function' ? ReactRouterDom.useBlocker(isLessonActive) : null;
 
   useEffect(() => {
     if (!blocker) return;

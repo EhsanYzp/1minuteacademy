@@ -56,3 +56,4 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Reliability: fixed lesson timer drift by basing the countdown on wall-clock time (accurate after background-tab throttling).
 - Reliability: added navigation guards during active lessons (beforeunload + in-app route change prompt) to prevent accidental loss of progress.
 - Reliability: fixed lesson start crash caused by `useBlocker` running under `BrowserRouter` by migrating to a React Router data router.
+- Build: fixed a production blank-screen boot crash caused by a circular chunk dependency (`vendor` ↔ `react`) by bundling React’s `scheduler` with the React chunk.

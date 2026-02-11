@@ -155,7 +155,7 @@ Every page is eagerly imported. The initial JS download includes code for the le
 
 **Status:** Implemented (2026-02-11)
 
-**Summary:** Added route-level code splitting via `React.lazy()` + `Suspense` in `src/App.jsx` with a lightweight `RouteLoading` fallback, and configured Vite/Rollup `manualChunks` to split key vendor libraries for improved caching.
+**Summary:** Added route-level code splitting via `React.lazy()` + `Suspense` in `src/App.jsx` with a lightweight `RouteLoading` fallback, and configured Vite/Rollup `manualChunks` to split key vendor libraries for improved caching. Follow-up: adjusted chunking to keep React’s `scheduler` bundled with the React chunk to avoid a production-only circular chunk import that could break app boot.
 
 ---
 

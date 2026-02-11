@@ -17,6 +17,10 @@ export default defineConfig({
           if (/node_modules[\\/]@vercel[\\/]analytics[\\/]/.test(id)) return 'analytics'
           if (/node_modules[\\/]react-icons[\\/]/.test(id)) return 'icons'
           if (/node_modules[\\/]stripe[\\/]/.test(id)) return 'stripe'
+          // Keep React + its runtime scheduler in the same chunk to avoid
+          // circular chunk imports (e.g. react -> vendor -> react) that can
+          // lead to `createContext` being undefined at runtime.
+          if (/node_modules[\\/]scheduler[\\/]/.test(id)) return 'react'
           if (/node_modules[\\/]react-dom[\\/]/.test(id)) return 'react'
           if (/node_modules[\\/]react[\\/]/.test(id)) return 'react'
 
