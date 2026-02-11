@@ -125,6 +125,10 @@ Users can accidentally navigate away or close the tab mid-lesson with no warning
 
 **Fix:** Add a `beforeunload` handler while the lesson timer is running. Optionally use React Router's `useBlocker` to warn on in-app navigation.
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Added a `beforeunload` guard and an in-app navigation blocker (React Router) while the lesson timer is active to warn users before leaving mid-lesson.
+
 ---
 
 ### ⚡ Performance

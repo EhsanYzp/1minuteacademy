@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { useParams, useNavigate } from 'react-router-dom';
+import * as ReactRouterDom from 'react-router-dom';
 import Seo from '../components/Seo';
 import Timer from '../components/Timer';
 import { StoryRenderer, StoryReview } from '../engine/story';
@@ -31,8 +31,8 @@ function normalizeTierForJourney(tier) {
 }
 
 function LessonPage() {
-  const { topicId } = useParams();
-  const navigate = useNavigate();
+  const { topicId } = ReactRouterDom.useParams();
+  const navigate = ReactRouterDom.useNavigate();
   const contentSource = getContentSource();
   const { user } = useAuth();
   const tier = getCurrentTier(user);
@@ -55,6 +55,20 @@ function LessonPage() {
   const submittedCompletionRef = useRef(false);
   const timerDeadlineMsRef = useRef(null);
   const timerCompletedRef = useRef(false);
+
+  const isLessonActive = isStarted && !isCompleted && timeRemaining > 0;
+
+  const useBlocker = ReactRouterDom.useBlocker || ReactRouterDom.unstable_useBlocker;
+  const blocker = typeof useBlocker === 'function' ? useBlocker(isLessonActive) : null;
+
+  useEffect(() => {
+    if (!blocker) return;
+    if (blocker.state !== 'blocked') return;
+
+    const ok = window.confirm('You have an active lesson. Leave this page and lose progress?');
+    if (ok) blocker.proceed?.();
+    else blocker.reset?.();
+  }, [blocker]);
 
   const canStart = useMemo(() => canStartTopic({ tier, topicRow }), [tier, topicRow]);
 
@@ -469,6 +483,22 @@ function LessonPage() {
     const timer = setInterval(tick, 1000);
     return () => clearInterval(timer);
   }, [isStarted, isCompleted, totalSeconds, handleTimeUp]);
+
+  useEffect(() => {
+    if (!isLessonActive) return;
+
+    function onBeforeUnload(e) {
+      // Triggers the browser's confirmation dialog.
+      e.preventDefault();
+      e.returnValue = '';
+      return '';
+    }
+
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', onBeforeUnload);
+    };
+  }, [isLessonActive]);
 
   useEffect(() => {
     if (!isStarted || !isCompleted) return;
