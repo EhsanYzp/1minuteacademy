@@ -1,9 +1,10 @@
 .learn {
   min-height: 100vh;
-  background: radial-gradient(1200px 600px at 20% 0%, rgba(99, 102, 241, 0.24), transparent 60%),
-    radial-gradient(1000px 700px at 90% 30%, rgba(16, 185, 129, 0.18), transparent 55%),
-    radial-gradient(900px 600px at 40% 100%, rgba(236, 72, 153, 0.14), transparent 55%),
-    var(--color-bg);
+  background:
+    radial-gradient(1200px 600px at 20% 0%, rgba(37, 99, 235, 0.18), transparent 60%),
+    radial-gradient(1000px 700px at 90% 30%, rgba(78, 205, 196, 0.16), transparent 55%),
+    radial-gradient(900px 600px at 40% 100%, rgba(255, 159, 67, 0.14), transparent 55%),
+    var(--bg-gradient);
 }
 
 .learn-main {
@@ -27,11 +28,12 @@
   gap: 8px;
   padding: 8px 12px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(45, 52, 54, 0.10);
+  color: var(--text-primary);
   font-weight: 600;
   letter-spacing: 0.2px;
+  box-shadow: var(--shadow-sm);
 }
 
 .learn-title {
@@ -43,9 +45,12 @@
 .learn-subtitle {
   margin: 0 auto;
   max-width: 64ch;
-  color: rgba(255, 255, 255, 0.76);
+  color: var(--text-secondary);
   font-size: 16px;
   line-height: 1.5;
+  font-family: var(--font-hand);
+  font-size: 1.25rem;
+  transform: rotate(-0.2deg);
 }
 
 .learn-grid {
@@ -62,19 +67,29 @@
 
 .learn-card {
   position: relative;
-  border-radius: 18px;
+  border-radius: var(--radius-xl);
   padding: 18px 18px 16px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(45, 52, 54, 0.10);
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
+}
+
+.learn-card:nth-child(1) {
+  transform: rotate(-0.18deg);
+}
+
+.learn-card:nth-child(2) {
+  transform: rotate(0.18deg);
 }
 
 .learn-card::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.10), transparent 40%);
+  background:
+    linear-gradient(120deg, rgba(37, 99, 235, 0.10), transparent 35%),
+    radial-gradient(450px 180px at 0% 0%, rgba(78, 205, 196, 0.18), transparent 60%);
   opacity: 0;
   transition: opacity 220ms ease;
   pointer-events: none;
@@ -85,13 +100,31 @@
 }
 
 .learn-card-surprise {
-  border-color: rgba(99, 102, 241, 0.35);
+  border-color: rgba(37, 99, 235, 0.22);
+  box-shadow: 0 12px 36px rgba(37, 99, 235, 0.16);
 }
 
 .learn-cardIcon {
-  font-size: 32px;
-  line-height: 1;
-  margin-bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  margin-bottom: 12px;
+  background: rgba(37, 99, 235, 0.10);
+  border: 1px solid rgba(37, 99, 235, 0.16);
+  color: var(--color-primary-dark);
+}
+
+.learn-cardSurpriseWiggle {
+  animation: learnWiggle 2.4s ease-in-out infinite;
+}
+
+@keyframes learnWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  45% { transform: rotate(-2deg); }
+  55% { transform: rotate(2deg); }
 }
 
 .learn-cardTitle {
@@ -102,7 +135,7 @@
 
 .learn-cardBody {
   margin: 0 0 14px;
-  color: rgba(255, 255, 255, 0.76);
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 
@@ -111,13 +144,17 @@
   align-items: center;
   gap: 10px;
   margin: 0 0 14px;
-  color: rgba(255, 255, 255, 0.84);
+  color: var(--text-primary);
   font-weight: 600;
 }
 
 .learn-toggle input {
   width: 18px;
   height: 18px;
+}
+
+.learn-toggle span {
+  color: var(--text-primary);
 }
 
 .learn-cardCta {
@@ -130,15 +167,22 @@
   border-radius: 12px;
   font-weight: 800;
   text-decoration: none;
-  color: #0b1020;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.82));
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: var(--text-primary);
+  background: var(--color-accent);
+  border: 2px solid rgba(58, 42, 0, 0.12);
+  box-shadow: var(--shadow-md);
   transition: transform 180ms ease, filter 180ms ease;
 }
 
 .learn-cardCta:hover {
   filter: brightness(1.03);
   transform: translateY(-1px);
+}
+
+.learn-cardCtaSecondary {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  box-shadow: var(--shadow-sm);
 }
 
 .learn-cardButton {
@@ -156,8 +200,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(10px);
+  background: rgba(45, 52, 54, 0.40);
+  backdrop-filter: blur(12px);
   padding: 22px;
   z-index: 50;
 }
@@ -166,36 +210,117 @@
   width: min(520px, 100%);
   border-radius: 18px;
   padding: 18px 16px;
-  background: rgba(15, 23, 42, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.35);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(45, 52, 54, 0.12);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.22);
   text-align: center;
+  position: relative;
 }
 
-.learn-spinner {
-  width: 42px;
-  height: 42px;
-  border-radius: 999px;
-  border: 3px solid rgba(255, 255, 255, 0.20);
-  border-top-color: rgba(99, 102, 241, 0.95);
-  margin: 2px auto 12px;
-  animation: learnSpin 900ms linear infinite;
+.learn-overlayClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  color: var(--text-primary);
+  cursor: pointer;
 }
 
-@keyframes learnSpin {
+.learn-overlayClose:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.learn-reel {
+  position: relative;
+  margin: 8px auto 14px;
+  width: min(460px, 100%);
+  height: 132px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(45, 52, 54, 0.10);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.84)),
+    radial-gradient(600px 220px at 20% 0%, rgba(37, 99, 235, 0.14), transparent 60%),
+    radial-gradient(500px 220px at 90% 100%, rgba(78, 205, 196, 0.16), transparent 58%);
+}
+
+.learn-reel::before,
+.learn-reel::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 36px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.learn-reel::before {
+  top: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0));
+}
+
+.learn-reel::after {
+  bottom: 0;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0));
+}
+
+.learn-reelTrack {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: start;
+  padding: 14px 14px;
+  gap: 10px;
+}
+
+.learn-reelRolling .learn-reelTrack {
+  animation: learnReelRoll 780ms linear infinite;
+}
+
+@keyframes learnReelRoll {
   to {
-    transform: rotate(360deg);
+    transform: translateY(-42px);
   }
+}
+
+.learn-reelItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  border-radius: 999px;
+  padding: 0 14px;
+  font-weight: 800;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(45, 52, 54, 0.08);
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.learn-reelSelected {
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.16), var(--shadow-md);
 }
 
 .learn-overlayTitle {
   font-size: 18px;
   font-weight: 900;
   margin-bottom: 8px;
+  color: var(--text-primary);
 }
 
 .learn-overlayBody {
-  color: rgba(255, 255, 255, 0.76);
+  color: var(--text-secondary);
   line-height: 1.5;
   margin-bottom: 14px;
 }
@@ -208,9 +333,9 @@
 
 .learn-overlayButton {
   appearance: none;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(45, 52, 54, 0.14);
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--text-primary);
   padding: 10px 12px;
   border-radius: 12px;
   font-weight: 800;
@@ -218,9 +343,49 @@
 }
 
 .learn-overlayButtonPrimary {
-  background: linear-gradient(90deg, rgba(99, 102, 241, 0.9), rgba(16, 185, 129, 0.75));
-  border-color: rgba(255, 255, 255, 0.18);
-  color: #0b1020;
+  background: var(--color-primary);
+  border-color: rgba(37, 99, 235, 0.28);
+  color: white;
+}
+
+.learn-picked {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  align-items: center;
+  gap: 12px;
+  margin: 10px auto 14px;
+  width: min(520px, 100%);
+  padding: 12px;
+  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-sm);
+  text-align: left;
+}
+
+.learn-pickedEmoji {
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 230, 109, 0.55);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 26px;
+}
+
+.learn-pickedTitle {
+  font-family: var(--font-display);
+  font-weight: 950;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.learn-pickedSub {
+  color: var(--text-secondary);
+  font-weight: 700;
+  margin-top: 2px;
 }
 
 .learn-overlayButton:hover {
@@ -228,7 +393,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .learn-spinner {
+  .learn-reelRolling .learn-reelTrack {
     animation: none;
   }
 

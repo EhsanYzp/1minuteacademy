@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { FiArrowRight, FiCompass, FiRefreshCw, FiShuffle, FiX } from 'react-icons/fi';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
 import { listTopics, listTopicsPage } from '../services/topics';
@@ -49,6 +50,36 @@ function randomInt(minInclusive, maxInclusive) {
   const max = Math.floor(maxInclusive);
   if (max < min) return min;
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function buildReelItemsFromTopics({ topics, selectedTitle }) {
+  const titles = (Array.isArray(topics) ? topics : [])
+    .map((t) => String(t?.title ?? '').trim())
+    .filter(Boolean);
+
+  const pool = titles.filter((t) => t !== selectedTitle);
+  const items = [];
+  const wanted = 10;
+  for (let i = 0; i < wanted; i += 1) {
+    if (pool.length === 0) break;
+    items.push(pool[randomInt(0, pool.length - 1)]);
+  }
+
+  // Ensure we show the selected title somewhere in the window.
+  if (selectedTitle) items.splice(6, 0, selectedTitle);
+
+  // If we couldn't get enough topics, fall back to fun phrases.
+  const filler = [
+    'Something unexpectedly useful',
+    'A concept you’ll keep forever',
+    'A tiny idea with big impact',
+    'A mental model you can reuse',
+    'A topic with a fun twist',
+    'A shortcut to understanding',
+  ];
+  while (items.length < 10) items.push(filler[randomInt(0, filler.length - 1)]);
+
+  return items;
 }
 
 async function getCompletedTopicIds({ enabled }) {
@@ -144,19 +175,55 @@ function LearnPage() {
     []
   );
 
+  const overlayOpen = Boolean(overlay);
+
+  useEffect(() => {
+    if (!overlayOpen) return;
+    const onKeyDown = (e) => {
+      if (e.key !== 'Escape') return;
+      e.preventDefault();
+      setOverlay(null);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [overlayOpen]);
+
+  function goToTopic(topicId) {
+    if (!topicId) return;
+    navigate(`/topic/${topicId}`);
+  }
+
   async function onSurpriseMe() {
     if (busy) return;
     setBusy(true);
 
     const startedAt = Date.now();
     const line = loadingLines[randomInt(0, loadingLines.length - 1)];
-    setOverlay({ mode: 'loading', line });
+    setOverlay({ mode: 'loading', line, reelItems: [], selectedTopic: null });
 
     try {
-      const topic = await pickRandomTopic({ tier, includeCompleted });
+      const [topic, reelPage] = await Promise.all([
+        pickRandomTopic({ tier, includeCompleted }),
+        (async () => {
+          try {
+            const totalProbe = await listTopicsPage({ limit: 1, offset: 0 });
+            const total = typeof totalProbe?.total === 'number' ? totalProbe.total : null;
+            if (typeof total !== 'number' || total <= 0) return null;
+            const limit = 25;
+            const offset = randomInt(0, Math.max(0, total - limit));
+            return await listTopicsPage({ limit, offset });
+          } catch {
+            return null;
+          }
+        })(),
+      ]);
 
-      // Keep the loading screen on long enough to feel intentional.
-      const minMs = 900;
+      const selectedTitle = String(topic?.title ?? '').trim() || null;
+      const reelItems = buildReelItemsFromTopics({ topics: reelPage?.items ?? [], selectedTitle });
+      setOverlay({ mode: 'loading', line, reelItems, selectedTopic: topic ?? null, selectedTitle });
+
+      // Keep the roll on-screen long enough to be felt.
+      const minMs = 2400;
       const elapsed = Date.now() - startedAt;
       if (elapsed < minMs) await new Promise((r) => setTimeout(r, minMs - elapsed));
 
@@ -171,8 +238,14 @@ function LearnPage() {
         return;
       }
 
-      pushRecentRandomId(topic.id);
-      navigate(`/topic/${topic.id}`);
+      // Reveal + let the user choose (so it doesn't feel like it flashed away).
+      setOverlay({
+        mode: 'reveal',
+        line,
+        reelItems,
+        selectedTopic: topic,
+        selectedTitle,
+      });
     } catch {
       setOverlay({
         mode: 'error',
@@ -196,25 +269,29 @@ function LearnPage() {
       <main className="learn-main">
         <section className="learn-hero" aria-label="Learning modes">
           <div className="learn-heroTop">
-            <div className="learn-badge">Pick your vibe</div>
+            <div className="learn-badge">Pick your adventure</div>
             <h1 className="learn-title">How do you want to learn today?</h1>
-            <p className="learn-subtitle">Choose a topic yourself — or let the platform surprise you with something you haven’t completed.</p>
+            <p className="learn-subtitle">Choose exactly what you want… or hit the big red button and let fate decide.</p>
           </div>
 
           <div className="learn-grid">
             <motion.div className="learn-card" whileHover={{ y: -4 }} whileTap={{ scale: 0.99 }}>
-              <div className="learn-cardIcon" aria-hidden="true">🧭</div>
+              <div className="learn-cardIcon" aria-hidden="true">
+                <FiCompass size={22} />
+              </div>
               <h2 className="learn-cardTitle">Learn a new topic myself</h2>
-              <p className="learn-cardBody">Browse subjects, filter by difficulty, and pick exactly what you want.</p>
-              <Link className="learn-cardCta" to="/topics">
-                Browse topics
+              <p className="learn-cardBody">Browse subjects, filter difficulty, and pick your next 60-second sprint.</p>
+              <Link className="learn-cardCta learn-cardCtaSecondary" to="/topics">
+                Browse topics <FiArrowRight aria-hidden="true" />
               </Link>
             </motion.div>
 
             <motion.div className="learn-card learn-card-surprise" whileHover={{ y: -4 }} whileTap={{ scale: 0.99 }}>
-              <div className="learn-cardIcon" aria-hidden="true">🎲</div>
+              <div className="learn-cardIcon" aria-hidden="true">
+                <FiShuffle size={22} />
+              </div>
               <h2 className="learn-cardTitle">Surprise me</h2>
-              <p className="learn-cardBody">We’ll randomly pick a topic you can access — and (by default) one you haven’t completed yet.</p>
+              <p className="learn-cardBody">We’ll pick a random topic you can access — and (by default) one you haven’t completed yet.</p>
 
               <label className="learn-toggle">
                 <input
@@ -226,7 +303,7 @@ function LearnPage() {
               </label>
 
               <button type="button" className="learn-cardCta learn-cardButton" onClick={onSurpriseMe} disabled={busy}>
-                {busy ? 'Picking…' : 'Teach me something random'}
+                {busy ? 'Shuffling…' : 'Teach me something random'}
               </button>
             </motion.div>
           </div>
@@ -237,9 +314,77 @@ function LearnPage() {
             <div className="learn-overlayCard">
               {overlay.mode === 'loading' && (
                 <>
-                  <div className="learn-spinner" aria-hidden="true" />
                   <div className="learn-overlayTitle">Finding your next topic…</div>
+                  <div className="learn-reel learn-reelRolling" aria-hidden="true">
+                    <div className="learn-reelTrack">
+                      {(Array.isArray(overlay.reelItems) ? overlay.reelItems : []).slice(0, 8).map((t, idx) => (
+                        <div
+                          key={`${idx}-${t}`}
+                          className={overlay.selectedTitle && t === overlay.selectedTitle ? 'learn-reelItem learn-reelSelected' : 'learn-reelItem'}
+                        >
+                          {t}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                   <div className="learn-overlayBody">{overlay.line}</div>
+                  <button type="button" className="learn-overlayClose" onClick={() => setOverlay(null)} aria-label="Close">
+                    <FiX aria-hidden="true" />
+                  </button>
+                </>
+              )}
+
+              {overlay.mode === 'reveal' && (
+                <>
+                  <div className="learn-overlayTitle">We picked one.</div>
+                  <div className="learn-picked" role="group" aria-label="Selected topic">
+                    <div className="learn-pickedEmoji" aria-hidden="true">
+                      {String(overlay?.selectedTopic?.emoji ?? '🎯')}
+                    </div>
+                    <div className="learn-pickedMeta">
+                      <div className="learn-pickedTitle">{String(overlay?.selectedTopic?.title ?? 'Selected topic')}</div>
+                      <div className="learn-pickedSub">
+                        {String(overlay?.selectedTopic?.subject ?? 'General')}
+                        {overlay?.selectedTopic?.difficulty ? ` • ${String(overlay.selectedTopic.difficulty)}` : ''}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="learn-overlayActions">
+                    <button
+                      type="button"
+                      className="learn-overlayButton"
+                      onClick={() => {
+                        setOverlay(null);
+                      }}
+                    >
+                      Not now
+                    </button>
+                    <button
+                      type="button"
+                      className="learn-overlayButton"
+                      onClick={() => {
+                        onSurpriseMe();
+                      }}
+                      disabled={busy}
+                      title="Pick another random topic"
+                    >
+                      <FiRefreshCw aria-hidden="true" /> Reroll
+                    </button>
+                    <button
+                      type="button"
+                      className="learn-overlayButton learn-overlayButtonPrimary"
+                      onClick={() => {
+                        const id = overlay?.selectedTopic?.id;
+                        if (!id) return;
+                        pushRecentRandomId(id);
+                        setOverlay(null);
+                        goToTopic(id);
+                      }}
+                    >
+                      Take me there <FiArrowRight aria-hidden="true" />
+                    </button>
+                  </div>
                 </>
               )}
 
