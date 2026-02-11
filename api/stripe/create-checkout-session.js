@@ -118,14 +118,9 @@ export default async function handler(req, res) {
     });
   }
 
-  const forwardedProto = req.headers['x-forwarded-proto'];
-  const forwardedHost = req.headers['x-forwarded-host'] || req.headers.host;
-  const inferredSiteUrl = forwardedHost
-    ? `${forwardedProto || 'https'}://${forwardedHost}`
-    : req.headers.origin;
-  // Prefer the configured canonical origin so users don't bounce between apex/www
-  // (which would lose Supabase session stored per-origin).
-  const siteUrl = normalizeSiteUrl(process.env.SITE_URL) || normalizeSiteUrl(inferredSiteUrl);
+  // SECURITY: redirect targets must be based on a trusted, configured origin.
+  // Never fall back to request headers (Origin / Host) which can be forged.
+  const siteUrl = normalizeSiteUrl(process.env.SITE_URL);
   if (!siteUrl) return json(res, 500, { error: 'Missing SITE_URL' });
 
   const stripe = process.env.STRIPE_API_VERSION
