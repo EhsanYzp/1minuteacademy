@@ -52,3 +52,4 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Reliability: added a top-level React ErrorBoundary to prevent white-screen crashes and provide a recovery UI.
 - Reliability: fixed lesson timer drift by basing the countdown on wall-clock time (accurate after background-tab throttling).
 - Reliability: added navigation guards during active lessons (beforeunload + in-app route change prompt) to prevent accidental loss of progress.
+- Reliability: fixed lesson start crash caused by `useBlocker` running under `BrowserRouter` by migrating to a React Router data router.

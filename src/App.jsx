@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { createBrowserRouter, Outlet, RouterProvider, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { Analytics } from '@vercel/analytics/react';
 import Home from './pages/Home';
@@ -25,49 +25,67 @@ const AuthCallbackPage = lazy(() => import('./pages/AuthCallbackPage'));
 const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 
+function AppFrame() {
+  const location = useLocation();
+
+  return (
+    <>
+      <ScrollToTop />
+      <div className="app">
+        <div className="app-content">
+          <AnimatePresence mode="wait">
+            <ErrorBoundary>
+              <Suspense fallback={<RouteLoading />}>
+                <div key={location.pathname}>
+                  <Outlet />
+                </div>
+              </Suspense>
+            </ErrorBoundary>
+          </AnimatePresence>
+        </div>
+
+        <Footer />
+        <Analytics />
+      </div>
+    </>
+  );
+}
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <AppFrame />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: 'topics', element: <TopicsBrowserPage /> },
+      { path: 'login', element: <LoginPage /> },
+      { path: 'auth/callback', element: <AuthCallbackPage /> },
+      { path: 'auth/reset', element: <ResetPasswordPage /> },
+      { path: 'upgrade', element: <UpgradePage /> },
+      { path: 'pricing', element: <UpgradePage /> },
+      { path: 'faq', element: <FaqPage /> },
+      { path: 'privacy', element: <PrivacyPage /> },
+      { path: 'terms', element: <TermsPage /> },
+      { path: 'cookies', element: <CookiesPage /> },
+      {
+        path: 'me',
+        element: (
+          <ProtectedRoute requireVerified>
+            <ProfilePage />
+          </ProtectedRoute>
+        ),
+      },
+      { path: 'topic/:topicId', element: <TopicPage /> },
+      { path: 'lesson/:topicId', element: <LessonPage /> },
+      { path: 'review/:topicId', element: <ReviewPage /> },
+    ],
+  },
+]);
+
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <ScrollToTop />
-        <div className="app">
-          <div className="app-content">
-            <AnimatePresence mode="wait">
-              <ErrorBoundary>
-                <Suspense fallback={<RouteLoading />}>
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/topics" element={<TopicsBrowserPage />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/auth/callback" element={<AuthCallbackPage />} />
-                    <Route path="/auth/reset" element={<ResetPasswordPage />} />
-                    <Route path="/upgrade" element={<UpgradePage />} />
-                    <Route path="/pricing" element={<UpgradePage />} />
-                    <Route path="/faq" element={<FaqPage />} />
-                    <Route path="/privacy" element={<PrivacyPage />} />
-                    <Route path="/terms" element={<TermsPage />} />
-                    <Route path="/cookies" element={<CookiesPage />} />
-                    <Route
-                      path="/me"
-                      element={
-                        <ProtectedRoute requireVerified>
-                          <ProfilePage />
-                        </ProtectedRoute>
-                      }
-                    />
-                    <Route path="/topic/:topicId" element={<TopicPage />} />
-                    <Route path="/lesson/:topicId" element={<LessonPage />} />
-                    <Route path="/review/:topicId" element={<ReviewPage />} />
-                  </Routes>
-                </Suspense>
-              </ErrorBoundary>
-            </AnimatePresence>
-          </div>
-
-          <Footer />
-          <Analytics />
-        </div>
-      </Router>
+      <RouterProvider router={router} />
     </AuthProvider>
   );
 }
