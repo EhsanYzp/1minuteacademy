@@ -1,10 +1,12 @@
 .learn {
   min-height: 100vh;
   background:
-    radial-gradient(1200px 600px at 20% 0%, rgba(37, 99, 235, 0.18), transparent 60%),
-    radial-gradient(1000px 700px at 90% 30%, rgba(78, 205, 196, 0.16), transparent 55%),
-    radial-gradient(900px 600px at 40% 100%, rgba(255, 159, 67, 0.14), transparent 55%),
+    radial-gradient(1200px 600px at 20% 0%, rgba(37, 99, 235, 0.16), transparent 62%),
+    radial-gradient(1000px 700px at 90% 30%, rgba(78, 205, 196, 0.14), transparent 58%),
+    radial-gradient(900px 600px at 40% 100%, rgba(255, 159, 67, 0.12), transparent 58%),
+    radial-gradient(circle at 1px 1px, rgba(45, 52, 54, 0.06) 1px, transparent 1px),
     var(--bg-gradient);
+  background-size: auto, auto, auto, 22px 22px, auto;
 }
 
 .learn-main {
@@ -28,8 +30,8 @@
   gap: 8px;
   padding: 8px 12px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(45, 52, 54, 0.10);
+  background: rgba(255, 255, 255, 0.86);
+  border: 2px solid rgba(45, 52, 54, 0.10);
   color: var(--text-primary);
   font-weight: 600;
   letter-spacing: 0.2px;
@@ -40,6 +42,25 @@
   margin: 14px 0 10px;
   font-size: clamp(28px, 4vw, 44px);
   line-height: 1.1;
+}
+
+.learn-titleAccent {
+  position: relative;
+  display: inline-block;
+  padding: 0 4px;
+}
+
+.learn-titleAccent::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 230, 109, 0.85);
+  transform: rotate(-1deg);
+  z-index: -1;
 }
 
 .learn-subtitle {
@@ -68,9 +89,9 @@
 .learn-card {
   position: relative;
   border-radius: var(--radius-xl);
-  padding: 18px 18px 16px;
-  background: rgba(255, 255, 255, 0.86);
-  border: 1px solid rgba(45, 52, 54, 0.10);
+  padding: 16px 16px 14px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid rgba(45, 52, 54, 0.12);
   box-shadow: var(--shadow-lg);
   overflow: hidden;
 }
@@ -88,8 +109,8 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(120deg, rgba(37, 99, 235, 0.10), transparent 35%),
-    radial-gradient(450px 180px at 0% 0%, rgba(78, 205, 196, 0.18), transparent 60%);
+    linear-gradient(120deg, rgba(37, 99, 235, 0.12), transparent 38%),
+    radial-gradient(450px 180px at 0% 0%, rgba(78, 205, 196, 0.16), transparent 62%);
   opacity: 0;
   transition: opacity 220ms ease;
   pointer-events: none;
@@ -99,9 +120,67 @@
   opacity: 1;
 }
 
+.learn-card::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 230, 109, 0.75), transparent 55%),
+    radial-gradient(circle at 70% 65%, rgba(78, 205, 196, 0.28), transparent 55%);
+  opacity: 0.65;
+  transform: rotate(12deg);
+  pointer-events: none;
+}
+
 .learn-card-surprise {
-  border-color: rgba(37, 99, 235, 0.22);
-  box-shadow: 0 12px 36px rgba(37, 99, 235, 0.16);
+  border-color: rgba(37, 99, 235, 0.24);
+  box-shadow: 0 16px 44px rgba(37, 99, 235, 0.18);
+}
+
+.learn-cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.learn-cardEmoji {
+  width: 42px;
+  height: 42px;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  background: rgba(255, 230, 109, 0.55);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-sm);
+  transform: rotate(-3deg);
+}
+
+.learn-cardPill {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  color: rgba(45, 52, 54, 0.85);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.learn-cardPill--surprise {
+  background: rgba(37, 99, 235, 0.10);
+  border-color: rgba(37, 99, 235, 0.18);
+  color: rgba(30, 64, 175, 0.92);
 }
 
 .learn-cardIcon {
@@ -111,10 +190,22 @@
   width: 44px;
   height: 44px;
   border-radius: 14px;
-  margin-bottom: 12px;
-  background: rgba(37, 99, 235, 0.10);
-  border: 1px solid rgba(37, 99, 235, 0.16);
+  margin-bottom: 10px;
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(37, 99, 235, 0.18);
   color: var(--color-primary-dark);
+}
+
+.learn-cardIcon--browse {
+  background: rgba(78, 205, 196, 0.16);
+  border-color: rgba(78, 205, 196, 0.25);
+  color: rgba(16, 110, 104, 0.95);
+}
+
+.learn-cardIcon--surprise {
+  background: rgba(37, 99, 235, 0.10);
+  border-color: rgba(37, 99, 235, 0.22);
+  color: rgba(30, 64, 175, 0.98);
 }
 
 .learn-cardSurpriseWiggle {
@@ -129,7 +220,7 @@
 
 .learn-cardTitle {
   margin: 0 0 8px;
-  font-size: 20px;
+  font-size: 22px;
   letter-spacing: 0.2px;
 }
 
@@ -137,6 +228,26 @@
   margin: 0 0 14px;
   color: var(--text-secondary);
   line-height: 1.5;
+}
+
+.learn-cardChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+
+.learn-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.70);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  color: rgba(45, 52, 54, 0.82);
+  font-weight: 800;
+  font-size: 12px;
+  box-shadow: var(--shadow-sm);
 }
 
 .learn-toggle {
@@ -207,7 +318,7 @@
 }
 
 .learn-overlayCard {
-  width: min(520px, 100%);
+  width: min(740px, 100%);
   border-radius: 18px;
   padding: 18px 16px;
   background: rgba(255, 255, 255, 0.94);
@@ -215,6 +326,103 @@
   box-shadow: 0 28px 70px rgba(0, 0, 0, 0.22);
   text-align: center;
   position: relative;
+}
+
+/* Slot machine */
+.learn-slot {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.6fr;
+  gap: 12px;
+  margin: 12px auto 14px;
+  width: min(720px, 100%);
+}
+
+@media (max-width: 720px) {
+  .learn-slot {
+    grid-template-columns: 1fr;
+  }
+}
+
+.learn-slotCol {
+  text-align: left;
+}
+
+.learn-slotColLabel {
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(45, 52, 54, 0.70);
+  margin: 0 0 6px;
+}
+
+.learn-slotWindow {
+  position: relative;
+  height: calc(3 * 42px);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid rgba(45, 52, 54, 0.10);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.86));
+  box-shadow: var(--shadow-sm);
+}
+
+.learn-slotWindow::before,
+.learn-slotWindow::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 36px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.learn-slotWindow::before {
+  top: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0));
+}
+
+.learn-slotWindow::after {
+  bottom: 0;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0));
+}
+
+.learn-slotTrack {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  will-change: transform;
+}
+
+.learn-slotItem {
+  height: 42px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  font-weight: 900;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.learn-slotItem:nth-child(odd) {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.learn-slotHighlight {
+  position: absolute;
+  top: 42px;
+  left: 10px;
+  right: 10px;
+  height: 42px;
+  border-radius: 14px;
+  border: 2px solid rgba(37, 99, 235, 0.18);
+  box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.10);
+  z-index: 3;
+  pointer-events: none;
 }
 
 .learn-overlayClose {
@@ -393,10 +601,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .learn-reelRolling .learn-reelTrack {
-    animation: none;
-  }
-
   .learn-cardCta,
   .learn-card::before {
     transition: none;
