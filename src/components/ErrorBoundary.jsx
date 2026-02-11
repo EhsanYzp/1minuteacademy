@@ -1,7 +1,18 @@
 import React from 'react';
 
+function isChunkLoadError(error) {
+  const message = String(error?.message || error || '');
+  return (
+    /Failed to fetch dynamically imported module/i.test(message) ||
+    /Importing a module script failed/i.test(message) ||
+    /Loading chunk [\w-]+ failed/i.test(message) ||
+    /ChunkLoadError/i.test(message)
+  );
+}
+
 function ErrorFallback({ error }) {
   const isDev = (import.meta?.env?.DEV ?? false) === true;
+  const chunkLoadFailed = isChunkLoadError(error);
 
   return (
     <div style={{
@@ -19,9 +30,13 @@ function ErrorFallback({ error }) {
         padding: '20px',
         boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
       }}>
-        <h1 style={{ margin: '0 0 8px', fontSize: '20px' }}>Something went wrong</h1>
+        <h1 style={{ margin: '0 0 8px', fontSize: '20px' }}>
+          {chunkLoadFailed ? 'Update needed' : 'Something went wrong'}
+        </h1>
         <p style={{ margin: '0 0 16px', color: 'rgba(0,0,0,0.72)' }}>
-          Try reloading the page. If this keeps happening, please contact support.
+          {chunkLoadFailed
+            ? 'A new version was likely deployed while your tab was open. Reload to update and continue.'
+            : 'Try reloading the page. If this keeps happening, please contact support.'}
         </p>
 
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
@@ -53,7 +68,7 @@ function ErrorFallback({ error }) {
               fontWeight: 600,
             }}
           >
-            Reload
+            {chunkLoadFailed ? 'Reload to update' : 'Reload'}
           </button>
         </div>
 

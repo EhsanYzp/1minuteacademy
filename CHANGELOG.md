@@ -59,3 +59,5 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Reliability: added navigation guards during active lessons (beforeunload + in-app route change prompt) to prevent accidental loss of progress.
 - Reliability: fixed lesson start crash caused by `useBlocker` running under `BrowserRouter` by migrating to a React Router data router.
 - Build: fixed a production blank-screen boot crash caused by a circular chunk dependency (`vendor` ↔ `react`) by bundling React’s `scheduler` with the React chunk.
+- Build/Deploy: prevented SPA rewrites from swallowing missing `/assets/*` chunks and added cache headers (`index.html` no-cache; hashed assets immutable) to avoid stale HTML referencing non-existent lazy-route bundles.
+- UI: improved the ErrorBoundary message for lazy-route load failures (dynamic import/chunk fetch) to prompt “Reload to update”.

@@ -7,6 +7,17 @@
   [headers.values]
     Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; script-src 'self' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://vitals.vercel-insights.com https://api.stripe.com;"
 
+# Cache policy: keep HTML fresh to avoid stale chunk references; keep hashed assets immutable.
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
 # API -> Netlify Functions
 [[redirects]]
   from = "/api/stripe/create-checkout-session"
@@ -19,7 +30,6 @@
   status = 200
 
 # SPA fallback for React Router
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+
+# NOTE: SPA fallback lives in `public/_redirects` so we can
+# keep `/assets/*` from being rewritten to `/index.html`.
