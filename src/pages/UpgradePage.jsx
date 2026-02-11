@@ -283,70 +283,82 @@ export default function UpgradePage() {
             </div>
 
             <div className="compare">
-              <div className="compare-row compare-head">
-                <div className="compare-feature">Feature</div>
-                <div className="compare-tier">Guest</div>
-                <div className="compare-tier">Free</div>
-                <div className="compare-tier">Pro</div>
-              </div>
+              <table className="compare-table">
+                <caption className="sr-only">Plan feature comparison</caption>
+                <colgroup>
+                  <col style={{ width: '43.75%' }} />
+                  <col style={{ width: '18.75%' }} />
+                  <col style={{ width: '18.75%' }} />
+                  <col style={{ width: '18.75%' }} />
+                </colgroup>
+                <thead>
+                  <tr className="compare-head">
+                    <th scope="col" className="compare-feature">Feature</th>
+                    <th scope="col" className="compare-tier">Guest</th>
+                    <th scope="col" className="compare-tier">Free</th>
+                    <th scope="col" className="compare-tier">Pro</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row" className="compare-feature">Beginner topics</th>
+                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                  </tr>
 
-              <div className="compare-row">
-                <div className="compare-feature">Beginner topics</div>
-                <div className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></div>
-                <div className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></div>
-                <div className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></div>
-              </div>
+                  <tr>
+                    <th scope="row" className="compare-feature">Intermediate/Advanced topics</th>
+                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                  </tr>
 
-              <div className="compare-row">
-                <div className="compare-feature">Intermediate/Advanced topics</div>
-                <div className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></div>
-                <div className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></div>
-                <div className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></div>
-              </div>
+                  <tr>
+                    <th scope="row" className="compare-feature">Progress tracking</th>
+                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                  </tr>
 
-              <div className="compare-row">
-                <div className="compare-feature">Progress tracking</div>
-                <div className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></div>
-                <div className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></div>
-                <div className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></div>
-              </div>
+                  <tr>
+                    <th scope="row" className="compare-feature">1MA minutes (1 minute per completion)</th>
+                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                  </tr>
 
-              <div className="compare-row">
-                <div className="compare-feature">1MA minutes (1 minute per completion)</div>
-                <div className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></div>
-                <div className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></div>
-                <div className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></div>
-              </div>
+                  <tr>
+                    <th scope="row" className="compare-feature">Review mode</th>
+                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                  </tr>
 
-              <div className="compare-row">
-                <div className="compare-feature">Review mode</div>
-                <div className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></div>
-                <div className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></div>
-                <div className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></div>
-              </div>
+                  <tr>
+                    <th scope="row" className="compare-feature">Lesson presentation styles</th>
+                    <td className="compare-cell compare-cell-stack">
+                      <span className="mark yes" aria-label="Available" title="Available">✓</span>
+                      <div className="compare-cell-note">Focus + Dark</div>
+                    </td>
+                    <td className="compare-cell compare-cell-stack">
+                      <span className="mark yes" aria-label="Available" title="Available">✓</span>
+                      <div className="compare-cell-note">Focus + Dark</div>
+                    </td>
+                    <td className="compare-cell compare-cell-stack">
+                      <span className="mark yes" aria-label="Available" title="Available">✓</span>
+                      <div className="compare-cell-note">All styles (incl. Pro-only)</div>
+                    </td>
+                  </tr>
 
-              <div className="compare-row">
-                <div className="compare-feature">Lesson presentation styles</div>
-                <div className="compare-cell compare-cell-stack">
-                  <span className="mark yes" aria-label="Available" title="Available">✓</span>
-                  <div className="compare-cell-note">Focus + Dark</div>
-                </div>
-                <div className="compare-cell compare-cell-stack">
-                  <span className="mark yes" aria-label="Available" title="Available">✓</span>
-                  <div className="compare-cell-note">Focus + Dark</div>
-                </div>
-                <div className="compare-cell compare-cell-stack">
-                  <span className="mark yes" aria-label="Available" title="Available">✓</span>
-                  <div className="compare-cell-note">All styles (incl. Pro-only)</div>
-                </div>
-              </div>
-
-              <div className="compare-row">
-                <div className="compare-feature">Rate modules with stars</div>
-                <div className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></div>
-                <div className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></div>
-                <div className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></div>
-              </div>
+                  <tr>
+                    <th scope="row" className="compare-feature">Rate modules with stars</th>
+                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <div className="tier-rule">Rule of thumb: only <strong>Beginner</strong> topics are available without Pro.</div>
           </div>

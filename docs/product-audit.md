@@ -353,6 +353,10 @@ The 3-column comparison grid is built with `<div>`s. Screen reader users cannot 
 
 **Fix:** Use semantic `<table>`, `<thead>`, `<th scope="col">`, and `<td>` elements.
 
+**Status:** Implemented (2026-02-11)
+
+**Summary:** Replaced the div-based comparison grid on the Pricing page with a semantic `<table>` (caption + `<thead>/<tbody>`, column headers via `<th scope="col">`, and feature names as row headers via `<th scope="row">`) so assistive tech can navigate the comparison as a real data table.
+
 ---
 
 ### 🎨 UX

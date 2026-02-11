@@ -48,6 +48,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Accessibility: lesson timer now includes screen reader announcements at key moments.
 - Accessibility: mobile hamburger menu now traps keyboard focus, closes on Escape, and restores focus to the toggle.
 - Accessibility: quiz answers are now exposed as a single-choice radio group (proper `radiogroup`/`radio` semantics with `aria-checked`) with arrow-key navigation.
+- Accessibility: pricing feature comparison is now a semantic `<table>` (screen readers can navigate rows/columns).
 
 ### Fixed
 - Prevented the “click into Pro-only then discover it’s locked” UX for free users.
