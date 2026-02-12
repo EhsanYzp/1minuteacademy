@@ -234,6 +234,7 @@ export default function UpgradePage() {
                 <div className="tier-note">No account required</div>
                 <ul className="tier-bullets">
                   <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Beginner topics</span></li>
+                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Surprise shuffle (Beginner only)</span></li>
                   <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Lesson styles: Focus + Dark</span></li>
                 </ul>
                 <div className="tier-actions">
@@ -247,6 +248,7 @@ export default function UpgradePage() {
                 <div className="tier-note">Sign in to save progress</div>
                 <ul className="tier-bullets">
                   <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Beginner topics</span></li>
+                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Surprise shuffle (Beginner only)</span></li>
                   <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Progress tracking</span></li>
                   <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Rate modules with stars</span></li>
                   <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Lesson styles: Focus + Dark</span></li>
@@ -267,6 +269,7 @@ export default function UpgradePage() {
                 <div className="tier-note">Beginner → Advanced</div>
                 <ul className="tier-bullets">
                   <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>All modules (not just Beginner)</span></li>
+                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Surprise shuffle across all modules</span></li>
                   <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Review mode (no timer)</span></li>
                   <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>All lesson presentation styles</span></li>
                   <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Progress tracking</span></li>
@@ -301,6 +304,13 @@ export default function UpgradePage() {
                   </tr>
                 </thead>
                 <tbody>
+                  <tr>
+                    <th scope="row" className="compare-feature">Surprise shuffle</th>
+                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                  </tr>
+
                   <tr>
                     <th scope="row" className="compare-feature">Beginner topics</th>
                     <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
@@ -338,18 +348,9 @@ export default function UpgradePage() {
 
                   <tr>
                     <th scope="row" className="compare-feature">Lesson presentation styles</th>
-                    <td className="compare-cell compare-cell-stack">
-                      <span className="mark yes" aria-label="Available" title="Available">✓</span>
-                      <div className="compare-cell-note">Focus + Dark</div>
-                    </td>
-                    <td className="compare-cell compare-cell-stack">
-                      <span className="mark yes" aria-label="Available" title="Available">✓</span>
-                      <div className="compare-cell-note">Focus + Dark</div>
-                    </td>
-                    <td className="compare-cell compare-cell-stack">
-                      <span className="mark yes" aria-label="Available" title="Available">✓</span>
-                      <div className="compare-cell-note">All styles (incl. Pro-only)</div>
-                    </td>
+                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
                   </tr>
 
                   <tr>
@@ -360,6 +361,9 @@ export default function UpgradePage() {
                   </tr>
                 </tbody>
               </table>
+            </div>
+            <div className="compare-notes" aria-label="Plan notes">
+              Note: Guest/Free shuffle from Beginner modules and include Focus + Dark styles. Pro shuffles across all modules and unlocks all styles.
             </div>
             <div className="tier-rule">Rule of thumb: only <strong>Beginner</strong> topics are available without Pro.</div>
           </div>

@@ -30,6 +30,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 ### Changed
 - Home: premium hero typography/underline polish, upgraded choice card hierarchy + hover, and metric ticker stats with a count-in animation (reduced-motion safe).
 - Home: removed the hero animated backdrop (kept the rest of the polish).
+- Home: restored the slot-machine style Surprise shuffle with reroll and an in-overlay toggle to include completed modules.
 - Completion: redesigned the “Congratulations” screen to keep actions visible without scrolling; shows the standard header/footer for consistency.
 - Completion: moved the rating prompt to the top of the completion flow and visually emphasized it.
 - Topics page polish: headline uses “1-minute”, Status labels are clearer (“To watch”/“Watched”), and the sticky filter bar now stays fully visible under the sticky header.
@@ -56,6 +57,8 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Accessibility: quiz answers are now exposed as a single-choice radio group (proper `radiogroup`/`radio` semantics with `aria-checked`) with arrow-key navigation.
 - Accessibility: pricing feature comparison is now a semantic `<table>` (screen readers can navigate rows/columns).
 - Profile: improved post-checkout Pro activation feedback with a progress indicator and a “taking longer than expected” hint.
+- Pricing: synced “What you get” with the comparison table (added Surprise row) and kept the table checkmark-clean by moving tier details into notes below the table.
+- Pricing: simplified the post-table notes to a single clean footnote.
 - Database: added TTL cleanup for `api_rate_limits` (daily schedule when pg_cron is available; external cron fallback).
 - Database: added TTL cleanup for `stripe_webhook_events` (30-day retention; daily schedule when pg_cron is available).
 
