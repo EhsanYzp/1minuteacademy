@@ -118,26 +118,58 @@ function buildReelItemsFromTopics({ topics, selectedTitle }) {
 
   return items;
 }
-            <Link className="learn-choice learn-choice--pick" to="/topics">
-              <div className="learn-choiceTitle">I want to pick topics myself</div>
-              <div className="learn-choiceSub">Browse the library and choose what you’re curious about.</div>
-              <div className="learn-choiceHint" aria-hidden="true">
-                Browse <FiArrowRight />
-              </div>
-            </Link>
 
-            <button
-              type="button"
-              className="learn-choice learn-choice--surprise"
-              onClick={onSurpriseMe}
-              disabled={busy}
-            >
-              <div className="learn-choiceTitle">You surprise me</div>
-              <div className="learn-choiceSub">Spin and pick a random topic I can access right now.</div>
-              <div className="learn-choiceHint" aria-hidden="true">
-                {busy ? 'Spinning…' : 'Spin'} <FiArrowRight />
-              </div>
-            </button>
+async function getCompletedTopicIds({ enabled }) {
+  if (!enabled) return new Set();
+  const rows = await listUserTopicProgress();
+  const completed = new Set();
+  for (const row of Array.isArray(rows) ? rows : []) {
+    const topicId = row?.topic_id ?? row?.topics?.id;
+    const completedCount = Number(row?.completed_count ?? 0) || 0;
+    if (!topicId) continue;
+    if (completedCount > 0) completed.add(String(topicId));
+  }
+  return completed;
+}
+
+async function pickRandomTopic({ tier, includeCompleted }) {
+  let recentIds = new Set(readRecentRandomIds());
+  const completedIds = await getCompletedTopicIds({ enabled: !includeCompleted && canTrackProgress(tier) });
+
+  const tryCandidate = (topicRow) => {
+    if (!topicRow?.id) return false;
+    if (!canStartTopic({ tier, topicRow })) return false;
+    const id = String(topicRow.id);
+    if (!includeCompleted && completedIds.has(id)) return false;
+    if (recentIds.has(id)) return false;
+    return true;
+  };
+
+  const tryPick = async () => {
+    let total = null;
+    try {
+      const first = await listTopicsPage({ limit: 1, offset: 0 });
+      if (typeof first?.total === 'number') total = first.total;
+    } catch {
+      // ignore
+    }
+
+    if (typeof total === 'number' && total > 0) {
+      for (let attempt = 0; attempt < 10; attempt += 1) {
+        const offset = randomInt(0, total - 1);
+        const page = await listTopicsPage({ limit: 1, offset });
+        const t = Array.isArray(page?.items) ? page.items[0] : null;
+        if (tryCandidate(t)) return t;
+      }
+
+      for (let attempt = 0; attempt < 6; attempt += 1) {
+        const pageSize = 50;
+        const maxOffset = Math.max(0, total - pageSize);
+        const offset = randomInt(0, maxOffset);
+        const page = await listTopicsPage({ limit: pageSize, offset });
+        const items = Array.isArray(page?.items) ? page.items : [];
+        const candidates = items.filter(tryCandidate);
+        if (candidates.length > 0) return candidates[randomInt(0, candidates.length - 1)];
       }
     }
 
@@ -199,7 +231,7 @@ function SlotReel({ label, sequence, finalIndex, durationMs, onDone }) {
   );
 }
 
-function LearnHubPage() {
+function LearnHubPageClean() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const tier = getCurrentTier(user);
@@ -324,132 +356,60 @@ function LearnHubPage() {
 
   return (
     <motion.div className="learn" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <Seo
-        title="Start learning"
-        description="Choose a topic, or let us surprise you with something new to learn in one minute."
-        path="/learn"
-      />
+      <Seo title="Start learning" description="Choose a topic, or let us surprise you with something new to learn in one minute." path="/learn" />
       <Header />
 
       <main className="learn-main">
         <section className="learn-hero" aria-label="Learning modes">
           <div className="learn-heroTop">
-            <div className="learn-badge">Welcome to the knowledge arcade</div>
             <h1 className="learn-title">
               How do you want to learn <span className="learn-titleAccent">today</span>?
             </h1>
-            <p className="learn-subtitle">Pick with intent… or pull the lever and let us choose a surprisingly good topic.</p>
           </div>
 
           <div className="learn-grid">
-            <motion.div className="learn-card" whileHover={{ y: -4 }} whileTap={{ scale: 0.99 }}>
-              <div className="learn-cardTop">
-                <div className="learn-cardEmoji" aria-hidden="true">
-                  🧭
-                </div>
-                <div className="learn-cardPill">Self‑pick</div>
+            <Link className="learn-choice learn-choice--pick" to="/topics">
+              <div className="learn-choiceTitle">I want to pick topics myself</div>
+              <div className="learn-choiceSub">Browse the library and choose what you’re curious about.</div>
+              <div className="learn-choiceHint" aria-hidden="true">
+                Browse <FiArrowRight />
               </div>
+            </Link>
 
-              <div className="learn-cardIcon learn-cardIcon--browse" aria-hidden="true">
-                <FiCompass size={22} />
+            <button type="button" className="learn-choice learn-choice--surprise" onClick={onSurpriseMe} disabled={busy}>
+              <div className="learn-choiceTitle">You surprise me</div>
+              <div className="learn-choiceSub">Spin and pick a random topic I can access right now.</div>
+              <div className="learn-choiceHint" aria-hidden="true">
+                {busy ? 'Spinning…' : 'Spin'} <FiArrowRight />
               </div>
-              <h2 className="learn-cardTitle">
-                Learn a new topic <span className="learn-cardTitleAccent">your way</span>
-              </h2>
-              <p className="learn-cardBody">Browse subjects, tune difficulty, and pick your next 60‑second win.</p>
-
-              <div className="learn-cardChips" aria-label="What you can do">
-                <span className="learn-chip">Filters</span>
-                <span className="learn-chip">Difficulty</span>
-                <span className="learn-chip">Ratings</span>
-              </div>
-
-              <div className="learn-preview" aria-label="Preview">
-                <div className="learn-previewLabel">You’re in control</div>
-                <div className="learn-previewRow" aria-hidden="true">
-                  <div className="learn-previewTag">Pick a subject</div>
-                  <div className="learn-previewDot" />
-                  <div className="learn-previewTag">Choose difficulty</div>
-                  <div className="learn-previewDot" />
-                  <div className="learn-previewTag">Start in 60s</div>
-                </div>
-              </div>
-
-              <Link className="learn-cardCta learn-cardCtaSecondary" to="/topics">
-                Browse topics <FiArrowRight aria-hidden="true" />
-              </Link>
-            </motion.div>
-
-            <motion.div className="learn-card learn-card-surprise" whileHover={{ y: -4 }} whileTap={{ scale: 0.99 }}>
-              <div className="learn-cardTop">
-                <div className="learn-cardEmoji" aria-hidden="true">
-                  🎰
-                </div>
-                <div className="learn-cardPill learn-cardPill--surprise">Lucky pull</div>
-              </div>
-
-              <div className="learn-cardIcon learn-cardIcon--surprise learn-cardSurpriseWiggle" aria-hidden="true">
-                <FiShuffle size={22} />
-              </div>
-              <h2 className="learn-cardTitle">
-                Surprise me <span className="learn-cardTitleAccent learn-cardTitleAccent--surprise">(do it)</span>
-              </h2>
-              <p className="learn-cardBody">A real shuffle: spin → slow → land on a topic you can start right now.</p>
-
-              <div className="learn-cardChips" aria-label="How it behaves">
-                <span className="learn-chip">Access‑aware</span>
-                <span className="learn-chip">Avoid repeats</span>
-                <span className="learn-chip">Fast</span>
-              </div>
-
-              <div className="learn-preview learn-preview--surprise" aria-label="Preview">
-                <div className="learn-previewLabel">How the pick works</div>
-                <div className="learn-previewRow" aria-hidden="true">
-                  <div className="learn-previewTag">You can access it</div>
-                  <div className="learn-previewDot" />
-                  <div className="learn-previewTag">Not recently picked</div>
-                  <div className="learn-previewDot" />
-                  <div className="learn-previewTag">Optional: exclude completed</div>
-                </div>
-              </div>
-
-              <label className="learn-toggle">
-                <input type="checkbox" checked={includeCompleted} onChange={(e) => setIncludeCompleted(e.target.checked)} />
-                <span>Include completed topics</span>
-              </label>
-
-              <button type="button" className="learn-cardCta learn-cardButton" onClick={onSurpriseMe} disabled={busy}>
-                {busy ? 'Spinning…' : 'Teach me something random'}
-              </button>
-            </motion.div>
+            </button>
           </div>
         </section>
 
-        {overlay && (
-          <div className="learn-overlay" role="dialog" aria-modal="true" aria-label="Picking a random topic">
+        {overlayOpen && (
+          <div className="learn-overlay" role="dialog" aria-modal="true" aria-label="Random topic picker">
+            <div className="learn-overlayBackdrop" onClick={() => setOverlay(null)} aria-hidden="true" />
             <div className="learn-overlayCard">
-              {(overlay.mode === 'loading' || overlay.mode === 'spinning') && (
-                <button type="button" className="learn-overlayClose" onClick={() => setOverlay(null)} aria-label="Close">
-                  <FiX aria-hidden="true" />
-                </button>
-              )}
+              <button type="button" className="learn-overlayClose" onClick={() => setOverlay(null)} aria-label="Close">
+                <FiX aria-hidden="true" />
+              </button>
 
-              {overlay.mode === 'loading' && (
+              {overlay?.mode === 'loading' && (
                 <>
-                  <div className="learn-overlayTitle">Warming up the slot machine…</div>
+                  <div className="learn-overlayTitle">Spinning up…</div>
                   <div className="learn-overlayBody">{overlay.line}</div>
                 </>
               )}
 
-              {overlay.mode === 'spinning' && (
+              {overlay?.mode === 'spinning' && (
                 <>
                   <div className="learn-overlayTitle">Pulling the lever…</div>
-                  <div className="learn-slot" role="group" aria-label="Random selection slot machine">
+                  <div className="learn-slotGrid" aria-label="Slot machine reels">
                     <SlotReel
                       label={overlay?.spin?.subject?.label ?? 'Subject'}
                       sequence={overlay?.spin?.subject?.sequence ?? []}
                       finalIndex={overlay?.spin?.subject?.finalIndex ?? 1}
-                      durationMs={overlay?.spin?.subject?.durationMs ?? 1800}
+                      durationMs={overlay?.spin?.subject?.durationMs ?? 2400}
                       onDone={() => {
                         spinDoneCountRef.current += 1;
                         if (spinDoneCountRef.current >= 3) {
@@ -465,7 +425,7 @@ function LearnHubPage() {
                       label={overlay?.spin?.difficulty?.label ?? 'Difficulty'}
                       sequence={overlay?.spin?.difficulty?.sequence ?? []}
                       finalIndex={overlay?.spin?.difficulty?.finalIndex ?? 1}
-                      durationMs={overlay?.spin?.difficulty?.durationMs ?? 2200}
+                      durationMs={overlay?.spin?.difficulty?.durationMs ?? 2600}
                       onDone={() => {
                         spinDoneCountRef.current += 1;
                         if (spinDoneCountRef.current >= 3) {
@@ -481,7 +441,7 @@ function LearnHubPage() {
                       label={overlay?.spin?.title?.label ?? 'Topic'}
                       sequence={overlay?.spin?.title?.sequence ?? []}
                       finalIndex={overlay?.spin?.title?.finalIndex ?? 1}
-                      durationMs={overlay?.spin?.title?.durationMs ?? 2600}
+                      durationMs={overlay?.spin?.title?.durationMs ?? 3000}
                       onDone={() => {
                         spinDoneCountRef.current += 1;
                         if (spinDoneCountRef.current >= 3) {
@@ -498,7 +458,7 @@ function LearnHubPage() {
                 </>
               )}
 
-              {overlay.mode === 'reveal' && (
+              {overlay?.mode === 'reveal' && (
                 <>
                   <div className="learn-overlayTitle">Jackpot.</div>
                   <div className="learn-picked" role="group" aria-label="Selected topic">
@@ -515,11 +475,7 @@ function LearnHubPage() {
                   </div>
 
                   <label className="learn-overlayToggle">
-                    <input
-                      type="checkbox"
-                      checked={includeCompleted}
-                      onChange={(e) => setIncludeCompleted(e.target.checked)}
-                    />
+                    <input type="checkbox" checked={includeCompleted} onChange={(e) => setIncludeCompleted(e.target.checked)} />
                     <span>Include completed topics (for rerolls)</span>
                   </label>
 
@@ -527,7 +483,13 @@ function LearnHubPage() {
                     <button type="button" className="learn-overlayButton" onClick={() => setOverlay(null)}>
                       Not now
                     </button>
-                    <button type="button" className="learn-overlayButton" onClick={() => onSurpriseMe()} disabled={busy} title="Pick another random topic">
+                    <button
+                      type="button"
+                      className="learn-overlayButton"
+                      onClick={() => onSurpriseMe()}
+                      disabled={busy}
+                      title="Pick another random topic"
+                    >
                       <FiRefreshCw aria-hidden="true" /> Reroll
                     </button>
                     <button
@@ -547,7 +509,7 @@ function LearnHubPage() {
                 </>
               )}
 
-              {overlay.mode !== 'loading' && overlay.mode !== 'spinning' && overlay.mode !== 'reveal' && (
+              {overlay?.mode && overlay.mode !== 'loading' && overlay.mode !== 'spinning' && overlay.mode !== 'reveal' && (
                 <>
                   <div className="learn-overlayTitle">{overlay.title}</div>
                   <div className="learn-overlayBody">{overlay.body}</div>
@@ -569,4 +531,4 @@ function LearnHubPage() {
   );
 }
 
-export default LearnHubPage;
+export default LearnHubPageClean;

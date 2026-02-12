@@ -12,7 +12,7 @@ import RouteLoading from './components/RouteLoading';
 import './App.css';
 
 const TopicsBrowserPage = lazy(() => import('./pages/TopicsBrowserPage'));
-const LearnPage = lazy(() => import('./pages/LearnHubPage'));
+const LearnPage = lazy(() => import('./pages/LearnHubPageClean'));
 const TopicPage = lazy(() => import('./pages/TopicPage'));
 const LessonPage = lazy(() => import('./pages/LessonPage'));
 const ReviewPage = lazy(() => import('./pages/ReviewPage'));
