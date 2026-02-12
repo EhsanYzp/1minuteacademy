@@ -96,10 +96,6 @@ export function compileJourneyFromTopic(topicRow) {
           title: 'Congratulations!',
           subtitle: 'You just learned about {topicTitle} in {totalSeconds} seconds!'
         },
-        { type: 'completionStats' },
-        { type: 'proPerkPanel', when: { tier: ['guest', 'free', 'starter', 'basic', 'paused'] } },
-        { type: 'oneMaAwardPanel', when: { tier: 'pro' } },
-        { type: 'completionProgress' },
         { type: 'ratingPrompt', title: 'Rate this module' },
         {
           type: 'ctaRow',
@@ -111,7 +107,11 @@ export function compileJourneyFromTopic(topicRow) {
             { label: '🏠 More Topics', variant: 'secondary', action: { type: 'goToTopics' } },
             { label: '🧑‍🚀 Your learning summary', variant: 'secondary', action: { type: 'goToProfile' } }
           ]
-        }
+        },
+        { type: 'completionStats' },
+        { type: 'proPerkPanel', when: { tier: ['guest', 'free', 'starter', 'basic', 'paused'] } },
+        { type: 'oneMaAwardPanel', when: { tier: 'pro' } },
+        { type: 'completionProgress' },
       ]
     },
     review: {
