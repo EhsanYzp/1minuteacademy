@@ -153,6 +153,10 @@ function LessonPage() {
           navigate('/topics');
           return;
         }
+        if (action.type === 'goToHome') {
+          navigate('/');
+          return;
+        }
         if (action.type === 'goToProfile') {
           navigate('/me');
           return;

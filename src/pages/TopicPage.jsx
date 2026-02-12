@@ -238,7 +238,10 @@ function TopicPage() {
         <Header />
         <main className="topic-main">
           <div className="topic-header">
-            <Link to="/topics" className="back-button">← Back to Topics</Link>
+            <div className="topic-nav">
+              <Link to="/" className="back-button">← Home</Link>
+              <Link to="/topics" className="back-button">← Back to Topics</Link>
+            </div>
           </div>
 
           <div className="topic-content">
@@ -327,7 +330,10 @@ function TopicPage() {
         <Header />
         <div className="topic-not-found">
           <h2>🔍 Topic not found!</h2>
-          <Link to="/topics">Go back to topics</Link>
+          <div className="topic-nav">
+            <Link to="/" className="back-button">← Home</Link>
+            <Link to="/topics" className="back-button">← Back to Topics</Link>
+          </div>
         </div>
       </div>
     );
@@ -358,9 +364,10 @@ function TopicPage() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1 }}
         >
-          <Link to="/topics" className="back-button">
-            ← Back to Topics
-          </Link>
+          <div className="topic-nav">
+            <Link to="/" className="back-button">← Home</Link>
+            <Link to="/topics" className="back-button">← Back to Topics</Link>
+          </div>
         </motion.div>
 
         <div className="topic-content">

@@ -107,6 +107,7 @@ export function compileJourneyFromTopic(topicRow) {
             { label: '🔄 Try Again', variant: 'primary', action: { type: 'tryAgain' } },
             { label: '📚 Review what you learned', variant: 'secondary', action: { type: 'openReview' }, when: { canReview: true } },
             { label: '🔒 Unlock review mode', variant: 'secondary', action: { type: 'goToUpgrade' }, when: { canReview: false } },
+            { label: '🏠 Home', variant: 'secondary', action: { type: 'goToHome' } },
             { label: '🏠 More Topics', variant: 'secondary', action: { type: 'goToTopics' } },
             { label: '🧑‍🚀 Your learning summary', variant: 'secondary', action: { type: 'goToProfile' } }
           ]
