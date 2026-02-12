@@ -8,6 +8,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 ## [Unreleased]
 
 ### Added
+- Content: added 4 new published topics across 2 subjects (Programming Fundamentals + AI & Agents) with distinct subcategories to validate end-to-end browsing, stats, and lesson rendering.
 - Locked Pro-only topics (Intermediate/Advanced) on the Topics page for guest/free users (shows a lock badge and disables navigation).
 - Route-level Pro-only gate on the topic page to prevent direct URL access without Pro.
 - Difficulty filter on the Topics page: All / Beginner / Intermediate / Advanced (persisted in the URL via `?difficulty=` for shareable links).
@@ -27,6 +28,10 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Auth: added a show/hide password toggle in the login/sign-up form.
 
 ### Changed
+- Home: premium hero typography/underline polish, upgraded choice card hierarchy + hover, and metric ticker stats with a count-in animation (reduced-motion safe).
+- Home: removed the hero animated backdrop (kept the rest of the polish).
+- Completion: redesigned the “Congratulations” screen to keep actions visible without scrolling; shows the standard header/footer for consistency.
+- Completion: moved the rating prompt to the top of the completion flow and visually emphasized it.
 - Topics page polish: headline uses “1-minute”, Status labels are clearer (“To watch”/“Watched”), and the sticky filter bar now stays fully visible under the sticky header.
 - Centralized topic access gating in `src/services/entitlements.js` via `getTopicGate()`.
 - Presentation-style entitlements: Guest + Free users can choose Focus + Dark; other styles are marked Pro-only.
@@ -55,6 +60,8 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Database: added TTL cleanup for `stripe_webhook_events` (30-day retention; daily schedule when pg_cron is available).
 
 ### Fixed
+- Home: fixed metric ticker count-up sometimes sticking at `0` in dev (React Strict Mode effect remount behavior).
+- Terminal style: improved contrast for quiz question/options/feedback so text is readable.
 - Prevented the “click into Pro-only then discover it’s locked” UX for free users.
 - Dark (Spotlight) style: review-mode navigation bar is now visible.
 - Split (Visual + Text) style: improved alignment and reduced layout/scroll issues on long-content modules.
