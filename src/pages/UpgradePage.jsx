@@ -187,6 +187,7 @@ export default function UpgradePage() {
 
       <main className="upgrade-main">
         <section className="upgrade-card">
+          <Link className="page-back" to="/">← Home</Link>
           <div className="upgrade-hero">
             <div className="upgrade-emoji">💳</div>
             <div>

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
 import SubjectCard from '../components/SubjectCard';
@@ -573,7 +573,7 @@ export default function TopicsBrowserPage() {
     <motion.div className="topics-browser" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Seo
         title="Topics"
-        description="Browse 1-minute lessons by category, difficulty, and search."
+        description="Browse 1 minute lessons by category, difficulty, and search."
         path="/topics"
         canonicalPath="/topics"
         jsonLd={itemListJsonLd}
@@ -582,7 +582,8 @@ export default function TopicsBrowserPage() {
 
       <main className="topics-browser-main">
         <div className="topics-browser-hero">
-          <h1>Pick your next 1-minute lesson</h1>
+          <Link className="topics-back" to="/">← Home</Link>
+          <h1>Pick your next 1 minute lesson</h1>
           <p>Browse by category, search, and jump right in.</p>
         </div>
 

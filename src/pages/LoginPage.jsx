@@ -321,7 +321,7 @@ export default function LoginPage() {
           </form>
 
           <div className="login-footer">
-            <Link to="/learn">← Back to learning</Link>
+            <Link to="/">← Back</Link>
           </div>
         </motion.div>
       </main>

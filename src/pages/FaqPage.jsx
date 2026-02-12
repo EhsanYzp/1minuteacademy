@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
 import './FaqPage.css';
@@ -22,11 +23,12 @@ export default function FaqPage() {
 
       <main className="faq-main">
         <section className="faq-card">
+          <Link className="page-back" to="/">← Home</Link>
           <div className="faq-hero">
             <div className="faq-emoji" aria-hidden="true">❓</div>
             <div>
               <h1 className="faq-title">FAQ</h1>
-              <p className="faq-sub">Quick answers about how 1MinuteAcademy works.</p>
+              <p className="faq-sub">Quick answers about how 1 Minute Academy works.</p>
             </div>
           </div>
 

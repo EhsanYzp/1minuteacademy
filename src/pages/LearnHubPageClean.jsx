@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion, useAnimationControls } from 'framer-motion';
 import { FiArrowRight, FiRefreshCw, FiX } from 'react-icons/fi';
 import Header from '../components/Header';
@@ -233,6 +233,7 @@ function SlotReel({ label, sequence, finalIndex, durationMs, onDone }) {
 
 function LearnHubPageClean() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { user } = useAuth();
   const tier = getCurrentTier(user);
 
@@ -264,6 +265,15 @@ function LearnHubPageClean() {
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [overlayOpen]);
+
+  useEffect(() => {
+    const wantsSurprise = searchParams.get('surprise');
+    if (!wantsSurprise) return;
+    // Fire once on entry, then clean the URL.
+    onSurpriseMe();
+    navigate('/learn', { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function goToTopic(topicId) {
     if (!topicId) return;

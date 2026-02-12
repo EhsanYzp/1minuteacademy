@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
 import './LegalPage.css';
@@ -13,16 +14,17 @@ export default function TermsPage() {
 
       <main className="legal-main">
         <section className="legal-card">
+          <Link className="page-back" to="/">← Home</Link>
           <h1 className="legal-title">Terms of Service</h1>
           <div className="legal-updated">Last updated: Feb 4, 2026</div>
 
           <div className="legal-summary">
-            By using 1MinuteAcademy, you agree to these Terms. If you do not agree, do not use the app.
+            By using 1 Minute Academy, you agree to these Terms. If you do not agree, do not use the app.
           </div>
 
           <h2>The service</h2>
           <p>
-            1MinuteAcademy provides short, interactive lessons. Lessons are for educational purposes only and are not professional advice.
+            1 Minute Academy provides short, interactive lessons. Lessons are for educational purposes only and are not professional advice.
           </p>
 
           <h2>Accounts</h2>

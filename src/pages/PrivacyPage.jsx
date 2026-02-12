@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
 import './LegalPage.css';
@@ -13,6 +14,7 @@ export default function PrivacyPage() {
 
       <main className="legal-main">
         <section className="legal-card">
+          <Link className="page-back" to="/">← Home</Link>
           <h1 className="legal-title">Privacy Policy</h1>
           <div className="legal-updated">Last updated: Feb 4, 2026</div>
 

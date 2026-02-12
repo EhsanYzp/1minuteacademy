@@ -170,7 +170,7 @@ function Header() {
         animate={{ y: 0 }}
         transition={{ type: 'spring', stiffness: 100, damping: 20 }}
       >
-      <Link to="/" className="logo" aria-label="1 Minute Academy" onClick={closeMobileMenu}>
+      <Link to="/" className="logo" aria-label="1 minute academy" onClick={closeMobileMenu}>
         <motion.span 
           className="logo-icon"
           animate={{ rotate: [0, 10, -10, 0] }}
@@ -180,8 +180,10 @@ function Header() {
         </motion.span>
         <span className="logo-text logo-text-long" aria-hidden="true">
           <span className="logo-number">1</span>
-          <span className="logo-minute">Minute</span>
-          <span className="logo-academy">Academy</span>
+          {' '}
+          <span className="logo-minute">minute</span>
+          {' '}
+          <span className="logo-academy">academy</span>
         </span>
         <span className="logo-text logo-text-short" aria-hidden="true">
           <span className="logo-number">1</span>
@@ -236,19 +238,16 @@ function Header() {
         tabIndex={-1}
         aria-label="Site navigation"
       >
-        <Link to="/learn" className="nav-item link browse" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
-          🧭 Learn
-        </Link>
         <Link to="/pricing" className="nav-item link" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
-          💳 Pricing
+          Pricing
         </Link>
         <Link to="/faq" className="nav-item link" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
-          ❓ FAQ
+          FAQ
         </Link>
         {user ? (
           <>
             <Link to="/me" className="nav-item link" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
-              👤 Profile
+              Profile
             </Link>
             <button className="nav-item button" type="button" onClick={onSignOut} disabled={busy}>
               {busy ? 'Signing out…' : 'Sign out'}

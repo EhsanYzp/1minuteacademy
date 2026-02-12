@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { createBrowserRouter, Outlet, RouterProvider, useLocation } from 'react-router-dom';
+import { Navigate, createBrowserRouter, Outlet, RouterProvider, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { Analytics } from '@vercel/analytics/react';
 import Home from './pages/Home';
@@ -12,7 +12,6 @@ import RouteLoading from './components/RouteLoading';
 import './App.css';
 
 const TopicsBrowserPage = lazy(() => import('./pages/TopicsBrowserPage'));
-const LearnPage = lazy(() => import('./pages/LearnHubPageClean'));
 const TopicPage = lazy(() => import('./pages/TopicPage'));
 const LessonPage = lazy(() => import('./pages/LessonPage'));
 const ReviewPage = lazy(() => import('./pages/ReviewPage'));
@@ -58,7 +57,7 @@ const router = createBrowserRouter([
     element: <AppFrame />,
     children: [
       { index: true, element: <Home /> },
-      { path: 'learn', element: <LearnPage /> },
+      { path: 'learn', element: <Navigate to="/" replace /> },
       { path: 'topics', element: <TopicsBrowserPage /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'auth/callback', element: <AuthCallbackPage /> },
