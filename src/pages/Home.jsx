@@ -6,6 +6,7 @@ import Seo from '../components/Seo';
 import { useAuth } from '../context/AuthContext';
 import { getCurrentTier } from '../services/entitlements';
 import { pickRandomEligibleTopic, pushRecentRandomId } from '../lib/surpriseTopic';
+import contentStats from '../generated/contentStats.json';
 import './Home.css';
 
 function Home() {
@@ -14,6 +15,13 @@ function Home() {
   const tier = getCurrentTier(user);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
+
+  const stats = contentStats && typeof contentStats === 'object' ? contentStats : { categories: 0, topics: 0, minutes: 0 };
+  const categoriesCount = Number(stats.categories ?? 0) || 0;
+  const subcategoriesCount = Number(stats.subcategories ?? 0) || 0;
+  const topicsCount = Number(stats.topics ?? 0) || 0;
+
+  const fmt = new Intl.NumberFormat(undefined);
 
   async function onSurprise() {
     if (busy) return;
@@ -107,6 +115,29 @@ function Home() {
             </div>
 
             {error && <div className="home-error" role="status">{error}</div>}
+
+            <section className="home-stats" aria-label="Learning stats">
+              <div className="home-statsInline">
+                <span className="home-statInline">
+                  <span className="home-statInlineNum">{fmt.format(categoriesCount)}</span>
+                  <span className="home-statInlineLabel">categories</span>
+                </span>
+
+                <span className="home-statDot" aria-hidden="true">·</span>
+
+                <span className="home-statInline">
+                  <span className="home-statInlineNum">{fmt.format(subcategoriesCount)}</span>
+                  <span className="home-statInlineLabel">subcategories</span>
+                </span>
+
+                <span className="home-statDot" aria-hidden="true">·</span>
+
+                <span className="home-statInline">
+                  <span className="home-statInlineNum">{fmt.format(topicsCount)}</span>
+                  <span className="home-statInlineLabel">1-minute lessons</span>
+                </span>
+              </div>
+            </section>
           </div>
         </motion.div>
       </main>
