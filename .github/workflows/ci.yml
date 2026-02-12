@@ -51,14 +51,14 @@ jobs:
       # - PROD_SUPABASE_SERVICE_ROLE_KEY
 
       - name: Sync content to Supabase (staging)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/staging'
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/staging' }}
         env:
           VITE_SUPABASE_URL: ${{ secrets.STAGING_SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.STAGING_SUPABASE_SERVICE_ROLE_KEY }}
         run: npm run content:sync:staging
 
       - name: Debug: show presence of staging secrets (diagnostic)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/staging'
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/staging' }}
         env:
           VITE_SUPABASE_URL: ${{ secrets.STAGING_SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.STAGING_SUPABASE_SERVICE_ROLE_KEY }}
@@ -69,7 +69,7 @@ jobs:
           env | grep -E 'SUPABASE|VITE_SUPABASE' || true
 
       - name: Sync content to Supabase (production)
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         env:
           VITE_SUPABASE_URL: ${{ secrets.PROD_SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.PROD_SUPABASE_SERVICE_ROLE_KEY }}
