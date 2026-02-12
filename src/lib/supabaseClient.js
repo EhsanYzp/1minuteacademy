@@ -36,36 +36,70 @@ export function setRememberMePreference(rememberMe) {
   writeRememberMePreference(Boolean(rememberMe));
 }
 
-export const supabasePersistent = isSupabaseConfigured
-  ? createClient(supabaseUrl, supabaseAnonKey, {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true,
-      },
-    })
-  : null;
+function buildStorageKey(suffix) {
+  try {
+    const host = new URL(supabaseUrl).host;
+    return `1ma:${host}:${suffix}`;
+  } catch {
+    return `1ma:${suffix}`;
+  }
+}
 
-export const supabaseEphemeral = isSupabaseConfigured
-  ? createClient(supabaseUrl, supabaseAnonKey, {
-      auth: {
-        persistSession: false,
-        autoRefreshToken: true,
-        detectSessionInUrl: true,
-      },
-    })
-  : null;
+let supabasePersistent = null;
+let supabaseSession = null;
+
+function getPersistentClient() {
+  if (!isSupabaseConfigured) return null;
+  if (supabasePersistent) return supabasePersistent;
+
+  supabasePersistent = createClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      storageKey: buildStorageKey('auth:persist'),
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+    },
+  });
+
+  return supabasePersistent;
+}
+
+function getSessionClient() {
+  if (!isSupabaseConfigured) return null;
+  if (supabaseSession) return supabaseSession;
+
+  // IMPORTANT:
+  // OAuth uses a redirect + PKCE code verifier stored in browser storage.
+  // If we set persistSession=false (memory only), the verifier and session are
+  // lost across the provider redirect, leading to “No active session found yet”.
+  //
+  // sessionStorage gives us “not remembered after tab close” semantics while
+  // still supporting OAuth redirects.
+  const storage = typeof window !== 'undefined' ? window.sessionStorage : undefined;
+
+  supabaseSession = createClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      storageKey: buildStorageKey('auth:session'),
+      storage,
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+    },
+  });
+
+  return supabaseSession;
+}
 
 export function getSupabaseClient(rememberMe = readRememberMePreference()) {
   if (!isSupabaseConfigured) return null;
-  return rememberMe ? supabasePersistent : supabaseEphemeral;
+  return rememberMe ? getPersistentClient() : getSessionClient();
 }
 
 export async function clearPersistentSupabaseSession() {
-  if (!isSupabaseConfigured || !supabasePersistent) return;
+  if (!isSupabaseConfigured) return;
   try {
     // Clear local storage only (do not revoke server-side tokens).
-    await supabasePersistent.auth.signOut({ scope: 'local' });
+    await getPersistentClient()?.auth.signOut({ scope: 'local' });
   } catch {
     // ignore
   }
