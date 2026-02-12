@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
@@ -13,6 +13,7 @@ function Home() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const tier = getCurrentTier(user);
+  const prefersReducedMotion = useReducedMotion();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
 
@@ -22,6 +23,53 @@ function Home() {
   const topicsCount = Number(stats.topics ?? 0) || 0;
 
   const fmt = new Intl.NumberFormat(undefined);
+
+  const [ticker, setTicker] = useState({ categories: 0, subcategories: 0, topics: 0 });
+  const tickerRafRef = useRef(null);
+  const didAnimateRef = useRef(false);
+
+  useEffect(() => {
+    if (didAnimateRef.current) return;
+    didAnimateRef.current = true;
+
+    const target = {
+      categories: categoriesCount,
+      subcategories: subcategoriesCount,
+      topics: topicsCount,
+    };
+
+    if (prefersReducedMotion) {
+      setTicker(target);
+      return;
+    }
+
+    const durationMs = 900;
+    const start = performance.now();
+
+    const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+    const tick = (now) => {
+      const elapsed = now - start;
+      const t = Math.min(1, Math.max(0, elapsed / durationMs));
+      const e = easeOutCubic(t);
+
+      setTicker({
+        categories: Math.round(target.categories * e),
+        subcategories: Math.round(target.subcategories * e),
+        topics: Math.round(target.topics * e),
+      });
+
+      if (t < 1) {
+        tickerRafRef.current = requestAnimationFrame(tick);
+      }
+    };
+
+    tickerRafRef.current = requestAnimationFrame(tick);
+
+    return () => {
+      if (tickerRafRef.current) cancelAnimationFrame(tickerRafRef.current);
+    };
+  }, [categoriesCount, subcategoriesCount, topicsCount, prefersReducedMotion]);
 
   async function onSurprise() {
     if (busy) return;
@@ -79,8 +127,8 @@ function Home() {
         >
           <motion.div 
             className="hero-badge"
-            animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
+            animate={prefersReducedMotion ? undefined : { scale: [1, 1.05, 1] }}
+            transition={prefersReducedMotion ? undefined : { duration: 2, repeat: Infinity }}
           >
             <span className="hero-badgeIcon" aria-hidden="true">⏱️</span>
             <span className="hero-badgeText">
@@ -117,24 +165,20 @@ function Home() {
             {error && <div className="home-error" role="status">{error}</div>}
 
             <section className="home-stats" aria-label="Learning stats">
-              <div className="home-statsInline">
-                <span className="home-statInline">
-                  <span className="home-statInlineNum">{fmt.format(categoriesCount)}</span>
-                  <span className="home-statInlineLabel">categories</span>
+              <div className="home-ticker" role="status" aria-live="polite">
+                <span className="home-tickerMetric">
+                  <span className="home-tickerNum">{fmt.format(ticker.categories)}</span>{' '}
+                  <span className="home-tickerLabel">categories</span>
                 </span>
-
-                <span className="home-statDot" aria-hidden="true">·</span>
-
-                <span className="home-statInline">
-                  <span className="home-statInlineNum">{fmt.format(subcategoriesCount)}</span>
-                  <span className="home-statInlineLabel">subcategories</span>
+                <span className="home-tickerDot" aria-hidden="true">·</span>
+                <span className="home-tickerMetric">
+                  <span className="home-tickerNum">{fmt.format(ticker.subcategories)}</span>{' '}
+                  <span className="home-tickerLabel">subcategories</span>
                 </span>
-
-                <span className="home-statDot" aria-hidden="true">·</span>
-
-                <span className="home-statInline">
-                  <span className="home-statInlineNum">{fmt.format(topicsCount)}</span>
-                  <span className="home-statInlineLabel">1-minute lessons</span>
+                <span className="home-tickerDot" aria-hidden="true">·</span>
+                <span className="home-tickerMetric">
+                  <span className="home-tickerNum">{fmt.format(ticker.topics)}</span>{' '}
+                  <span className="home-tickerLabel">1-minute lessons</span>
                 </span>
               </div>
             </section>
