@@ -26,12 +26,8 @@ function Home() {
 
   const [ticker, setTicker] = useState({ categories: 0, subcategories: 0, topics: 0 });
   const tickerRafRef = useRef(null);
-  const didAnimateRef = useRef(false);
 
   useEffect(() => {
-    if (didAnimateRef.current) return;
-    didAnimateRef.current = true;
-
     const target = {
       categories: categoriesCount,
       subcategories: subcategoriesCount,
