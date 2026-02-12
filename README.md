@@ -93,6 +93,11 @@ See: `docs/content-generation.md` for the content playbook.
 	- The sync script loads `.env.local` automatically
 	- Updates existing topics only if local `lesson.version` is higher (prevents accidental overwrites)
 
+- Sync to a specific environment (recommended for staging/prod split):
+	- Create `.env.staging.local` with staging keys, then run: `npm run content:sync:staging`
+	- Create `.env.production.local` (or keep using `.env.local`), then run: `npm run content:sync:prod`
+	- You can also use: `npm run content:sync -- --env staging`
+
 ### Troubleshooting progress not saving
 
 - If lesson completion shows an RPC error, re-run the SQL in [supabase/001_init.sql](supabase/001_init.sql) to update `public.complete_topic(...)`.

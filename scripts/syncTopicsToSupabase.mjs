@@ -4,10 +4,51 @@ import { createClient } from '@supabase/supabase-js';
 import { TOPICS_DIR } from './_contentPaths.mjs';
 import dotenv from 'dotenv';
 
-// Node scripts do not automatically load Vite env files.
-// Load local developer secrets for sync (gitignored).
-dotenv.config({ path: '.env.local' });
-dotenv.config({ path: '.env' });
+function parseEnvNameFromArgv(argv) {
+  for (let i = 0; i < argv.length; i++) {
+    if (argv[i] === '--env') {
+      const v = argv[i + 1];
+      if (!v || v.startsWith('--')) return null;
+      return String(v).trim();
+    }
+  }
+  return null;
+}
+
+function normalizeSyncEnvName(raw) {
+  const v = String(raw ?? '').trim().toLowerCase();
+  if (!v) return null;
+  if (v === 'prod') return 'production';
+  return v;
+}
+
+function loadDotenv(syncEnvName) {
+  // Node scripts do not automatically load Vite env files.
+  // Keep this intentionally explicit to avoid mixing prod/staging secrets.
+  //
+  // Default (no --env):
+  //   - .env
+  //   - .env.local
+  //
+  // With --env <name> (e.g. staging):
+  //   - .env
+  //   - .env.<name>
+  //   - .env.<name>.local
+  //
+  // Note: dotenv does not override existing process.env by default.
+  dotenv.config({ path: '.env' });
+
+  if (syncEnvName) {
+    dotenv.config({ path: `.env.${syncEnvName}` });
+    dotenv.config({ path: `.env.${syncEnvName}.local` });
+  } else {
+    // Load local developer secrets for sync (gitignored).
+    dotenv.config({ path: '.env.local' });
+  }
+}
+
+const requestedEnv = normalizeSyncEnvName(parseEnvNameFromArgv(process.argv.slice(2)));
+loadDotenv(requestedEnv);
 
 function requiredEnv(name) {
   const v = process.env[name];
@@ -41,13 +82,19 @@ async function readJson(filePath) {
 }
 
 function parseArgs(argv) {
-  const args = { topics: null, dryRun: false, force: false, insertOnly: false };
+  const args = { topics: null, dryRun: false, force: false, insertOnly: false, env: null };
 
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--dry-run') args.dryRun = true;
     else if (a === '--force') args.force = true;
     else if (a === '--insert-only') args.insertOnly = true;
+    else if (a === '--env') {
+      const v = argv[i + 1];
+      if (!v || v.startsWith('--')) throw new Error('Missing value for --env <name>.');
+      i++;
+      args.env = normalizeSyncEnvName(v);
+    }
     else if (a === '--topic') {
       const v = argv[i + 1];
       if (!v || v.startsWith('--')) throw new Error('Missing value for --topic <topicId[,topicId2,...]>.');
@@ -58,7 +105,7 @@ function parseArgs(argv) {
         .filter(Boolean);
       if (args.topics.length === 0) throw new Error('Empty --topic list.');
     } else if (a === '--help' || a === '-h') {
-      console.log(`\nUsage: npm run content:sync -- [--topic <id[,id2]>] [--dry-run] [--force] [--insert-only]\n\nDefaults:\n- Inserts new topics\n- Updates existing topics when:\n  - local lesson.version > remote lesson.version, OR\n  - local journey differs from remote journey\n\nFlags:\n- --topic <id[,id2]>   Sync only specific topic IDs\n- --dry-run            Print what would change; write nothing\n- --force              Update even if version isn't higher\n- --insert-only        Only insert new topics; never update existing\n\nTip: Bump lesson.version in your local JSON to intentionally publish changes.\n`);
+      console.log(`\nUsage: npm run content:sync -- [--env <name>] [--topic <id[,id2]>] [--dry-run] [--force] [--insert-only]\n\nDefaults:\n- Inserts new topics\n- Updates existing topics when:\n  - local lesson.version > remote lesson.version, OR\n  - local journey differs from remote journey\n\nFlags:\n- --env <name>         Load env vars from .env.<name>(.local) instead of .env.local (example: staging)\n- --topic <id[,id2]>   Sync only specific topic IDs\n- --dry-run            Print what would change; write nothing\n- --force              Update even if version isn't higher\n- --insert-only        Only insert new topics; never update existing\n\nTip: Bump lesson.version in your local JSON to intentionally publish changes.\n`);
       process.exit(0);
     } else {
       throw new Error(`Unknown arg: ${a}`);
@@ -112,6 +159,10 @@ async function main() {
   forbidEnv('VITE_SUPABASE_SERVICE_ROLE_KEY');
 
   const args = parseArgs(process.argv.slice(2));
+
+  if (requestedEnv && args.env && requestedEnv !== args.env) {
+    throw new Error(`Conflicting --env values detected. Parsed '${args.env}' but dotenv loaded '${requestedEnv}'.`);
+  }
 
   const url = requiredEnv('VITE_SUPABASE_URL');
 

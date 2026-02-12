@@ -49,6 +49,10 @@ To persist `journey` in Supabase, apply the migration in `supabase/011_topic_jou
 - Set `SUPABASE_SERVICE_ROLE_KEY` in `.env.local` (scripts only)
 - Run: `npm run content:sync`
 
+Staging tip:
+- Create `.env.staging.local` (with `VITE_SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` for the staging Supabase project)
+- Run: `npm run content:sync:staging`
+
 Notes:
 - The sync script auto-loads `.env.local` (you do not need to export env vars manually).
 - Find the service role key in Supabase Dashboard → Project Settings → API → Project API keys → `service_role`.
