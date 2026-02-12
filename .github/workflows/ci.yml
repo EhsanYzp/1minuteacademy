@@ -35,3 +35,31 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      # Auto-publish content to Supabase.
+      #
+      # - Runs only for direct pushes (never on PRs).
+      # - Uses service role keys stored in GitHub Secrets.
+      # - Keeps the sync behavior "safe by default":
+      #     - inserts new topics
+      #     - updates only when lesson.version increased or journey/subcategory changed
+      #
+      # Required repo secrets:
+      # - STAGING_SUPABASE_URL
+      # - STAGING_SUPABASE_SERVICE_ROLE_KEY
+      # - PROD_SUPABASE_URL
+      # - PROD_SUPABASE_SERVICE_ROLE_KEY
+
+      - name: Sync content to Supabase (staging)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/staging'
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.STAGING_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.STAGING_SUPABASE_SERVICE_ROLE_KEY }}
+        run: npm run content:sync:staging
+
+      - name: Sync content to Supabase (production)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.PROD_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.PROD_SUPABASE_SERVICE_ROLE_KEY }}
+        run: npm run content:sync:prod
