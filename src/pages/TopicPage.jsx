@@ -125,6 +125,22 @@ function TopicPage() {
     }
   }
 
+  const normalizeDurationLabel = (duration) => {
+    const raw = String(duration ?? '').trim();
+    const d = raw.toLowerCase();
+    if (!raw) return '1 minute';
+    if (d.includes('60')) return '1 minute';
+    if (d === '1m' || d === '1 min' || d === '1 minute') return '1 minute';
+    return raw;
+  };
+
+  const ratingSummaryText = (() => {
+    const count = Number(ratingSummary?.ratings_count ?? 0);
+    const avg = Number(ratingSummary?.avg_rating ?? 0);
+    if (count > 0 && Number.isFinite(avg)) return `${avg.toFixed(1)} (${count})`;
+    return 'No ratings yet';
+  })();
+
   useEffect(() => {
     let mounted = true;
 
@@ -391,124 +407,105 @@ function TopicPage() {
               </div>
             )}
 
-            <motion.div 
-              className="topic-emoji"
-              animate={{ 
-                y: [0, -10, 0],
-                rotate: [0, 5, -5, 0]
-              }}
-              transition={{ 
-                duration: 3, 
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              {topic.emoji}
-            </motion.div>
+            <div className="topic-emoji">{topic.emoji}</div>
             
             <h1 className="topic-title">{topic.title}</h1>
             <p className="topic-description">{topic.description}</p>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginTop: 10 }}>
-              {ratingSummary && Number(ratingSummary?.ratings_count ?? 0) > 0 ? (
-                <>
-                  <StarRating value={Number(ratingSummary.avg_rating)} readOnly size="md" />
-                  <span style={{ color: 'var(--text-secondary)', fontWeight: 800 }}>
-                    {Number(ratingSummary.avg_rating).toFixed(1)} ({Number(ratingSummary.ratings_count)})
-                  </span>
-                </>
-              ) : (
-                <span style={{ color: 'var(--text-secondary)', fontWeight: 800 }}>No ratings yet</span>
-              )}
-            </div>
-
-            <div className="topic-rating-row">
-              <span style={{ color: 'var(--text-secondary)', fontWeight: 800 }}>Your rating</span>
-              {user && (
-                <span style={{ color: 'var(--text-secondary)', opacity: 0.85, fontWeight: 700, fontSize: 13 }}>
-                  (you can change this anytime)
-                </span>
-              )}
-              <StarRating
-                value={Number(myRating ?? 0)}
-                onChange={user ? onRate : undefined}
-                readOnly={!user || ratingBusy}
-                size="md"
-                label="Your rating"
-              />
-              {!user && (
-                <motion.button
-                  className="topic-action-btn secondary topic-rate-signin"
-                  onClick={() => navigate('/login')}
-                  whileTap={{ scale: 0.96 }}
-                >
-                  Sign in to rate
-                </motion.button>
-              )}
-              {ratingBusy && <span style={{ opacity: 0.7, fontWeight: 750 }}>Saving…</span>}
-            </div>
-
-            {ratingError && (
-              <div style={{ marginTop: 8, color: '#b91c1c', fontWeight: 750 }}>
-                {ratingError?.message ?? String(ratingError)}
-              </div>
-            )}
-            
             <div className="topic-meta">
               <span className="meta-badge duration">
-                ⏱️ {topic.duration}
+                ⏱️ {normalizeDurationLabel(topic.duration)}
               </span>
               <span className="meta-badge difficulty">
                 📊 {topic.difficulty}
               </span>
+              <span className="meta-badge beats">
+                🎬 6 beats
+              </span>
+              <span className="meta-badge quiz">
+                ✅ Quick quiz
+              </span>
             </div>
 
-            </motion.div>
+            <div className="topic-start-actions">
+              <JourneyBlocks
+                blocks={journey?.topicStart?.blocks}
+                ctx={journeyCtx}
+                allowedTypes={['cta', 'ctaRow']}
+              />
+            </div>
 
-            <motion.div
-              className="topic-start-card"
-              initial={{ y: 18, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.25, type: 'spring' }}
-            >
-              <div className="topic-start-kicker">Your 60-second lesson</div>
-              <h2 className="topic-start-title">Start when you’re ready</h2>
-              <p className="topic-start-sub">
-                6 beats (48s) + a quick quiz (12s). Built for momentum.
-              </p>
+            <p className="start-hint">
+              {!canStart
+                ? (tier === 'paused'
+                  ? 'Your account is paused. Resume it to start lessons.'
+                  : `${beginner ? '' : 'This lesson is Pro-only. '}Your plan: ${formatTierLabel(tier)}.`)
+                : isCompleted && !canUseReview
+                  ? 'Review mode is Pro-only.'
+                  : 'Tip: find a quiet 60 seconds, then press Start.'}
+            </p>
 
-              <div className="topic-start-chips" aria-label="Lesson breakdown">
-                <span className="topic-chip">⏱️ 60s total</span>
-                <span className="topic-chip">🎬 6 beats</span>
-                <span className="topic-chip">✅ 1 quiz</span>
+            <details className="topic-start-panel">
+              <summary className="topic-start-panel-title">What you’ll get</summary>
+              <ul className="topic-start-points">
+                {(Array.isArray(topic.learningPoints) ? topic.learningPoints : []).slice(0, 4).map((p, i) => (
+                  <li key={`lp-${i}`}>{p}</li>
+                ))}
+              </ul>
+            </details>
+
+            <details className="topic-rating-details" open={Boolean(ratingError)}>
+              <summary className="topic-rating-details__title">
+                <span>Ratings</span>
+                <span className="topic-rating-details__meta">{ratingSummaryText}</span>
+              </summary>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginTop: 10 }}>
+                {ratingSummary && Number(ratingSummary?.ratings_count ?? 0) > 0 ? (
+                  <>
+                    <StarRating value={Number(ratingSummary.avg_rating)} readOnly size="md" />
+                    <span style={{ color: 'var(--text-secondary)', fontWeight: 800 }}>
+                      {Number(ratingSummary.avg_rating).toFixed(1)} ({Number(ratingSummary.ratings_count)})
+                    </span>
+                  </>
+                ) : (
+                  <span style={{ color: 'var(--text-secondary)', fontWeight: 800 }}>No ratings yet</span>
+                )}
               </div>
 
-              <div className="topic-start-panel">
-                <div className="topic-start-panel-title">What you’ll get</div>
-                <ul className="topic-start-points">
-                  {(Array.isArray(topic.learningPoints) ? topic.learningPoints : []).slice(0, 4).map((p, i) => (
-                    <li key={`lp-${i}`}>{p}</li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="topic-start-actions">
-                <JourneyBlocks
-                  blocks={journey?.topicStart?.blocks}
-                  ctx={journeyCtx}
-                  allowedTypes={['cta', 'ctaRow']}
+              <div className="topic-rating-row">
+                <span style={{ color: 'var(--text-secondary)', fontWeight: 800 }}>Your rating</span>
+                {user && (
+                  <span style={{ color: 'var(--text-secondary)', opacity: 0.85, fontWeight: 700, fontSize: 13 }}>
+                    (you can change this anytime)
+                  </span>
+                )}
+                <StarRating
+                  value={Number(myRating ?? 0)}
+                  onChange={user ? onRate : undefined}
+                  readOnly={!user || ratingBusy}
+                  size="md"
+                  label="Your rating"
                 />
+                {!user && (
+                  <motion.button
+                    className="topic-action-btn secondary topic-rate-signin"
+                    onClick={() => navigate('/login')}
+                    whileTap={{ scale: 0.96 }}
+                  >
+                    Sign in to rate
+                  </motion.button>
+                )}
+                {ratingBusy && <span style={{ opacity: 0.7, fontWeight: 750 }}>Saving…</span>}
               </div>
 
-              <p className="start-hint">
-                {!canStart
-                  ? (tier === 'paused'
-                    ? 'Your account is paused. Resume it to start lessons.'
-                    : `${beginner ? '' : 'This lesson is Pro-only. '}Your plan: ${formatTierLabel(tier)}.`)
-                  : isCompleted && !canUseReview
-                    ? 'Review mode is Pro-only.'
-                    : 'Tip: find a quiet 60 seconds, then press Start.'}
-              </p>
+              {ratingError && (
+                <div style={{ marginTop: 8, color: '#b91c1c', fontWeight: 750 }}>
+                  {ratingError?.message ?? String(ratingError)}
+                </div>
+              )}
+            </details>
+
             </motion.div>
           </div>
 
