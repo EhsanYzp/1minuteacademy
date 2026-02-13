@@ -26,19 +26,46 @@ function buildTicks(count) {
 export default function HeroClockBackdrop() {
   const ticks = useMemo(() => buildTicks(60), []);
   const rootRef = useRef(null);
+  const secondHandRef = useRef(null);
+  const minuteHandRef = useRef(null);
+  const progressRef = useRef(null);
 
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
 
     const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
-    if (reduceMotion) return;
 
     let rafId = 0;
     let targetX = 0;
     let targetY = 0;
     let currentX = 0;
     let currentY = 0;
+
+    const setClockFromNow = () => {
+      const now = new Date();
+      const seconds = now.getSeconds() + now.getMilliseconds() / 1000;
+      const minutes = now.getMinutes() + seconds / 60;
+
+      const secondAngle = seconds * 6;
+      const minuteAngle = minutes * 6;
+
+      if (secondHandRef.current) {
+        secondHandRef.current.style.animation = 'none';
+        secondHandRef.current.style.transform = `rotate(${secondAngle}deg)`;
+      }
+
+      if (minuteHandRef.current) {
+        minuteHandRef.current.style.animation = 'none';
+        minuteHandRef.current.style.transform = `rotate(${minuteAngle}deg)`;
+      }
+
+      if (progressRef.current) {
+        const filled = Math.max(0, Math.min(60, seconds));
+        const empty = Math.max(0, 60 - filled);
+        progressRef.current.style.strokeDasharray = `${filled.toFixed(3)} ${empty.toFixed(3)}`;
+      }
+    };
 
     const onPointerMove = (e) => {
       const vw = Math.max(1, window.innerWidth);
@@ -50,6 +77,7 @@ export default function HeroClockBackdrop() {
     };
 
     const tick = () => {
+      setClockFromNow();
       const lerp = 0.06;
       currentX += (targetX - currentX) * lerp;
       currentY += (targetY - currentY) * lerp;
@@ -59,8 +87,12 @@ export default function HeroClockBackdrop() {
       rafId = window.requestAnimationFrame(tick);
     };
 
-    window.addEventListener('pointermove', onPointerMove, { passive: true });
-    rafId = window.requestAnimationFrame(tick);
+    setClockFromNow();
+
+    if (!reduceMotion) {
+      window.addEventListener('pointermove', onPointerMove, { passive: true });
+      rafId = window.requestAnimationFrame(tick);
+    }
 
     return () => {
       window.removeEventListener('pointermove', onPointerMove);
@@ -124,6 +156,7 @@ export default function HeroClockBackdrop() {
           <g className="heroClock-hands">
             <line
               className="heroClock-minuteHand"
+              ref={minuteHandRef}
               x1="500"
               y1="500"
               x2="500"
@@ -136,6 +169,7 @@ export default function HeroClockBackdrop() {
 
             <line
               className="heroClock-secondHand"
+              ref={secondHandRef}
               x1="500"
               y1="540"
               x2="500"
@@ -156,11 +190,12 @@ export default function HeroClockBackdrop() {
             d="M500 98 a402 402 0 0 1 0 804 a402 402 0 0 1 0 -804"
             fill="none"
             stroke="#2563eb"
-            strokeOpacity="0.14"
-            strokeWidth="26"
+            strokeOpacity="0.18"
+            strokeWidth="24"
             strokeLinecap="round"
             pathLength="60"
-            className="heroClock-sweep"
+            className="heroClock-progress"
+            ref={progressRef}
           />
         </g>
       </svg>
