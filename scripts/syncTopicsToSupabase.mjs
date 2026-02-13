@@ -154,6 +154,13 @@ function journeysEqual(a, b) {
   return stableStringify(a) === stableStringify(b);
 }
 
+function lessonsEqual(a, b) {
+  if (a === b) return true;
+  if (a == null && b == null) return true;
+  if (a == null || b == null) return false;
+  return stableStringify(a) === stableStringify(b);
+}
+
 async function main() {
   // Guardrails: prevent accidentally leaking the service role key to the frontend
   forbidEnv('VITE_SUPABASE_SERVICE_ROLE_KEY');
@@ -229,7 +236,7 @@ async function main() {
   const remoteById = new Map();
   const { data: remoteRows, error: remoteErr } = await supabase
     .from('topics')
-    .select('id, lesson, journey, subcategory')
+    .select('id, subject, subcategory, title, emoji, color, description, difficulty, published, lesson, journey')
     .in('id', ids);
 
   if (remoteErr) throw remoteErr;
@@ -256,8 +263,27 @@ async function main() {
     const lv = getLessonVersion(local.lesson);
     const rv = getLessonVersion(remote.lesson);
 
+    const lessonChanged = !lessonsEqual(local.lesson ?? null, remote.lesson ?? null);
     const journeyChanged = !journeysEqual(local.journey ?? null, remote.journey ?? null);
+
+    const publishedChanged = Boolean(local.published) !== Boolean(remote.published);
+    const subjectChanged = (local.subject ?? null) !== (remote.subject ?? null);
     const subcategoryChanged = (local.subcategory ?? null) !== (remote.subcategory ?? null);
+    const titleChanged = (local.title ?? null) !== (remote.title ?? null);
+    const emojiChanged = (local.emoji ?? null) !== (remote.emoji ?? null);
+    const colorChanged = (local.color ?? null) !== (remote.color ?? null);
+    const descriptionChanged = (local.description ?? null) !== (remote.description ?? null);
+    const difficultyChanged = (local.difficulty ?? null) !== (remote.difficulty ?? null);
+
+    const metaChanged =
+      publishedChanged ||
+      subjectChanged ||
+      subcategoryChanged ||
+      titleChanged ||
+      emojiChanged ||
+      colorChanged ||
+      descriptionChanged ||
+      difficultyChanged;
 
     if (args.force) {
       toUpdate.push(local);
@@ -266,14 +292,16 @@ async function main() {
 
     if (lv > rv) {
       toUpdate.push(local);
+    } else if (lessonChanged) {
+      toUpdate.push(local);
     } else if (journeyChanged) {
       toUpdate.push(local);
-    } else if (subcategoryChanged) {
+    } else if (metaChanged) {
       toUpdate.push(local);
     } else {
       skipped.push({
         id,
-        reason: `no changes (version ${lv} <= ${rv}, journey unchanged)`,
+        reason: `no changes (lesson/journey/meta unchanged)`,
       });
     }
   }
