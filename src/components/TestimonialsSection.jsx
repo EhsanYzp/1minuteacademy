@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { isSupabaseConfigured } from '../lib/supabaseClient';
 import { getMyLatestTestimonial, listApprovedTestimonials, submitTestimonial } from '../services/testimonials';
+import { getMyProfile, uploadMyAvatar, updateMyProfile } from '../services/profiles';
 
 function initialsFromName(name) {
   const s = String(name ?? '').trim();
@@ -22,6 +23,10 @@ export default function TestimonialsSection() {
   const [myLatest, setMyLatest] = useState(null);
   const [myError, setMyError] = useState(null);
 
+  const [myProfile, setMyProfile] = useState(null);
+  const [profileLoading, setProfileLoading] = useState(false);
+  const [profileError, setProfileError] = useState(null);
+
   const [showForm, setShowForm] = useState(false);
   const [quote, setQuote] = useState('');
   const [authorTitle, setAuthorTitle] = useState('');
@@ -31,13 +36,34 @@ export default function TestimonialsSection() {
   const [submitNotice, setSubmitNotice] = useState('');
   const [submitError, setSubmitError] = useState(null);
 
+  const [avatarBusy, setAvatarBusy] = useState(false);
+  const [avatarError, setAvatarError] = useState(null);
+  const [avatarNotice, setAvatarNotice] = useState('');
+  const avatarInputRef = useRef(null);
+
   const isAuthed = Boolean(user);
   const formRef = useRef(null);
 
+  const myAvatarUrl = String(myProfile?.avatar_url ?? '').trim();
+  const needsAvatar = Boolean(isAuthed && isSupabaseConfigured && !myAvatarUrl);
+
+  const quoteTrimmed = String(quote ?? '').trim();
+  const quoteLen = quoteTrimmed.length;
+
+  const submitDisabledReason = useMemo(() => {
+    if (!isAuthed) return 'Sign in to submit.';
+    if (needsAvatar) return 'Upload a photo to submit.';
+    if (quoteLen < 20) return 'Add at least 20 characters.';
+    if (quoteLen > 420) return 'Keep it under 420 characters.';
+    return '';
+  }, [isAuthed, needsAvatar, quoteLen]);
+
   const canSubmit = useMemo(() => {
-    const q = String(quote ?? '').trim();
-    return q.length >= 20 && q.length <= 420;
-  }, [quote]);
+    const quoteOk = quoteLen >= 20 && quoteLen <= 420;
+    if (!quoteOk) return false;
+    if (needsAvatar) return false;
+    return true;
+  }, [quoteLen, needsAvatar]);
 
   useEffect(() => {
     let cancelled = false;
@@ -62,6 +88,38 @@ export default function TestimonialsSection() {
       cancelled = true;
     };
   }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!isAuthed || !isSupabaseConfigured) {
+      setMyProfile(null);
+      setProfileError(null);
+      setProfileLoading(false);
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    const runProfile = async () => {
+      setProfileLoading(true);
+      setProfileError(null);
+      try {
+        const p = await getMyProfile();
+        if (cancelled) return;
+        setMyProfile(p);
+      } catch (e) {
+        if (cancelled) return;
+        setProfileError(e);
+      } finally {
+        if (!cancelled) setProfileLoading(false);
+      }
+    };
+
+    runProfile();
+    return () => {
+      cancelled = true;
+    };
+  }, [isAuthed]);
 
   useEffect(() => {
     let cancelled = false;
@@ -94,6 +152,10 @@ export default function TestimonialsSection() {
   async function onSubmit(e) {
     e.preventDefault();
     if (!isAuthed || submitBusy) return;
+    if (needsAvatar) {
+      setSubmitError(new Error('Please upload a profile photo before submitting.'));
+      return;
+    }
 
     setSubmitBusy(true);
     setSubmitError(null);
@@ -123,8 +185,40 @@ export default function TestimonialsSection() {
   function openForm() {
     setSubmitNotice('');
     setSubmitError(null);
+    setAvatarError(null);
+    setAvatarNotice('');
     setShowForm(true);
     setTimeout(() => formRef.current?.scrollIntoView?.({ behavior: 'smooth', block: 'center' }), 0);
+  }
+
+  async function onPickAvatar(e) {
+    const f = e?.target?.files?.[0] ?? null;
+    if (!f) return;
+    if (!isAuthed) return;
+    if (!isSupabaseConfigured) return;
+    if (avatarBusy || submitBusy) return;
+
+    setAvatarBusy(true);
+    setAvatarError(null);
+    setAvatarNotice('');
+    setSubmitError(null);
+    setSubmitNotice('');
+
+    try {
+      const url = await uploadMyAvatar(f);
+      const updated = await updateMyProfile({ avatarUrl: url });
+      setMyProfile(updated);
+      setAvatarNotice('Photo uploaded. You can submit now.');
+    } catch (e2) {
+      setAvatarError(e2);
+    } finally {
+      setAvatarBusy(false);
+      try {
+        if (avatarInputRef.current) avatarInputRef.current.value = '';
+      } catch {
+        // ignore
+      }
+    }
   }
 
   return (
@@ -146,7 +240,11 @@ export default function TestimonialsSection() {
       {!loading && !error && (
         <div className="testimonials-grid">
           {isAuthed && myLatest && myLatest.approved === false && (
-            <figure key={myLatest.id} className="testimonials-card" style={{ gridColumn: '1 / -1' }}>
+            <figure key={myLatest.id} className="testimonials-card testimonials-card--pending">
+              <div className="testimonials-badge" aria-label="Pending approval">
+                Pending approval
+              </div>
+
               <blockquote className="testimonials-quote">{String(myLatest.quote ?? '')}</blockquote>
               <figcaption className="testimonials-who">
                 {myLatest.author_avatar_url ? (
@@ -157,9 +255,7 @@ export default function TestimonialsSection() {
                   </div>
                 )}
                 <div className="testimonials-meta">
-                  <div className="testimonials-name">
-                    {String(myLatest.author_name ?? 'You')} <span style={{ opacity: 0.7, fontWeight: 900 }}>(pending approval)</span>
-                  </div>
+                  <div className="testimonials-name">{String(myLatest.author_name ?? 'You')}</div>
                   {(myLatest.author_title || myLatest.platform) && (
                     <div className="testimonials-titleLine">
                       {myLatest.author_title ? String(myLatest.author_title) : null}
@@ -174,6 +270,17 @@ export default function TestimonialsSection() {
 
           {(Array.isArray(items) ? items : []).slice(0, 6).map((t) => (
             <figure key={t.id} className="testimonials-card">
+              {t.platform && (
+                <div className="testimonials-badge" aria-label="Source">
+                  {t.platform_url ? (
+                    <a className="testimonials-badgeLink" href={String(t.platform_url)} target="_blank" rel="noreferrer">
+                      {String(t.platform)}
+                    </a>
+                  ) : (
+                    String(t.platform)
+                  )}
+                </div>
+              )}
               <blockquote className="testimonials-quote">{String(t.quote ?? '')}</blockquote>
               <figcaption className="testimonials-who">
                 {t.author_avatar_url ? (
@@ -225,6 +332,52 @@ export default function TestimonialsSection() {
 
       {isAuthed && showForm && (
         <form ref={formRef} className="testimonials-form" onSubmit={onSubmit}>
+          {isSupabaseConfigured && (
+            <div className={needsAvatar ? 'testimonials-required testimonials-required--hard' : 'testimonials-required'}>
+              <div className="testimonials-requiredTitle">Profile photo</div>
+              <div className="testimonials-requiredSub">
+                {needsAvatar
+                  ? 'Required to keep testimonials real.'
+                  : 'Looks good. You can change it anytime.'}
+              </div>
+
+              <div className="testimonials-requiredRow">
+                {myAvatarUrl ? (
+                  <img className="testimonials-avatar" src={myAvatarUrl} alt="" loading="lazy" />
+                ) : (
+                  <div className="testimonials-avatar testimonials-avatar--fallback" aria-hidden="true">
+                    {initialsFromName(myProfile?.display_name || user?.email || 'You')}
+                  </div>
+                )}
+
+                <input
+                  ref={avatarInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={onPickAvatar}
+                  disabled={avatarBusy || submitBusy}
+                  className="testimonials-fileInput"
+                  aria-label="Upload profile photo"
+                />
+
+                <button
+                  type="button"
+                  className="testimonials-btn"
+                  onClick={() => avatarInputRef.current?.click?.()}
+                  disabled={avatarBusy || submitBusy || profileLoading}
+                >
+                  {avatarBusy ? 'Uploading…' : myAvatarUrl ? 'Change photo' : 'Upload photo'}
+                </button>
+
+                {profileLoading ? <span className="testimonials-inlineNote">Loading profile…</span> : null}
+              </div>
+
+              {avatarNotice ? <div className="testimonials-status testimonials-status--ok">{avatarNotice}</div> : null}
+              {profileError ? <div className="testimonials-status testimonials-status--error">{profileError.message ?? 'Failed to load profile.'}</div> : null}
+              {avatarError ? <div className="testimonials-status testimonials-status--error">{avatarError.message ?? 'Failed to upload photo.'}</div> : null}
+            </div>
+          )}
+
           <label>
             Your testimonial
             <textarea
@@ -235,6 +388,10 @@ export default function TestimonialsSection() {
               maxLength={420}
               required
             />
+            <div className="testimonials-hint">
+              <span>{quoteLen}/420</span>
+              <span>Write at least 20 characters.</span>
+            </div>
           </label>
 
           <div className="testimonials-formRow">
@@ -264,6 +421,8 @@ export default function TestimonialsSection() {
               {submitBusy ? 'Sending…' : 'Submit'}
             </button>
           </div>
+
+          {!canSubmit && submitDisabledReason ? <div className="testimonials-hint testimonials-hint--warn">{submitDisabledReason}</div> : null}
         </form>
       )}
     </section>

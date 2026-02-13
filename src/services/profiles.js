@@ -39,14 +39,23 @@ export async function getMyProfile() {
     normalizeDisplayName(String(user?.email ?? '').split('@')[0]) ||
     'Member';
 
-  const { data: inserted, error: insertErr } = await supabase
+  // The DB also auto-creates profiles via trigger on auth.users.
+  // In practice, the trigger + client can race, which can cause a duplicate key.
+  // We upsert with ignoreDuplicates=true and then re-fetch.
+  const { error: upsertErr } = await supabase
     .from('profiles')
-    .insert({ user_id: userId, display_name: fallbackName })
+    .upsert({ user_id: userId, display_name: fallbackName }, { onConflict: 'user_id', ignoreDuplicates: true });
+
+  if (upsertErr) throw upsertErr;
+
+  const { data: data2, error: err2 } = await supabase
+    .from('profiles')
     .select('user_id, display_name, avatar_url, updated_at')
+    .eq('user_id', userId)
     .single();
 
-  if (insertErr) throw insertErr;
-  return inserted;
+  if (err2) throw err2;
+  return data2;
 }
 
 export async function updateMyProfile({ displayName, avatarUrl } = {}) {
