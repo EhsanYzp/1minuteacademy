@@ -4,12 +4,14 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
 import { useAuth } from '../context/AuthContext';
+import { isSupabaseConfigured } from '../lib/supabaseClient';
 import { getTopicCategoryCounts, listTopicsByIds } from '../services/topics';
 import { getContentSource } from '../services/_contentSource';
 import { getUserStats, listUserTopicProgress } from '../services/progress';
 import { canReview, canStartTopic, formatTierLabel, getCurrentTier } from '../services/entitlements';
 import { getSubscriptionStatus, openCustomerPortal } from '../services/billing';
 import { deleteAccount, pauseAccount, resumeAccount } from '../services/account';
+import { getMyProfile, updateMyProfile, uploadMyAvatar } from '../services/profiles';
 import StarRating from '../components/StarRating';
 import { listMyTopicRatings, setMyTopicRating } from '../services/ratings';
 import OneMAIcon from '../components/OneMAIcon';
@@ -60,6 +62,15 @@ function fmtShortDate(iso) {
   } catch {
     return '—';
   }
+}
+
+function initialsFromName(name) {
+  const s = String(name ?? '').trim();
+  if (!s) return '?';
+  const parts = s.split(/\s+/).filter(Boolean);
+  const first = parts[0]?.[0] ?? '';
+  const last = parts.length > 1 ? parts[parts.length - 1]?.[0] ?? '' : '';
+  return (first + last).toUpperCase() || '?';
 }
 
 function formatStripeStatus(status) {
@@ -171,9 +182,93 @@ export default function ProfilePage() {
   const [presentationError, setPresentationError] = useState(null);
   const [presentationNotice, setPresentationNotice] = useState('');
 
+  const [identityLoaded, setIdentityLoaded] = useState(false);
+  const [identityBusy, setIdentityBusy] = useState(false);
+  const [identityError, setIdentityError] = useState(null);
+  const [identityNotice, setIdentityNotice] = useState('');
+  const [displayName, setDisplayName] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState('');
+  const avatarInputRef = useRef(null);
+
   useEffect(() => {
     setPresentationStyle(initialPresentationStyle);
   }, [initialPresentationStyle]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const run = async () => {
+      if (!user) return;
+      if (contentSource === 'local') return;
+      if (!isSupabaseConfigured) return;
+
+      setIdentityError(null);
+      setIdentityNotice('');
+
+      try {
+        const p = await getMyProfile();
+        if (cancelled) return;
+        setDisplayName(String(p?.display_name ?? ''));
+        setAvatarUrl(String(p?.avatar_url ?? ''));
+        setIdentityLoaded(true);
+      } catch (e) {
+        if (cancelled) return;
+        setIdentityError(e);
+      }
+    };
+
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, [contentSource, user]);
+
+  async function onSaveIdentity() {
+    if (identityBusy) return;
+    setIdentityBusy(true);
+    setIdentityError(null);
+    setIdentityNotice('');
+
+    try {
+      const next = await updateMyProfile({ displayName, avatarUrl });
+      setDisplayName(String(next?.display_name ?? ''));
+      setAvatarUrl(String(next?.avatar_url ?? ''));
+      setIdentityLoaded(true);
+      setIdentityNotice('Saved. New testimonials will use this name/photo.');
+    } catch (e) {
+      setIdentityError(e);
+    } finally {
+      setIdentityBusy(false);
+    }
+  }
+
+  async function onPickAvatar(e) {
+    const f = e?.target?.files?.[0] ?? null;
+    if (!f) return;
+    if (identityBusy) return;
+
+    setIdentityBusy(true);
+    setIdentityError(null);
+    setIdentityNotice('');
+
+    try {
+      const url = await uploadMyAvatar(f);
+      setAvatarUrl(String(url ?? ''));
+      const next = await updateMyProfile({ avatarUrl: url });
+      setAvatarUrl(String(next?.avatar_url ?? url ?? ''));
+      setIdentityLoaded(true);
+      setIdentityNotice('Photo updated.');
+    } catch (e2) {
+      setIdentityError(e2);
+    } finally {
+      setIdentityBusy(false);
+      try {
+        if (avatarInputRef.current) avatarInputRef.current.value = '';
+      } catch {
+        // ignore
+      }
+    }
+  }
 
   async function onChangePresentationStyle(e) {
     const next = normalizePresentationStyle(e?.target?.value) ?? initialPresentationStyle;
@@ -868,6 +963,79 @@ export default function ProfilePage() {
 
               {activeTab === 'preferences' && (
                 <>
+                  <div className="profile-section-header profile-section-header-spaced">
+                    <h2>Public profile</h2>
+                    <div className="profile-section-sub">Shown on your testimonials (after approval).</div>
+                  </div>
+
+                  <div className="profile-note" style={{ marginBottom: 12 }}>
+                    <strong>Display name & photo</strong>
+                    {contentSource === 'local' ? (
+                      <div style={{ marginTop: 8 }}>Disabled in Local Preview mode.</div>
+                    ) : !isSupabaseConfigured ? (
+                      <div style={{ marginTop: 8 }}>Supabase is not configured for this environment.</div>
+                    ) : (
+                      <div className="profile-identity">
+                        <div className="profile-identity-avatar">
+                          {avatarUrl ? (
+                            <img className="profile-avatar" src={String(avatarUrl)} alt="" loading="lazy" />
+                          ) : (
+                            <div className="profile-avatar profile-avatar--fallback" aria-hidden="true">
+                              {initialsFromName(displayName || user?.email || 'You')}
+                            </div>
+                          )}
+
+                          <input
+                            ref={avatarInputRef}
+                            type="file"
+                            accept="image/*"
+                            onChange={onPickAvatar}
+                            disabled={identityBusy}
+                            className="profile-avatarInput"
+                            aria-label="Upload profile photo"
+                          />
+
+                          <button
+                            type="button"
+                            className="profile-account-btn secondary"
+                            onClick={() => avatarInputRef.current?.click?.()}
+                            disabled={identityBusy}
+                          >
+                            {avatarUrl ? 'Change photo' : 'Upload photo'}
+                          </button>
+                        </div>
+
+                        <label className="profile-preference-label" style={{ marginTop: 10 }}>
+                          Display name
+                          <input
+                            className="profile-identity-input"
+                            value={displayName}
+                            onChange={(e) => setDisplayName(e.target.value)}
+                            placeholder="e.g. Zeinab"
+                            maxLength={40}
+                            disabled={identityBusy}
+                          />
+                        </label>
+
+                        <div className="profile-identity-actions">
+                          <button
+                            type="button"
+                            className="profile-account-btn"
+                            onClick={onSaveIdentity}
+                            disabled={identityBusy || !identityLoaded}
+                          >
+                            {identityBusy ? 'Saving…' : 'Save'}
+                          </button>
+                        </div>
+
+                        {identityNotice ? <div className="profile-preference-note">{identityNotice}</div> : null}
+                        {identityError ? (
+                          <div className="profile-preference-error">{identityError?.message ?? String(identityError)}</div>
+                        ) : null}
+                      </div>
+                    )}
+                  </div>
+
                   <div className="profile-section-header profile-section-header-spaced">
                     <h2>Experience</h2>
                     <div className="profile-section-sub">Personalize how lesson pages look.</div>
