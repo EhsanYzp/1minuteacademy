@@ -36,29 +36,58 @@ jobs:
       - name: Build
         run: npm run build
 
-      # Auto-publish content to Supabase.
-      #
-      # - Runs only for direct pushes (never on PRs).
-      # - Uses service role keys stored in GitHub Secrets.
-      # - Keeps the sync behavior "safe by default":
-      #     - inserts new topics
-      #     - updates only when lesson.version increased or journey/subcategory changed
-      #
-      # Required repo secrets:
-      # - STAGING_SUPABASE_URL
-      # - STAGING_SUPABASE_SERVICE_ROLE_KEY
-      # - PROD_SUPABASE_URL
-      # - PROD_SUPABASE_SERVICE_ROLE_KEY
+  # Auto-publish content to Supabase.
+  #
+  # These jobs run only for direct pushes (never on PRs).
+  #
+  # IMPORTANT: If you store secrets as *Environment secrets* (GitHub Settings → Environments),
+  # the job must declare `environment:` to access them.
+
+  sync-staging:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/staging' }}
+    needs: validate-build
+    runs-on: ubuntu-latest
+    environment: staging
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
 
       - name: Sync content to Supabase (staging)
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/staging' }}
         env:
           VITE_SUPABASE_URL: ${{ secrets.STAGING_SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.STAGING_SUPABASE_SERVICE_ROLE_KEY }}
         run: npm run content:sync:staging
 
+  sync-production:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    needs: validate-build
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
       - name: Sync content to Supabase (production)
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         env:
           VITE_SUPABASE_URL: ${{ secrets.PROD_SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.PROD_SUPABASE_SERVICE_ROLE_KEY }}
