@@ -167,3 +167,13 @@ Scenario 2: we want to test things in staging before going into production (afte
             ```
     5.2 if not ok
         5.2.2make more changes until ok (go again to 2) 
+
+
+if i want to sync to db directly without need to deploy to github/vercel:
+npm run content:validate
+npm run journey:parity 
+
+staging: npm run content:sync:stagin
+production: npm run content:sync
+
+*sitemap,seo will not be updated like this
