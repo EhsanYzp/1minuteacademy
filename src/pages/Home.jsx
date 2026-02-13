@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FiArrowRight, FiRefreshCw, FiX } from 'react-icons/fi';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
+import HeroClockBackdrop from '../components/HeroClockBackdrop';
 import { useAuth } from '../context/AuthContext';
 import { getCurrentTier } from '../services/entitlements';
 import { pickRandomEligibleTopic, pushRecentRandomId } from '../lib/surpriseTopic';
@@ -443,6 +444,7 @@ function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, type: 'spring' }}
         >
+          <HeroClockBackdrop />
           <motion.div 
             className="hero-badge"
             animate={prefersReducedMotion ? undefined : { scale: [1, 1.05, 1] }}

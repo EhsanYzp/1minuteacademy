@@ -259,8 +259,84 @@
 
 /* Hero Section */
 .hero {
+  position: relative;
   text-align: center;
   padding: var(--space-3xl) 0;
+  overflow: hidden;
+}
+
+.hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.heroClock {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.48;
+  /* Fade out towards edges so it feels “behind” the hero */
+  mask-image: radial-gradient(circle at 50% 46%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.96) 48%, rgba(0, 0, 0, 0.10) 74%, rgba(0, 0, 0, 0) 86%);
+  -webkit-mask-image: radial-gradient(circle at 50% 46%, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.96) 48%, rgba(0, 0, 0, 0.10) 74%, rgba(0, 0, 0, 0) 86%);
+}
+
+.heroClock-svg {
+  width: clamp(520px, 74vw, 1040px);
+  height: auto;
+  transform: translate3d(var(--heroClockX, 0px), var(--heroClockY, 0px), 0) translateY(-2%);
+  filter: blur(0.35px) saturate(1.08);
+}
+
+.heroClock-face {
+  transform-origin: 500px 500px;
+  animation: heroClock-drift 180s linear infinite;
+}
+
+.heroClock-minuteHand,
+.heroClock-secondHand {
+  transform-origin: 500px 500px;
+}
+
+.heroClock-minuteHand {
+  animation: heroClock-rotate 720s linear infinite;
+}
+
+.heroClock-secondHand {
+  animation: heroClock-rotate 60s linear infinite;
+}
+
+.heroClock-sweep {
+  /* One “minute marker” segment that orbits once per minute */
+  stroke-dasharray: 6 54;
+  stroke-dashoffset: 60;
+  animation: heroClock-sweep 60s linear infinite;
+}
+
+@keyframes heroClock-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes heroClock-sweep {
+  from { stroke-dashoffset: 60; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes heroClock-drift {
+  from { transform: rotate(-6deg); }
+  to { transform: rotate(354deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroClock-face,
+  .heroClock-minuteHand,
+  .heroClock-secondHand,
+  .heroClock-sweep {
+    animation: none;
+  }
 }
 
 .hero-badge {
