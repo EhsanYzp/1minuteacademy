@@ -29,6 +29,65 @@ git merge origin/main
 git push origin staging
 ```
 
+### Why Vercel shows 2 deployments (Production + Preview)
+
+This repo is set up to use **two Vercel projects** pointing to the **same GitHub repo** (see `docs/deployments.md`):
+
+- **Prod project**: Production Branch = `main`
+- **Staging project**: Production Branch = `staging`
+
+So when you push:
+
+- Push to `staging`:
+    - Staging project deploys **Production** (because `staging` is its production branch)
+    - Prod project deploys a **Preview** (because `staging` is *not* its production branch)
+
+- Push to `main`:
+    - Prod project deploys **Production**
+    - Staging project deploys a **Preview** (because `main` is *not* its production branch)
+
+Those “extra” Preview deploys are normal Vercel Git-integration behavior when multiple projects watch the same repo.
+
+### How to stop the extra Preview deploys
+
+If you want **only one deploy** on `staging` pushes and **only one deploy** on `main` pushes, add an **Ignored Build Step** per Vercel project:
+
+- In the **Prod** Vercel project, set the project’s **Ignore Command / Ignored Build Step** to ignore everything except `main`.
+
+    Where it is in the UI depends on the Vercel dashboard version, but it’s usually under Project **Settings** → **Build & Development Settings** (or similar) and is named **Ignore Command**.
+
+```bash
+if [ "$VERCEL_GIT_COMMIT_REF" != "main" ]; then
+    echo "Ignore deploy for branch $VERCEL_GIT_COMMIT_REF"
+    exit 0
+fi
+exit 1
+```
+
+- In the **Staging** Vercel project, ignore only `main` (so feature branches + `staging` still work there):
+
+```bash
+if [ "$VERCEL_GIT_COMMIT_REF" = "main" ]; then
+    echo "Ignore main branch in staging project"
+    exit 0
+fi
+exit 1
+```
+
+(In Vercel, an Ignored Build Step that exits `0` skips the deployment; a non-zero exit continues the build.)
+
+If you can’t find the UI setting, you can also configure it in-repo via the `ignoreCommand` property (see Vercel “Project Configuration” docs). Note: a repo-based `ignoreCommand` applies to any Vercel project using this repo, so for different behavior per project you’ll typically still prefer the dashboard setting (or a `vercel.ts` that branches on env vars).
+
+This repo already includes a branch-aware `ignoreCommand` in `vercel.json`. To activate it per project, set this **project environment variable** in Vercel:
+
+- Prod Vercel project: `DEPLOY_TARGET=prod`
+- Staging Vercel project: `DEPLOY_TARGET=staging`
+
+That makes Vercel skip only the “cross-branch” Preview deploys:
+
+- Prod project ignores `staging` branch deploys
+- Staging project ignores `main` branch deploys
+
 ### Local content preview (no Supabase content reads)
 
 ```bash
