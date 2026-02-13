@@ -88,6 +88,8 @@ That makes Vercel skip only the “cross-branch” Preview deploys:
 - Prod project ignores `staging` branch deploys
 - Staging project ignores `main` branch deploys
 
+Note: Vercel limits `ignoreCommand` length. This repo keeps `vercel.json` short and puts the logic in [scripts/vercelIgnore.mjs](scripts/vercelIgnore.mjs).
+
 ### Local content preview (no Supabase content reads)
 
 ```bash
