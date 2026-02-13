@@ -15,6 +15,7 @@ function parseArgs(argv) {
     published: true,
     seed: null,
     dryRun: false,
+      subcategory: 'Core Concepts',
     force: false,
   };
 
@@ -31,9 +32,10 @@ function parseArgs(argv) {
     else if (a === '--unpublished') args.published = false;
     else if (a === '--seed') args.seed = argv[++i];
     else if (a === '--dry-run') args.dryRun = true;
+      else if (a === '--subcategory') args.subcategory = argv[++i];
     else if (a === '--force') args.force = true;
     else if (a === '--help' || a === '-h') {
-      console.log(`\nUsage:\n  npm run content:scaffold -- --id <topicId> --subject <Subject> --title <Title> [options]\n\nOptions:\n  --description <text>\n  --difficulty Beginner|Intermediate|Advanced\n  --emoji <emoji>\n  --color <#RRGGBB>\n  --unpublished\n  --seed <any>\n  --dry-run\n  --force   (overwrite if file exists)\n\nThis scaffolds a story-based topic JSON with 4 narrative beats + quiz.\n`);
+      console.log(`\nUsage:\n  npm run content:scaffold -- --id <topicId> --subject <Subject> --title <Title> [options]\n\nOptions:\n  --subcategory <text>\n  --description <text>\n  --difficulty Beginner|Intermediate|Advanced\n  --emoji <emoji>\n  --color <#RRGGBB>\n  --unpublished\n  --seed <any>\n  --dry-run\n  --force   (overwrite if file exists)\n\nThis scaffolds a story-based topic JSON with 6 narrative beats + quiz.\n`);
       process.exit(0);
     } else {
       throw new Error(`Unknown arg: ${a}`);
@@ -42,6 +44,7 @@ function parseArgs(argv) {
 
   if (!args.id) throw new Error('Missing --id');
   if (!args.subject) throw new Error('Missing --subject');
+  if (!args.subcategory) throw new Error('Missing --subcategory');
   if (!args.title) throw new Error('Missing --title');
   if (!['Beginner', 'Intermediate', 'Advanced'].includes(args.difficulty)) {
     throw new Error('Invalid --difficulty (Beginner|Intermediate|Advanced)');
@@ -81,6 +84,7 @@ function pickPaletteColor(subject, rand) {
     'Programming Fundamentals': ['#FF6B6B', '#4D96FF', '#6BCB77'],
     'Blockchain & Web3': ['#4ECDC4', '#00BFA6', '#2EC4B6'],
     'Quantum & Physics': ['#A06CD5', '#5E60CE', '#64DFDF'],
+    Cybersecurity: ['#EF476F', '#118AB2', '#06D6A0'],
   };
   const list = palette[subject] ?? ['#4ECDC4', '#FFB703', '#A06CD5', '#FF6B6B'];
   return pickOne(list, rand);
@@ -107,6 +111,7 @@ async function main() {
   const topic = {
     id: args.id,
     subject: args.subject,
+    subcategory: args.subcategory,
     title: args.title,
     emoji: args.emoji,
     color,
@@ -141,12 +146,8 @@ async function main() {
     },
     quiz: {
       question: 'What did you just learn?',
-      options: [
-        { id: 'a', text: 'Option A (wrong)', correct: false },
-        { id: 'b', text: 'Option B (correct)', correct: true },
-        { id: 'c', text: 'Option C (wrong)', correct: false },
-      ],
-      explanation: 'Brief explanation of why the correct answer is right.',
+      options: ['Option A (wrong)', 'Option B (correct)', 'Option C (wrong)'],
+      correct: 1,
     },
   };
 
