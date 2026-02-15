@@ -5,7 +5,6 @@ import { FiArrowRight, FiRefreshCw, FiX } from 'react-icons/fi';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
 import HeroClockBackdrop from '../components/HeroClockBackdrop';
-import TestimonialsSection from '../components/TestimonialsSection';
 import { useAuth } from '../context/AuthContext';
 import { getCurrentTier } from '../services/entitlements';
 import { pickRandomEligibleTopic, pushRecentRandomId } from '../lib/surpriseTopic';
@@ -483,6 +482,18 @@ function Home() {
               </button>
             </div>
 
+            <div className="home-reviewsHint" aria-label="Reviews">
+              {user ? (
+                <Link className="home-reviewsHintLink" to="/reviews?new=1">
+                  Leave a review
+                </Link>
+              ) : (
+                <Link className="home-reviewsHintLink" to="/reviews">
+                  Read reviews
+                </Link>
+              )}
+            </div>
+
             {error && <div className="home-error" role="status">{error}</div>}
 
             <section className="home-stats" aria-label="Learning stats">
@@ -503,8 +514,6 @@ function Home() {
                 </span>
               </div>
             </section>
-
-            <TestimonialsSection />
           </div>
         </motion.div>
       </main>

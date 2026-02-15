@@ -15,6 +15,7 @@ const TopicsBrowserPage = lazy(() => import('./pages/TopicsBrowserPage'));
 const TopicPage = lazy(() => import('./pages/TopicPage'));
 const LessonPage = lazy(() => import('./pages/LessonPage'));
 const ReviewPage = lazy(() => import('./pages/ReviewPage'));
+const ReviewsPage = lazy(() => import('./pages/ReviewsPage'));
 const UpgradePage = lazy(() => import('./pages/UpgradePage'));
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage'));
 const TermsPage = lazy(() => import('./pages/TermsPage'));
@@ -79,6 +80,7 @@ const router = createBrowserRouter([
       { path: 'topic/:topicId', element: <TopicPage /> },
       { path: 'lesson/:topicId', element: <LessonPage /> },
       { path: 'review/:topicId', element: <ReviewPage /> },
+      { path: 'reviews', element: <ReviewsPage /> },
     ],
   },
 ]);

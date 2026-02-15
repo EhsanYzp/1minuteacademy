@@ -234,7 +234,7 @@ export default function ProfilePage() {
       setDisplayName(String(next?.display_name ?? ''));
       setAvatarUrl(String(next?.avatar_url ?? ''));
       setIdentityLoaded(true);
-      setIdentityNotice('Saved. New testimonials will use this name/photo.');
+      setIdentityNotice('Saved. New reviews will use this name/photo.');
     } catch (e) {
       setIdentityError(e);
     } finally {
@@ -965,7 +965,7 @@ export default function ProfilePage() {
                 <>
                   <div className="profile-section-header profile-section-header-spaced">
                     <h2>Public profile</h2>
-                    <div className="profile-section-sub">Shown on your testimonials (after approval).</div>
+                    <div className="profile-section-sub">Shown on your reviews (after approval).</div>
                   </div>
 
                   <div className="profile-note" style={{ marginBottom: 12 }}>
