@@ -261,25 +261,17 @@ export default function ReviewsPage() {
     setSubmitBusy(true);
     try {
       await submitReview({ rating, quote, authorTitle, platform, platformUrl });
-      setSubmitNotice('Thanks — received. We only publish reviews after manual approval.');
-      setQuote('');
-      setAuthorTitle('');
-      setPlatform('');
-      setPlatformUrl('');
-      setShowForm(false);
-
+      // Per request: reload so the new review shows up in the list.
+      // Force page 1 and remove any ?new=1 auto-open state.
       try {
-        const latest = await getMyLatestReview();
-        setMine(latest);
+        const params = new URLSearchParams(location.search);
+        params.set('page', '1');
+        params.delete('new');
+        window.location.assign(`${location.pathname}?${params.toString()}`);
+        return;
       } catch {
-        // ignore
-      }
-
-      try {
-        const s = await getReviewSummary();
-        setSummary(s);
-      } catch {
-        // ignore
+        window.location.assign(location.pathname);
+        return;
       }
     } catch (e2) {
       setSubmitError(e2);
@@ -304,7 +296,7 @@ export default function ReviewsPage() {
 
         <section className="reviews-hero">
           <h1>Reviews</h1>
-          <p>Real people. Real reviews. Approved before publishing.</p>
+          <p>Real people. Real reviews.</p>
 
           <div className="reviews-summary">
             <StarRating value={Number(summary?.avgRating ?? 0) || 0} readOnly size="lg" label="Average rating" showValue countText={`${Number(summary?.count ?? 0) || 0} review${Number(summary?.count ?? 0) === 1 ? '' : 's'}`} />
@@ -323,11 +315,6 @@ export default function ReviewsPage() {
           </div>
 
           {mineError ? <div className="reviews-status reviews-status--error">{mineError.message ?? 'Failed to load your review.'}</div> : null}
-          {mine && mine.approved === false ? (
-            <div className="reviews-status reviews-status--pending">
-              Your latest review is pending approval.
-            </div>
-          ) : null}
         </section>
 
         {isAuthed && showForm && (
@@ -420,8 +407,21 @@ export default function ReviewsPage() {
               <div className="reviews-grid">
                 {(Array.isArray(items) ? items : []).map((r) => (
                   <figure key={r.id} className="reviews-card">
-                    <div className="reviews-cardTop">
-                      <StarRating value={Number(r.rating ?? 0) || 0} readOnly size="sm" label="Review rating" />
+                    <div className="reviews-cardHeader">
+                      <div className="reviews-person">
+                        {r.author_avatar_url ? (
+                          <img className="reviews-avatar reviews-cardAvatar" src={String(r.author_avatar_url)} alt="" loading="lazy" />
+                        ) : (
+                          <div className="reviews-avatar reviews-avatar--fallback reviews-cardAvatar" aria-hidden="true">
+                            {initialsFromName(r.author_name)}
+                          </div>
+                        )}
+                        <div className="reviews-personMeta">
+                          <div className="reviews-name">{String(r.author_name ?? 'Member')}</div>
+                          {r.author_title ? <div className="reviews-titleLine">{String(r.author_title)}</div> : null}
+                        </div>
+                      </div>
+
                       {r.platform ? (
                         <div className="reviews-badge">
                           {r.platform_url ? (
@@ -437,19 +437,12 @@ export default function ReviewsPage() {
 
                     <blockquote className="reviews-quote">{String(r.quote ?? '')}</blockquote>
 
-                    <figcaption className="reviews-who">
-                      {r.author_avatar_url ? (
-                        <img className="reviews-avatar" src={String(r.author_avatar_url)} alt="" loading="lazy" />
-                      ) : (
-                        <div className="reviews-avatar reviews-avatar--fallback" aria-hidden="true">
-                          {initialsFromName(r.author_name)}
-                        </div>
-                      )}
-                      <div className="reviews-meta">
-                        <div className="reviews-name">{String(r.author_name ?? 'Member')}</div>
-                        {r.author_title ? <div className="reviews-titleLine">{String(r.author_title)}</div> : null}
+                    <div className="reviews-cardFooter">
+                      <StarRating value={Number(r.rating ?? 0) || 0} readOnly size="md" label="Review rating" />
+                      <div className="reviews-ratingPill" aria-hidden="true">
+                        {Number(r.rating ?? 0) || 0}/5
                       </div>
-                    </figcaption>
+                    </div>
                   </figure>
                 ))}
               </div>

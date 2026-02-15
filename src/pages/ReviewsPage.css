@@ -263,10 +263,20 @@
   margin: 0;
   padding: 16px 16px;
   border-radius: 18px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.88));
-  border: 1px solid rgba(45, 52, 54, 0.12);
+  border: 1px solid transparent;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.84)) padding-box,
+    conic-gradient(
+      from 200deg,
+      rgba(37, 99, 235, 0.55),
+      rgba(78, 205, 196, 0.45),
+      rgba(245, 158, 11, 0.38),
+      rgba(168, 85, 247, 0.38),
+      rgba(37, 99, 235, 0.55)
+    ) border-box;
   box-shadow:
     0 18px 55px rgba(0, 0, 0, 0.10),
+    0 24px 90px rgba(37, 99, 235, 0.08),
     0 1px 0 rgba(255, 255, 255, 0.50) inset;
   display: flex;
   flex-direction: column;
@@ -286,10 +296,32 @@
   position: absolute;
   inset: -2px;
   background:
-    radial-gradient(600px 160px at 20% 0%, rgba(37, 99, 235, 0.12), transparent 55%),
-    radial-gradient(600px 160px at 80% 0%, rgba(78, 205, 196, 0.12), transparent 55%);
-  opacity: 0.65;
+    radial-gradient(520px 220px at 12% 0%, rgba(37, 99, 235, 0.18), transparent 56%),
+    radial-gradient(520px 220px at 92% 0%, rgba(78, 205, 196, 0.16), transparent 56%),
+    radial-gradient(560px 220px at 40% 110%, rgba(168, 85, 247, 0.12), transparent 55%);
+  opacity: 0.85;
   pointer-events: none;
+}
+
+.reviews-card::after {
+  content: '';
+  position: absolute;
+  top: -40%;
+  left: -60%;
+  width: 160%;
+  height: 120%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.00) 35%,
+    rgba(255, 255, 255, 0.44) 50%,
+    rgba(255, 255, 255, 0.00) 65%,
+    transparent 100%
+  );
+  transform: rotate(10deg);
+  opacity: 0.0;
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 420ms ease;
 }
 
 .reviews-card > * {
@@ -299,17 +331,56 @@
 
 .reviews-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(37, 99, 235, 0.20);
   box-shadow:
     0 26px 80px rgba(0, 0, 0, 0.14),
+    0 34px 120px rgba(37, 99, 235, 0.10),
     0 1px 0 rgba(255, 255, 255, 0.55) inset;
 }
 
-.reviews-cardTop {
+.reviews-card:hover::after {
+  opacity: 0.75;
+  transform: translateX(18%) rotate(10deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reviews-card,
+  .reviews-card::after {
+    transition: none;
+  }
+
+  .reviews-card:hover {
+    transform: none;
+  }
+}
+
+.reviews-cardHeader {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 10px;
+}
+
+.reviews-person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.reviews-personMeta {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.reviews-cardAvatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  border: 1px solid rgba(37, 99, 235, 0.20);
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.14),
+    0 0 0 6px rgba(37, 99, 235, 0.06);
 }
 
 .reviews-badge {
@@ -319,11 +390,13 @@
   font-size: 12px;
   letter-spacing: -0.01em;
   color: rgba(30, 41, 59, 0.92);
-  background: rgba(148, 163, 184, 0.14);
-  border: 1px solid rgba(148, 163, 184, 0.22);
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(37, 99, 235, 0.18);
   padding: 6px 10px;
   border-radius: 999px;
   width: fit-content;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
 }
 
 .reviews-badgeLink {
@@ -337,34 +410,54 @@
 
 .reviews-quote {
   color: rgba(18, 22, 24, 0.92);
-  font-weight: 780;
+  font-weight: 820;
   line-height: 1.55;
   letter-spacing: -0.01em;
   margin: 0;
   position: relative;
+  font-size: 1.02rem;
 }
 
 .reviews-quote::before {
   content: '“';
   position: absolute;
-  left: -8px;
+  left: -10px;
   top: -14px;
   font-size: 44px;
   font-weight: 1000;
-  color: rgba(37, 99, 235, 0.16);
+  color: rgba(37, 99, 235, 0.18);
 }
 
-.reviews-who {
+.reviews-cardFooter {
+  margin-top: auto;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
-  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid rgba(45, 52, 54, 0.08);
+}
+
+.reviews-ratingPill {
+  font-weight: 1000;
+  letter-spacing: -0.01em;
+  color: rgba(30, 41, 59, 0.90);
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-variant-numeric: tabular-nums;
 }
 
 .reviews-name {
   font-weight: 1000;
   color: var(--text-primary);
   letter-spacing: -0.01em;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  word-break: break-word;
+  line-height: 1.15;
 }
 
 .reviews-titleLine {

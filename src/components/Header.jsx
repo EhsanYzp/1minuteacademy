@@ -244,9 +244,6 @@ function Header() {
         <Link to="/faq" className="nav-item link" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
           FAQ
         </Link>
-        <Link to="/reviews" className="nav-item link" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
-          Reviews
-        </Link>
         {user ? (
           <>
             <Link to="/me" className="nav-item link" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>

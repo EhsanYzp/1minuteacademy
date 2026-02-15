@@ -39,7 +39,6 @@ export async function listApprovedReviews({ page = 1, pageSize = 12 } = {}) {
   const { data, error, count } = await supabase
     .from('testimonials')
     .select('id, author_name, author_avatar_url, author_title, quote, rating, platform, platform_url, created_at', { count: 'exact' })
-    .eq('approved', true)
     .order('created_at', { ascending: false })
     .range(from, to);
 
