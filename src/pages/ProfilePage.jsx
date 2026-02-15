@@ -14,7 +14,6 @@ import { deleteAccount, pauseAccount, resumeAccount } from '../services/account'
 import { getMyProfile, updateMyProfile, uploadMyAvatar } from '../services/profiles';
 import StarRating from '../components/StarRating';
 import { listMyTopicRatings, setMyTopicRating } from '../services/ratings';
-import OneMAIcon from '../components/OneMAIcon';
 import {
   buildPresentationStyleOptions,
   canChoosePresentationStyle,
@@ -23,6 +22,29 @@ import {
   saveStoryPresentationStyle,
 } from '../services/presentationStyle';
 import './ProfilePage.css';
+
+const EXPERT_BADGES = [
+  { minutes: 1, emoji: '🌱', name: '1‑Minute Expert' },
+  { minutes: 10, emoji: '⚡️', name: '10‑Minute Expert' },
+  { minutes: 60, emoji: '⏱️', name: '60‑Minute Expert' },
+  { minutes: 1000, emoji: '🏅', name: '1,000‑Minute Expert' },
+  { minutes: 1_000_000, emoji: '👑', name: '1,000,000‑Minute Legend' },
+];
+
+function formatMinuteExpert(minutes) {
+  const n = Math.max(0, Math.floor(Number(minutes) || 0));
+  return `${n}-minute Expert`;
+}
+
+function getUnlockedBadges(minutes) {
+  const n = Math.max(0, Math.floor(Number(minutes) || 0));
+  return EXPERT_BADGES.filter((b) => n >= b.minutes);
+}
+
+function getNextBadge(minutes) {
+  const n = Math.max(0, Math.floor(Number(minutes) || 0));
+  return EXPERT_BADGES.find((b) => b.minutes > n) ?? null;
+}
 
 function fmtDate(iso) {
   if (!iso) return '—';
@@ -145,7 +167,7 @@ export default function ProfilePage() {
   const [checkoutBannerText, setCheckoutBannerText] = useState('');
   const [checkoutProgress, setCheckoutProgress] = useState(null); // { elapsedMs: number, maxMs: number } | null
 
-  const [stats, setStats] = useState({ one_ma_balance: 0, streak: 0, last_completed_date: null });
+  const [stats, setStats] = useState({ expert_minutes: 0, streak: 0, last_completed_date: null });
   const [progressRows, setProgressRows] = useState([]);
   const [topics, setTopics] = useState([]);
   const [topicCategoryCounts, setTopicCategoryCounts] = useState({});
@@ -832,7 +854,7 @@ export default function ProfilePage() {
         return 'Manage your plan, billing, and account.';
       case 'overview':
       default:
-        return 'Track your 1MA minutes (minutes completed), streak, and completed topics.';
+        return 'Track your Minute Expert level, streak, and completed topics.';
     }
   }, [activeTab]);
 
@@ -930,12 +952,15 @@ export default function ProfilePage() {
                   <div className="profile-stats">
                     <div className="profile-stat">
                       <div className="profile-stat-label">
-                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-                          <OneMAIcon size={16} />
-                          1MA minutes
-                        </span>
+                        Minute Expert
                       </div>
-                      <div className="profile-stat-value">{Number(stats?.one_ma_balance ?? 0)}</div>
+                      <div className="profile-stat-value">{Number(stats?.expert_minutes ?? 0) || 0}</div>
+                      <div className="profile-stat-sub">{formatMinuteExpert(Number(stats?.expert_minutes ?? 0) || 0)}</div>
+                      {tier !== 'pro' && (
+                        <div className="profile-stat-sub" style={{ opacity: 0.85, marginTop: 6 }}>
+                          Pro feature — upgrade to start earning expert minutes and badges.
+                        </div>
+                      )}
                     </div>
                     <div className="profile-stat">
                       <div className="profile-stat-label">🔥 Streak</div>
@@ -947,17 +972,37 @@ export default function ProfilePage() {
                     </div>
                   </div>
 
-                  {tier !== 'pro' && contentSource !== 'local' && (
-                    <div className="profile-note" style={{ margin: '12px 0 0' }}>
-                      <strong>Unlock 1MA minutes with Pro</strong>
-                      <div className="profile-note-row">
-                        <div>
-                          Pro members earn <strong>+1</strong> to their <strong>1MA minutes</strong> each time they complete a module.
+                  <div className="profile-badges" aria-label="Badges">
+                    <div className="profile-badges-title">Badges</div>
+                    <div className="profile-badges-row">
+                      {getUnlockedBadges(Number(stats?.expert_minutes ?? 0) || 0).length > 0 ? (
+                        getUnlockedBadges(Number(stats?.expert_minutes ?? 0) || 0).map((b) => (
+                          <div key={b.minutes} className="profile-badge" title={b.name}>
+                            <span className="profile-badge-emoji" aria-hidden="true">{b.emoji}</span>
+                            <span className="profile-badge-name">{b.name}</span>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="profile-badges-empty">
+                          {tier === 'pro'
+                            ? 'Complete your first minute to unlock your first badge.'
+                            : 'Upgrade to Pro to start unlocking badges.'}
                         </div>
-                        <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
-                      </div>
+                      )}
                     </div>
-                  )}
+
+                    {(() => {
+                      const next = getNextBadge(Number(stats?.expert_minutes ?? 0) || 0);
+                      if (!next) return null;
+                      const have = Number(stats?.expert_minutes ?? 0) || 0;
+                      const remaining = Math.max(0, next.minutes - have);
+                      return (
+                        <div className="profile-badges-next">
+                          Next badge: <strong>{next.name}</strong> in <strong>{remaining}</strong> minute(s).
+                        </div>
+                      );
+                    })()}
+                  </div>
                 </>
               )}
 
@@ -965,7 +1010,7 @@ export default function ProfilePage() {
                 <>
                   <div className="profile-section-header profile-section-header-spaced">
                     <h2>Public profile</h2>
-                    <div className="profile-section-sub">Shown on your reviews (after approval).</div>
+                    <div className="profile-section-sub">Shown on your reviews.</div>
                   </div>
 
                   <div className="profile-note" style={{ marginBottom: 12 }}>

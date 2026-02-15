@@ -44,7 +44,7 @@ function includesQuery(topic, q) {
   return hay.includes(q.toLowerCase());
 }
 
-const DIFFICULTY_FILTERS = ['all', 'beginner', 'intermediate', 'advanced'];
+const DIFFICULTY_FILTERS = ['all', 'beginner', 'intermediate', 'advanced', 'premium'];
 
 export default function TopicsBrowserPage() {
   const { user, isSupabaseConfigured } = useAuth();
@@ -65,7 +65,7 @@ export default function TopicsBrowserPage() {
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [filter, setFilter] = useState('all'); // all | completed | new
-  const [difficultyFilter, setDifficultyFilter] = useState('all'); // all | beginner | intermediate | advanced
+  const [difficultyFilter, setDifficultyFilter] = useState('all'); // all | beginner | intermediate | advanced | premium
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -672,6 +672,7 @@ export default function TopicsBrowserPage() {
                     <option value="beginner">Beginner</option>
                     <option value="intermediate">Intermediate</option>
                     <option value="advanced">Advanced</option>
+                    <option value="premium">Premium</option>
                   </select>
                 </div>
 

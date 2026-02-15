@@ -57,14 +57,25 @@ export function isBeginnerTopic(topicRow) {
   return difficulty.toLowerCase() === 'beginner';
 }
 
+export function isPremiumTopic(topicRow) {
+  const difficulty = String(topicRow?.difficulty ?? 'Beginner');
+  return difficulty.toLowerCase() === 'premium';
+}
+
 export function isProOnlyTopic(topicRow) {
+  // Premium is Pro-only. Intermediate/Advanced are also Pro-only.
+  if (isPremiumTopic(topicRow)) return true;
   return !isBeginnerTopic(topicRow);
 }
 
-export function getTopicGate({ tier, topicRow }) {
+export function getTopicGate({ tier, topicRow, expertMinutes = 0 }) {
   if (tier === 'paused') {
     return { locked: true, reason: 'paused', label: 'Account paused' };
   }
+
+  // expertMinutes is intentionally not used for access. Minute Expert + badges are Pro-only,
+  // and Premium topics remain Pro-only.
+  void expertMinutes;
 
   if (tier === 'pro') {
     return { locked: false, reason: null, label: null };
@@ -77,8 +88,8 @@ export function getTopicGate({ tier, topicRow }) {
   return { locked: false, reason: null, label: null };
 }
 
-export function canStartTopic({ tier, topicRow }) {
-  return !getTopicGate({ tier, topicRow })?.locked;
+export function canStartTopic({ tier, topicRow, expertMinutes = 0 }) {
+  return !getTopicGate({ tier, topicRow, expertMinutes })?.locked;
 }
 
 export function canTrackProgress(tier) {

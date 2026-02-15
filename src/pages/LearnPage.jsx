@@ -5,7 +5,7 @@ import { FiArrowRight, FiCompass, FiRefreshCw, FiShuffle, FiX } from 'react-icon
 import Header from '../components/Header';
 import Seo from '../components/Seo';
 import { listTopics, listTopicsPage } from '../services/topics';
-import { listUserTopicProgress } from '../services/progress';
+import { getUserStats, listUserTopicProgress } from '../services/progress';
 import { canStartTopic, canTrackProgress, getCurrentTier } from '../services/entitlements';
 import { useAuth } from '../context/AuthContext';
 import './LearnPage.css';
@@ -132,13 +132,13 @@ async function getCompletedTopicIds({ enabled }) {
   return completed;
 }
 
-async function pickRandomTopic({ tier, includeCompleted }) {
+async function pickRandomTopic({ tier, includeCompleted, expertMinutes = 0 }) {
   let recentIds = new Set(readRecentRandomIds());
   const completedIds = await getCompletedTopicIds({ enabled: !includeCompleted && canTrackProgress(tier) });
 
   const tryCandidate = (topicRow) => {
     if (!topicRow?.id) return false;
-    if (!canStartTopic({ tier, topicRow })) return false;
+    if (!canStartTopic({ tier, topicRow, expertMinutes })) return false;
     const id = String(topicRow.id);
     if (!includeCompleted && completedIds.has(id)) return false;
     if (recentIds.has(id)) return false;
@@ -235,6 +235,8 @@ function LearnPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const tier = getCurrentTier(user);
+  const [expertMinutes, setExpertMinutes] = useState(0);
+  const [expertMinutes, setExpertMinutes] = useState(0);
 
   const [includeCompleted, setIncludeCompleted] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -253,6 +255,56 @@ function LearnPage() {
     ],
     []
   );
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!user) {
+      setExpertMinutes(0);
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    const run = async () => {
+      try {
+        const s = await getUserStats();
+        if (cancelled) return;
+        setExpertMinutes(Number(s?.expert_minutes ?? 0) || 0);
+      } catch {
+        if (!cancelled) setExpertMinutes(0);
+      }
+    };
+
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, [user]);
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!user) {
+      setExpertMinutes(0);
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    const run = async () => {
+      try {
+        const s = await getUserStats();
+        if (cancelled) return;
+        setExpertMinutes(Number(s?.expert_minutes ?? 0) || 0);
+      } catch {
+        if (!cancelled) setExpertMinutes(0);
+      }
+    };
+
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, [user]);
 
   useEffect(() => {
     if (!overlayOpen) return;
@@ -280,7 +332,7 @@ function LearnPage() {
 
     try {
       const [topic, reelPage] = await Promise.all([
-        pickRandomTopic({ tier, includeCompleted }),
+        pickRandomTopic({ tier, includeCompleted, expertMinutes }),
         (async () => {
           try {
             const totalProbe = await listTopicsPage({ limit: 1, offset: 0 });
@@ -546,7 +598,7 @@ import { FiArrowRight, FiCompass, FiRefreshCw, FiShuffle, FiX } from 'react-icon
 import Header from '../components/Header';
 import Seo from '../components/Seo';
 import { listTopics, listTopicsPage } from '../services/topics';
-import { listUserTopicProgress } from '../services/progress';
+import { getUserStats, listUserTopicProgress } from '../services/progress';
 import { canStartTopic, canTrackProgress, getCurrentTier } from '../services/entitlements';
 import { useAuth } from '../context/AuthContext';
 import './LearnPage.css';
@@ -673,13 +725,13 @@ async function getCompletedTopicIds({ enabled }) {
   return completed;
 }
 
-async function pickRandomTopic({ tier, includeCompleted }) {
+async function pickRandomTopic({ tier, includeCompleted, expertMinutes = 0 }) {
   let recentIds = new Set(readRecentRandomIds());
   const completedIds = await getCompletedTopicIds({ enabled: !includeCompleted && canTrackProgress(tier) });
 
   const tryCandidate = (topicRow) => {
     if (!topicRow?.id) return false;
-    if (!canStartTopic({ tier, topicRow })) return false;
+    if (!canStartTopic({ tier, topicRow, expertMinutes })) return false;
     const id = String(topicRow.id);
     if (!includeCompleted && completedIds.has(id)) return false;
     if (recentIds.has(id)) return false;
@@ -781,7 +833,7 @@ function LearnPage() {
 
     try {
       const [topic, reelPage] = await Promise.all([
-        pickRandomTopic({ tier, includeCompleted }),
+        pickRandomTopic({ tier, includeCompleted, expertMinutes }),
         (async () => {
           try {
             const totalProbe = await listTopicsPage({ limit: 1, offset: 0 });

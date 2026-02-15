@@ -41,7 +41,7 @@ function normalizeTopic(topicRow, topicId) {
     learningPoints:
       learningPoints.length > 0
         ? learningPoints
-        : ['⏱️ Designed to fit in 60 seconds', '🎮 Interactive story + quiz', '🪙 Finish and add +1 minute (1MA, Pro)'],
+        : ['⏱️ Designed to fit in 60 seconds', '🎮 Interactive story + quiz', '🏅 Finish and add +1 expert minute (Pro)'],
     funFact: 'Each lesson here is tuned to fit in one minute!',
   };
 }
@@ -226,7 +226,10 @@ function TopicPage() {
 
   const isCompleted = Number(completedCount) > 0;
   const beginner = useMemo(() => isBeginnerTopic(topicRow ?? fallbackTopics[topicId]), [topicRow, topicId]);
-  const canStart = useMemo(() => canStartTopic({ tier, topicRow: topicRow ?? fallbackTopics[topicId] }), [tier, topicRow, topicId]);
+  const canStart = useMemo(
+    () => canStartTopic({ tier, topicRow: topicRow ?? fallbackTopics[topicId] }),
+    [tier, topicRow, topicId]
+  );
   const canUseReview = canReview(tier);
 
   const topicGate = useMemo(

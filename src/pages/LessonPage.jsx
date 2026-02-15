@@ -7,13 +7,12 @@ import Seo from '../components/Seo';
 import Timer from '../components/Timer';
 import { StoryRenderer, StoryReview } from '../engine/story';
 import { getTopic } from '../services/topics';
-import { completeTopic } from '../services/progress';
+import { completeTopic, getUserStats } from '../services/progress';
 import { getContentSource } from '../services/_contentSource';
 import { useAuth } from '../context/AuthContext';
 import { canReview, canStartTopic, canTrackProgress, formatTierLabel, getCurrentTier } from '../services/entitlements';
 import StarRating from '../components/StarRating';
 import { getMyTopicRating, setMyTopicRating } from '../services/ratings';
-import OneMAIcon from '../components/OneMAIcon';
 import { compileJourneyFromTopic } from '../engine/journey/compileJourney';
 import JourneyBlocks from '../engine/journey/JourneyBlocks';
 import {
@@ -38,7 +37,33 @@ function LessonPage() {
   const contentSource = getContentSource();
   const { user } = useAuth();
   const tier = getCurrentTier(user);
+  const [expertMinutes, setExpertMinutes] = useState(0);
   const canUseReview = canReview(tier);
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!user && contentSource !== 'local') {
+      setExpertMinutes(0);
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    const run = async () => {
+      try {
+        const s = await getUserStats();
+        if (cancelled) return;
+        setExpertMinutes(Number(s?.expert_minutes ?? 0) || 0);
+      } catch {
+        if (!cancelled) setExpertMinutes(0);
+      }
+    };
+
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, [user, contentSource]);
   const canSaveProgress = canTrackProgress(tier);
   const canAttemptSaveProgress = canSaveProgress && Boolean(user);
   const [isStarted, setIsStarted] = useState(true);
@@ -71,7 +96,7 @@ function LessonPage() {
     else blocker.reset?.();
   }, [blocker]);
 
-  const canStart = useMemo(() => canStartTopic({ tier, topicRow }), [tier, topicRow]);
+  const canStart = useMemo(() => canStartTopic({ tier, topicRow, expertMinutes }), [tier, topicRow, expertMinutes]);
 
   // Fixed 60 seconds for story-based lessons
   const totalSeconds = 60;
@@ -181,12 +206,12 @@ function LessonPage() {
             <span className="stat-value">
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-                  <OneMAIcon size={18} />
-                  <span>+{Number(completionResult?.awarded_one_ma ?? 0) || 0}</span>
+                  <span aria-hidden="true">⏱️</span>
+                  <span>+{Number(completionResult?.awarded_minutes ?? 0) || 0}</span>
                 </span>
               </span>
             </span>
-            <span className="stat-label">1MA Minutes</span>
+            <span className="stat-label">Expert minutes</span>
           </div>
           <div className="stat">
             <span className="stat-value">🔥 {completionResult?.streak ?? '—'}</span>
@@ -195,22 +220,19 @@ function LessonPage() {
         </div>
       ),
       renderProPerkPanel: () => (
-        tier !== 'pro' ? (
+        !user ? (
           <div className="completion-panel" style={{ marginTop: 12 }}>
             <p style={{ margin: 0 }}>
-              <strong>Pro perk:</strong> each completed module adds <strong>+1</strong> to your <strong>1MA minutes</strong>.
-            </p>
-            <p style={{ margin: '8px 0 0', opacity: 0.85 }}>
-              Your 1MA minutes equal the number of minutes you’ve completed on the platform.
+              Sign in to track your progress, Minute Expert level, and badges.
             </p>
             <div style={{ marginTop: 10, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-              <button onClick={() => navigate('/upgrade')}>Unlock 1MA minutes (Pro)</button>
+              <button onClick={() => navigate('/login')}>Sign in</button>
             </div>
           </div>
         ) : null
       ),
       renderOneMaAwardPanel: () => (
-        tier === 'pro' && completionResult && Number(completionResult?.awarded_one_ma ?? 0) > 0 ? (
+        user && completionResult && Number(completionResult?.awarded_minutes ?? 0) > 0 ? (
           <motion.div
             className="completion-panel"
             initial={{ scale: 0.98, opacity: 0 }}
@@ -219,19 +241,21 @@ function LessonPage() {
             style={{ marginTop: 12 }}
           >
             <p style={{ margin: 0, display: 'flex', alignItems: 'center', gap: 8 }}>
-              <OneMAIcon size={18} />
-              <strong>+1</strong> added to your 1MA minutes.
+              <span aria-hidden="true">⏱️</span>
+              <strong>+1</strong> added to your Minute Expert.
             </p>
             <p style={{ margin: '8px 0 0', opacity: 0.85 }}>
-              Total 1MA minutes: <strong>{Number(completionResult?.one_ma_balance ?? 0)}</strong>
+              Total expert minutes: <strong>{Number(completionResult?.expert_minutes ?? 0)}</strong>
             </p>
           </motion.div>
         ) : null
       ),
       renderCompletionProgress: () => (
         <div className="completion-panel completion-progress">
-          {!canSaveProgress || !user ? (
+          {!user ? (
             <p style={{ margin: 0 }}>✅ Completed. Sign in to track progress.</p>
+          ) : !canSaveProgress ? (
+            <p style={{ margin: 0 }}>✅ Completed. Progress tracking is disabled for your account.</p>
           ) : submittingCompletion ? (
             <p style={{ margin: 0 }}>Saving your progress…</p>
           ) : completionError ? (

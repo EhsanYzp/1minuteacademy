@@ -179,7 +179,7 @@ export default function UpgradePage() {
     <motion.div className="upgrade-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Seo
         title="Pricing"
-        description="Guest and Free let you start. Pro unlocks advanced topics, review mode, and more lesson styles."
+        description="Guest and Free let you start. Pro unlocks all topics (including Premium), review mode, Minute Expert + badges, and more lesson styles."
         path={location?.pathname || '/pricing'}
         canonicalPath="/pricing"
       />
@@ -270,11 +270,12 @@ export default function UpgradePage() {
                 <ul className="tier-bullets">
                   <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>All modules (not just Beginner)</span></li>
                   <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Surprise shuffle across all modules</span></li>
+                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Premium topics</span></li>
                   <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Review mode (no timer)</span></li>
+                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Minute Expert + badges</span></li>
                   <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>All lesson presentation styles</span></li>
                   <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Progress tracking</span></li>
                   <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Rate modules with stars</span></li>
-                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Earn +1 minute (1MA) per completion</span></li>
                 </ul>
                 <div className="tier-actions">
                   {tier === 'pro' ? (
@@ -333,7 +334,14 @@ export default function UpgradePage() {
                   </tr>
 
                   <tr>
-                    <th scope="row" className="compare-feature">1MA minutes (1 minute per completion)</th>
+                    <th scope="row" className="compare-feature">Minute Expert + badges</th>
+                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                  </tr>
+
+                  <tr>
+                    <th scope="row" className="compare-feature">Premium topics</th>
                     <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
                     <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
                     <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
@@ -370,7 +378,7 @@ export default function UpgradePage() {
 
           <div className="upgrade-section upgrade-section-spaced">
             <div className="upgrade-section-title">Pick a Pro plan</div>
-            <div className="upgrade-section-sub">Cancel anytime in Stripe Portal. Pro unlocks advanced modules, review mode, ratings, extra lesson presentation styles, and 1MA minutes (your minutes completed).</div>
+            <div className="upgrade-section-sub">Cancel anytime in Stripe Portal. Pro unlocks Premium + advanced modules, Minute Expert + badges, review mode, ratings, and extra lesson presentation styles.</div>
           </div>
 
           <div className="upgrade-grid" id="pro-plans">
@@ -379,10 +387,11 @@ export default function UpgradePage() {
               <div className="plan-price">{DEFAULT_PRICE_MONTH}<span className="plan-sub">/month</span></div>
               <ul className="plan-bullets">
                 <li>All modules (not just Beginner)</li>
+                <li>Premium topics</li>
+                <li>Minute Expert + badges</li>
                 <li>Review mode (no timer)</li>
                 <li>Progress tracking</li>
                 <li>Rate modules with stars</li>
-                <li>Earn +1 minute (1MA) per completion</li>
               </ul>
               <button
                 className="plan-cta"

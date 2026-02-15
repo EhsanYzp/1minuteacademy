@@ -22,7 +22,12 @@ export async function getUserStats() {
 
   // When row doesn't exist yet, PostgREST can return 406; treat as empty
   if (error && error.code !== 'PGRST116') throw error;
-  return data ?? { one_ma_balance: 0, streak: 0, last_completed_date: null };
+  const row = data ?? { one_ma_balance: 0, streak: 0, last_completed_date: null };
+  return {
+    expert_minutes: Number(row?.one_ma_balance ?? 0) || 0,
+    streak: Number(row?.streak ?? 0) || 0,
+    last_completed_date: row?.last_completed_date ?? null,
+  };
 }
 
 export async function completeTopic({ topicId, seconds = 60 }) {
@@ -40,7 +45,11 @@ export async function completeTopic({ topicId, seconds = 60 }) {
 
   // Supabase returns an array for table returns
   const row = Array.isArray(data) ? data[0] : data;
-  return row;
+  return {
+    expert_minutes: Number(row?.one_ma_balance ?? 0) || 0,
+    streak: Number(row?.streak ?? 0) || 0,
+    awarded_minutes: Number(row?.awarded_one_ma ?? 0) || 0,
+  };
 }
 
 export async function listUserTopicProgress() {

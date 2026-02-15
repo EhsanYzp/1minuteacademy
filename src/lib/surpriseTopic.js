@@ -57,13 +57,13 @@ async function getCompletedTopicIds({ enabled }) {
   return completed;
 }
 
-export async function pickRandomEligibleTopic({ tier, includeCompleted = false, avoidRecent = true }) {
+export async function pickRandomEligibleTopic({ tier, includeCompleted = false, avoidRecent = true, expertMinutes = 0 }) {
   let recentIds = new Set(avoidRecent ? readRecentRandomIds() : []);
   const completedIds = await getCompletedTopicIds({ enabled: !includeCompleted && canTrackProgress(tier) });
 
   const tryCandidate = (topicRow) => {
     if (!topicRow?.id) return false;
-    if (!canStartTopic({ tier, topicRow })) return false;
+    if (!canStartTopic({ tier, topicRow, expertMinutes })) return false;
     const id = String(topicRow.id);
     if (!includeCompleted && completedIds.has(id)) return false;
     if (avoidRecent && recentIds.has(id)) return false;

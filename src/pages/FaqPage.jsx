@@ -44,31 +44,36 @@ export default function FaqPage() {
               <ul>
                 <li><strong>Guest:</strong> Beginner topics only, no progress tracking.</li>
                 <li><strong>Free account:</strong> Beginner topics + progress tracking (sign in required).</li>
-                <li><strong>Pro:</strong> All topics + review mode + 1MA minutes.</li>
+                <li><strong>Pro:</strong> All topics + review mode.</li>
               </ul>
               <p>
                 See the full comparison on the Pricing page.
               </p>
             </FaqItem>
 
-            <FaqItem q="What are 1MA minutes?">
+            <FaqItem q="What is Minute Expert?">
               <p>
-                <strong>1MA minutes</strong> are a simple collectible that tracks how many one-minute modules you’ve completed.
-                Think of it as “minutes completed on the platform”.
+                <strong>Minute Expert</strong> is your minutes expertise level.
+                On <strong>Pro</strong>, every time you finish a one-minute module, you earn <strong>+1 expert minute</strong>.
+                Example: finish 60 modules → you’re a <strong>60-minute Expert</strong>.
               </p>
             </FaqItem>
 
-            <FaqItem q="How do I earn 1MA minutes?">
+            <FaqItem q="How do I earn expert minutes and badges?">
               <p>
-                Each completed module adds <strong>+1 minute (1MA)</strong> to your balance — <strong>Pro-only</strong>.
-                Free and Guest users can still complete modules, but they don’t earn 1MA minutes.
+                On <strong>Pro</strong>, each completed module adds <strong>+1</strong> to your expert minutes.
+                As your expert minutes grow, you unlock badges at milestones (like <strong>1</strong>, <strong>10</strong>, <strong>60</strong>, and beyond).
               </p>
             </FaqItem>
 
             <FaqItem q="Why are some topics locked?">
               <p>
-                Topics above <strong>Beginner</strong> are Pro-only. We use the topic’s difficulty to determine access.
+                Some topics are locked based on difficulty:
               </p>
+              <ul>
+                <li><strong>Intermediate/Advanced:</strong> Pro-only.</li>
+                <li><strong>Premium:</strong> Pro-only.</li>
+              </ul>
             </FaqItem>
 
             <FaqItem q="Can I review a lesson after the timer ends?">

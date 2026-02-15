@@ -6,7 +6,7 @@ function getDevTier() {
   try {
     const raw = localStorage.getItem(DEV_TIER_KEY);
     const v = String(raw ?? '').toLowerCase();
-    if (v === 'guest' || v === 'free' || v === 'pro') return v;
+    if (v === 'guest' || v === 'free' || v === 'pro' || v === 'paused') return v;
   } catch {
     // ignore
   }
@@ -20,15 +20,16 @@ function todayISO() {
 function readStats() {
   try {
     const raw = localStorage.getItem(STATS_KEY);
-    if (!raw) return { one_ma_balance: 0, streak: 0, last_completed_date: null };
+    if (!raw) return { expert_minutes: 0, streak: 0, last_completed_date: null };
     const parsed = JSON.parse(raw);
     return {
-      one_ma_balance: Number(parsed.one_ma_balance ?? parsed.xp ?? 0),
+      // Back-compat: older keys stored one_ma_balance (or xp).
+      expert_minutes: Number(parsed.expert_minutes ?? parsed.one_ma_balance ?? parsed.xp ?? 0),
       streak: Number(parsed.streak ?? 0),
       last_completed_date: parsed.last_completed_date ?? null,
     };
   } catch {
-    return { one_ma_balance: 0, streak: 0, last_completed_date: null };
+    return { expert_minutes: 0, streak: 0, last_completed_date: null };
   }
 }
 
@@ -82,11 +83,13 @@ export async function completeLocalTopic({ topicId, seconds = 60 }) {
     streak = last === yesterday ? streak + 1 : 1;
   }
 
+  // Expert minutes are Pro-only. Guest/Free/Paused do not earn.
+  // (Local Preview uses localStorage only; this is just for dev/testing.)
   const tier = getDevTier();
-  const awarded_one_ma = tier === 'pro' ? 1 : 0;
+  const awarded_minutes = tier === 'pro' ? 1 : 0;
 
   const next = {
-    one_ma_balance: (stats.one_ma_balance ?? 0) + awarded_one_ma,
+    expert_minutes: (stats.expert_minutes ?? 0) + awarded_minutes,
     streak,
     last_completed_date: today,
   };
@@ -112,5 +115,5 @@ export async function completeLocalTopic({ topicId, seconds = 60 }) {
     writeTopicProgress(map);
   }
 
-  return { one_ma_balance: next.one_ma_balance, streak: next.streak, awarded_one_ma };
+  return { expert_minutes: next.expert_minutes, streak: next.streak, awarded_minutes };
 }

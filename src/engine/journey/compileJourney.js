@@ -48,7 +48,7 @@ export function compileJourneyFromTopic(topicRow) {
       ? topicRow.description.trim()
       : 'No description yet.';
 
-  const learningItems = ['⏱️ Designed to fit in 60 seconds', '🎮 Interactive story + quiz', '🪙 Finish and add +1 minute (1MA, Pro)'];
+  const learningItems = ['⏱️ Designed to fit in 60 seconds', '🎮 Interactive story + quiz', '🏅 Finish and add +1 expert minute (Pro)'];
 
   return {
     version: 1,

@@ -8,6 +8,7 @@ function SubjectCard({ subject, gate }) {
   const hasRating = Number(ratingCount ?? 0) > 0 && Number.isFinite(Number(ratingAvg));
   const isLocked = Boolean(gate?.locked);
   const lockLabel = String(gate?.label ?? 'Pro only');
+  const lockReason = String(gate?.reason ?? 'pro');
 
   return (
     <motion.div
@@ -41,7 +42,11 @@ function SubjectCard({ subject, gate }) {
 
           {isLocked && (
             <div className="locked-hint">
-              Upgrade to unlock this topic.
+              {lockReason === 'pro'
+                ? 'Upgrade to unlock this topic.'
+                : lockReason === 'paused'
+                  ? 'Your account is paused.'
+                  : 'Locked.'}
             </div>
           )}
         </div>

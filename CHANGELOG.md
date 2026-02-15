@@ -59,6 +59,8 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Profile: improved post-checkout Pro activation feedback with a progress indicator and a “taking longer than expected” hint.
 - Pricing: synced “What you get” with the comparison table (added Surprise row) and kept the table checkmark-clean by moving tier details into notes below the table.
 - Pricing: simplified the post-table notes to a single clean footnote.
+- Progress: Minute Expert minutes + milestone badges are Pro-only.
+- Topics: Premium difficulty is Pro-only.
 - Topic page: iterated on the CTA-first layout with cleaner hierarchy (title + subtitle are adjacent, beats/quiz moved into meta badges, removed repetitive chips, and restyled What you’ll get into compact checkmarked rows).
 - Database: added TTL cleanup for `api_rate_limits` (daily schedule when pg_cron is available; external cron fallback).
 - Database: added TTL cleanup for `stripe_webhook_events` (30-day retention; daily schedule when pg_cron is available).
