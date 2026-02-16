@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import * as ReactRouterDom from 'react-router-dom';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
 import Seo from '../components/Seo';
 import Timer from '../components/Timer';
 import { StoryRenderer, StoryReview } from '../engine/story';
@@ -866,7 +865,6 @@ function LessonPage() {
               ))}
             </div>
           </motion.div>
-          <Footer />
         </>
       ) : (
         <div className="lesson-container">
