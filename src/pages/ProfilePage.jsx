@@ -24,12 +24,45 @@ import {
 import './ProfilePage.css';
 
 const EXPERT_BADGES = [
-  { minutes: 1, emoji: '🌱', name: '1‑Minute Expert' },
-  { minutes: 10, emoji: '⚡️', name: '10‑Minute Expert' },
-  { minutes: 60, emoji: '⏱️', name: '60‑Minute Expert' },
-  { minutes: 1000, emoji: '🏅', name: '1,000‑Minute Expert' },
-  { minutes: 1_000_000, emoji: '👑', name: '1,000,000‑Minute Legend' },
+  { minutes: 1, emoji: '🌱', name: 'Seedling' },
+  { minutes: 2, emoji: '🪴', name: 'Sprout' },
+  { minutes: 3, emoji: '✨', name: 'Spark' },
+  { minutes: 4, emoji: '🧠', name: 'Mind Awake' },
+  { minutes: 5, emoji: '🔥', name: 'Warm‑Up' },
+  { minutes: 7, emoji: '⚙️', name: 'Momentum' },
+  { minutes: 10, emoji: '⚡️', name: 'Charged' },
+  { minutes: 12, emoji: '🧭', name: 'Explorer' },
+  { minutes: 15, emoji: '🧩', name: 'Pattern Finder' },
+  { minutes: 20, emoji: '🚀', name: 'Lift‑Off' },
+  { minutes: 25, emoji: '🎯', name: 'On Target' },
+  { minutes: 30, emoji: '🏃‍♂️', name: 'Steady Pace' },
+  { minutes: 40, emoji: '🛡️', name: 'Reliable' },
+  { minutes: 50, emoji: '💎', name: 'Polished' },
+  { minutes: 60, emoji: '⏱️', name: 'One‑Hour Expert' },
+  { minutes: 75, emoji: '🌊', name: 'Flow State' },
+  { minutes: 90, emoji: '🧪', name: 'Experimenter' },
+  { minutes: 100, emoji: '🏅', name: 'Centurion' },
+  { minutes: 125, emoji: '📚', name: 'Scholar' },
+  { minutes: 150, emoji: '🔭', name: 'Deep Focus' },
+  { minutes: 200, emoji: '🧱', name: 'Builder' },
+  { minutes: 250, emoji: '🗺️', name: 'Trailblazer' },
+  { minutes: 300, emoji: '🦾', name: 'Unstoppable' },
+  { minutes: 400, emoji: '🌟', name: 'Standout' },
+  { minutes: 500, emoji: '🎖️', name: 'Master' },
+  { minutes: 600, emoji: '🏛️', name: 'Architect' },
+  { minutes: 750, emoji: '🧬', name: 'Specialist' },
+  { minutes: 1000, emoji: '👑', name: 'Legend' },
+  { minutes: 1500, emoji: '🪐', name: 'Mythic' },
+  { minutes: 2000, emoji: '🏆', name: 'Grandmaster' },
 ];
+
+function getBadgeRarity(minutesRequired) {
+  const n = Number(minutesRequired) || 0;
+  if (n >= 1000) return 'legendary';
+  if (n >= 200) return 'epic';
+  if (n >= 50) return 'rare';
+  return 'common';
+}
 
 function formatMinuteExpert(minutes) {
   const n = Math.max(0, Math.floor(Number(minutes) || 0));
@@ -824,6 +857,7 @@ export default function ProfilePage() {
       { id: 'overview', label: 'Overview' },
       { id: 'preferences', label: 'Preferences' },
       { id: 'progress', label: 'Progress' },
+      { id: 'badges', label: 'Badges' },
       { id: 'ratings', label: 'Ratings' },
     ];
     if (contentSource !== 'local') base.push({ id: 'account', label: 'Account' });
@@ -848,6 +882,8 @@ export default function ProfilePage() {
         return 'Personalize how lesson pages look.';
       case 'progress':
         return 'See your progress and completed topics.';
+      case 'badges':
+        return 'Track your Minute Expert badges and milestones.';
       case 'ratings':
         return 'View and update your module ratings.';
       case 'account':
@@ -971,25 +1007,72 @@ export default function ProfilePage() {
                       <div className="profile-stat-value small">{stats?.last_completed_date ?? '—'}</div>
                     </div>
                   </div>
+                </>
+              )}
+
+              {activeTab === 'badges' && (
+                <>
+                  <div className="profile-section-header profile-section-header-spaced">
+                    <h2>Badges</h2>
+                    <div className="profile-section-sub">Milestones based on your Minute Expert minutes.</div>
+                  </div>
+
+                  {tier !== 'pro' && tier !== 'paused' && contentSource !== 'local' ? (
+                    <div className="profile-note" style={{ marginBottom: 12 }}>
+                      <strong>Pro feature</strong>
+                      <div>Upgrade to Pro to start earning expert minutes and unlocking badges.</div>
+                      <div style={{ marginTop: 10 }}>
+                        <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
+                      </div>
+                    </div>
+                  ) : null}
 
                   <div className="profile-badges" aria-label="Badges">
-                    <div className="profile-badges-title">Badges</div>
+                    <div className="profile-badges-title">All badges</div>
                     <div className="profile-badges-row">
-                      {getUnlockedBadges(Number(stats?.expert_minutes ?? 0) || 0).length > 0 ? (
-                        getUnlockedBadges(Number(stats?.expert_minutes ?? 0) || 0).map((b) => (
-                          <div key={b.minutes} className="profile-badge" title={b.name}>
-                            <span className="profile-badge-emoji" aria-hidden="true">{b.emoji}</span>
-                            <span className="profile-badge-name">{b.name}</span>
+                      {EXPERT_BADGES.map((b) => {
+                        const minutes = Number(stats?.expert_minutes ?? 0) || 0;
+                        const required = Number(b.minutes ?? 0) || 0;
+                        const unlocked = minutes >= required;
+                        const rarity = getBadgeRarity(required);
+                        const pct = required > 0 ? Math.max(0, Math.min(100, Math.round((minutes / required) * 100))) : 0;
+                        const label = unlocked ? `${b.name} (Unlocked)` : `${b.name} (Locked)`;
+                        return (
+                          <div
+                            key={b.minutes}
+                            className={`profile-badge ${unlocked ? 'profile-badge--unlocked' : 'profile-badge--locked'} profile-badge--${rarity}`}
+                            title={label}
+                            aria-label={label}
+                          >
+                            <div className="profile-badge-top">
+                              <div className="profile-badge-emoji" aria-hidden="true">{b.emoji}</div>
+                              <div className="profile-badge-meta">
+                                <div className="profile-badge-name">{b.name}</div>
+                                <div className="profile-badge-req">Unlock at <strong>{required}</strong> min</div>
+                              </div>
+                              <div className={`profile-badge-pill ${unlocked ? 'ok' : 'locked'}`}>
+                                {unlocked ? 'Unlocked' : 'Locked'}
+                              </div>
+                            </div>
+
+                            <div className="profile-badge-progress" aria-hidden="true">
+                              <div className="profile-badge-progressTrack">
+                                <div className="profile-badge-progressFill" style={{ width: `${unlocked ? 100 : pct}%` }} />
+                              </div>
+                              <div className="profile-badge-progressText">{unlocked ? '100%' : `${pct}%`}</div>
+                            </div>
                           </div>
-                        ))
-                      ) : (
-                        <div className="profile-badges-empty">
-                          {tier === 'pro'
-                            ? 'Complete your first minute to unlock your first badge.'
-                            : 'Upgrade to Pro to start unlocking badges.'}
-                        </div>
-                      )}
+                        );
+                      })}
                     </div>
+
+                    {getUnlockedBadges(Number(stats?.expert_minutes ?? 0) || 0).length === 0 ? (
+                      <div className="profile-badges-empty" style={{ marginTop: 10 }}>
+                        {tier === 'pro'
+                          ? 'Complete your first module to unlock your first badge.'
+                          : 'Badges are Pro-only. Upgrade to start unlocking.'}
+                      </div>
+                    ) : null}
 
                     {(() => {
                       const next = getNextBadge(Number(stats?.expert_minutes ?? 0) || 0);
