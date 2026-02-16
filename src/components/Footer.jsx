@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Footer.css';
 
 const SUPPORT_EMAIL = import.meta.env.VITE_SUPPORT_EMAIL || 'support@1minute.academy';
 
 export default function Footer() {
+  const location = useLocation();
+  const showLandingFineprint = location?.pathname === '/';
   const year = new Date().getFullYear();
 
   return (
@@ -25,7 +27,9 @@ export default function Footer() {
 
         <div className="footer-meta">
           <div className="footer-copy">© {year} 1 Minute Academy</div>
-          <div className="footer-fineprint">Made for people who hate long landing pages.</div>
+          {showLandingFineprint ? (
+            <div className="footer-fineprint">Made for people who hate long landing pages.</div>
+          ) : null}
         </div>
       </div>
     </footer>
