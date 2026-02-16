@@ -219,6 +219,7 @@ export default function ProfilePage() {
   const [displayName, setDisplayName] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('');
   const avatarInputRef = useRef(null);
+  const [identityCertPrompt, setIdentityCertPrompt] = useState(null); // { count: number } | null
 
   useEffect(() => {
     setPresentationStyle(initialPresentationStyle);
@@ -258,6 +259,7 @@ export default function ProfilePage() {
     setIdentityBusy(true);
     setIdentityError(null);
     setIdentityNotice('');
+    setIdentityCertPrompt(null);
 
     try {
       const next = await updateMyProfile({ displayName, avatarUrl });
@@ -265,6 +267,16 @@ export default function ProfilePage() {
       setAvatarUrl(String(next?.avatar_url ?? ''));
       setIdentityLoaded(true);
       setIdentityNotice('Saved. New reviews will use this name/photo.');
+
+      if (hasProAccess && contentSource !== 'local' && isSupabaseConfigured) {
+        try {
+          const rows = await listMyCertificates();
+          const count = Array.isArray(rows) ? rows.length : 0;
+          if (count > 0) setIdentityCertPrompt({ count });
+        } catch {
+          // ignore
+        }
+      }
     } catch (e) {
       setIdentityError(e);
     } finally {
@@ -280,6 +292,7 @@ export default function ProfilePage() {
     setIdentityBusy(true);
     setIdentityError(null);
     setIdentityNotice('');
+    setIdentityCertPrompt(null);
 
     try {
       const url = await uploadMyAvatar(f);
@@ -288,6 +301,16 @@ export default function ProfilePage() {
       setAvatarUrl(String(next?.avatar_url ?? url ?? ''));
       setIdentityLoaded(true);
       setIdentityNotice('Photo updated.');
+
+      if (hasProAccess && contentSource !== 'local' && isSupabaseConfigured) {
+        try {
+          const rows = await listMyCertificates();
+          const count = Array.isArray(rows) ? rows.length : 0;
+          if (count > 0) setIdentityCertPrompt({ count });
+        } catch {
+          // ignore
+        }
+      }
     } catch (e2) {
       setIdentityError(e2);
     } finally {
@@ -1083,14 +1106,34 @@ export default function ProfilePage() {
   async function onRegenerateAllCertificates() {
     if (!hasProAccess) return;
     if (certBusyId || certBulkBusy) return;
-    if (!Array.isArray(certificates) || certificates.length === 0) return;
+
+    let rows = Array.isArray(certificates) ? certificates : [];
+    if (rows.length === 0) {
+      try {
+        rows = await listMyCertificates();
+        setCertificates(Array.isArray(rows) ? rows : []);
+      } catch (e) {
+        pushToast({
+          variant: 'error',
+          emoji: '⚠️',
+          title: 'Could not load certificates',
+          message: e?.message || 'Try again in a moment.',
+        });
+        return;
+      }
+    }
+
+    if (!Array.isArray(rows) || rows.length === 0) {
+      pushToast({ variant: 'success', emoji: '✅', title: 'No certificates to update', message: 'Earn one by completing a category.' });
+      return;
+    }
 
     setCertBulkBusy(true);
-    setCertBulkProgress({ done: 0, total: certificates.length });
+    setCertBulkProgress({ done: 0, total: rows.length });
     setCertError(null);
 
     try {
-      const ordered = [...certificates].sort((a, b) => {
+      const ordered = [...rows].sort((a, b) => {
         const ax = String(a?.awarded_at ?? a?.created_at ?? '');
         const bx = String(b?.awarded_at ?? b?.created_at ?? '');
         return bx.localeCompare(ax);
@@ -1119,6 +1162,8 @@ export default function ProfilePage() {
         title: 'All certificates updated',
         message: 'Regenerated using your current display name.',
       });
+
+      setIdentityCertPrompt(null);
     } catch (e) {
       pushToast({
         variant: 'error',
@@ -1372,14 +1417,14 @@ export default function ProfilePage() {
                         className="profile-certificate-btn primary"
                         onClick={onRegenerateAllCertificates}
                         disabled={certBulkBusy || Boolean(certBusyId)}
-                        title="Regenerate all certificates using your current display name"
+                        title="Regenerate all certificates using your current display name and photo"
                       >
                         {certBulkBusy
                           ? `Regenerating… (${certBulkProgress?.done ?? 0}/${certBulkProgress?.total ?? certificates.length})`
-                          : 'Regenerate all (current name)'}
+                          : 'Regenerate all (current name + photo)'}
                       </button>
                       <div className="profile-certificates-toolbarNote">
-                        Uses your current display name: <strong>{resolveCurrentRecipientName()}</strong>
+                        Uses your current profile identity: <strong>{resolveCurrentRecipientName()}</strong>
                       </div>
                     </div>
                   ) : null}
@@ -1471,7 +1516,7 @@ export default function ProfilePage() {
                                   className="profile-certificate-btn"
                                   onClick={() => onRegenerateCertificate(c)}
                                   disabled={!hasProAccess || busy}
-                                  title={!hasProAccess ? 'Pro only' : 'Regenerate using your current display name'}
+                                  title={!hasProAccess ? 'Pro only' : 'Regenerate using your current display name and photo'}
                                 >
                                   Regenerate
                                 </button>
@@ -1563,6 +1608,41 @@ export default function ProfilePage() {
                         </div>
 
                         {identityNotice ? <div className="profile-preference-note">{identityNotice}</div> : null}
+
+                        {identityCertPrompt && hasProAccess ? (
+                          <div className="profile-cert-updatePrompt" role="status">
+                            <div className="profile-cert-updatePrompt-title">
+                              Update your certificates?
+                            </div>
+                            <div className="profile-cert-updatePrompt-sub">
+                              You have {identityCertPrompt.count} certificate{identityCertPrompt.count === 1 ? '' : 's'}. Regenerate them to reflect your new name/photo.
+                            </div>
+                            <div className="profile-cert-updatePrompt-actions">
+                              <button
+                                type="button"
+                                className="profile-account-btn"
+                                onClick={onRegenerateAllCertificates}
+                                disabled={certBulkBusy || Boolean(certBusyId)}
+                              >
+                                {certBulkBusy
+                                  ? `Updating… (${certBulkProgress?.done ?? 0}/${certBulkProgress?.total ?? identityCertPrompt.count})`
+                                  : 'Update certificates now'}
+                              </button>
+                              <button
+                                type="button"
+                                className="profile-account-btn secondary"
+                                onClick={() => setIdentityCertPrompt(null)}
+                                disabled={certBulkBusy || Boolean(certBusyId)}
+                              >
+                                Later
+                              </button>
+                              <Link className="profile-upgrade-inline" to="/me?tab=certificates">
+                                View certificates
+                              </Link>
+                            </div>
+                          </div>
+                        ) : null}
+
                         {identityError ? (
                           <div className="profile-preference-error">{identityError?.message ?? String(identityError)}</div>
                         ) : null}
