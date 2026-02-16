@@ -19,6 +19,7 @@ import { EXPERT_BADGES, getNextBadge, getUnlockedBadges } from '../services/badg
 import {
   generateAndUploadMyCertificate,
   getCertificatePublicUrlFromPath,
+  getCertificatePublicUrlFromPathWithOptions,
   listMyCertificates,
   updateMyCertificateRecipient,
 } from '../services/certificates';
@@ -1178,7 +1179,10 @@ export default function ProfilePage() {
   }
 
   async function onShareCertificate(row) {
-    const url = getCertificatePublicUrlFromPath(row?.png_path) || getCertificatePublicUrlFromPath(row?.svg_path);
+    const cacheBuster = row?.updated_at ?? row?.awarded_at ?? null;
+    const url =
+      getCertificatePublicUrlFromPathWithOptions(row?.png_path, { cacheBuster }) ||
+      getCertificatePublicUrlFromPathWithOptions(row?.svg_path, { cacheBuster });
     if (!url) {
       pushToast({ variant: 'error', emoji: '⚠️', title: 'Not ready', message: 'Generate the certificate first.' });
       return;
@@ -1462,8 +1466,9 @@ export default function ProfilePage() {
                     ) : (
                       <div className="profile-certificates-grid">
                         {certificates.map((c) => {
-                          const pngUrl = getCertificatePublicUrlFromPath(c?.png_path);
-                          const svgUrl = getCertificatePublicUrlFromPath(c?.svg_path);
+                          const cacheBuster = c?.updated_at ?? c?.awarded_at ?? null;
+                          const pngUrl = getCertificatePublicUrlFromPathWithOptions(c?.png_path, { cacheBuster });
+                          const svgUrl = getCertificatePublicUrlFromPathWithOptions(c?.svg_path, { cacheBuster });
                           const viewUrl = pngUrl || svgUrl;
                           const ready = Boolean(viewUrl);
                           const busy = certBusyId && String(certBusyId) === String(c?.id);

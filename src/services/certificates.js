@@ -244,13 +244,23 @@ export async function listMyCertificates() {
 }
 
 export function getCertificatePublicUrlFromPath(path) {
+  return getCertificatePublicUrlFromPathWithOptions(path, {});
+}
+
+export function getCertificatePublicUrlFromPathWithOptions(path, { cacheBuster } = {}) {
   if (!path) return null;
   if (!isSupabaseConfigured) return null;
   try {
     const supabase = getSupabaseClient();
     if (!supabase) return null;
     const { data } = supabase.storage.from(BUCKET).getPublicUrl(String(path));
-    return data?.publicUrl ?? null;
+    const base = data?.publicUrl ?? null;
+    if (!base) return null;
+
+    const token = cacheBuster == null ? '' : String(cacheBuster);
+    if (!token) return base;
+    const join = base.includes('?') ? '&' : '?';
+    return `${base}${join}v=${encodeURIComponent(token)}`;
   } catch {
     return null;
   }
