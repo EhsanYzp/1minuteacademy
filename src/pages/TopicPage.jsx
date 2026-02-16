@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
-import { getTopic, listRelatedTopics } from '../services/topics';
+import { getTopic } from '../services/topics';
 import { listUserTopicProgress } from '../services/progress';
 import { getContentSource } from '../services/_contentSource';
 import { useAuth } from '../context/AuthContext';
@@ -68,7 +68,6 @@ function TopicPage() {
   const [myRating, setMyRating] = useState(null);
   const [ratingBusy, setRatingBusy] = useState(false);
   const [ratingError, setRatingError] = useState(null);
-  const [relatedTopics, setRelatedTopics] = useState([]);
 
   useEffect(() => {
     let mounted = true;
@@ -194,35 +193,6 @@ function TopicPage() {
     };
   }, [topic, topicId]);
 
-  useEffect(() => {
-    let cancelled = false;
-    async function loadRelated() {
-      const base = topicRow ?? fallbackTopics[topicId];
-      if (!base) return;
-      const subject = String(base?.subject ?? '').trim();
-      const subcategory = String(base?.subcategory ?? '').trim();
-      if (!subject) return;
-
-      try {
-        const chosen = await listRelatedTopics({
-          topicId,
-          subject,
-          subcategory,
-          limit: 6,
-        });
-        if (cancelled) return;
-
-        setRelatedTopics(Array.isArray(chosen) ? chosen : []);
-      } catch {
-        if (!cancelled) setRelatedTopics([]);
-      }
-    }
-
-    loadRelated();
-    return () => {
-      cancelled = true;
-    };
-  }, [topicRow, topicId]);
 
   const isCompleted = Number(completedCount) > 0;
   const beginner = useMemo(() => isBeginnerTopic(topicRow ?? fallbackTopics[topicId]), [topicRow, topicId]);
@@ -236,10 +206,6 @@ function TopicPage() {
     () => getTopicGate({ tier, topicRow: topicRow ?? fallbackTopics[topicId] }),
     [tier, topicRow, topicId]
   );
-
-  const baseTopic = topicRow ?? fallbackTopics[topicId];
-  const baseSubject = String(baseTopic?.subject ?? '').trim();
-  const baseSubcategory = String(baseTopic?.subcategory ?? '').trim();
 
   if (!loading && topic && topicGate?.locked && topicGate?.reason === 'pro') {
     return (
@@ -512,56 +478,6 @@ function TopicPage() {
             </motion.div>
           </div>
 
-          {Array.isArray(relatedTopics) && relatedTopics.length > 0 && (
-            <section className="related-topics" aria-label="Related topics">
-              <div className="related-topics__header">
-                <div>
-                  <div className="related-topics__kicker">Keep learning</div>
-                  <div className="related-topics__title">
-                    Related topics{baseSubject ? ` in ${baseSubject}` : ''}
-                  </div>
-                  {baseSubcategory ? (
-                    <div className="related-topics__sub">Subcategory: {baseSubcategory}</div>
-                  ) : null}
-                </div>
-                <Link className="related-topics__cta" to="/topics">
-                  Browse all →
-                </Link>
-              </div>
-
-              <div className="related-topics__grid">
-                {relatedTopics.map((t) => (
-                  <Link
-                    key={t.id}
-                    to={`/topic/${t.id}`}
-                    className="related-topic-card"
-                    style={{ '--rel-color': t?.color ?? '#4ECDC4' }}
-                  >
-                    <div className="related-topic-card__top">
-                      <div className="related-topic-card__emoji" aria-hidden>
-                        {t.emoji ?? '🎯'}
-                      </div>
-                      <div className="related-topic-card__text">
-                        <div className="related-topic-card__title">{t.title}</div>
-                        {t?.description ? (
-                          <div className="related-topic-card__desc">{t.description}</div>
-                        ) : null}
-                      </div>
-                    </div>
-
-                    <div className="related-topic-card__meta">
-                      {t?.difficulty ? (
-                        <span className="related-topic-card__badge">📊 {t.difficulty}</span>
-                      ) : null}
-                      {t?.subcategory ? (
-                        <span className="related-topic-card__badge related-topic-card__badge--muted">{t.subcategory}</span>
-                      ) : null}
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </section>
-          )}
         </div>
       </main>
     </motion.div>

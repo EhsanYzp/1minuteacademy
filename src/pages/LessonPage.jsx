@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 import Seo from '../components/Seo';
 import Timer from '../components/Timer';
 import { StoryRenderer, StoryReview } from '../engine/story';
-import { getTopic } from '../services/topics';
+import { getTopic, listRelatedTopics } from '../services/topics';
 import { completeTopic, getUserStats } from '../services/progress';
 import { getContentSource } from '../services/_contentSource';
 import { useAuth } from '../context/AuthContext';
@@ -81,6 +81,7 @@ function LessonPage() {
   const [myRating, setMyRating] = useState(null);
   const [ratingBusy, setRatingBusy] = useState(false);
   const [ratingError, setRatingError] = useState(null);
+  const [relatedTopics, setRelatedTopics] = useState([]);
   const submittedCompletionRef = useRef(false);
   const timerDeadlineMsRef = useRef(null);
   const timerCompletedRef = useRef(false);
@@ -485,6 +486,47 @@ function LessonPage() {
   }, [topicId]);
 
   useEffect(() => {
+    let cancelled = false;
+
+    if (!isCompleted) {
+      setRelatedTopics([]);
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    const subject = String(topicRow?.subject ?? '').trim();
+    const subcategory = String(topicRow?.subcategory ?? '').trim();
+
+    if (!subject) {
+      setRelatedTopics([]);
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    const run = async () => {
+      try {
+        const chosen = await listRelatedTopics({
+          topicId,
+          subject,
+          subcategory,
+          limit: 6,
+        });
+        if (cancelled) return;
+        setRelatedTopics(Array.isArray(chosen) ? chosen : []);
+      } catch {
+        if (!cancelled) setRelatedTopics([]);
+      }
+    };
+
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, [isCompleted, topicId, topicRow]);
+
+  useEffect(() => {
     if (!isStarted) {
       setTimeRemaining(totalSeconds);
       setIsCompleted(false);
@@ -742,6 +784,57 @@ function LessonPage() {
                   'ctaRow',
                 ]}
               />
+
+              {Array.isArray(relatedTopics) && relatedTopics.length > 0 && (
+                <section className="related-topics related-topics--completion" aria-label="Related topics">
+                  <div className="related-topics__header">
+                    <div>
+                      <div className="related-topics__kicker">Up next</div>
+                      <div className="related-topics__title">
+                        Related topics{topicRow?.subject ? ` in ${String(topicRow.subject)}` : ''}
+                      </div>
+                      {topicRow?.subcategory ? (
+                        <div className="related-topics__sub">Subcategory: {String(topicRow.subcategory)}</div>
+                      ) : null}
+                    </div>
+                    <ReactRouterDom.Link className="related-topics__cta" to="/topics">
+                      Browse all →
+                    </ReactRouterDom.Link>
+                  </div>
+
+                  <div className="related-topics__grid">
+                    {relatedTopics.map((t) => (
+                      <ReactRouterDom.Link
+                        key={t.id}
+                        to={`/topic/${t.id}`}
+                        className="related-topic-card"
+                        style={{ '--rel-color': t?.color ?? '#4ECDC4' }}
+                      >
+                        <div className="related-topic-card__top">
+                          <div className="related-topic-card__emoji" aria-hidden>
+                            {t.emoji ?? '🎯'}
+                          </div>
+                          <div className="related-topic-card__text">
+                            <div className="related-topic-card__title">{t.title}</div>
+                            {t?.description ? (
+                              <div className="related-topic-card__desc">{t.description}</div>
+                            ) : null}
+                          </div>
+                        </div>
+
+                        <div className="related-topic-card__meta">
+                          {t?.difficulty ? (
+                            <span className="related-topic-card__badge">📊 {t.difficulty}</span>
+                          ) : null}
+                          {t?.subcategory ? (
+                            <span className="related-topic-card__badge related-topic-card__badge--muted">{t.subcategory}</span>
+                          ) : null}
+                        </div>
+                      </ReactRouterDom.Link>
+                    ))}
+                  </div>
+                </section>
+              )}
             </motion.div>
             
             {/* Confetti Effect (lightweight) */}
