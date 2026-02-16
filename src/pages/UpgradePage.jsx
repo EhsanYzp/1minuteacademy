@@ -6,6 +6,7 @@ import Seo from '../components/Seo';
 import { useAuth } from '../context/AuthContext';
 import { formatTierLabel, getCurrentTier } from '../services/entitlements';
 import { openCustomerPortal, startProCheckout } from '../services/billing';
+import { PRESENTATION_STYLES } from '../services/presentationStyle';
 import './UpgradePage.css';
 
 const DEFAULT_PRICE_MONTH = import.meta.env.VITE_PRICE_MONTH ?? '$7.99';
@@ -43,6 +44,7 @@ export default function UpgradePage() {
   const location = useLocation();
   const navigate = useNavigate();
   const tier = getCurrentTier(user);
+  const proLessonStyleCount = PRESENTATION_STYLES.length;
   const planInterval = String(user?.user_metadata?.plan_interval ?? '').toLowerCase();
   const proInterval = (planInterval === 'year' || planInterval === 'yearly' || planInterval === 'annual')
     ? 'year'
@@ -62,6 +64,14 @@ export default function UpgradePage() {
   const [banner, setBanner] = useState(null); // 'success' | 'cancel' | 'error' | null
   const [bannerText, setBannerText] = useState('');
   const activationStartedRef = useRef(false);
+
+  const [selectedInterval, setSelectedInterval] = useState(() => proInterval ?? 'year');
+
+  useEffect(() => {
+    if (tier === 'pro' && proInterval && (proInterval === 'month' || proInterval === 'year')) {
+      setSelectedInterval(proInterval);
+    }
+  }, [tier, proInterval]);
 
   const checkoutState = useMemo(() => {
     try {
@@ -179,7 +189,7 @@ export default function UpgradePage() {
     <motion.div className="upgrade-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Seo
         title="Pricing"
-        description="Guest and Free let you start. Pro unlocks all topics (including Premium), review mode, Minute Expert + badges, and more lesson styles."
+        description="Start free. Upgrade to Pro to unlock all topics (including Premium), Minute Expert + badges, and review mode."
         path={location?.pathname || '/pricing'}
         canonicalPath="/pricing"
       />
@@ -191,8 +201,8 @@ export default function UpgradePage() {
           <div className="upgrade-hero">
             <div className="upgrade-emoji">💳</div>
             <div>
-              <h1>Pricing</h1>
-              <p>Three tiers: Guest, Free account, and Pro.</p>
+              <h1>Simple pricing</h1>
+              <p>Free to start. Pro unlocks the full library.</p>
               <div className="upgrade-tier">Your current plan: <strong>{planLabel}</strong></div>
               {tier === 'pro' && (
                 <div className="upgrade-tier-actions">
@@ -226,212 +236,256 @@ export default function UpgradePage() {
           )}
 
           <div className="upgrade-section">
-            <div className="upgrade-section-title">What you get</div>
-            <div className="tier-grid">
-              <div className={`tier-card ${currentTierKey === 'guest' ? 'current' : ''}`}>
-                <div className="tier-name">Guest</div>
-                <div className="tier-price">$0</div>
-                <div className="tier-note">No account required</div>
-                <ul className="tier-bullets">
-                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Beginner topics</span></li>
-                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Surprise shuffle (Beginner only)</span></li>
-                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Lesson styles: Focus + Dark</span></li>
+            <div className="upgrade-section-title">Choose your plan</div>
+            <div className="pricing-grid" aria-label="Plans">
+              <div className={`pricing-plan ${currentTierKey === 'guest' ? 'current' : ''}`}>
+                <div className="pricing-plan-head">
+                  <div className="pricing-plan-name">Guest</div>
+                  <div className="pricing-plan-price">$0</div>
+                  <div className="pricing-plan-sub">Start instantly. No account.</div>
+                </div>
+
+                <ul className="pricing-feature-list" aria-label="Guest features">
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>Beginner topics</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>Surprise shuffle (Beginner)</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>2 lesson styles (Focus + Dark)</li>
                 </ul>
-                <div className="tier-actions">
-                  <Link className="upgrade-link secondary" to="/topics">Browse free topics</Link>
+
+                <div className="pricing-plan-actions">
+                  <Link className="upgrade-link secondary" to="/topics">Start learning</Link>
+                  <div className="pricing-small">Tip: create a free account to save progress.</div>
                 </div>
               </div>
 
-              <div className={`tier-card ${currentTierKey === 'free' ? 'current' : ''}`}>
-                <div className="tier-name">Free account</div>
-                <div className="tier-price">$0</div>
-                <div className="tier-note">Sign in to save progress</div>
-                <ul className="tier-bullets">
-                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Beginner topics</span></li>
-                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Surprise shuffle (Beginner only)</span></li>
-                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Progress tracking</span></li>
-                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Rate modules with stars</span></li>
-                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Lesson styles: Focus + Dark</span></li>
+              <div className={`pricing-plan ${currentTierKey === 'free' ? 'current' : ''}`}>
+                <div className="pricing-plan-head">
+                  <div className="pricing-plan-name">Free</div>
+                  <div className="pricing-plan-price">$0</div>
+                  <div className="pricing-plan-sub">Save progress and ratings.</div>
+                </div>
+
+                <ul className="pricing-feature-list" aria-label="Free features">
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>Beginner topics</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>Surprise shuffle (Beginner)</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>2 lesson styles (Focus + Dark)</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>Progress tracking</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>Rate modules with stars</li>
                 </ul>
-                <div className="tier-actions">
+
+                <div className="pricing-plan-actions">
                   {!user ? (
-                    <Link className="upgrade-link" to="/login">Sign in</Link>
+                    <Link className="upgrade-link" to="/login">Create free account</Link>
                   ) : (
-                    <Link className="upgrade-link" to="/me">Go to profile</Link>
+                    <Link className="upgrade-link secondary" to="/me">Go to profile</Link>
                   )}
                 </div>
               </div>
 
-              <div className={`tier-card featured ${currentTierKey === 'pro' ? 'current' : ''}`}>
-                <div className="tier-badge">Best for serious learners</div>
-                <div className="tier-name">Pro</div>
-                <div className="tier-price">All access</div>
-                <div className="tier-note">Beginner → Advanced</div>
-                <ul className="tier-bullets">
-                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>All modules (not just Beginner)</span></li>
-                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Surprise shuffle across all modules</span></li>
-                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Premium topics</span></li>
-                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Review mode (no timer)</span></li>
-                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Minute Expert + badges</span></li>
-                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>All lesson presentation styles</span></li>
-                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Progress tracking</span></li>
-                  <li><span className="mark yes bullet-mark" aria-label="Available" title="Available">✓</span><span>Rate modules with stars</span></li>
+              <div className={`pricing-plan pro featured ${currentTierKey === 'pro' ? 'current' : ''}`}>
+                <div className="pricing-plan-badge">Most people upgrade here</div>
+                <div className="pricing-plan-head">
+                  <div className="pricing-plan-name">Pro</div>
+                  <div className="pricing-plan-price">All access</div>
+                  <div className="pricing-plan-sub">Unlock everything (Premium + advanced).</div>
+                </div>
+
+                <div className="pricing-toggle" role="group" aria-label="Billing interval">
+                  <button
+                    type="button"
+                    className={`pricing-toggle-btn ${selectedInterval === 'month' ? 'active' : ''}`}
+                    onClick={() => setSelectedInterval('month')}
+                    disabled={tier === 'pro' || busy !== null}
+                  >
+                    <span className="pricing-toggle-label">Monthly</span>
+                    <span className="pricing-toggle-price">{DEFAULT_PRICE_MONTH}</span>
+                  </button>
+                  <button
+                    type="button"
+                    className={`pricing-toggle-btn ${selectedInterval === 'year' ? 'active' : ''}`}
+                    onClick={() => setSelectedInterval('year')}
+                    disabled={tier === 'pro' || busy !== null}
+                  >
+                    <span className="pricing-toggle-label">Yearly</span>
+                    <span className="pricing-toggle-price">{DEFAULT_PRICE_YEAR}</span>
+                    {yearlyDiscountLabel ? <span className="pricing-save">Save {yearlyDiscountLabel}</span> : null}
+                  </button>
+                </div>
+
+                <ul className="pricing-feature-list" aria-label="Pro features">
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>All topics (Intermediate + Advanced)</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>Premium topics</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>Minute Expert + badges</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>Review mode (no timer)</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>Surprise shuffle across all modules</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>{proLessonStyleCount} lesson styles</li>
                 </ul>
-                <div className="tier-actions">
+
+                <div className="pricing-pro-cta">
                   {tier === 'pro' ? (
-                    <button className="upgrade-link" type="button" onClick={onManageSubscription}>Manage subscription</button>
+                    <button className="plan-cta" type="button" onClick={onManageSubscription}>
+                      Manage subscription
+                    </button>
                   ) : (
-                    <a className="upgrade-link" href="#pro-plans">See Pro plans</a>
+                    <button
+                      className="plan-cta"
+                      type="button"
+                      onClick={() => onCheckout(selectedInterval)}
+                      disabled={!user || busy !== null}
+                      title={!user ? 'Sign in to upgrade' : 'Start Stripe checkout'}
+                    >
+                      {busy ? 'Redirecting…' : 'Upgrade to Pro'}
+                    </button>
                   )}
+                  <div className="pricing-small">
+                    Cancel anytime in Stripe Portal. Pro activates automatically after checkout.
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="compare">
-              <table className="compare-table">
-                <caption className="sr-only">Plan feature comparison</caption>
-                <colgroup>
-                  <col style={{ width: '43.75%' }} />
-                  <col style={{ width: '18.75%' }} />
-                  <col style={{ width: '18.75%' }} />
-                  <col style={{ width: '18.75%' }} />
-                </colgroup>
-                <thead>
-                  <tr className="compare-head">
-                    <th scope="col" className="compare-feature">Feature</th>
-                    <th scope="col" className="compare-tier">Guest</th>
-                    <th scope="col" className="compare-tier">Free</th>
-                    <th scope="col" className="compare-tier">Pro</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row" className="compare-feature">Surprise shuffle</th>
-                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
-                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
-                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row" className="compare-feature">Beginner topics</th>
-                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
-                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
-                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row" className="compare-feature">Intermediate/Advanced topics</th>
-                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
-                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
-                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row" className="compare-feature">Progress tracking</th>
-                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
-                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
-                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row" className="compare-feature">Minute Expert + badges</th>
-                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
-                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
-                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row" className="compare-feature">Premium topics</th>
-                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
-                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
-                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row" className="compare-feature">Review mode</th>
-                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
-                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
-                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row" className="compare-feature">Lesson presentation styles</th>
-                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
-                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
-                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row" className="compare-feature">Rate modules with stars</th>
-                    <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
-                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
-                    <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div className="compare-notes" aria-label="Plan notes">
-              Note: Guest/Free shuffle from Beginner modules and include Focus + Dark styles. Pro shuffles across all modules and unlocks all styles.
-            </div>
-            <div className="tier-rule">Rule of thumb: only <strong>Beginner</strong> topics are available without Pro.</div>
-          </div>
-
-          <div className="upgrade-section upgrade-section-spaced">
-            <div className="upgrade-section-title">Pick a Pro plan</div>
-            <div className="upgrade-section-sub">Cancel anytime in Stripe Portal. Pro unlocks Premium + advanced modules, Minute Expert + badges, review mode, ratings, and extra lesson presentation styles.</div>
-          </div>
-
-          <div className="upgrade-grid" id="pro-plans">
-            <div className={`plan ${tier === 'pro' && proInterval === 'month' ? 'current' : ''}`}>
-              <div className="plan-title">Monthly</div>
-              <div className="plan-price">{DEFAULT_PRICE_MONTH}<span className="plan-sub">/month</span></div>
-              <ul className="plan-bullets">
-                <li>All modules (not just Beginner)</li>
-                <li>Premium topics</li>
-                <li>Minute Expert + badges</li>
-                <li>Review mode (no timer)</li>
-                <li>Progress tracking</li>
-                <li>Rate modules with stars</li>
-              </ul>
-              <button
-                className="plan-cta"
-                type="button"
-                onClick={() => onCheckout('month')}
-                disabled={!user || tier === 'pro' || busy !== null}
-                title={!user ? 'Sign in to upgrade' : tier === 'pro' ? 'You are already Pro' : 'Start Stripe checkout'}
-              >
-                {tier === 'pro' ? 'You’re Pro' : busy === 'month' ? 'Redirecting…' : 'Continue'}
-              </button>
-            </div>
-
-            <div className={`plan featured ${tier === 'pro' && proInterval === 'year' ? 'current' : ''}`}>
-              <div className="plan-badge">Best value</div>
-              <div className="plan-title">Yearly</div>
-              <div className="plan-price">{DEFAULT_PRICE_YEAR}<span className="plan-sub">/year</span></div>
-              <div className="plan-note">
-                {yearlyOriginalLabel && yearlyDiscountLabel ? (
-                  <div className="plan-savings" aria-label="Yearly savings">
-                    <span className="plan-was">Was {yearlyOriginalLabel}</span>
-                    <span className="plan-discount-pill">{yearlyDiscountLabel} off</span>
-                  </div>
-                ) : (
-                  <span>{yearlyDiscountLabel ? `Save ${yearlyDiscountLabel} vs monthly` : 'Save vs monthly'}</span>
-                )}
+            <details className="pricing-details">
+              <summary>What do these words mean?</summary>
+              <div className="pricing-glossary" aria-label="Glossary">
+                <div className="pricing-glossary-item">
+                  <div className="pricing-glossary-term">Minute Expert</div>
+                  <div className="pricing-glossary-def">A Pro-only progress reward + badge milestones for completing topics.</div>
+                </div>
+                <div className="pricing-glossary-item">
+                  <div className="pricing-glossary-term">Premium topics</div>
+                  <div className="pricing-glossary-def">Higher-difficulty topics reserved for Pro.</div>
+                </div>
+                <div className="pricing-glossary-item">
+                  <div className="pricing-glossary-term">Surprise shuffle</div>
+                  <div className="pricing-glossary-def">The “Surprise me” button that picks a topic for you. Free shuffles Beginner only; Pro shuffles everything.</div>
+                </div>
+                <div className="pricing-glossary-item">
+                  <div className="pricing-glossary-term">Lesson styles</div>
+                  <div className="pricing-glossary-def">Different visual reading modes for the same lesson (e.g., Focus, Dark, Cards, Terminal). Guest/Free get 2 styles; Pro unlocks all {proLessonStyleCount}.</div>
+                </div>
               </div>
-              <ul className="plan-bullets">
-                <li>Everything in Monthly</li>
-                <li>Lower effective monthly cost</li>
-              </ul>
-              <button
-                className="plan-cta"
-                type="button"
-                onClick={() => onCheckout('year')}
-                disabled={!user || tier === 'pro' || busy !== null}
-                title={!user ? 'Sign in to upgrade' : tier === 'pro' ? 'You are already Pro' : 'Start Stripe checkout'}
-              >
-                {tier === 'pro' ? 'You’re Pro' : busy === 'year' ? 'Redirecting…' : 'Continue'}
-              </button>
+            </details>
+
+            <div className="upgrade-section upgrade-section-spaced">
+              <div className="upgrade-section-title">Compare all 3 tiers</div>
+              <div className="compare" aria-label="Plan comparison">
+                <table className="compare-table">
+                  <caption className="sr-only">Plan feature comparison</caption>
+                  <colgroup>
+                    <col style={{ width: '43.75%' }} />
+                    <col style={{ width: '18.75%' }} />
+                    <col style={{ width: '18.75%' }} />
+                    <col style={{ width: '18.75%' }} />
+                  </colgroup>
+                  <thead>
+                    <tr className="compare-head">
+                      <th scope="col" className="compare-feature">Feature</th>
+                      <th scope="col" className="compare-tier">Guest</th>
+                      <th scope="col" className="compare-tier">Free</th>
+                      <th scope="col" className="compare-tier">Pro</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row" className="compare-feature">Beginner topics</th>
+                      <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                      <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                      <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                    </tr>
+
+                    <tr>
+                      <th scope="row" className="compare-feature">Intermediate + Advanced topics</th>
+                      <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                      <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                      <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                    </tr>
+
+                    <tr>
+                      <th scope="row" className="compare-feature">Premium topics</th>
+                      <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                      <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                      <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                    </tr>
+
+                    <tr>
+                      <th scope="row" className="compare-feature">Surprise shuffle</th>
+                      <td className="compare-cell">
+                        <div className="compare-cell-stack">
+                          <span className="mark yes" aria-label="Available" title="Available">✓</span>
+                          <span className="compare-cell-note">Beginner</span>
+                        </div>
+                      </td>
+                      <td className="compare-cell">
+                        <div className="compare-cell-stack">
+                          <span className="mark yes" aria-label="Available" title="Available">✓</span>
+                          <span className="compare-cell-note">Beginner</span>
+                        </div>
+                      </td>
+                      <td className="compare-cell">
+                        <div className="compare-cell-stack">
+                          <span className="mark yes" aria-label="Available" title="Available">✓</span>
+                          <span className="compare-cell-note">All modules</span>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <th scope="row" className="compare-feature">Progress tracking</th>
+                      <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                      <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                      <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                    </tr>
+
+                    <tr>
+                      <th scope="row" className="compare-feature">Rate modules with stars</th>
+                      <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                      <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                      <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                    </tr>
+
+                    <tr>
+                      <th scope="row" className="compare-feature">Minute Expert + badges</th>
+                      <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                      <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                      <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                    </tr>
+
+                    <tr>
+                      <th scope="row" className="compare-feature">Review mode (no timer)</th>
+                      <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                      <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                      <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                    </tr>
+
+                    <tr>
+                      <th scope="row" className="compare-feature">Lesson styles</th>
+                      <td className="compare-cell">
+                        <div className="compare-cell-stack">
+                          <span className="mark yes" aria-label="Available" title="Available">✓</span>
+                          <span className="compare-cell-note">Focus + Dark</span>
+                        </div>
+                      </td>
+                      <td className="compare-cell">
+                        <div className="compare-cell-stack">
+                          <span className="mark yes" aria-label="Available" title="Available">✓</span>
+                          <span className="compare-cell-note">Focus + Dark</span>
+                        </div>
+                      </td>
+                      <td className="compare-cell">
+                        <div className="compare-cell-stack">
+                          <span className="mark yes" aria-label="Available" title="Available">✓</span>
+                          <span className="compare-cell-note">{proLessonStyleCount} styles</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className="compare-notes" aria-label="Plan notes">
+                Guest is for trying instantly. Free requires an account (to save progress). Pro unlocks everything.
+              </div>
             </div>
+
+            <div className="tier-rule">Rule of thumb: without Pro you’ll see <strong>Beginner</strong> topics only.</div>
           </div>
 
           {!user ? (
