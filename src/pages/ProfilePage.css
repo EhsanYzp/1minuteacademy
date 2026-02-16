@@ -1396,3 +1396,128 @@
     grid-column: 1 / -1;
   }
 }
+
+/* Certificates */
+.profile-certificates {
+  margin-top: 6px;
+}
+
+.profile-certificates-empty {
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.65);
+  padding: 14px;
+  color: var(--text-secondary);
+  font-weight: 750;
+}
+
+.profile-certificates-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+@media (max-width: 840px) {
+  .profile-certificates-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.profile-certificate-card {
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.72);
+  overflow: hidden;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.06);
+}
+
+.profile-certificate-preview {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.07) 0%, rgba(78, 205, 196, 0.08) 100%);
+  padding: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.profile-certificate-preview img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: #fff;
+}
+
+.profile-certificate-placeholder {
+  border-radius: 14px;
+  border: 1px dashed rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.55);
+  min-height: 160px;
+  display: grid;
+  place-items: center;
+  gap: 6px;
+  padding: 18px;
+  text-align: center;
+}
+
+.profile-certificate-placeholderIcon {
+  font-size: 1.6rem;
+}
+
+.profile-certificate-placeholderText {
+  color: var(--text-secondary);
+  font-weight: 850;
+}
+
+.profile-certificate-meta {
+  padding: 12px 12px 10px;
+}
+
+.profile-certificate-title {
+  font-weight: 950;
+  letter-spacing: -0.01em;
+  color: rgba(15, 23, 42, 0.95);
+}
+
+.profile-certificate-sub {
+  margin-top: 4px;
+  color: var(--text-secondary);
+  font-weight: 750;
+}
+
+.profile-certificate-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 0 12px 14px;
+}
+
+.profile-certificate-btn {
+  appearance: none;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.85);
+  color: rgba(15, 23, 42, 0.95);
+  padding: 9px 12px;
+  border-radius: 999px;
+  font-weight: 950;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.profile-certificate-btn:hover {
+  border-color: rgba(78, 205, 196, 0.45);
+}
+
+.profile-certificate-btn.primary {
+  background: rgba(37, 99, 235, 0.12);
+  border-color: rgba(37, 99, 235, 0.25);
+  color: var(--color-primary);
+}
+
+.profile-certificate-btn.primary:hover {
+  background: rgba(37, 99, 235, 0.18);
+}
+
+.profile-certificate-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}

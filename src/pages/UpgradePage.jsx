@@ -189,7 +189,7 @@ export default function UpgradePage() {
     <motion.div className="upgrade-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Seo
         title="Pricing"
-        description="Start free. Upgrade to Pro to unlock all topics (including Premium), Minute Expert + badges, and review mode."
+        description="Start free. Upgrade to Pro to unlock all topics (including Premium), certificates, Minute Expert + badges, and review mode."
         path={location?.pathname || '/pricing'}
         canonicalPath="/pricing"
       />
@@ -314,6 +314,7 @@ export default function UpgradePage() {
                 <ul className="pricing-feature-list" aria-label="Pro features">
                   <li><span className="pricing-check" aria-hidden="true">✓</span>All topics (Intermediate + Advanced)</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>Premium topics</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>Certificates (complete a category)</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>Minute Expert + badges</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>Review mode (no timer)</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>Surprise shuffle across all modules</li>
@@ -349,6 +350,10 @@ export default function UpgradePage() {
                 <div className="pricing-glossary-item">
                   <div className="pricing-glossary-term">Minute Expert</div>
                   <div className="pricing-glossary-def">A Pro-only progress reward + badge milestones for completing topics.</div>
+                </div>
+                <div className="pricing-glossary-item">
+                  <div className="pricing-glossary-term">Certificates</div>
+                  <div className="pricing-glossary-def">Pro-only shareable certificates you earn when you complete every module in a category.</div>
                 </div>
                 <div className="pricing-glossary-item">
                   <div className="pricing-glossary-term">Premium topics</div>
@@ -444,6 +449,13 @@ export default function UpgradePage() {
 
                     <tr>
                       <th scope="row" className="compare-feature">Minute Expert + badges</th>
+                      <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                      <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                      <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                    </tr>
+
+                    <tr>
+                      <th scope="row" className="compare-feature">Certificates (complete a category)</th>
                       <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
                       <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
                       <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>

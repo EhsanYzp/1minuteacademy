@@ -7,6 +7,7 @@ import Timer from '../components/Timer';
 import { StoryRenderer, StoryReview } from '../engine/story';
 import { getTopic, listRelatedTopics } from '../services/topics';
 import { completeTopic, getUserStats } from '../services/progress';
+import { generateAndUploadMyCertificate, listMyCertificates } from '../services/certificates';
 import { getContentSource } from '../services/_contentSource';
 import { useAuth } from '../context/AuthContext';
 import { canReview, canStartTopic, canTrackProgress, formatTierLabel, getCurrentTier } from '../services/entitlements';
@@ -647,8 +648,45 @@ function LessonPage() {
       try {
         setSubmittingCompletion(true);
         setCompletionError(null);
+
+        let beforeCertIds = null;
+        if (tier === 'pro') {
+          try {
+            const before = await listMyCertificates();
+            beforeCertIds = new Set(
+              (Array.isArray(before) ? before : []).map((c) => String(c?.id ?? ''))
+            );
+          } catch {
+            beforeCertIds = null;
+          }
+        }
+
         const result = await completeTopic({ topicId, seconds: totalSeconds });
         if (mounted) setCompletionResult(result);
+
+        if (tier === 'pro' && beforeCertIds) {
+          try {
+            const after = await listMyCertificates();
+            const afterRows = Array.isArray(after) ? after : [];
+            const newlyAwarded = afterRows.find((c) => c?.id && !beforeCertIds.has(String(c.id)));
+            if (newlyAwarded) {
+              const subjectLabel = String(newlyAwarded?.subject ?? '').trim();
+              const earnedLabel = subjectLabel ? `${subjectLabel} 1 Minute Expert` : (newlyAwarded?.title ?? 'Category certificate');
+              pushToast({
+                variant: 'celebration',
+                emoji: '📜',
+                title: 'Certificate unlocked',
+                message: `${earnedLabel} — view it in Profile → Certificates.`,
+                durationMs: 10000,
+              });
+
+              // Background-generate assets so the Certificates tab has an instant preview.
+              void generateAndUploadMyCertificate({ certificateRow: newlyAwarded });
+            }
+          } catch {
+            // ignore
+          }
+        }
       } catch (e) {
         if (mounted) setCompletionError(e);
       } finally {
@@ -660,7 +698,7 @@ function LessonPage() {
     return () => {
       mounted = false;
     };
-  }, [isStarted, isCompleted, topicRow, topicId, totalSeconds, canAttemptSaveProgress]);
+  }, [isStarted, isCompleted, topicRow, topicId, totalSeconds, canAttemptSaveProgress, tier]);
 
   // Calculate progress based on time elapsed
   const progress = totalSeconds > 0 ? ((totalSeconds - timeRemaining) / totalSeconds) * 100 : 0;

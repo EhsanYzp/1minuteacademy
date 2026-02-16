@@ -17,6 +17,11 @@ import { listMyTopicRatings, setMyTopicRating } from '../services/ratings';
 import ToastStack from '../components/ToastStack';
 import { EXPERT_BADGES, getNextBadge, getUnlockedBadges } from '../services/badges';
 import {
+  generateAndUploadMyCertificate,
+  getCertificatePublicUrlFromPath,
+  listMyCertificates,
+} from '../services/certificates';
+import {
   buildPresentationStyleOptions,
   canChoosePresentationStyle,
   normalizePresentationStyle,
@@ -138,6 +143,7 @@ export default function ProfilePage() {
   const contentSource = getContentSource();
   const tier = getCurrentTier(user);
   const isPaused = tier === 'paused';
+  const hasProAccess = tier === 'pro' || tier === 'paused';
   const planLabel = formatPlanForProfile(user, tier);
   const showReview = canReview(tier);
 
@@ -826,6 +832,7 @@ export default function ProfilePage() {
       { id: 'preferences', label: 'Preferences' },
       { id: 'progress', label: 'Progress' },
       { id: 'badges', label: 'Badges' },
+      { id: 'certificates', label: 'Certificates' },
       { id: 'ratings', label: 'Ratings' },
     ];
     if (contentSource !== 'local') base.push({ id: 'account', label: 'Account' });
@@ -852,6 +859,8 @@ export default function ProfilePage() {
         return 'See your progress and completed topics.';
       case 'badges':
         return 'Track your Minute Expert badges and milestones.';
+      case 'certificates':
+        return 'Earn shareable certificates by completing entire categories.';
       case 'ratings':
         return 'View and update your module ratings.';
       case 'account':
@@ -863,6 +872,12 @@ export default function ProfilePage() {
   }, [activeTab]);
 
   const [toasts, setToasts] = useState([]);
+
+  const [certificates, setCertificates] = useState([]);
+  const [certLoading, setCertLoading] = useState(false);
+  const [certError, setCertError] = useState(null);
+  const [certBusyId, setCertBusyId] = useState(null);
+  const certAutoAttemptedRef = useRef(new Set());
 
   function dismissToast(id) {
     setToasts((prev) => (Array.isArray(prev) ? prev.filter((t) => t.id !== id) : []));
@@ -945,6 +960,108 @@ export default function ProfilePage() {
       // ignore
     }
   }, [stats, tier, user]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const run = async () => {
+      if (activeTab !== 'certificates') return;
+      if (!user) return;
+      if (contentSource === 'local') return;
+      if (!isSupabaseConfigured) return;
+
+      setCertError(null);
+      setCertLoading(true);
+      try {
+        const rows = await listMyCertificates();
+        if (cancelled) return;
+        setCertificates(Array.isArray(rows) ? rows : []);
+      } catch (e) {
+        if (cancelled) return;
+        setCertError(e);
+      } finally {
+        if (!cancelled) setCertLoading(false);
+      }
+    };
+
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, [activeTab, contentSource, user, isSupabaseConfigured]);
+
+  useEffect(() => {
+    if (activeTab !== 'certificates') return;
+    if (!hasProAccess) return;
+    if (contentSource === 'local') return;
+    if (!isSupabaseConfigured) return;
+    if (certLoading) return;
+    if (certBusyId) return;
+
+    const next = (Array.isArray(certificates) ? certificates : []).find((c) =>
+      c?.id && !c?.png_path && !c?.svg_path && !certAutoAttemptedRef.current.has(String(c.id))
+    );
+    if (!next) return;
+
+    certAutoAttemptedRef.current.add(String(next.id));
+    void onGenerateCertificate(next);
+  }, [activeTab, certBusyId, certLoading, certificates, contentSource, hasProAccess, isSupabaseConfigured]);
+
+  async function onGenerateCertificate(row) {
+    if (!row?.id) return;
+    if (certBusyId) return;
+    setCertBusyId(String(row.id));
+    try {
+      const updated = await generateAndUploadMyCertificate({ certificateRow: row });
+      setCertificates((prev) => (Array.isArray(prev)
+        ? prev.map((c) => (String(c?.id) === String(updated?.id) ? updated : c))
+        : [updated]));
+      pushToast({
+        variant: 'celebration',
+        emoji: '📜',
+        title: 'Certificate generated',
+        message: `${String(updated?.subject ?? 'Category')} certificate is ready.`,
+      });
+    } catch (e) {
+      pushToast({
+        variant: 'error',
+        emoji: '⚠️',
+        title: 'Certificate failed',
+        message: e?.message || 'Could not generate certificate',
+      });
+    } finally {
+      setCertBusyId(null);
+    }
+  }
+
+  async function onShareCertificate(row) {
+    const url = getCertificatePublicUrlFromPath(row?.png_path) || getCertificatePublicUrlFromPath(row?.svg_path);
+    if (!url) {
+      pushToast({ variant: 'error', emoji: '⚠️', title: 'Not ready', message: 'Generate the certificate first.' });
+      return;
+    }
+
+    try {
+      if (navigator?.share) {
+        await navigator.share({
+          title: row?.title ?? 'Certificate',
+          text: row?.title ?? '1 Minute Academy certificate',
+          url,
+        });
+        return;
+      }
+
+      await navigator?.clipboard?.writeText(url);
+      pushToast({ variant: 'success', emoji: '🔗', title: 'Link copied', message: 'Share link copied to clipboard.' });
+    } catch {
+      // Fallback: open in a new tab.
+      try {
+        window?.open(url, '_blank', 'noopener,noreferrer');
+      } catch {
+        // ignore
+      }
+    }
+  }
 
   function setActiveTab(next) {
     const wanted = String(next ?? '').trim().toLowerCase();
@@ -1139,6 +1256,114 @@ export default function ProfilePage() {
                         </div>
                       );
                     })()}
+                  </div>
+                </>
+              )}
+
+              {activeTab === 'certificates' && (
+                <>
+                  <div className="profile-section-header profile-section-header-spaced">
+                    <h2>Certificates</h2>
+                    <div className="profile-section-sub">Earn a certificate when you complete every module in a category.</div>
+                  </div>
+
+                  {!hasProAccess && contentSource !== 'local' ? (
+                    <div className="profile-note" style={{ marginBottom: 12 }}>
+                      <strong>Pro feature</strong>
+                      <div>Certificates are Pro-only. Upgrade to start earning category certificates.</div>
+                      <div style={{ marginTop: 10 }}>
+                        <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
+                      </div>
+                    </div>
+                  ) : null}
+
+                  {contentSource === 'local' ? (
+                    <div className="profile-note" style={{ marginBottom: 12 }}>
+                      <strong>Local Preview mode</strong>
+                      <div>Certificates require Supabase (Storage + DB).</div>
+                    </div>
+                  ) : null}
+
+                  {certError ? (
+                    <div className="profile-error">{certError?.message ?? 'Failed to load certificates.'}</div>
+                  ) : null}
+
+                  <div className="profile-certificates" aria-label="Certificates">
+                    {certLoading ? (
+                      <div className="profile-certificates-empty">Loading certificates…</div>
+                    ) : certificates.length === 0 ? (
+                      <div className="profile-certificates-empty">
+                        {hasProAccess
+                          ? 'No certificates yet. Complete an entire category to earn one.'
+                          : 'Certificates appear here after you upgrade and complete a category.'}
+                      </div>
+                    ) : (
+                      <div className="profile-certificates-grid">
+                        {certificates.map((c) => {
+                          const pngUrl = getCertificatePublicUrlFromPath(c?.png_path);
+                          const svgUrl = getCertificatePublicUrlFromPath(c?.svg_path);
+                          const viewUrl = pngUrl || svgUrl;
+                          const ready = Boolean(viewUrl);
+                          const busy = certBusyId && String(certBusyId) === String(c?.id);
+                          const subtitle = c?.awarded_at ? `Awarded ${fmtShortDate(c.awarded_at)}` : 'Awarded';
+                          const progressNote = (Number(c?.total_topics ?? 0) > 0)
+                            ? `${Number(c?.completed_topics ?? 0)}/${Number(c?.total_topics ?? 0)} modules` : null;
+
+                          return (
+                            <div key={c.id} className="profile-certificate-card">
+                              <div className="profile-certificate-preview" aria-label="Certificate preview">
+                                {ready ? (
+                                  <img src={viewUrl} alt={c?.title ?? 'Certificate'} loading="lazy" />
+                                ) : (
+                                  <div className="profile-certificate-placeholder">
+                                    <div className="profile-certificate-placeholderIcon">📜</div>
+                                    <div className="profile-certificate-placeholderText">Generate to preview</div>
+                                  </div>
+                                )}
+                              </div>
+
+                              <div className="profile-certificate-meta">
+                                <div className="profile-certificate-title">{c?.title ?? 'Certificate'}</div>
+                                <div className="profile-certificate-sub">{subtitle}{progressNote ? ` • ${progressNote}` : ''}</div>
+                              </div>
+
+                              <div className="profile-certificate-actions">
+                                {!ready ? (
+                                  <button
+                                    type="button"
+                                    className="profile-certificate-btn primary"
+                                    onClick={() => onGenerateCertificate(c)}
+                                    disabled={!hasProAccess || busy}
+                                    title={!hasProAccess ? 'Pro only' : 'Generate certificate assets'}
+                                  >
+                                    {busy ? 'Generating…' : 'Generate'}
+                                  </button>
+                                ) : (
+                                  <>
+                                    <a className="profile-certificate-btn primary" href={viewUrl} target="_blank" rel="noreferrer">
+                                      View
+                                    </a>
+                                    <a className="profile-certificate-btn" href={viewUrl} download>
+                                      Download
+                                    </a>
+                                  </>
+                                )}
+
+                                <button
+                                  type="button"
+                                  className="profile-certificate-btn"
+                                  onClick={() => onShareCertificate(c)}
+                                  disabled={!hasProAccess}
+                                  title={!hasProAccess ? 'Pro only' : 'Copy a share link'}
+                                >
+                                  Share
+                                </button>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
                 </>
               )}
