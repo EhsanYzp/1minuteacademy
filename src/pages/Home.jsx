@@ -61,7 +61,10 @@ function SlotReel({ label, sequence, finalIndex, durationMs, onDone }) {
     doneRef.current = false;
     const run = async () => {
       await controls.set({ y: 0 });
-      const targetY = -Math.max(0, (finalIndex - 1) * SLOT_ITEM_HEIGHT);
+      // The slot window renders 3 rows, and the highlight is on the middle row.
+      // Align the chosen (finalIndex) item to that middle row for 100% visual sync.
+      const highlightRowIndex = 2; // 1-based row index within the 3-row window
+      const targetY = -Math.max(0, (finalIndex - highlightRowIndex) * SLOT_ITEM_HEIGHT);
       await controls.start({
         y: targetY,
         transition: {
