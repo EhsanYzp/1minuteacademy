@@ -14,6 +14,8 @@ import { deleteAccount, pauseAccount, resumeAccount } from '../services/account'
 import { getMyProfile, updateMyProfile, uploadMyAvatar } from '../services/profiles';
 import StarRating from '../components/StarRating';
 import { listMyTopicRatings, setMyTopicRating } from '../services/ratings';
+import ToastStack from '../components/ToastStack';
+import { EXPERT_BADGES, getNextBadge, getUnlockedBadges } from '../services/badges';
 import {
   buildPresentationStyleOptions,
   canChoosePresentationStyle,
@@ -22,39 +24,6 @@ import {
   saveStoryPresentationStyle,
 } from '../services/presentationStyle';
 import './ProfilePage.css';
-
-const EXPERT_BADGES = [
-  { minutes: 1, emoji: '🌱', name: 'Seedling' },
-  { minutes: 2, emoji: '🪴', name: 'Sprout' },
-  { minutes: 3, emoji: '✨', name: 'Spark' },
-  { minutes: 4, emoji: '🧠', name: 'Mind Awake' },
-  { minutes: 5, emoji: '🔥', name: 'Warm‑Up' },
-  { minutes: 7, emoji: '⚙️', name: 'Momentum' },
-  { minutes: 10, emoji: '⚡️', name: 'Charged' },
-  { minutes: 12, emoji: '🧭', name: 'Explorer' },
-  { minutes: 15, emoji: '🧩', name: 'Pattern Finder' },
-  { minutes: 20, emoji: '🚀', name: 'Lift‑Off' },
-  { minutes: 25, emoji: '🎯', name: 'On Target' },
-  { minutes: 30, emoji: '🏃‍♂️', name: 'Steady Pace' },
-  { minutes: 40, emoji: '🛡️', name: 'Reliable' },
-  { minutes: 50, emoji: '💎', name: 'Polished' },
-  { minutes: 60, emoji: '⏱️', name: 'One‑Hour Expert' },
-  { minutes: 75, emoji: '🌊', name: 'Flow State' },
-  { minutes: 90, emoji: '🧪', name: 'Experimenter' },
-  { minutes: 100, emoji: '🏅', name: 'Centurion' },
-  { minutes: 125, emoji: '📚', name: 'Scholar' },
-  { minutes: 150, emoji: '🔭', name: 'Deep Focus' },
-  { minutes: 200, emoji: '🧱', name: 'Builder' },
-  { minutes: 250, emoji: '🗺️', name: 'Trailblazer' },
-  { minutes: 300, emoji: '🦾', name: 'Unstoppable' },
-  { minutes: 400, emoji: '🌟', name: 'Standout' },
-  { minutes: 500, emoji: '🎖️', name: 'Master' },
-  { minutes: 600, emoji: '🏛️', name: 'Architect' },
-  { minutes: 750, emoji: '🧬', name: 'Specialist' },
-  { minutes: 1000, emoji: '👑', name: 'Legend' },
-  { minutes: 1500, emoji: '🪐', name: 'Mythic' },
-  { minutes: 2000, emoji: '🏆', name: 'Grandmaster' },
-];
 
 function getBadgeRarity(minutesRequired) {
   const n = Number(minutesRequired) || 0;
@@ -69,14 +38,13 @@ function formatMinuteExpert(minutes) {
   return `${n}-minute Expert`;
 }
 
-function getUnlockedBadges(minutes) {
-  const n = Math.max(0, Math.floor(Number(minutes) || 0));
-  return EXPERT_BADGES.filter((b) => n >= b.minutes);
-}
 
-function getNextBadge(minutes) {
-  const n = Math.max(0, Math.floor(Number(minutes) || 0));
-  return EXPERT_BADGES.find((b) => b.minutes > n) ?? null;
+function makeToastId() {
+  try {
+    return `${Date.now()}_${Math.random().toString(16).slice(2)}`;
+  } catch {
+    return String(Date.now());
+  }
 }
 
 function fmtDate(iso) {
@@ -894,6 +862,90 @@ export default function ProfilePage() {
     }
   }, [activeTab]);
 
+  const [toasts, setToasts] = useState([]);
+
+  function dismissToast(id) {
+    setToasts((prev) => (Array.isArray(prev) ? prev.filter((t) => t.id !== id) : []));
+  }
+
+  function pushToast(toast) {
+    const t = { id: makeToastId(), ...toast };
+    setToasts((prev) => {
+      const arr = Array.isArray(prev) ? prev : [];
+      // Keep the stack compact.
+      const next = [t, ...arr].slice(0, 4);
+      return next;
+    });
+    // Auto-dismiss.
+    setTimeout(() => dismissToast(t.id), 5200);
+  }
+
+  // Celebration toasts for newly-unlocked badges.
+  useEffect(() => {
+    if (!stats) return;
+    if (tier !== 'pro') return;
+
+    const currentMinutes = Math.max(0, Math.floor(Number(stats?.expert_minutes ?? 0) || 0));
+    const userId = String(user?.id ?? 'local');
+    const key = `oma_badges_last_minutes_${userId}`;
+
+    let prevMinutes = null;
+    try {
+      const raw = window?.localStorage?.getItem(key);
+      const n = raw == null ? null : Number(raw);
+      prevMinutes = Number.isFinite(n) ? Math.max(0, Math.floor(n)) : null;
+    } catch {
+      prevMinutes = null;
+    }
+
+    // First time (or storage cleared): record baseline without spamming the user.
+    if (prevMinutes == null) {
+      try {
+        window?.localStorage?.setItem(key, String(currentMinutes));
+      } catch {
+        // ignore
+      }
+      return;
+    }
+
+    if (currentMinutes <= prevMinutes) return;
+
+    const newlyUnlocked = EXPERT_BADGES.filter((b) => prevMinutes < b.minutes && currentMinutes >= b.minutes);
+    if (newlyUnlocked.length === 0) {
+      try {
+        window?.localStorage?.setItem(key, String(currentMinutes));
+      } catch {
+        // ignore
+      }
+      return;
+    }
+
+    // Show up to 3 badge toasts; summarize the rest.
+    const top = newlyUnlocked.slice(0, 3);
+    for (const b of top) {
+      pushToast({
+        variant: 'celebration',
+        emoji: b.emoji,
+        title: 'Badge unlocked',
+        message: `${b.name} — unlocked at ${b.minutes} min`,
+      });
+    }
+    if (newlyUnlocked.length > 3) {
+      pushToast({
+        variant: 'celebration',
+        emoji: '🎉',
+        title: 'More badges unlocked',
+        message: `+${newlyUnlocked.length - 3} more`,
+      });
+    }
+
+    try {
+      window?.localStorage?.setItem(key, String(currentMinutes));
+    } catch {
+      // ignore
+    }
+  }, [stats, tier, user]);
+
   function setActiveTab(next) {
     const wanted = String(next ?? '').trim().toLowerCase();
     const allowed = new Set(visibleTabs.map((t) => t.id));
@@ -920,6 +972,8 @@ export default function ProfilePage() {
     <motion.div className="profile-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Seo title="Your profile" description="Manage your account and preferences." path="/me" canonicalPath="/me" noindex />
       <Header />
+
+      <ToastStack toasts={toasts} onDismiss={dismissToast} />
 
       <main className="profile-main">
         <div className="profile-top">

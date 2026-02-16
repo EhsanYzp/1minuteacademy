@@ -15,6 +15,8 @@ import StarRating from '../components/StarRating';
 import { getMyTopicRating, setMyTopicRating } from '../services/ratings';
 import { compileJourneyFromTopic } from '../engine/journey/compileJourney';
 import JourneyBlocks from '../engine/journey/JourneyBlocks';
+import ToastStack from '../components/ToastStack';
+import { getNewlyUnlockedBadges } from '../services/badges';
 import {
   buildPresentationStyleOptions,
   canChoosePresentationStyle,
@@ -82,6 +84,65 @@ function LessonPage() {
   const submittedCompletionRef = useRef(false);
   const timerDeadlineMsRef = useRef(null);
   const timerCompletedRef = useRef(false);
+  const badgeToastFiredRef = useRef(false);
+
+  const [toasts, setToasts] = useState([]);
+
+  function dismissToast(id) {
+    setToasts((prev) => (Array.isArray(prev) ? prev.filter((t) => t.id !== id) : []));
+  }
+
+  function pushToast(toast) {
+    const t = {
+      id: `${Date.now()}_${Math.random().toString(16).slice(2)}`,
+      ...toast,
+    };
+    setToasts((prev) => {
+      const arr = Array.isArray(prev) ? prev : [];
+      return [t, ...arr].slice(0, 4);
+    });
+    const ms = Number(toast?.durationMs ?? 8000);
+    setTimeout(() => dismissToast(t.id), Number.isFinite(ms) ? Math.max(2500, ms) : 8000);
+  }
+
+  useEffect(() => {
+    if (!completionResult) return;
+    if (badgeToastFiredRef.current) return;
+    if (tier !== 'pro') return;
+    if (Number(completionResult?.awarded_minutes ?? 0) <= 0) return;
+
+    const nextMinutes = Math.max(0, Math.floor(Number(completionResult?.expert_minutes ?? 0) || 0));
+    const awarded = Math.max(0, Math.floor(Number(completionResult?.awarded_minutes ?? 0) || 0));
+    const prevMinutes = Math.max(0, nextMinutes - awarded);
+
+    const newlyUnlocked = getNewlyUnlockedBadges(prevMinutes, nextMinutes);
+    if (newlyUnlocked.length === 0) {
+      badgeToastFiredRef.current = true;
+      return;
+    }
+
+    badgeToastFiredRef.current = true;
+
+    const top = newlyUnlocked.slice(0, 3);
+    for (const b of top) {
+      pushToast({
+        variant: 'celebration',
+        emoji: b.emoji,
+        title: 'Badge unlocked',
+        message: `${b.name} — ${b.minutes} min milestone`,
+        durationMs: 8000,
+      });
+    }
+    if (newlyUnlocked.length > 3) {
+      pushToast({
+        variant: 'celebration',
+        emoji: '🎉',
+        title: 'More badges unlocked',
+        message: `+${newlyUnlocked.length - 3} more`,
+        durationMs: 8000,
+      });
+    }
+  }, [completionResult, tier]);
 
   const isLessonActive = isStarted && !isCompleted && timeRemaining > 0;
 
@@ -650,6 +711,7 @@ function LessonPage() {
       ) : isCompleted ? (
         <>
           <Header />
+          <ToastStack toasts={toasts} onDismiss={dismissToast} />
           <motion.div 
             className="completion-screen"
             initial={{ scale: 0.8, opacity: 0 }}
