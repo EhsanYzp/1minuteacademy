@@ -240,3 +240,26 @@ export async function generateAndUploadMyCertificate({ certificateRow }) {
   if (updateErr) throw updateErr;
   return updated;
 }
+
+export async function updateMyCertificateRecipient({ certificateId, recipientName, recipientAvatarUrl = null }) {
+  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+  const supabase = requireSupabase();
+
+  const id = String(certificateId ?? '').trim();
+  if (!id) throw new Error('Invalid certificate');
+
+  const nextName = String(recipientName ?? '').trim();
+  if (!nextName) throw new Error('Recipient name is required');
+
+  const nextAvatar = recipientAvatarUrl ? String(recipientAvatarUrl) : null;
+
+  const { data: updated, error } = await supabase
+    .from('user_certificates')
+    .update({ recipient_name: nextName, recipient_avatar_url: nextAvatar })
+    .eq('id', id)
+    .select('id, user_id, subject, title, recipient_name, recipient_avatar_url, total_topics, completed_topics, awarded_at, svg_path, png_path, created_at, updated_at')
+    .single();
+
+  if (error) throw error;
+  return updated;
+}

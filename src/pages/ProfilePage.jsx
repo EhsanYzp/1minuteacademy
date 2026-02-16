@@ -20,6 +20,7 @@ import {
   generateAndUploadMyCertificate,
   getCertificatePublicUrlFromPath,
   listMyCertificates,
+  updateMyCertificateRecipient,
 } from '../services/certificates';
 import {
   buildPresentationStyleOptions,
@@ -877,6 +878,8 @@ export default function ProfilePage() {
   const [certLoading, setCertLoading] = useState(false);
   const [certError, setCertError] = useState(null);
   const [certBusyId, setCertBusyId] = useState(null);
+  const [certBulkBusy, setCertBulkBusy] = useState(false);
+  const [certBulkProgress, setCertBulkProgress] = useState(null); // { done: number, total: number } | null
   const certAutoAttemptedRef = useRef(new Set());
 
   function dismissToast(id) {
@@ -1009,7 +1012,7 @@ export default function ProfilePage() {
 
   async function onGenerateCertificate(row) {
     if (!row?.id) return;
-    if (certBusyId) return;
+    if (certBusyId || certBulkBusy) return;
     setCertBusyId(String(row.id));
     try {
       const updated = await generateAndUploadMyCertificate({ certificateRow: row });
@@ -1031,6 +1034,101 @@ export default function ProfilePage() {
       });
     } finally {
       setCertBusyId(null);
+    }
+  }
+
+  function resolveCurrentRecipientName() {
+    const trimmed = String(displayName ?? '').trim();
+    if (trimmed) return trimmed;
+    const email = String(user?.email ?? '').trim();
+    return email || 'Member';
+  }
+
+  async function onRegenerateCertificate(row) {
+    if (!row?.id) return;
+    if (!hasProAccess) return;
+    if (certBusyId || certBulkBusy) return;
+
+    setCertBusyId(String(row.id));
+    try {
+      const updatedRecipientRow = await updateMyCertificateRecipient({
+        certificateId: row.id,
+        recipientName: resolveCurrentRecipientName(),
+        recipientAvatarUrl: String(avatarUrl ?? '') || null,
+      });
+
+      const updated = await generateAndUploadMyCertificate({ certificateRow: updatedRecipientRow });
+      setCertificates((prev) => (Array.isArray(prev)
+        ? prev.map((c) => (String(c?.id) === String(updated?.id) ? updated : c))
+        : [updated]));
+
+      pushToast({
+        variant: 'success',
+        emoji: '♻️',
+        title: 'Certificate regenerated',
+        message: `${String(updated?.subject ?? 'Category')} now uses your current name.`,
+      });
+    } catch (e) {
+      pushToast({
+        variant: 'error',
+        emoji: '⚠️',
+        title: 'Regeneration failed',
+        message: e?.message || 'Could not regenerate certificate',
+      });
+    } finally {
+      setCertBusyId(null);
+    }
+  }
+
+  async function onRegenerateAllCertificates() {
+    if (!hasProAccess) return;
+    if (certBusyId || certBulkBusy) return;
+    if (!Array.isArray(certificates) || certificates.length === 0) return;
+
+    setCertBulkBusy(true);
+    setCertBulkProgress({ done: 0, total: certificates.length });
+    setCertError(null);
+
+    try {
+      const ordered = [...certificates].sort((a, b) => {
+        const ax = String(a?.awarded_at ?? a?.created_at ?? '');
+        const bx = String(b?.awarded_at ?? b?.created_at ?? '');
+        return bx.localeCompare(ax);
+      });
+
+      let done = 0;
+      for (const row of ordered) {
+        const updatedRecipientRow = await updateMyCertificateRecipient({
+          certificateId: row.id,
+          recipientName: resolveCurrentRecipientName(),
+          recipientAvatarUrl: String(avatarUrl ?? '') || null,
+        });
+
+        const updated = await generateAndUploadMyCertificate({ certificateRow: updatedRecipientRow });
+        setCertificates((prev) => (Array.isArray(prev)
+          ? prev.map((c) => (String(c?.id) === String(updated?.id) ? updated : c))
+          : [updated]));
+
+        done += 1;
+        setCertBulkProgress({ done, total: ordered.length });
+      }
+
+      pushToast({
+        variant: 'success',
+        emoji: '✅',
+        title: 'All certificates updated',
+        message: 'Regenerated using your current display name.',
+      });
+    } catch (e) {
+      pushToast({
+        variant: 'error',
+        emoji: '⚠️',
+        title: 'Bulk regeneration failed',
+        message: e?.message || 'Could not regenerate all certificates',
+      });
+    } finally {
+      setCertBulkBusy(false);
+      setCertBulkProgress(null);
     }
   }
 
@@ -1267,6 +1365,25 @@ export default function ProfilePage() {
                     <div className="profile-section-sub">Earn a certificate when you complete every module in a category.</div>
                   </div>
 
+                  {hasProAccess && certificates.length > 0 ? (
+                    <div className="profile-certificates-toolbar">
+                      <button
+                        type="button"
+                        className="profile-certificate-btn primary"
+                        onClick={onRegenerateAllCertificates}
+                        disabled={certBulkBusy || Boolean(certBusyId)}
+                        title="Regenerate all certificates using your current display name"
+                      >
+                        {certBulkBusy
+                          ? `Regenerating… (${certBulkProgress?.done ?? 0}/${certBulkProgress?.total ?? certificates.length})`
+                          : 'Regenerate all (current name)'}
+                      </button>
+                      <div className="profile-certificates-toolbarNote">
+                        Uses your current display name: <strong>{resolveCurrentRecipientName()}</strong>
+                      </div>
+                    </div>
+                  ) : null}
+
                   {!hasProAccess && contentSource !== 'local' ? (
                     <div className="profile-note" style={{ marginBottom: 12 }}>
                       <strong>Pro feature</strong>
@@ -1348,6 +1465,16 @@ export default function ProfilePage() {
                                     </a>
                                   </>
                                 )}
+
+                                <button
+                                  type="button"
+                                  className="profile-certificate-btn"
+                                  onClick={() => onRegenerateCertificate(c)}
+                                  disabled={!hasProAccess || busy}
+                                  title={!hasProAccess ? 'Pro only' : 'Regenerate using your current display name'}
+                                >
+                                  Regenerate
+                                </button>
 
                                 <button
                                   type="button"
