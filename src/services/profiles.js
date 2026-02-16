@@ -102,11 +102,29 @@ export async function uploadMyAvatar(file) {
   const ext = rawExt.toLowerCase().replace(/[^a-z0-9]+/g, '').slice(0, 8);
   const safeExt = ext || (mime === 'image/png' ? 'png' : mime === 'image/webp' ? 'webp' : 'jpg');
 
-  const objectPath = `${user.id}/avatar.${safeExt}`;
+  const folder = `${user.id}`;
+  const objectPath = `${folder}/avatar_${Date.now()}.${safeExt}`;
+
+  // Best-effort cleanup of older avatars to prevent clutter.
+  // Also helps avoid any caching surprises if some clients still reference older URLs.
+  try {
+    const { data: existing } = await supabase.storage.from('avatars').list(folder, { limit: 50, offset: 0 });
+    const toRemove = (Array.isArray(existing) ? existing : [])
+      .map((o) => String(o?.name ?? ''))
+      .filter(Boolean)
+      .filter((name) => name.startsWith('avatar_') || name.startsWith('avatar.'))
+      .map((name) => `${folder}/${name}`);
+
+    if (toRemove.length > 0) {
+      await supabase.storage.from('avatars').remove(toRemove);
+    }
+  } catch {
+    // ignore cleanup errors
+  }
 
   const { error: uploadErr } = await supabase.storage.from('avatars').upload(objectPath, f, {
-    upsert: true,
-    cacheControl: '3600',
+    upsert: false,
+    cacheControl: '0',
     contentType: mime || undefined,
   });
 
@@ -116,6 +134,6 @@ export async function uploadMyAvatar(file) {
   const publicUrl = data?.publicUrl;
   if (!publicUrl) throw new Error('Failed to resolve avatar URL');
 
-  // Cache-bust so the new avatar shows immediately.
-  return `${publicUrl}?v=${Date.now()}`;
+  // Path changes every upload, so it naturally cache-busts.
+  return publicUrl;
 }

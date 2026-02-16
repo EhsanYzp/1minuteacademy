@@ -51,7 +51,7 @@ async function tryFetchAsDataUrl(url) {
   const u = String(url ?? '').trim();
   if (!u) return null;
   try {
-    const res = await fetch(u, { mode: 'cors', credentials: 'omit' });
+    const res = await fetch(u, { mode: 'cors', credentials: 'omit', cache: 'no-store' });
     if (!res.ok) return null;
     const blob = await res.blob();
     if (!blob || !blob.type) return null;
@@ -77,9 +77,10 @@ function buildCertificateSvg({
   const id = escapeXml(String(certificateId ?? '').slice(0, 36));
   const subj = escapeXml(subject ?? 'General');
   const name = escapeXml(recipientName ?? 'Member');
-  const initials = escapeXml(initialsFromName(recipientName));
   const dateLabel = escapeXml(fmtShortDate(awardedAt) || fmtShortDate(new Date().toISOString()));
   const avatarHref = recipientAvatarDataUrl ? escapeXml(recipientAvatarDataUrl) : '';
+  const hasAvatar = Boolean(avatarHref);
+  const yShift = hasAvatar ? 0 : -84;
 
   // A4 landscape-ish at 1600x1131 (keeps crisp PNG previews).
   const w = 1600;
@@ -147,27 +148,27 @@ function buildCertificateSvg({
 
     <text x="800" y="310" text-anchor="middle" font-family="ui-serif, Georgia, 'Times New Roman'" font-size="64" font-weight="900" fill="#0b1220" opacity="0.93">Certificate of Completion</text>
 
-    <!-- Avatar badge -->
+    ${hasAvatar ? `<!-- Avatar badge -->
     <g transform="translate(800 392)">
       <circle cx="0" cy="0" r="68" fill="url(#accent)" opacity="0.18"/>
       <circle cx="0" cy="0" r="62" fill="#fff" stroke="#0b1220" stroke-opacity="0.10" stroke-width="2"/>
-      ${avatarHref ? `<g clip-path="url(#avatarClip)" transform="translate(0 0)">
+      <g clip-path="url(#avatarClip)" transform="translate(0 0)">
         <image href="${avatarHref}" x="-54" y="-54" width="108" height="108" preserveAspectRatio="xMidYMid slice" />
-      </g>` : `<text x="0" y="14" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system" font-size="34" font-weight="950" fill="#0b1220" opacity="0.80">${initials}</text>`}
+      </g>
       <circle cx="0" cy="0" r="54" fill="none" stroke="url(#accent)" stroke-width="6" opacity="0.60"/>
-    </g>
+    </g>` : ''}
 
     <!-- Recipient -->
-    <text x="800" y="505" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system" font-size="22" font-weight="850" fill="#0b1220" opacity="0.56">This certifies that</text>
-    <text x="800" y="585" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system" font-size="60" font-weight="950" fill="#0b1220" opacity="0.95">${name}</text>
+    <text x="800" y="${505 + yShift}" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system" font-size="22" font-weight="850" fill="#0b1220" opacity="0.56">This certifies that</text>
+    <text x="800" y="${585 + yShift}" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system" font-size="60" font-weight="950" fill="#0b1220" opacity="0.95">${name}</text>
 
-    <text x="800" y="655" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system" font-size="22" font-weight="850" fill="#0b1220" opacity="0.56">has completed every module in</text>
+    <text x="800" y="${655 + yShift}" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system" font-size="22" font-weight="850" fill="#0b1220" opacity="0.56">has completed every module in</text>
 
     <!-- Subject award -->
-    <text x="800" y="745" text-anchor="middle" font-family="ui-serif, Georgia, 'Times New Roman'" font-size="54" font-weight="900" fill="#0b1220" opacity="0.93">${subj}</text>
+    <text x="800" y="${745 + yShift}" text-anchor="middle" font-family="ui-serif, Georgia, 'Times New Roman'" font-size="54" font-weight="900" fill="#0b1220" opacity="0.93">${subj}</text>
 
     <!-- Ribbon title -->
-    <g transform="translate(480 780)">
+    <g transform="translate(480 ${780 + yShift})">
       <path d="M60 0 H580 a26 26 0 0 1 26 26 v34 a26 26 0 0 1 -26 26 H60 a26 26 0 0 1 -26 -26 V26 A26 26 0 0 1 60 0 Z" fill="url(#ribbon)" opacity="0.95"/>
       <path d="M34 26 L0 43 L34 60" fill="#f59e0b" opacity="0.70"/>
       <path d="M666 26 L700 43 L666 60" fill="#f59e0b" opacity="0.70"/>
