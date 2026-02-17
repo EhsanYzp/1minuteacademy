@@ -198,6 +198,10 @@ The dev-only module-check feature (~190 lines of state, SSE logic, and modal UI)
 
 **Fix:** Extract the module-check feature into a separate `DevModuleCheck` component.
 
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Extracted the dev-only module-check UI/state/SSE streaming into `DevModuleCheck`, reducing `TopicsBrowserPage.jsx` from 875 → 640 lines while keeping behavior the same.
+
 ---
 
 #### CQ-04 · Duplicated utility functions across API files *(Unchanged)*
