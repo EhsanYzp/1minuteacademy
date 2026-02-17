@@ -166,9 +166,13 @@ There is no catch-all `*` route in the router configuration. Any URL that doesn'
 
 **Where:** [src/pages/LessonPage.jsx](../../src/pages/LessonPage.jsx)
 
-Grown from ~695 → **921 lines** (+33%) due to certificate-unlock detection and post-completion UI. The main `useMemo` is **~243 lines** containing 8 distinct inline JSX factories (completion screen, topbar, related topics, confetti, etc.). No `CompletionScreen` or `LessonTopbar` components have been extracted.
+Previously grown from ~695 → **921 lines** (+33%) due to certificate-unlock detection and post-completion UI.
 
-**Fix:** Extract into separate components: `CompletionScreen`, `LessonTopbar`, `RelatedTopics`.
+**Fix:** Extract into separate components: `CompletionScreen`, `LessonTopbar` (and optionally `RelatedTopics`).
+
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Extracted the lesson topbar and completion UI into `LessonTopbar` and `CompletionScreen`, reducing `LessonPage.jsx` from 921 → 791 lines and removing large inline JSX blocks.
 
 ---
 

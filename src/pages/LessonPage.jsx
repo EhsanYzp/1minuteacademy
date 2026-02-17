@@ -16,6 +16,8 @@ import { getMyTopicRating, setMyTopicRating } from '../services/ratings';
 import { compileJourneyFromTopic } from '../engine/journey/compileJourney';
 import JourneyBlocks from '../engine/journey/JourneyBlocks';
 import ToastStack from '../components/ToastStack';
+import LessonTopbar from '../components/lesson/LessonTopbar';
+import CompletionScreen from '../components/lesson/CompletionScreen';
 import { getNewlyUnlockedBadges } from '../services/badges';
 import {
   buildPresentationStyleOptions,
@@ -383,40 +385,17 @@ function LessonPage() {
       ),
       // Lesson page block renderers
       renderLessonTopbar: () => (
-        <div className="story-topbar">
-          <button className="story-close-btn" onClick={() => navigate(`/topic/${topicId}`)} aria-label="Close">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-          <div className="story-topic-title">
-            <span className="story-topic-emoji">{topicRow?.emoji || '📚'}</span>
-            <span className="story-topic-name">{topicRow?.title || 'Learning...'}</span>
-          </div>
-          <div className="story-topbar-right">
-            {canChoosePresentation ? (
-              <label className="story-style">
-                <span className="story-style-label">Style</span>
-                <select
-                  className="story-style-select"
-                  value={storyPresentationStyle}
-                  onChange={(e) => onChangeStoryPresentationStyle(e.target.value)}
-                  disabled={storyStyleBusy}
-                  aria-label="Lesson presentation style"
-                >
-                  {presentationStyleOptions.map((s) => (
-                    <option key={s.id} value={s.id} disabled={Boolean(s.disabled)}>{s.label}</option>
-                  ))}
-                </select>
-              </label>
-            ) : null}
-
-            <div className="story-timer-large">
-              <span className="story-timer-value">{Math.floor(timeRemaining / 60)}:{(timeRemaining % 60).toString().padStart(2, '0')}</span>
-            </div>
-          </div>
-        </div>
+        <LessonTopbar
+          topicEmoji={topicRow?.emoji}
+          topicTitle={topicRow?.title}
+          onClose={() => navigate(`/topic/${topicId}`)}
+          canChoosePresentation={canChoosePresentation}
+          storyPresentationStyle={storyPresentationStyle}
+          onChangeStoryPresentationStyle={onChangeStoryPresentationStyle}
+          storyStyleBusy={storyStyleBusy}
+          presentationStyleOptions={presentationStyleOptions}
+          timeRemaining={timeRemaining}
+        />
       ),
       renderStoryBeats: () => (
         <StoryRenderer
@@ -788,122 +767,14 @@ function LessonPage() {
           presentationStyleOptions={presentationStyleOptions}
         />
       ) : isCompleted ? (
-        <>
-          <Header />
-          <ToastStack toasts={toasts} onDismiss={dismissToast} />
-          <motion.div 
-            className="completion-screen"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-          >
-            <div className="completion-backdrop" aria-hidden="true" />
-            <motion.div className="completion-content" initial={{ y: 50 }} animate={{ y: 0 }}>
-              <motion.div
-                className="completion-emoji"
-                animate={{ scale: [1, 1.2, 1], rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 0.5, repeat: 3 }}
-              >
-                🎉
-              </motion.div>
-
-              <JourneyBlocks
-                blocks={journey?.completion?.blocks}
-                ctx={journeyCtx}
-                allowedTypes={[
-                  'hero',
-                  'completionStats',
-                  'proPerkPanel',
-                  'oneMaAwardPanel',
-                  'completionProgress',
-
-                  'ratingPrompt',
-                  'cta',
-                  'ctaRow',
-                ]}
-              />
-
-              {Array.isArray(relatedTopics) && relatedTopics.length > 0 && (
-                <section className="related-topics related-topics--completion" aria-label="Related topics">
-                  <div className="related-topics__header">
-                    <div>
-                      <div className="related-topics__kicker">Up next</div>
-                      <div className="related-topics__title">
-                        Related topics{topicRow?.subject ? ` in ${String(topicRow.subject)}` : ''}
-                      </div>
-                      {topicRow?.subcategory ? (
-                        <div className="related-topics__sub">Subcategory: {String(topicRow.subcategory)}</div>
-                      ) : null}
-                    </div>
-                    <ReactRouterDom.Link className="related-topics__cta" to="/topics">
-                      Browse all →
-                    </ReactRouterDom.Link>
-                  </div>
-
-                  <div className="related-topics__grid">
-                    {relatedTopics.map((t) => (
-                      <ReactRouterDom.Link
-                        key={t.id}
-                        to={`/topic/${t.id}`}
-                        className="related-topic-card"
-                        style={{ '--rel-color': t?.color ?? '#4ECDC4' }}
-                      >
-                        <div className="related-topic-card__top">
-                          <div className="related-topic-card__emoji" aria-hidden>
-                            {t.emoji ?? '🎯'}
-                          </div>
-                          <div className="related-topic-card__text">
-                            <div className="related-topic-card__title">{t.title}</div>
-                            {t?.description ? (
-                              <div className="related-topic-card__desc">{t.description}</div>
-                            ) : null}
-                          </div>
-                        </div>
-
-                        <div className="related-topic-card__meta">
-                          {t?.difficulty ? (
-                            <span className="related-topic-card__badge">📊 {t.difficulty}</span>
-                          ) : null}
-                          {t?.subcategory ? (
-                            <span className="related-topic-card__badge related-topic-card__badge--muted">{t.subcategory}</span>
-                          ) : null}
-                        </div>
-                      </ReactRouterDom.Link>
-                    ))}
-                  </div>
-                </section>
-              )}
-            </motion.div>
-            
-            {/* Confetti Effect (lightweight) */}
-            <div className="confetti-container" aria-hidden="true">
-              {[...Array(12)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="confetti"
-                  style={{
-                    left: `${(i * 8 + 6) % 100}%`,
-                    width: `${8 + (i % 4) * 4}px`,
-                    height: `${8 + ((i + 2) % 4) * 4}px`,
-                    borderRadius: i % 3 === 0 ? '999px' : '6px',
-                    backgroundColor: ['#2563EB', '#4ECDC4', '#FFE66D', '#0EA5E9', '#FF9F43'][i % 5],
-                    opacity: 0.85,
-                  }}
-                  initial={{ y: -20, opacity: 1 }}
-                  animate={{ 
-                    y: '100vh',
-                    rotate: 180 + i * 90,
-                    opacity: 0
-                  }}
-                  transition={{
-                    duration: 2.4 + (i % 4) * 0.35,
-                    delay: (i % 6) * 0.08,
-                    ease: 'easeOut'
-                  }}
-                />
-              ))}
-            </div>
-          </motion.div>
-        </>
+        <CompletionScreen
+          journey={journey}
+          journeyCtx={journeyCtx}
+          toasts={toasts}
+          onDismissToast={dismissToast}
+          relatedTopics={relatedTopics}
+          topicRow={topicRow}
+        />
       ) : (
         <div className="lesson-container">
           <JourneyBlocks

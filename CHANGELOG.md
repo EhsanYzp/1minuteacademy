@@ -64,6 +64,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Topic page: iterated on the CTA-first layout with cleaner hierarchy (title + subtitle are adjacent, beats/quiz moved into meta badges, removed repetitive chips, and restyled What you’ll get into compact checkmarked rows).
 - Database: added TTL cleanup for `api_rate_limits` (daily schedule when pg_cron is available; external cron fallback).
 - Database: added TTL cleanup for `stripe_webhook_events` (30-day retention; daily schedule when pg_cron is available).
+- Refactor: extracted `LessonTopbar` and `CompletionScreen` components out of `LessonPage.jsx` to reduce inline JSX and improve maintainability.
 
 ### Fixed
 - Home: fixed metric ticker count-up sometimes sticking at `0` in dev (React Strict Mode effect remount behavior).
