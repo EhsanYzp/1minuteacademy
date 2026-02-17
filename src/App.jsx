@@ -35,7 +35,7 @@ function AppFrame() {
       <div className="app">
         <div className="app-content">
           <AnimatePresence mode="wait">
-            <ErrorBoundary>
+            <ErrorBoundary resetKey={location.key}>
               <Suspense fallback={<RouteLoading />}>
                 <div key={location.pathname}>
                   <Outlet />

@@ -87,3 +87,4 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Security: OAuth/email auth redirect targets now use `VITE_SITE_URL` (origin fallback only in dev) to avoid proxy/CDN origin manipulation.
 - Security: Netlify Stripe functions now require `SITE_URL` for redirect targets (no `Origin` fallback), add CORS + `OPTIONS` handling, and return safe generic errors.
 - Security: Stripe billing portal `returnPath` is now sanitized to prevent open redirect via absolute URLs.
+- Reliability: ErrorBoundary now resets after navigation so a recovered route doesn’t stay stuck on the fallback UI.

@@ -78,6 +78,10 @@ Once the ErrorBoundary catches an error, `this.state.hasError` remains `true` pe
 1. Wrap ErrorBoundary inside a component that passes `location.key` as a `key` prop, forcing a remount on route changes.
 2. Or implement `componentDidUpdate` to reset `hasError` when a `resetKey` prop (derived from `location.pathname`) changes.
 
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Added a `resetKey` prop to `ErrorBoundary` and wired it to router `location.key` so the boundary clears its error state after navigation.
+
 ---
 
 ---
