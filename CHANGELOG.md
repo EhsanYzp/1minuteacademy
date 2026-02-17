@@ -65,6 +65,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Database: added TTL cleanup for `api_rate_limits` (daily schedule when pg_cron is available; external cron fallback).
 - Database: added TTL cleanup for `stripe_webhook_events` (30-day retention; daily schedule when pg_cron is available).
 - Refactor: extracted `LessonTopbar` and `CompletionScreen` components out of `LessonPage.jsx` to reduce inline JSX and improve maintainability.
+- Refactor: split `ProfilePage.jsx` tab sections into `src/components/profile/tabs/*` components to reduce inline JSX and improve maintainability.
 
 ### Fixed
 - Home: fixed metric ticker count-up sometimes sticking at `0` in dev (React Strict Mode effect remount behavior).

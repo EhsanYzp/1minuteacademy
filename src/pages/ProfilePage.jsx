@@ -12,13 +12,11 @@ import { canReview, canStartTopic, formatTierLabel, getCurrentTier } from '../se
 import { getSubscriptionStatus, openCustomerPortal } from '../services/billing';
 import { deleteAccount, pauseAccount, resumeAccount } from '../services/account';
 import { getMyProfile, updateMyProfile, uploadMyAvatar } from '../services/profiles';
-import StarRating from '../components/StarRating';
 import { listMyTopicRatings, setMyTopicRating } from '../services/ratings';
 import ToastStack from '../components/ToastStack';
-import { EXPERT_BADGES, getNextBadge, getUnlockedBadges } from '../services/badges';
+import { EXPERT_BADGES } from '../services/badges';
 import {
   generateAndUploadMyCertificate,
-  getCertificatePublicUrlFromPath,
   getCertificatePublicUrlFromPathWithOptions,
   listMyCertificates,
   updateMyCertificateRecipient,
@@ -30,6 +28,13 @@ import {
   resolveStoryPresentationStyle,
   saveStoryPresentationStyle,
 } from '../services/presentationStyle';
+import OverviewTab from '../components/profile/tabs/OverviewTab';
+import PreferencesTab from '../components/profile/tabs/PreferencesTab';
+import ProgressTab from '../components/profile/tabs/ProgressTab';
+import BadgesTab from '../components/profile/tabs/BadgesTab';
+import CertificatesTab from '../components/profile/tabs/CertificatesTab';
+import RatingsTab from '../components/profile/tabs/RatingsTab';
+import AccountTab from '../components/profile/tabs/AccountTab';
 import './ProfilePage.css';
 
 function getBadgeRarity(minutesRequired) {
@@ -1302,815 +1307,123 @@ export default function ProfilePage() {
               </div>
 
               {activeTab === 'overview' && (
-                <>
-                  <div className="profile-stats">
-                    <div className="profile-stat">
-                      <div className="profile-stat-label">
-                        Minute Expert
-                      </div>
-                      <div className="profile-stat-value">{Number(stats?.expert_minutes ?? 0) || 0}</div>
-                      <div className="profile-stat-sub">{formatMinuteExpert(Number(stats?.expert_minutes ?? 0) || 0)}</div>
-                      {tier !== 'pro' && (
-                        <div className="profile-stat-sub" style={{ opacity: 0.85, marginTop: 6 }}>
-                          Pro feature — upgrade to start earning expert minutes and badges.
-                        </div>
-                      )}
-                    </div>
-                    <div className="profile-stat">
-                      <div className="profile-stat-label">🔥 Streak</div>
-                      <div className="profile-stat-value">{Number(stats?.streak ?? 0)} days</div>
-                    </div>
-                    <div className="profile-stat">
-                      <div className="profile-stat-label">📅 Last completion</div>
-                      <div className="profile-stat-value small">{stats?.last_completed_date ?? '—'}</div>
-                    </div>
-                  </div>
-                </>
+                <OverviewTab stats={stats} tier={tier} formatMinuteExpert={formatMinuteExpert} />
               )}
 
               {activeTab === 'badges' && (
-                <>
-                  <div className="profile-section-header profile-section-header-spaced">
-                    <h2>Badges</h2>
-                    <div className="profile-section-sub">Milestones based on your Minute Expert minutes.</div>
-                  </div>
-
-                  {tier !== 'pro' && tier !== 'paused' && contentSource !== 'local' ? (
-                    <div className="profile-note" style={{ marginBottom: 12 }}>
-                      <strong>Pro feature</strong>
-                      <div>Upgrade to Pro to start earning expert minutes and unlocking badges.</div>
-                      <div style={{ marginTop: 10 }}>
-                        <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
-                      </div>
-                    </div>
-                  ) : null}
-
-                  <div className="profile-badges" aria-label="Badges">
-                    <div className="profile-badges-title">All badges</div>
-                    <div className="profile-badges-row">
-                      {EXPERT_BADGES.map((b) => {
-                        const minutes = Number(stats?.expert_minutes ?? 0) || 0;
-                        const required = Number(b.minutes ?? 0) || 0;
-                        const unlocked = minutes >= required;
-                        const rarity = getBadgeRarity(required);
-                        const pct = required > 0 ? Math.max(0, Math.min(100, Math.round((minutes / required) * 100))) : 0;
-                        const label = unlocked ? `${b.name} (Unlocked)` : `${b.name} (Locked)`;
-                        return (
-                          <div
-                            key={b.minutes}
-                            className={`profile-badge ${unlocked ? 'profile-badge--unlocked' : 'profile-badge--locked'} profile-badge--${rarity}`}
-                            title={label}
-                            aria-label={label}
-                          >
-                            <div className="profile-badge-top">
-                              <div className="profile-badge-emoji" aria-hidden="true">{b.emoji}</div>
-                              <div className="profile-badge-meta">
-                                <div className="profile-badge-name">{b.name}</div>
-                                <div className="profile-badge-req">Unlock at <strong>{required}</strong> min</div>
-                              </div>
-                              <div className={`profile-badge-pill ${unlocked ? 'ok' : 'locked'}`}>
-                                {unlocked ? 'Unlocked' : 'Locked'}
-                              </div>
-                            </div>
-
-                            <div className="profile-badge-progress" aria-hidden="true">
-                              <div className="profile-badge-progressTrack">
-                                <div className="profile-badge-progressFill" style={{ width: `${unlocked ? 100 : pct}%` }} />
-                              </div>
-                              <div className="profile-badge-progressText">{unlocked ? '100%' : `${pct}%`}</div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-
-                    {getUnlockedBadges(Number(stats?.expert_minutes ?? 0) || 0).length === 0 ? (
-                      <div className="profile-badges-empty" style={{ marginTop: 10 }}>
-                        {tier === 'pro'
-                          ? 'Complete your first module to unlock your first badge.'
-                          : 'Badges are Pro-only. Upgrade to start unlocking.'}
-                      </div>
-                    ) : null}
-
-                    {(() => {
-                      const next = getNextBadge(Number(stats?.expert_minutes ?? 0) || 0);
-                      if (!next) return null;
-                      const have = Number(stats?.expert_minutes ?? 0) || 0;
-                      const remaining = Math.max(0, next.minutes - have);
-                      return (
-                        <div className="profile-badges-next">
-                          Next badge: <strong>{next.name}</strong> in <strong>{remaining}</strong> minute(s).
-                        </div>
-                      );
-                    })()}
-                  </div>
-                </>
+                <BadgesTab stats={stats} tier={tier} contentSource={contentSource} getBadgeRarity={getBadgeRarity} />
               )}
 
               {activeTab === 'certificates' && (
-                <>
-                  <div className="profile-section-header profile-section-header-spaced">
-                    <h2>Certificates</h2>
-                    <div className="profile-section-sub">Earn a certificate when you complete every module in a category.</div>
-                  </div>
-
-                  {hasProAccess && certificates.length > 0 ? (
-                    <div className="profile-certificates-toolbar">
-                      <button
-                        type="button"
-                        className="profile-certificate-btn primary"
-                        onClick={onRegenerateAllCertificates}
-                        disabled={certBulkBusy || Boolean(certBusyId)}
-                        title="Regenerate all certificates using your current display name and photo"
-                      >
-                        {certBulkBusy
-                          ? `Regenerating… (${certBulkProgress?.done ?? 0}/${certBulkProgress?.total ?? certificates.length})`
-                          : 'Regenerate all (current name + photo)'}
-                      </button>
-                      <div className="profile-certificates-toolbarNote">
-                        Uses your current profile identity: <strong>{resolveCurrentRecipientName()}</strong>
-                      </div>
-                    </div>
-                  ) : null}
-
-                  {!hasProAccess && contentSource !== 'local' ? (
-                    <div className="profile-note" style={{ marginBottom: 12 }}>
-                      <strong>Pro feature</strong>
-                      <div>Certificates are Pro-only. Upgrade to start earning category certificates.</div>
-                      <div style={{ marginTop: 10 }}>
-                        <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
-                      </div>
-                    </div>
-                  ) : null}
-
-                  {contentSource === 'local' ? (
-                    <div className="profile-note" style={{ marginBottom: 12 }}>
-                      <strong>Local Preview mode</strong>
-                      <div>Certificates require Supabase (Storage + DB).</div>
-                    </div>
-                  ) : null}
-
-                  {certError ? (
-                    <div className="profile-error">{certError?.message ?? 'Failed to load certificates.'}</div>
-                  ) : null}
-
-                  <div className="profile-certificates" aria-label="Certificates">
-                    {certLoading ? (
-                      <div className="profile-certificates-empty">Loading certificates…</div>
-                    ) : certificates.length === 0 ? (
-                      <div className="profile-certificates-empty">
-                        {hasProAccess
-                          ? 'No certificates yet. Complete an entire category to earn one.'
-                          : 'Certificates appear here after you upgrade and complete a category.'}
-                      </div>
-                    ) : (
-                      <div className="profile-certificates-grid">
-                        {certificates.map((c) => {
-                          const cacheBuster = c?.updated_at ?? c?.awarded_at ?? null;
-                          const pngUrl = getCertificatePublicUrlFromPathWithOptions(c?.png_path, { cacheBuster });
-                          const svgUrl = getCertificatePublicUrlFromPathWithOptions(c?.svg_path, { cacheBuster });
-                          const viewUrl = pngUrl || svgUrl;
-                          const ready = Boolean(viewUrl);
-                          const busy = certBusyId && String(certBusyId) === String(c?.id);
-                          const subtitle = c?.awarded_at ? `Awarded ${fmtShortDate(c.awarded_at)}` : 'Awarded';
-                          const progressNote = (Number(c?.total_topics ?? 0) > 0)
-                            ? `${Number(c?.completed_topics ?? 0)}/${Number(c?.total_topics ?? 0)} modules` : null;
-
-                          return (
-                            <div key={c.id} className="profile-certificate-card">
-                              <div className="profile-certificate-preview" aria-label="Certificate preview">
-                                {ready ? (
-                                  <img src={viewUrl} alt={c?.title ?? 'Certificate'} loading="lazy" />
-                                ) : (
-                                  <div className="profile-certificate-placeholder">
-                                    <div className="profile-certificate-placeholderIcon">📜</div>
-                                    <div className="profile-certificate-placeholderText">Generate to preview</div>
-                                  </div>
-                                )}
-                              </div>
-
-                              <div className="profile-certificate-meta">
-                                <div className="profile-certificate-title">{c?.title ?? 'Certificate'}</div>
-                                <div className="profile-certificate-sub">{subtitle}{progressNote ? ` • ${progressNote}` : ''}</div>
-                              </div>
-
-                              <div className="profile-certificate-actions">
-                                {!ready ? (
-                                  <button
-                                    type="button"
-                                    className="profile-certificate-btn primary"
-                                    onClick={() => onGenerateCertificate(c)}
-                                    disabled={!hasProAccess || busy}
-                                    title={!hasProAccess ? 'Pro only' : 'Generate certificate assets'}
-                                  >
-                                    {busy ? 'Generating…' : 'Generate'}
-                                  </button>
-                                ) : (
-                                  <>
-                                    <a className="profile-certificate-btn primary" href={viewUrl} target="_blank" rel="noreferrer">
-                                      View
-                                    </a>
-                                    <a className="profile-certificate-btn" href={viewUrl} download>
-                                      Download
-                                    </a>
-                                  </>
-                                )}
-
-                                <button
-                                  type="button"
-                                  className="profile-certificate-btn"
-                                  onClick={() => onRegenerateCertificate(c)}
-                                  disabled={!hasProAccess || busy}
-                                  title={!hasProAccess ? 'Pro only' : 'Regenerate using your current display name and photo'}
-                                >
-                                  Regenerate
-                                </button>
-
-                                <button
-                                  type="button"
-                                  className="profile-certificate-btn"
-                                  onClick={() => onShareCertificate(c)}
-                                  disabled={!hasProAccess}
-                                  title={!hasProAccess ? 'Pro only' : 'Copy a share link'}
-                                >
-                                  Share
-                                </button>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                </>
+                <CertificatesTab
+                  certificates={certificates}
+                  certLoading={certLoading}
+                  certError={certError}
+                  certBusyId={certBusyId}
+                  certBulkBusy={certBulkBusy}
+                  certBulkProgress={certBulkProgress}
+                  contentSource={contentSource}
+                  hasProAccess={hasProAccess}
+                  fmtShortDate={fmtShortDate}
+                  getCertificatePublicUrlFromPathWithOptions={getCertificatePublicUrlFromPathWithOptions}
+                  onGenerateCertificate={onGenerateCertificate}
+                  onRegenerateAllCertificates={onRegenerateAllCertificates}
+                  onRegenerateCertificate={onRegenerateCertificate}
+                  onShareCertificate={onShareCertificate}
+                  resolveCurrentRecipientName={resolveCurrentRecipientName}
+                />
               )}
 
               {activeTab === 'preferences' && (
-                <>
-                  <div className="profile-section-header profile-section-header-spaced">
-                    <h2>Public profile</h2>
-                    <div className="profile-section-sub">Shown on your reviews.</div>
-                  </div>
-
-                  <div className="profile-note" style={{ marginBottom: 12 }}>
-                    <strong>Display name & photo</strong>
-                    {contentSource === 'local' ? (
-                      <div style={{ marginTop: 8 }}>Disabled in Local Preview mode.</div>
-                    ) : !isSupabaseConfigured ? (
-                      <div style={{ marginTop: 8 }}>Supabase is not configured for this environment.</div>
-                    ) : (
-                      <div className="profile-identity">
-                        <div className="profile-identity-avatar">
-                          {avatarUrl ? (
-                            <img className="profile-avatar" src={String(avatarUrl)} alt="" loading="lazy" />
-                          ) : (
-                            <div className="profile-avatar profile-avatar--fallback" aria-hidden="true">
-                              {initialsFromName(displayName || user?.email || 'You')}
-                            </div>
-                          )}
-
-                          <input
-                            ref={avatarInputRef}
-                            type="file"
-                            accept="image/*"
-                            onChange={onPickAvatar}
-                            disabled={identityBusy}
-                            className="profile-avatarInput"
-                            aria-label="Upload profile photo"
-                          />
-
-                          <button
-                            type="button"
-                            className="profile-account-btn secondary"
-                            onClick={() => avatarInputRef.current?.click?.()}
-                            disabled={identityBusy}
-                          >
-                            {avatarUrl ? 'Change photo' : 'Upload photo'}
-                          </button>
-                        </div>
-
-                        <label className="profile-preference-label" style={{ marginTop: 10 }}>
-                          Display name
-                          <input
-                            className="profile-identity-input"
-                            value={displayName}
-                            onChange={(e) => setDisplayName(e.target.value)}
-                            placeholder="e.g. Zeinab"
-                            maxLength={40}
-                            disabled={identityBusy}
-                          />
-                        </label>
-
-                        <div className="profile-identity-actions">
-                          <button
-                            type="button"
-                            className="profile-account-btn"
-                            onClick={onSaveIdentity}
-                            disabled={identityBusy || !identityLoaded}
-                          >
-                            {identityBusy ? 'Saving…' : 'Save'}
-                          </button>
-                        </div>
-
-                        {identityNotice ? <div className="profile-preference-note">{identityNotice}</div> : null}
-
-                        {identityCertPrompt && hasProAccess ? (
-                          <div className="profile-cert-updatePrompt" role="status">
-                            <div className="profile-cert-updatePrompt-title">
-                              Update your certificates?
-                            </div>
-                            <div className="profile-cert-updatePrompt-sub">
-                              You have {identityCertPrompt.count} certificate{identityCertPrompt.count === 1 ? '' : 's'}. Regenerate them to reflect your new name/photo.
-                            </div>
-                            <div className="profile-cert-updatePrompt-actions">
-                              <button
-                                type="button"
-                                className="profile-account-btn"
-                                onClick={onRegenerateAllCertificates}
-                                disabled={certBulkBusy || Boolean(certBusyId)}
-                              >
-                                {certBulkBusy
-                                  ? `Updating… (${certBulkProgress?.done ?? 0}/${certBulkProgress?.total ?? identityCertPrompt.count})`
-                                  : 'Update certificates now'}
-                              </button>
-                              <button
-                                type="button"
-                                className="profile-account-btn secondary"
-                                onClick={() => setIdentityCertPrompt(null)}
-                                disabled={certBulkBusy || Boolean(certBusyId)}
-                              >
-                                Later
-                              </button>
-                              <Link className="profile-upgrade-inline" to="/me?tab=certificates">
-                                View certificates
-                              </Link>
-                            </div>
-                          </div>
-                        ) : null}
-
-                        {identityError ? (
-                          <div className="profile-preference-error">{identityError?.message ?? String(identityError)}</div>
-                        ) : null}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="profile-section-header profile-section-header-spaced">
-                    <h2>Experience</h2>
-                    <div className="profile-section-sub">Personalize how lesson pages look.</div>
-                  </div>
-
-                  <div className="profile-note" style={{ marginBottom: 12 }}>
-                    <strong>Lesson presentation</strong>
-                    <div className="profile-preference-row">
-                      <label className="profile-preference-label">
-                        Style
-                        <select
-                          className="profile-preference-select"
-                          value={presentationStyle}
-                          onChange={onChangePresentationStyle}
-                          disabled={!canChoosePresentation || presentationBusy}
-                          aria-label="Lesson presentation style"
-                        >
-                          {presentationStyleOptions.map((s) => (
-                            <option key={s.id} value={s.id} disabled={Boolean(s.disabled)}>{s.label}</option>
-                          ))}
-                        </select>
-                      </label>
-
-                      {tier !== 'pro' && tier !== 'paused' && contentSource !== 'local' ? (
-                        <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
-                      ) : null}
-                    </div>
-
-                    <div className="profile-preference-help">
-                      {tier === 'pro' || tier === 'paused'
-                        ? 'Applies to lessons and review mode.'
-                        : tier === 'free'
-                          ? 'Free members can choose Focus or Dark. Other styles are Pro-only.'
-                          : 'Sign in to choose Focus or Dark. Other styles are Pro-only.'}
-                    </div>
-
-                    {presentationNotice ? (
-                      <div className="profile-preference-note" aria-live="polite">{presentationNotice}</div>
-                    ) : null}
-
-                    {presentationError ? (
-                      <div className="profile-preference-error" aria-live="polite">
-                        {presentationError?.message ?? String(presentationError)}
-                      </div>
-                    ) : null}
-                  </div>
-                </>
+                <PreferencesTab
+                  avatarInputRef={avatarInputRef}
+                  avatarUrl={avatarUrl}
+                  canChoosePresentation={canChoosePresentation}
+                  certBulkBusy={certBulkBusy}
+                  certBulkProgress={certBulkProgress}
+                  certBusyId={certBusyId}
+                  contentSource={contentSource}
+                  displayName={displayName}
+                  hasProAccess={hasProAccess}
+                  identityBusy={identityBusy}
+                  identityCertPrompt={identityCertPrompt}
+                  identityError={identityError}
+                  identityLoaded={identityLoaded}
+                  identityNotice={identityNotice}
+                  initialsFromName={initialsFromName}
+                  isSupabaseConfigured={isSupabaseConfigured}
+                  onChangePresentationStyle={onChangePresentationStyle}
+                  onPickAvatar={onPickAvatar}
+                  onRegenerateAllCertificates={onRegenerateAllCertificates}
+                  onSaveIdentity={onSaveIdentity}
+                  presentationBusy={presentationBusy}
+                  presentationError={presentationError}
+                  presentationNotice={presentationNotice}
+                  presentationStyle={presentationStyle}
+                  presentationStyleOptions={presentationStyleOptions}
+                  setDisplayName={setDisplayName}
+                  setIdentityCertPrompt={setIdentityCertPrompt}
+                  tier={tier}
+                  user={user}
+                />
               )}
 
               {activeTab === 'progress' && (
-                <>
-                  <div className="profile-section-header">
-                    <h2>Your learning</h2>
-                    <div className="profile-section-sub">Your progress in one place.</div>
-                  </div>
-
-                  {contentSource !== 'local' && !showReview && (
-                    <div className="profile-note" style={{ marginBottom: 12 }}>
-                      <strong>Free plan</strong>
-                      <div className="profile-note-row">
-                        <div>
-                          Your current plan is <strong>{planLabel}</strong>. Upgrade to unlock review mode.
-                        </div>
-                        <Link className="profile-upgrade-btn" to="/upgrade">Upgrade</Link>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="profile-progress-toolbar">
-                    <div className="profile-toggle">
-                      <button
-                        type="button"
-                        className={progressView === 'subjects' ? 'pt active' : 'pt'}
-                        onClick={() => setProgressView('subjects')}
-                      >
-                        By subject
-                      </button>
-                      <button
-                        type="button"
-                        className={progressView === 'recent' ? 'pt active' : 'pt'}
-                        onClick={() => setProgressView('recent')}
-                      >
-                        Recent
-                      </button>
-                    </div>
-
-                    <label className="profile-search">
-                      <span className="profile-search-icon">🔎</span>
-                      <input
-                        value={progressQuery}
-                        onChange={(e) => setProgressQuery(e.target.value)}
-                        placeholder="Search your progress…"
-                        aria-label="Search progress"
-                      />
-                      {progressQuery && (
-                        <button type="button" className="profile-clear" onClick={() => setProgressQuery('')} aria-label="Clear search">
-                          ✕
-                        </button>
-                      )}
-                    </label>
-                  </div>
-
-                  {loading ? (
-            <div className="profile-loading">Loading…</div>
-          ) : progress.length === 0 ? (
-            <div className="profile-empty">No activity yet. Finish a topic to see your progress.</div>
-          ) : progressView === 'subjects' ? (
-            <div className="subject-progress">
-              {progressBySubject.map((group) => {
-                const pct = group.total > 0 ? Math.round((group.completedTopics / group.total) * 100) : 0;
-                return (
-                  <details key={group.subject} className="subject-group">
-                    <summary className="subject-summary">
-                      <div className="subject-left">
-                        <div className="subject-name">{group.subject}</div>
-                        <div className="subject-sub">✅ {group.completedTopics}/{group.total} topics</div>
-                      </div>
-                      <div className="subject-right">
-                        <div className="subject-bar" aria-label="subject completion">
-                          <div className="subject-fill" style={{ width: `${pct}%` }} />
-                        </div>
-                        <div className="subject-pct">{pct}%</div>
-                      </div>
-                    </summary>
-
-                    <div className="progress-list" style={{ marginTop: 10 }}>
-                      {group.rows.map((p) => {
-                        const completed = Number(p.completed ?? 0) > 0;
-
-                        return (
-                          <details key={p.topicId} className="progress-details">
-                            <summary className="progress-row" style={{ '--row-color': p.color }}>
-                              <div className="progress-left">
-                                <div className="progress-emoji">{p.emoji}</div>
-                                <div className="progress-meta">
-                                  <Link className="progress-title-link" to={`/topic/${p.topicId}`}>
-                                    <div className="progress-title">{p.title}</div>
-                                  </Link>
-                                  <div className="progress-sub">{p.subject}</div>
-                                </div>
-                              </div>
-
-                              <div className="progress-right">
-                                <div className="pill">✅ {p.completed}</div>
-                                <div className="pill faint">🕒 {fmtDate(p.lastCompletedAt)}</div>
-                              </div>
-                            </summary>
-
-                            <div className="progress-expand">
-                              {completed && (
-                                <div className="progress-actions">
-                                  {showReview ? (
-                                    <Link className="action-pill" to={`/review/${p.topicId}`}>
-                                      📚 Review
-                                    </Link>
-                                  ) : (
-                                    <Link className="action-pill" to="/upgrade">
-                                      🔒 Unlock review
-                                    </Link>
-                                  )}
-                                  <Link className="action-pill secondary" to={`/lesson/${p.topicId}`}>
-                                    🔄 Restart
-                                  </Link>
-                                </div>
-                              )}
-                            </div>
-                          </details>
-                        );
-                      })}
-                    </div>
-                  </details>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="progress-list">
-              {progressFiltered.map((p) => {
-                const completed = Number(p.completed ?? 0) > 0;
-
-                return (
-                  <details key={p.topicId} className="progress-details">
-                    <summary className="progress-row" style={{ '--row-color': p.color }}>
-                      <div className="progress-left">
-                        <div className="progress-emoji">{p.emoji}</div>
-                        <div className="progress-meta">
-                          <Link className="progress-title-link" to={`/topic/${p.topicId}`}>
-                            <div className="progress-title">{p.title}</div>
-                          </Link>
-                          <div className="progress-sub">{p.subject}</div>
-                        </div>
-                      </div>
-
-                      <div className="progress-right">
-                        <div className="pill">✅ {p.completed}</div>
-                        <div className="pill faint">🕒 {fmtDate(p.lastCompletedAt)}</div>
-                      </div>
-                    </summary>
-
-                    <div className="progress-expand">
-                      {completed && (
-                        <div className="progress-actions">
-                          {showReview ? (
-                            <Link className="action-pill" to={`/review/${p.topicId}`}>
-                              📚 Review
-                            </Link>
-                          ) : (
-                            <Link className="action-pill" to="/upgrade">
-                              🔒 Unlock review
-                            </Link>
-                          )}
-                          <Link className="action-pill secondary" to={`/lesson/${p.topicId}`}>
-                            🔄 Restart
-                          </Link>
-                        </div>
-                      )}
-                    </div>
-                  </details>
-                );
-              })}
-            </div>
-          )}
-                </>
+                <ProgressTab
+                  contentSource={contentSource}
+                  fmtDate={fmtDate}
+                  loading={loading}
+                  planLabel={planLabel}
+                  progress={progress}
+                  progressBySubject={progressBySubject}
+                  progressFiltered={progressFiltered}
+                  progressQuery={progressQuery}
+                  progressView={progressView}
+                  setProgressQuery={setProgressQuery}
+                  setProgressView={setProgressView}
+                  showReview={showReview}
+                />
               )}
 
               {activeTab === 'ratings' && (
-                <>
-                  <div className="profile-section-header profile-section-header-spaced">
-                    <h2>Your ratings</h2>
-                    <div className="profile-section-sub">Change your stars anytime.</div>
-                  </div>
-
-                  {contentSource !== 'local' && !user ? (
-                    <div className="profile-empty">
-                      Sign in to see and edit your ratings.
-                    </div>
-                  ) : ratingsLoading ? (
-                    <div className="profile-loading">Loading your ratings…</div>
-                  ) : myRatingsEnriched.length === 0 ? (
-                    <div className="profile-empty">No ratings yet. Finish a module and rate it.</div>
-                  ) : (
-                    <>
-                      <div className="ratings-toolbar">
-                        <div className="ratings-count">
-                          {myRatingsFiltered.length} of {myRatingsEnriched.length}
-                        </div>
-
-                        <label className="ratings-search">
-                          <span className="ratings-search-icon">🔎</span>
-                          <input
-                            value={ratingsQuery}
-                            onChange={(e) => setRatingsQuery(e.target.value)}
-                            placeholder="Search your ratings…"
-                            aria-label="Search your ratings"
-                          />
-                          {ratingsQuery && (
-                            <button
-                              type="button"
-                              className="ratings-clear"
-                              onClick={() => setRatingsQuery('')}
-                              aria-label="Clear ratings search"
-                            >
-                              ✕
-                            </button>
-                          )}
-                        </label>
-                      </div>
-
-                      {myRatingsFiltered.length === 0 ? (
-                        <div className="profile-empty">No matches.</div>
-                      ) : (
-                        <div className="ratings-list" aria-label="Your module ratings">
-                          {myRatingsFiltered.map((r) => {
-                            const canEdit = contentSource === 'local' || Boolean(user);
-                            const busy = ratingBusyTopicId === r.topicId;
-                            return (
-                              <div key={r.topicId} className="rating-row">
-                                <Link className="rating-title-link" to={`/topic/${r.topicId}`}>
-                                  <div className="rating-emoji" aria-hidden="true">
-                                    {r.emoji}
-                                  </div>
-                                  <div className="rating-meta">
-                                    <div className="rating-title">{r.title}</div>
-                                    <div className="rating-sub">
-                                      {r.subject}
-                                      {r.updatedAt ? ` • updated ${fmtShortDate(r.updatedAt)}` : ''}
-                                    </div>
-                                  </div>
-                                </Link>
-
-                                <div className="rating-actions">
-                                  <StarRating
-                                    value={Number(r.rating ?? 0)}
-                                    onChange={canEdit ? (next) => onUpdateRating(r.topicId, next) : undefined}
-                                    readOnly={!canEdit || busy}
-                                    size="md"
-                                    label={`Your rating for ${r.title}`}
-                                  />
-                                  {busy && <span className="rating-saving">Saving…</span>}
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
-
-                      {ratingsError && (
-                        <div className="ratings-error">{ratingsError?.message ?? String(ratingsError)}</div>
-                      )}
-                    </>
-                  )}
-                </>
+                <RatingsTab
+                  contentSource={contentSource}
+                  fmtShortDate={fmtShortDate}
+                  myRatingsEnriched={myRatingsEnriched}
+                  myRatingsFiltered={myRatingsFiltered}
+                  onUpdateRating={onUpdateRating}
+                  ratingBusyTopicId={ratingBusyTopicId}
+                  ratingsError={ratingsError}
+                  ratingsLoading={ratingsLoading}
+                  ratingsQuery={ratingsQuery}
+                  setRatingsQuery={setRatingsQuery}
+                  user={user}
+                />
               )}
 
               {activeTab === 'account' && contentSource !== 'local' && (
-                <>
-                  <div className="profile-section-header profile-section-header-spaced">
-                    <h2>Account</h2>
-                    <div className="profile-section-sub">Plan, billing, and account controls.</div>
-                  </div>
-
-                  <div className="profile-side-card">
-                    <div className="profile-side-kicker">Signed in</div>
-                    <div className="profile-email">{user?.email ?? '—'}</div>
-
-                    <div className="profile-plan-row" style={{ marginTop: 10 }}>
-                      <span>Plan: <strong>{planLabel}</strong></span>
-                      {tier !== 'pro' && (
-                        <Link className="profile-upgrade-btn" to="/upgrade">
-                          Upgrade
-                        </Link>
-                      )}
-                    </div>
-
-                    {isPaused && (
-                      <div className="profile-paused-note">
-                        <strong>Paused</strong>
-                        <div>You can’t start lessons until you resume.</div>
-                      </div>
-                    )}
-                  </div>
-
-                  {showSubscriptionBox && (
-                    <div className="profile-sub-box">
-                      <div className="profile-sub-head">
-                        <div className="profile-sub-title">Subscription</div>
-                        {hasStripeCustomer && (
-                          <button className="profile-sub-btn" type="button" onClick={onManageSubscription}>
-                            Manage
-                          </button>
-                        )}
-                      </div>
-
-                      {subLoading ? (
-                        <div className="profile-sub-row">Loading subscription details…</div>
-                      ) : subError ? (
-                        <div className="profile-sub-row profile-sub-error">{subError.message ?? 'Could not load subscription details.'}</div>
-                      ) : subStatus ? (
-                        (() => {
-                          const statusLabel = formatStripeStatus(subStatus.status);
-                          const rawStatus = String(subStatus.status ?? '').toLowerCase();
-                          const isCanceled = rawStatus === 'canceled';
-                          const hasCancelAt = Boolean(subStatus.cancel_at);
-                          const isScheduledCancel = Boolean(subStatus.cancel_at_period_end) || (!isCanceled && hasCancelAt);
-
-                          const fallbackPeriodEnd = computeFallbackPeriodEnd(subStatus.created, subStatus.plan_interval);
-                          const periodDate = subStatus.current_period_end || fallbackPeriodEnd;
-                          const scheduledEndDate = subStatus.cancel_at || subStatus.current_period_end || fallbackPeriodEnd;
-                          const endedDate = subStatus.ended_at || subStatus.canceled_at || subStatus.cancel_at || subStatus.current_period_end;
-
-                          const dateLabel = isCanceled ? 'Ended' : isScheduledCancel ? 'Ends' : 'Renews';
-                          const dateValue = isCanceled ? endedDate : isScheduledCancel ? scheduledEndDate : periodDate;
-
-                          const cancellationLabel = isCanceled
-                            ? 'Canceled'
-                            : isScheduledCancel
-                              ? 'Scheduled'
-                              : 'Not scheduled';
-
-                          return (
-                            <div className="profile-sub-grid">
-                              <div className="profile-sub-item"><span>Status</span><strong>{statusLabel}</strong></div>
-                              <div className="profile-sub-item"><span>{dateLabel}</span><strong>{fmtShortDate(dateValue)}</strong></div>
-                              <div className="profile-sub-item"><span>Started</span><strong>{fmtShortDate(subStatus.created)}</strong></div>
-                              <div className="profile-sub-item"><span>Cancellation</span><strong>{cancellationLabel}</strong></div>
-                            </div>
-                          );
-                        })()
-                      ) : (
-                        <div className="profile-sub-row">No subscription details found yet.</div>
-                      )}
-
-                      <div className="profile-sub-foot">Invoices and cancellation are in Stripe Portal.</div>
-                    </div>
-                  )}
-
-                  <div className="profile-account-box">
-                    <div className="profile-account-head">
-                      <div className="profile-account-title">Account status</div>
-                      {isPaused ? (
-                        <div className="profile-account-pill">Paused</div>
-                      ) : (
-                        <div className="profile-account-pill active">Active</div>
-                      )}
-                    </div>
-
-                    {accountNotice && <div className="profile-account-row profile-account-notice">{accountNotice}</div>}
-                    {accountError && <div className="profile-account-row profile-account-error">{accountError.message ?? String(accountError)}</div>}
-
-                    <div className="profile-account-actions">
-                      {isPaused ? (
-                        <button
-                          className="profile-account-btn"
-                          type="button"
-                          onClick={onResumeAccount}
-                          disabled={accountBusy !== null}
-                          title="Resume your account"
-                        >
-                          {accountBusy === 'resume' ? 'Resuming…' : 'Resume'}
-                        </button>
-                      ) : (
-                        <button
-                          className="profile-account-btn secondary"
-                          type="button"
-                          onClick={onPauseAccount}
-                          disabled={accountBusy !== null}
-                          title="Pause your account"
-                        >
-                          {accountBusy === 'pause' ? 'Pausing…' : 'Pause'}
-                        </button>
-                      )}
-                    </div>
-
-                    <div className="profile-account-foot">
-                      {isPaused
-                        ? 'Paused accounts cannot start lessons.'
-                        : 'Pausing disables learning access without changing billing.'}
-                    </div>
-
-                    <details className="profile-danger">
-                      <summary className="profile-danger-summary">Danger zone</summary>
-                      <div className="profile-danger-body">
-                        <div className="profile-danger-text">
-                          Permanently deletes your account and progress. If you have an active subscription, we’ll attempt to cancel it first.
-                        </div>
-                        <button
-                          className="profile-account-btn danger"
-                          type="button"
-                          onClick={onDeleteAccount}
-                          disabled={accountBusy !== null}
-                        >
-                          {accountBusy === 'delete' ? 'Deleting…' : 'Delete account'}
-                        </button>
-                      </div>
-                    </details>
-                  </div>
-                </>
+                <AccountTab
+                  accountBusy={accountBusy}
+                  accountError={accountError}
+                  accountNotice={accountNotice}
+                  computeFallbackPeriodEnd={computeFallbackPeriodEnd}
+                  contentSource={contentSource}
+                  fmtShortDate={fmtShortDate}
+                  formatStripeStatus={formatStripeStatus}
+                  hasStripeCustomer={hasStripeCustomer}
+                  isPaused={isPaused}
+                  onDeleteAccount={onDeleteAccount}
+                  onManageSubscription={onManageSubscription}
+                  onPauseAccount={onPauseAccount}
+                  onResumeAccount={onResumeAccount}
+                  planLabel={planLabel}
+                  showSubscriptionBox={showSubscriptionBox}
+                  subError={subError}
+                  subLoading={subLoading}
+                  subStatus={subStatus}
+                  tier={tier}
+                  user={user}
+                />
               )}
 
             </div>

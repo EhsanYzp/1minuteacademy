@@ -180,9 +180,13 @@ Previously grown from ~695 → **921 lines** (+33%) due to certificate-unlock de
 
 **Where:** [src/pages/ProfilePage.jsx](../../src/pages/ProfilePage.jsx)
 
-Grown from ~1,335 → **2,122 lines** (+59%). Contains **7 inline tab sections** (overview, preferences, progress, badges, certificates, ratings, account) and **~40+ `useState` hooks**. The new Certificates tab alone adds ~300 lines.
+Previously grown from ~1,335 → **2,122 lines** (+59%). Contains **7 inline tab sections** (overview, preferences, progress, badges, certificates, ratings, account) and **~40+ `useState` hooks**. The new Certificates tab alone adds ~300 lines.
 
 **Fix:** Split into per-tab components: `OverviewTab`, `PreferencesTab`, `ProgressTab`, `BadgesTab`, `CertificatesTab`, `RatingsTab`, `AccountTab`.
+
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Extracted all tab sections into dedicated components under `src/components/profile/tabs/`, reducing `ProfilePage.jsx` from 2,122 → 1,437 lines and removing large inline JSX blocks.
 
 ---
 
