@@ -244,6 +244,10 @@ All three files exist on disk but **none are imported or routed to** in `App.jsx
 
 **Fix:** Delete all three files. If any design is needed in the future, it can be rebuilt from git history.
 
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Deleted the dead Learn page variants (`LearnPage.jsx`, `LearnHubPage.jsx`, `LearnHubPageClean.jsx`) plus their unused `LearnPage.css`, since `/learn` redirects to `/` and none were routed/imported.
+
 ---
 
 #### CQ-10 · certificates.js `buildCertificateSvg` is a 120-line template string *(New)*
@@ -254,26 +258,9 @@ The certificate SVG is built as a single 120-line template literal with inline s
 
 **Fix:** Consider extracting the SVG template into a separate file or a dedicated `CertificateTemplate.jsx` component.
 
----
+**Status:** Implemented (2026-02-17)
 
-### 🧪 Testing
-
-#### TEST-01 · No unit tests exist *(Unchanged)*
-
-No test runner (Vitest, Jest, or other) is configured. No `"test"` script exists in `package.json`. No test files (`*.test.js`, `*.spec.js`) exist anywhere. The `tests/` directory contains only a `.DS_Store` — even the Playwright E2E tests that were previously referenced appear to have been removed. `test-results/` and `playwright-report/` are stale artifacts.
-
-**Fix:**
-1. Add Vitest (`npm i -D vitest`).
-2. Write unit tests for: `entitlements.js`, `passwordStrength.js`, `compileJourney.js`, `topics.local.js`, `seo.js`.
-3. Add `"test": "vitest run"` to `package.json`.
-
----
-
-#### TEST-02 · Stripe webhook handler is untested *(Unchanged, blocked by TEST-01)*
-
-No webhook test files exist. Signature verification, user metadata updates, and idempotency logic are tested only by manual webhook sends.
-
-**Fix:** Add unit tests with mocked Stripe events and Supabase responses.
+**Summary:** Extracted the certificate SVG markup into `src/services/certificateSvgTemplate.js` and kept `buildCertificateSvg` as a thin wrapper that escapes/derives values before rendering the template.
 
 ---
 

@@ -69,6 +69,8 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Refactor: extracted the dev-only module-check feature out of `TopicsBrowserPage.jsx` into `DevModuleCheck`.
 - Refactor: deduplicated shared Stripe API route helpers by centralizing them in `api/account/_utils.js` and importing from the Stripe routes.
 - Refactor: deleted dead `/learn` page implementation (`LearnPage.jsx`) that contained two concatenated copies of itself.
+- Refactor: deleted dead Learn hub page variants (`LearnHubPage.jsx`, `LearnHubPageClean.jsx`) plus the unused `LearnPage.css` stylesheet.
+- Refactor: extracted the certificate SVG template into `src/services/certificateSvgTemplate.js`.
 
 ### Fixed
 - Home: fixed metric ticker count-up sometimes sticking at `0` in dev (React Strict Mode effect remount behavior).
