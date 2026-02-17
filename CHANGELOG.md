@@ -91,3 +91,4 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Performance: `listTopics()` now uses explicit Supabase pagination to avoid silent truncation at 1,000 rows.
 - Performance: removed schema-error fallback retries that could trigger multiple Supabase queries per call.
 - Accessibility: marked lesson completion confetti as `aria-hidden` to avoid screen reader noise.
+- UX: added a Not Found (404) page and catch-all route for unknown URLs.

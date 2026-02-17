@@ -154,6 +154,10 @@ There is no catch-all `*` route in the router configuration. Any URL that doesn'
 { path: '*', element: <NotFoundPage /> }
 ```
 
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Added a `NotFoundPage` and a catch-all `*` route so unknown URLs show a proper 404 page instead of rendering blank.
+
 ---
 
 ### 🧹 Code Quality
