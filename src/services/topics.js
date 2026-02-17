@@ -73,60 +73,20 @@ export async function listTopicsPage({ limit = 30, offset = 0, subject = null } 
 
   const supabase = requireSupabase();
 
-  // The topics browser needs `subject` for categories.
-  // Keep this resilient: if an older schema lacks a column, retry with a minimal select.
-  const fullSelect = 'id, subject, subcategory, title, emoji, color, description, difficulty';
-  const noSubcategorySelect = 'id, subject, title, emoji, color, description, difficulty';
-  const minimalSelect = 'id, title, emoji, color, description, difficulty';
+  const columns = 'id, subject, subcategory, title, emoji, color, description, difficulty';
+  let q = supabase
+    .from('topics')
+    .select(columns, { count: 'exact' })
+    .eq('published', true)
+    .order('title', { ascending: true });
 
-  const run = async (columns) => {
-    let q = supabase
-      .from('topics')
-      .select(columns, { count: 'exact' })
-      .eq('published', true)
-      .order('title', { ascending: true });
+  if (subjectFilter && subjectFilter !== 'All') q = q.eq('subject', subjectFilter);
 
-    if (subjectFilter && subjectFilter !== 'All') q = q.eq('subject', subjectFilter);
+  const { data, error, count } = await q.range(safeOffset, safeOffset + safeLimit - 1);
+  if (error) throw error;
 
-    return q.range(safeOffset, safeOffset + safeLimit - 1);
-  };
-
-  const first = await run(fullSelect);
-  if (!first.error) {
-    const items = first.data ?? [];
-    const total = typeof first.count === 'number' ? first.count : null;
-    const nextOffset = safeOffset + items.length;
-    return {
-      items,
-      total,
-      nextOffset,
-      hasMore: total == null ? items.length === safeLimit : nextOffset < total,
-    };
-  }
-
-  const msg = String(first.error?.message ?? '').toLowerCase();
-  const looksLikeMissingColumn = msg.includes('column') && msg.includes('does not exist');
-  if (!looksLikeMissingColumn) throw first.error;
-
-  // Fall back 1: DB has `subject` but not `subcategory`.
-  const second = await run(noSubcategorySelect);
-  if (!second.error) {
-    const items = second.data ?? [];
-    const total = typeof second.count === 'number' ? second.count : null;
-    const nextOffset = safeOffset + items.length;
-    return {
-      items,
-      total,
-      nextOffset,
-      hasMore: total == null ? items.length === safeLimit : nextOffset < total,
-    };
-  }
-
-  // Fall back 2: older schema missing `subject` too.
-  const third = await run(minimalSelect);
-  if (third.error) throw third.error;
-  const items = third.data ?? [];
-  const total = typeof third.count === 'number' ? third.count : null;
+  const items = data ?? [];
+  const total = typeof count === 'number' ? count : null;
   const nextOffset = safeOffset + items.length;
   return {
     items,
@@ -184,7 +144,7 @@ export async function searchTopicsPage({ query = '', limit = 30, offset = 0, sub
   };
 }
 
-export async function listTopics() {
+export async function listTopics({ pageSize = 500 } = {}) {
   if (getContentSource() === 'local') {
     return listLocalTopics();
   }
@@ -193,36 +153,32 @@ export async function listTopics() {
 
   const supabase = requireSupabase();
 
-  // The topics browser needs `subject` for categories.
-  // Keep this resilient: if an older schema lacks a column, retry with a minimal select.
-  const fullSelect = 'id, subject, subcategory, title, emoji, color, description, difficulty';
-  const noSubcategorySelect = 'id, subject, title, emoji, color, description, difficulty';
-  const minimalSelect = 'id, title, emoji, color, description, difficulty';
+  const safePageSize = Math.min(1000, Math.max(1, Number(pageSize) || 500));
+  const columns = 'id, subject, subcategory, title, emoji, color, description, difficulty';
 
-  const run = async (columns) => {
-    return supabase
+  const out = [];
+  let offset = 0;
+  const MAX_ROWS = 50000;
+
+  while (true) {
+    const { data, error } = await supabase
       .from('topics')
       .select(columns)
       .eq('published', true)
-      .order('title', { ascending: true });
-  };
+      .order('title', { ascending: true })
+      .range(offset, offset + safePageSize - 1);
 
-  const first = await run(fullSelect);
-  if (!first.error) return first.data ?? [];
+    if (error) throw error;
 
-  // Only fall back for schema-ish errors; otherwise surface the real error.
-  const msg = String(first.error?.message ?? '').toLowerCase();
-  const looksLikeMissingColumn = msg.includes('column') && msg.includes('does not exist');
-  if (!looksLikeMissingColumn) throw first.error;
+    const rows = data ?? [];
+    out.push(...rows);
+    if (rows.length < safePageSize) break;
 
-  // Fall back 1: DB has `subject` but not `subcategory`.
-  const second = await run(noSubcategorySelect);
-  if (!second.error) return second.data ?? [];
+    offset += rows.length;
+    if (offset >= MAX_ROWS) throw new Error('Too many topics to load');
+  }
 
-  // Fall back 2: older schema missing `subject` too.
-  const third = await run(minimalSelect);
-  if (third.error) throw third.error;
-  return third.data ?? [];
+  return out;
 }
 
 export async function listRelatedTopics({
@@ -258,58 +214,31 @@ export async function listRelatedTopics({
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
   const supabase = requireSupabase();
 
-  // Be resilient to schema drift (missing subcategory/subject columns).
-  const fullSelect = 'id, subject, subcategory, title, emoji, color, description, difficulty';
-  const noSubcategorySelect = 'id, subject, title, emoji, color, description, difficulty';
-  const minimalSelect = 'id, title, emoji, color, description, difficulty';
+  const columns = 'id, subject, subcategory, title, emoji, color, description, difficulty';
 
-  const looksLikeMissingColumn = (err) => {
-    const msg = String(err?.message ?? '').toLowerCase();
-    return msg.includes('column') && msg.includes('does not exist');
-  };
-
-  const run = async ({ columns, includeSubcategory }) => {
+  const run = async ({ includeSubcategory }) => {
     let q = supabase
       .from('topics')
       .select(columns)
       .eq('published', true)
+      .eq('subject', subjectFilter)
       .order('title', { ascending: true })
       .limit(safeLimit);
-
-    // If the DB is missing `subject`, this will error and we'll fall back.
-    q = q.eq('subject', subjectFilter);
 
     if (excludeId) q = q.neq('id', excludeId);
     if (includeSubcategory && subcategoryFilter) q = q.eq('subcategory', subcategoryFilter);
 
-    return q;
-  };
-
-  const tryFetch = async ({ includeSubcategory }) => {
-    const first = await run({ columns: fullSelect, includeSubcategory });
-    if (!first.error) return first.data ?? [];
-    if (!looksLikeMissingColumn(first.error)) throw first.error;
-
-    const second = await run({ columns: noSubcategorySelect, includeSubcategory: false });
-    if (!second.error) return second.data ?? [];
-    if (!looksLikeMissingColumn(second.error)) throw second.error;
-
-    const third = await run({ columns: minimalSelect, includeSubcategory: false });
-    if (third.error) throw third.error;
-    return third.data ?? [];
+    const { data, error } = await q;
+    if (error) throw error;
+    return data ?? [];
   };
 
   if (subcategoryFilter) {
-    try {
-      const same = await tryFetch({ includeSubcategory: true });
-      if (same.length > 0) return same;
-    } catch (e) {
-      // If `subcategory` doesn't exist, treat as a "no subcategory" schema and fall back.
-      if (!looksLikeMissingColumn(e)) throw e;
-    }
+    const same = await run({ includeSubcategory: true });
+    if (same.length > 0) return same;
   }
 
-  return tryFetch({ includeSubcategory: false });
+  return run({ includeSubcategory: false });
 }
 
 export async function getTopic(topicId) {

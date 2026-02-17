@@ -100,6 +100,10 @@ The `listTopics()` function (used by `TopicsBrowserPage`) performs an unbounded 
 1. Add explicit pagination with `.range()` and a "load more" UI.
 2. Or at minimum add `.limit(2000)` to make the cap explicit and detectable.
 
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Updated `listTopics()` to fetch results via explicit `.range()` pagination so it can’t silently truncate at 1,000 rows.
+
 ---
 
 #### PERF-11 · Triple-query schema fallback in topics service *(New)*
@@ -109,6 +113,10 @@ The `listTopics()` function (used by `TopicsBrowserPage`) performs an unbounded 
 Functions like `listTopicsPage`, `listRelatedTopics`, and `getTopicBySlug` have a "missing column" fallback pattern: try full select → try without `subcategory` → try minimal select. This means **up to 3 Supabase queries per call** on schema errors. This was added for migration safety but the schema is now stable.
 
 **Fix:** Remove the cascading fallback queries. If the schema is ever wrong, a clear error is better than silently degrading and tripling latency.
+
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Removed the schema-error “missing column” fallback retries so topic list queries don’t run up to 3 times on failures.
 
 ---
 

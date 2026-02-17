@@ -88,3 +88,5 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Security: Netlify Stripe functions now require `SITE_URL` for redirect targets (no `Origin` fallback), add CORS + `OPTIONS` handling, and return safe generic errors.
 - Security: Stripe billing portal `returnPath` is now sanitized to prevent open redirect via absolute URLs.
 - Reliability: ErrorBoundary now resets after navigation so a recovered route doesn’t stay stuck on the fallback UI.
+- Performance: `listTopics()` now uses explicit Supabase pagination to avoid silent truncation at 1,000 rows.
+- Performance: removed schema-error fallback retries that could trigger multiple Supabase queries per call.
