@@ -230,6 +230,10 @@ The first 593 lines are dead code. The route currently redirects `/learn` to `/`
 
 **Fix:** Delete the file entirely (see CQ-09).
 
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Deleted `src/pages/LearnPage.jsx`, which contained two concatenated copies of itself and was dead code since `/learn` redirects to `/`.
+
 ---
 
 #### CQ-09 · Three dead Learn page variants on disk *(New)*

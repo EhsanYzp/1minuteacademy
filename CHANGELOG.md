@@ -68,6 +68,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Refactor: split `ProfilePage.jsx` tab sections into `src/components/profile/tabs/*` components to reduce inline JSX and improve maintainability.
 - Refactor: extracted the dev-only module-check feature out of `TopicsBrowserPage.jsx` into `DevModuleCheck`.
 - Refactor: deduplicated shared Stripe API route helpers by centralizing them in `api/account/_utils.js` and importing from the Stripe routes.
+- Refactor: deleted dead `/learn` page implementation (`LearnPage.jsx`) that contained two concatenated copies of itself.
 
 ### Fixed
 - Home: fixed metric ticker count-up sometimes sticking at `0` in dev (React Strict Mode effect remount behavior).
