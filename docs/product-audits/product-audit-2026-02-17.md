@@ -390,6 +390,10 @@ The login form has no client-side throttle. While Supabase has its own rate limi
 
 **Fix:** Add a short cooldown on the submit button after each attempt.
 
+**Status:** Implemented (2026-02-18)
+
+**Summary:** Added a short client-side cooldown on auth actions (sign-in/sign-up/reset/OAuth/resend) in `LoginPage` to reduce rapid repeat attempts and unnecessary auth load.
+
 ---
 
 #### SEC-10 · IP rate-limit key is derived from `X-Forwarded-For` *(New)*
@@ -399,6 +403,10 @@ The login form has no client-side throttle. While Supabase has its own rate limi
 `getClientIp` reads `req.headers['x-forwarded-for']` and takes the first entry. If a client sends a forged header, that fake IP is used as the rate-limit key, potentially allowing bypass.
 
 **Fix:** Verify that the deployment platform sanitizes `X-Forwarded-For`. Alternatively, use Vercel's `req.socket.remoteAddress` or `x-real-ip`.
+
+**Status:** Implemented (2026-02-18)
+
+**Summary:** Hardened `getClientIp` to prefer platform-provided single-IP headers (e.g. `x-real-ip`) and avoid trusting the spoofable first entry of `X-Forwarded-For`.
 
 ---
 

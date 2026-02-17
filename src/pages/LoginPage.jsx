@@ -46,8 +46,27 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [cooldownUntilMs, setCooldownUntilMs] = useState(0);
+  const [cooldownTick, setCooldownTick] = useState(0);
   const [info, setInfo] = useState(null);
   const [localError, setLocalError] = useState(null);
+
+  const cooldownMsLeft = Math.max(0, (Number(cooldownUntilMs) || 0) - (Date.now() + cooldownTick));
+  const cooldownActive = cooldownMsLeft > 0;
+  const cooldownSecondsLeft = Math.ceil(cooldownMsLeft / 1000);
+
+  useEffect(() => {
+    if (!cooldownActive) return;
+    const t = window.setInterval(() => setCooldownTick((v) => (v + 250) % 1000000), 250);
+    return () => window.clearInterval(t);
+  }, [cooldownActive]);
+
+  function startCooldown(ms = 2000) {
+    const n = Number(ms);
+    if (!Number.isFinite(n) || n <= 0) return;
+    setCooldownTick(0);
+    setCooldownUntilMs(Date.now() + n);
+  }
 
   useEffect(() => {
     // If the user is already authenticated but not verified, guide them to verify
@@ -78,6 +97,7 @@ export default function LoginPage() {
   }, [mode]);
 
   async function onOAuth(provider) {
+    if (cooldownActive) return;
     setBusy(true);
     setInfo(null);
     setLocalError(null);
@@ -91,10 +111,12 @@ export default function LoginPage() {
       // handled by context
     } finally {
       setBusy(false);
+      startCooldown();
     }
   }
 
   async function onResendVerification() {
+    if (cooldownActive) return;
     if (!email) return;
     setBusy(true);
     setInfo(null);
@@ -106,11 +128,13 @@ export default function LoginPage() {
       // handled by context
     } finally {
       setBusy(false);
+      startCooldown();
     }
   }
 
   async function onSubmit(e) {
     e.preventDefault();
+    if (cooldownActive) return;
     setBusy(true);
     setInfo(null);
     setLocalError(null);
@@ -146,6 +170,7 @@ export default function LoginPage() {
       // handled by context
     } finally {
       setBusy(false);
+      startCooldown();
     }
   }
 
@@ -196,13 +221,13 @@ export default function LoginPage() {
             <div className="login-social" aria-label="Social sign-in">
               <div className="login-social-label">Or continue with</div>
               <div className="login-social-buttons">
-                <button type="button" className="login-social-btn login-social-btn--google" onClick={() => onOAuth('google')} disabled={busy || !isSupabaseConfigured}>
+                <button type="button" className="login-social-btn login-social-btn--google" onClick={() => onOAuth('google')} disabled={busy || cooldownActive || !isSupabaseConfigured}>
                   <span className="login-social-icon" aria-hidden="true">
                     <GoogleGIcon />
                   </span>
                   <span className="login-social-text">Google</span>
                 </button>
-                <button type="button" className="login-social-btn login-social-btn--github" onClick={() => onOAuth('github')} disabled={busy || !isSupabaseConfigured}>
+                <button type="button" className="login-social-btn login-social-btn--github" onClick={() => onOAuth('github')} disabled={busy || cooldownActive || !isSupabaseConfigured}>
                   <span className="login-social-icon" aria-hidden="true">
                     <FaGithub />
                   </span>
@@ -288,7 +313,7 @@ export default function LoginPage() {
                 <div className="login-info">
                   Verify your email to finish creating your account.
                 </div>
-                <button type="button" className="login-secondary" onClick={onResendVerification} disabled={busy || !isSupabaseConfigured}>
+                <button type="button" className="login-secondary" onClick={onResendVerification} disabled={busy || cooldownActive || !isSupabaseConfigured}>
                   {busy ? 'Sending…' : 'Resend verification email'}
                 </button>
                 <button
@@ -312,11 +337,21 @@ export default function LoginPage() {
             <motion.button
               className="login-submit"
               type="submit"
-              disabled={busy || !isSupabaseConfigured}
+              disabled={busy || cooldownActive || !isSupabaseConfigured}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              {busy ? 'Working…' : mode === 'signup' ? 'Create Account' : mode === 'forgot' ? 'Send reset email' : mode === 'verify' ? 'Resend verification email' : 'Sign In'}
+              {busy
+                ? 'Working…'
+                : cooldownActive
+                  ? `Try again in ${cooldownSecondsLeft}s`
+                  : mode === 'signup'
+                    ? 'Create Account'
+                    : mode === 'forgot'
+                      ? 'Send reset email'
+                      : mode === 'verify'
+                        ? 'Resend verification email'
+                        : 'Sign In'}
             </motion.button>
           </form>
 

@@ -108,3 +108,5 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Performance: removed schema-error fallback retries that could trigger multiple Supabase queries per call.
 - Accessibility: marked lesson completion confetti as `aria-hidden` to avoid screen reader noise.
 - UX: added a Not Found (404) page and catch-all route for unknown URLs.
+- Security: added a short client-side cooldown on auth actions to reduce rapid repeat login/sign-up/reset attempts.
+- Security: hardened API rate-limit IP derivation to prefer platform-provided client IP headers and avoid trusting spoofable `X-Forwarded-For` entries.

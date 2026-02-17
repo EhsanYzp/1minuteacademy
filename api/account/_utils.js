@@ -47,8 +47,36 @@ export function createStripeClient() {
 }
 
 export function getClientIp(req) {
-  const xff = req.headers['x-forwarded-for'];
-  if (typeof xff === 'string' && xff.trim()) return xff.split(',')[0].trim();
+  const extractFirstIp = (value) => {
+    if (typeof value !== 'string') return null;
+    const s = value.trim();
+    if (!s) return null;
+    return s.split(',')[0].trim() || null;
+  };
+
+  const extractLastIp = (value) => {
+    if (typeof value !== 'string') return null;
+    const parts = value
+      .split(',')
+      .map((p) => p.trim())
+      .filter(Boolean);
+    if (parts.length === 0) return null;
+    return parts[parts.length - 1] || null;
+  };
+
+  // Prefer single-IP headers set by the platform/load balancer.
+  // On Vercel, `x-real-ip` is typically the client IP.
+  const xRealIp = extractFirstIp(req.headers['x-real-ip']);
+  if (xRealIp) return xRealIp;
+
+  const xVercelFwdFor = extractFirstIp(req.headers['x-vercel-forwarded-for']);
+  if (xVercelFwdFor) return xVercelFwdFor;
+
+  // Fall back to XFF, but avoid trusting the first entry (can be spoofed on some stacks).
+  // Taking the last hop is safer on platforms that append to XFF.
+  const xff = extractLastIp(req.headers['x-forwarded-for']);
+  if (xff) return xff;
+
   return req.socket?.remoteAddress || null;
 }
 
