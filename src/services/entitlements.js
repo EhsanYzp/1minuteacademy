@@ -1,5 +1,3 @@
-import { getContentSource } from './_contentSource';
-
 const DEV_TIER_KEY = 'oma_dev_tier';
 
 // Tiers:

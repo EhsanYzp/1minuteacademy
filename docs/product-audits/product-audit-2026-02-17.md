@@ -420,21 +420,9 @@ The login form has no client-side throttle. While Supabase has its own rate limi
 
 **Fix:** Return a cleanup function that restores previous title, description, canonical, and removes JSON-LD scripts.
 
----
+**Status:** Implemented (2026-02-18)
 
-#### CQ-06 · No TypeScript *(Unchanged)*
-
-Entire codebase is plain JS with no type annotations. Refactoring becomes risky at scale without type safety.
-
-**Fix:** Consider incremental TypeScript adoption starting with services and utilities. `tsconfig.json` with `allowJs: true` lets you migrate gradually.
-
----
-
-#### CQ-07 · No CI/CD pipeline definition in the repo *(Unchanged)*
-
-No `.github/workflows/` or equivalent exists. No automated lint, test, or build verification on pull requests.
-
-**Fix:** Add a GitHub Actions workflow: lint → test → build → content:validate on every PR.
+**Summary:** Added `useEffect` cleanup in `Seo` to restore/clear head mutations (title/meta/canonical) and remove route-owned JSON-LD scripts on unmount.
 
 ---
 
@@ -446,6 +434,10 @@ Imports `getContentSource` from `./_contentSource` but never uses it.
 
 **Fix:** Remove the unused import.
 
+**Status:** Implemented (2026-02-18)
+
+**Summary:** Removed the unused `getContentSource` import from `src/services/entitlements.js`.
+
 ---
 
 #### CQ-12 · ESLint only targets browser environment *(New)*
@@ -456,56 +448,8 @@ ESLint is configured with browser globals only. Server-side code in `api/` and `
 
 **Fix:** Add a separate ESLint override for `api/**` and `scripts/**` with Node.js globals.
 
----
+**Status:** Implemented (2026-02-18)
 
-### 🧪 Testing
+**Summary:** Added an ESLint override for `api/**`, `scripts/**`, and `netlify/functions/**` to enable Node.js globals during linting.
 
-#### TEST-03 · Build scripts have no automated tests *(Unchanged)*
 
-`syncTopicsToSupabase`, `validateContent`, `regenerateJourneys` are tested only by manual execution.
-
-**Fix:** Add integration tests that run scripts against fixture data in a temp directory.
-
----
-
-#### TEST-04 · No visual regression tests *(Unchanged)*
-
-No Playwright or screenshot tests. `test-results/` and `playwright-report/` are stale artifacts with no active test configuration.
-
-**Fix:** Add Playwright visual comparison tests for key pages (Home, Topics, Topic, Lesson, Profile).
-
----
-
----
-
-## Summary matrix
-
-| Category | P0 | P1 | P2 |
-|---|---|---|---|
-| **Security** | **SEC-08** 🆕, **SEC-09** 🆕 | — | SEC-06 ❌, **SEC-10** 🆕 |
-| **Reliability** | **REL-04** 🆕 | — | — |
-| **Performance** | — | **PERF-10** 🆕, **PERF-11** 🆕 | PERF-08 ❌, PERF-09 ❌, **PERF-12** 🆕 |
-| **Accessibility** | — | **A11Y-09** ↑ | — |
-| **UX** | — | **UX-07** ↑ | UX-05 ❌, UX-06 ❌, **UX-08** 🆕 |
-| **Scalability** | — | — | SCALE-04 ❌, SCALE-05 ⚠️, **SCALE-06** 🆕 |
-| **Code Quality** | — | CQ-01 ❌⊘, CQ-02 ❌⊘, CQ-03 ❌, CQ-04 ❌, **CQ-08** 🆕, **CQ-09** 🆕, **CQ-10** 🆕 | CQ-05 ❌, CQ-06 ❌, CQ-07 ❌, **CQ-11** 🆕, **CQ-12** 🆕 |
-| **Testing** | — | TEST-01 ❌, TEST-02 ❌ | TEST-03 ❌, TEST-04 ❌ |
-
-> ❌ = Not addressed | ❌⊘ = Worse than previous audit | ⚠️ = Partially addressed | 🆕 = New finding | ↑ = Escalated from P2
-
-**Totals: 3 P0 · 12 P1 · 16 P2 = 31 open items** (16 new, 15 carried over)
-
----
-
-## Recommended execution order
-
-1. **SEC-08** — Fix or delete stale Netlify functions (open redirect + error leaks)
-2. **SEC-09** — Validate `returnPath` in portal session to prevent open redirect
-3. **REL-04** — Fix ErrorBoundary navigation reset
-4. **UX-07** — Add a 404 page
-5. **CQ-09** — Delete dead Learn page files (~2,200 lines of dead code)
-6. **CQ-04** — Deduplicate API utility functions (5 functions × 3–4 files)
-7. **CQ-02** — Split ProfilePage.jsx into per-tab components (2,122 → ~300 each)
-8. **CQ-01** — Extract CompletionScreen and LessonTopbar from LessonPage.jsx
-9. **A11Y-09** — Add `aria-hidden="true"` to confetti container
-10. **TEST-01** — Set up Vitest + core unit tests

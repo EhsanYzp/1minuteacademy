@@ -77,6 +77,9 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Refactor: deleted dead `/learn` page implementation (`LearnPage.jsx`) that contained two concatenated copies of itself.
 - Refactor: deleted dead Learn hub page variants (`LearnHubPage.jsx`, `LearnHubPageClean.jsx`) plus the unused `LearnPage.css` stylesheet.
 - Refactor: extracted the certificate SVG template into `src/services/certificateSvgTemplate.js`.
+- Refactor: `Seo` now cleans up meta/canonical/JSON-LD on unmount to avoid stale tags persisting across navigations.
+- Chore: removed an unused import from `src/services/entitlements.js`.
+- Chore: ESLint now applies Node.js globals for `api/**` and `scripts/**`.
 - Scalability: added a lightweight TTL cache for Supabase-backed topic category counts and topic list/search paging results.
 - Scalability: topic content sync now writes via a transactional Supabase RPC in chunks to avoid partial syncs.
 - Security/Scalability: enforced avatar Storage uploads to be image-only and <= 5 MB at the database policy layer.
