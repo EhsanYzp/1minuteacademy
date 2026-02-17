@@ -264,8 +264,6 @@ The certificate SVG is built as a single 120-line template literal with inline s
 
 ---
 
----
-
 ## P2 — Strategic
 
 ### ⚡ Performance
@@ -276,6 +274,10 @@ Three font families (Fredoka, Baloo 2, Caveat) are still loaded from `fonts.goog
 
 **Fix:** Download the woff2 files and serve from `public/fonts/`.
 
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Removed Google Fonts `<link>` loads from `index.html` and switched to locally bundled fonts via `@fontsource/*` imports (Fredoka, Baloo 2, Caveat) in `src/main.jsx`.
+
 ---
 
 #### PERF-09 · Image optimization pipeline *(Unchanged)*
@@ -284,11 +286,19 @@ No image optimization plugin or build-time compression exists. As more topic ass
 
 **Fix:** Add `vite-plugin-image-optimizer` or a build-time script to convert images to WebP/AVIF with responsive `srcset`.
 
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Added `vite-plugin-image-optimizer` and configured it in `vite.config.js` to apply build-time image compression for bundled assets.
+
 ---
 
 #### PERF-12 · ProfilePage chunk is 43 KB — largest page chunk *(New)*
 
 At 43 KB raw / 12 KB gzip, `ProfilePage` is the largest page-level chunk — more than double `LessonPage` (21 KB). This is a direct consequence of CQ-02 (2,122 lines in one file). Splitting into per-tab lazy components would significantly reduce initial chunk size.
+
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Updated `ProfilePage.jsx` to lazy-load its per-tab components via `React.lazy` + `Suspense`, so each tab’s UI code is split into its own chunk and only loaded when selected.
 
 ---
 

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, lazy, useEffect, useMemo, useRef, useState } from 'react';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
 import { useAuth } from '../context/AuthContext';
@@ -28,14 +28,15 @@ import {
   resolveStoryPresentationStyle,
   saveStoryPresentationStyle,
 } from '../services/presentationStyle';
-import OverviewTab from '../components/profile/tabs/OverviewTab';
-import PreferencesTab from '../components/profile/tabs/PreferencesTab';
-import ProgressTab from '../components/profile/tabs/ProgressTab';
-import BadgesTab from '../components/profile/tabs/BadgesTab';
-import CertificatesTab from '../components/profile/tabs/CertificatesTab';
-import RatingsTab from '../components/profile/tabs/RatingsTab';
-import AccountTab from '../components/profile/tabs/AccountTab';
 import './ProfilePage.css';
+
+const OverviewTab = lazy(() => import('../components/profile/tabs/OverviewTab'));
+const PreferencesTab = lazy(() => import('../components/profile/tabs/PreferencesTab'));
+const ProgressTab = lazy(() => import('../components/profile/tabs/ProgressTab'));
+const BadgesTab = lazy(() => import('../components/profile/tabs/BadgesTab'));
+const CertificatesTab = lazy(() => import('../components/profile/tabs/CertificatesTab'));
+const RatingsTab = lazy(() => import('../components/profile/tabs/RatingsTab'));
+const AccountTab = lazy(() => import('../components/profile/tabs/AccountTab'));
 
 function getBadgeRarity(minutesRequired) {
   const n = Number(minutesRequired) || 0;
@@ -1306,125 +1307,127 @@ export default function ProfilePage() {
                 ))}
               </div>
 
-              {activeTab === 'overview' && (
-                <OverviewTab stats={stats} tier={tier} formatMinuteExpert={formatMinuteExpert} />
-              )}
+              <Suspense fallback={<div className="profile-loading">Loading…</div>}>
+                {activeTab === 'overview' && (
+                  <OverviewTab stats={stats} tier={tier} formatMinuteExpert={formatMinuteExpert} />
+                )}
 
-              {activeTab === 'badges' && (
-                <BadgesTab stats={stats} tier={tier} contentSource={contentSource} getBadgeRarity={getBadgeRarity} />
-              )}
+                {activeTab === 'badges' && (
+                  <BadgesTab stats={stats} tier={tier} contentSource={contentSource} getBadgeRarity={getBadgeRarity} />
+                )}
 
-              {activeTab === 'certificates' && (
-                <CertificatesTab
-                  certificates={certificates}
-                  certLoading={certLoading}
-                  certError={certError}
-                  certBusyId={certBusyId}
-                  certBulkBusy={certBulkBusy}
-                  certBulkProgress={certBulkProgress}
-                  contentSource={contentSource}
-                  hasProAccess={hasProAccess}
-                  fmtShortDate={fmtShortDate}
-                  getCertificatePublicUrlFromPathWithOptions={getCertificatePublicUrlFromPathWithOptions}
-                  onGenerateCertificate={onGenerateCertificate}
-                  onRegenerateAllCertificates={onRegenerateAllCertificates}
-                  onRegenerateCertificate={onRegenerateCertificate}
-                  onShareCertificate={onShareCertificate}
-                  resolveCurrentRecipientName={resolveCurrentRecipientName}
-                />
-              )}
+                {activeTab === 'certificates' && (
+                  <CertificatesTab
+                    certificates={certificates}
+                    certLoading={certLoading}
+                    certError={certError}
+                    certBusyId={certBusyId}
+                    certBulkBusy={certBulkBusy}
+                    certBulkProgress={certBulkProgress}
+                    contentSource={contentSource}
+                    hasProAccess={hasProAccess}
+                    fmtShortDate={fmtShortDate}
+                    getCertificatePublicUrlFromPathWithOptions={getCertificatePublicUrlFromPathWithOptions}
+                    onGenerateCertificate={onGenerateCertificate}
+                    onRegenerateAllCertificates={onRegenerateAllCertificates}
+                    onRegenerateCertificate={onRegenerateCertificate}
+                    onShareCertificate={onShareCertificate}
+                    resolveCurrentRecipientName={resolveCurrentRecipientName}
+                  />
+                )}
 
-              {activeTab === 'preferences' && (
-                <PreferencesTab
-                  avatarInputRef={avatarInputRef}
-                  avatarUrl={avatarUrl}
-                  canChoosePresentation={canChoosePresentation}
-                  certBulkBusy={certBulkBusy}
-                  certBulkProgress={certBulkProgress}
-                  certBusyId={certBusyId}
-                  contentSource={contentSource}
-                  displayName={displayName}
-                  hasProAccess={hasProAccess}
-                  identityBusy={identityBusy}
-                  identityCertPrompt={identityCertPrompt}
-                  identityError={identityError}
-                  identityLoaded={identityLoaded}
-                  identityNotice={identityNotice}
-                  initialsFromName={initialsFromName}
-                  isSupabaseConfigured={isSupabaseConfigured}
-                  onChangePresentationStyle={onChangePresentationStyle}
-                  onPickAvatar={onPickAvatar}
-                  onRegenerateAllCertificates={onRegenerateAllCertificates}
-                  onSaveIdentity={onSaveIdentity}
-                  presentationBusy={presentationBusy}
-                  presentationError={presentationError}
-                  presentationNotice={presentationNotice}
-                  presentationStyle={presentationStyle}
-                  presentationStyleOptions={presentationStyleOptions}
-                  setDisplayName={setDisplayName}
-                  setIdentityCertPrompt={setIdentityCertPrompt}
-                  tier={tier}
-                  user={user}
-                />
-              )}
+                {activeTab === 'preferences' && (
+                  <PreferencesTab
+                    avatarInputRef={avatarInputRef}
+                    avatarUrl={avatarUrl}
+                    canChoosePresentation={canChoosePresentation}
+                    certBulkBusy={certBulkBusy}
+                    certBulkProgress={certBulkProgress}
+                    certBusyId={certBusyId}
+                    contentSource={contentSource}
+                    displayName={displayName}
+                    hasProAccess={hasProAccess}
+                    identityBusy={identityBusy}
+                    identityCertPrompt={identityCertPrompt}
+                    identityError={identityError}
+                    identityLoaded={identityLoaded}
+                    identityNotice={identityNotice}
+                    initialsFromName={initialsFromName}
+                    isSupabaseConfigured={isSupabaseConfigured}
+                    onChangePresentationStyle={onChangePresentationStyle}
+                    onPickAvatar={onPickAvatar}
+                    onRegenerateAllCertificates={onRegenerateAllCertificates}
+                    onSaveIdentity={onSaveIdentity}
+                    presentationBusy={presentationBusy}
+                    presentationError={presentationError}
+                    presentationNotice={presentationNotice}
+                    presentationStyle={presentationStyle}
+                    presentationStyleOptions={presentationStyleOptions}
+                    setDisplayName={setDisplayName}
+                    setIdentityCertPrompt={setIdentityCertPrompt}
+                    tier={tier}
+                    user={user}
+                  />
+                )}
 
-              {activeTab === 'progress' && (
-                <ProgressTab
-                  contentSource={contentSource}
-                  fmtDate={fmtDate}
-                  loading={loading}
-                  planLabel={planLabel}
-                  progress={progress}
-                  progressBySubject={progressBySubject}
-                  progressFiltered={progressFiltered}
-                  progressQuery={progressQuery}
-                  progressView={progressView}
-                  setProgressQuery={setProgressQuery}
-                  setProgressView={setProgressView}
-                  showReview={showReview}
-                />
-              )}
+                {activeTab === 'progress' && (
+                  <ProgressTab
+                    contentSource={contentSource}
+                    fmtDate={fmtDate}
+                    loading={loading}
+                    planLabel={planLabel}
+                    progress={progress}
+                    progressBySubject={progressBySubject}
+                    progressFiltered={progressFiltered}
+                    progressQuery={progressQuery}
+                    progressView={progressView}
+                    setProgressQuery={setProgressQuery}
+                    setProgressView={setProgressView}
+                    showReview={showReview}
+                  />
+                )}
 
-              {activeTab === 'ratings' && (
-                <RatingsTab
-                  contentSource={contentSource}
-                  fmtShortDate={fmtShortDate}
-                  myRatingsEnriched={myRatingsEnriched}
-                  myRatingsFiltered={myRatingsFiltered}
-                  onUpdateRating={onUpdateRating}
-                  ratingBusyTopicId={ratingBusyTopicId}
-                  ratingsError={ratingsError}
-                  ratingsLoading={ratingsLoading}
-                  ratingsQuery={ratingsQuery}
-                  setRatingsQuery={setRatingsQuery}
-                  user={user}
-                />
-              )}
+                {activeTab === 'ratings' && (
+                  <RatingsTab
+                    contentSource={contentSource}
+                    fmtShortDate={fmtShortDate}
+                    myRatingsEnriched={myRatingsEnriched}
+                    myRatingsFiltered={myRatingsFiltered}
+                    onUpdateRating={onUpdateRating}
+                    ratingBusyTopicId={ratingBusyTopicId}
+                    ratingsError={ratingsError}
+                    ratingsLoading={ratingsLoading}
+                    ratingsQuery={ratingsQuery}
+                    setRatingsQuery={setRatingsQuery}
+                    user={user}
+                  />
+                )}
 
-              {activeTab === 'account' && contentSource !== 'local' && (
-                <AccountTab
-                  accountBusy={accountBusy}
-                  accountError={accountError}
-                  accountNotice={accountNotice}
-                  computeFallbackPeriodEnd={computeFallbackPeriodEnd}
-                  contentSource={contentSource}
-                  fmtShortDate={fmtShortDate}
-                  formatStripeStatus={formatStripeStatus}
-                  hasStripeCustomer={hasStripeCustomer}
-                  isPaused={isPaused}
-                  onDeleteAccount={onDeleteAccount}
-                  onManageSubscription={onManageSubscription}
-                  onPauseAccount={onPauseAccount}
-                  onResumeAccount={onResumeAccount}
-                  planLabel={planLabel}
-                  showSubscriptionBox={showSubscriptionBox}
-                  subError={subError}
-                  subLoading={subLoading}
-                  subStatus={subStatus}
-                  tier={tier}
-                  user={user}
-                />
-              )}
+                {activeTab === 'account' && contentSource !== 'local' && (
+                  <AccountTab
+                    accountBusy={accountBusy}
+                    accountError={accountError}
+                    accountNotice={accountNotice}
+                    computeFallbackPeriodEnd={computeFallbackPeriodEnd}
+                    contentSource={contentSource}
+                    fmtShortDate={fmtShortDate}
+                    formatStripeStatus={formatStripeStatus}
+                    hasStripeCustomer={hasStripeCustomer}
+                    isPaused={isPaused}
+                    onDeleteAccount={onDeleteAccount}
+                    onManageSubscription={onManageSubscription}
+                    onPauseAccount={onPauseAccount}
+                    onResumeAccount={onResumeAccount}
+                    planLabel={planLabel}
+                    showSubscriptionBox={showSubscriptionBox}
+                    subError={subError}
+                    subLoading={subLoading}
+                    subStatus={subStatus}
+                    tier={tier}
+                    user={user}
+                  />
+                )}
+              </Suspense>
 
             </div>
           </div>
