@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import Seo from '../components/Seo';
 import SubjectCard from '../components/SubjectCard';
 import DevModuleCheck from '../components/topics/DevModuleCheck';
+import { TopicsGridSkeleton } from '../components/SkeletonBlocks';
 import { getTopicCategoryCounts, listTopicsPage, searchTopicsPage } from '../services/topics';
 import { listUserTopicProgress } from '../services/progress';
 import { getTopicRatingSummaries } from '../services/ratings';
@@ -595,7 +596,7 @@ export default function TopicsBrowserPage() {
             </div>
 
             {loading ? (
-              <div className="topics-loading">Loading topics…</div>
+              <TopicsGridSkeleton count={12} />
             ) : visibleTopics.length === 0 ? (
               <div className="topics-empty">No topics match your search/filter. Try a different keyword.</div>
             ) : (

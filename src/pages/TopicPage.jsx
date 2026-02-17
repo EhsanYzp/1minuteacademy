@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
+import { TopicHeaderSkeleton } from '../components/SkeletonBlocks';
 import { getTopic } from '../services/topics';
 import { listUserTopicProgress } from '../services/progress';
 import { getContentSource } from '../services/_contentSource';
@@ -302,7 +303,7 @@ function TopicPage() {
         <Seo title="Loading topic" description="Loading topic details." path={`/topic/${topicId}`} canonicalPath={`/topic/${topicId}`} />
         <Header />
         <div className="topic-not-found">
-          <h2>Loading…</h2>
+          <TopicHeaderSkeleton />
         </div>
       </div>
     );

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
+import RouteLoading from '../components/RouteLoading';
 import { useAuth } from '../context/AuthContext';
 import './LoginPage.css';
 
@@ -65,6 +66,8 @@ export default function AuthCallbackPage() {
             <h1>Signing you in…</h1>
             <p>Finishing authentication. You’ll be redirected automatically.</p>
           </div>
+
+          {(loading || (!user && !error)) && <RouteLoading />}
 
           {error && <div className="login-error">{String(error?.message ?? error)}</div>}
 

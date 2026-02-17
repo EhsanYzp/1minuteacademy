@@ -310,6 +310,10 @@ At 43 KB raw / 12 KB gzip, `ProfilePage` is the largest page-level chunk — mor
 
 **Fix:** Add a centered spinner or branded loading animation.
 
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Updated `AuthCallbackPage.jsx` to show a centered loading spinner via the shared `RouteLoading` component while authentication completes.
+
 ---
 
 #### UX-06 · No skeleton loading states *(Unchanged)*
@@ -317,6 +321,10 @@ At 43 KB raw / 12 KB gzip, `ProfilePage` is the largest page-level chunk — mor
 No skeleton components exist. Loading states use plain text ("Loading…", "Loading topics…", "Loading certificates…").
 
 **Fix:** Add lightweight skeleton components (gray pulsing rectangles) for card grids, profile tabs, and topic headers.
+
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Added reusable skeleton components and replaced plain-text loading states with skeletons for the topics grid, topic header, and profile tab content.
 
 ---
 
@@ -327,6 +335,10 @@ No skeleton components exist. Loading states use plain text ("Loading…", "Load
 If JavaScript fails to load or is disabled, the user sees a blank white page with no explanation.
 
 **Fix:** Add `<noscript>` inside `<body>`: "1 Minute Academy requires JavaScript to run."
+
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Added a simple `<noscript>` fallback message to `index.html` so users without JavaScript see an explanation instead of a blank page.
 
 ---
 

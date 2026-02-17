@@ -15,6 +15,8 @@ import { getMyProfile, updateMyProfile, uploadMyAvatar } from '../services/profi
 import { listMyTopicRatings, setMyTopicRating } from '../services/ratings';
 import ToastStack from '../components/ToastStack';
 import { EXPERT_BADGES } from '../services/badges';
+import Skeleton from '../components/Skeleton';
+import { ProfileTabsSkeleton } from '../components/SkeletonBlocks';
 import {
   generateAndUploadMyCertificate,
   getCertificatePublicUrlFromPathWithOptions,
@@ -1307,7 +1309,20 @@ export default function ProfilePage() {
                 ))}
               </div>
 
-              <Suspense fallback={<div className="profile-loading">Loading…</div>}>
+              <Suspense
+                fallback={
+                  <div className="profile-loading">
+                    <ProfileTabsSkeleton />
+                    <div style={{ marginTop: 14 }} aria-hidden="true">
+                      <Skeleton width={'62%'} height={22} radius={12} style={{ marginBottom: 10 }} />
+                      <Skeleton width={'92%'} height={14} radius={10} style={{ marginBottom: 8 }} />
+                      <Skeleton width={'88%'} height={14} radius={10} style={{ marginBottom: 14 }} />
+                      <Skeleton width={'80%'} height={14} radius={10} style={{ marginBottom: 8 }} />
+                      <Skeleton width={'76%'} height={14} radius={10} style={{ marginBottom: 8 }} />
+                    </div>
+                  </div>
+                }
+              >
                 {activeTab === 'overview' && (
                   <OverviewTab stats={stats} tier={tier} formatMinuteExpert={formatMinuteExpert} />
                 )}
