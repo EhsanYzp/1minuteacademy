@@ -34,6 +34,10 @@ The Netlify serverless functions are an **earlier copy** of the Vercel API route
 - If Netlify deploys are still active: port all Vercel security fixes (CORS, error sanitization, `SITE_URL`-only redirects).
 - If Netlify is no longer the active deploy target: **delete the Netlify functions** entirely to avoid confusion and prevent accidental deployment of vulnerable code.
 
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Hardened the legacy Netlify Stripe functions to rely on `SITE_URL` only for redirect targets, added CORS/OPTIONS handling, and stopped returning raw exception messages to clients.
+
 ---
 
 #### SEC-09 · Potential open redirect in `create-portal-session.js` via `returnPath` body parameter *(New)*
@@ -55,6 +59,10 @@ const safePath = (typeof returnPath === 'string' && returnPath.startsWith('/') &
   ? returnPath
   : '/me';
 ```
+
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Sanitized `returnPath` to allow only safe in-site relative paths (default `/me`) before building Stripe Billing Portal `return_url`.
 
 ---
 

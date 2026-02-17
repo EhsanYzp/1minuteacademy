@@ -16,6 +16,16 @@ async function readJsonBody(req) {
   return JSON.parse(raw);
 }
 
+function safeReturnPath(raw) {
+  if (typeof raw !== 'string') return null;
+  const s = raw.split('#')[0].replace(/\s/g, '').trim();
+  if (!s) return null;
+  if (!s.startsWith('/')) return null;
+  if (s.startsWith('//')) return null;
+  if (s.includes('://')) return null;
+  return s.slice(0, 1024);
+}
+
 function normalizeSiteUrl(input) {
   let raw = String(input ?? '').trim();
   if (!raw) return null;
@@ -75,7 +85,7 @@ export default async function handler(req, res) {
     return json(res, 400, { error: 'Invalid JSON body' });
   }
 
-  const returnPath = typeof body?.returnPath === 'string' ? body.returnPath : '/me';
+  const returnPath = safeReturnPath(body?.returnPath) ?? '/me';
 
   // SECURITY: redirect targets must be based on a trusted, configured origin.
   // Never fall back to request headers (Origin / Host) which can be forged.

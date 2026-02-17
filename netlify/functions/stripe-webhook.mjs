@@ -1,6 +1,38 @@
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 
+function normalizeSiteUrl(input) {
+  let raw = String(input || '').trim();
+  if (!raw) return null;
+
+  raw = raw.replace(/^https?;\/\//i, 'https://');
+  raw = raw.replace(/^https?:;\/\//i, 'https://');
+  raw = raw.replace(/^http;\/\//i, 'http://');
+  raw = raw.replace(/^https?:\/\/\//i, (m) => m.slice(0, 8));
+
+  const hasScheme = /^[a-z][a-z0-9+.-]*:\/\//i.test(raw);
+  const withScheme = hasScheme ? raw : `https://${raw}`;
+  return withScheme.replace(/\/+$/, '');
+}
+
+function getCorsHeaders(event) {
+  const siteUrl = normalizeSiteUrl(process.env.SITE_URL);
+  const allowedOrigin = siteUrl ? new URL(siteUrl).origin : null;
+
+  const origin = String(event?.headers?.origin || event?.headers?.Origin || '').trim();
+  const allowLocalhost = process.env.NODE_ENV !== 'production';
+  const isLocalhost = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin);
+  const allowOrigin = origin && (origin === allowedOrigin || (allowLocalhost && isLocalhost)) ? origin : allowedOrigin;
+
+  return {
+    'Access-Control-Allow-Origin': allowOrigin || '',
+    'Access-Control-Allow-Methods': 'POST,OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Stripe-Signature',
+    'Access-Control-Max-Age': '600',
+    Vary: 'Origin',
+  };
+}
+
 function isProSubscriptionStatus(status) {
   return status === 'active' || status === 'trialing' || status === 'past_due';
 }
@@ -74,7 +106,13 @@ async function upsertStripeCustomerMapping({
 }
 
 export async function handler(event) {
-  if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method not allowed' };
+  const corsHeaders = getCorsHeaders(event);
+
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers: corsHeaders, body: '' };
+  }
+
+  if (event.httpMethod !== 'POST') return { statusCode: 405, headers: corsHeaders, body: 'Method not allowed' };
 
   const stripeKey = process.env.STRIPE_SECRET_KEY;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -88,14 +126,15 @@ export async function handler(event) {
   const stripe = process.env.STRIPE_API_VERSION
     ? new Stripe(stripeKey, { apiVersion: process.env.STRIPE_API_VERSION })
     : new Stripe(stripeKey);
-  const signature = event.headers?.['stripe-signature'];
-  if (!signature) return { statusCode: 400, body: 'Missing stripe-signature' };
+  const signature = event.headers?.['stripe-signature'] || event.headers?.['Stripe-Signature'];
+  if (!signature) return { statusCode: 400, headers: corsHeaders, body: 'Missing stripe-signature' };
 
   let stripeEvent;
   try {
     stripeEvent = stripe.webhooks.constructEvent(event.body, signature, webhookSecret);
   } catch (err) {
-    return { statusCode: 400, body: `Webhook Error: ${err?.message || 'Invalid signature'}` };
+    console.error('netlify:stripe-webhook signature verification failed', err);
+    return { statusCode: 400, headers: corsHeaders, body: 'Webhook Error: Invalid signature' };
   }
 
   const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey);
@@ -107,7 +146,7 @@ export async function handler(event) {
       event_type: stripeEvent.type,
     });
     if (!error && data === false) {
-      return { statusCode: 200, body: 'ok' };
+      return { statusCode: 200, headers: corsHeaders, body: 'ok' };
     }
   } catch {
     // fail-open
@@ -244,8 +283,9 @@ export async function handler(event) {
       // ignore
     }
 
-    return { statusCode: 200, body: 'ok' };
+    return { statusCode: 200, headers: corsHeaders, body: 'ok' };
   } catch (e) {
+    console.error('netlify:stripe-webhook error', e);
     try {
       await supabaseAdmin
         .from('stripe_webhook_events')
@@ -254,6 +294,6 @@ export async function handler(event) {
     } catch {
       // ignore
     }
-    return { statusCode: 500, body: e?.message || 'Server error' };
+    return { statusCode: 500, headers: corsHeaders, body: 'Server error' };
   }
 }

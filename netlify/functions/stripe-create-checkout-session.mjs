@@ -1,6 +1,49 @@
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 
+function normalizeSiteUrl(input) {
+  let raw = String(input || '').trim();
+  if (!raw) return null;
+
+  raw = raw.replace(/^https?;\/\//i, 'https://');
+  raw = raw.replace(/^https?:;\/\//i, 'https://');
+  raw = raw.replace(/^http;\/\//i, 'http://');
+  raw = raw.replace(/^https?:\/\/\//i, (m) => m.slice(0, 8));
+
+  const hasScheme = /^[a-z][a-z0-9+.-]*:\/\//i.test(raw);
+  const withScheme = hasScheme ? raw : `https://${raw}`;
+  return withScheme.replace(/\/+$/, '');
+}
+
+function getCorsHeaders(event) {
+  const siteUrl = normalizeSiteUrl(process.env.SITE_URL);
+  const allowedOrigin = siteUrl ? new URL(siteUrl).origin : null;
+
+  const origin = String(event?.headers?.origin || event?.headers?.Origin || '').trim();
+  const allowLocalhost = process.env.NODE_ENV !== 'production';
+  const isLocalhost = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin);
+  const allowOrigin = origin && (origin === allowedOrigin || (allowLocalhost && isLocalhost)) ? origin : allowedOrigin;
+
+  return {
+    'Access-Control-Allow-Origin': allowOrigin || '',
+    'Access-Control-Allow-Methods': 'POST,OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Max-Age': '600',
+    Vary: 'Origin',
+  };
+}
+
+function json(statusCode, body, extraHeaders = {}) {
+  return {
+    statusCode,
+    headers: {
+      'Content-Type': 'application/json',
+      ...extraHeaders,
+    },
+    body: JSON.stringify(body),
+  };
+}
+
 function getClientIp(event) {
   const xff = event.headers?.['x-forwarded-for'] || event.headers?.['X-Forwarded-For'];
   if (typeof xff === 'string' && xff.trim()) return xff.split(',')[0].trim();
@@ -51,17 +94,23 @@ async function setCachedCheckout({ supabaseAdmin, cacheKey, userId, priceId, int
 }
 
 export async function handler(event) {
+  const corsHeaders = getCorsHeaders(event);
+
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 204, headers: corsHeaders, body: '' };
+  }
+
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
+    return json(405, { error: 'Method not allowed' }, corsHeaders);
   }
 
   const stripeKey = process.env.STRIPE_SECRET_KEY;
   const supabaseUrl = process.env.SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-  if (!stripeKey) return { statusCode: 500, body: JSON.stringify({ error: 'Missing STRIPE_SECRET_KEY' }) };
+  if (!stripeKey) return json(500, { error: 'Missing STRIPE_SECRET_KEY' }, corsHeaders);
   if (!supabaseUrl || !serviceRoleKey) {
-    return { statusCode: 500, body: JSON.stringify({ error: 'Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY' }) };
+    return json(500, { error: 'Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY' }, corsHeaders);
   }
 
   const authHeader = event.headers?.authorization || event.headers?.Authorization;
@@ -69,18 +118,18 @@ export async function handler(event) {
     ? authHeader.slice('Bearer '.length)
     : null;
 
-  if (!token) return { statusCode: 401, body: JSON.stringify({ error: 'Missing Authorization bearer token' }) };
+  if (!token) return json(401, { error: 'Missing Authorization bearer token' }, corsHeaders);
 
   let body;
   try {
     body = JSON.parse(event.body || '{}');
   } catch {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Invalid JSON body' }) };
+    return json(400, { error: 'Invalid JSON body' }, corsHeaders);
   }
 
   const interval = String(body?.interval ?? 'month').toLowerCase();
   if (interval !== 'month' && interval !== 'year') {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Invalid interval' }) };
+    return json(400, { error: 'Invalid interval' }, corsHeaders);
   }
 
   const monthlyPriceId = process.env.STRIPE_PRICE_ID_MONTHLY;
@@ -88,30 +137,19 @@ export async function handler(event) {
   const priceId = interval === 'year' ? yearlyPriceId : monthlyPriceId;
 
   if (!priceId) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
+    return json(
+      500,
+      {
         error: interval === 'year' ? 'Missing STRIPE_PRICE_ID_YEARLY' : 'Missing STRIPE_PRICE_ID_MONTHLY',
-      }),
-    };
+      },
+      corsHeaders,
+    );
   }
 
-  const normalizeSiteUrl = (input) => {
-    let raw = String(input || '').trim();
-    if (!raw) return null;
-
-    raw = raw.replace(/^https?;\/\//i, 'https://');
-    raw = raw.replace(/^https?:;\/\//i, 'https://');
-    raw = raw.replace(/^http;\/\//i, 'http://');
-    raw = raw.replace(/^https?:\/\/\//i, (m) => m.slice(0, 8));
-
-    const hasScheme = /^[a-z][a-z0-9+.-]*:\/\//i.test(raw);
-    const withScheme = hasScheme ? raw : `https://${raw}`;
-    return withScheme.replace(/\/+$/, '');
-  };
-
-    const siteUrl = normalizeSiteUrl(event.headers?.origin) || normalizeSiteUrl(process.env.SITE_URL);
-  if (!siteUrl) return { statusCode: 500, body: JSON.stringify({ error: 'Missing SITE_URL' }) };
+  // SECURITY: redirect targets must be based on a trusted, configured origin.
+  // Never fall back to request headers (Origin / Host) which can be forged.
+  const siteUrl = normalizeSiteUrl(process.env.SITE_URL);
+  if (!siteUrl) return json(500, { error: 'Missing SITE_URL' }, corsHeaders);
 
   const stripe = process.env.STRIPE_API_VERSION
     ? new Stripe(stripeKey, { apiVersion: process.env.STRIPE_API_VERSION })
@@ -119,7 +157,7 @@ export async function handler(event) {
   const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey);
 
   const { data: userData, error: userErr } = await supabaseAdmin.auth.getUser(token);
-  if (userErr || !userData?.user) return { statusCode: 401, body: JSON.stringify({ error: 'Invalid Supabase session' }) };
+  if (userErr || !userData?.user) return json(401, { error: 'Invalid Supabase session' }, corsHeaders);
 
   const user = userData.user;
 
@@ -128,10 +166,16 @@ export async function handler(event) {
     await enforceRateLimit({ supabaseAdmin, key: `stripe:checkout:ip:${ip}`, windowSeconds: 60, maxCount: 12 });
     await enforceRateLimit({ supabaseAdmin, key: `stripe:checkout:user:${user.id}`, windowSeconds: 600, maxCount: 4 });
   } catch (e) {
-    return {
-      statusCode: e?.statusCode || 429,
-      body: JSON.stringify({ error: e?.message || 'Too many requests', reset_at: e?.resetAt || null }),
-    };
+    const status = Number(e?.statusCode) || 429;
+    if (status >= 500) console.error('netlify:stripe-create-checkout-session rate-limit error', e);
+    return json(
+      status,
+      {
+        error: status === 429 ? 'Too many requests. Please wait and try again.' : 'Server error',
+        reset_at: e?.resetAt || null,
+      },
+      corsHeaders,
+    );
   }
 
   const cacheKey = `v1:${user.id}:${priceId}:${interval}`;
@@ -149,7 +193,7 @@ export async function handler(event) {
         } catch {
           // fall through
         }
-        return { statusCode: 200, body: JSON.stringify({ url: cached.checkout_url, reused: true }) };
+        return json(200, { url: cached.checkout_url, reused: true }, corsHeaders);
       }
     }
   } catch {
@@ -186,8 +230,9 @@ export async function handler(event) {
       // ignore
     }
 
-    return { statusCode: 200, body: JSON.stringify({ url: session.url }) };
+    return json(200, { url: session.url }, corsHeaders);
   } catch (e) {
-    return { statusCode: 500, body: JSON.stringify({ error: e?.message || 'Stripe error' }) };
+    console.error('netlify:stripe-create-checkout-session error', e);
+    return json(500, { error: 'Server error' }, corsHeaders);
   }
 }
