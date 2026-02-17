@@ -1,6 +1,7 @@
 import { getSupabaseClient, isSupabaseConfigured } from '../lib/supabaseClient';
 import { getContentSource } from './_contentSource';
 import { getLocalTopic, listLocalTopics } from './topics.local';
+import { makeCacheKey, withCache } from './cache';
 
 function requireSupabase() {
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
@@ -33,20 +34,28 @@ export async function getTopicCategoryCounts() {
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
-  const supabase = requireSupabase();
+  const cacheKey = makeCacheKey(['topics', 'categoryCounts', 'supabase']);
+  return withCache(
+    cacheKey,
+    { ttlMs: 5 * 60 * 1000 },
+    async () => {
+      const supabase = requireSupabase();
 
-  const { data, error } = await supabase.rpc('get_topic_category_counts');
-  if (error) throw error;
+      const { data, error } = await supabase.rpc('get_topic_category_counts');
+      if (error) throw error;
 
-  let total = 0;
-  for (const row of Array.isArray(data) ? data : []) {
-    const subject = String(row?.subject ?? '').trim() || 'General';
-    const n = Number(row?.topic_count ?? 0) || 0;
-    counts.set(subject, n);
-    total += n;
-  }
+      const cachedCounts = new Map();
+      let total = 0;
+      for (const row of Array.isArray(data) ? data : []) {
+        const subject = String(row?.subject ?? '').trim() || 'General';
+        const n = Number(row?.topic_count ?? 0) || 0;
+        cachedCounts.set(subject, n);
+        total += n;
+      }
 
-  return { counts, total };
+      return { counts: cachedCounts, total };
+    }
+  );
 }
 
 export async function listTopicsPage({ limit = 30, offset = 0, subject = null } = {}) {
@@ -71,29 +80,36 @@ export async function listTopicsPage({ limit = 30, offset = 0, subject = null } 
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
-  const supabase = requireSupabase();
+  const cacheKey = makeCacheKey(['topics', 'page', 'supabase', subjectFilter ?? 'all', safeLimit, safeOffset]);
+  return withCache(
+    cacheKey,
+    { ttlMs: 60 * 1000 },
+    async () => {
+      const supabase = requireSupabase();
 
-  const columns = 'id, subject, subcategory, title, emoji, color, description, difficulty';
-  let q = supabase
-    .from('topics')
-    .select(columns, { count: 'exact' })
-    .eq('published', true)
-    .order('title', { ascending: true });
+      const columns = 'id, subject, subcategory, title, emoji, color, description, difficulty';
+      let q = supabase
+        .from('topics')
+        .select(columns, { count: 'exact' })
+        .eq('published', true)
+        .order('title', { ascending: true });
 
-  if (subjectFilter && subjectFilter !== 'All') q = q.eq('subject', subjectFilter);
+      if (subjectFilter && subjectFilter !== 'All') q = q.eq('subject', subjectFilter);
 
-  const { data, error, count } = await q.range(safeOffset, safeOffset + safeLimit - 1);
-  if (error) throw error;
+      const { data, error, count } = await q.range(safeOffset, safeOffset + safeLimit - 1);
+      if (error) throw error;
 
-  const items = data ?? [];
-  const total = typeof count === 'number' ? count : null;
-  const nextOffset = safeOffset + items.length;
-  return {
-    items,
-    total,
-    nextOffset,
-    hasMore: total == null ? items.length === safeLimit : nextOffset < total,
-  };
+      const items = data ?? [];
+      const total = typeof count === 'number' ? count : null;
+      const nextOffset = safeOffset + items.length;
+      return {
+        items,
+        total,
+        nextOffset,
+        hasMore: total == null ? items.length === safeLimit : nextOffset < total,
+      };
+    }
+  );
 }
 
 export async function searchTopicsPage({ query = '', limit = 30, offset = 0, subject = null } = {}) {
@@ -121,27 +137,34 @@ export async function searchTopicsPage({ query = '', limit = 30, offset = 0, sub
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
-  const supabase = requireSupabase();
+  const cacheKey = makeCacheKey(['topics', 'searchPage', 'supabase', subjectFilter ?? 'all', q, safeLimit, safeOffset]);
+  return withCache(
+    cacheKey,
+    { ttlMs: 60 * 1000 },
+    async () => {
+      const supabase = requireSupabase();
 
-  const { data, error } = await supabase.rpc('search_topics_page', {
-    p_query: q,
-    p_subject: subjectFilter,
-    p_limit: safeLimit,
-    p_offset: safeOffset,
-  });
-  if (error) throw error;
+      const { data, error } = await supabase.rpc('search_topics_page', {
+        p_query: q,
+        p_subject: subjectFilter,
+        p_limit: safeLimit,
+        p_offset: safeOffset,
+      });
+      if (error) throw error;
 
-  const rows = Array.isArray(data) ? data : [];
-  const total = rows.length > 0 ? Number(rows[0]?.total_count ?? 0) : 0;
-  const items = rows.map(({ total_count, ...rest }) => rest);
+      const rows = Array.isArray(data) ? data : [];
+      const total = rows.length > 0 ? Number(rows[0]?.total_count ?? 0) : 0;
+      const items = rows.map(({ total_count, ...rest }) => rest);
 
-  const nextOffset = safeOffset + items.length;
-  return {
-    items,
-    total,
-    nextOffset,
-    hasMore: nextOffset < total,
-  };
+      const nextOffset = safeOffset + items.length;
+      return {
+        items,
+        total,
+        nextOffset,
+        hasMore: nextOffset < total,
+      };
+    }
+  );
 }
 
 export async function listTopics({ pageSize = 500 } = {}) {

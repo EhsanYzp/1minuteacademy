@@ -350,6 +350,10 @@ Every page load re-fetches data from Supabase. No in-memory cache, no stale-whil
 
 **Fix:** Add a lightweight cache (e.g., TanStack Query) with sensible `staleTime` values. Or add a simple `Map`-based cache with TTL in the service layer.
 
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Added a small TTL cache (`src/services/cache.js`) and cached Supabase-backed topic category counts (5 min) plus topic list/search paging results (60s) in `src/services/topics.js` to reduce repeated reads.
+
 ---
 
 #### SCALE-05 · Content sync script has no transaction wrapping *(Partial)*
@@ -357,6 +361,10 @@ Every page load re-fetches data from Supabase. No in-memory cache, no stale-whil
 `syncTopicsToSupabase.mjs` now supports `--dry-run` and `--force` flags ✅, but still has **no transaction wrapping**. Inserts and upserts are separate calls — if the insert succeeds but the upsert fails, a partial sync results. There is also no batch chunking.
 
 **Fix:** Wrap inserts + upserts in a transaction via an RPC. Add batch chunking for large catalogs.
+
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Added an atomic write path via a Supabase RPC (`supabase/024_sync_topics_rpc.sql`) and updated `scripts/syncTopicsToSupabase.mjs` to sync via the RPC in 200-row chunks, preventing partial insert/upsert syncs.
 
 ---
 
@@ -367,6 +375,10 @@ Every page load re-fetches data from Supabase. No in-memory cache, no stale-whil
 The RLS policies restrict writes to the owner's folder but don't enforce file size or MIME type at the database level. While the client validates MIME and enforces 2 MB, a malicious user could bypass this via direct Storage API calls.
 
 **Fix:** Add a storage policy or trigger that rejects files over 5 MB or with non-image MIME types.
+
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Tightened avatar Storage write policies to enforce an image-only MIME allowlist and a 5 MB max size at the database layer (`supabase/025_avatars_storage_constraints.sql`), preventing direct API bypass of client-side validation.
 
 ---
 

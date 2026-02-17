@@ -330,14 +330,54 @@ async function main() {
     return;
   }
 
-  if (toInsert.length > 0) {
-    const { error: insErr } = await supabase.from('topics').insert(toInsert);
-    if (insErr) throw insErr;
-  }
+  const BATCH_SIZE = 200;
 
-  if (toUpdate.length > 0) {
-    const { error: updErr } = await supabase.from('topics').upsert(toUpdate, { onConflict: 'id' });
-    if (updErr) throw updErr;
+  const chunk = (arr, size) => {
+    const out = [];
+    for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
+    return out;
+  };
+
+  const applyBatches = async (rows, fn, label) => {
+    const batches = chunk(rows, BATCH_SIZE);
+    for (let i = 0; i < batches.length; i++) {
+      const b = batches[i];
+      const suffix = batches.length > 1 ? ` (batch ${i + 1}/${batches.length})` : '';
+      const { data, error } = await fn(b);
+      if (error) throw error;
+      const applied = typeof data === 'number' ? data : b.length;
+      console.log(`Applied ${b.length} topic(s)${suffix}${label ? `: ${label}` : ''}`);
+      if (typeof data === 'number' && data !== b.length) {
+        console.log(`  - Rows affected: ${applied}`);
+      }
+    }
+  };
+
+  if (args.insertOnly) {
+    if (toInsert.length > 0) {
+      await applyBatches(
+        toInsert,
+        (b) =>
+          supabase.rpc('sync_topics_batch', {
+            p_topics: b,
+            p_insert_only: true,
+          }),
+        'rpc insert-only'
+      );
+    }
+  } else {
+    const toWrite = [...toInsert, ...toUpdate];
+    if (toWrite.length > 0) {
+      await applyBatches(
+        toWrite,
+        (b) =>
+          supabase.rpc('sync_topics_batch', {
+            p_topics: b,
+            p_insert_only: false,
+          }),
+        'rpc upsert'
+      );
+    }
   }
 
   console.log(`\n✅ Synced ${toInsert.length + toUpdate.length} topic(s) to Supabase.`);
