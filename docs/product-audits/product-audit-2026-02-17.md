@@ -134,6 +134,10 @@ The lesson completion confetti container (`<div className="confetti-container">`
 <div className="confetti-container" aria-hidden="true">
 ```
 
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Marked the confetti container as `aria-hidden="true"` so decorative elements are ignored by screen readers.
+
 ---
 
 ### 🎨 UX

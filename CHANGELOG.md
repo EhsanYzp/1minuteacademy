@@ -90,3 +90,4 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - Reliability: ErrorBoundary now resets after navigation so a recovered route doesn’t stay stuck on the fallback UI.
 - Performance: `listTopics()` now uses explicit Supabase pagination to avoid silent truncation at 1,000 rows.
 - Performance: removed schema-error fallback retries that could trigger multiple Supabase queries per call.
+- Accessibility: marked lesson completion confetti as `aria-hidden` to avoid screen reader noise.

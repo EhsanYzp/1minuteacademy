@@ -875,7 +875,7 @@ function LessonPage() {
             </motion.div>
             
             {/* Confetti Effect (lightweight) */}
-            <div className="confetti-container">
+            <div className="confetti-container" aria-hidden="true">
               {[...Array(12)].map((_, i) => (
                 <motion.div
                   key={i}
