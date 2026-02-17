@@ -113,3 +113,8 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - UX: added a Not Found (404) page and catch-all route for unknown URLs.
 - Security: added a short client-side cooldown on auth actions to reduce rapid repeat login/sign-up/reset attempts.
 - Security: hardened API rate-limit IP derivation to prefer platform-provided client IP headers and avoid trusting spoofable `X-Forwarded-For` entries.
+- Security: fixed auth cooldown arithmetic that double-counted elapsed time, causing a 2-second cooldown to expire in ~1 second.
+- Reliability: added a tab-scoped `ErrorBoundary` around lazy-loaded profile tabs so a chunk-load failure shows a localized "Reload" prompt instead of crashing the entire page.
+- Performance: cache module now proactively sweeps expired entries every 60 seconds, caps at 200 entries (LRU-style eviction), and deduplicates concurrent in-flight requests for the same key.
+- Refactor: replaced the per-instance capture-restore pattern in `Seo` with a global stack-based registry so overlapping mount/unmount during route transitions never leaves stale meta tags.
+- Chore: narrowed ESLint React plugin/browser-globals scope to `src/**` only; Node API and script files now get an independent config block with `js.configs.recommended` + Node globals.

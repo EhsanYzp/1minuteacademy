@@ -51,7 +51,10 @@ export default function LoginPage() {
   const [info, setInfo] = useState(null);
   const [localError, setLocalError] = useState(null);
 
-  const cooldownMsLeft = Math.max(0, (Number(cooldownUntilMs) || 0) - (Date.now() + cooldownTick));
+  // cooldownTick is only used to trigger re-renders every 250ms; actual remaining
+  // time is derived purely from wall-clock comparison to avoid double-counting.
+  void cooldownTick;
+  const cooldownMsLeft = Math.max(0, (Number(cooldownUntilMs) || 0) - Date.now());
   const cooldownActive = cooldownMsLeft > 0;
   const cooldownSecondsLeft = Math.ceil(cooldownMsLeft / 1000);
 

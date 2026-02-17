@@ -94,6 +94,8 @@ const cooldownMsLeft = Math.max(0, (Number(cooldownUntilMs) || 0) - Date.now());
 
 The interval (`setCooldownTick`) stays as-is since it drives the 250 ms re-render cadence.
 
+> **Status:** ✅ Implemented — Removed `cooldownTick` from the `cooldownMsLeft` formula; now uses `Date.now()` only. `void cooldownTick` retains the re-render dependency. 2-second cooldown now lasts a full 2 seconds.
+
 ---
 
 ### P2 — Strategic
@@ -107,6 +109,8 @@ The seven lazy-loaded tab components are wrapped in `<Suspense>` (with a skeleto
 The app's top-level ErrorBoundary catches this, but the user sees the full crash UI instead of a scoped "failed to load tab — retry" message.
 
 **Fix:** Wrap each tab's `<Suspense>` in a lightweight error boundary with a "Failed to load — Retry" fallback that only affects the tab panel, not the entire profile page.
+
+> **Status:** ✅ Implemented — Wrapped `<Suspense>` in `<ErrorBoundary resetKey={activeTab}>` with an inline fallback that detects chunk-load errors and shows a scoped "Reload to update" button. Switching tabs resets the boundary.
 
 ---
 
@@ -125,6 +129,8 @@ In today's usage (short sessions, bounded key space of ~5–10 unique keys), thi
 
 Also: consider deduplicating in-flight requests by storing the `Promise` itself in the cache until it resolves.
 
+> **Status:** ✅ Implemented — Added a 60-second periodic sweep (`setInterval` with `.unref()`), a 200-entry max-size cap with LRU-style eviction, and in-flight request deduplication (stores the `Promise` in an `inflight` Map until resolved/rejected).
+
 ---
 
 #### CQ-13 · Seo meta restore can leave stale tags when instances overlap *(New — introduced by CQ-05 fix)*
@@ -136,6 +142,8 @@ During route transitions, both the old and new `<Seo>` instances may be briefly 
 In practice this is fleeting (the next route's `<Seo>` fires immediately), and the JSON-LD owner-ID scoping is correct. But a crawler hitting the page during the transition gap could see stale OG tags.
 
 **Fix:** This is inherent to the "capture previous → restore" pattern with overlapping mounts. If it causes real issues, consider a global singleton approach (one `<SeoManager>` at the top of the tree that receives props via context) instead of per-route instances.
+
+> **Status:** ✅ Implemented — Replaced the capture-restore pattern with a global `seoStack` registry. Each `<Seo>` instance pushes its state on mount and removes it on unmount; the DOM always reflects the topmost stack entry. Overlapping instances during route transitions are now handled correctly.
 
 ---
 
@@ -163,7 +171,7 @@ The first config block matches `**/*.{js,jsx}`, which includes API and script fi
 },
 ```
 
----
+> **Status:** ✅ Implemented — First block narrowed to `src/**/*.{js,jsx}`; Node override now independently extends `js.configs.recommended` with its own `languageOptions` (ecmaVersion, node globals, module sourceType) and `no-unused-vars` rule. React plugins no longer apply to API/script files.
 
 ---
 
@@ -171,30 +179,30 @@ The first config block matches `**/*.{js,jsx}`, which includes API and script fi
 
 | Category | P0 | P1 | P2 |
 |---|---|---|---|
-| **Security** | — | **SEC-11** 🆕 | — |
-| **Reliability** | — | — | **REL-05** 🆕 |
-| **Performance** | — | — | **PERF-13** 🆕 |
+| **Security** | — | ~~SEC-11~~ ✅ | — |
+| **Reliability** | — | — | ~~REL-05~~ ✅ |
+| **Performance** | — | — | ~~PERF-13~~ ✅ |
 | **Accessibility** | — | — | — |
 | **UX** | — | — | — |
 | **Scalability** | — | — | — |
-| **Code Quality** | — | — | CQ-06 ❌, CQ-07 ❌, **CQ-13** 🆕, **CQ-14** 🆕 |
+| **Code Quality** | — | — | CQ-06 ❌, CQ-07 ❌, ~~CQ-13~~ ✅, ~~CQ-14~~ ✅ |
 | **Testing** | — | TEST-01 ❌, TEST-02 ❌ | TEST-03 ❌, TEST-04 ❌ |
 
-> ❌ = Not addressed (carried forward) | 🆕 = New finding
+> ❌ = Not addressed (carried forward) | ✅ = Implemented this cycle
 
-**Totals: 0 P0 · 3 P1 · 8 P2 = 11 open items** (4 new, 7 carried forward)
+**Totals: 0 P0 · 2 P1 · 4 P2 = 6 open items** (all carried forward from prior audits)
 
-Down from 31 open items → 11 open items (65% reduction).
+All 5 new findings resolved. Down from 31 open items → 6 open items (81% reduction across all audit cycles).
 
 ---
 
 ## Recommended execution order
 
-1. **SEC-11** — Fix cooldown arithmetic (one-line change)
-2. **CQ-14** — Narrow ESLint file patterns to stop React plugins leaking to Node code
+1. ~~**SEC-11** — Fix cooldown arithmetic (one-line change)~~ ✅
+2. ~~**CQ-14** — Narrow ESLint file patterns to stop React plugins leaking to Node code~~ ✅
 3. **TEST-01** — Set up Vitest + core unit tests
 4. **TEST-02** — Add E2E test coverage
-5. **REL-05** — Add tab-level ErrorBoundary in ProfilePage
-6. **PERF-13** — Add periodic cache sweep or max-size cap
-7. **CQ-13** — Consider singleton Seo manager (if stale-tag issue surfaces in crawlers)
+5. ~~**REL-05** — Add tab-level ErrorBoundary in ProfilePage~~ ✅
+6. ~~**PERF-13** — Add periodic cache sweep or max-size cap~~ ✅
+7. ~~**CQ-13** — Consider singleton Seo manager (if stale-tag issue surfaces in crawlers)~~ ✅
 

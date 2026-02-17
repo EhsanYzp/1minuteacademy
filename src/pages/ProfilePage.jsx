@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Suspense, lazy, useEffect, useMemo, useRef, useState } from 'react';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
+import ErrorBoundary from '../components/ErrorBoundary';
 import { useAuth } from '../context/AuthContext';
 import { isSupabaseConfigured } from '../lib/supabaseClient';
 import { getTopicCategoryCounts, listTopicsByIds } from '../services/topics';
@@ -1309,6 +1310,37 @@ export default function ProfilePage() {
                 ))}
               </div>
 
+              <ErrorBoundary
+                resetKey={activeTab}
+                fallback={({ error }) => {
+                  const isChunk =
+                    /Failed to fetch dynamically imported module|Importing a module script failed|Loading chunk .* failed|ChunkLoadError/i.test(
+                      String(error?.message || error || ''),
+                    );
+                  return (
+                    <div className="profile-loading" style={{ textAlign: 'center', padding: '32px 16px' }}>
+                      <p style={{ fontWeight: 600, marginBottom: 8 }}>
+                        {isChunk ? 'This tab failed to load — the app may have been updated.' : 'Something went wrong loading this tab.'}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => window.location.reload()}
+                        style={{
+                          padding: '8px 16px',
+                          borderRadius: 10,
+                          border: '1px solid rgba(0,0,0,0.14)',
+                          background: 'var(--color-primary, #3b82f6)',
+                          color: '#fff',
+                          fontWeight: 600,
+                          cursor: 'pointer',
+                        }}
+                      >
+                        {isChunk ? 'Reload to update' : 'Reload page'}
+                      </button>
+                    </div>
+                  );
+                }}
+              >
               <Suspense
                 fallback={
                   <div className="profile-loading">
@@ -1443,6 +1475,7 @@ export default function ProfilePage() {
                   />
                 )}
               </Suspense>
+              </ErrorBoundary>
 
             </div>
           </div>

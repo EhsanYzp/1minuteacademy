@@ -17,6 +17,64 @@ function buildTitle(pageTitle) {
   return `${t} | ${SITE_NAME}`;
 }
 
+/* ------------------------------------------------------------------ */
+/*  Global stack – the DOM always reflects the topmost entry.          */
+/* ------------------------------------------------------------------ */
+const seoStack = [];
+
+function metaSelector({ name, property }) {
+  if (name) return `meta[name="${CSS.escape(name)}"]`;
+  if (property) return `meta[property="${CSS.escape(property)}"]`;
+  return null;
+}
+
+function applyToDom(entry) {
+  if (typeof document === 'undefined') return;
+
+  setDocumentTitle(entry.title);
+  upsertLink({ rel: 'canonical', href: entry.canonicalUrl });
+
+  for (const m of entry.meta) upsertMeta(m);
+
+  // Remove all owned JSON-LD first, then re-insert.
+  document.head
+    .querySelectorAll(
+      `script[type="application/ld+json"][data-seo-id^="${CSS.escape(`seo-jsonld-${entry.ownerId}-`)}"]`,
+    )
+    .forEach((el) => el.remove());
+
+  if (Array.isArray(entry.jsonLd)) {
+    entry.jsonLd.forEach((item, idx) =>
+      upsertJsonLd({ id: `seo-jsonld-${entry.ownerId}-${idx}`, json: item }),
+    );
+  } else if (entry.jsonLd) {
+    upsertJsonLd({ id: `seo-jsonld-${entry.ownerId}-0`, json: entry.jsonLd });
+  }
+}
+
+function removeOwnedJsonLd(ownerId) {
+  if (typeof document === 'undefined') return;
+  document.head
+    .querySelectorAll(
+      `script[type="application/ld+json"][data-seo-id^="${CSS.escape(`seo-jsonld-${ownerId}-`)}"]`,
+    )
+    .forEach((el) => el.remove());
+}
+
+/** Reapply the current topmost entry (or restore defaults). */
+function syncDom() {
+  if (seoStack.length > 0) {
+    applyToDom(seoStack[seoStack.length - 1]);
+  } else if (typeof document !== 'undefined') {
+    // Stack empty — restore safe defaults.
+    setDocumentTitle(SITE_NAME);
+    upsertMeta({ name: 'description', content: DEFAULT_DESCRIPTION });
+    upsertMeta({ name: 'robots', content: 'index,follow' });
+  }
+}
+
+/* ------------------------------------------------------------------ */
+
 export default function Seo({
   title,
   description,
@@ -38,34 +96,6 @@ export default function Seo({
 
     const ownerId = ownerIdRef.current;
 
-    const metaSelector = ({ name, property }) => {
-      if (name) return `meta[name="${CSS.escape(name)}"]`;
-      if (property) return `meta[property="${CSS.escape(property)}"]`;
-      return null;
-    };
-
-    const getMetaContent = (attrs) => {
-      const sel = metaSelector(attrs);
-      if (!sel) return null;
-      const el = document.head.querySelector(sel);
-      return el ? el.getAttribute('content') : null;
-    };
-
-    const getLinkHref = (rel) => {
-      const r = String(rel ?? '').trim();
-      if (!r) return null;
-      const el = document.head.querySelector(`link[rel="${CSS.escape(r)}"]`);
-      return el ? el.getAttribute('href') : null;
-    };
-
-    const removeJsonLdOwned = () => {
-      document.head
-        .querySelectorAll(
-          `script[type="application/ld+json"][data-seo-id^="${CSS.escape(`seo-jsonld-${ownerId}-`)}"]`
-        )
-        .forEach((el) => el.remove());
-    };
-
     const nextTitle = buildTitle(title);
     const nextDescription = String(description ?? '').trim() || DEFAULT_DESCRIPTION;
 
@@ -78,82 +108,37 @@ export default function Seo({
       canonicalPath || (typeof window !== 'undefined' ? window.location.pathname : '/'),
     );
 
-    const prevTitle = document.title;
-
-    const plannedMeta = [
+    const meta = [
       { name: 'description', content: nextDescription },
-
       { property: 'og:site_name', content: SITE_NAME },
       { property: 'og:title', content: nextTitle },
       { property: 'og:description', content: nextDescription },
       { property: 'og:type', content: String(type ?? 'website') },
       { property: 'og:url', content: url },
       { property: 'og:image', content: toAbsoluteUrl(ogImage) },
-
       { name: 'twitter:image', content: toAbsoluteUrl(twImage) },
       { name: 'twitter:card', content: (!isSvg(twImage) && !isSvg(ogImage)) ? 'summary_large_image' : 'summary' },
       { name: 'twitter:title', content: nextTitle },
       { name: 'twitter:description', content: nextDescription },
-
       { name: 'robots', content: noindex ? 'noindex,nofollow' : 'index,follow' },
     ];
 
-    const prevMeta = plannedMeta.map((m) => ({
-      key: m,
-      prevContent: getMetaContent(m),
-    }));
+    const entry = { ownerId, title: nextTitle, canonicalUrl, meta, jsonLd };
 
-    const prevCanonicalHref = getLinkHref('canonical');
-
-    setDocumentTitle(nextTitle);
-
-    upsertLink({ rel: 'canonical', href: canonicalUrl });
-
-    for (const m of plannedMeta) upsertMeta(m);
-
-    // JSON-LD (owned IDs so cleanup doesn't fight the next page)
-    removeJsonLdOwned();
-    if (Array.isArray(jsonLd)) {
-      jsonLd.forEach((item, idx) => upsertJsonLd({ id: `seo-jsonld-${ownerId}-${idx}`, json: item }));
-    } else if (jsonLd) {
-      upsertJsonLd({ id: `seo-jsonld-${ownerId}-0`, json: jsonLd });
-    }
+    // Push onto the stack and apply.
+    seoStack.push(entry);
+    applyToDom(entry);
 
     return () => {
-      // Restore title only if we still own it.
-      if (document.title === nextTitle) document.title = prevTitle;
+      // Remove this entry from the stack (wherever it is).
+      const idx = seoStack.indexOf(entry);
+      if (idx !== -1) seoStack.splice(idx, 1);
 
-      // Restore canonical only if we still own it.
-      const currentCanonical = getLinkHref('canonical');
-      if (currentCanonical === canonicalUrl) {
-        if (prevCanonicalHref == null) {
-          const el = document.head.querySelector('link[rel="canonical"]');
-          if (el) el.remove();
-        } else {
-          upsertLink({ rel: 'canonical', href: prevCanonicalHref });
-        }
-      }
+      // Clean up our JSON-LD nodes.
+      removeOwnedJsonLd(ownerId);
 
-      // Restore meta tags only if they still match what we set.
-      for (const item of prevMeta) {
-        const { key, prevContent } = item;
-        const sel = metaSelector(key);
-        if (!sel) continue;
-        const el = document.head.querySelector(sel);
-        if (!el) continue;
-
-        const current = el.getAttribute('content');
-        const expected = String(key.content ?? '').trim();
-        if (current !== expected) continue;
-
-        if (prevContent == null) {
-          el.remove();
-        } else {
-          el.setAttribute('content', prevContent);
-        }
-      }
-
-      removeJsonLdOwned();
+      // Re-sync DOM to the current topmost entry (or defaults).
+      syncDom();
     };
   }, [title, description, path, canonicalPath, type, image, twitterImage, noindex, jsonLd]);
 
