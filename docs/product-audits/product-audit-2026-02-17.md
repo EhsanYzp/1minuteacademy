@@ -212,6 +212,10 @@ The dev-only module-check feature (~190 lines of state, SSE logic, and modal UI)
 
 **Fix:** Import from `api/account/_utils.js`. Add `normalizeSiteUrl` to the shared file. Delete the local copies.
 
+**Status:** Implemented (2026-02-17)
+
+**Summary:** Centralized shared Stripe route helpers in `api/account/_utils.js` (including adding `normalizeSiteUrl`) and refactored the Stripe API routes to import the shared utilities, removing local duplicate copies.
+
 ---
 
 #### CQ-08 · LearnPage.jsx contains two concatenated copies of itself *(New)*

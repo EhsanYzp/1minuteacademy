@@ -52,6 +52,21 @@ export function getClientIp(req) {
   return req.socket?.remoteAddress || null;
 }
 
+export function normalizeSiteUrl(input) {
+  let raw = String(input ?? '').trim();
+  if (!raw) return null;
+
+  // Fix common env-var typos like `https;//example.com` or `https:;//example.com`
+  raw = raw.replace(/^https?;\/\//i, 'https://');
+  raw = raw.replace(/^https?:;\/\//i, 'https://');
+  raw = raw.replace(/^http;\/\//i, 'http://');
+  raw = raw.replace(/^https?:\/\/\//i, (m) => m.slice(0, 8)); // collapse `https:////` -> `https://`
+
+  const hasScheme = /^[a-z][a-z0-9+.-]*:\/\//i.test(raw);
+  const withScheme = hasScheme ? raw : `https://${raw}`;
+  return withScheme.replace(/\/+$/, '');
+}
+
 export async function enforceRateLimit({ supabaseAdmin, key, windowSeconds, maxCount }) {
   const { data, error } = await supabaseAdmin.rpc('rate_limit_check', {
     key,
@@ -66,6 +81,7 @@ export async function enforceRateLimit({ supabaseAdmin, key, windowSeconds, maxC
   if (row && row.allowed === false) {
     const err = new Error('Too many requests. Please wait and try again.');
     err.status = 429;
+    err.statusCode = 429;
     err.resetAt = row.reset_at || null;
     throw err;
   }
