@@ -38,6 +38,8 @@ The Netlify serverless functions are an **earlier copy** of the Vercel API route
 
 **Summary:** Hardened the legacy Netlify Stripe functions to rely on `SITE_URL` only for redirect targets, added CORS/OPTIONS handling, and stopped returning raw exception messages to clients.
 
+**Re-audit (2026-02-18):** ✅ Confirmed. Both Netlify functions derive redirect URLs from `SITE_URL` only (no `Origin` fallback), handle `OPTIONS` with 204 + CORS headers, and catch blocks return generic error strings.
+
 ---
 
 #### SEC-09 · Potential open redirect in `create-portal-session.js` via `returnPath` body parameter *(New)*
@@ -64,6 +66,8 @@ const safePath = (typeof returnPath === 'string' && returnPath.startsWith('/') &
 
 **Summary:** Sanitized `returnPath` to allow only safe in-site relative paths (default `/me`) before building Stripe Billing Portal `return_url`.
 
+**Re-audit (2026-02-18):** ✅ Confirmed. `create-portal-session.js` validates `returnPath` starts with `/`, rejects `://` and `//`, and truncates to 1024 chars before passing to `new URL(safePath, siteUrl)`.
+
 ---
 
 ### 🛡️ Reliability
@@ -81,6 +85,8 @@ Once the ErrorBoundary catches an error, `this.state.hasError` remains `true` pe
 **Status:** Implemented (2026-02-17)
 
 **Summary:** Added a `resetKey` prop to `ErrorBoundary` and wired it to router `location.key` so the boundary clears its error state after navigation.
+
+**Re-audit (2026-02-18):** ✅ Confirmed. `ErrorBoundary.jsx` implements `componentDidUpdate` checking `resetKey` and resets `hasError`. `App.jsx` passes `location.key` as `resetKey`.
 
 ---
 
@@ -117,7 +123,7 @@ Functions like `listTopicsPage`, `listRelatedTopics`, and `getTopicBySlug` have 
 **Status:** Implemented (2026-02-17)
 
 **Summary:** Removed the schema-error “missing column” fallback retries so topic list queries don’t run up to 3 times on failures.
-
+**Re-audit (2026-02-18):** ✅ Confirmed. `topics.js` has zero `try/catch` cascading fallback blocks — errors throw directly.
 ---
 
 ### ♿ Accessibility
@@ -137,6 +143,8 @@ The lesson completion confetti container (`<div className="confetti-container">`
 **Status:** Implemented (2026-02-17)
 
 **Summary:** Marked the confetti container as `aria-hidden="true"` so decorative elements are ignored by screen readers.
+
+**Re-audit (2026-02-18):** ✅ Confirmed. Confetti (extracted to `CompletionScreen.jsx`) renders with `aria-hidden="true"` on the container.
 
 ---
 
@@ -158,6 +166,8 @@ There is no catch-all `*` route in the router configuration. Any URL that doesn'
 
 **Summary:** Added a `NotFoundPage` and a catch-all `*` route so unknown URLs show a proper 404 page instead of rendering blank.
 
+**Re-audit (2026-02-18):** ✅ Confirmed. `App.jsx` has a `{ path: '*', element: <NotFoundPage /> }` catch-all route. `NotFoundPage` is lazy-loaded.
+
 ---
 
 ### 🧹 Code Quality
@@ -174,6 +184,8 @@ Previously grown from ~695 → **921 lines** (+33%) due to certificate-unlock de
 
 **Summary:** Extracted the lesson topbar and completion UI into `LessonTopbar` and `CompletionScreen`, reducing `LessonPage.jsx` from 921 → 791 lines and removing large inline JSX blocks.
 
+**Re-audit (2026-02-18):** ✅ Confirmed. `LessonPage.jsx` is 791 lines. `CompletionScreen` and `LessonTopbar` are imported from separate files.
+
 ---
 
 #### CQ-02 · ProfilePage.jsx is 2,122 lines *(Worse)*
@@ -187,6 +199,8 @@ Previously grown from ~1,335 → **2,122 lines** (+59%). Contains **7 inline tab
 **Status:** Implemented (2026-02-17)
 
 **Summary:** Extracted all tab sections into dedicated components under `src/components/profile/tabs/`, reducing `ProfilePage.jsx` from 2,122 → 1,437 lines and removing large inline JSX blocks.
+
+**Re-audit (2026-02-18):** ✅ Confirmed. `ProfilePage.jsx` is 1,453 lines. Seven tab components are lazy-loaded from `src/components/profile/tabs/`.
 
 ---
 
@@ -202,6 +216,8 @@ The dev-only module-check feature (~190 lines of state, SSE logic, and modal UI)
 
 **Summary:** Extracted the dev-only module-check UI/state/SSE streaming into `DevModuleCheck`, reducing `TopicsBrowserPage.jsx` from 875 → 640 lines while keeping behavior the same.
 
+**Re-audit (2026-02-18):** ✅ Confirmed. `TopicsBrowserPage.jsx` is 641 lines. `DevModuleCheck` is imported from a separate component file.
+
 ---
 
 #### CQ-04 · Duplicated utility functions across API files *(Unchanged)*
@@ -215,6 +231,8 @@ The dev-only module-check feature (~190 lines of state, SSE logic, and modal UI)
 **Status:** Implemented (2026-02-17)
 
 **Summary:** Centralized shared Stripe route helpers in `api/account/_utils.js` (including adding `normalizeSiteUrl`) and refactored the Stripe API routes to import the shared utilities, removing local duplicate copies.
+
+**Re-audit (2026-02-18):** ✅ Confirmed. All three Stripe route files import from `../account/_utils.js`. No local definitions of `json`, `getClientIp`, `readJsonBody`, or `enforceRateLimit` remain.
 
 ---
 
@@ -234,6 +252,8 @@ The first 593 lines are dead code. The route currently redirects `/learn` to `/`
 
 **Summary:** Deleted `src/pages/LearnPage.jsx`, which contained two concatenated copies of itself and was dead code since `/learn` redirects to `/`.
 
+**Re-audit (2026-02-18):** ✅ Confirmed. `src/pages/LearnPage.jsx` does not exist on disk.
+
 ---
 
 #### CQ-09 · Three dead Learn page variants on disk *(New)*
@@ -248,6 +268,8 @@ All three files exist on disk but **none are imported or routed to** in `App.jsx
 
 **Summary:** Deleted the dead Learn page variants (`LearnPage.jsx`, `LearnHubPage.jsx`, `LearnHubPageClean.jsx`) plus their unused `LearnPage.css`, since `/learn` redirects to `/` and none were routed/imported.
 
+**Re-audit (2026-02-18):** ✅ Confirmed. All four files (`LearnPage.jsx`, `LearnHubPage.jsx`, `LearnHubPageClean.jsx`, `LearnPage.css`) are absent from disk.
+
 ---
 
 #### CQ-10 · certificates.js `buildCertificateSvg` is a 120-line template string *(New)*
@@ -261,6 +283,8 @@ The certificate SVG is built as a single 120-line template literal with inline s
 **Status:** Implemented (2026-02-17)
 
 **Summary:** Extracted the certificate SVG markup into `src/services/certificateSvgTemplate.js` and kept `buildCertificateSvg` as a thin wrapper that escapes/derives values before rendering the template.
+
+**Re-audit (2026-02-18):** ✅ Confirmed. `certificates.js` imports `renderCertificateSvgTemplate` from `./certificateSvgTemplate`. Template file (123 lines) contains the full SVG markup.
 
 ---
 
@@ -278,6 +302,8 @@ Three font families (Fredoka, Baloo 2, Caveat) are still loaded from `fonts.goog
 
 **Summary:** Removed Google Fonts `<link>` loads from `index.html` and switched to locally bundled fonts via `@fontsource/*` imports (Fredoka, Baloo 2, Caveat) in `src/main.jsx`.
 
+**Re-audit (2026-02-18):** ✅ Confirmed. `index.html` has no Google Fonts `<link>` tags. `main.jsx` imports `@fontsource/fredoka`, `@fontsource/baloo-2`, and `@fontsource/caveat`.
+
 ---
 
 #### PERF-09 · Image optimization pipeline *(Unchanged)*
@@ -289,6 +315,8 @@ No image optimization plugin or build-time compression exists. As more topic ass
 **Status:** Implemented (2026-02-17)
 
 **Summary:** Added `vite-plugin-image-optimizer` and configured it in `vite.config.js` to apply build-time image compression for bundled assets.
+
+**Re-audit (2026-02-18):** ✅ Confirmed. `vite.config.js` imports `viteImageOptimizer` and configures quality settings for jpg, png, webp, avif, and svg.
 
 ---
 
@@ -314,6 +342,8 @@ At 43 KB raw / 12 KB gzip, `ProfilePage` is the largest page-level chunk — mor
 
 **Summary:** Updated `AuthCallbackPage.jsx` to show a centered loading spinner via the shared `RouteLoading` component while authentication completes.
 
+**Re-audit (2026-02-18):** ✅ Confirmed. `AuthCallbackPage.jsx` renders `<RouteLoading />` as its loading state.
+
 ---
 
 #### UX-06 · No skeleton loading states *(Unchanged)*
@@ -325,6 +355,8 @@ No skeleton components exist. Loading states use plain text ("Loading…", "Load
 **Status:** Implemented (2026-02-17)
 
 **Summary:** Added reusable skeleton components and replaced plain-text loading states with skeletons for the topics grid, topic header, and profile tab content.
+
+**Re-audit (2026-02-18):** ✅ Confirmed. `Skeleton.jsx` and `SkeletonBlocks.jsx` exist and are used in `TopicsBrowserPage`, `TopicPage`, and `ProfilePage`.
 
 ---
 
@@ -340,6 +372,8 @@ If JavaScript fails to load or is disabled, the user sees a blank white page wit
 
 **Summary:** Added a simple `<noscript>` fallback message to `index.html` so users without JavaScript see an explanation instead of a blank page.
 
+**Re-audit (2026-02-18):** ✅ Confirmed. `index.html` has a styled `<noscript>` block inside `<body>`.
+
 ---
 
 ### 📈 Scalability
@@ -354,6 +388,8 @@ Every page load re-fetches data from Supabase. No in-memory cache, no stale-whil
 
 **Summary:** Added a small TTL cache (`src/services/cache.js`) and cached Supabase-backed topic category counts (5 min) plus topic list/search paging results (60s) in `src/services/topics.js` to reduce repeated reads.
 
+**Re-audit (2026-02-18):** ✅ Confirmed. `cache.js` exports `makeCacheKey`/`withCache`. `topics.js` wraps `getTopicCategoryCounts` (5 min), `listTopicsPage` (60s), and `searchTopicsPage` (60s). See PERF-13 (new finding) re: cache eviction.
+
 ---
 
 #### SCALE-05 · Content sync script has no transaction wrapping *(Partial)*
@@ -365,6 +401,8 @@ Every page load re-fetches data from Supabase. No in-memory cache, no stale-whil
 **Status:** Implemented (2026-02-17)
 
 **Summary:** Added an atomic write path via a Supabase RPC (`supabase/024_sync_topics_rpc.sql`) and updated `scripts/syncTopicsToSupabase.mjs` to sync via the RPC in 200-row chunks, preventing partial insert/upsert syncs.
+
+**Re-audit (2026-02-18):** ✅ Confirmed. `syncTopicsToSupabase.mjs` calls `supabase.rpc('sync_topics_batch', ...)` in a chunked loop (batch size 200). SQL file creates the RPC with service-role-only guard.
 
 ---
 
@@ -380,6 +418,8 @@ The RLS policies restrict writes to the owner's folder but don't enforce file si
 
 **Summary:** Tightened avatar Storage write policies to enforce an image-only MIME allowlist and a 5 MB max size at the database layer (`supabase/025_avatars_storage_constraints.sql`), preventing direct API bypass of client-side validation.
 
+**Re-audit (2026-02-18):** ✅ Confirmed. Insert and update policies both enforce MIME allowlist (5 types) and `size <= 5242880` via `metadata` JSON. Defensive `coalesce` across multiple MIME key variants.
+
 ---
 
 ### 🔒 Security
@@ -394,6 +434,8 @@ The login form has no client-side throttle. While Supabase has its own rate limi
 
 **Summary:** Added a short client-side cooldown on auth actions (sign-in/sign-up/reset/OAuth/resend) in `LoginPage` to reduce rapid repeat attempts and unnecessary auth load.
 
+**Re-audit (2026-02-18):** ⚠️ Partial. Cooldown is present and buttons are correctly disabled, but the duration arithmetic double-counts elapsed time (see SEC-11 new finding), causing the 2s cooldown to expire in ~1s.
+
 ---
 
 #### SEC-10 · IP rate-limit key is derived from `X-Forwarded-For` *(New)*
@@ -407,6 +449,8 @@ The login form has no client-side throttle. While Supabase has its own rate limi
 **Status:** Implemented (2026-02-18)
 
 **Summary:** Hardened `getClientIp` to prefer platform-provided single-IP headers (e.g. `x-real-ip`) and avoid trusting the spoofable first entry of `X-Forwarded-For`.
+
+**Re-audit (2026-02-18):** ✅ Confirmed. `getClientIp` prefers `x-real-ip`, then `x-vercel-forwarded-for`, then last XFF hop, then `socket.remoteAddress`. Edge cases handled correctly.
 
 ---
 
@@ -424,6 +468,8 @@ The login form has no client-side throttle. While Supabase has its own rate limi
 
 **Summary:** Added `useEffect` cleanup in `Seo` to restore/clear head mutations (title/meta/canonical) and remove route-owned JSON-LD scripts on unmount.
 
+**Re-audit (2026-02-18):** ✅ Confirmed. `Seo.jsx` returns a cleanup function that restores title/meta/canonical and removes JSON-LD scripts scoped by a unique owner ID. Minor edge case with overlapping instances noted (see CQ-13).
+
 ---
 
 #### CQ-11 · Dead `getContentSource` import in entitlements *(New)*
@@ -437,6 +483,8 @@ Imports `getContentSource` from `./_contentSource` but never uses it.
 **Status:** Implemented (2026-02-18)
 
 **Summary:** Removed the unused `getContentSource` import from `src/services/entitlements.js`.
+
+**Re-audit (2026-02-18):** ✅ Confirmed. No `getContentSource` import exists in `entitlements.js`.
 
 ---
 
