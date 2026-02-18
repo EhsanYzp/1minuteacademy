@@ -221,6 +221,7 @@ function LessonPage() {
       isActionDisabled: (action) => {
         if (!action || typeof action !== 'object') return false;
         if (action.type === 'openReview') return !canUseReview;
+        if (action.type === 'goToProfile') return !user;
         return false;
       },
       onAction: (action) => {

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../Header';
 import ToastStack from '../ToastStack';
 import JourneyBlocks from '../../engine/journey/JourneyBlocks';
+import { getTopicGate } from '../../services/entitlements';
 
 export default function CompletionScreen({
   journey,
@@ -12,6 +13,8 @@ export default function CompletionScreen({
   relatedTopics,
   topicRow,
 }) {
+  const tier = String(journeyCtx?.tier ?? 'guest');
+
   return (
     <>
       <Header />
@@ -64,37 +67,62 @@ export default function CompletionScreen({
               </div>
 
               <div className="related-topics__grid">
-                {relatedTopics.map((t) => (
-                  <Link
-                    key={t.id}
-                    to={`/topic/${t.id}`}
-                    className="related-topic-card"
-                    style={{ '--rel-color': t?.color ?? '#4ECDC4' }}
-                  >
-                    <div className="related-topic-card__top">
-                      <div className="related-topic-card__emoji" aria-hidden>
-                        {t.emoji ?? '🎯'}
+                {relatedTopics.map((t) => {
+                  const gate = getTopicGate({ tier, topicRow: t });
+                  const isLocked = Boolean(gate?.locked && gate?.reason === 'pro');
+
+                  const CardTag = isLocked ? 'div' : Link;
+                  const cardProps = isLocked
+                    ? {
+                      role: 'link',
+                      'aria-disabled': true,
+                      tabIndex: -1,
+                    }
+                    : { to: `/topic/${t.id}` };
+
+                  return (
+                    <CardTag
+                      key={t.id}
+                      {...cardProps}
+                      className={`related-topic-card ${isLocked ? 'related-topic-card--locked' : ''}`}
+                      style={{ '--rel-color': t?.color ?? '#4ECDC4' }}
+                    >
+                      <div className="related-topic-card__top">
+                        <div className="related-topic-card__emoji" aria-hidden>
+                          {t.emoji ?? '🎯'}
+                        </div>
+                        <div className="related-topic-card__text">
+                          <div className="related-topic-card__title">{t.title}</div>
+                          {t?.description ? (
+                            <div className="related-topic-card__desc">{t.description}</div>
+                          ) : null}
+                        </div>
                       </div>
-                      <div className="related-topic-card__text">
-                        <div className="related-topic-card__title">{t.title}</div>
-                        {t?.description ? (
-                          <div className="related-topic-card__desc">{t.description}</div>
+
+                      <div className="related-topic-card__meta">
+                        {isLocked ? (
+                          <span className="related-topic-card__badge related-topic-card__badge--lock" title={String(gate?.label ?? 'Pro only')}>
+                            🔒 {String(gate?.label ?? 'Pro only')}
+                          </span>
+                        ) : null}
+                        {t?.difficulty ? (
+                          <span className="related-topic-card__badge">📊 {t.difficulty}</span>
+                        ) : null}
+                        {t?.subcategory ? (
+                          <span className="related-topic-card__badge related-topic-card__badge--muted">
+                            {t.subcategory}
+                          </span>
                         ) : null}
                       </div>
-                    </div>
 
-                    <div className="related-topic-card__meta">
-                      {t?.difficulty ? (
-                        <span className="related-topic-card__badge">📊 {t.difficulty}</span>
+                      {isLocked ? (
+                        <div className="related-topic-card__locked-hint">
+                          Upgrade to unlock.
+                        </div>
                       ) : null}
-                      {t?.subcategory ? (
-                        <span className="related-topic-card__badge related-topic-card__badge--muted">
-                          {t.subcategory}
-                        </span>
-                      ) : null}
-                    </div>
-                  </Link>
-                ))}
+                    </CardTag>
+                  );
+                })}
               </div>
             </section>
           )}

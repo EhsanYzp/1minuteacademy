@@ -108,6 +108,7 @@ export function compileJourneyFromTopic(topicRow) {
             { label: '🧑‍🚀 Your learning summary', variant: 'secondary', action: { type: 'goToProfile' } }
           ]
         },
+        { type: 'info', text: '👤 Sign in to access your learning summary and progress tracking.', when: { loggedIn: false } },
         { type: 'completionStats' },
         { type: 'proPerkPanel', when: { tier: ['guest', 'free', 'starter', 'basic', 'paused'] } },
         { type: 'oneMaAwardPanel', when: { tier: 'pro' } },
