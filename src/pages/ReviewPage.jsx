@@ -139,7 +139,7 @@ export default function ReviewPage() {
           return;
         }
         if (action.type === 'goToTopics') {
-          navigate('/topics');
+          navigate('/categories');
           return;
         }
       },

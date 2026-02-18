@@ -41,7 +41,7 @@ export default function NotFoundPage() {
             Go to Home
           </Link>
           <Link
-            to="/topics"
+            to="/categories"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -55,7 +55,7 @@ export default function NotFoundPage() {
               fontWeight: 700,
             }}
           >
-            Browse topics
+            Browse categories
           </Link>
         </div>
       </main>

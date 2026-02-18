@@ -1,0 +1,368 @@
+.catflow {
+  min-height: 100vh;
+}
+
+.catflow-main {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 20px 20px 56px;
+}
+
+.catflow-hero {
+  margin: 10px 0 18px;
+  padding: 18px 18px 16px;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.10);
+  backdrop-filter: blur(10px);
+}
+
+.catflow-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: rgba(45, 52, 54, 0.92);
+  font-weight: 950;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  width: fit-content;
+  margin-bottom: 10px;
+}
+
+.catflow-back:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.catflow-hero h1 {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.catflow-hero p {
+  margin: 10px 0 0;
+  color: var(--text-secondary);
+}
+
+.catflow-toolbar {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.catflow-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.70);
+}
+
+.catflow-search button {
+  height: 28px;
+  width: 28px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(0, 0, 0, 0.04);
+  font-weight: 950;
+}
+
+.catflow-search input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.catflow-toolbarStack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.catflow-filtersRow {
+  display: inline-flex;
+  gap: 10px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.catflow-toolbarRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.catflow-filters {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.catflow-filter {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.catflow-filterLabel {
+  font-size: 12px;
+  font-weight: 950;
+  color: rgba(45, 52, 54, 0.75);
+}
+
+.catflow-filter select {
+  height: 38px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: rgba(0, 0, 0, 0.03);
+  padding: 0 10px;
+  font-weight: 800;
+  color: rgba(45, 52, 54, 0.92);
+}
+
+.catflow-reset {
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: rgba(0, 0, 0, 0.03);
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.catflow-toolbarSub {
+  margin-top: 10px;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.catflow-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+@media (max-width: 980px) {
+  .catflow-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .catflow-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.catflow-card {
+  --accent: var(--card-accent, var(--color-primary));
+  position: relative;
+  display: block;
+  text-decoration: none;
+  border-radius: 22px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  border-left: 6px solid var(--accent);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.74) 100%);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.10);
+  padding: 16px;
+  color: rgba(45, 52, 54, 0.96);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+  overflow: hidden;
+}
+
+.catflow-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.75;
+  background:
+    radial-gradient(800px 180px at 0% 0%, rgba(37, 99, 235, 0.14), transparent 60%),
+    radial-gradient(600px 160px at 100% 0%, rgba(78, 205, 196, 0.12), transparent 55%);
+}
+
+.catflow-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.14);
+  border-color: rgba(0, 0, 0, 0.16);
+}
+
+.catflow-cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.catflow-badges {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.catflow-emoji {
+  font-size: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  width: 42px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.70);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.catflow-badge {
+  font-size: 12px;
+  font-weight: 900;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  color: rgba(45, 52, 54, 0.88);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+}
+
+.catflow-cardTitle {
+  margin: 10px 0 0;
+  font-size: 16px;
+  font-weight: 950;
+  letter-spacing: -0.01em;
+}
+
+.catflow-cardDesc {
+  margin: 8px 0 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.35;
+  min-height: 34px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.catflow-empty {
+  margin-top: 14px;
+  color: var(--text-secondary);
+}
+
+.catflow-error {
+  margin-top: 14px;
+  color: rgba(185, 28, 28, 0.92);
+  font-weight: 800;
+}
+
+.catflow-sectionTitle {
+  margin: 16px 0 10px;
+  font-size: 18px;
+  font-weight: 950;
+}
+
+.catflow-list {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.catflow-row {
+  --accent: var(--row-accent, var(--color-secondary));
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  border-radius: 22px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  border-left: 6px solid var(--accent);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.76) 100%);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.10);
+  padding: 14px 16px;
+}
+
+.catflow-rowMeta {
+  min-width: 0;
+}
+
+.catflow-rowTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 950;
+}
+
+.catflow-rowDesc {
+  margin: 6px 0 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.catflow-rowBadges {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.catflow-pill {
+  font-size: 12px;
+  font-weight: 900;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.70);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  color: rgba(45, 52, 54, 0.86);
+}
+
+.catflow-actions {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.catflow-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.78);
+  color: rgba(45, 52, 54, 0.94);
+  font-weight: 950;
+}
+
+.catflow-button.primary {
+  border-color: rgba(37, 99, 235, 0.30);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.18) 0%, rgba(96, 165, 250, 0.14) 100%);
+  color: rgba(30, 64, 175, 0.98);
+}
+
+.catflow-button:hover {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.catflow-button.primary:hover {
+  background: rgba(37, 99, 235, 0.14);
+}

@@ -226,7 +226,7 @@ function TopicPage() {
           <div className="topic-header">
             <div className="topic-nav">
               <Link to="/" className="back-button">← Home</Link>
-              <Link to="/topics" className="back-button">← Back to Topics</Link>
+              <Link to="/categories" className="back-button">← Back to browse</Link>
             </div>
           </div>
 
@@ -244,7 +244,7 @@ function TopicPage() {
               </div>
               <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
                 <button type="button" onClick={() => navigate('/upgrade')}>Upgrade</button>
-                <button type="button" onClick={() => navigate('/topics')}>Browse beginner topics</button>
+                <button type="button" onClick={() => navigate('/categories')}>Browse beginner topics</button>
               </div>
             </div>
           </div>
@@ -281,7 +281,7 @@ function TopicPage() {
         if (action.type === 'startLesson') {
           navigate(`/lesson/${topicId}`);
         } else if (action.type === 'goToTopics') {
-          navigate('/topics');
+          navigate('/categories');
         } else if (action.type === 'goToUpgrade') {
           navigate('/upgrade');
         } else if (action.type === 'goToProfile') {
@@ -318,7 +318,7 @@ function TopicPage() {
           <h2>🔍 Topic not found!</h2>
           <div className="topic-nav">
             <Link to="/" className="back-button">← Home</Link>
-            <Link to="/topics" className="back-button">← Back to Topics</Link>
+            <Link to="/categories" className="back-button">← Back to browse</Link>
           </div>
         </div>
       </div>
@@ -352,7 +352,7 @@ function TopicPage() {
         >
           <div className="topic-nav">
             <Link to="/" className="back-button">← Home</Link>
-            <Link to="/topics" className="back-button">← Back to Topics</Link>
+            <Link to="/categories" className="back-button">← Back to browse</Link>
           </div>
         </motion.div>
 

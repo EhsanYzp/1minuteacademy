@@ -468,9 +468,9 @@ function Home() {
             </div>
 
             <div className="home-choices">
-              <Link className="home-choice" to="/topics">
+              <Link className="home-choice" to="/categories">
                 <div className="home-choiceTitle">I’ll pick</div>
-                <div className="home-choiceSub">Browse topics and choose what you’re curious about.</div>
+                <div className="home-choiceSub">Pick a category → course → chapter → topic.</div>
                 <div className="home-choiceHint" aria-hidden="true">
                   Browse →
                 </div>
@@ -508,7 +508,7 @@ function Home() {
                 <span className="home-tickerDot" aria-hidden="true">·</span>
                 <span className="home-tickerMetric">
                   <span className="home-tickerNum">{fmt.format(ticker.subcategories)}</span>{' '}
-                  <span className="home-tickerLabel">subcategories</span>
+                  <span className="home-tickerLabel">courses</span>
                 </span>
                 <span className="home-tickerDot" aria-hidden="true">·</span>
                 <span className="home-tickerMetric">

@@ -242,7 +242,7 @@ function LessonPage() {
           return;
         }
         if (action.type === 'goToTopics') {
-          navigate('/topics');
+          navigate('/categories');
           return;
         }
         if (action.type === 'goToHome') {

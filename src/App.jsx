@@ -11,7 +11,10 @@ import ErrorBoundary from './components/ErrorBoundary';
 import RouteLoading from './components/RouteLoading';
 import './App.css';
 
-const TopicsBrowserPage = lazy(() => import('./pages/TopicsBrowserPage'));
+const CategoriesPage = lazy(() => import('./pages/CategoriesPage'));
+const CategoryCoursesPage = lazy(() => import('./pages/CategoryCoursesPage'));
+const CourseChaptersPage = lazy(() => import('./pages/CourseChaptersPage'));
+const ChapterTopicsPage = lazy(() => import('./pages/ChapterTopicsPage'));
 const TopicPage = lazy(() => import('./pages/TopicPage'));
 const LessonPage = lazy(() => import('./pages/LessonPage'));
 const ReviewPage = lazy(() => import('./pages/ReviewPage'));
@@ -60,12 +63,16 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'learn', element: <Navigate to="/" replace /> },
+      { path: 'categories', element: <CategoriesPage /> },
+      { path: 'categories/:categoryId', element: <CategoryCoursesPage /> },
+      { path: 'categories/:categoryId/courses/:courseId', element: <CourseChaptersPage /> },
+      { path: 'categories/:categoryId/courses/:courseId/chapters/:chapterId', element: <ChapterTopicsPage /> },
       {
         path: 'topics',
-        element: <TopicsBrowserPage />,
+        element: <Navigate to="/categories" replace />,
       },
       // Backwards-compatible alias.
-      { path: 'topics/search', element: <Navigate to="/topics" replace /> },
+      { path: 'topics/search', element: <Navigate to="/categories" replace /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'auth/callback', element: <AuthCallbackPage /> },
       { path: 'auth/reset', element: <ResetPasswordPage /> },

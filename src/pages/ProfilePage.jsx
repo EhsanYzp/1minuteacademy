@@ -1250,8 +1250,8 @@ export default function ProfilePage() {
 
       <main className="profile-main">
         <div className="profile-top">
-          <Link className="profile-back" to="/topics">
-            ← Back to topics
+          <Link className="profile-back" to="/categories">
+            ← Back to browse
           </Link>
         </div>
 

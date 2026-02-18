@@ -252,7 +252,7 @@ export default function UpgradePage() {
                 </ul>
 
                 <div className="pricing-plan-actions">
-                  <Link className="upgrade-link secondary" to="/topics">Start learning</Link>
+                  <Link className="upgrade-link secondary" to="/categories">Start learning</Link>
                   <div className="pricing-small">Tip: create a free account to save progress.</div>
                 </div>
               </div>
@@ -509,7 +509,7 @@ export default function UpgradePage() {
             <div className="upgrade-foot">
               <div className="upgrade-foot-text">Your plan is tied to your account. After checkout, we’ll activate Pro automatically.</div>
               <div className="upgrade-foot-actions">
-                <Link className="upgrade-link" to="/topics">Back to topics</Link>
+                <Link className="upgrade-link" to="/categories">Back to browse</Link>
                 <Link className="upgrade-link secondary" to="/me">Go to profile</Link>
               </div>
             </div>

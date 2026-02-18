@@ -62,7 +62,7 @@ export default function CompletionScreen({
                     <div className="related-topics__sub">Course: {String(topicRow.subcategory)}</div>
                   ) : null}
                 </div>
-                <Link className="related-topics__cta" to="/topics">
+                <Link className="related-topics__cta" to="/categories">
                   Browse all →
                 </Link>
               </div>

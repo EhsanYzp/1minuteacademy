@@ -136,6 +136,78 @@ export async function listTopicsForCourse({ courseId } = {}) {
   });
 }
 
+export async function listTopicsForChapter({ courseId, chapterId } = {}) {
+  const course = String(courseId ?? '').trim();
+  const chapter = String(chapterId ?? '').trim();
+  if (!course || !chapter) return [];
+
+  if (isLocalCatalogMode()) {
+    const all = await listLocalTopicsForCourse({ courseId: course });
+    return (Array.isArray(all) ? all : [])
+      .filter((t) => String(t?.chapter_id ?? t?.chapterId ?? '').trim() === chapter);
+  }
+
+  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+
+  const cacheKey = makeCacheKey(['catalog', 'chapterTopics', 'supabase', course, chapter]);
+  return withCache(cacheKey, { ttlMs: 60 * 1000 }, async () => {
+    const supabase = requireSupabase();
+    const { data, error } = await supabase
+      .from('topics')
+      .select('id, subject, subcategory, course_id, chapter_id, title, emoji, color, description, difficulty, published')
+      .eq('published', true)
+      .eq('course_id', course)
+      .eq('chapter_id', chapter)
+      .order('title', { ascending: true });
+    if (error) throw error;
+    return data ?? [];
+  });
+}
+
+export async function getCourseCounts({ courseId } = {}) {
+  const id = String(courseId ?? '').trim();
+  if (!id) return { chapters: 0, topics: 0 };
+
+  if (isLocalCatalogMode()) {
+    const [ch, topics] = await Promise.all([
+      listLocalChapters({ courseId: id }),
+      listLocalTopicsForCourse({ courseId: id }),
+    ]);
+    return {
+      chapters: Array.isArray(ch) ? ch.length : 0,
+      topics: Array.isArray(topics) ? topics.length : 0,
+    };
+  }
+
+  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+
+  const cacheKey = makeCacheKey(['catalog', 'courseCounts', 'supabase', id]);
+  return withCache(cacheKey, { ttlMs: 2 * 60 * 1000 }, async () => {
+    const supabase = requireSupabase();
+
+    const [{ count: chapterCount, error: chapterErr }, { count: topicCount, error: topicErr }] = await Promise.all([
+      supabase
+        .from('chapters')
+        .select('id', { count: 'exact', head: true })
+        .eq('published', true)
+        .eq('course_id', id),
+      supabase
+        .from('topics')
+        .select('id', { count: 'exact', head: true })
+        .eq('published', true)
+        .eq('course_id', id),
+    ]);
+
+    if (chapterErr) throw chapterErr;
+    if (topicErr) throw topicErr;
+
+    return {
+      chapters: typeof chapterCount === 'number' ? chapterCount : 0,
+      topics: typeof topicCount === 'number' ? topicCount : 0,
+    };
+  });
+}
+
 export async function getCourseOutline({ courseId } = {}) {
   const id = String(courseId ?? '').trim();
   if (!id) throw new Error('Course id missing');
