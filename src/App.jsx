@@ -90,6 +90,9 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      // Chapter-scoped aliases (preferred when navigating from the catalog flow).
+      { path: 'categories/:categoryId/courses/:courseId/chapters/:chapterId/topic/:topicId', element: <TopicPage /> },
+      { path: 'categories/:categoryId/courses/:courseId/chapters/:chapterId/lesson/:topicId', element: <LessonPage /> },
       { path: 'topic/:topicId', element: <TopicPage /> },
       { path: 'lesson/:topicId', element: <LessonPage /> },
       { path: 'review/:topicId', element: <ReviewPage /> },

@@ -56,7 +56,7 @@ function normalizeTierForJourney(tier) {
 }
 
 function TopicPage() {
-  const { topicId } = useParams();
+  const { topicId, categoryId: routeCategoryId, courseId: routeCourseId, chapterId: routeChapterId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
@@ -206,12 +206,17 @@ function TopicPage() {
 
   const backToChapterTo = useMemo(() => {
     const s = location?.state?.fromChapter;
-    const categoryId = String(s?.categoryId ?? '').trim();
-    const courseId = String(s?.courseId ?? '').trim();
-    const chapterId = String(s?.chapterId ?? '').trim();
+    const categoryId = String(s?.categoryId ?? routeCategoryId ?? '').trim();
+    const courseId = String(s?.courseId ?? routeCourseId ?? '').trim();
+    const chapterId = String(s?.chapterId ?? routeChapterId ?? '').trim();
     if (!categoryId || !courseId || !chapterId) return null;
     return `/categories/${encodeURIComponent(categoryId)}/courses/${encodeURIComponent(courseId)}/chapters/${encodeURIComponent(chapterId)}`;
-  }, [location?.state]);
+  }, [location?.state, routeCategoryId, routeCourseId, routeChapterId]);
+
+  const lessonTo = useMemo(() => {
+    if (!backToChapterTo) return `/lesson/${encodeURIComponent(String(topicId))}`;
+    return `${backToChapterTo}/lesson/${encodeURIComponent(String(topicId))}`;
+  }, [backToChapterTo, topicId]);
 
   const topicGate = useMemo(
     () => getTopicGate({ tier, topicRow: topicRow ?? fallbackTopics[topicId] }),
@@ -224,7 +229,7 @@ function TopicPage() {
         <Seo
           title={topic?.title ? `${topic.title} (Pro)` : 'Pro-only topic'}
           description={topic?.description || 'Upgrade to Pro to unlock this topic.'}
-          path={`/topic/${topicId}`}
+          path={location?.pathname}
           canonicalPath={`/topic/${topicId}`}
           image={`/og/topics/${encodeURIComponent(String(topicId))}.svg`}
           twitterImage="/og/og-image.png"
@@ -292,7 +297,7 @@ function TopicPage() {
       onAction: (action) => {
         if (!action || typeof action !== 'object') return;
         if (action.type === 'startLesson') {
-          navigate(`/lesson/${topicId}`);
+          navigate(lessonTo, { state: location?.state });
         } else if (action.type === 'goToTopics') {
           navigate('/categories');
         } else if (action.type === 'goToUpgrade') {
@@ -308,12 +313,12 @@ function TopicPage() {
         }
       },
     };
-  }, [tier, isCompleted, canStart, canUseReview, user, topic?.title, navigate, topicId]);
+  }, [tier, isCompleted, canStart, canUseReview, user, topic?.title, navigate, topicId, lessonTo, location?.state]);
 
   if (!topic && loading) {
     return (
       <div className="topic-page">
-        <Seo title="Loading topic" description="Loading topic details." path={`/topic/${topicId}`} canonicalPath={`/topic/${topicId}`} />
+        <Seo title="Loading topic" description="Loading topic details." path={location?.pathname} canonicalPath={`/topic/${topicId}`} />
         <Header />
         <div className="topic-not-found">
           <TopicHeaderSkeleton />
@@ -325,7 +330,7 @@ function TopicPage() {
   if (!topic && !loading) {
     return (
       <div className="topic-page">
-        <Seo title="Topic not found" description="This topic could not be found." path={`/topic/${topicId}`} canonicalPath={`/topic/${topicId}`} noindex />
+        <Seo title="Topic not found" description="This topic could not be found." path={location?.pathname} canonicalPath={`/topic/${topicId}`} noindex />
         <Header />
         <div className="topic-not-found">
           <h2>🔍 Topic not found!</h2>
@@ -351,7 +356,7 @@ function TopicPage() {
       <Seo
         title={topic?.title || 'Topic'}
         description={topic?.description || 'Learn this topic in 60 seconds.'}
-        path={`/topic/${topicId}`}
+        path={location?.pathname}
         canonicalPath={`/topic/${topicId}`}
         image={`/og/topics/${encodeURIComponent(String(topicId))}.svg`}
         twitterImage="/og/og-image.png"

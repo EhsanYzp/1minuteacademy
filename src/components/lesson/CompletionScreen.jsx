@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Header from '../Header';
 import ToastStack from '../ToastStack';
 import JourneyBlocks from '../../engine/journey/JourneyBlocks';
@@ -28,11 +28,12 @@ export default function CompletionScreen({
 }) {
   const tier = String(journeyCtx?.tier ?? 'guest');
   const location = useLocation();
+  const { categoryId: routeCategoryId, courseId: routeCourseId, chapterId: routeChapterId } = useParams();
 
   const from = location?.state?.fromChapter;
-  const fromCategoryId = String(from?.categoryId ?? '').trim();
-  const fromCourseId = String(from?.courseId ?? '').trim();
-  const fromChapterId = String(from?.chapterId ?? '').trim();
+  const fromCategoryId = String(from?.categoryId ?? routeCategoryId ?? '').trim();
+  const fromCourseId = String(from?.courseId ?? routeCourseId ?? '').trim();
+  const fromChapterId = String(from?.chapterId ?? routeChapterId ?? '').trim();
   const backToChapterTo =
     fromCategoryId && fromCourseId && fromChapterId
       ? `/categories/${encodeURIComponent(fromCategoryId)}/courses/${encodeURIComponent(fromCourseId)}/chapters/${encodeURIComponent(fromChapterId)}`

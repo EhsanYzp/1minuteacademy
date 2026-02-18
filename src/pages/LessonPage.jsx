@@ -36,7 +36,7 @@ function normalizeTierForJourney(tier) {
 }
 
 function LessonPage() {
-  const { topicId } = ReactRouterDom.useParams();
+  const { topicId, categoryId: routeCategoryId, courseId: routeCourseId, chapterId: routeChapterId } = ReactRouterDom.useParams();
   const navigate = ReactRouterDom.useNavigate();
   const location = ReactRouterDom.useLocation();
   const contentSource = getContentSource();
@@ -208,9 +208,9 @@ function LessonPage() {
   const journeyCtx = useMemo(() => {
     const normalizedTier = normalizeTierForJourney(tier);
     const from = location?.state?.fromChapter;
-    const fromCategoryId = String(from?.categoryId ?? '').trim();
-    const fromCourseId = String(from?.courseId ?? '').trim();
-    const fromChapterId = String(from?.chapterId ?? '').trim();
+    const fromCategoryId = String(from?.categoryId ?? routeCategoryId ?? '').trim();
+    const fromCourseId = String(from?.courseId ?? routeCourseId ?? '').trim();
+    const fromChapterId = String(from?.chapterId ?? routeChapterId ?? '').trim();
     const backToChapterTo =
       fromCategoryId && fromCourseId && fromChapterId
         ? `/categories/${encodeURIComponent(fromCategoryId)}/courses/${encodeURIComponent(fromCourseId)}/chapters/${encodeURIComponent(fromChapterId)}`
@@ -448,6 +448,9 @@ function LessonPage() {
     onRate,
     navigate,
     location,
+    routeCategoryId,
+    routeCourseId,
+    routeChapterId,
     topicId,
     timeRemaining,
     handleComplete,
@@ -705,7 +708,7 @@ function LessonPage() {
   if (topicError) {
     return (
       <div className="lesson-page">
-        <Seo title="Lesson" description="Lesson content." path={`/lesson/${topicId}`} canonicalPath={`/topic/${topicId}`} noindex />
+        <Seo title="Lesson" description="Lesson content." path={location?.pathname} canonicalPath={`/topic/${topicId}`} noindex />
         <div className="lesson-error">
           <h2>⚠️ Couldn’t load lesson</h2>
           <p style={{ opacity: 0.8 }}>Make sure Supabase is configured and the topic exists.</p>
@@ -718,7 +721,7 @@ function LessonPage() {
   if (topicLoading) {
     return (
       <div className="lesson-page">
-        <Seo title="Loading lesson" description="Loading lesson." path={`/lesson/${topicId}`} canonicalPath={`/topic/${topicId}`} noindex />
+        <Seo title="Loading lesson" description="Loading lesson." path={location?.pathname} canonicalPath={`/topic/${topicId}`} noindex />
         <div className="lesson-error">
           <h2>Loading…</h2>
         </div>
@@ -730,7 +733,7 @@ function LessonPage() {
     if (tier === 'paused') {
       return (
         <div className="lesson-page">
-          <Seo title="Lesson" description="Lesson content." path={`/lesson/${topicId}`} canonicalPath={`/topic/${topicId}`} noindex />
+          <Seo title="Lesson" description="Lesson content." path={location?.pathname} canonicalPath={`/topic/${topicId}`} noindex />
           <div className="lesson-error">
             <h2>⏸️ Account paused</h2>
             <p style={{ opacity: 0.85, maxWidth: 520 }}>
@@ -747,7 +750,7 @@ function LessonPage() {
 
     return (
       <div className="lesson-page">
-        <Seo title="Pro-only lesson" description="Upgrade to Pro to start this lesson." path={`/lesson/${topicId}`} canonicalPath={`/topic/${topicId}`} noindex />
+        <Seo title="Pro-only lesson" description="Upgrade to Pro to start this lesson." path={location?.pathname} canonicalPath={`/topic/${topicId}`} noindex />
         <div className="lesson-error">
           <h2>🔒 Pro-only lesson</h2>
           <p style={{ opacity: 0.85, maxWidth: 520 }}>
@@ -772,7 +775,7 @@ function LessonPage() {
       <Seo
         title={topicRow?.title ? `Lesson: ${topicRow.title}` : 'Lesson'}
         description={topicRow?.description || 'A timed 60-second lesson.'}
-        path={`/lesson/${topicId}`}
+        path={location?.pathname}
         canonicalPath={`/topic/${topicId}`}
         noindex
       />

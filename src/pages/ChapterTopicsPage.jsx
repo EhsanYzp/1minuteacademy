@@ -113,6 +113,8 @@ export default function ChapterTopicsPage() {
   const courseTitle = String(courseRow?.title ?? 'Course');
   const chapterTitle = String(chapterRow?.title ?? 'Chapter');
 
+  const chapterBasePath = `/categories/${encodeURIComponent(category)}/courses/${encodeURIComponent(course)}/chapters/${encodeURIComponent(chapter)}`;
+
   const fromChapterState = useMemo(
     () => ({
       fromChapter: {
@@ -284,8 +286,8 @@ export default function ChapterTopicsPage() {
                   </div>
 
                   <div className="catflow-actions">
-                    <Link className="catflow-button" to={`/topic/${encodeURIComponent(id)}`} state={fromChapterState}>Details</Link>
-                    <Link className="catflow-button primary" to={`/lesson/${encodeURIComponent(id)}`} state={fromChapterState}>Start</Link>
+                    <Link className="catflow-button" to={`${chapterBasePath}/topic/${encodeURIComponent(id)}`} state={fromChapterState}>Details</Link>
+                    <Link className="catflow-button primary" to={`${chapterBasePath}/lesson/${encodeURIComponent(id)}`} state={fromChapterState}>Start</Link>
                   </div>
                 </div>
               );
