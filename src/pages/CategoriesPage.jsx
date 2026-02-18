@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
-import Breadcrumbs from '../components/Breadcrumbs';
 import { listCategories, listCourses } from '../services/catalog';
 import './CategoriesFlow.css';
 
@@ -73,7 +72,6 @@ export default function CategoriesPage() {
       <main className="catflow-main">
         <div className="catflow-hero">
           <Link className="catflow-back" to="/">← Home</Link>
-          <Breadcrumbs items={[{ label: 'Categories', to: '/categories' }]} />
           <h1>Categories</h1>
           <p>Pick a category to see its courses.</p>
 
@@ -103,7 +101,6 @@ export default function CategoriesPage() {
             {visibleCategories.map((cat) => {
               const id = String(cat?.id ?? '').trim();
               const title = String(cat?.title ?? 'Untitled');
-              const emoji = String(cat?.emoji ?? '📚');
               const description = String(cat?.description ?? '');
               const borderColor = cat?.color ? String(cat.color) : null;
               const courseCount = courseCountsByCategory.get(id) ?? 0;
@@ -116,10 +113,9 @@ export default function CategoriesPage() {
                   style={borderColor ? { '--card-accent': borderColor } : undefined}
                 >
                   <div className="catflow-cardTop">
-                    <div className="catflow-emoji">{emoji}</div>
+                    <h2 className="catflow-cardTitle catflow-cardTitleTop">{title}</h2>
                     <div className="catflow-badge">{courseCount} courses</div>
                   </div>
-                  <h2 className="catflow-cardTitle">{title}</h2>
                   <p className="catflow-cardDesc">{description}</p>
                 </Link>
               );

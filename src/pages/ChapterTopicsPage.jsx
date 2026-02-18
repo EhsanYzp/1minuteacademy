@@ -250,7 +250,6 @@ export default function ChapterTopicsPage() {
               const id = norm(t?.id);
               const title = String(t?.title ?? id);
               const desc = String(t?.description ?? '');
-              const emoji = String(t?.emoji ?? '🎯');
               const difficulty = String(t?.difficulty ?? '').trim();
               const completed = Boolean(t?.completed);
               const accent = t?.color ? String(t.color) : '';
@@ -262,7 +261,7 @@ export default function ChapterTopicsPage() {
                   style={accent ? { '--row-accent': accent } : undefined}
                 >
                   <div className="catflow-rowMeta">
-                    <h3 className="catflow-rowTitle">{emoji} {title}</h3>
+                    <h3 className="catflow-rowTitle">{title}</h3>
                     {desc && <p className="catflow-rowDesc">{desc}</p>}
                     <div className="catflow-rowBadges">
                       {difficulty && <span className="catflow-pill">{difficulty}</span>}

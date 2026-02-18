@@ -134,7 +134,7 @@ export default function CategoryCoursesPage() {
               { label: title, to: `/categories/${encodeURIComponent(id)}` },
             ]}
           />
-          <h1>{category?.emoji ? `${category.emoji} ` : ''}{title}</h1>
+          <h1>{title}</h1>
           <p>{guidance}</p>
 
           <div className="catflow-toolbar" role="region" aria-label="Course search">
@@ -163,7 +163,6 @@ export default function CategoryCoursesPage() {
             {visibleCourses.map((c) => {
               const courseId = String(c?.id ?? '').trim();
               const courseTitle = String(c?.title ?? 'Untitled course');
-              const emoji = String(c?.emoji ?? '📘');
               const desc = String(c?.description ?? '');
               const borderColor = c?.color ? String(c.color) : null;
               const counts = countsByCourseId.get(courseId) ?? null;
@@ -181,13 +180,12 @@ export default function CategoryCoursesPage() {
                   style={borderColor ? { '--card-accent': borderColor } : undefined}
                 >
                   <div className="catflow-cardTop">
-                    <div className="catflow-emoji">{emoji}</div>
+                    <h2 className="catflow-cardTitle catflow-cardTitleTop">{courseTitle}</h2>
                     <div className="catflow-badges" aria-label="Course stats">
                       <div className="catflow-badge">{chaptersText}</div>
                       <div className="catflow-badge">{topicsText}</div>
                     </div>
                   </div>
-                  <h2 className="catflow-cardTitle">{courseTitle}</h2>
                   <p className="catflow-cardDesc">{desc}</p>
                 </Link>
               );

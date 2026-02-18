@@ -109,7 +109,7 @@ export default function CourseChaptersPage() {
               { label: courseTitle, to: `/categories/${encodeURIComponent(category)}/courses/${encodeURIComponent(course)}` },
             ]}
           />
-          <h1>{courseRow?.emoji ? `${courseRow.emoji} ` : ''}{courseTitle}</h1>
+          <h1>{courseTitle}</h1>
           {courseRow?.description ? <p>{String(courseRow.description)}</p> : <p>Pick a chapter to see its topics.</p>}
 
           <div className="catflow-toolbar" role="region" aria-label="Chapter search">
@@ -150,10 +150,9 @@ export default function CourseChaptersPage() {
                     className="catflow-card"
                   >
                     <div className="catflow-cardTop">
-                      <div className="catflow-emoji">📖</div>
+                      <h3 className="catflow-cardTitle catflow-cardTitleTop">{title}</h3>
                       <div className="catflow-badge">{count} topics</div>
                     </div>
-                    <h3 className="catflow-cardTitle">{title}</h3>
                     <p className="catflow-cardDesc">{desc}</p>
                   </Link>
                 );
