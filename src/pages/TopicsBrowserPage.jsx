@@ -160,6 +160,17 @@ export default function TopicsBrowserPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const hasActiveFilters = useMemo(() => {
+    const q = String(query ?? '').trim();
+    return (
+      Boolean(q) ||
+      activeCategory !== 'All' ||
+      activeSubcategory !== 'All' ||
+      filter !== 'all' ||
+      difficultyFilter !== 'all'
+    );
+  }, [query, activeCategory, activeSubcategory, filter, difficultyFilter]);
+
   function resetBrowseState() {
     setActiveCategory('All');
     setActiveSubcategory('All');
@@ -199,6 +210,12 @@ export default function TopicsBrowserPage() {
     // If user has a difficulty pinned in the URL, assume they want the grid.
     if (urlDifficulty !== 'all') setViewMode('grid');
   }, [urlDifficulty]);
+
+  useEffect(() => {
+    // If the user touches any filters (besides search which has its own effect),
+    // they expect to see results immediately.
+    if (viewMode === 'curated' && hasActiveFilters) setViewMode('grid');
+  }, [viewMode, hasActiveFilters]);
 
   useEffect(() => {
     // Sync URL from UI state (without clobbering other query params).
@@ -802,7 +819,10 @@ export default function TopicsBrowserPage() {
                   <select
                     id="topics-filter-category"
                     value={activeCategory}
-                    onChange={(e) => setActiveCategory(e.target.value)}
+                    onChange={(e) => {
+                      setActiveCategory(e.target.value);
+                      setViewMode('grid');
+                    }}
                     aria-label="Category"
                   >
                     {categories.map((c) => (
@@ -818,7 +838,10 @@ export default function TopicsBrowserPage() {
                   <select
                     id="topics-filter-subcategory"
                     value={activeSubcategory}
-                    onChange={(e) => setActiveSubcategory(e.target.value)}
+                    onChange={(e) => {
+                      setActiveSubcategory(e.target.value);
+                      setViewMode('grid');
+                    }}
                     disabled={activeCategory === 'All' || subcategories.length === 0}
                     aria-label="Subcategory"
                   >
@@ -839,7 +862,10 @@ export default function TopicsBrowserPage() {
                   <select
                     id="topics-filter-difficulty"
                     value={difficultyFilter}
-                    onChange={(e) => setDifficultyFilter(e.target.value)}
+                    onChange={(e) => {
+                      setDifficultyFilter(e.target.value);
+                      setViewMode('grid');
+                    }}
                     aria-label="Difficulty"
                   >
                     <option value="all">All</option>
@@ -855,7 +881,10 @@ export default function TopicsBrowserPage() {
                   <select
                     id="topics-filter-status"
                     value={filter}
-                    onChange={(e) => setFilter(e.target.value)}
+                    onChange={(e) => {
+                      setFilter(e.target.value);
+                      setViewMode('grid');
+                    }}
                     aria-label="Status"
                   >
                     <option value="all">All</option>
