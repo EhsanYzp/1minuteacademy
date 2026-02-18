@@ -1,14 +1,26 @@
 import { getContentSource } from './_contentSource';
 
-// Local preview topics are bundled by Vite at dev/build time.
-// This lets you iterate on content without pushing to Supabase.
+// Local preview: catalog + topics are bundled by Vite at dev/build time.
+// New architecture stores seed content under content/catalog/catalog.json.
+// (content/topics/** is legacy and may be empty.)
 const topicModules = import.meta.glob('../../content/topics/**/*.topic.json', { eager: true });
+const catalogModules = import.meta.glob('../../content/catalog/*.json', { eager: true });
+
+function readCatalogTopics() {
+  const values = Object.values(catalogModules)
+    .map((m) => (m && typeof m === 'object' && 'default' in m ? m.default : m))
+    .filter(Boolean);
+  const catalog = values[0] ?? null;
+  const rows = Array.isArray(catalog?.topics) ? catalog.topics : [];
+  return rows;
+}
 
 function normalizeTopic(t) {
   return {
     id: t.id,
-    subject: t.subject,
-    subcategory: t.subcategory,
+    // Map new names (categoryTitle/courseTitle) into the legacy-friendly fields.
+    subject: t.subject ?? t.categoryTitle ?? t.category ?? t.subjectTitle,
+    subcategory: t.subcategory ?? t.courseTitle ?? t.course ?? t.subcategoryTitle,
     title: t.title,
     emoji: t.emoji,
     color: t.color,
@@ -18,6 +30,8 @@ function normalizeTopic(t) {
     story: t.story,
     quiz: t.quiz,
     journey: t.journey,
+    course_id: t.courseId ?? t.course_id ?? null,
+    chapter_id: t.chapterId ?? t.chapter_id ?? null,
   };
 }
 
@@ -26,8 +40,13 @@ export function isLocalContentMode() {
 }
 
 export function listLocalTopics() {
-  const topics = Object.values(topicModules)
+  const legacy = Object.values(topicModules)
     .map((m) => (m && typeof m === 'object' && 'default' in m ? m.default : m))
+    .filter(Boolean);
+
+  const catalogTopics = readCatalogTopics();
+
+  const topics = [...legacy, ...(Array.isArray(catalogTopics) ? catalogTopics : [])]
     .filter(Boolean)
     .map(normalizeTopic)
     .filter((t) => t.published);

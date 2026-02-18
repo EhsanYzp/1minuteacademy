@@ -7,6 +7,8 @@ function parseArgs(argv) {
   const args = {
     id: null,
     subject: null,
+    courseId: null,
+    chapterId: null,
     title: null,
     description: '',
     difficulty: 'Beginner',
@@ -15,7 +17,7 @@ function parseArgs(argv) {
     published: true,
     seed: null,
     dryRun: false,
-      subcategory: 'Core Concepts',
+    subcategory: 'Core Concepts',
     force: false,
   };
 
@@ -24,6 +26,8 @@ function parseArgs(argv) {
 
     if (a === '--id') args.id = argv[++i];
     else if (a === '--subject') args.subject = argv[++i];
+    else if (a === '--courseId') args.courseId = argv[++i];
+    else if (a === '--chapterId') args.chapterId = argv[++i];
     else if (a === '--title') args.title = argv[++i];
     else if (a === '--description') args.description = argv[++i] ?? '';
     else if (a === '--difficulty') args.difficulty = argv[++i];
@@ -32,10 +36,10 @@ function parseArgs(argv) {
     else if (a === '--unpublished') args.published = false;
     else if (a === '--seed') args.seed = argv[++i];
     else if (a === '--dry-run') args.dryRun = true;
-      else if (a === '--subcategory') args.subcategory = argv[++i];
+    else if (a === '--subcategory') args.subcategory = argv[++i];
     else if (a === '--force') args.force = true;
     else if (a === '--help' || a === '-h') {
-      console.log(`\nUsage:\n  npm run content:scaffold -- --id <topicId> --subject <Subject> --title <Title> [options]\n\nOptions:\n  --subcategory <text>\n  --description <text>\n  --difficulty Beginner|Intermediate|Advanced\n  --emoji <emoji>\n  --color <#RRGGBB>\n  --unpublished\n  --seed <any>\n  --dry-run\n  --force   (overwrite if file exists)\n\nThis scaffolds a story-based topic JSON with 6 narrative beats + quiz.\n`);
+      console.log(`\nUsage:\n  npm run content:scaffold -- --id <topicId> --subject <Subject> --title <Title> [options]\n\nOptions:\n  --courseId <courseId>\n  --chapterId <chapterId>\n  --subcategory <text>\n  --description <text>\n  --difficulty Beginner|Intermediate|Advanced\n  --emoji <emoji>\n  --color <#RRGGBB>\n  --unpublished\n  --seed <any>\n  --dry-run\n  --force   (overwrite if file exists)\n\nThis scaffolds a story-based topic JSON with 6 narrative beats + quiz.\n`);
       process.exit(0);
     } else {
       throw new Error(`Unknown arg: ${a}`);
@@ -112,6 +116,8 @@ async function main() {
     id: args.id,
     subject: args.subject,
     subcategory: args.subcategory,
+    ...(args.courseId ? { courseId: args.courseId } : {}),
+    ...(args.chapterId ? { chapterId: args.chapterId } : {}),
     title: args.title,
     emoji: args.emoji,
     color,

@@ -202,6 +202,8 @@ async function main() {
       id: t.id,
       subject: t.subject,
       subcategory: t.subcategory ?? null,
+      course_id: t.course_id ?? t.courseId ?? null,
+      chapter_id: t.chapter_id ?? t.chapterId ?? null,
       title: t.title,
       emoji: t.emoji,
       color: t.color,
