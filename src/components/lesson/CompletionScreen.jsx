@@ -39,6 +39,7 @@ export default function CompletionScreen({
             ctx={journeyCtx}
             allowedTypes={[
               'hero',
+              'info',
               'completionStats',
               'proPerkPanel',
               'oneMaAwardPanel',
@@ -87,6 +88,11 @@ export default function CompletionScreen({
                       className={`related-topic-card ${isLocked ? 'related-topic-card--locked' : ''}`}
                       style={{ '--rel-color': t?.color ?? '#4ECDC4' }}
                     >
+                      {isLocked ? (
+                        <div className="related-topic-card__corner-lock" aria-hidden="true">
+                          🔒 Pro only
+                        </div>
+                      ) : null}
                       <div className="related-topic-card__top">
                         <div className="related-topic-card__emoji" aria-hidden>
                           {t.emoji ?? '🎯'}
