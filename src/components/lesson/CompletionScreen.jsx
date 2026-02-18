@@ -59,7 +59,7 @@ export default function CompletionScreen({
                     Related topics{topicRow?.subject ? ` in ${String(topicRow.subject)}` : ''}
                   </div>
                   {topicRow?.subcategory ? (
-                    <div className="related-topics__sub">Subcategory: {String(topicRow.subcategory)}</div>
+                    <div className="related-topics__sub">Course: {String(topicRow.subcategory)}</div>
                   ) : null}
                 </div>
                 <Link className="related-topics__cta" to="/topics">

@@ -12,10 +12,6 @@ import RouteLoading from './components/RouteLoading';
 import './App.css';
 
 const TopicsBrowserPage = lazy(() => import('./pages/TopicsBrowserPage'));
-const CatalogLayoutPage = lazy(() => import('./pages/CatalogLayoutPage'));
-const CatalogCategoriesPage = lazy(() => import('./pages/CatalogCategoriesPage'));
-const CatalogCategoryPage = lazy(() => import('./pages/CatalogCategoryPage'));
-const CatalogCoursePage = lazy(() => import('./pages/CatalogCoursePage'));
 const TopicPage = lazy(() => import('./pages/TopicPage'));
 const LessonPage = lazy(() => import('./pages/LessonPage'));
 const ReviewPage = lazy(() => import('./pages/ReviewPage'));
@@ -66,25 +62,10 @@ const router = createBrowserRouter([
       { path: 'learn', element: <Navigate to="/" replace /> },
       {
         path: 'topics',
-        element: <CatalogLayoutPage />,
-        children: [
-          // Legacy / original entry: search + filters + topic list.
-          { index: true, element: <TopicsBrowserPage /> },
-          // Backwards-compatible alias for the older nested route.
-          { path: 'search', element: <Navigate to="/topics" replace /> },
-
-          // New catalog navigation.
-          {
-            path: 'catalog',
-            element: <CatalogLayoutPage />,
-            children: [
-              { index: true, element: <CatalogCategoriesPage /> },
-              { path: 'category/:categoryId', element: <CatalogCategoryPage /> },
-              { path: 'course/:courseId', element: <CatalogCoursePage /> },
-            ],
-          },
-        ],
+        element: <TopicsBrowserPage />,
       },
+      // Backwards-compatible alias.
+      { path: 'topics/search', element: <Navigate to="/topics" replace /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'auth/callback', element: <AuthCallbackPage /> },
       { path: 'auth/reset', element: <ResetPasswordPage /> },

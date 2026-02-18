@@ -764,7 +764,7 @@ export default function TopicsBrowserPage() {
     <motion.div className="topics-browser" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Seo
         title="Topics"
-        description="Browse 1 minute lessons by category, difficulty, and search."
+        description="Browse 1 minute lessons by category, course, difficulty, and search."
         path="/topics"
         canonicalPath="/topics"
         jsonLd={itemListJsonLd}
@@ -775,7 +775,7 @@ export default function TopicsBrowserPage() {
         <div className="topics-browser-hero">
           <Link className="topics-back" to="/">← Home</Link>
           <h1>Pick your next 1 minute lesson</h1>
-          <p>Browse by category, search, and jump right in.</p>
+          <p>Search, filter by category/course, and jump right in.</p>
         </div>
 
         {error && (
@@ -834,7 +834,7 @@ export default function TopicsBrowserPage() {
                 </div>
 
                 <div className="filter-group">
-                  <label className="filter-label" htmlFor="topics-filter-subcategory">Subcategory</label>
+                  <label className="filter-label" htmlFor="topics-filter-subcategory">Course</label>
                   <select
                     id="topics-filter-subcategory"
                     value={activeSubcategory}
@@ -843,7 +843,7 @@ export default function TopicsBrowserPage() {
                       setViewMode('grid');
                     }}
                     disabled={activeCategory === 'All' || subcategories.length === 0}
-                    aria-label="Subcategory"
+                    aria-label="Course"
                   >
                     {(activeCategory === 'All' || subcategories.length === 0) ? (
                       <option value="All">All</option>

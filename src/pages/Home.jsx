@@ -254,8 +254,8 @@ function Home() {
         line: 'Pulling the lever…',
         selectedTopic: topic,
         spin: {
-          subject: { label: 'Subject', ...subjectSpin, durationMs: 1700 },
-          subcategory: { label: 'Subcategory', ...subcategorySpin, durationMs: 2100 },
+          subject: { label: 'Category', ...subjectSpin, durationMs: 1700 },
+          subcategory: { label: 'Course', ...subcategorySpin, durationMs: 2100 },
           title: { label: 'Topic', ...titleSpin, durationMs: 2600 },
         },
       });
@@ -355,7 +355,7 @@ function Home() {
                       }}
                     />
                     <SlotReel
-                      label={spinOverlay?.spin?.subcategory?.label ?? 'Subcategory'}
+                      label={spinOverlay?.spin?.subcategory?.label ?? 'Course'}
                       sequence={spinOverlay?.spin?.subcategory?.sequence ?? []}
                       finalIndex={spinOverlay?.spin?.subcategory?.finalIndex ?? 1}
                       durationMs={spinOverlay?.spin?.subcategory?.durationMs ?? 2100}
