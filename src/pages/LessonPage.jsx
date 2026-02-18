@@ -225,6 +225,14 @@ function LessonPage() {
       vars: {
         topicTitle: String(topicRow?.title ?? ''),
         totalSeconds: String(totalSeconds),
+        totalTime: (() => {
+          const sec = Number(totalSeconds) || 0;
+          if (sec >= 60) {
+            const minutes = Math.max(1, Math.round(sec / 60));
+            return `${minutes} minute${minutes === 1 ? '' : 's'}`;
+          }
+          return `${sec} second${sec === 1 ? '' : 's'}`;
+        })(),
       },
       containerClassName: 'journey-blocks',
       buttonClassName: 'action-button',

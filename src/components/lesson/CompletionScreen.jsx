@@ -53,6 +53,13 @@ export default function CompletionScreen({
   const primaryCta = primaryCtaIdx >= 0 ? ctaItems[primaryCtaIdx] : ctaItems[0] ?? null;
   const otherCtas = ctaItems.filter((_, idx) => idx !== (primaryCta ? (primaryCtaIdx >= 0 ? primaryCtaIdx : 0) : -1));
 
+  const summaryCtaDisabledForGuest = ctaItems.some((it) => {
+    const action = it?.action;
+    if (!action || typeof action !== 'object') return false;
+    if (action.type !== 'goToProfile') return false;
+    return Boolean(journeyCtx?.isActionDisabled?.(action));
+  });
+
   const buttonBaseClass = journeyCtx?.buttonClassName ?? 'journey-btn';
   const renderCtaButton = (item, { compact = false } = {}) => {
     if (!item) return null;
@@ -60,6 +67,11 @@ export default function CompletionScreen({
     const label = interpolate(String(item?.label ?? ''), journeyCtx?.vars);
     const action = item?.action ?? null;
     const disabled = Boolean(journeyCtx?.isActionDisabled?.(action));
+
+    const disabledTitle =
+      disabled && action?.type === 'goToProfile'
+        ? 'Sign in to view your learning summary.'
+        : undefined;
 
     const className =
       buttonBaseClass +
@@ -72,6 +84,7 @@ export default function CompletionScreen({
         type="button"
         className={className}
         disabled={disabled}
+        title={disabledTitle}
         onClick={() => journeyCtx?.onAction?.(action)}
       >
         {label}
@@ -105,19 +118,19 @@ export default function CompletionScreen({
               🎉
             </motion.div>
 
-              <JourneyBlocks
-                blocks={blocksUpToRating}
-                ctx={journeyCtx}
-                allowedTypes={[
-                  'hero',
-                  'info',
-                  'completionStats',
-                  'proPerkPanel',
-                  'oneMaAwardPanel',
-                  'completionProgress',
-                  'ratingPrompt',
-                ]}
-              />
+            <JourneyBlocks
+              blocks={blocksUpToRating}
+              ctx={journeyCtx}
+              allowedTypes={[
+                'hero',
+                'info',
+                'completionStats',
+                'proPerkPanel',
+                'oneMaAwardPanel',
+                'completionProgress',
+                'ratingPrompt',
+              ]}
+            />
 
             {(backToChapterTo || primaryCta || otherCtas.length > 0) ? (
               <div className="completion-actionDock" aria-label="Next actions">
@@ -140,103 +153,120 @@ export default function CompletionScreen({
                     <div className="completion-actionDockMoreGrid">
                       {otherCtas.map((it) => renderCtaButton(it, { compact: true }))}
                     </div>
+                    {summaryCtaDisabledForGuest ? (
+                      <div className="completion-actionDockHint">
+                        Sign in to view your learning summary.
+                      </div>
+                    ) : null}
                   </details>
                 ) : null}
               </div>
             ) : null}
 
             {blocksAfterRating.length > 0 ? (
-              <JourneyBlocks
-                blocks={blocksAfterRating}
-                ctx={journeyCtx}
-                allowedTypes={[
-                  'hero',
-                  'info',
-                  'completionStats',
-                  'proPerkPanel',
-                  'oneMaAwardPanel',
-                  'completionProgress',
-                  'ratingPrompt',
-                ]}
-              />
+              <details className="completion-fold" aria-label="Progress and stats">
+                <summary className="completion-foldSummary">Progress and stats</summary>
+                <div className="completion-foldBody">
+                  <JourneyBlocks
+                    blocks={blocksAfterRating}
+                    ctx={journeyCtx}
+                    allowedTypes={[
+                      'hero',
+                      'info',
+                      'completionStats',
+                      'proPerkPanel',
+                      'oneMaAwardPanel',
+                      'completionProgress',
+                      'ratingPrompt',
+                    ]}
+                  />
+                </div>
+              </details>
             ) : null}
 
             {Array.isArray(relatedTopics) && relatedTopics.length > 0 && (
-              <section className="related-topics related-topics--completion" aria-label="Related topics">
-                <div className="related-topics__header">
-                  <div>
-                    <div className="related-topics__kicker">Up next</div>
-                    <div className="related-topics__title">
-                      Related topics{topicRow?.subject ? ` in ${String(topicRow.subject)}` : ''}
-                    </div>
-                    {topicRow?.subcategory ? (
-                      <div className="related-topics__sub">Course: {String(topicRow.subcategory)}</div>
-                    ) : null}
-                  </div>
-                  <Link className="related-topics__cta" to="/categories">
-                    Browse all →
-                  </Link>
-                </div>
-
-                <div className="related-topics__grid">
-                  {relatedTopics.map((t) => {
-                    const gate = getTopicGate({ tier, topicRow: t });
-                    const isLocked = Boolean(gate?.locked && gate?.reason === 'pro');
-
-                    const CardTag = isLocked ? 'div' : Link;
-                    const cardProps = isLocked
-                      ? {
-                        role: 'link',
-                        'aria-disabled': true,
-                        tabIndex: -1,
-                      }
-                      : { to: `/topic/${t.id}` };
-
-                    return (
-                      <CardTag
-                        key={t.id}
-                        {...cardProps}
-                        className={`related-topic-card ${isLocked ? 'related-topic-card--locked' : ''}`}
-                        style={{ '--rel-color': t?.color ?? '#4ECDC4' }}
-                      >
-                        <div className="related-topic-card__top">
-                          <div className="related-topic-card__emoji" aria-hidden>
-                            {t.emoji ?? '🎯'}
-                          </div>
-                          <div className="related-topic-card__text">
-                            <div className="related-topic-card__title">{t.title}</div>
-                            {t?.description ? (
-                              <div className="related-topic-card__desc">{t.description}</div>
-                            ) : null}
-                          </div>
+              <details className="completion-fold" aria-label="Up next">
+                <summary className="completion-foldSummary">
+                  Up next ({relatedTopics.length})
+                </summary>
+                <div className="completion-foldBody">
+                  <section className="related-topics related-topics--completion" aria-label="Related topics">
+                    <div className="related-topics__header">
+                      <div>
+                        <div className="related-topics__kicker">Up next</div>
+                        <div className="related-topics__title">
+                          Related topics{topicRow?.subject ? ` in ${String(topicRow.subject)}` : ''}
                         </div>
-
-                        <div className="related-topic-card__meta">
-                          {isLocked ? (
-                            <span className="related-topic-card__badge related-topic-card__badge--lock" title={String(gate?.label ?? 'Pro only')}>
-                              🔒 {String(gate?.label ?? 'Pro only')}
-                            </span>
-                          ) : null}
-                          {t?.difficulty ? (
-                            <span className="related-topic-card__badge">📊 {t.difficulty}</span>
-                          ) : null}
-                          {t?.subcategory ? (
-                            <span className="related-topic-card__badge related-topic-card__badge--muted">
-                              {t.subcategory}
-                            </span>
-                          ) : null}
-                        </div>
-
-                        {isLocked ? (
-                          <div className="related-topic-card__locked-hint">
-                            Upgrade to unlock.
-                          </div>
+                        {topicRow?.subcategory ? (
+                          <div className="related-topics__sub">Course: {String(topicRow.subcategory)}</div>
                         ) : null}
-                      </CardTag>
-                    );
-                  })}
+                      </div>
+                      <Link className="related-topics__cta" to="/categories">
+                        Browse all →
+                      </Link>
+                    </div>
+
+                    <div className="related-topics__grid">
+                      {relatedTopics.map((t) => {
+                        const gate = getTopicGate({ tier, topicRow: t });
+                        const isLocked = Boolean(gate?.locked && gate?.reason === 'pro');
+
+                        const CardTag = isLocked ? 'div' : Link;
+                        const cardProps = isLocked
+                          ? {
+                            role: 'link',
+                            'aria-disabled': true,
+                            tabIndex: -1,
+                          }
+                          : { to: `/topic/${t.id}` };
+
+                        return (
+                          <CardTag
+                            key={t.id}
+                            {...cardProps}
+                            className={`related-topic-card ${isLocked ? 'related-topic-card--locked' : ''}`}
+                            style={{ '--rel-color': t?.color ?? '#4ECDC4' }}
+                          >
+                            <div className="related-topic-card__top">
+                              <div className="related-topic-card__emoji" aria-hidden>
+                                {t.emoji ?? '🎯'}
+                              </div>
+                              <div className="related-topic-card__text">
+                                <div className="related-topic-card__title">{t.title}</div>
+                                {t?.description ? (
+                                  <div className="related-topic-card__desc">{t.description}</div>
+                                ) : null}
+                              </div>
+                            </div>
+
+                            <div className="related-topic-card__meta">
+                              {isLocked ? (
+                                <span className="related-topic-card__badge related-topic-card__badge--lock" title={String(gate?.label ?? 'Pro only')}>
+                                  🔒 {String(gate?.label ?? 'Pro only')}
+                                </span>
+                              ) : null}
+                              {t?.difficulty ? (
+                                <span className="related-topic-card__badge">📊 {t.difficulty}</span>
+                              ) : null}
+                              {t?.subcategory ? (
+                                <span className="related-topic-card__badge related-topic-card__badge--muted">
+                                  {t.subcategory}
+                                </span>
+                              ) : null}
+                            </div>
+
+                            {isLocked ? (
+                              <div className="related-topic-card__locked-hint">
+                                Upgrade to unlock.
+                              </div>
+                            ) : null}
+                          </CardTag>
+                        );
+                      })}
+                    </div>
+                  </section>
                 </div>
-              </section>
+              </details>
             )}
           </div>
         </motion.div>

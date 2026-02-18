@@ -94,7 +94,7 @@ export function compileJourneyFromTopic(topicRow) {
         {
           type: 'hero',
           title: 'Congratulations!',
-          subtitle: 'You just learned about {topicTitle} in {totalSeconds} seconds!'
+          subtitle: 'You just learned about {topicTitle} in {totalTime}!'
         },
         { type: 'ratingPrompt', title: 'Rate this module' },
         {
