@@ -48,11 +48,100 @@ function includesQuery(topic, q) {
 
 const DIFFICULTY_FILTERS = ['all', 'beginner', 'intermediate', 'advanced', 'premium'];
 
+const FEATURED_TRACKS = [
+  {
+    key: 'ai_agents',
+    title: 'AI & Agents Track',
+    subject: 'AI & Agents',
+    emoji: '🤖',
+    blurb: 'Build intuition for modern AI systems, agents, and workflows.',
+  },
+  {
+    key: 'fundamentals',
+    title: 'Programming Fundamentals',
+    subject: 'Programming Fundamentals',
+    emoji: '🧠',
+    blurb: 'The fastest path to stronger coding fundamentals.',
+  },
+  {
+    key: 'cyber',
+    title: 'Cybersecurity Essentials',
+    subject: 'Cybersecurity',
+    emoji: '🛡️',
+    blurb: 'Threats, defenses, and practical security thinking.',
+  },
+  {
+    key: 'cloud',
+    title: 'Cloud & DevOps',
+    subject: 'Cloud & DevOps',
+    emoji: '☁️',
+    blurb: 'Systems, reliability, and shipping faster with confidence.',
+  },
+  {
+    key: 'data',
+    title: 'Data & Analytics',
+    subject: 'Data & Analytics',
+    emoji: '📊',
+    blurb: 'From data basics to analysis patterns you can reuse.',
+  },
+  {
+    key: 'web_mobile',
+    title: 'Web & Mobile Development',
+    subject: 'Web & Mobile Development',
+    emoji: '📱',
+    blurb: 'Frontend + backend concepts, fast.',
+  },
+];
+
+const CURATED_SUBJECTS = [
+  'AI & Agents',
+  'Programming Fundamentals',
+  'Cybersecurity',
+  'Cloud & DevOps',
+  'Data & Analytics',
+  'Web & Mobile Development',
+];
+
+function uniqById(rows) {
+  const out = [];
+  const seen = new Set();
+  for (const r of Array.isArray(rows) ? rows : []) {
+    const id = r?.id;
+    if (!id) continue;
+    if (seen.has(id)) continue;
+    seen.add(id);
+    out.push(r);
+  }
+  return out;
+}
+
+function decorateTopicRow({ row, ratingSummaryMap, completedIds }) {
+  const summary = ratingSummaryMap?.get?.(row?.id) ?? null;
+  return {
+    ...row,
+    completed: Boolean(row?.id && completedIds?.has?.(row.id)),
+    ratingAvg: summary?.avg_rating ?? null,
+    ratingCount: summary?.ratings_count ?? 0,
+  };
+}
+
 export default function TopicsBrowserPage() {
   const { user, isSupabaseConfigured } = useAuth();
   const contentSource = getContentSource();
   const tier = getCurrentTier(user);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const [viewMode, setViewMode] = useState('curated'); // curated | grid
+  const gridRef = useRef(null);
+  const lastGridStateRef = useRef(null);
+
+  const [curated, setCurated] = useState(() => ({
+    loading: true,
+    error: null,
+    trending: [],
+    beginnerPicks: [],
+    bySubject: {},
+  }));
 
   const [topics, setTopics] = useState([]);
   const [totalTopics, setTotalTopics] = useState(null);
@@ -77,6 +166,23 @@ export default function TopicsBrowserPage() {
     setFilter('all');
     setDifficultyFilter('all');
     setQuery('');
+    setTopics([]);
+    setTotalTopics(null);
+    setNextOffset(0);
+    setHasMore(false);
+    lastGridStateRef.current = null;
+    setViewMode('curated');
+
+    // Clear URL-driven grid triggers.
+    try {
+      if (searchParams.has('difficulty')) {
+        const next = new URLSearchParams(searchParams);
+        next.delete('difficulty');
+        setSearchParams(next, { replace: true });
+      }
+    } catch {
+      // ignore
+    }
   }
 
   const urlDifficulty = useMemo(() => {
@@ -87,6 +193,11 @@ export default function TopicsBrowserPage() {
   useEffect(() => {
     // Sync UI state from URL (supports shareable links + browser back/forward).
     setDifficultyFilter((prev) => (prev === urlDifficulty ? prev : urlDifficulty));
+  }, [urlDifficulty]);
+
+  useEffect(() => {
+    // If user has a difficulty pinned in the URL, assume they want the grid.
+    if (urlDifficulty !== 'all') setViewMode('grid');
   }, [urlDifficulty]);
 
   useEffect(() => {
@@ -121,6 +232,10 @@ export default function TopicsBrowserPage() {
   useEffect(() => {
     const handle = setTimeout(() => setDebouncedQuery(query), 250);
     return () => clearTimeout(handle);
+  }, [query]);
+
+  useEffect(() => {
+    if (String(query ?? '').trim()) setViewMode('grid');
   }, [query]);
 
   useEffect(() => {
@@ -248,6 +363,13 @@ export default function TopicsBrowserPage() {
   useEffect(() => {
     mountedRef.current = true;
 
+    if (viewMode !== 'grid') {
+      setLoading(false);
+      return () => {
+        mountedRef.current = false;
+      };
+    }
+
     async function load() {
       try {
         const requestId = (requestIdRef.current += 1);
@@ -278,7 +400,7 @@ export default function TopicsBrowserPage() {
     return () => {
       mountedRef.current = false;
     };
-  }, [activeCategory, debouncedQuery]);
+  }, [activeCategory, debouncedQuery, viewMode]);
 
   useEffect(() => {
     setActiveSubcategory('All');
@@ -315,6 +437,96 @@ export default function TopicsBrowserPage() {
       mounted = false;
     };
   }, [contentSource, isSupabaseConfigured, user]);
+
+  useEffect(() => {
+    let mounted = true;
+    const requestId = (requestIdRef.current += 1);
+
+    async function loadCurated() {
+      try {
+        setCurated((prev) => ({ ...prev, loading: true, error: null }));
+
+        const subjects = CURATED_SUBJECTS.slice();
+        const pages = await Promise.all(
+          subjects.map((subject) => listTopicsPage({ limit: 14, offset: 0, subject }))
+        );
+
+        if (!mounted || requestIdRef.current !== requestId) return;
+
+        const bySubject = {};
+        let pool = [];
+        for (let i = 0; i < subjects.length; i += 1) {
+          const subject = subjects[i];
+          const items = Array.isArray(pages[i]?.items) ? pages[i].items : [];
+          bySubject[subject] = items;
+          pool.push(...items);
+        }
+
+        pool = uniqById(pool);
+
+        let ratingSummaryMap = new Map();
+        try {
+          ratingSummaryMap = await getTopicRatingSummaries(pool.map((t) => t.id));
+          if (!mounted || requestIdRef.current !== requestId) return;
+          setRatingMap((prev) => {
+            const next = new Map(prev);
+            for (const [k, v] of ratingSummaryMap.entries()) next.set(k, v);
+            return next;
+          });
+        } catch {
+          ratingSummaryMap = new Map();
+        }
+
+        const decoratedPool = pool.map((t) => decorateTopicRow({ row: t, ratingSummaryMap, completedIds }));
+
+        const trending = decoratedPool
+          .slice()
+          .sort((a, b) => {
+            const ac = Number(a?.ratingCount ?? 0) || 0;
+            const bc = Number(b?.ratingCount ?? 0) || 0;
+            if (ac !== bc) return bc - ac;
+            const aa = Number(a?.ratingAvg ?? 0) || 0;
+            const ba = Number(b?.ratingAvg ?? 0) || 0;
+            if (aa !== ba) return ba - aa;
+            return String(a?.title ?? '').localeCompare(String(b?.title ?? ''));
+          })
+          .slice(0, 12);
+
+        const beginnerPicks = decoratedPool
+          .filter((t) => String(t?.difficulty ?? '').toLowerCase() === 'beginner')
+          .slice(0, 12);
+
+        const decoratedBySubject = {};
+        for (const [subject, items] of Object.entries(bySubject)) {
+          decoratedBySubject[subject] = (Array.isArray(items) ? items : [])
+            .map((t) => decorateTopicRow({ row: t, ratingSummaryMap, completedIds }))
+            .slice(0, 12);
+        }
+
+        setCurated({
+          loading: false,
+          error: null,
+          trending,
+          beginnerPicks,
+          bySubject: decoratedBySubject,
+        });
+      } catch (e) {
+        if (!mounted) return;
+        setCurated({
+          loading: false,
+          error: e,
+          trending: [],
+          beginnerPicks: [],
+          bySubject: {},
+        });
+      }
+    }
+
+    loadCurated();
+    return () => {
+      mounted = false;
+    };
+  }, [contentSource, completedIds]);
 
   const sidebarCounts = useMemo(() => {
     const counts = new Map();
@@ -450,6 +662,87 @@ export default function TopicsBrowserPage() {
     };
   }, [topics]);
 
+  function enterGridMode() {
+    setViewMode('grid');
+    setTimeout(() => {
+      try {
+        gridRef.current?.scrollIntoView?.({ behavior: 'smooth', block: 'start' });
+      } catch {
+        // ignore
+      }
+    }, 0);
+  }
+
+  function saveGridState() {
+    lastGridStateRef.current = {
+      activeCategory,
+      activeSubcategory,
+      query,
+      filter,
+      difficultyFilter,
+    };
+  }
+
+  function enterCuratedMode({ remember = true } = {}) {
+    if (remember && viewMode === 'grid') saveGridState();
+
+    setViewMode('curated');
+
+    // Curated view is a clean exploration surface.
+    setActiveCategory('All');
+    setActiveSubcategory('All');
+    setFilter('all');
+    setQuery('');
+    setDifficultyFilter('all');
+
+    // Prevent URL params from snapping us back into grid.
+    try {
+      if (searchParams.has('difficulty')) {
+        const next = new URLSearchParams(searchParams);
+        next.delete('difficulty');
+        setSearchParams(next, { replace: true });
+      }
+    } catch {
+      // ignore
+    }
+
+    setTimeout(() => {
+      try {
+        window?.scrollTo?.({ top: 0, behavior: 'smooth' });
+      } catch {
+        // ignore
+      }
+    }, 0);
+  }
+
+  function resumeLastGrid() {
+    const last = lastGridStateRef.current;
+    if (!last) return;
+    setActiveCategory(last.activeCategory ?? 'All');
+    setActiveSubcategory(last.activeSubcategory ?? 'All');
+    setFilter(last.filter ?? 'all');
+    setQuery(last.query ?? '');
+    setDifficultyFilter(last.difficultyFilter ?? 'all');
+    enterGridMode();
+  }
+
+  function handleTrackClick(subject) {
+    setQuery('');
+    setFilter('all');
+    setDifficultyFilter('all');
+    setActiveSubcategory('All');
+    setActiveCategory(subject);
+    enterGridMode();
+  }
+
+  function handleBrowseAllClick() {
+    setActiveCategory('All');
+    setActiveSubcategory('All');
+    setFilter('all');
+    setDifficultyFilter('all');
+    enterGridMode();
+  }
+
   return (
     <motion.div className="topics-browser" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Seo
@@ -574,64 +867,230 @@ export default function TopicsBrowserPage() {
                 <button type="button" className="toolbar-reset" onClick={resetBrowseState}>
                   Reset
                 </button>
+
+                {viewMode === 'grid' && (
+                  <button type="button" className="toolbar-explore" onClick={() => enterCuratedMode({ remember: true })}>
+                    Back to explore
+                  </button>
+                )}
               </div>
 
-              <div className="toolbar-sub">
-                Showing <strong>{visibleTopics.length}</strong> result(s)
-                {(() => {
-                  const fallbackTotal = sidebarCounts.get(activeCategory) ?? null;
-                  const displayTotal = typeof totalTopics === 'number' ? totalTopics : fallbackTotal;
-                  if (typeof displayTotal === 'number') {
-                    return (
-                      <>
-                        {' '}• Loaded <strong>{topics.length}</strong> / <strong>{displayTotal}</strong>
-                        {activeCategory !== 'All' ? <> in <strong>{activeCategory}</strong></> : null}
-                      </>
-                    );
-                  }
-                  return <>{' '}• Loaded <strong>{topics.length}</strong></>;
-                })()}
-                {contentSource === 'local' ? ' (Local Preview)' : user ? '' : ' (sign in to track completion)'}
-              </div>
+              {viewMode === 'grid' ? (
+                <div className="toolbar-sub">
+                  Showing <strong>{visibleTopics.length}</strong> result(s)
+                  {(() => {
+                    const fallbackTotal = sidebarCounts.get(activeCategory) ?? null;
+                    const displayTotal = typeof totalTopics === 'number' ? totalTopics : fallbackTotal;
+                    if (typeof displayTotal === 'number') {
+                      return (
+                        <>
+                          {' '}• Loaded <strong>{topics.length}</strong> / <strong>{displayTotal}</strong>
+                          {activeCategory !== 'All' ? <> in <strong>{activeCategory}</strong></> : null}
+                        </>
+                      );
+                    }
+                    return <>{' '}• Loaded <strong>{topics.length}</strong></>;
+                  })()}
+                  {contentSource === 'local' ? ' (Local Preview)' : user ? '' : ' (sign in to track completion)'}
+                </div>
+              ) : (
+                <div className="toolbar-sub toolbar-sub--curated">
+                  Explore curated tracks below — or search to jump straight into a topic.
+                  {contentSource === 'local' ? ' (Local Preview)' : user ? '' : ' (sign in to track completion)'}
+                </div>
+              )}
             </div>
 
-            {loading ? (
-              <TopicsGridSkeleton count={12} />
-            ) : visibleTopics.length === 0 ? (
-              <div className="topics-empty">No topics match your search/filter. Try a different keyword.</div>
-            ) : (
-              <DevModuleCheck enabled={isLocalDev}>
-                {({ enabled, runModuleCheck, getDevTestLabel }) => (
-                  <>
-                    <div className="topics-grid">
-                      {visibleTopics.map((t, idx) => (
-                        <motion.div
-                          key={t.id}
-                          initial={{ y: 8, opacity: 0 }}
-                          animate={{ y: 0, opacity: 1 }}
-                          transition={{ delay: Math.min(0.2, idx * 0.02) }}
-                        >
-                          <SubjectCard
-                            subject={t}
-                            gate={getTopicGate({ tier, topicRow: t })}
-                            devTestLabel={getDevTestLabel(t.id)}
-                            onDevTest={enabled && !t?.comingSoon ? () => runModuleCheck(t) : null}
-                          />
-                        </motion.div>
-                      ))}
-                    </div>
+            {viewMode === 'curated' ? (
+              <div className="topics-curated" aria-label="Curated topic tracks">
+                <div className="curated-cta-row">
+                  {lastGridStateRef.current ? (
+                    <button type="button" className="curated-primary" onClick={resumeLastGrid}>
+                      Resume browsing
+                    </button>
+                  ) : (
+                    <button type="button" className="curated-primary" onClick={handleBrowseAllClick}>
+                      Browse all topics
+                    </button>
+                  )}
+                  <div className="curated-quick">
+                    <button type="button" className="curated-chip" onClick={() => { setDifficultyFilter('beginner'); enterGridMode(); }}>
+                      Beginner
+                    </button>
+                    <button type="button" className="curated-chip" onClick={() => { setDifficultyFilter('intermediate'); enterGridMode(); }}>
+                      Intermediate
+                    </button>
+                    <button type="button" className="curated-chip" onClick={() => { setDifficultyFilter('advanced'); enterGridMode(); }}>
+                      Advanced
+                    </button>
+                    <button type="button" className="curated-chip" onClick={() => { setDifficultyFilter('premium'); enterGridMode(); }}>
+                      Premium
+                    </button>
+                  </div>
+                </div>
 
-                    {hasMore && (
-                      <div className="topics-loadmore">
-                        <button type="button" className="loadmore-btn" onClick={handleLoadMore} disabled={loadingMore}>
-                          {loadingMore ? 'Loading…' : 'Load more topics'}
+                <div className="curated-section">
+                  <div className="curated-header">
+                    <h2>Featured tracks</h2>
+                    <div className="curated-sub">Pick an area, then we’ll show everything in it.</div>
+                  </div>
+
+                  <div className="track-grid" role="list">
+                    {FEATURED_TRACKS.map((t) => {
+                      const count = sidebarCounts.get(t.subject) ?? null;
+                      return (
+                        <button
+                          key={t.key}
+                          type="button"
+                          className="track-card"
+                          onClick={() => handleTrackClick(t.subject)}
+                          role="listitem"
+                        >
+                          <div className="track-emoji" aria-hidden="true">{t.emoji}</div>
+                          <div className="track-meta">
+                            <div className="track-title">{t.title}</div>
+                            <div className="track-blurb">{t.blurb}</div>
+                            <div className="track-foot">
+                              <span className="track-pill">{t.subject}</span>
+                              {typeof count === 'number' ? <span className="track-count">{count} topics</span> : null}
+                            </div>
+                          </div>
                         </button>
-                        <div className="loadmore-sub">Load more to expand your results without downloading everything.</div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="curated-section">
+                  <div className="curated-header">
+                    <h2>Trending now</h2>
+                    <div className="curated-sub">Popular picks based on community ratings.</div>
+                  </div>
+
+                  {curated.loading ? (
+                    <TopicsGridSkeleton count={6} />
+                  ) : curated.trending.length === 0 ? (
+                    <div className="topics-empty">No trending topics yet — try searching above.</div>
+                  ) : (
+                    <div className="topics-carousel" role="region" aria-label="Trending topics">
+                      <div className="topics-carousel-row">
+                        {curated.trending.map((t) => (
+                          <div key={t.id} className="topics-carousel-item">
+                            <SubjectCard subject={t} gate={getTopicGate({ tier, topicRow: t })} />
+                          </div>
+                        ))}
                       </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="curated-section">
+                  <div className="curated-header">
+                    <h2>Beginner-friendly</h2>
+                    <div className="curated-sub">Fast wins to build momentum.</div>
+                  </div>
+
+                  {curated.loading ? (
+                    <TopicsGridSkeleton count={6} />
+                  ) : curated.beginnerPicks.length === 0 ? (
+                    <div className="topics-empty">No beginner topics found — try another difficulty.</div>
+                  ) : (
+                    <div className="topics-carousel" role="region" aria-label="Beginner topics">
+                      <div className="topics-carousel-row">
+                        {curated.beginnerPicks.map((t) => (
+                          <div key={t.id} className="topics-carousel-item">
+                            <SubjectCard subject={t} gate={getTopicGate({ tier, topicRow: t })} />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="curated-section">
+                  <div className="curated-header">
+                    <h2>Explore by area</h2>
+                    <div className="curated-sub">Scroll a row, or jump into the full list for that area.</div>
+                  </div>
+
+                  {curated.error ? (
+                    <div className="topics-browser-error">
+                      <strong>Couldn’t load curated topics.</strong>
+                      <div className="topics-browser-error-sub">{curated.error?.message ?? String(curated.error)}</div>
+                    </div>
+                  ) : null}
+
+                  {CURATED_SUBJECTS.map((subject) => {
+                    const items = curated.bySubject?.[subject] ?? [];
+                    if (!curated.loading && items.length === 0) return null;
+                    return (
+                      <div key={subject} className="curated-row">
+                        <div className="curated-row-head">
+                          <div className="curated-row-title">{subject}</div>
+                          <button type="button" className="curated-row-link" onClick={() => handleTrackClick(subject)}>
+                            See all
+                          </button>
+                        </div>
+
+                        {curated.loading ? (
+                          <TopicsGridSkeleton count={6} />
+                        ) : (
+                          <div className="topics-carousel" role="region" aria-label={`${subject} topics`}>
+                            <div className="topics-carousel-row">
+                              {items.map((t) => (
+                                <div key={t.id} className="topics-carousel-item">
+                                  <SubjectCard subject={t} gate={getTopicGate({ tier, topicRow: t })} />
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (
+              <div ref={gridRef}>
+                {loading ? (
+                  <TopicsGridSkeleton count={12} />
+                ) : visibleTopics.length === 0 ? (
+                  <div className="topics-empty">No topics match your search/filter. Try a different keyword.</div>
+                ) : (
+                  <DevModuleCheck enabled={isLocalDev}>
+                    {({ enabled, runModuleCheck, getDevTestLabel }) => (
+                      <>
+                        <div className="topics-grid">
+                          {visibleTopics.map((t, idx) => (
+                            <motion.div
+                              key={t.id}
+                              initial={{ y: 8, opacity: 0 }}
+                              animate={{ y: 0, opacity: 1 }}
+                              transition={{ delay: Math.min(0.2, idx * 0.02) }}
+                            >
+                              <SubjectCard
+                                subject={t}
+                                gate={getTopicGate({ tier, topicRow: t })}
+                                devTestLabel={getDevTestLabel(t.id)}
+                                onDevTest={enabled && !t?.comingSoon ? () => runModuleCheck(t) : null}
+                              />
+                            </motion.div>
+                          ))}
+                        </div>
+
+                        {hasMore && (
+                          <div className="topics-loadmore">
+                            <button type="button" className="loadmore-btn" onClick={handleLoadMore} disabled={loadingMore}>
+                              {loadingMore ? 'Loading…' : 'Load more topics'}
+                            </button>
+                            <div className="loadmore-sub">Load more to expand your results without downloading everything.</div>
+                          </div>
+                        )}
+                      </>
                     )}
-                  </>
+                  </DevModuleCheck>
                 )}
-              </DevModuleCheck>
+              </div>
             )}
           </section>
         </div>
