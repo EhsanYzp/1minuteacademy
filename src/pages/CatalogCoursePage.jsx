@@ -46,18 +46,18 @@ export default function CatalogCoursePage() {
       <Seo
         title={`${courseTitle} — Topics`}
         description={courseDesc || 'Browse chapters and topics.'}
-        path={`/topics/course/${encodeURIComponent(id)}`}
-        canonicalPath={`/topics/course/${encodeURIComponent(id)}`}
+        path={`/topics/catalog/course/${encodeURIComponent(id)}`}
+        canonicalPath={`/topics/catalog/course/${encodeURIComponent(id)}`}
       />
 
       <Header />
 
       <main className="catalog-main">
         <div className="catalog-headerRow">
-          <Link className="catalog-back" to="/topics">
+          <Link className="catalog-back" to="/topics/catalog">
             ← Categories
           </Link>
-          <Link className="catalog-back" to="/topics/search">
+          <Link className="catalog-back" to="/topics">
             Search
           </Link>
         </div>

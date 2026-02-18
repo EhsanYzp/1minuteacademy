@@ -49,18 +49,18 @@ export default function CatalogCategoryPage() {
       <Seo
         title={`${title} — Topics`}
         description={description || 'Browse courses in this category.'}
-        path={`/topics/category/${encodeURIComponent(id)}`}
-        canonicalPath={`/topics/category/${encodeURIComponent(id)}`}
+        path={`/topics/catalog/category/${encodeURIComponent(id)}`}
+        canonicalPath={`/topics/catalog/category/${encodeURIComponent(id)}`}
       />
 
       <Header />
 
       <main className="catalog-main">
         <div className="catalog-headerRow">
-          <Link className="catalog-back" to="/topics">
+          <Link className="catalog-back" to="/topics/catalog">
             ← Back
           </Link>
-          <Link className="catalog-back" to="/topics/search">
+          <Link className="catalog-back" to="/topics">
             Search
           </Link>
         </div>
@@ -83,7 +83,7 @@ export default function CatalogCategoryPage() {
               return (
                 <Link
                   key={courseId}
-                  to={`/topics/course/${encodeURIComponent(courseId)}`}
+                  to={`/topics/catalog/course/${encodeURIComponent(courseId)}`}
                   className="catalog-card"
                   style={borderColor ? { borderColor } : undefined}
                 >

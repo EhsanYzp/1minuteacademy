@@ -68,10 +68,21 @@ const router = createBrowserRouter([
         path: 'topics',
         element: <CatalogLayoutPage />,
         children: [
-          { index: true, element: <CatalogCategoriesPage /> },
-          { path: 'category/:categoryId', element: <CatalogCategoryPage /> },
-          { path: 'course/:courseId', element: <CatalogCoursePage /> },
-          { path: 'search', element: <TopicsBrowserPage /> },
+          // Legacy / original entry: search + filters + topic list.
+          { index: true, element: <TopicsBrowserPage /> },
+          // Backwards-compatible alias for the older nested route.
+          { path: 'search', element: <Navigate to="/topics" replace /> },
+
+          // New catalog navigation.
+          {
+            path: 'catalog',
+            element: <CatalogLayoutPage />,
+            children: [
+              { index: true, element: <CatalogCategoriesPage /> },
+              { path: 'category/:categoryId', element: <CatalogCategoryPage /> },
+              { path: 'course/:courseId', element: <CatalogCoursePage /> },
+            ],
+          },
         ],
       },
       { path: 'login', element: <LoginPage /> },

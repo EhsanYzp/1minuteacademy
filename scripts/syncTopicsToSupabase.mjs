@@ -56,6 +56,17 @@ function requiredEnv(name) {
   return v;
 }
 
+function requiredEnvAny(names) {
+  for (const name of names) {
+    const v = process.env[name];
+    if (v) return v;
+  }
+  const envFileHint = requestedEnv ? `.env.${requestedEnv}.local` : '.env.local';
+  throw new Error(
+    `Missing env var: ${names.join(' or ')} (set it in ${envFileHint} or export it in your shell)`
+  );
+}
+
 function forbidEnv(name) {
   const v = process.env[name];
   if (v) {
@@ -171,7 +182,7 @@ async function main() {
     throw new Error(`Conflicting --env values detected. Parsed '${args.env}' but dotenv loaded '${requestedEnv}'.`);
   }
 
-  const url = requiredEnv('VITE_SUPABASE_URL');
+  const url = requiredEnvAny(['VITE_SUPABASE_URL', 'SUPABASE_URL']);
 
   // IMPORTANT: use service role for bulk upserts in scripts (never expose in the browser)
   const serviceRoleKey = requiredEnv('SUPABASE_SERVICE_ROLE_KEY');
@@ -346,7 +357,19 @@ async function main() {
       const b = batches[i];
       const suffix = batches.length > 1 ? ` (batch ${i + 1}/${batches.length})` : '';
       const { data, error } = await fn(b);
-      if (error) throw error;
+      if (error) {
+        if (String(error?.code ?? '') === 'P0001' && String(error?.message ?? '').toLowerCase() === 'forbidden') {
+          throw new Error(
+            [
+              `Supabase RPC rejected the request as 'forbidden'.`,
+              `This usually means the request is NOT using the service role key.`,
+              `Fix: ensure SUPABASE_SERVICE_ROLE_KEY is set to your Supabase project's Service Role key for the chosen --env (e.g. put it in .env.production.local when running --env production).`,
+              `Also ensure you are not accidentally using an anon key in SUPABASE_SERVICE_ROLE_KEY.`,
+            ].join(' ')
+          );
+        }
+        throw error;
+      }
       const applied = typeof data === 'number' ? data : b.length;
       console.log(`Applied ${b.length} topic(s)${suffix}${label ? `: ${label}` : ''}`);
       if (typeof data === 'number' && data !== b.length) {

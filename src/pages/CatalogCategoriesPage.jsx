@@ -52,8 +52,8 @@ export default function CatalogCategoriesPage() {
       <Seo
         title="Topics"
         description="Explore categories and courses."
-        path="/topics"
-        canonicalPath="/topics"
+        path="/topics/catalog"
+        canonicalPath="/topics/catalog"
       />
 
       <Header />
@@ -64,9 +64,7 @@ export default function CatalogCategoriesPage() {
             <h1 className="catalog-title">Explore</h1>
             <p className="catalog-subtitle">Choose a category, then a course, then a chapter.</p>
           </div>
-          <Link className="catalog-back" to="search">
-            Search topics
-          </Link>
+          <Link className="catalog-back" to="/topics">Search topics</Link>
         </div>
 
         {loading && <p className="catalog-empty">Loading…</p>}
