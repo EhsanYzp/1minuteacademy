@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
@@ -57,6 +57,7 @@ function normalizeTierForJourney(tier) {
 
 function TopicPage() {
   const { topicId } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const contentSource = getContentSource();
@@ -203,6 +204,15 @@ function TopicPage() {
   );
   const canUseReview = canReview(tier);
 
+  const backToChapterTo = useMemo(() => {
+    const s = location?.state?.fromChapter;
+    const categoryId = String(s?.categoryId ?? '').trim();
+    const courseId = String(s?.courseId ?? '').trim();
+    const chapterId = String(s?.chapterId ?? '').trim();
+    if (!categoryId || !courseId || !chapterId) return null;
+    return `/categories/${encodeURIComponent(categoryId)}/courses/${encodeURIComponent(courseId)}/chapters/${encodeURIComponent(chapterId)}`;
+  }, [location?.state]);
+
   const topicGate = useMemo(
     () => getTopicGate({ tier, topicRow: topicRow ?? fallbackTopics[topicId] }),
     [tier, topicRow, topicId]
@@ -226,7 +236,10 @@ function TopicPage() {
           <div className="topic-header">
             <div className="topic-nav">
               <Link to="/" className="back-button">← Home</Link>
-              <Link to="/categories" className="back-button">← Back to browse</Link>
+              {backToChapterTo ? (
+                <Link to={backToChapterTo} className="back-button">← Back to chapter</Link>
+              ) : null}
+              <Link to="/categories" className="back-button">← Categories</Link>
             </div>
           </div>
 
@@ -318,7 +331,10 @@ function TopicPage() {
           <h2>🔍 Topic not found!</h2>
           <div className="topic-nav">
             <Link to="/" className="back-button">← Home</Link>
-            <Link to="/categories" className="back-button">← Back to browse</Link>
+              {backToChapterTo ? (
+                <Link to={backToChapterTo} className="back-button">← Back to chapter</Link>
+              ) : null}
+              <Link to="/categories" className="back-button">← Categories</Link>
           </div>
         </div>
       </div>
@@ -352,7 +368,10 @@ function TopicPage() {
         >
           <div className="topic-nav">
             <Link to="/" className="back-button">← Home</Link>
-            <Link to="/categories" className="back-button">← Back to browse</Link>
+              {backToChapterTo ? (
+                <Link to={backToChapterTo} className="back-button">← Back to chapter</Link>
+              ) : null}
+              <Link to="/categories" className="back-button">← Categories</Link>
           </div>
         </motion.div>
 

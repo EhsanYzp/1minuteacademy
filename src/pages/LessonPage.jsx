@@ -38,6 +38,7 @@ function normalizeTierForJourney(tier) {
 function LessonPage() {
   const { topicId } = ReactRouterDom.useParams();
   const navigate = ReactRouterDom.useNavigate();
+  const location = ReactRouterDom.useLocation();
   const contentSource = getContentSource();
   const { user } = useAuth();
   const tier = getCurrentTier(user);
@@ -206,6 +207,15 @@ function LessonPage() {
   }
   const journeyCtx = useMemo(() => {
     const normalizedTier = normalizeTierForJourney(tier);
+    const from = location?.state?.fromChapter;
+    const fromCategoryId = String(from?.categoryId ?? '').trim();
+    const fromCourseId = String(from?.courseId ?? '').trim();
+    const fromChapterId = String(from?.chapterId ?? '').trim();
+    const backToChapterTo =
+      fromCategoryId && fromCourseId && fromChapterId
+        ? `/categories/${encodeURIComponent(fromCategoryId)}/courses/${encodeURIComponent(fromCourseId)}/chapters/${encodeURIComponent(fromChapterId)}`
+        : null;
+    const closeTo = backToChapterTo || `/topic/${topicId}`;
     return {
       completed: isCompleted,
       canStart,
@@ -262,7 +272,7 @@ function LessonPage() {
           return;
         }
         if (action.type === 'goToTopic') {
-          navigate(`/topic/${topicId}`);
+          navigate(`/topic/${topicId}`, { state: location?.state });
         }
       },
       renderCompletionStats: () => (
@@ -389,7 +399,7 @@ function LessonPage() {
         <LessonTopbar
           topicEmoji={topicRow?.emoji}
           topicTitle={topicRow?.title}
-          onClose={() => navigate(`/topic/${topicId}`)}
+          onClose={() => navigate(closeTo)}
           canChoosePresentation={canChoosePresentation}
           storyPresentationStyle={storyPresentationStyle}
           onChangeStoryPresentationStyle={onChangeStoryPresentationStyle}
@@ -404,7 +414,7 @@ function LessonPage() {
           topicTitle={topicRow?.title}
           timeRemaining={timeRemaining}
           onComplete={handleComplete}
-          onClose={() => navigate(`/topic/${topicId}`)}
+          onClose={() => navigate(closeTo)}
           hideTopbar={true}
           presentationStyle={storyPresentationStyle}
         />
@@ -429,6 +439,7 @@ function LessonPage() {
     ratingError,
     onRate,
     navigate,
+    location,
     topicId,
     timeRemaining,
     handleComplete,

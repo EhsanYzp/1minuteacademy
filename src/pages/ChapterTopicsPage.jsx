@@ -113,6 +113,20 @@ export default function ChapterTopicsPage() {
   const courseTitle = String(courseRow?.title ?? 'Course');
   const chapterTitle = String(chapterRow?.title ?? 'Chapter');
 
+  const fromChapterState = useMemo(
+    () => ({
+      fromChapter: {
+        categoryId: category,
+        courseId: course,
+        chapterId: chapter,
+        categoryTitle,
+        courseTitle,
+        chapterTitle,
+      },
+    }),
+    [category, course, chapter, categoryTitle, courseTitle, chapterTitle]
+  );
+
   const visibleTopics = useMemo(() => {
     const q = String(query ?? '').trim();
     let rows = (Array.isArray(topics) ? topics : [])
@@ -270,8 +284,8 @@ export default function ChapterTopicsPage() {
                   </div>
 
                   <div className="catflow-actions">
-                    <Link className="catflow-button" to={`/topic/${encodeURIComponent(id)}`}>Details</Link>
-                    <Link className="catflow-button primary" to={`/lesson/${encodeURIComponent(id)}`}>Start</Link>
+                    <Link className="catflow-button" to={`/topic/${encodeURIComponent(id)}`} state={fromChapterState}>Details</Link>
+                    <Link className="catflow-button primary" to={`/lesson/${encodeURIComponent(id)}`} state={fromChapterState}>Start</Link>
                   </div>
                 </div>
               );

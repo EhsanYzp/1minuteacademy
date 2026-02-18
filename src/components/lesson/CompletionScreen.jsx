@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Header from '../Header';
 import ToastStack from '../ToastStack';
 import JourneyBlocks from '../../engine/journey/JourneyBlocks';
@@ -14,6 +14,16 @@ export default function CompletionScreen({
   topicRow,
 }) {
   const tier = String(journeyCtx?.tier ?? 'guest');
+  const location = useLocation();
+
+  const from = location?.state?.fromChapter;
+  const fromCategoryId = String(from?.categoryId ?? '').trim();
+  const fromCourseId = String(from?.courseId ?? '').trim();
+  const fromChapterId = String(from?.chapterId ?? '').trim();
+  const backToChapterTo =
+    fromCategoryId && fromCourseId && fromChapterId
+      ? `/categories/${encodeURIComponent(fromCategoryId)}/courses/${encodeURIComponent(fromCourseId)}/chapters/${encodeURIComponent(fromChapterId)}`
+      : null;
 
   return (
     <>
@@ -26,6 +36,11 @@ export default function CompletionScreen({
       >
         <div className="completion-backdrop" aria-hidden="true" />
         <motion.div className="completion-content" initial={{ y: 50 }} animate={{ y: 0 }}>
+          <div className="completion-nav" aria-label="Completion navigation">
+            <Link className="completion-navLink" to="/">Home</Link>
+            {backToChapterTo ? <Link className="completion-navLink" to={backToChapterTo}>Back to chapter</Link> : null}
+            <Link className="completion-navLink" to="/categories">Categories</Link>
+          </div>
           <motion.div
             className="completion-emoji"
             animate={{ scale: [1, 1.2, 1], rotate: [0, 10, -10, 0] }}
