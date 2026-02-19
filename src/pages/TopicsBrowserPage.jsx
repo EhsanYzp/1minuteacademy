@@ -15,8 +15,9 @@ import { getCurrentTier, getTopicGate } from '../services/entitlements';
 import { toAbsoluteUrl } from '../services/seo';
 import './TopicsBrowserPage.css';
 
+const HIDDEN_SUBJECTS = new Set(['AI & Agents']);
+
 const CANONICAL_CATEGORIES = [
-  'AI & Agents',
   'Programming Fundamentals',
   'Web & Mobile Development',
   'Data & Analytics',
@@ -49,13 +50,6 @@ function includesQuery(topic, q) {
 const DIFFICULTY_FILTERS = ['all', 'beginner', 'intermediate', 'advanced', 'premium'];
 
 const FEATURED_TRACKS = [
-  {
-    key: 'ai_agents',
-    title: 'AI & Agents Track',
-    subject: 'AI & Agents',
-    emoji: '🤖',
-    blurb: 'Build intuition for modern AI systems, agents, and workflows.',
-  },
   {
     key: 'fundamentals',
     title: 'Programming Fundamentals',
@@ -94,7 +88,6 @@ const FEATURED_TRACKS = [
 ];
 
 const CURATED_SUBJECTS = [
-  'AI & Agents',
   'Programming Fundamentals',
   'Cybersecurity',
   'Cloud & DevOps',
@@ -551,7 +544,10 @@ export default function TopicsBrowserPage() {
     // Seed canonical categories so they exist even if empty.
     for (const c of CANONICAL_CATEGORIES) counts.set(c, 0);
 
-    for (const [k, v] of categoryCounts.entries()) counts.set(k, v);
+    for (const [k, v] of categoryCounts.entries()) {
+      if (HIDDEN_SUBJECTS.has(k)) continue;
+      counts.set(k, v);
+    }
 
     // Ensure All exists.
     if (!counts.has('All')) {
@@ -567,14 +563,14 @@ export default function TopicsBrowserPage() {
   const categories = useMemo(() => {
     const discovered = new Set();
     for (const k of sidebarCounts.keys()) {
-      if (k !== 'All') discovered.add(k);
+      if (k !== 'All' && !HIDDEN_SUBJECTS.has(k)) discovered.add(k);
     }
 
     const out = ['All', ...CANONICAL_CATEGORIES];
 
     const canonicalSet = new Set(CANONICAL_CATEGORIES);
     const extra = Array.from(discovered)
-      .filter((c) => c && !canonicalSet.has(c))
+      .filter((c) => c && !canonicalSet.has(c) && !HIDDEN_SUBJECTS.has(c))
       .sort((a, b) => String(a).localeCompare(String(b)));
 
     out.push(...extra);
@@ -599,6 +595,7 @@ export default function TopicsBrowserPage() {
           ratingCount: summary?.ratings_count ?? 0,
         };
       })
+      .filter((t) => !HIDDEN_SUBJECTS.has(norm(t.subject) || 'General'))
       .filter((t) => (shouldClientFilterQuery ? includesQuery(t, q) : true));
 
     if (activeCategory !== 'All') {

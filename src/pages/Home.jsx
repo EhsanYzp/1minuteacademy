@@ -246,7 +246,7 @@ function Home() {
       const safeTitle = String(topic?.title ?? '').trim() || 'Selected topic';
 
       const subjectSpin = buildSpinSequenceWithFinalIndex({
-        pool: subjects.length ? subjects : ['General', 'Programming Fundamentals', 'AI & Agents', 'Cybersecurity'],
+        pool: subjects.length ? subjects : ['General', 'Programming Fundamentals', 'Cybersecurity'],
         finalValue: safeSubject,
         spins: 18,
         tailPads: 2,

@@ -2,6 +2,8 @@ import { listTopics, listTopicsPage } from '../services/topics';
 import { listUserTopicProgress } from '../services/progress';
 import { canStartTopic, canTrackProgress } from '../services/entitlements';
 
+const HIDDEN_SUBJECTS = new Set(['AI & Agents']);
+
 const RECENT_RANDOM_TOPIC_IDS_KEY = 'oma_recent_random_topics';
 
 function safeJsonParse(raw, fallback) {
@@ -63,6 +65,8 @@ export async function pickRandomEligibleTopic({ tier, includeCompleted = false, 
 
   const tryCandidate = (topicRow) => {
     if (!topicRow?.id) return false;
+    const subject = String(topicRow?.subject ?? '').trim() || 'General';
+    if (HIDDEN_SUBJECTS.has(subject)) return false;
     if (!canStartTopic({ tier, topicRow, expertMinutes })) return false;
     const id = String(topicRow.id);
     if (!includeCompleted && completedIds.has(id)) return false;
