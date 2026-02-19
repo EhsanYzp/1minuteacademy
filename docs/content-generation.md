@@ -83,15 +83,18 @@ In local preview:
 
 Tip: after completing a lesson, check `/me` (Profile) and the landing page badges to verify progress behavior.
 
-### Scaffold a new module automatically (picks 4–5 steps)
+### Scaffold a new topic JSON
 
-This creates a new `content/topics/<Subject>/<id>.topic.json` and automatically picks a diverse mix of fast steps from the recipe pool.
+Simple (writes `content/topics/<Subject>/<topicId>.topic.json`):
 
 - `npm run content:scaffold -- --id <topicId> --subject "<Subject>" --title "<Title>" --description "<One-liner>"`
 
+Hierarchy (recommended; writes `content/topics/<categoryId>/<courseId>/<chapterId>/<topicId>.topic.json`):
+
+- `npm run content:scaffold -- --id <topicId> --title "<Title>" --courseId <courseId> --chapterId <chapterId> --description "<One-liner>"`
+
 Optional:
-- `--steps 4` or `--steps 5`
-- `--seed <any>` to make the chosen recipe mix deterministic
+- `--seed <any>` to make generated defaults deterministic
 - `--dry-run` to print JSON without writing a file
 
 ### Publish to Supabase (production)

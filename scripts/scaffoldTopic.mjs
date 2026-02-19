@@ -1,13 +1,22 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import { CATALOG_DIR, TOPICS_DIR } from './_contentPaths.mjs';
-import { compileJourneyFromTopic } from '../src/engine/journey/compileJourney.js';
+// Deprecated wrapper: the real implementation lives in scaffoldContent.mjs.
+// Kept so older docs/commands that reference scaffoldTopic.mjs still work.
+import './scaffoldContent.mjs';
 
+/*
 function parseArgs(argv) {
   const args = {
     id: null,
     subject: null,
+    categoryId: null,
+    categoryTitle: null,
+    categoryDescription: null,
+    categoryEmoji: null,
+    categoryColor: null,
     courseId: null,
+    courseTitle: null,
+    courseDescription: null,
+    courseEmoji: null,
+    courseColor: null,
     chapterId: null,
     chapterTitle: null,
     chapterDescription: null,
@@ -27,27 +36,38 @@ function parseArgs(argv) {
 
   for (let i = 0; i < argv.length; i += 1) {
     const a = argv[i];
-
-    if (a === '--id') args.id = argv[++i];
-    else if (a === '--subject') args.subject = argv[++i];
-    else if (a === '--courseId') args.courseId = argv[++i];
-    else if (a === '--chapterId') args.chapterId = argv[++i];
-    else if (a === '--chapterTitle') args.chapterTitle = argv[++i];
-    else if (a === '--chapterDescription') args.chapterDescription = argv[++i];
-    else if (a === '--chapterPosition') args.chapterPosition = argv[++i];
-    else if (a === '--no-catalog-update') args.noCatalogUpdate = true;
-    else if (a === '--title') args.title = argv[++i];
-    else if (a === '--description') args.description = argv[++i] ?? '';
-    else if (a === '--difficulty') args.difficulty = argv[++i];
-    else if (a === '--emoji') args.emoji = argv[++i];
-    else if (a === '--color') args.color = argv[++i];
-    else if (a === '--unpublished') args.published = false;
-    else if (a === '--seed') args.seed = argv[++i];
-    else if (a === '--dry-run') args.dryRun = true;
-    else if (a === '--subcategory') args.subcategory = argv[++i];
+       id: null,
+       title: null,
+       description: '',
+       difficulty: 'Beginner',
+       emoji: '🎯',
+       color: null,
+       published: true,
+       seed: null,
+       dryRun: false,
+       force: false,
+       subject: null,
+       subcategory: null,
+       categoryId: null,
+       categoryTitle: null,
+       categoryDescription: null,
+       categoryEmoji: null,
+       categoryColor: null,
+       courseId: null,
+       courseTitle: null,
+       courseDescription: null,
+       courseEmoji: null,
+       courseColor: null,
+       chapterId: null,
+       chapterTitle: null,
+       chapterDescription: null,
+       chapterPosition: null,
+       noCatalogUpdate: false,
     else if (a === '--force') args.force = true;
     else if (a === '--help' || a === '-h') {
-      console.log(`\nUsage:\n  npm run content:scaffold -- --id <topicId> --title <Title> [options]\n\nOptions:\n  --subject <Subject>\n  --subcategory <text>\n\n  --courseId <courseId>\n  --chapterId <chapterId>\n  --chapterTitle <text>\n  --chapterDescription <text>\n  --chapterPosition <number>\n  --no-catalog-update   (do not auto-add chapter to content/catalog)\n\n  --description <text>\n  --difficulty Beginner|Intermediate|Advanced\n  --emoji <emoji>\n  --color <#RRGGBB>\n  --unpublished\n  --seed <any>\n  --dry-run\n  --force   (overwrite if file exists)\n\nNotes:\n- If you pass --courseId and --chapterId, the script will infer subject/subcategory from content/catalog/catalog.json and write the file to:\n  content/topics/<categoryId>/<courseId>/<chapterId>/<topicId>.topic.json\n\nThis scaffolds a story-based topic JSON with 6 narrative beats + quiz.\n`);
+      console.log(
+        `\nUsage:\n  npm run content:scaffold -- --id <topicId> --title <Title> [options]\n\nOptions:\n  --subject <Subject>\n  --subcategory <text>\n\n  Local catalog (optional; used when creating missing catalog entries):\n  --categoryId <categoryId>\n  --categoryTitle <text>\n  --categoryDescription <text>\n  --categoryEmoji <emoji>\n  --categoryColor <#RRGGBB>\n\n  --courseId <courseId>\n  --courseTitle <text>\n  --courseDescription <text>\n  --courseEmoji <emoji>\n  --courseColor <#RRGGBB>\n\n  --chapterId <chapterId>\n  --chapterTitle <text>\n  --chapterDescription <text>\n  --chapterPosition <number>\n  --no-catalog-update   (do not auto-add category/course/chapter to content/catalog)\n\n  Topic content:\n  --description <text>\n  --difficulty Beginner|Intermediate|Advanced\n  --emoji <emoji>\n  --color <#RRGGBB>\n  --unpublished\n  --seed <any>\n  --dry-run\n  --force   (overwrite if file exists)\n\nNotes:\n- If you pass --courseId and --chapterId, the script will infer subject/subcategory from content/catalog/catalog.json and write the file to:\n  content/topics/<categoryId>/<courseId>/<chapterId>/<topicId>.topic.json\n- If course/category/chapter does not exist in the local catalog and you do NOT pass --no-catalog-update, the script will create them (local mode only).\n\nThis scaffolds a story-based topic JSON with 6 narrative beats + quiz.\n`
+      );
       process.exit(0);
     } else {
       throw new Error(`Unknown arg: ${a}`);
@@ -69,6 +89,62 @@ function parseArgs(argv) {
   }
 
   return args;
+}
+
+function ensureCategoryInCatalog({ catalog, categoryId, categoryTitle, categoryDescription, categoryEmoji, categoryColor }) {
+  const categories = Array.isArray(catalog?.categories) ? catalog.categories : [];
+  const existing = categories.find((c) => String(c?.id ?? '') === categoryId);
+  if (existing) return { catalog, created: false };
+
+    const next = {
+      ...catalog,
+      categories: categories
+        .concat([
+          {
+            id: categoryId,
+            title: String(categoryTitle ?? '').trim() || titleFromId(categoryId),
+            emoji: String(categoryEmoji ?? '').trim() || '📚',
+            color: String(categoryColor ?? '').trim() || '#4ECDC4',
+            description: String(categoryDescription ?? '').trim() || '',
+            published: true,
+          },
+        ])
+        .slice()
+        .sort((a, b) => String(a?.title ?? '').localeCompare(String(b?.title ?? ''))),
+    };
+
+  return { catalog: next, created: true };
+}
+
+function ensureCourseInCatalog({ catalog, courseId, categoryId, courseTitle, courseDescription, courseEmoji, courseColor }) {
+  const courses = Array.isArray(catalog?.courses) ? catalog.courses : [];
+  const existing = courses.find((c) => String(c?.id ?? '') === courseId);
+  if (existing) return { catalog, created: false };
+
+  const next = {
+    ...catalog,
+    courses: courses
+      .concat([
+        {
+          id: courseId,
+          categoryId,
+          title: String(courseTitle ?? '').trim() || titleFromId(courseId),
+          emoji: String(courseEmoji ?? '').trim() || '📘',
+          color: String(courseColor ?? '').trim() || '#4ECDC4',
+          description: String(courseDescription ?? '').trim() || '',
+          published: true,
+        },
+      ])
+      .slice()
+      .sort((a, b) => {
+        const ac = String(a?.categoryId ?? '');
+        const bc = String(b?.categoryId ?? '');
+        if (ac !== bc) return ac.localeCompare(bc);
+        return String(a?.title ?? '').localeCompare(String(b?.title ?? ''));
+      }),
+  };
+
+  return { catalog: next, created: true };
 }
 
 function seedToInt(s) {
@@ -286,19 +362,25 @@ async function main() {
       },
     },
     quiz: {
-      question: 'What did you just learn?',
-      options: ['Option A (wrong)', 'Option B (correct)', 'Option C (wrong)'],
-      correct: 1,
-    },
+function findCatalogCategory(catalog, categoryId) {
+  return (Array.isArray(catalog?.categories) ? catalog.categories : []).find((c) => String(c?.id ?? '') === categoryId) ?? null;
+}
+
+function findCatalogCourse(catalog, courseId) {
+  return (Array.isArray(catalog?.courses) ? catalog.courses : []).find((c) => String(c?.id ?? '') === courseId) ?? null;
+}
+
+function resolveHierarchyFromCatalog(catalog, courseId) {
+  const course = findCatalogCourse(catalog, courseId);
+  if (!course) return null;
+  const categoryId = String(course?.categoryId ?? '').trim();
+  if (!categoryId) throw new Error(`Course is missing categoryId in catalog: ${courseId}`);
+  const category = findCatalogCategory(catalog, categoryId);
+  return {
+    categoryId,
+    categoryTitle: String(category?.title ?? '').trim() || categoryId,
+    courseTitle: String(course?.title ?? '').trim() || courseId,
   };
-
-  // Add auto-generated journey spec
-  topic.journey = compileJourneyFromTopic(topic);
-
-  const outDir = courseId
-    ? path.join(
-        TOPICS_DIR,
-        assertSafePathSegment(inferred?.categoryId, 'categoryId (from catalog)'),
         courseId,
         chapterId
       )
@@ -329,3 +411,5 @@ main().catch((e) => {
   console.error(e);
   process.exit(1);
 });
+
+*/

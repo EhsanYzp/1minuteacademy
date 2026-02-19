@@ -67,8 +67,10 @@ After syncing, verify:
 - Landing page shows your published topics.
 - After completing a lesson, `/me` and the landing page should reflect **✅ Completed**.
 
-## Scaffold (auto-pick steps)
+## Scaffold (create a topic JSON)
 
-To create a new module with an automatically selected 4–5 step mix (from the recipe pool):
+- Simple (writes `content/topics/<Subject>/<topicId>.topic.json`):
+  - `npm run content:scaffold -- --id <topicId> --subject "<Subject>" --title "<Title>" --description "<One-liner>"`
 
-- `npm run content:scaffold -- --id <topicId> --subject "<Subject>" --title "<Title>" --description "<One-liner>"`
+- Hierarchy (recommended; writes `content/topics/<categoryId>/<courseId>/<chapterId>/<topicId>.topic.json`):
+  - `npm run content:scaffold -- --id <topicId> --title "<Title>" --courseId <courseId> --chapterId <chapterId> --description "<One-liner>"`
