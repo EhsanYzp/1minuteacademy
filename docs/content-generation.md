@@ -131,6 +131,35 @@ Instead:
 
 ## Content guidelines (so it fits in 60 seconds)
 
+### Story beat text length limits (enforced)
+
+Each topic has a 6-beat story. Each beat displays for **8 seconds**.  
+To keep text readable at that pace, **strict character limits are enforced** at
+three levels: the JSON schema, the validation script, and the generation script.
+
+| Beat       | Max characters | ~Max words |
+|------------|---------------|-----------|
+| hook       | 120           | ~20       |
+| buildup    | 120           | ~20       |
+| discovery  | 120           | ~20       |
+| twist      | 120           | ~20       |
+| climax     | 120           | ~20       |
+| punchline  | 80            | ~13       |
+
+**Where enforced:**
+- `content/schema/story.schema.json` → `maxLength` on beat `text` property
+- `scripts/generateCourseTopicJsons.mjs` → rejects any beat that exceeds the limit
+- `scripts/validateContent.mjs` → uses the schema, so it catches violations too
+- CI → runs `content:validate` on every push
+
+**Writing tips:**
+- One idea per beat. If you need a comma, you probably need two beats.
+- Prefer concrete over abstract ("predicts the next word" > "uses statistical methods").
+- Punchline = mic-drop. Make it punchy and memorable.
+- Use the visual emoji to carry context so the text doesn't have to.
+
+### General content rules
+
 - Keep text short; prefer 1–2 sentences per step.
 - Use 3–4 steps per lesson for clarity.
 - Sum of all `steps[].seconds` should equal `lesson.totalSeconds` (target: 60).

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://1minuteacademy.dev/schemas/story.schema.json",
   "title": "1MinuteAcademy Story",
-  "description": "A 6-beat narrative structure for micro-learning modules (8 seconds each)",
+  "description": "A 6-beat narrative structure for micro-learning modules. Each beat displays for 8 seconds. Beat text is capped at 120 chars (punchline: 80) to ensure comfortable reading at that pace.",
   "type": "object",
   "required": ["hook", "buildup", "discovery", "twist", "climax", "punchline"],
   "properties": {
@@ -11,14 +11,22 @@
     "discovery": { "$ref": "#/$defs/beat" },
     "twist": { "$ref": "#/$defs/beat" },
     "climax": { "$ref": "#/$defs/beat" },
-    "punchline": { "$ref": "#/$defs/beat" }
+    "punchline": { "$ref": "#/$defs/punchlineBeat" }
   },
   "$defs": {
     "beat": {
       "type": "object",
       "required": ["text", "visual"],
       "properties": {
-        "text": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "visual": { "type": "string", "minLength": 1 }
+      }
+    },
+    "punchlineBeat": {
+      "type": "object",
+      "required": ["text", "visual"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1, "maxLength": 80 },
         "visual": { "type": "string", "minLength": 1 }
       }
     }

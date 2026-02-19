@@ -102,6 +102,9 @@ function normalizeDifficulty(d) {
   return v;
 }
 
+const BEAT_TEXT_MAX = 120; // characters — must match story.schema.json beat maxLength
+const PUNCHLINE_TEXT_MAX = 80; // punchline is the mic-drop: even shorter
+
 function validateStoryShape(story, ctxLabel) {
   const label = ctxLabel ? ` (${ctxLabel})` : '';
   if (!story || typeof story !== 'object') throw new Error(`Invalid story object${label}`);
@@ -111,6 +114,13 @@ function validateStoryShape(story, ctxLabel) {
     if (!node || typeof node !== 'object') throw new Error(`Missing story.${beat}${label}`);
     if (typeof node.text !== 'string' || !node.text.trim()) throw new Error(`Missing story.${beat}.text${label}`);
     if (typeof node.visual !== 'string' || !node.visual.trim()) throw new Error(`Missing story.${beat}.visual${label}`);
+    const maxLen = beat === 'punchline' ? PUNCHLINE_TEXT_MAX : BEAT_TEXT_MAX;
+    if (node.text.length > maxLen) {
+      throw new Error(
+        `story.${beat}.text is ${node.text.length} chars (max ${maxLen})${label}. ` +
+        `Shorten to fit an 8-second reading window.`
+      );
+    }
   }
 }
 
