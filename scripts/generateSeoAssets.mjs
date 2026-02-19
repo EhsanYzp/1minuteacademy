@@ -26,7 +26,13 @@ function escapeXml(s) {
 }
 
 async function listTopicFiles(dir) {
-  const entries = await fs.readdir(dir, { withFileTypes: true });
+  let entries;
+  try {
+    entries = await fs.readdir(dir, { withFileTypes: true });
+  } catch (e) {
+    if (e?.code === 'ENOENT') return [];
+    throw e;
+  }
   const out = [];
   for (const entry of entries) {
     const full = path.join(dir, entry.name);
