@@ -69,6 +69,11 @@ Allowed difficulty values in topic JSON:
 Every topic must be:
 - **Unique**: no duplicate titles, no duplicate story beats, no recycled quiz questions.
 - **Non-templated** (STRICT): do **not** reuse the same beat phrasing pattern across topics (e.g. avoid repeating identical lead-ins like “Aim for: … / Key move: … / Common trap: … / If you remember one thing: …” in every topic). Each beat must be written with **fresh wording** that still fits the 60-second format.
+- **Human + clear (STRICT)**: write like a great teacher, not like a model output.
+  - Use plain language; avoid “meta” phrasing like “today’s micro-lesson”, “target condition”, “print this on the wall”, “the shortest useful explanation”, etc.
+  - Prefer a concrete moment or scenario in the hook (what the learner is doing / what goes wrong / what they want).
+  - Keep beats short and conversational (1–2 sentences each). No corporate/robot tone.
+  - Avoid jargon unless it’s immediately explained with a simple example.
 - **Specific**: tightly focused on the topic title (no generic filler).
 - **Coherent in 1 minute**: the story beats should fit the 60-second format.
 - **Correct**: no contradictions across topics in the same course.
@@ -129,6 +134,18 @@ Each `.topic.json` must include (at minimum):
 
 Note:
 - The sync pipeline can derive `lesson` from `story` + `quiz`.
+
+---
+
+## 6) Chapters page readability (STRICT)
+
+The chapter cards shown on the Chapters page must be readable and well-ordered:
+- Chapter `title` must be short and human-friendly (e.g. “Prompts & Tools”), never a slug/id like `ai--agent-builder-lab--ch02-prompts-and-tools`.
+- Chapter ordering must be correct via `position` (1..N).
+- Avoid putting the course id/name inside the chapter title (it makes cards ugly and gets cropped).
+
+Operational note:
+- Chapters must be synced to Supabase (title + position). The topic sync script upserts chapters from `content/course-plans/*.json` so the UI stays clean.
 
 ---
 

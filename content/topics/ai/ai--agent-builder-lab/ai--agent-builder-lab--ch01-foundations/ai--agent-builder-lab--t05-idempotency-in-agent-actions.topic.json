@@ -14,27 +14,27 @@
   "story": {
     "hook": {
       "visual": "📌",
-      "text": "If Idempotency in Agent Actions feels fuzzy, this will sharpen it."
+      "text": "You hit “retry” and the agent charges the customer twice. That’s an idempotency bug."
     },
     "buildup": {
       "visual": "🧭",
-      "text": "Treat this as the contract: Make actions safe to retry without causing duplicates."
+      "text": "Any action with side effects must be safe to run twice."
     },
     "discovery": {
       "visual": "🧰",
-      "text": "Operational move: Use idempotency keys for side effects."
+      "text": "Use an idempotency key per intent (e.g., orderId + action) and have the server treat duplicates as the same request."
     },
     "twist": {
       "visual": "🧱",
-      "text": "The trapdoor here is: Charging, emailing, or writing twice on retry."
+      "text": "Retries happen for normal reasons: timeouts, flaky networks, and rate limits."
     },
     "climax": {
       "visual": "🏁",
-      "text": "If you’re forced to simplify, simplify to: Make actions safe to retry without causing duplicates."
+      "text": "Design actions so “same request again” means “same result”, not “double everything.”"
     },
     "punchline": {
       "visual": "🎬",
-      "text": "Retries are normal; duplicates are optional."
+      "text": "Retry is fine. Double-charge is not."
     }
   },
   "quiz": {

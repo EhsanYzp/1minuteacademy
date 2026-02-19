@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createClient } from '@supabase/supabase-js';
-import { TOPICS_DIR } from './_contentPaths.mjs';
+import { COURSE_PLANS_DIR, TOPICS_DIR } from './_contentPaths.mjs';
 import dotenv from 'dotenv';
 
 function parseEnvNameFromArgv(argv) {
@@ -112,6 +112,63 @@ async function listTopicFiles(dir) {
 async function readJson(filePath) {
   const raw = await fs.readFile(filePath, 'utf8');
   return JSON.parse(raw);
+}
+
+async function listCoursePlanFiles(dir) {
+  try {
+    const entries = await fs.readdir(dir, { withFileTypes: true });
+    return entries
+      .filter((e) => e.isFile() && e.name.toLowerCase().endsWith('.json'))
+      .map((e) => path.join(dir, e.name));
+  } catch {
+    return [];
+  }
+}
+
+function safeString(v) {
+  const s = typeof v === 'string' ? v.trim() : '';
+  return s || null;
+}
+
+async function loadChaptersFromPlans({ courseIds }) {
+  const files = await listCoursePlanFiles(COURSE_PLANS_DIR);
+  if (files.length === 0) return [];
+
+  const desiredCourses = new Set(Array.isArray(courseIds) ? courseIds.filter(Boolean) : []);
+  const out = [];
+
+  for (const file of files) {
+    let plan;
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      plan = await readJson(file);
+    } catch {
+      continue;
+    }
+
+    const courseId = safeString(plan?.courseId);
+    if (!courseId) continue;
+    if (desiredCourses.size > 0 && !desiredCourses.has(courseId)) continue;
+
+    const chapters = Array.isArray(plan?.chapters) ? plan.chapters : [];
+    for (const ch of chapters) {
+      const id = safeString(ch?.id);
+      const title = safeString(ch?.title);
+      const position = Number.isInteger(ch?.position) ? ch.position : null;
+      if (!id || !title || !position) continue;
+
+      out.push({
+        id,
+        course_id: courseId,
+        title,
+        position,
+        description: safeString(ch?.description),
+        published: true,
+      });
+    }
+  }
+
+  return out;
 }
 
 function parseArgs(argv) {
@@ -249,6 +306,35 @@ async function main() {
     if (!row.id) throw new Error(`Missing required field 'id' in ${file}`);
     if (!row.lesson) throw new Error(`Missing 'lesson' or 'story'+'quiz' in ${file}`);
     localById.set(row.id, row);
+  }
+
+  // Keep chapters in Supabase aligned with the human-authored course plan(s), so
+  // the Chapters page renders clean titles and correct ordering.
+  const courseIdsInSync = Array.from(
+    new Set(
+      Array.from(localById.values())
+        .map((r) => String(r?.course_id ?? '').trim())
+        .filter(Boolean)
+    )
+  ).sort();
+
+  const chapterRowsFromPlans = await loadChaptersFromPlans({ courseIds: courseIdsInSync });
+  if (chapterRowsFromPlans.length > 0) {
+    console.log(`[content:sync] chapters from plans: ${chapterRowsFromPlans.length}`);
+    if (args.dryRun) {
+      for (const ch of chapterRowsFromPlans.slice(0, 10)) {
+        console.log(`(dry-run) chapter upsert: ${ch.id} -> ${ch.title} (pos ${ch.position})`);
+      }
+      if (chapterRowsFromPlans.length > 10) {
+        console.log(`(dry-run) …and ${chapterRowsFromPlans.length - 10} more chapter(s)`);
+      }
+    } else {
+      const { error: chErr } = await supabase.from('chapters').upsert(chapterRowsFromPlans, { onConflict: 'id' });
+      if (chErr) throw chErr;
+      console.log('✅ Chapters upserted from course plans.');
+    }
+  } else {
+    console.log('[content:sync] chapters from plans: 0 (no matching course plan files found)');
   }
 
   if (args.topics) {
