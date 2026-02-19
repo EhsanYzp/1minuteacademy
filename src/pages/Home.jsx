@@ -7,6 +7,7 @@ import Seo from '../components/Seo';
 import HeroClockBackdrop from '../components/HeroClockBackdrop';
 import { useAuth } from '../context/AuthContext';
 import { getCurrentTier } from '../services/entitlements';
+import { toDisplaySubject } from '../lib/subjectAliases';
 import { pickRandomEligibleTopic, pushRecentRandomId } from '../lib/surpriseTopic';
 import { listTopicsPage } from '../services/topics';
 import { getHomeStats } from '../services/stats';
@@ -237,16 +238,16 @@ function Home() {
       }
 
       const poolTopics = Array.isArray(poolPage?.items) ? poolPage.items : [];
-      const subjects = uniqueNonEmptyStrings(poolTopics.map((t) => t?.subject)).slice(0, 50);
+      const subjects = uniqueNonEmptyStrings(poolTopics.map((t) => toDisplaySubject(t?.subject))).slice(0, 50);
       const subcategories = uniqueNonEmptyStrings(poolTopics.map((t) => t?.subcategory)).slice(0, 50);
       const titles = uniqueNonEmptyStrings(poolTopics.map((t) => t?.title)).slice(0, 80);
 
-      const safeSubject = String(topic?.subject ?? '').trim() || 'General';
+      const safeSubject = toDisplaySubject(topic?.subject);
       const safeSubcategory = String(topic?.subcategory ?? '').trim() || 'General';
       const safeTitle = String(topic?.title ?? '').trim() || 'Selected topic';
 
       const subjectSpin = buildSpinSequenceWithFinalIndex({
-        pool: subjects.length ? subjects : ['General', 'Programming Fundamentals', 'Cybersecurity'],
+        pool: subjects.length ? subjects : ['General', 'Programming Fundamentals', 'Cybersecurity', 'AI'],
         finalValue: safeSubject,
         spins: 18,
         tailPads: 2,
@@ -420,7 +421,7 @@ function Home() {
                     <div className="home-pickedMeta">
                       <div className="home-pickedTitle">{String(spinOverlay?.selectedTopic?.title ?? 'Selected topic')}</div>
                       <div className="home-pickedSub">
-                        {String(spinOverlay?.selectedTopic?.subject ?? 'General')}
+                        {toDisplaySubject(spinOverlay?.selectedTopic?.subject)}
                         {spinOverlay?.selectedTopic?.subcategory ? ` • ${String(spinOverlay.selectedTopic.subcategory)}` : ''}
                         {spinOverlay?.selectedTopic?.difficulty ? ` • ${String(spinOverlay.selectedTopic.difficulty)}` : ''}
                       </div>

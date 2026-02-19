@@ -20,7 +20,14 @@ export async function listCategories() {
       .eq('published', true)
       .order('title', { ascending: true });
     if (error) throw error;
-    return (data ?? []).filter((c) => String(c?.id ?? '').trim().toLowerCase() !== 'ai');
+
+    return (data ?? []).map((c) => {
+      const id = String(c?.id ?? '').trim().toLowerCase();
+      if (id !== 'ai') return c;
+      const title = String(c?.title ?? '').trim();
+      if (title !== 'AI & Agents') return c;
+      return { ...c, title: 'AI' };
+    });
   });
 }
 
@@ -39,7 +46,7 @@ export async function listCourses({ categoryId = null } = {}) {
     if (cat) q = q.eq('category_id', cat);
     const { data, error } = await q;
     if (error) throw error;
-    return (data ?? []).filter((c) => String(c?.category_id ?? '').trim().toLowerCase() !== 'ai');
+    return data ?? [];
   });
 }
 

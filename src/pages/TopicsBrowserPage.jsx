@@ -13,11 +13,11 @@ import { useAuth } from '../context/AuthContext';
 import { getContentSource } from '../services/_contentSource';
 import { getCurrentTier, getTopicGate } from '../services/entitlements';
 import { toAbsoluteUrl } from '../services/seo';
+import { toDisplaySubject, toQuerySubject } from '../lib/subjectAliases';
 import './TopicsBrowserPage.css';
 
-const HIDDEN_SUBJECTS = new Set(['AI & Agents']);
-
 const CANONICAL_CATEGORIES = [
+  'AI',
   'Programming Fundamentals',
   'Web & Mobile Development',
   'Data & Analytics',
@@ -50,6 +50,13 @@ function includesQuery(topic, q) {
 const DIFFICULTY_FILTERS = ['all', 'beginner', 'intermediate', 'advanced', 'premium'];
 
 const FEATURED_TRACKS = [
+  {
+    key: 'ai',
+    title: 'AI Track',
+    subject: 'AI',
+    emoji: '🤖',
+    blurb: 'Build intuition for modern AI systems, agents, and workflows.',
+  },
   {
     key: 'fundamentals',
     title: 'Programming Fundamentals',
@@ -88,6 +95,7 @@ const FEATURED_TRACKS = [
 ];
 
 const CURATED_SUBJECTS = [
+  'AI',
   'Programming Fundamentals',
   'Cybersecurity',
   'Cloud & DevOps',
@@ -299,9 +307,10 @@ export default function TopicsBrowserPage() {
 
   async function loadPage({ offset, append, subject, searchQuery, requestId }) {
     const q = String(searchQuery ?? '').trim();
+    const querySubject = toQuerySubject(subject);
     const page = q
-      ? await searchTopicsPage({ query: q, limit: PAGE_SIZE, offset, subject })
-      : await listTopicsPage({ limit: PAGE_SIZE, offset, subject });
+      ? await searchTopicsPage({ query: q, limit: PAGE_SIZE, offset, subject: querySubject })
+      : await listTopicsPage({ limit: PAGE_SIZE, offset, subject: querySubject });
     const rows = Array.isArray(page?.items) ? page.items : [];
 
     if (!mountedRef.current) return;
@@ -352,11 +361,17 @@ export default function TopicsBrowserPage() {
       try {
         const { counts, total } = await getTopicCategoryCounts();
         if (!mounted) return;
-        const next = new Map(counts);
-        next.set(
-          'All',
-          typeof total === 'number' ? total : Array.from(counts.values()).reduce((a, b) => a + (Number(b) || 0), 0)
-        );
+        const next = new Map();
+
+        let nextTotal = 0;
+        for (const [k, v] of counts.entries()) {
+          const subject = toDisplaySubject(k);
+          const n = Number(v) || 0;
+          next.set(subject, (next.get(subject) ?? 0) + n);
+          nextTotal += n;
+        }
+
+        next.set('All', typeof total === 'number' ? total : nextTotal);
         setCategoryCounts(next);
       } catch {
         if (mounted) setCategoryCounts(new Map([['All', 0]]));
@@ -458,7 +473,7 @@ export default function TopicsBrowserPage() {
 
         const subjects = CURATED_SUBJECTS.slice();
         const pages = await Promise.all(
-          subjects.map((subject) => listTopicsPage({ limit: 14, offset: 0, subject }))
+          subjects.map((subject) => listTopicsPage({ limit: 14, offset: 0, subject: toQuerySubject(subject) }))
         );
 
         if (!mounted || requestIdRef.current !== requestId) return;
@@ -544,10 +559,7 @@ export default function TopicsBrowserPage() {
     // Seed canonical categories so they exist even if empty.
     for (const c of CANONICAL_CATEGORIES) counts.set(c, 0);
 
-    for (const [k, v] of categoryCounts.entries()) {
-      if (HIDDEN_SUBJECTS.has(k)) continue;
-      counts.set(k, v);
-    }
+    for (const [k, v] of categoryCounts.entries()) counts.set(k, v);
 
     // Ensure All exists.
     if (!counts.has('All')) {
@@ -563,14 +575,14 @@ export default function TopicsBrowserPage() {
   const categories = useMemo(() => {
     const discovered = new Set();
     for (const k of sidebarCounts.keys()) {
-      if (k !== 'All' && !HIDDEN_SUBJECTS.has(k)) discovered.add(k);
+      if (k !== 'All') discovered.add(k);
     }
 
     const out = ['All', ...CANONICAL_CATEGORIES];
 
     const canonicalSet = new Set(CANONICAL_CATEGORIES);
     const extra = Array.from(discovered)
-      .filter((c) => c && !canonicalSet.has(c) && !HIDDEN_SUBJECTS.has(c))
+      .filter((c) => c && !canonicalSet.has(c))
       .sort((a, b) => String(a).localeCompare(String(b)));
 
     out.push(...extra);
@@ -595,11 +607,10 @@ export default function TopicsBrowserPage() {
           ratingCount: summary?.ratings_count ?? 0,
         };
       })
-      .filter((t) => !HIDDEN_SUBJECTS.has(norm(t.subject) || 'General'))
       .filter((t) => (shouldClientFilterQuery ? includesQuery(t, q) : true));
 
     if (activeCategory !== 'All') {
-      out = out.filter((t) => (norm(t.subject) || 'General') === activeCategory);
+      out = out.filter((t) => toDisplaySubject(norm(t.subject) || 'General') === activeCategory);
     }
 
     if (activeCategory !== 'All' && activeSubcategory !== 'All') {
