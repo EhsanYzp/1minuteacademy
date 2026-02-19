@@ -1,0 +1,559 @@
+{
+  "categoryId": "ai",
+  "subject": "AI & Agents",
+  "courseId": "ai--nlp-essentials",
+  "courseTitle": "NLP Essentials",
+  "emoji": "💬",
+  "color": "#D97706",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "ai--nlp-essentials--ch01-text-basics", "title": "Text Representation", "position": 1 },
+    { "id": "ai--nlp-essentials--ch02-classification", "title": "Text Classification", "position": 2 },
+    { "id": "ai--nlp-essentials--ch03-generation", "title": "Text Generation", "position": 3 },
+    { "id": "ai--nlp-essentials--ch04-information", "title": "Information Extraction", "position": 4 },
+    { "id": "ai--nlp-essentials--ch05-search", "title": "Search & Retrieval", "position": 5 },
+    { "id": "ai--nlp-essentials--ch06-multilingual", "title": "Multilingual & Speech", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "ai--nlp-essentials--ch01-text-basics",
+      "title": "Bag of Words: The Simplest Representation",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "text": "Throw away word order. Just count how often each word appears. That's bag of words.", "visual": "🎒" },
+        "buildup": { "text": "BoW turns a sentence into a vector where each dimension is a word count.", "visual": "🔢" },
+        "discovery": { "text": "Simple but effective for spam detection, topic classification, and keyword matching.", "visual": "📧" },
+        "twist": { "text": "BoW ignores order: 'dog bites man' and 'man bites dog' look identical.", "visual": "🐕" },
+        "climax": { "text": "For quick baselines, BoW + logistic regression is surprisingly hard to beat.", "visual": "📊" },
+        "punchline": { "text": "Count the words. Ignore the grammar. Ship the baseline.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "What does bag of words ignore?",
+        "options": ["Word order", "Word frequency", "Punctuation only"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch01-text-basics",
+      "title": "TF-IDF: Words That Matter",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "text": "The word 'the' appears in every document. It tells you nothing. TF-IDF knows that.", "visual": "📉" },
+        "buildup": { "text": "TF-IDF multiplies term frequency (how often) by inverse document frequency (how rare).", "visual": "🧮" },
+        "discovery": { "text": "Common words get downweighted. Rare, distinctive words get boosted.", "visual": "📈" },
+        "twist": { "text": "TF-IDF is still used in production search engines alongside neural methods.", "visual": "🔍" },
+        "climax": { "text": "BM25, the backbone of Elasticsearch, is essentially a tuned TF-IDF variant.", "visual": "⚙️" },
+        "punchline": { "text": "Not how often. How distinctive.", "visual": "💎" }
+      },
+      "quiz": {
+        "question": "What does inverse document frequency measure?",
+        "options": ["How rare a word is across all documents", "How often a word appears in one document", "The length of the document"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch01-text-basics",
+      "title": "Word2Vec: Meaning from Context",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "'You shall know a word by the company it keeps.' Word2Vec made that literal.", "visual": "👥" },
+        "buildup": { "text": "Word2Vec trains a neural network to predict a word from its neighbors (or vice versa).", "visual": "🧠" },
+        "discovery": { "text": "The hidden layer weights become word embeddings—vectors that capture meaning.", "visual": "📍" },
+        "twist": { "text": "Famous result: king − man + woman = queen. Arithmetic on meaning.", "visual": "👑" },
+        "climax": { "text": "Word2Vec was the bridge from sparse BoW to dense neural representations.", "visual": "🌉" },
+        "punchline": { "text": "Context defines meaning. Embeddings encode it.", "visual": "🔮" }
+      },
+      "quiz": {
+        "question": "What does Word2Vec learn from?",
+        "options": ["Predicting words from their surrounding context", "Dictionary definitions", "Image captions"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch01-text-basics",
+      "title": "Contextual Embeddings: One Word, Many Meanings",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "'Bank' means different things in 'river bank' and 'bank account.' Static embeddings miss this.", "visual": "🏦" },
+        "buildup": { "text": "Contextual embeddings give each word a different vector depending on its surrounding sentence.", "visual": "🔄" },
+        "discovery": { "text": "BERT and GPT produce contextual embeddings—every token vector is context-dependent.", "visual": "🧩" },
+        "twist": { "text": "This is why transformers excel at disambiguation—they see the whole sentence at once.", "visual": "👁️" },
+        "climax": { "text": "Contextual embeddings replaced Word2Vec as the default for almost every NLP task.", "visual": "🔀" },
+        "punchline": { "text": "Same word, different context, different vector.", "visual": "🎭" }
+      },
+      "quiz": {
+        "question": "What makes contextual embeddings different from Word2Vec?",
+        "options": ["The same word gets different vectors based on context", "They use fewer dimensions", "They ignore word order"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch01-text-basics",
+      "title": "Sentence Embeddings for Semantic Search",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "Search for 'affordable flights' and find 'cheap plane tickets.' Keywords don't match, meaning does.", "visual": "✈️" },
+        "buildup": { "text": "Sentence embeddings compress an entire sentence into one dense vector.", "visual": "📦" },
+        "discovery": { "text": "Models like Sentence-BERT and E5 are trained on paraphrase and NLI data for similarity.", "visual": "🔗" },
+        "twist": { "text": "Cosine similarity between vectors measures semantic closeness—no keyword matching needed.", "visual": "📐" },
+        "climax": { "text": "Sentence embeddings power semantic search, RAG retrieval, and duplicate detection.", "visual": "🔍" },
+        "punchline": { "text": "Match meaning, not words.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "How do sentence embeddings enable semantic search?",
+        "options": ["By comparing vector similarity instead of keyword matches", "By counting shared words", "By using regex patterns"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch02-classification",
+      "title": "Sentiment Analysis: Positive or Negative?",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "text": "'This product is amazing!' → positive. 'Total waste of money.' → negative.", "visual": "😊" },
+        "buildup": { "text": "Sentiment analysis classifies text into positive, negative, or neutral categories.", "visual": "📊" },
+        "discovery": { "text": "Modern approaches fine-tune BERT on labeled reviews for 95%+ accuracy.", "visual": "🎯" },
+        "twist": { "text": "Sarcasm breaks everything: 'Oh great, another meeting' is negative but sounds positive.", "visual": "🙄" },
+        "climax": { "text": "Aspect-based sentiment goes deeper: 'food was great, service was terrible.'", "visual": "🔬" },
+        "punchline": { "text": "Feelings, quantified by machines.", "visual": "📈" }
+      },
+      "quiz": {
+        "question": "What challenge does sarcasm pose for sentiment analysis?",
+        "options": ["Positive words express negative sentiment", "The text is too short", "The model runs slower"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch02-classification",
+      "title": "Topic Classification at Scale",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "A news site publishes 10,000 articles a day. Each needs a category label.", "visual": "📰" },
+        "buildup": { "text": "Topic classification assigns one or more category labels (sports, politics, tech) to text.", "visual": "🏷️" },
+        "discovery": { "text": "Multi-label classification lets one article belong to multiple categories simultaneously.", "visual": "🔀" },
+        "twist": { "text": "Zero-shot classification uses LLMs to classify without any labeled training data.", "visual": "🪄" },
+        "climax": { "text": "For production: fine-tuned small models for speed, LLMs for cold-start or rare categories.", "visual": "⚡" },
+        "punchline": { "text": "Label everything. Miss nothing.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What is zero-shot classification?",
+        "options": ["Classifying without labeled training data", "Using zero features", "Training with zero examples"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch02-classification",
+      "title": "Spam and Toxicity Detection",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "Your comment section is flooded with hate speech and scam links. Filters are your first line.", "visual": "🛡️" },
+        "buildup": { "text": "Content moderation classifies text as safe, spam, toxic, or policy-violating.", "visual": "🚦" },
+        "discovery": { "text": "Perspective API and custom models score text on toxicity, threat, and profanity dimensions.", "visual": "📊" },
+        "twist": { "text": "Adversarial users obfuscate: 'h8te' instead of 'hate,' Unicode tricks, and code-switching.", "visual": "🎭" },
+        "climax": { "text": "Layer keyword filters, ML classifiers, and human review for robust moderation.", "visual": "🏗️" },
+        "punchline": { "text": "Filter the noise. Protect the community.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "How do adversarial users evade toxicity filters?",
+        "options": ["Obfuscating words with misspellings and Unicode tricks", "Writing longer messages", "Using proper grammar"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch02-classification",
+      "title": "Intent Detection for Chatbots",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "'I want to cancel my order' → cancel_order intent. The chatbot knows what to do.", "visual": "🤖" },
+        "buildup": { "text": "Intent detection classifies user messages into predefined action categories.", "visual": "🎯" },
+        "discovery": { "text": "Combine intent detection with entity extraction: 'cancel order #1234' → intent + order_id.", "visual": "🔗" },
+        "twist": { "text": "Users say the same thing a hundred different ways. Robust training needs diverse examples.", "visual": "🌊" },
+        "climax": { "text": "Fallback intents catch unrecognized messages and route to human agents.", "visual": "👤" },
+        "punchline": { "text": "Understand the intent. Extract the details. Act.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "What does intent detection do?",
+        "options": ["Classifies user messages into action categories", "Generates responses", "Translates languages"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch03-generation",
+      "title": "Summarization: Long to Short",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "text": "A 50-page report becomes a 3-sentence summary. The key points survive.", "visual": "📋" },
+        "buildup": { "text": "Extractive summarization picks the most important sentences from the original text.", "visual": "✂️" },
+        "discovery": { "text": "Abstractive summarization generates new sentences that capture the meaning.", "visual": "✍️" },
+        "twist": { "text": "Abstractive summaries can hallucinate details not in the source—always verify.", "visual": "⚠️" },
+        "climax": { "text": "LLMs excel at abstractive summarization but need length and focus constraints.", "visual": "🎯" },
+        "punchline": { "text": "Same information. Fewer words.", "visual": "💎" }
+      },
+      "quiz": {
+        "question": "What risk does abstractive summarization carry?",
+        "options": ["Hallucinating details not in the source", "Being too long", "Copying text verbatim"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch03-generation",
+      "title": "Machine Translation: Breaking Language Barriers",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "Type in English, read in Japanese. Neural translation made this seamless.", "visual": "🌐" },
+        "buildup": { "text": "Sequence-to-sequence models encode source language and decode into target language.", "visual": "🔄" },
+        "discovery": { "text": "Attention mechanism lets the decoder focus on relevant source words during translation.", "visual": "👁️" },
+        "twist": { "text": "Low-resource languages have little parallel data—translation quality drops dramatically.", "visual": "📉" },
+        "climax": { "text": "Multilingual models (NLLB, mBART) transfer knowledge across 200+ languages.", "visual": "🌍" },
+        "punchline": { "text": "One model, hundreds of language pairs.", "visual": "🔀" }
+      },
+      "quiz": {
+        "question": "Why do low-resource languages have worse translation?",
+        "options": ["They have less parallel training data", "They have simpler grammar", "Their words are shorter"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch03-generation",
+      "title": "Question Answering: Reading Comprehension by Machines",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "Give the model a paragraph and a question. It highlights the exact answer span.", "visual": "🔍" },
+        "buildup": { "text": "Extractive QA finds the answer as a substring within the provided context.", "visual": "📌" },
+        "discovery": { "text": "Models predict start and end token positions of the answer within the passage.", "visual": "📍" },
+        "twist": { "text": "Generative QA (using LLMs) can synthesize answers from multiple passages—more flexible but riskier.", "visual": "⚗️" },
+        "climax": { "text": "RAG-based QA combines retrieval of relevant docs with generative answering.", "visual": "🔗" },
+        "punchline": { "text": "Ask anything. Get the exact span.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "How does extractive QA find answers?",
+        "options": ["Predicts start and end positions within the passage", "Generates new text", "Searches the internet"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch03-generation",
+      "title": "Controlled Generation: Steering LLM Output",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "text": "You want the model to write in formal English, under 100 words, with no jargon.", "visual": "🎛️" },
+        "buildup": { "text": "Controlled generation constrains model output by style, length, tone, or format.", "visual": "📏" },
+        "discovery": { "text": "System prompts, few-shot examples, and structured output schemas all steer generation.", "visual": "🧭" },
+        "twist": { "text": "Hard constraints (JSON schema enforcement) are more reliable than soft prompts.", "visual": "🔒" },
+        "climax": { "text": "Tools like Outlines and Instructor force valid JSON/schema output from any LLM.", "visual": "🔧" },
+        "punchline": { "text": "Don't hope for the right format. Enforce it.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What is the most reliable way to control LLM output format?",
+        "options": ["Hard schema enforcement like JSON mode", "Asking nicely in the prompt", "Increasing temperature"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch04-information",
+      "title": "Named Entity Recognition: Finding Names and Dates",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "text": "'Apple released the iPhone 16 on September 20.' NER finds Apple, iPhone 16, and the date.", "visual": "🏷️" },
+        "buildup": { "text": "NER identifies and classifies entities: people, organizations, locations, dates, amounts.", "visual": "🔍" },
+        "discovery": { "text": "Token-level classification: each word gets a label (B-ORG, I-ORG, O) using BIO tagging.", "visual": "🧩" },
+        "twist": { "text": "Ambiguity is everywhere: 'Apple' could be a company, a fruit, or a person's name.", "visual": "🍎" },
+        "climax": { "text": "NER is the first step in knowledge graphs, search indexing, and document processing.", "visual": "🕸️" },
+        "punchline": { "text": "Find the who, what, where, and when.", "visual": "📍" }
+      },
+      "quiz": {
+        "question": "What does NER identify in text?",
+        "options": ["Named entities like people, organizations, and dates", "Grammar errors", "Sentiment scores"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch04-information",
+      "title": "Relation Extraction: How Entities Connect",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "text": "'Elon Musk founded SpaceX.' Relation extraction finds: (Musk, founded, SpaceX).", "visual": "🔗" },
+        "buildup": { "text": "After NER finds entities, relation extraction determines how they're connected.", "visual": "🕸️" },
+        "discovery": { "text": "Output is a triple: (subject, relation, object). These triples build knowledge graphs.", "visual": "📐" },
+        "twist": { "text": "Implicit relations are hard: 'After leaving Google, she joined Meta' implies employment at both.", "visual": "🧩" },
+        "climax": { "text": "LLMs can extract relations zero-shot, but domain-specific models are more reliable.", "visual": "🎯" },
+        "punchline": { "text": "Entities are nodes. Relations are edges. Text becomes a graph.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "What does relation extraction produce?",
+        "options": ["Triples of (subject, relation, object)", "A list of keywords", "A summary of the text"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch04-information",
+      "title": "Coreference Resolution: Who Is 'They'?",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "text": "'The team won the game. They celebrated all night.' Who is 'they'?", "visual": "🤔" },
+        "buildup": { "text": "Coreference resolution links pronouns and references back to the entities they refer to.", "visual": "🔗" },
+        "discovery": { "text": "It groups all mentions of the same entity into clusters across the document.", "visual": "👥" },
+        "twist": { "text": "Ambiguous cases: 'The trophy didn't fit in the suitcase because it was too big.' What's 'it'?", "visual": "🧳" },
+        "climax": { "text": "Coreference is critical for document summarization, QA, and knowledge graph construction.", "visual": "🏗️" },
+        "punchline": { "text": "Every 'it,' 'they,' and 'she' points somewhere. Find where.", "visual": "👆" }
+      },
+      "quiz": {
+        "question": "What does coreference resolution do?",
+        "options": ["Links pronouns back to the entities they refer to", "Corrects grammar", "Translates pronouns"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch04-information",
+      "title": "Document Parsing and Chunking for RAG",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "text": "You have a 200-page PDF. The LLM's context window is 8K tokens. Chunking bridges the gap.", "visual": "📄" },
+        "buildup": { "text": "Chunking splits documents into pieces small enough for embedding and retrieval.", "visual": "✂️" },
+        "discovery": { "text": "Strategies: fixed-size chunks, sentence-based, paragraph-based, or semantic splitting.", "visual": "🧩" },
+        "twist": { "text": "Bad chunks split ideas in half. Good chunks preserve coherent meaning units.", "visual": "💡" },
+        "climax": { "text": "Overlap between chunks (e.g., 50 tokens) prevents losing context at boundaries.", "visual": "🔄" },
+        "punchline": { "text": "Chunk smart. Retrieve right. Answer well.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why do chunks need overlap?",
+        "options": ["To prevent losing context at chunk boundaries", "To increase file size", "To slow down retrieval"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch05-search",
+      "title": "Keyword Search with BM25",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "Search 'python web framework' and get results containing those exact words. That's BM25.", "visual": "🔍" },
+        "buildup": { "text": "BM25 scores documents by term frequency, inverse document frequency, and document length.", "visual": "📊" },
+        "discovery": { "text": "It's the default algorithm behind Elasticsearch, Solr, and most traditional search engines.", "visual": "⚙️" },
+        "twist": { "text": "BM25 misses synonyms: search 'car' and miss documents that only say 'automobile.'", "visual": "🚗" },
+        "climax": { "text": "Hybrid search combines BM25 (precision) with vector search (recall) for best results.", "visual": "🔀" },
+        "punchline": { "text": "Fast, interpretable, and still hard to beat for exact matches.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "What does BM25 miss?",
+        "options": ["Synonyms and semantic similarity", "Exact keyword matches", "Document length"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch05-search",
+      "title": "Vector Search: Meaning over Keywords",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "Search 'how to fix a broken heart' in a medical database. Vector search finds cardiology articles.", "visual": "❤️" },
+        "buildup": { "text": "Vector search encodes queries and documents as embeddings, then finds nearest neighbors.", "visual": "📍" },
+        "discovery": { "text": "Vector databases (Pinecone, Weaviate, pgvector) store and index millions of embeddings.", "visual": "🗄️" },
+        "twist": { "text": "Embedding models can be biased—'nurse' might be closer to 'woman' than to 'man.'", "visual": "⚖️" },
+        "climax": { "text": "For production: use approximate nearest neighbor (ANN) algorithms like HNSW for speed.", "visual": "⚡" },
+        "punchline": { "text": "Search by meaning, not by matching characters.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "What algorithm do vector databases use for fast retrieval?",
+        "options": ["Approximate nearest neighbor (e.g., HNSW)", "Exact brute force search", "BM25"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch05-search",
+      "title": "Reranking: Refining Search Results",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "text": "Your search returns 100 results. A reranker picks the 5 that truly answer the question.", "visual": "🏆" },
+        "buildup": { "text": "Rerankers score each (query, document) pair using a cross-encoder model.", "visual": "🔀" },
+        "discovery": { "text": "Cross-encoders are more accurate than bi-encoders because they see query and doc together.", "visual": "👁️" },
+        "twist": { "text": "Reranking is slow (O(n) forward passes), so only apply it to a shortlist from fast retrieval.", "visual": "⏳" },
+        "climax": { "text": "Two-stage pipeline: fast retrieval (BM25 or vector) → accurate reranking (cross-encoder).", "visual": "🏗️" },
+        "punchline": { "text": "Retrieve many. Rerank to the best.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why is reranking only applied to a shortlist?",
+        "options": ["Cross-encoders are too slow to score all documents", "It reduces accuracy", "It increases recall"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch05-search",
+      "title": "Hybrid Search: Best of Both Worlds",
+      "difficulty": "Premium",
+      "story": {
+        "hook": { "text": "BM25 nails exact matches. Vectors catch synonyms. Why not use both?", "visual": "🔀" },
+        "buildup": { "text": "Hybrid search runs keyword and vector searches in parallel, then merges results.", "visual": "🤝" },
+        "discovery": { "text": "Reciprocal rank fusion (RRF) combines rankings without needing score calibration.", "visual": "📊" },
+        "twist": { "text": "The optimal keyword-to-vector weight ratio depends on your data—tune it empirically.", "visual": "🎚️" },
+        "climax": { "text": "Hybrid search consistently outperforms either method alone on diverse queries.", "visual": "📈" },
+        "punchline": { "text": "Keywords for precision. Vectors for recall. Together for both.", "visual": "💪" }
+      },
+      "quiz": {
+        "question": "What does reciprocal rank fusion do?",
+        "options": ["Merges rankings from different search methods", "Replaces vector search", "Only uses keyword scores"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch06-multilingual",
+      "title": "Multilingual Models: One Model, Many Languages",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "Train on English. Test on German. It works—zero-shot cross-lingual transfer.", "visual": "🌍" },
+        "buildup": { "text": "Multilingual models like mBERT and XLM-R are trained on 100+ languages simultaneously.", "visual": "📚" },
+        "discovery": { "text": "Shared subword vocabularies and training objectives create a universal language space.", "visual": "🔗" },
+        "twist": { "text": "Low-resource languages get less representation and perform worse—the 'curse of multilinguality.'", "visual": "📉" },
+        "climax": { "text": "For critical languages, fine-tune on language-specific data after multilingual pre-training.", "visual": "🎯" },
+        "punchline": { "text": "One model understands the world's languages. Unevenly.", "visual": "🌐" }
+      },
+      "quiz": {
+        "question": "What is cross-lingual transfer?",
+        "options": ["Training on one language and testing on another", "Translating before training", "Using separate models per language"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch06-multilingual",
+      "title": "Speech-to-Text: Turning Audio into Words",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "text": "Speak into your phone and text appears. That's automatic speech recognition (ASR).", "visual": "🎤" },
+        "buildup": { "text": "ASR models convert audio waveforms into text transcriptions.", "visual": "🔊" },
+        "discovery": { "text": "Whisper by OpenAI handles 99 languages, accents, background noise, and even punctuation.", "visual": "🌐" },
+        "twist": { "text": "ASR struggles with homophones ('there' vs 'their'), mumbling, and domain jargon.", "visual": "🤷" },
+        "climax": { "text": "Fine-tune on your domain's audio (call centers, medical, legal) for dramatically better results.", "visual": "📈" },
+        "punchline": { "text": "Listen, transcribe, understand.", "visual": "👂" }
+      },
+      "quiz": {
+        "question": "What does Whisper by OpenAI do?",
+        "options": ["Converts audio into text across 99 languages", "Generates audio from text", "Only works in English"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch06-multilingual",
+      "title": "Text-to-Speech: Giving AI a Voice",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "Type a sentence and hear a human-sounding voice read it. No recording needed.", "visual": "🔊" },
+        "buildup": { "text": "TTS models synthesize natural-sounding speech from text input.", "visual": "🗣️" },
+        "discovery": { "text": "Neural TTS (e.g., VITS, Bark) produces near-human quality with emotion and prosody.", "visual": "🎭" },
+        "twist": { "text": "Voice cloning needs only 3 seconds of audio—raising deepfake and consent concerns.", "visual": "⚠️" },
+        "climax": { "text": "TTS powers accessibility, audiobooks, virtual assistants, and language learning apps.", "visual": "📱" },
+        "punchline": { "text": "Text goes in. A human voice comes out.", "visual": "🎶" }
+      },
+      "quiz": {
+        "question": "What concern does voice cloning raise?",
+        "options": ["Deepfake misuse and consent issues", "Lower audio quality", "Slower processing speed"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch06-multilingual",
+      "title": "Language Detection and Code-Switching",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "text": "'That movie was muy bueno, honestly.' English and Spanish in one sentence.", "visual": "🌎" },
+        "buildup": { "text": "Language detection identifies which language a text is written in.", "visual": "🏷️" },
+        "discovery": { "text": "Code-switching—mixing languages within a sentence—is common in multilingual communities.", "visual": "🔀" },
+        "twist": { "text": "Most NLP models assume one language per document. Code-switching breaks that assumption.", "visual": "💥" },
+        "climax": { "text": "Handle code-switching with multilingual models or sentence-level language detection.", "visual": "🧠" },
+        "punchline": { "text": "Real people don't stick to one language. Models shouldn't either.", "visual": "🌐" }
+      },
+      "quiz": {
+        "question": "What is code-switching?",
+        "options": ["Mixing multiple languages within a sentence or conversation", "Switching programming languages", "Changing text encoding"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch01-text-basics",
+      "title": "Tokenization: Breaking Text into Pieces",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "text": "The model doesn't see words. It sees tokens—fragments that may split 'unhappiness' into three pieces.", "visual": "✂️" },
+        "buildup": { "text": "Tokenization converts raw text into a sequence of tokens the model can process.", "visual": "📝" },
+        "discovery": { "text": "BPE, WordPiece, and SentencePiece are common tokenizers used by different LLMs.", "visual": "🔧" },
+        "twist": { "text": "Tokenization affects cost (more tokens = more $) and quality (bad splits lose meaning).", "visual": "💰" },
+        "climax": { "text": "Different languages tokenize differently—Chinese gets more tokens per concept than English.", "visual": "🌍" },
+        "punchline": { "text": "Before meaning comes splitting. Tokens are the atoms of NLP.", "visual": "⚛️" }
+      },
+      "quiz": {
+        "question": "Why does tokenization matter for NLP?",
+        "options": ["It determines how text is split into pieces the model processes", "It only affects formatting", "Models process raw characters directly"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch02-classification",
+      "title": "Zero-Shot Classification with LLMs",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "Classify 50 categories with zero training examples? Just describe each category in a prompt.", "visual": "🎯" },
+        "buildup": { "text": "Zero-shot classification uses LLMs to categorize text into labels never seen during training.", "visual": "📋" },
+        "discovery": { "text": "The model uses its general knowledge to match text meaning with label descriptions.", "visual": "🧠" },
+        "twist": { "text": "Zero-shot accuracy is lower than fine-tuned models but it's instant—no labeled data needed.", "visual": "⚡" },
+        "climax": { "text": "Use zero-shot to bootstrap, collect labels from corrections, then fine-tune for production.", "visual": "📈" },
+        "punchline": { "text": "No training data? No problem. Describe your labels.", "visual": "📝" }
+      },
+      "quiz": {
+        "question": "What is the advantage of zero-shot classification?",
+        "options": ["No labeled training data is needed", "It's always more accurate", "It requires extensive fine-tuning"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch03-generation",
+      "title": "Dialogue Systems: Building Conversational AI",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "Early chatbots matched keywords. Modern ones maintain context across 50-turn conversations.", "visual": "💬" },
+        "buildup": { "text": "Dialogue systems manage multi-turn conversations with context tracking and response generation.", "visual": "🔄" },
+        "discovery": { "text": "Key challenges: maintaining context, handling topic switches, and knowing when to clarify.", "visual": "🎯" },
+        "twist": { "text": "The hardest part isn't generating responses—it's deciding when NOT to respond or to ask a question.", "visual": "❓" },
+        "climax": { "text": "Modern dialogue combines LLMs with retrieval, tools, and safety filters in a pipeline.", "visual": "🔧" },
+        "punchline": { "text": "Great conversation is about listening, not just speaking.", "visual": "👂" }
+      },
+      "quiz": {
+        "question": "What is a key challenge in dialogue systems?",
+        "options": ["Maintaining context across multiple conversation turns", "Generating single responses", "Only matching keywords"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch04-information",
+      "title": "Text Normalization: Cleaning the Mess",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "text": "'U.S.A.', 'USA', 'United States'—three strings, one country. Your model sees three different things.", "visual": "🧹" },
+        "buildup": { "text": "Text normalization standardizes text: lowercasing, removing punctuation, expanding abbreviations.", "visual": "📝" },
+        "discovery": { "text": "Steps: unicode normalization, whitespace cleanup, spell correction, and lemmatization.", "visual": "🔧" },
+        "twist": { "text": "Over-normalizing destroys signal: 'US' (country) vs 'us' (pronoun) need different treatment.", "visual": "⚠️" },
+        "climax": { "text": "Match normalization to your task. Search needs aggressive cleanup; sentiment needs case and punctuation.", "visual": "🎯" },
+        "punchline": { "text": "Clean data in, clean answers out.", "visual": "✨" }
+      },
+      "quiz": {
+        "question": "Why is text normalization important?",
+        "options": ["It standardizes variations so models treat equivalent text consistently", "It makes text longer", "It's only for formatting"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--nlp-essentials--ch05-search",
+      "title": "Query Understanding: What Did the User Mean?",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "text": "User types 'apple.' Do they want the fruit, the company, or the record label?", "visual": "🍎" },
+        "buildup": { "text": "Query understanding disambiguates user intent from short, ambiguous search queries.", "visual": "🔍" },
+        "discovery": { "text": "Techniques: query expansion, spell correction, entity recognition, and intent classification.", "visual": "🧠" },
+        "twist": { "text": "Context matters: the same query from a developer vs a chef means completely different things.", "visual": "👨‍🍳" },
+        "climax": { "text": "Personalized query understanding uses user history to resolve ambiguity automatically.", "visual": "📊" },
+        "punchline": { "text": "Understand the question before searching for the answer.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "What does query understanding solve?",
+        "options": ["Disambiguating user intent from short, ambiguous queries", "Making queries longer", "Replacing search engines"],
+        "correct": 0
+      }
+    }
+  ]
+}

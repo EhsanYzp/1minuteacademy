@@ -1,0 +1,559 @@
+{
+  "categoryId": "ai",
+  "subject": "AI & Agents",
+  "courseId": "ai--ai-for-product-teams",
+  "courseTitle": "AI for Product Teams",
+  "emoji": "📦",
+  "color": "#0D9488",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "ai--ai-for-product-teams--ch01-landscape", "title": "The AI Product Landscape", "position": 1 },
+    { "id": "ai--ai-for-product-teams--ch02-design", "title": "Designing AI Features", "position": 2 },
+    { "id": "ai--ai-for-product-teams--ch03-data-strategy", "title": "Data Strategy", "position": 3 },
+    { "id": "ai--ai-for-product-teams--ch04-build-vs-buy", "title": "Build vs Buy", "position": 4 },
+    { "id": "ai--ai-for-product-teams--ch05-measurement", "title": "Measurement & Iteration", "position": 5 },
+    { "id": "ai--ai-for-product-teams--ch06-org", "title": "Organizational Readiness", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch01-landscape",
+      "title": "AI Product Categories: A Mental Map",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "text": "Not every AI product is a chatbot. The landscape is much wider than you think.", "visual": "🗺️" },
+        "buildup": { "text": "Categories: search, recommendations, content generation, automation, analytics, and copilots.", "visual": "📊" },
+        "discovery": { "text": "Each category has different data needs, latency requirements, and user expectations.", "visual": "📋" },
+        "twist": { "text": "The best AI features are invisible—users benefit without knowing AI is involved.", "visual": "👻" },
+        "climax": { "text": "Map your product's pain points to AI categories before choosing a solution.", "visual": "🎯" },
+        "punchline": { "text": "Start with the problem, not the technology.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "What's the best approach when adding AI to a product?",
+        "options": ["Start with the user problem, then find the AI solution", "Start with the latest model", "Add AI to every feature"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch01-landscape",
+      "title": "When AI Is the Wrong Solution",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "text": "Your team spent 6 months building an ML model. A simple SQL query did the same thing.", "visual": "🤦" },
+        "buildup": { "text": "AI adds complexity: training data, model maintenance, unpredictable outputs, and latency.", "visual": "⚙️" },
+        "discovery": { "text": "Rules, heuristics, and simple statistics solve many problems faster and more reliably.", "visual": "📏" },
+        "twist": { "text": "AI is expensive to maintain. If the problem doesn't change, rules don't need retraining.", "visual": "💰" },
+        "climax": { "text": "Use AI when: patterns are complex, data is abundant, and perfect rules are impossible.", "visual": "✅" },
+        "punchline": { "text": "The best AI decision is sometimes not to use AI.", "visual": "🚫" }
+      },
+      "quiz": {
+        "question": "When should you avoid using AI?",
+        "options": ["When simple rules or SQL can solve the problem", "When you have too much data", "When the problem is complex"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch01-landscape",
+      "title": "Foundation Models vs Custom Models",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "GPT-4 via API or a custom model trained on your data? The answer depends on your needs.", "visual": "🔀" },
+        "buildup": { "text": "Foundation models (GPT, Claude, Llama) are general-purpose and ready to use immediately.", "visual": "🏗️" },
+        "discovery": { "text": "Custom models are trained on your domain data—more accurate for specific tasks.", "visual": "🎯" },
+        "twist": { "text": "Foundation models improve monthly for free. Custom models need ongoing retraining by your team.", "visual": "🔄" },
+        "climax": { "text": "Start with foundation models. Fine-tune or build custom only when quality demands it.", "visual": "📈" },
+        "punchline": { "text": "Rent intelligence first. Build it only if you must.", "visual": "🏠" }
+      },
+      "quiz": {
+        "question": "When should you consider a custom model?",
+        "options": ["When foundation models don't meet quality needs for your specific task", "Always—custom is better", "Never—APIs are sufficient"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch01-landscape",
+      "title": "The AI Hype Cycle: Setting Expectations",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "The demo looked magical. The production version disappoints 40% of users.", "visual": "🎪" },
+        "buildup": { "text": "AI demos cherry-pick best cases. Production must handle edge cases, errors, and scale.", "visual": "📉" },
+        "discovery": { "text": "The hype cycle: peak of inflated expectations → trough of disillusionment → plateau of productivity.", "visual": "📊" },
+        "twist": { "text": "Most AI projects fail not from bad models but from bad expectations set by flashy demos.", "visual": "🎭" },
+        "climax": { "text": "Show stakeholders realistic demos with failure cases. Under-promise, over-deliver.", "visual": "📋" },
+        "punchline": { "text": "Demos impress. Shipped products convince.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "Why do AI demos mislead stakeholders?",
+        "options": ["They cherry-pick best cases and hide failures", "They're always accurate", "They show production performance"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch02-design",
+      "title": "Designing for Uncertainty: AI Isn't Perfect",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "text": "Your AI feature is 90% accurate. That means 1 in 10 users sees a wrong answer.", "visual": "📊" },
+        "buildup": { "text": "Unlike traditional software, AI outputs are probabilistic—sometimes wrong, sometimes great.", "visual": "🎲" },
+        "discovery": { "text": "Design patterns: confidence indicators, edit buttons, fallback options, and human escalation.", "visual": "🎨" },
+        "twist": { "text": "Users forgive errors if they can easily correct them. They rage-quit if they can't.", "visual": "😤" },
+        "climax": { "text": "Make AI suggestions, not AI decisions. Let users confirm, edit, or reject.", "visual": "✏️" },
+        "punchline": { "text": "Design for the 10% that's wrong, not the 90% that's right.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "How should AI features handle uncertainty?",
+        "options": ["Offer suggestions with edit and reject options", "Hide all errors from users", "Always show 100% confidence"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch02-design",
+      "title": "Progressive Disclosure of AI Capabilities",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "Drop users into a blank AI chat and they type 'hello.' Give them templates and they build.", "visual": "💬" },
+        "buildup": { "text": "Progressive disclosure reveals AI features gradually as users build confidence.", "visual": "🪜" },
+        "discovery": { "text": "Start with templates and presets. Unlock advanced prompting for power users.", "visual": "🔓" },
+        "twist": { "text": "The blank-page problem kills AI adoption. Users don't know what to ask.", "visual": "📄" },
+        "climax": { "text": "Suggest actions, show examples, and guide users to discover what the AI can do.", "visual": "🧭" },
+        "punchline": { "text": "Show the easy path first. Reveal depth over time.", "visual": "🌊" }
+      },
+      "quiz": {
+        "question": "What is the 'blank page problem' in AI products?",
+        "options": ["Users don't know what to ask or how to start", "The AI generates empty responses", "The UI has no design"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch02-design",
+      "title": "Feedback Loops: Users Improve the Model",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "Every thumbs-up and thumbs-down is a free label. Your users are annotating your data.", "visual": "👍" },
+        "buildup": { "text": "Implicit feedback (clicks, edits, dismissals) reveals what users actually want.", "visual": "📊" },
+        "discovery": { "text": "Collect feedback at the right moment: right after the AI output, not days later.", "visual": "⏱️" },
+        "twist": { "text": "Biased feedback: only unhappy users click 'bad.' You're seeing a skewed sample.", "visual": "📉" },
+        "climax": { "text": "Use feedback to fine-tune, retrain, and improve prompts in a continuous improvement loop.", "visual": "🔄" },
+        "punchline": { "text": "Every interaction is a training signal.", "visual": "📡" }
+      },
+      "quiz": {
+        "question": "Why is user feedback biased?",
+        "options": ["Unhappy users are more likely to leave feedback", "Users always give perfect feedback", "Feedback is never collected"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch02-design",
+      "title": "Latency Perception: Making AI Feel Fast",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "text": "The model takes 3 seconds. Streaming the response token by token makes it feel instant.", "visual": "⚡" },
+        "buildup": { "text": "Perceived latency matters more than actual latency. Users judge the first visible result.", "visual": "👁️" },
+        "discovery": { "text": "Techniques: token streaming, skeleton loaders, progressive rendering, and optimistic UI.", "visual": "🎨" },
+        "twist": { "text": "For long tasks, show progress steps: 'Searching… Analyzing… Generating answer.'", "visual": "📋" },
+        "climax": { "text": "If the user sees activity, they wait 3× longer before feeling frustrated.", "visual": "⏳" },
+        "punchline": { "text": "Show progress. Users wait for motion, not completion.", "visual": "🏃" }
+      },
+      "quiz": {
+        "question": "Why does token streaming improve perceived performance?",
+        "options": ["Users see the first tokens immediately instead of waiting", "It reduces actual computation time", "It uses less memory"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch03-data-strategy",
+      "title": "Your Data Moat: The Real Competitive Advantage",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "Everyone has access to GPT-4. Your proprietary data is what makes your product unique.", "visual": "🏰" },
+        "buildup": { "text": "A data moat is unique, hard-to-replicate data that gives your AI a competitive edge.", "visual": "🛡️" },
+        "discovery": { "text": "Sources: user interactions, domain expertise, proprietary documents, and feedback logs.", "visual": "📚" },
+        "twist": { "text": "Data moats erode if you don't keep collecting. Competitors catch up fast.", "visual": "🏃" },
+        "climax": { "text": "Design your product to generate valuable data with every user interaction.", "visual": "🔄" },
+        "punchline": { "text": "The model is rented. The data is yours. Invest in the data.", "visual": "💎" }
+      },
+      "quiz": {
+        "question": "What makes a data moat effective?",
+        "options": ["Unique, hard-to-replicate data that improves your AI", "Using the biggest model", "Having the most users"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch03-data-strategy",
+      "title": "Cold Start: Building AI with No Data",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "Day one. Zero users. Zero data. How do you build an AI-powered product?", "visual": "🥚" },
+        "buildup": { "text": "Cold start strategies: use foundation models, synthetic data, or manual curation.", "visual": "🏗️" },
+        "discovery": { "text": "Start with rules + LLM. Collect user data. Switch to fine-tuned models once you have enough.", "visual": "📈" },
+        "twist": { "text": "The first 1,000 users generate more valuable training data than any public dataset.", "visual": "👥" },
+        "climax": { "text": "Design the MVP to collect the data you need for v2. Every feature is a data pipeline.", "visual": "🔄" },
+        "punchline": { "text": "No data? Ship anyway. The product creates the data.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "How do you handle the AI cold start problem?",
+        "options": ["Use foundation models and collect user data for future training", "Wait until you have millions of data points", "Build a custom model immediately"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch03-data-strategy",
+      "title": "Data Privacy by Design",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "text": "Your users share sensitive health data to get AI recommendations. One breach ends everything.", "visual": "🔒" },
+        "buildup": { "text": "Privacy by design embeds data protection into the product from the start, not as an afterthought.", "visual": "🏗️" },
+        "discovery": { "text": "Principles: minimize collection, anonymize early, encrypt at rest and in transit, delete on schedule.", "visual": "📋" },
+        "twist": { "text": "Even anonymized data can be re-identified. True anonymization is harder than it sounds.", "visual": "🔍" },
+        "climax": { "text": "Give users control: transparent policies, data export, and deletion with one click.", "visual": "👤" },
+        "punchline": { "text": "Build trust by design. Lose it by incident.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What does 'privacy by design' mean?",
+        "options": ["Embedding data protection into the product from the start", "Adding privacy settings after launch", "Collecting all possible data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch04-build-vs-buy",
+      "title": "API-First: Using AI Provider APIs",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "text": "One API call to OpenAI and your product has AI. No GPU, no training, no infra.", "visual": "🔌" },
+        "buildup": { "text": "AI APIs (OpenAI, Anthropic, Google) let you add intelligence with minimal engineering.", "visual": "⚡" },
+        "discovery": { "text": "Benefits: instant start, no ML expertise needed, automatic improvements from the provider.", "visual": "✅" },
+        "twist": { "text": "Risks: vendor lock-in, pricing changes, rate limits, and dependence on external uptime.", "visual": "⚠️" },
+        "climax": { "text": "Abstract the AI provider behind an interface. Switch providers without rewriting your product.", "visual": "🔀" },
+        "punchline": { "text": "Start with APIs. Migrate if you outgrow them.", "visual": "🏃" }
+      },
+      "quiz": {
+        "question": "What is the main risk of using AI provider APIs?",
+        "options": ["Vendor lock-in and dependence on external services", "They're always too slow", "They can't handle any task"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch04-build-vs-buy",
+      "title": "Fine-Tuning: When Generic Isn't Enough",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "text": "GPT-4 writes generic legal text. Your law firm needs your firm's exact style and citations.", "visual": "⚖️" },
+        "buildup": { "text": "Fine-tuning adapts a foundation model to your domain, tone, and output format.", "visual": "🔧" },
+        "discovery": { "text": "You need 100–10,000 high-quality examples. More data = better, but quality beats quantity.", "visual": "📊" },
+        "twist": { "text": "Fine-tuning is cheaper than training from scratch but still costs engineering time and compute.", "visual": "💰" },
+        "climax": { "text": "Evaluate: does fine-tuning beat few-shot prompting? If not, save the complexity.", "visual": "📋" },
+        "punchline": { "text": "Fine-tune for quality. Prompt for speed. Test to decide.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "When should you fine-tune instead of prompting?",
+        "options": ["When prompting doesn't meet quality requirements", "Always—fine-tuning is better", "Never—prompting is sufficient"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch04-build-vs-buy",
+      "title": "Cost Estimation for AI Features",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "text": "Your AI feature costs $0.02 per user request. At 1 million requests, that's $20,000 a month.", "visual": "💰" },
+        "buildup": { "text": "AI costs: API tokens, GPU compute, data storage, annotation labor, and engineering time.", "visual": "📊" },
+        "discovery": { "text": "Map cost per request × expected volume × growth rate to project monthly spend.", "visual": "📈" },
+        "twist": { "text": "Viral features can 10× usage overnight. Your cost model must handle spikes.", "visual": "🚀" },
+        "climax": { "text": "Optimize: cache common queries, use smaller models for simple tasks, batch where possible.", "visual": "🔧" },
+        "punchline": { "text": "Know your cost per request before you ship.", "visual": "🧾" }
+      },
+      "quiz": {
+        "question": "Why is cost estimation critical for AI features?",
+        "options": ["Usage spikes can make AI costs explode unexpectedly", "AI features are always cheap", "Cost doesn't affect product decisions"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch04-build-vs-buy",
+      "title": "Prompt Engineering as a Product Discipline",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "Your system prompt is 2,000 tokens long. It's the most important code in your product.", "visual": "📝" },
+        "buildup": { "text": "Prompt engineering defines how your AI feature behaves, responds, and handles edge cases.", "visual": "🔧" },
+        "discovery": { "text": "Version your prompts. A/B test them. Measure output quality per prompt version.", "visual": "📊" },
+        "twist": { "text": "A prompt change that improves one metric can break another. Always regression test.", "visual": "⚠️" },
+        "climax": { "text": "Treat prompts like code: reviewed, versioned, tested, and deployed through CI/CD.", "visual": "🏗️" },
+        "punchline": { "text": "Prompts are product logic. Treat them like it.", "visual": "💻" }
+      },
+      "quiz": {
+        "question": "How should prompts be managed in production?",
+        "options": ["Versioned, tested, and deployed like code", "Written once and never changed", "Only the PM should edit them"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch05-measurement",
+      "title": "Defining Success Metrics for AI Features",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "Your model is 95% accurate. Revenue dropped. What went wrong?", "visual": "📉" },
+        "buildup": { "text": "Model metrics (accuracy, F1) don't always correlate with product metrics (engagement, revenue).", "visual": "📊" },
+        "discovery": { "text": "Define success at three levels: model quality, feature engagement, and business impact.", "visual": "🎯" },
+        "twist": { "text": "A 'worse' model that gives faster results may increase engagement more than a slower perfect one.", "visual": "⚡" },
+        "climax": { "text": "Track the full funnel: impressions → interactions → conversions → satisfaction.", "visual": "📋" },
+        "punchline": { "text": "Model accuracy is a means, not the end.", "visual": "🏁" }
+      },
+      "quiz": {
+        "question": "Why can high model accuracy lead to poor business outcomes?",
+        "options": ["Model metrics don't always correlate with product metrics", "Accuracy is never important", "Users prefer inaccurate results"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch05-measurement",
+      "title": "A/B Testing AI Features",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "text": "The new AI search is 'obviously better.' But 60% of users prefer the old keyword search.", "visual": "🔍" },
+        "buildup": { "text": "A/B testing splits users between variants to measure real-world impact objectively.", "visual": "📊" },
+        "discovery": { "text": "For AI features: test the full experience, not just the model. UI, latency, and trust all matter.", "visual": "🎨" },
+        "twist": { "text": "Novelty effect: users engage more with anything new. Wait 2+ weeks for stable results.", "visual": "📅" },
+        "climax": { "text": "Pre-register your hypothesis and metrics. Don't change them after seeing results.", "visual": "📋" },
+        "punchline": { "text": "Intuition proposes. Data decides.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What is the novelty effect in A/B testing?",
+        "options": ["Users engage more with new features simply because they're new", "New features always perform worse", "Users ignore new features"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch05-measurement",
+      "title": "Evaluating LLM-Powered Features",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "text": "How do you A/B test a chatbot? There's no single 'correct' answer to compare.", "visual": "🤖" },
+        "buildup": { "text": "LLM evaluation is harder than classification because outputs are open-ended.", "visual": "📝" },
+        "discovery": { "text": "Methods: human ratings, LLM-as-judge, task completion rate, and user satisfaction scores.", "visual": "📊" },
+        "twist": { "text": "A single bad interaction can destroy trust. Measure worst-case performance, not just average.", "visual": "⚠️" },
+        "climax": { "text": "Build an eval suite: 100+ test cases covering happy paths, edge cases, and adversarial inputs.", "visual": "🧪" },
+        "punchline": { "text": "If you can't measure it, you can't improve it.", "visual": "📏" }
+      },
+      "quiz": {
+        "question": "Why is evaluating LLM features harder than classification?",
+        "options": ["Outputs are open-ended with no single correct answer", "LLMs always give the same answer", "There are no metrics for LLMs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch05-measurement",
+      "title": "Continuous Improvement with User Feedback",
+      "difficulty": "Premium",
+      "story": {
+        "hook": { "text": "Version 1 was 70% accurate. After 6 months of user feedback, version 4 hits 92%.", "visual": "📈" },
+        "buildup": { "text": "User feedback creates a flywheel: more usage → more data → better model → more usage.", "visual": "🔄" },
+        "discovery": { "text": "Log feedback, cluster failure patterns, fix the top issues, and retrain or re-prompt.", "visual": "🔧" },
+        "twist": { "text": "The flywheel stalls if you don't act on feedback. Collecting it alone does nothing.", "visual": "⚙️" },
+        "climax": { "text": "Set a weekly cadence: review failures, update prompts or data, evaluate, and deploy.", "visual": "📅" },
+        "punchline": { "text": "Ship, learn, improve. The flywheel never stops.", "visual": "♻️" }
+      },
+      "quiz": {
+        "question": "What makes an AI improvement flywheel work?",
+        "options": ["Acting on collected feedback to improve the model regularly", "Just collecting more data", "Launching more features"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch06-org",
+      "title": "Building an AI Team: Roles You Need",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "text": "You hired 5 ML engineers but no one to label data or design the UX. The project stalls.", "visual": "🤦" },
+        "buildup": { "text": "AI teams need: ML engineers, data engineers, product managers, designers, and domain experts.", "visual": "👥" },
+        "discovery": { "text": "Data engineers are often the bottleneck—without clean data pipelines, models can't train.", "visual": "🔧" },
+        "twist": { "text": "Domain experts who understand the business problem are as critical as ML engineers.", "visual": "🎯" },
+        "climax": { "text": "Start small: one ML engineer, one data engineer, one PM. Scale roles as complexity grows.", "visual": "📈" },
+        "punchline": { "text": "AI is a team sport. Don't just hire model builders.", "visual": "🏀" }
+      },
+      "quiz": {
+        "question": "Who is often the bottleneck in AI teams?",
+        "options": ["Data engineers—without clean pipelines, models can't train", "ML engineers only", "Marketing teams"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch06-org",
+      "title": "AI Literacy for Non-Technical Stakeholders",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "text": "The CEO asks: 'Can we just make the AI 100% accurate by next sprint?'", "visual": "😅" },
+        "buildup": { "text": "Non-technical stakeholders need baseline AI literacy to set realistic expectations.", "visual": "📚" },
+        "discovery": { "text": "Key concepts to teach: probabilistic outputs, training data dependence, and iterative improvement.", "visual": "📋" },
+        "twist": { "text": "Overpromising AI capabilities to leadership creates disappointment and budget cuts later.", "visual": "📉" },
+        "climax": { "text": "Run monthly AI demos showing real performance—including failures—to build shared understanding.", "visual": "🎥" },
+        "punchline": { "text": "Educated stakeholders make better AI decisions.", "visual": "🎓" }
+      },
+      "quiz": {
+        "question": "Why is AI literacy important for non-technical stakeholders?",
+        "options": ["To set realistic expectations about what AI can deliver", "They need to code models", "It's not important for them"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch06-org",
+      "title": "AI Ethics Review in Product Development",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "text": "Your recommendation algorithm boosts engagement but also promotes addictive content.", "visual": "📱" },
+        "buildup": { "text": "Ethics reviews evaluate AI features for potential harms before they reach users.", "visual": "🔍" },
+        "discovery": { "text": "Review questions: who benefits, who's harmed, what if it fails, can users opt out?", "visual": "📋" },
+        "twist": { "text": "Ethics reviews slow down shipping. But shipping harmful features slows down trust permanently.", "visual": "⚖️" },
+        "climax": { "text": "Embed ethics checkpoints at design, pre-launch, and post-launch monitoring phases.", "visual": "🚦" },
+        "punchline": { "text": "Move fast and don't break people.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "When should ethics reviews happen?",
+        "options": ["At design, pre-launch, and post-launch phases", "Only after launch", "Never—they slow things down"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch06-org",
+      "title": "Managing AI Technical Debt",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "text": "Your model uses 5 hand-picked features from 2022. Nobody remembers why those 5.", "visual": "🕸️" },
+        "buildup": { "text": "AI technical debt: stale models, undocumented pipelines, unused features, and tangled configs.", "visual": "🧩" },
+        "discovery": { "text": "ML systems have extra debt sources: data dependencies, feature drift, and pipeline coupling.", "visual": "🔗" },
+        "twist": { "text": "AI debt compounds silently. The model works until it doesn't—then everything breaks at once.", "visual": "💥" },
+        "climax": { "text": "Schedule regular debt sprints: clean data pipelines, document configs, and deprecate stale models.", "visual": "🧹" },
+        "punchline": { "text": "Debt you can see hurts less than debt that surprises you.", "visual": "👀" }
+      },
+      "quiz": {
+        "question": "What is unique about AI technical debt?",
+        "options": ["It includes data dependencies and pipeline coupling beyond code debt", "It's the same as regular technical debt", "AI systems don't accumulate debt"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch01-landscape",
+      "title": "AI Maturity Levels for Organizations",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "text": "Level 0: 'We should do something with AI.' Level 5: 'AI is embedded in every decision.'", "visual": "📊" },
+        "buildup": { "text": "AI maturity models map an organization's journey from awareness to full integration.", "visual": "🗺️" },
+        "discovery": { "text": "Levels: aware → experimenting → operationalizing → optimizing → transforming.", "visual": "📈" },
+        "twist": { "text": "Most companies are stuck between experimenting and operationalizing. The gap is infrastructure, not ideas.", "visual": "🏗️" },
+        "climax": { "text": "Assess your level honestly. Invest in the foundations your current level demands.", "visual": "🔍" },
+        "punchline": { "text": "Know where you are before planning where to go.", "visual": "🧭" }
+      },
+      "quiz": {
+        "question": "Where are most organizations stuck in AI maturity?",
+        "options": ["Between experimenting and operationalizing", "At the highest level", "Before any awareness"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch02-design",
+      "title": "Guardrails: Keeping AI Outputs Safe",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "text": "Your customer-facing chatbot just recommended a competitor's product. Guardrails would have caught that.", "visual": "🚧" },
+        "buildup": { "text": "Guardrails are rules, filters, and checks applied to AI outputs before they reach users.", "visual": "🛡️" },
+        "discovery": { "text": "Types: topic restrictions, profanity filters, PII detection, factual grounding checks.", "visual": "📋" },
+        "twist": { "text": "Too many guardrails make the AI useless ('I can't help with that'). Balance safety and utility.", "visual": "⚖️" },
+        "climax": { "text": "Layer guardrails: input validation → model constraints → output filtering → human review.", "visual": "🔧" },
+        "punchline": { "text": "Freedom with fences. Safe enough to ship.", "visual": "🏁" }
+      },
+      "quiz": {
+        "question": "What is a risk of too many guardrails?",
+        "options": ["The AI becomes too restrictive and refuses valid requests", "It becomes more accurate", "Users prefer more restrictions"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch03-data-strategy",
+      "title": "Labeling Data: The Hidden Bottleneck",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "You need 10,000 labeled examples. Your team labels 50 per day. That's 200 working days.", "visual": "🏷️" },
+        "buildup": { "text": "Labeled data is the fuel for supervised ML. Without it, models can't learn task-specific patterns.", "visual": "⛽" },
+        "discovery": { "text": "Options: in-house annotators, crowdsourcing (MTurk), LLM-assisted labeling, and active learning.", "visual": "📊" },
+        "twist": { "text": "Label quality matters more than quantity. 1,000 perfect labels beat 10,000 noisy ones.", "visual": "✨" },
+        "climax": { "text": "Use LLMs for initial labels, human reviewers for corrections, and active learning to prioritize.", "visual": "🔄" },
+        "punchline": { "text": "Labels are the real cost. Budget for them.", "visual": "💰" }
+      },
+      "quiz": {
+        "question": "Why is labeling data a bottleneck?",
+        "options": ["It's time-consuming, expensive, and quality-dependent", "Labels are free and instant", "ML doesn't need labeled data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch04-build-vs-buy",
+      "title": "RAG vs Fine-Tuning: Choosing the Right Approach",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "text": "Your product needs domain-specific answers. Do you fine-tune a model or plug in a knowledge base?", "visual": "🔀" },
+        "buildup": { "text": "RAG retrieves documents at query time. Fine-tuning bakes knowledge into model weights.", "visual": "📚" },
+        "discovery": { "text": "RAG: fresh data, no retraining, transparent sources. Fine-tuning: faster inference, custom style.", "visual": "⚖️" },
+        "twist": { "text": "RAG + fine-tuning together often beats either alone. Fine-tune for style, RAG for facts.", "visual": "🤝" },
+        "climax": { "text": "Start with RAG (cheaper, faster). Add fine-tuning only if quality gaps remain.", "visual": "📈" },
+        "punchline": { "text": "Retrieve for facts. Fine-tune for flavor.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "When should you start with RAG over fine-tuning?",
+        "options": ["When you need fresh data and transparent sources without retraining", "When you have unlimited compute", "Fine-tuning is always better"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch05-measurement",
+      "title": "ROI of AI Features: Justifying the Investment",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "The AI feature cost $200K to build. The CEO asks: 'What's the return?'", "visual": "💰" },
+        "buildup": { "text": "AI ROI is hard to measure because benefits are indirect: time saved, churn reduced, support deflected.", "visual": "📊" },
+        "discovery": { "text": "Build a business case: cost of current process vs cost with AI, including development and maintenance.", "visual": "📋" },
+        "twist": { "text": "The biggest ROI often isn't revenue—it's reduced manual work or prevented errors.", "visual": "🔧" },
+        "climax": { "text": "Track leading indicators (usage, time saved) and lagging indicators (revenue, retention) separately.", "visual": "📈" },
+        "punchline": { "text": "Measure what matters. Not every return is in dollars.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why is AI ROI hard to measure?",
+        "options": ["Benefits are often indirect like time saved or errors prevented", "AI always has clear revenue impact", "ROI isn't relevant for AI"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch06-org",
+      "title": "Change Management: Getting Teams to Adopt AI Tools",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "You built an amazing AI tool. Nobody on the team uses it. The problem isn't the tool—it's adoption.", "visual": "📢" },
+        "buildup": { "text": "Change management guides people through the transition from old workflows to AI-enhanced ones.", "visual": "🔄" },
+        "discovery": { "text": "Steps: demonstrate value early, train champions, address fears, and iterate on feedback.", "visual": "📋" },
+        "twist": { "text": "Fear of replacement is the biggest blocker. Frame AI as augmentation, not automation of jobs.", "visual": "🤝" },
+        "climax": { "text": "Embed AI into existing workflows rather than creating separate AI tools nobody visits.", "visual": "🔧" },
+        "punchline": { "text": "The best AI tool is the one people actually use.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What is the biggest blocker to AI adoption in teams?",
+        "options": ["Fear of job replacement", "Technical limitations", "Cost of the tools"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "ai--ai-for-product-teams--ch01-landscape",
+      "title": "Copilots vs Autopilots: Two AI Product Patterns",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "text": "A copilot suggests. An autopilot acts. The choice changes everything about your product.", "visual": "✈️" },
+        "buildup": { "text": "Copilot pattern: AI assists the human who makes the final decision (e.g., GitHub Copilot).", "visual": "🤝" },
+        "discovery": { "text": "Autopilot pattern: AI acts autonomously with human oversight only on exceptions (e.g., spam filters).", "visual": "🤖" },
+        "twist": { "text": "Users trust copilots faster because they stay in control. Autopilots need higher accuracy to earn trust.", "visual": "📊" },
+        "climax": { "text": "Start as copilot. Earn trust. Graduate to autopilot as accuracy and confidence grow.", "visual": "📈" },
+        "punchline": { "text": "Assist first. Automate later. Trust is the bridge.", "visual": "🌉" }
+      },
+      "quiz": {
+        "question": "Why do copilot-pattern AI products earn trust faster?",
+        "options": ["Users stay in control and make the final decision", "They're always more accurate", "They don't require any AI"],
+        "correct": 0
+      }
+    }
+  ]
+}
