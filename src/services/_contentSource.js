@@ -1,6 +1,4 @@
 export function getContentSource() {
-  // 'supabase' (default) or 'local'
-  const raw = import.meta.env.VITE_CONTENT_SOURCE;
-  if (raw === 'local') return 'local';
+  // Local content mode retired: always use Supabase.
   return 'supabase';
 }

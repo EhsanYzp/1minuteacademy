@@ -9,7 +9,7 @@ import { useAuth } from '../context/AuthContext';
 import { getCurrentTier } from '../services/entitlements';
 import { pickRandomEligibleTopic, pushRecentRandomId } from '../lib/surpriseTopic';
 import { listTopicsPage } from '../services/topics';
-import contentStats from '../generated/contentStats.json';
+import { getHomeStats } from '../services/stats';
 import './Home.css';
 
 const SLOT_ITEM_HEIGHT = 42;
@@ -115,20 +115,35 @@ function Home() {
   const spinDoneCountRef = useRef(0);
   const spinRunIdRef = useRef(0);
 
-  const stats = contentStats && typeof contentStats === 'object' ? contentStats : { categories: 0, topics: 0, minutes: 0 };
-  const categoriesCount = Number(stats.categories ?? 0) || 0;
-  const subcategoriesCount = Number(stats.subcategories ?? 0) || 0;
-  const topicsCount = Number(stats.topics ?? 0) || 0;
+  const [homeStats, setHomeStats] = useState({ categories: 0, courses: 0, topics: 0 });
+  const categoriesCount = Number(homeStats.categories ?? 0) || 0;
+  const coursesCount = Number(homeStats.courses ?? 0) || 0;
+  const topicsCount = Number(homeStats.topics ?? 0) || 0;
 
   const fmt = new Intl.NumberFormat(undefined);
 
-  const [ticker, setTicker] = useState({ categories: 0, subcategories: 0, topics: 0 });
+  const [ticker, setTicker] = useState({ categories: 0, courses: 0, topics: 0 });
   const tickerRafRef = useRef(null);
+
+  useEffect(() => {
+    let alive = true;
+    getHomeStats()
+      .then((s) => {
+        if (!alive) return;
+        setHomeStats(s);
+      })
+      .catch(() => {
+        // Non-fatal; stats are just display.
+      });
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   useEffect(() => {
     const target = {
       categories: categoriesCount,
-      subcategories: subcategoriesCount,
+      courses: coursesCount,
       topics: topicsCount,
     };
 
@@ -149,7 +164,7 @@ function Home() {
 
       setTicker({
         categories: Math.round(target.categories * e),
-        subcategories: Math.round(target.subcategories * e),
+        courses: Math.round(target.courses * e),
         topics: Math.round(target.topics * e),
       });
 
@@ -163,7 +178,7 @@ function Home() {
     return () => {
       if (tickerRafRef.current) cancelAnimationFrame(tickerRafRef.current);
     };
-  }, [categoriesCount, subcategoriesCount, topicsCount, prefersReducedMotion]);
+  }, [categoriesCount, coursesCount, topicsCount, prefersReducedMotion]);
 
   useEffect(() => {
     const open = Boolean(spinOverlay);
@@ -507,7 +522,7 @@ function Home() {
                 </span>
                 <span className="home-tickerDot" aria-hidden="true">·</span>
                 <span className="home-tickerMetric">
-                  <span className="home-tickerNum">{fmt.format(ticker.subcategories)}</span>{' '}
+                  <span className="home-tickerNum">{fmt.format(ticker.courses)}</span>{' '}
                   <span className="home-tickerLabel">courses</span>
                 </span>
                 <span className="home-tickerDot" aria-hidden="true">·</span>

@@ -69,17 +69,13 @@ Catalog:
 
 ## Preview vs publish
 
-### Local preview (fast iteration)
+### Preview in staging (recommended)
 
 1. Add/edit JSON under `content/topics/**`
 2. Validate: `npm run content:validate`
-3. Run: `npm run dev:local`
-
-In local preview:
-- The app reads topics/lessons from `content/topics/**`
-- 1MA balance/streak are stored in `localStorage`
-- `/lesson/:topicId` does not require login
-- Header shows a `LOCAL PREVIEW` badge
+3. Sync to staging (recommended single-topic):
+  - `npm run content:sync:staging -- --topic <topicId>`
+4. Run the app against staging Supabase: `npm run dev`
 
 Tip: after completing a lesson, check `/me` (Profile) and the landing page badges to verify progress behavior.
 
@@ -130,7 +126,7 @@ Use [supabase/001_init.sql](supabase/001_init.sql) for schema/RLS/RPC. Avoid add
 
 Instead:
 - Draft new modules in `content/topics/**`
-- Preview with `npm run dev:local`
+- Preview via staging sync: `npm run content:sync:staging -- --topic <id>` + `npm run dev`
 - Publish with `npm run content:sync -- --topic <id>`
 
 ## Content guidelines (so it fits in 60 seconds)

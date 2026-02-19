@@ -1,6 +1,4 @@
 import { getSupabaseClient, isSupabaseConfigured } from '../lib/supabaseClient';
-import { getContentSource } from './_contentSource';
-import { getLocalTopic, listLocalTopics } from './topics.local';
 import { makeCacheKey, withCache } from './cache';
 
 function requireSupabase() {
@@ -10,28 +8,7 @@ function requireSupabase() {
   return supabase;
 }
 
-function includesQueryLocal(topic, q) {
-  const query = String(q ?? '').trim().toLowerCase();
-  if (!query) return true;
-  const hay = `${topic?.title ?? ''} ${topic?.description ?? ''} ${topic?.subject ?? ''} ${topic?.subcategory ?? ''}`.toLowerCase();
-  return hay.includes(query);
-}
-
 export async function getTopicCategoryCounts() {
-  const counts = new Map();
-
-  if (getContentSource() === 'local') {
-    const all = listLocalTopics();
-    for (const t of all) {
-      const subject = String(t?.subject ?? '').trim() || 'General';
-      counts.set(subject, (counts.get(subject) ?? 0) + 1);
-    }
-    return {
-      counts,
-      total: all.length,
-    };
-  }
-
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
   const cacheKey = makeCacheKey(['topics', 'categoryCounts', 'supabase']);
@@ -62,21 +39,6 @@ export async function listTopicsPage({ limit = 30, offset = 0, subject = null } 
   const safeLimit = Math.min(200, Math.max(1, Number(limit) || 30));
   const safeOffset = Math.max(0, Number(offset) || 0);
   const subjectFilter = typeof subject === 'string' && subject.trim() ? subject.trim() : null;
-
-  if (getContentSource() === 'local') {
-    let all = listLocalTopics();
-    if (subjectFilter && subjectFilter !== 'All') {
-      all = all.filter((t) => (String(t?.subject ?? '').trim() || 'General') === subjectFilter);
-    }
-    const items = all.slice(safeOffset, safeOffset + safeLimit);
-    const nextOffset = safeOffset + items.length;
-    return {
-      items,
-      total: all.length,
-      nextOffset,
-      hasMore: nextOffset < all.length,
-    };
-  }
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
@@ -118,23 +80,6 @@ export async function searchTopicsPage({ query = '', limit = 30, offset = 0, sub
   const subjectFilter = typeof subject === 'string' && subject.trim() ? subject.trim() : null;
   const q = typeof query === 'string' ? query.trim() : String(query ?? '').trim();
 
-  if (getContentSource() === 'local') {
-    let all = listLocalTopics();
-    if (subjectFilter && subjectFilter !== 'All') {
-      all = all.filter((t) => (String(t?.subject ?? '').trim() || 'General') === subjectFilter);
-    }
-    if (q) all = all.filter((t) => includesQueryLocal(t, q));
-
-    const items = all.slice(safeOffset, safeOffset + safeLimit);
-    const nextOffset = safeOffset + items.length;
-    return {
-      items,
-      total: all.length,
-      nextOffset,
-      hasMore: nextOffset < all.length,
-    };
-  }
-
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
   const cacheKey = makeCacheKey(['topics', 'searchPage', 'supabase', subjectFilter ?? 'all', q, safeLimit, safeOffset]);
@@ -168,10 +113,6 @@ export async function searchTopicsPage({ query = '', limit = 30, offset = 0, sub
 }
 
 export async function listTopics({ pageSize = 500 } = {}) {
-  if (getContentSource() === 'local') {
-    return listLocalTopics();
-  }
-
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
   const supabase = requireSupabase();
@@ -217,23 +158,6 @@ export async function listRelatedTopics({
 
   if (!subjectFilter) return [];
 
-  if (getContentSource() === 'local') {
-    const all = listLocalTopics();
-    const candidates = (Array.isArray(all) ? all : [])
-      .filter((t) => t && t.id && (!excludeId || String(t.id) !== excludeId))
-      .filter((t) => String(t.subject ?? '').trim() === subjectFilter);
-
-    const sameSubcategory = subcategoryFilter
-      ? candidates.filter((t) => String(t.subcategory ?? '').trim() === subcategoryFilter)
-      : [];
-
-    const chosen = (sameSubcategory.length > 0 ? sameSubcategory : candidates)
-      .sort((a, b) => String(a.title ?? '').localeCompare(String(b.title ?? '')))
-      .slice(0, safeLimit);
-
-    return chosen;
-  }
-
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
   const supabase = requireSupabase();
 
@@ -265,12 +189,6 @@ export async function listRelatedTopics({
 }
 
 export async function getTopic(topicId) {
-  if (getContentSource() === 'local') {
-    const local = getLocalTopic(topicId);
-    if (!local) throw new Error('Topic not found');
-    return local;
-  }
-
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
   const supabase = requireSupabase();
   const { data, error } = await supabase
@@ -295,14 +213,6 @@ export async function listTopicsByIds(topicIds, { includeLesson = false } = {}) 
   const ids = Array.isArray(topicIds) ? topicIds.filter(Boolean) : [];
   const uniq = Array.from(new Set(ids.map(String)));
   if (uniq.length === 0) return [];
-
-  if (getContentSource() === 'local') {
-    const topics = listLocalTopics();
-    const byId = new Map(topics.map((t) => [t.id, t]));
-    const out = uniq.map((id) => byId.get(id)).filter(Boolean);
-    if (!includeLesson) return out.map(({ lesson, ...rest }) => rest);
-    return out;
-  }
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 

@@ -1,14 +1,9 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { getContentSource } from '../../services/_contentSource';
 
 export default function ProtectedRoute({ children, requireVerified = false }) {
   const { user, loading, isSupabaseConfigured, sessionExpired } = useAuth();
   const location = useLocation();
-
-  if (getContentSource() === 'local') {
-    return children;
-  }
 
   if (!isSupabaseConfigured) {
     return (

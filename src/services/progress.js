@@ -1,6 +1,4 @@
 import { getSupabaseClient, isSupabaseConfigured } from '../lib/supabaseClient';
-import { getContentSource } from './_contentSource';
-import { completeLocalTopic, getLocalTopicProgress, getLocalUserStats } from './progress.local';
 
 function requireSupabase() {
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
@@ -10,11 +8,13 @@ function requireSupabase() {
 }
 
 export async function getUserStats() {
-  if (getContentSource() === 'local') {
-    return getLocalUserStats();
+  const supabase = requireSupabase();
+
+  const { data: sessionData } = await supabase.auth.getSession();
+  if (!sessionData?.session) {
+    return { expert_minutes: 0, streak: 0, last_completed_date: null };
   }
 
-  const supabase = requireSupabase();
   const { data, error } = await supabase
     .from('user_stats')
     .select('one_ma_balance, streak, last_completed_date')
@@ -31,11 +31,13 @@ export async function getUserStats() {
 }
 
 export async function completeTopic({ topicId, seconds = 60 }) {
-  if (getContentSource() === 'local') {
-    return completeLocalTopic({ topicId, seconds });
+  const supabase = requireSupabase();
+
+  const { data: sessionData } = await supabase.auth.getSession();
+  if (!sessionData?.session) {
+    throw new Error('Please sign in to track progress');
   }
 
-  const supabase = requireSupabase();
   const { data, error } = await supabase.rpc('complete_topic', {
     p_topic_id: topicId,
     p_seconds: seconds,
@@ -53,11 +55,11 @@ export async function completeTopic({ topicId, seconds = 60 }) {
 }
 
 export async function listUserTopicProgress() {
-  if (getContentSource() === 'local') {
-    return getLocalTopicProgress();
-  }
-
   const supabase = requireSupabase();
+
+  const { data: sessionData } = await supabase.auth.getSession();
+  if (!sessionData?.session) return [];
+
   const { data, error } = await supabase
     .from('user_topic_progress')
     .select(

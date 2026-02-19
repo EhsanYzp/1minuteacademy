@@ -90,10 +90,16 @@ That makes Vercel skip only the “cross-branch” Preview deploys:
 
 Note: Vercel limits `ignoreCommand` length. This repo keeps `vercel.json` short and puts the logic in [scripts/vercelIgnore.mjs](scripts/vercelIgnore.mjs).
 
-### Local content preview (no Supabase content reads)
+### Dev (staging Supabase by default)
 
 ```bash
-npm run dev:local
+npm run dev
+```
+
+To run with production-mode env vars locally:
+
+```bash
+npm run dev:prod
 ```
 
 ### Validate topic JSON (always do before syncing)

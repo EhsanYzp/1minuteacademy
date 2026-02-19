@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { getContentSource } from '../services/_contentSource';
 import { formatTierLabel, getCurrentTier, setDevTierOverride } from '../services/entitlements';
 import './Header.css';
 
@@ -37,7 +36,6 @@ function getFocusableElements(container) {
 
 function Header() {
   const { user, isSupabaseConfigured, signOut, resendVerificationEmail } = useAuth();
-  const contentSource = getContentSource();
   const [busy, setBusy] = useState(false);
   const [verifyBusy, setVerifyBusy] = useState(false);
   const [verifySent, setVerifySent] = useState(false);
@@ -57,7 +55,7 @@ function Header() {
   }, []);
 
   const isVerified = Boolean(user?.email_confirmed_at || user?.confirmed_at);
-  const showVerifyBanner = contentSource !== 'local' && isSupabaseConfigured && Boolean(user?.email) && !isVerified;
+  const showVerifyBanner = isSupabaseConfigured && Boolean(user?.email) && !isVerified;
 
   async function onResendVerification() {
     if (!user?.email || verifyBusy) return;
@@ -190,12 +188,6 @@ function Header() {
           <span className="logo-short">MA</span>
         </span>
       </Link>
-
-      {contentSource === 'local' && (
-        <div className="env-badge" title="Topics come from content/topics/** (no Supabase)">
-          LOCAL PREVIEW
-        </div>
-      )}
 
       {import.meta.env.DEV && (
         <label

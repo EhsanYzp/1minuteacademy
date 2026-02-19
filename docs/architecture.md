@@ -13,10 +13,10 @@ You do *not* create React components per module.
 #### Content sources (dev vs prod)
 
 - **Production source of truth:** Supabase `public.topics`.
-- **Local iteration source:** JSON files under `content/topics/**`.
+- **Authoring input:** JSON files under `content/topics/**`.
   - Validate: `npm run content:validate`
-  - Preview in-app without Supabase pushes: `npm run dev:local`
-  - Publish to Supabase when ready: `npm run content:sync`
+  - Preview via staging Supabase: `npm run content:sync:staging -- --topic <id>` + `npm run dev`
+  - Publish to production Supabase when ready: `npm run content:sync`
 
 #### Drafts (not committed)
 
@@ -51,8 +51,6 @@ When you add thousands of modules, you mostly add JSON files/rows — the engine
 - Supabase mode (`npm run dev` / production)
   - Writes: RPC `public.complete_topic(...)`
   - Reads: `public.user_stats` + `public.user_topic_progress` (joined with `public.topics`)
-- Local Preview mode (`npm run dev:local`)
-  - Writes/reads progress from browser storage (localStorage)
 
 ## Suggested repo layout
 
@@ -76,10 +74,11 @@ When you add thousands of modules, you mostly add JSON files/rows — the engine
 
 ## Adding 1,000 modules – the actual process
 
-### Fast iteration loop (no Supabase)
+### Fast iteration loop (staging Supabase)
 1. Create/edit `content/topics/<Subject>/<id>.topic.json`
 2. `npm run content:validate`
-3. `npm run dev:local` and test the lesson UI instantly
+3. `npm run content:sync:staging -- --topic <id>`
+4. `npm run dev` and test the lesson UI
 
 ### Publish loop (Supabase)
 1. `npm run content:sync` (bulk upsert to `public.topics`)

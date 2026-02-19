@@ -1,7 +1,65 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { CATALOG_DIR, TOPICS_DIR } from './_contentPaths.mjs';
+import dotenv from 'dotenv';
+import { createClient } from '@supabase/supabase-js';
+import { TOPICS_DIR } from './_contentPaths.mjs';
 import { compileJourneyFromTopic } from '../src/engine/journey/compileJourney.js';
+
+function parseEnvNameFromArgv(argv) {
+  for (let i = 0; i < argv.length; i++) {
+    if (argv[i] === '--env') {
+      const v = argv[i + 1];
+      if (!v || v.startsWith('--')) return null;
+      return String(v).trim();
+    }
+  }
+  return null;
+}
+
+function normalizeEnvName(raw) {
+  const v = String(raw ?? '').trim().toLowerCase();
+  if (!v) return null;
+  if (v === 'prod') return 'production';
+  return v;
+}
+
+function loadDotenv(envName) {
+  const loaded = [];
+  const load = (p) => {
+    const res = dotenv.config({ path: p });
+    if (!res.error) loaded.push(p);
+  };
+
+  load('.env');
+  load('.env.local');
+  if (envName) {
+    load(`.env.${envName}`);
+    load(`.env.${envName}.local`);
+  }
+
+  const envLabel = envName ? `--env ${envName}` : '(no --env)';
+  console.log(`[content:scaffold] dotenv loaded (${envLabel}): ${loaded.length ? loaded.join(', ') : '(none found)'}`);
+}
+
+function requiredEnvAny(names) {
+  for (const name of names) {
+    const v = process.env[name];
+    if (v) return v;
+  }
+  const requestedEnv = normalizeEnvName(parseEnvNameFromArgv(process.argv.slice(2))) ?? 'staging';
+  const envFileHint = requestedEnv ? `.env.${requestedEnv}.local` : '.env.local';
+  throw new Error(`Missing env var: ${names.join(' or ')} (set it in ${envFileHint} or export it in your shell)`);
+}
+
+function slugifyCategoryId(title) {
+  return String(title ?? '')
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .replace(/--+/g, '-');
+}
 
 function parseArgs(argv) {
   const args = {
@@ -37,6 +95,8 @@ function parseArgs(argv) {
     chapterPosition: null,
 
     noCatalogUpdate: false,
+
+    env: null,
   };
 
   for (let i = 0; i < argv.length; i += 1) {
@@ -74,8 +134,9 @@ function parseArgs(argv) {
     else if (a === '--chapterPosition') args.chapterPosition = argv[++i];
 
     else if (a === '--no-catalog-update') args.noCatalogUpdate = true;
+    else if (a === '--env') args.env = argv[++i];
     else if (a === '--help' || a === '-h') {
-      console.log(`\nUsage:\n  npm run content:scaffold -- --id <topicId> --title <Title> [options]\n\nOptions:\n  Topic:\n  --description <text>\n  --difficulty Beginner|Intermediate|Advanced\n  --emoji <emoji>\n  --color <#RRGGBB>\n  --unpublished\n  --seed <any>\n  --dry-run\n  --force   (overwrite if file exists)\n\n  Classification (optional):\n  --subject <Subject>\n  --subcategory <text>\n\n  Hierarchy (recommended):\n  --courseId <courseId>\n  --chapterId <chapterId>\n\n  Local catalog auto-create (only used when category/course/chapter missing):\n  --categoryId <categoryId>\n  --categoryTitle <text>\n  --categoryDescription <text>\n  --categoryEmoji <emoji>\n  --categoryColor <#RRGGBB>\n\n  --courseTitle <text>\n  --courseDescription <text>\n  --courseEmoji <emoji>\n  --courseColor <#RRGGBB>\n\n  --chapterTitle <text>\n  --chapterDescription <text>\n  --chapterPosition <number>\n\n  --no-catalog-update   (never modify content/catalog/catalog.json)\n\nNotes:\n- If you pass --courseId and --chapterId, the file is written to:\n  content/topics/<categoryId>/<courseId>/<chapterId>/<topicId>.topic.json\n- If the referenced category/course/chapter does not exist in content/catalog/catalog.json and you do NOT pass --no-catalog-update, the script will create them (local mode only).\n`);
+      console.log(`\nUsage:\n  npm run content:scaffold -- --id <topicId> --title <Title> [options]\n\nOptions:\n  Topic:\n  --description <text>\n  --difficulty Beginner|Intermediate|Advanced\n  --emoji <emoji>\n  --color <#RRGGBB>\n  --unpublished\n  --seed <any>\n  --dry-run\n  --force   (overwrite if file exists)\n\n  Classification (optional):\n  --subject <Subject>\n  --subcategory <text>\n\n  Hierarchy (recommended):\n  --courseId <courseId>\n  --chapterId <chapterId>\n\n  Folder (only used when NOT using --courseId):\n  --categoryId <categoryId>   (defaults to slugified --subject)\n\n  Environment:\n  --env staging|production    (defaults to staging)\n\nNotes:\n- If you pass --courseId and --chapterId, the script resolves category via Supabase and writes:\n  content/topics/<categoryId>/<courseId>/<chapterId>/<topicId>.topic.json\n- Local catalog mode is retired.\n`);
       process.exit(0);
     } else {
       throw new Error(`Unknown arg: ${a}`);
@@ -93,7 +154,7 @@ function parseArgs(argv) {
   }
 
   if (!args.subject && !args.courseId) {
-    throw new Error('Missing --subject (or provide --courseId to infer subject from the local catalog)');
+    throw new Error('Missing --subject (or provide --courseId to infer subject from Supabase)');
   }
 
   return args;
@@ -171,26 +232,38 @@ async function writeJson(filePath, data) {
   await fs.writeFile(filePath, JSON.stringify(data, null, 2) + '\n', 'utf8');
 }
 
-async function loadLocalCatalog() {
-  const catalogPath = path.join(CATALOG_DIR, 'catalog.json');
-  const data = await readJson(catalogPath);
-  return { catalogPath, data };
-}
+async function resolveHierarchyFromSupabase({ supabase, courseId, chapterId }) {
+  const { data: course, error: courseErr } = await supabase
+    .from('courses')
+    .select('id, title, category_id')
+    .eq('id', courseId)
+    .maybeSingle();
+  if (courseErr) throw courseErr;
+  if (!course) throw new Error(`Course not found in Supabase: ${courseId}`);
 
-function findCatalogCategory(catalog, categoryId) {
-  return (Array.isArray(catalog?.categories) ? catalog.categories : []).find((c) => String(c?.id ?? '') === categoryId) ?? null;
-}
+  const categoryId = String(course?.category_id ?? '').trim();
+  if (!categoryId) throw new Error(`Course is missing category_id: ${courseId}`);
 
-function findCatalogCourse(catalog, courseId) {
-  return (Array.isArray(catalog?.courses) ? catalog.courses : []).find((c) => String(c?.id ?? '') === courseId) ?? null;
-}
+  const { data: category, error: catErr } = await supabase
+    .from('categories')
+    .select('id, title')
+    .eq('id', categoryId)
+    .maybeSingle();
+  if (catErr) throw catErr;
 
-function resolveHierarchyFromCatalog(catalog, courseId) {
-  const course = findCatalogCourse(catalog, courseId);
-  if (!course) return null;
-  const categoryId = String(course?.categoryId ?? '').trim();
-  if (!categoryId) throw new Error(`Course is missing categoryId in local catalog: ${courseId}`);
-  const category = findCatalogCategory(catalog, categoryId);
+  if (chapterId) {
+    const { data: chapter, error: chErr } = await supabase
+      .from('chapters')
+      .select('id, course_id, title')
+      .eq('id', chapterId)
+      .maybeSingle();
+    if (chErr) throw chErr;
+    if (!chapter) throw new Error(`Chapter not found in Supabase: ${chapterId}`);
+    if (String(chapter?.course_id ?? '') !== courseId) {
+      throw new Error(`Chapter ${chapterId} does not belong to course ${courseId}`);
+    }
+  }
+
   return {
     categoryId,
     categoryTitle: String(category?.title ?? '').trim() || categoryId,
@@ -198,102 +271,11 @@ function resolveHierarchyFromCatalog(catalog, courseId) {
   };
 }
 
-function ensureCategoryInCatalog({ catalog, categoryId, categoryTitle, categoryDescription, categoryEmoji, categoryColor }) {
-  const categories = Array.isArray(catalog?.categories) ? catalog.categories : [];
-  const existing = categories.find((c) => String(c?.id ?? '') === categoryId);
-  if (existing) return { catalog, created: false };
-
-  const next = {
-    ...catalog,
-    categories: categories
-      .concat([
-        {
-          id: categoryId,
-          title: String(categoryTitle ?? '').trim() || titleFromId(categoryId),
-          emoji: String(categoryEmoji ?? '').trim() || '📚',
-          color: String(categoryColor ?? '').trim() || '#4ECDC4',
-          description: String(categoryDescription ?? '').trim() || '',
-          published: true,
-        },
-      ])
-      .slice()
-      .sort((a, b) => String(a?.title ?? '').localeCompare(String(b?.title ?? ''))),
-  };
-
-  return { catalog: next, created: true };
-}
-
-function ensureCourseInCatalog({ catalog, courseId, categoryId, courseTitle, courseDescription, courseEmoji, courseColor }) {
-  const courses = Array.isArray(catalog?.courses) ? catalog.courses : [];
-  const existing = courses.find((c) => String(c?.id ?? '') === courseId);
-  if (existing) return { catalog, created: false };
-
-  const next = {
-    ...catalog,
-    courses: courses
-      .concat([
-        {
-          id: courseId,
-          categoryId,
-          title: String(courseTitle ?? '').trim() || titleFromId(courseId),
-          emoji: String(courseEmoji ?? '').trim() || '📘',
-          color: String(courseColor ?? '').trim() || '#4ECDC4',
-          description: String(courseDescription ?? '').trim() || '',
-          published: true,
-        },
-      ])
-      .slice()
-      .sort((a, b) => {
-        const ac = String(a?.categoryId ?? '');
-        const bc = String(b?.categoryId ?? '');
-        if (ac !== bc) return ac.localeCompare(bc);
-        return String(a?.title ?? '').localeCompare(String(b?.title ?? ''));
-      }),
-  };
-
-  return { catalog: next, created: true };
-}
-
-function ensureChapterInCatalog({ catalog, courseId, chapterId, chapterTitle, chapterDescription, chapterPosition }) {
-  const chapters = Array.isArray(catalog?.chapters) ? catalog.chapters : [];
-  const existing = chapters.find((c) => String(c?.id ?? '') === chapterId);
-  if (existing) return { catalog, created: false };
-
-  const pos = Number(chapterPosition);
-  const courseChapters = chapters.filter((c) => String(c?.courseId ?? '') === courseId);
-  const maxPos = courseChapters.reduce((m, c) => Math.max(m, Number(c?.position ?? 0) || 0), 0);
-  const nextPos = Number.isFinite(pos) ? pos : (maxPos ? maxPos + 10 : 10);
-
-  const next = {
-    ...catalog,
-    chapters: chapters
-      .concat([
-        {
-          id: chapterId,
-          courseId,
-          title: String(chapterTitle ?? '').trim() || titleFromId(chapterId),
-          position: nextPos,
-          description: String(chapterDescription ?? '').trim() || '',
-          published: true,
-        },
-      ])
-      .slice()
-      .sort((a, b) => {
-        const ac = String(a?.courseId ?? '');
-        const bc = String(b?.courseId ?? '');
-        if (ac !== bc) return ac.localeCompare(bc);
-        const ap = Number(a?.position ?? 0) || 0;
-        const bp = Number(b?.position ?? 0) || 0;
-        if (ap !== bp) return ap - bp;
-        return String(a?.id ?? '').localeCompare(String(b?.id ?? ''));
-      }),
-  };
-
-  return { catalog: next, created: true };
-}
-
 async function main() {
   const args = parseArgs(process.argv.slice(2));
+
+  const requestedEnv = normalizeEnvName(args.env ?? parseEnvNameFromArgv(process.argv.slice(2))) ?? 'staging';
+  loadDotenv(requestedEnv);
 
   const topicId = assertSafePathSegment(args.id, '--id');
   const courseId = args.courseId ? assertSafePathSegment(args.courseId, '--courseId') : null;
@@ -302,68 +284,16 @@ async function main() {
   let inferred = null;
 
   if (courseId) {
-    const { catalogPath, data } = await loadLocalCatalog();
-    let workingCatalog = data;
+    const supabaseUrl = requiredEnvAny(['SUPABASE_URL', 'VITE_SUPABASE_URL']);
+    const anonKey = requiredEnvAny(['SUPABASE_ANON_KEY', 'VITE_SUPABASE_ANON_KEY']);
+    const supabase = createClient(supabaseUrl, anonKey, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
 
-    if (!findCatalogCourse(workingCatalog, courseId)) {
-      if (args.noCatalogUpdate) {
-        throw new Error(
-          `Course not found in content/catalog/catalog.json: ${courseId}. Remove --no-catalog-update or add it to the local catalog.`
-        );
-      }
-      const categoryIdFromArgs = assertSafePathSegment(args.categoryId, '--categoryId (required for new courses)');
-
-      const { catalog: catNext, created: catCreated } = ensureCategoryInCatalog({
-        catalog: workingCatalog,
-        categoryId: categoryIdFromArgs,
-        categoryTitle: args.categoryTitle,
-        categoryDescription: args.categoryDescription,
-        categoryEmoji: args.categoryEmoji,
-        categoryColor: args.categoryColor,
-      });
-      workingCatalog = catNext;
-
-      const { catalog: courseNext, created: courseCreated } = ensureCourseInCatalog({
-        catalog: workingCatalog,
-        courseId,
-        categoryId: categoryIdFromArgs,
-        courseTitle: args.courseTitle,
-        courseDescription: args.courseDescription,
-        courseEmoji: args.courseEmoji,
-        courseColor: args.courseColor,
-      });
-      workingCatalog = courseNext;
-
-      if (!args.dryRun && (catCreated || courseCreated)) {
-        await writeJson(catalogPath, workingCatalog);
-        if (catCreated) console.log(`✅ Added category to local catalog: ${categoryIdFromArgs}`);
-        if (courseCreated) console.log(`✅ Added course to local catalog: ${courseId} (categoryId: ${categoryIdFromArgs})`);
-      }
-    }
-
-    inferred = resolveHierarchyFromCatalog(workingCatalog, courseId);
-    if (!inferred) throw new Error(`Unable to resolve category for courseId: ${courseId}`);
+    inferred = await resolveHierarchyFromSupabase({ supabase, courseId, chapterId });
 
     if (!args.subject) args.subject = inferred.categoryTitle;
     if (!args.subcategory) args.subcategory = inferred.courseTitle;
-
-    if (!args.dryRun && chapterId && !args.noCatalogUpdate) {
-      const { catalog: nextCatalog, created } = ensureChapterInCatalog({
-        catalog: workingCatalog,
-        courseId,
-        chapterId,
-        chapterTitle: args.chapterTitle,
-        chapterDescription: args.chapterDescription,
-        chapterPosition: args.chapterPosition,
-      });
-      if (created) {
-        await writeJson(catalogPath, nextCatalog);
-        console.log(`✅ Added chapter to local catalog: ${chapterId} (courseId: ${courseId})`);
-        workingCatalog = nextCatalog;
-      }
-    }
-
-    inferred = resolveHierarchyFromCatalog(workingCatalog, courseId);
   }
 
   if (!args.subcategory) args.subcategory = 'Core Concepts';
@@ -374,6 +304,7 @@ async function main() {
 
   const topic = {
     id: topicId,
+     version: 1,
     subject: args.subject,
     subcategory: args.subcategory,
     ...(courseId ? { courseId } : {}),
@@ -381,7 +312,7 @@ async function main() {
     title: args.title,
     emoji: args.emoji,
     color,
-    description: args.description || 'Learn this concept in 60 seconds.',
+    description: args.description || 'Learn this concept in 1 minute.',
     difficulty: args.difficulty,
     published: Boolean(args.published),
     story: {
@@ -419,14 +350,18 @@ async function main() {
 
   topic.journey = compileJourneyFromTopic(topic);
 
+  const categoryDir = courseId
+    ? assertSafePathSegment(inferred?.categoryId, 'categoryId (from Supabase)')
+    : assertSafePathSegment(args.categoryId ?? slugifyCategoryId(args.subject), '--categoryId or --subject');
+
   const outDir = courseId
     ? path.join(
         TOPICS_DIR,
-        assertSafePathSegment(inferred?.categoryId, 'categoryId (from catalog)'),
+        categoryDir,
         courseId,
         chapterId
       )
-    : path.join(TOPICS_DIR, assertSafePathSegment(args.subject, '--subject'));
+    : path.join(TOPICS_DIR, categoryDir);
 
   const outPath = path.join(outDir, `${topicId}.topic.json`);
 
@@ -447,7 +382,7 @@ async function main() {
   console.log(`\nNext steps:`);
   console.log(`1. Edit story.hook, story.buildup, story.discovery, story.twist, story.climax, story.punchline`);
   console.log(`2. Edit quiz question and options`);
-  console.log(`3. Test with: npm run dev:local`);
+  console.log(`3. Test with: npm run dev`);
 }
 
 main().catch((e) => {

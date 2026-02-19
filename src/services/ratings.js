@@ -1,7 +1,4 @@
 import { getSupabaseClient, isSupabaseConfigured } from '../lib/supabaseClient';
-import { getContentSource } from './_contentSource';
-
-const LS_KEY = 'oma_topic_ratings_v1';
 
 function clampRating(n) {
   const v = Number(n);
@@ -9,25 +6,6 @@ function clampRating(n) {
   const i = Math.round(v);
   if (i < 1 || i > 5) return null;
   return i;
-}
-
-function readLocal() {
-  try {
-    const raw = window?.localStorage?.getItem(LS_KEY);
-    if (!raw) return {};
-    const obj = JSON.parse(raw);
-    return obj && typeof obj === 'object' ? obj : {};
-  } catch {
-    return {};
-  }
-}
-
-function writeLocal(obj) {
-  try {
-    window?.localStorage?.setItem(LS_KEY, JSON.stringify(obj ?? {}));
-  } catch {
-    // ignore
-  }
 }
 
 function requireSupabase() {
@@ -42,18 +20,7 @@ export async function getTopicRatingSummaries(topicIds) {
   const uniq = Array.from(new Set(ids));
   if (uniq.length === 0) return new Map();
 
-  if (getContentSource() === 'local') {
-    // Local mode: only show your own ratings (no crowd).
-    const map = new Map();
-    const local = readLocal();
-    for (const id of uniq) {
-      const r = clampRating(local[id]);
-      if (r) map.set(id, { avg_rating: r, ratings_count: 1 });
-    }
-    return map;
-  }
-
-  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+  if (!isSupabaseConfigured) return new Map();
 
   const supabase = requireSupabase();
 
@@ -81,12 +48,7 @@ export async function getMyTopicRating(topicId) {
   const id = String(topicId ?? '').trim();
   if (!id) return null;
 
-  if (getContentSource() === 'local') {
-    const local = readLocal();
-    return clampRating(local[id]);
-  }
-
-  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+  if (!isSupabaseConfigured) return null;
 
   const supabase = requireSupabase();
 
@@ -104,19 +66,7 @@ export async function getMyTopicRating(topicId) {
 }
 
 export async function listMyTopicRatings() {
-  if (getContentSource() === 'local') {
-    const local = readLocal();
-    return Object.entries(local)
-      .map(([topic_id, rating]) => ({
-        topic_id: String(topic_id),
-        rating: clampRating(rating),
-        updated_at: null,
-      }))
-      .filter((r) => Boolean(r.topic_id) && Boolean(r.rating))
-      .sort((a, b) => String(a.topic_id).localeCompare(String(b.topic_id)));
-  }
-
-  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+  if (!isSupabaseConfigured) return [];
 
   const supabase = requireSupabase();
 
@@ -144,13 +94,6 @@ export async function setMyTopicRating(topicId, rating) {
   const r = clampRating(rating);
   if (!id) throw new Error('Topic id missing');
   if (!r) throw new Error('Rating must be 1 to 5');
-
-  if (getContentSource() === 'local') {
-    const next = readLocal();
-    next[id] = r;
-    writeLocal(next);
-    return { rating: r };
-  }
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 

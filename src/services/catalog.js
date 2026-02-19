@@ -1,14 +1,5 @@
 import { getSupabaseClient, isSupabaseConfigured } from '../lib/supabaseClient';
-import { getContentSource } from './_contentSource';
 import { makeCacheKey, withCache } from './cache';
-import {
-  getLocalCourse,
-  isLocalCatalogMode,
-  listLocalCategories,
-  listLocalChapters,
-  listLocalCourses,
-  listLocalTopicsForCourse,
-} from './catalog.local';
 
 function requireSupabase() {
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
@@ -18,11 +9,6 @@ function requireSupabase() {
 }
 
 export async function listCategories() {
-  if (isLocalCatalogMode()) {
-    return listLocalCategories();
-  }
-
-  if (getContentSource() === 'local') return listLocalCategories();
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
   const cacheKey = makeCacheKey(['catalog', 'categories', 'supabase']);
@@ -39,10 +25,6 @@ export async function listCategories() {
 }
 
 export async function listCourses({ categoryId = null } = {}) {
-  if (isLocalCatalogMode()) {
-    return listLocalCourses({ categoryId });
-  }
-
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
   const cat = typeof categoryId === 'string' && categoryId.trim() ? categoryId.trim() : null;
@@ -65,12 +47,6 @@ export async function getCourse(courseId) {
   const id = String(courseId ?? '').trim();
   if (!id) throw new Error('Course id missing');
 
-  if (isLocalCatalogMode()) {
-    const c = getLocalCourse(id);
-    if (!c) throw new Error('Course not found');
-    return c;
-  }
-
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
   const cacheKey = makeCacheKey(['catalog', 'course', 'supabase', id]);
@@ -92,10 +68,6 @@ export async function listChapters({ courseId } = {}) {
   const id = String(courseId ?? '').trim();
   if (!id) return [];
 
-  if (isLocalCatalogMode()) {
-    return listLocalChapters({ courseId: id });
-  }
-
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
   const cacheKey = makeCacheKey(['catalog', 'chapters', 'supabase', id]);
@@ -115,10 +87,6 @@ export async function listChapters({ courseId } = {}) {
 export async function listTopicsForCourse({ courseId } = {}) {
   const id = String(courseId ?? '').trim();
   if (!id) return [];
-
-  if (isLocalCatalogMode()) {
-    return listLocalTopicsForCourse({ courseId: id });
-  }
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
@@ -141,12 +109,6 @@ export async function listTopicsForChapter({ courseId, chapterId } = {}) {
   const chapter = String(chapterId ?? '').trim();
   if (!course || !chapter) return [];
 
-  if (isLocalCatalogMode()) {
-    const all = await listLocalTopicsForCourse({ courseId: course });
-    return (Array.isArray(all) ? all : [])
-      .filter((t) => String(t?.chapter_id ?? t?.chapterId ?? '').trim() === chapter);
-  }
-
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
   const cacheKey = makeCacheKey(['catalog', 'chapterTopics', 'supabase', course, chapter]);
@@ -167,17 +129,6 @@ export async function listTopicsForChapter({ courseId, chapterId } = {}) {
 export async function getCourseCounts({ courseId } = {}) {
   const id = String(courseId ?? '').trim();
   if (!id) return { chapters: 0, topics: 0 };
-
-  if (isLocalCatalogMode()) {
-    const [ch, topics] = await Promise.all([
-      listLocalChapters({ courseId: id }),
-      listLocalTopicsForCourse({ courseId: id }),
-    ]);
-    return {
-      chapters: Array.isArray(ch) ? ch.length : 0,
-      topics: Array.isArray(topics) ? topics.length : 0,
-    };
-  }
 
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 

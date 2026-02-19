@@ -102,22 +102,21 @@ See: `docs/content-generation.md` for the content playbook.
 
 - If lesson completion shows an RPC error, re-run the SQL in [supabase/001_init.sql](supabase/001_init.sql) to update `public.complete_topic(...)`.
 - If your Supabase project was created before the 1MA change, also apply [supabase/010_one_ma_collectible.sql](supabase/010_one_ma_collectible.sql).
-- Ensure you are running `npm run dev` (Supabase mode), not `npm run dev:local` (Local Preview).
+- Ensure you are running `npm run dev` (staging Supabase by default).
 
-### Local Preview (no Supabase push while iterating)
+### Development
 
-When you’re drafting a new module, you can run the app using local JSON from `content/topics/**`:
+- `npm run dev` runs Vite in **staging** mode (staging Supabase).
+- `npm run dev:prod` runs Vite in the default mode (useful if you want production env vars locally).
 
-- `npm run dev:local`
+### Previewing content changes
 
-In this mode:
-- Topics/lessons come from `content/topics/**` (bundled by Vite)
-- 1MA balance/streak are stored in `localStorage` (1MA awarding is Pro-only)
-- `/lesson/:topicId` does not require login
+Edit JSON under `content/topics/**`, validate with `npm run content:validate`, then sync to **staging** for preview:
 
-When you’re happy, publish to Supabase with `npm run content:sync`.
+- Single topic (recommended): `npm run content:sync:staging -- --topic <topicId>`
+- Bulk sync: `npm run content:sync:staging`
 
-Tip: prefer `npm run content:sync -- --topic <id>` so publishing a new module only touches that one module.
+Then run `npm run dev` and verify the DB-backed behavior.
 
 ## 💳 Stripe Integration (Pro subscriptions)
 

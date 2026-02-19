@@ -42,6 +42,7 @@ async function readJson(filePath) {
 }
 
 function formatLastmod(date) {
+  if (!date) return null;
   try {
     return new Date(date).toISOString();
   } catch {
@@ -62,12 +63,28 @@ function urlEntry({ loc, lastmod, changefreq, priority }) {
 
 async function writeFileEnsuringDir(filePath, content) {
   await fs.mkdir(path.dirname(filePath), { recursive: true });
-  await fs.writeFile(filePath, content, 'utf8');
+  const next = String(content ?? '');
+  try {
+    const prev = await fs.readFile(filePath, 'utf8');
+    if (prev === next) return false;
+  } catch {
+    // ignore
+  }
+  await fs.writeFile(filePath, next, 'utf8');
+  return true;
 }
 
 async function writeBinaryEnsuringDir(filePath, buffer) {
   await fs.mkdir(path.dirname(filePath), { recursive: true });
-  await fs.writeFile(filePath, buffer);
+  const next = Buffer.isBuffer(buffer) ? buffer : Buffer.from(buffer);
+  try {
+    const prev = await fs.readFile(filePath);
+    if (Buffer.isBuffer(prev) && prev.equals(next)) return false;
+  } catch {
+    // ignore
+  }
+  await fs.writeFile(filePath, next);
+  return true;
 }
 
 function setPixel(png, x, y, r, g, b, a = 255) {
@@ -224,8 +241,25 @@ function makeTopicOgSvg({ title, emoji, color, siteName = '1 Minute Academy' }) 
 `  <text x="140" y="${titleY}" font-size="72" font-weight="800" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" fill="#f9fafb">${lines[0] ?? ''}</text>\n` +
 `  ${lines.length > 1 ? `<text x="140" y="${titleY + lineGap}" font-size="72" font-weight="800" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" fill="#f9fafb">${lines[1] ?? ''}</text>` : ''}\n` +
 `\n` +
-`  <text x="140" y="510" font-size="30" font-weight="700" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" fill="rgba(229,231,235,0.85)">${escapeXml(siteName)} · 60-second lesson</text>\n` +
+`  <text x="140" y="510" font-size="30" font-weight="700" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial" fill="rgba(229,231,235,0.85)">${escapeXml(siteName)} · 1-minute lesson</text>\n` +
 `</svg>\n`;
+}
+
+function parseLessonVersion(data) {
+  const v = data?.lesson?.version ?? data?.version ?? null;
+  const n = typeof v === 'string' ? Number.parseInt(v, 10) : Number(v);
+  if (!Number.isFinite(n) || n <= 0) return null;
+  return Math.floor(n);
+}
+
+function deterministicUpdatedAtFromVersion(version) {
+  const v = typeof version === 'number' ? version : parseLessonVersion({ lesson: { version } });
+  if (!v) return null;
+
+  // Deterministic timestamp derived from lesson.version.
+  // We intentionally avoid fs.mtime (which changes on checkout/zip/copy) to prevent churn.
+  const BASE_MS = Date.UTC(2026, 0, 1, 0, 0, 0);
+  return new Date(BASE_MS + v * 1000);
 }
 
 async function main() {
@@ -242,7 +276,7 @@ async function main() {
     try {
       const data = await readJson(file);
       if (!data?.id || data?.published !== true) continue;
-      const stat = await fs.stat(file);
+      const version = parseLessonVersion(data);
       topicRows.push({
         id: String(data.id),
         subject: String(data.subject ?? ''),
@@ -252,7 +286,8 @@ async function main() {
         emoji: String(data.emoji ?? ''),
         color: String(data.color ?? ''),
         difficulty: String(data.difficulty ?? ''),
-        updatedAt: stat.mtime,
+        version,
+        updatedAt: deterministicUpdatedAtFromVersion(version),
       });
     } catch {
       // Ignore invalid files here; content validation should catch them.
@@ -261,16 +296,22 @@ async function main() {
 
   topicRows.sort((a, b) => a.id.localeCompare(b.id));
 
-  const now = new Date();
+  const topicUpdatedAtMs = topicRows
+    .map((t) => (t.updatedAt instanceof Date ? t.updatedAt.getTime() : null))
+    .filter((n) => typeof n === 'number' && Number.isFinite(n));
+
+  const maxTopicUpdatedAt = topicUpdatedAtMs.length > 0 ? new Date(Math.max(...topicUpdatedAtMs)) : null;
+  const generatedAt = (maxTopicUpdatedAt ?? new Date(0)).toISOString();
 
   const routes = [
-    { path: '/', changefreq: 'weekly', priority: 1.0, lastmod: now },
-    { path: '/topics', changefreq: 'daily', priority: 0.9, lastmod: now },
-    { path: '/pricing', changefreq: 'monthly', priority: 0.6, lastmod: now },
-    { path: '/faq', changefreq: 'monthly', priority: 0.4, lastmod: now },
-    { path: '/privacy', changefreq: 'yearly', priority: 0.2, lastmod: now },
-    { path: '/terms', changefreq: 'yearly', priority: 0.2, lastmod: now },
-    { path: '/cookies', changefreq: 'yearly', priority: 0.2, lastmod: now },
+    { path: '/', changefreq: 'weekly', priority: 1.0, lastmod: null },
+    // /topics changes when topic content changes; tie lastmod to the newest published topic.
+    { path: '/topics', changefreq: 'daily', priority: 0.9, lastmod: maxTopicUpdatedAt },
+    { path: '/pricing', changefreq: 'monthly', priority: 0.6, lastmod: null },
+    { path: '/faq', changefreq: 'monthly', priority: 0.4, lastmod: null },
+    { path: '/privacy', changefreq: 'yearly', priority: 0.2, lastmod: null },
+    { path: '/terms', changefreq: 'yearly', priority: 0.2, lastmod: null },
+    { path: '/cookies', changefreq: 'yearly', priority: 0.2, lastmod: null },
   ];
 
   for (const t of topicRows) {
@@ -336,7 +377,7 @@ async function main() {
         emoji: t.emoji,
         color: t.color,
       });
-      await fs.writeFile(path.join(outDir, filename), svg, 'utf8');
+      await writeFileEnsuringDir(path.join(outDir, filename), svg);
     }
   }
 
@@ -386,13 +427,13 @@ async function main() {
         difficulty: difficulty || null,
         url: `${base}${urlPath}`,
         path: urlPath,
-        updatedAt: new Date(t.updatedAt).toISOString(),
+        updatedAt: t.updatedAt instanceof Date ? t.updatedAt.toISOString() : null,
       };
     });
 
     const json = JSON.stringify(
       {
-        generatedAt: now.toISOString(),
+        generatedAt,
         site: base,
         count: cleaned.length,
         topics: cleaned,
@@ -404,7 +445,7 @@ async function main() {
 
     const lines = [];
     lines.push('# 1 Minute Academy topics catalog');
-    lines.push(`# Generated: ${now.toISOString()}`);
+    lines.push(`# Generated: ${generatedAt}`);
     lines.push(`# Site: ${base}`);
     lines.push('# Format: TSV');
     lines.push('id\ttitle\tdescription\turl\tsubject\tsubcategory\tdifficulty\tupdatedAt');
