@@ -171,6 +171,66 @@ async function loadChaptersFromPlans({ courseIds }) {
   return out;
 }
 
+/**
+ * Derive category and course rows from course plan files so the sync script
+ * can upsert them *before* chapters (respecting FK: categories → courses → chapters).
+ */
+async function loadCategoriesAndCoursesFromPlans({ courseIds }) {
+  const files = await listCoursePlanFiles(COURSE_PLANS_DIR);
+  if (files.length === 0) return { categories: [], courses: [] };
+
+  const desiredCourses = new Set(Array.isArray(courseIds) ? courseIds.filter(Boolean) : []);
+  const categoryMap = new Map();
+  const courseMap = new Map();
+
+  for (const file of files) {
+    let plan;
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      plan = await readJson(file);
+    } catch {
+      continue;
+    }
+
+    const courseId = safeString(plan?.courseId);
+    if (!courseId) continue;
+    if (desiredCourses.size > 0 && !desiredCourses.has(courseId)) continue;
+
+    const categoryId = safeString(plan?.categoryId);
+    if (!categoryId) continue;
+
+    // Accumulate categories (de-duped by id)
+    if (!categoryMap.has(categoryId)) {
+      categoryMap.set(categoryId, {
+        id: categoryId,
+        title: safeString(plan?.subject) || categoryId,
+        emoji: safeString(plan?.emoji) || null,
+        color: safeString(plan?.color) || null,
+        description: `Explore 1-minute lessons in ${safeString(plan?.subject) || categoryId}.`,
+        published: true,
+      });
+    }
+
+    // Accumulate courses (de-duped by id)
+    if (!courseMap.has(courseId)) {
+      courseMap.set(courseId, {
+        id: courseId,
+        category_id: categoryId,
+        title: safeString(plan?.courseTitle) || courseId,
+        emoji: safeString(plan?.emoji) || null,
+        color: safeString(plan?.color) || null,
+        description: safeString(plan?.description) || null,
+        published: true,
+      });
+    }
+  }
+
+  return {
+    categories: Array.from(categoryMap.values()),
+    courses: Array.from(courseMap.values()),
+  };
+}
+
 function parseArgs(argv) {
   const args = { topics: null, dryRun: false, force: false, insertOnly: false, env: null };
 
@@ -310,6 +370,8 @@ async function main() {
 
   // Keep chapters in Supabase aligned with the human-authored course plan(s), so
   // the Chapters page renders clean titles and correct ordering.
+  //
+  // Also upsert categories and courses first (FK order: categories → courses → chapters).
   const courseIdsInSync = Array.from(
     new Set(
       Array.from(localById.values())
@@ -318,6 +380,42 @@ async function main() {
     )
   ).sort();
 
+  const { categories: categoryRows, courses: courseRows } =
+    await loadCategoriesAndCoursesFromPlans({ courseIds: courseIdsInSync });
+
+  // --- Upsert categories ---
+  if (categoryRows.length > 0) {
+    console.log(`[content:sync] categories from plans: ${categoryRows.length}`);
+    if (args.dryRun) {
+      for (const cat of categoryRows) {
+        console.log(`(dry-run) category upsert: ${cat.id} -> ${cat.title}`);
+      }
+    } else {
+      const { error: catErr } = await supabase
+        .from('categories')
+        .upsert(categoryRows, { onConflict: 'id', ignoreDuplicates: true });
+      if (catErr) throw catErr;
+      console.log('✅ Categories upserted from course plans.');
+    }
+  }
+
+  // --- Upsert courses ---
+  if (courseRows.length > 0) {
+    console.log(`[content:sync] courses from plans: ${courseRows.length}`);
+    if (args.dryRun) {
+      for (const c of courseRows) {
+        console.log(`(dry-run) course upsert: ${c.id} -> ${c.title}`);
+      }
+    } else {
+      const { error: crsErr } = await supabase
+        .from('courses')
+        .upsert(courseRows, { onConflict: 'id', ignoreDuplicates: true });
+      if (crsErr) throw crsErr;
+      console.log('✅ Courses upserted from course plans.');
+    }
+  }
+
+  // --- Upsert chapters ---
   const chapterRowsFromPlans = await loadChaptersFromPlans({ courseIds: courseIdsInSync });
   if (chapterRowsFromPlans.length > 0) {
     console.log(`[content:sync] chapters from plans: ${chapterRowsFromPlans.length}`);
