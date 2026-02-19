@@ -68,6 +68,7 @@ Allowed difficulty values in topic JSON:
 
 Every topic must be:
 - **Unique**: no duplicate titles, no duplicate story beats, no recycled quiz questions.
+- **Non-templated** (STRICT): do **not** reuse the same beat phrasing pattern across topics (e.g. avoid repeating identical lead-ins like “Aim for: … / Key move: … / Common trap: … / If you remember one thing: …” in every topic). Each beat must be written with **fresh wording** that still fits the 60-second format.
 - **Specific**: tightly focused on the topic title (no generic filler).
 - **Coherent in 1 minute**: the story beats should fit the 60-second format.
 - **Correct**: no contradictions across topics in the same course.
@@ -75,6 +76,16 @@ Every topic must be:
 Minimum lesson payload per topic:
 - A 6-beat story: `hook`, `buildup`, `discovery`, `twist`, `climax`, `punchline`
 - A quiz with 2–4 options and one correct answer.
+
+### Authored mode (STRICT requirement)
+For new courses, topics must be created in **authored mode**:
+- Every topic must include a fully written `story` object (all 6 beats, each with its own unique wording).
+- The generator must act as a **compiler/packager** only (validate, normalize, write files) and must **not** auto-write story prose from templates.
+- The course plan must set `requireAuthoredStory: true` so generation fails fast if any topic is missing a story.
+
+Enforcement notes:
+- The generator enforces authored-only. If `requireAuthoredStory` is missing, it is treated as `true`.
+- Template-based story generation is not allowed.
 
 ---
 

@@ -881,6 +881,7 @@ function categorySpecificCourseTitles(title) {
       'LLMs 101',
       'RAG Basics',
       'AI Agents',
+      'Agent Builder Lab',
       'Evaluation & Testing',
       'AI Product Design',
       'AI Safety Basics',

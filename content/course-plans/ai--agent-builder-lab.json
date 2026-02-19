@@ -1,0 +1,2456 @@
+{
+  "categoryId": "ai",
+  "subject": "AI",
+  "courseId": "ai--agent-builder-lab",
+  "courseTitle": "Agent Builder Lab",
+  "emoji": "🤖",
+  "color": "#EF4444",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "ai--agent-builder-lab--ch01-foundations",
+      "title": "Foundations",
+      "position": 1
+    },
+    {
+      "id": "ai--agent-builder-lab--ch02-prompts-and-tools",
+      "title": "Prompts & Tools",
+      "position": 2
+    },
+    {
+      "id": "ai--agent-builder-lab--ch03-planning-and-control",
+      "title": "Planning & Control",
+      "position": 3
+    },
+    {
+      "id": "ai--agent-builder-lab--ch04-memory-and-rag",
+      "title": "Memory & RAG",
+      "position": 4
+    },
+    {
+      "id": "ai--agent-builder-lab--ch05-safety-and-guardrails",
+      "title": "Safety & Guardrails",
+      "position": 5
+    },
+    {
+      "id": "ai--agent-builder-lab--ch06-evaluation",
+      "title": "Evaluation",
+      "position": 6
+    },
+    {
+      "id": "ai--agent-builder-lab--ch07-shipping",
+      "title": "Shipping",
+      "position": 7
+    }
+  ],
+  "topics": [
+    {
+      "id": "ai--agent-builder-lab--t01-agent-vs-automation",
+      "chapter_id": "ai--agent-builder-lab--ch01-foundations",
+      "title": "Agent vs Automation",
+      "description": "A quick, practical guide to Agent vs Automation.",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "visual": "📌",
+          "text": "Agent vs Automation, explained like you’re shipping it this week."
+        },
+        "buildup": {
+          "visual": "🧭",
+          "text": "Make this your target condition: Use an agent only when decisions depend on context that changes."
+        },
+        "discovery": {
+          "visual": "🧰",
+          "text": "If you only do one action today, do: Write the decision boundary in one sentence."
+        },
+        "twist": {
+          "visual": "🧱",
+          "text": "A common self-own: Using an agent for a deterministic script task."
+        },
+        "climax": {
+          "visual": "🏁",
+          "text": "Anchor the whole approach on this: Use an agent only when decisions depend on context that changes."
+        },
+        "punchline": {
+          "visual": "🎬",
+          "text": "If it’s a checklist, don’t make it an agent."
+        }
+      },
+      "quiz": {
+        "question": "When is an agent the right choice?",
+        "options": [
+          "When the task is fully deterministic",
+          "When decisions depend on changing context",
+          "When you want fewer logs",
+          "When you can avoid validation"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t02-the-observe-think-act-loop",
+      "chapter_id": "ai--agent-builder-lab--ch01-foundations",
+      "title": "The Observe → Think → Act Loop",
+      "description": "A quick win: understand The Observe → Think → Act Loop.",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "visual": "🛠️",
+          "text": "Let’s make The Observe → Think → Act Loop concrete."
+        },
+        "buildup": {
+          "visual": "🎯",
+          "text": "Optimize for: Make the loop explicit so you can test each step."
+        },
+        "discovery": {
+          "visual": "🧪",
+          "text": "Practical shortcut: Log inputs/outputs for each step of the loop."
+        },
+        "twist": {
+          "visual": "🔒",
+          "text": "What not to do (even if it’s tempting): Letting the model “implicitly” decide without state."
+        },
+        "climax": {
+          "visual": "🔑",
+          "text": "Make the loop explicit so you can test each step. — and you’ll avoid most pain."
+        },
+        "punchline": {
+          "visual": "🧲",
+          "text": "Explicit loops are debuggable loops."
+        }
+      },
+      "quiz": {
+        "question": "What’s the main benefit of making the loop explicit?",
+        "options": [
+          "It increases randomness",
+          "It makes each step testable",
+          "It removes the need for tools",
+          "It guarantees perfect answers"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t03-problem-framing-for-agents",
+      "chapter_id": "ai--agent-builder-lab--ch01-foundations",
+      "title": "Problem Framing for Agents",
+      "description": "A short lesson to help you apply Problem Framing for Agents.",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "visual": "📌",
+          "text": "If Problem Framing for Agents feels fuzzy, this will sharpen it."
+        },
+        "buildup": {
+          "visual": "🧭",
+          "text": "Make this your target condition: Define the user outcome and the constraints before building."
+        },
+        "discovery": {
+          "visual": "🧰",
+          "text": "Convert the idea into a checklist item: Write success as an observable output."
+        },
+        "twist": {
+          "visual": "🧱",
+          "text": "The fastest way to regress: Starting with tools before a clear success definition."
+        },
+        "climax": {
+          "visual": "🏁",
+          "text": "If you’re forced to simplify, simplify to: Define the user outcome and the constraints before building."
+        },
+        "punchline": {
+          "visual": "🎬",
+          "text": "If you can’t measure it, you can’t ship it."
+        }
+      },
+      "quiz": {
+        "question": "What should you define first?",
+        "options": [
+          "All possible tools",
+          "Observable success output",
+          "A longer prompt",
+          "A bigger model"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t04-failure-modes-tool-errors-vs-hallucinations",
+      "chapter_id": "ai--agent-builder-lab--ch01-foundations",
+      "title": "Failure Modes: Tool Errors vs Hallucinations",
+      "description": "A tiny lesson with a big payoff: Failure Modes: Tool Errors vs Hallucinations.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "⚡️",
+          "text": "The shortest useful explanation of Failure Modes: Tool Errors vs Hallucinations."
+        },
+        "buildup": {
+          "visual": "🧱",
+          "text": "What you’re really trying to achieve: Classify failures so fixes are targeted."
+        },
+        "discovery": {
+          "visual": "🛠️",
+          "text": "A clean implementation path begins with: Tag failures as tool/runtime/data/prompt/model."
+        },
+        "twist": {
+          "visual": "🧯",
+          "text": "The mistake that ruins it: Treating every error as “the model is bad”."
+        },
+        "climax": {
+          "visual": "🧪",
+          "text": "If you want one rule that survives edge cases: Classify failures so fixes are targeted."
+        },
+        "punchline": {
+          "visual": "📣",
+          "text": "A good taxonomy halves debugging time."
+        }
+      },
+      "quiz": {
+        "question": "What’s the best first step after a failure?",
+        "options": [
+          "Increase temperature",
+          "Classify the failure mode",
+          "Add more tools",
+          "Remove logs"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t05-idempotency-in-agent-actions",
+      "chapter_id": "ai--agent-builder-lab--ch01-foundations",
+      "title": "Idempotency in Agent Actions",
+      "description": "A 1-minute de-risking session on Idempotency in Agent Actions.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "📌",
+          "text": "If Idempotency in Agent Actions feels fuzzy, this will sharpen it."
+        },
+        "buildup": {
+          "visual": "🧭",
+          "text": "Treat this as the contract: Make actions safe to retry without causing duplicates."
+        },
+        "discovery": {
+          "visual": "🧰",
+          "text": "Operational move: Use idempotency keys for side effects."
+        },
+        "twist": {
+          "visual": "🧱",
+          "text": "The trapdoor here is: Charging, emailing, or writing twice on retry."
+        },
+        "climax": {
+          "visual": "🏁",
+          "text": "If you’re forced to simplify, simplify to: Make actions safe to retry without causing duplicates."
+        },
+        "punchline": {
+          "visual": "🎬",
+          "text": "Retries are normal; duplicates are optional."
+        }
+      },
+      "quiz": {
+        "question": "What prevents duplicate side effects on retries?",
+        "options": [
+          "Longer prompts",
+          "Idempotency keys",
+          "More tokens",
+          "Skipping validation"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t06-thin-slice-mvp-for-agents",
+      "chapter_id": "ai--agent-builder-lab--ch01-foundations",
+      "title": "Thin-Slice MVP for Agents",
+      "description": "One-minute skill: Thin-Slice MVP for Agents.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "⚡️",
+          "text": "Speed-run: Thin-Slice MVP for Agents."
+        },
+        "buildup": {
+          "visual": "🧱",
+          "text": "What you’re really trying to achieve: Ship the smallest loop that creates real user value."
+        },
+        "discovery": {
+          "visual": "🛠️",
+          "text": "Minimum viable practice: Start with one tool and one happy path."
+        },
+        "twist": {
+          "visual": "🧯",
+          "text": "Don’t let your system drift into this: Building “general intelligence” before a working path."
+        },
+        "climax": {
+          "visual": "🧪",
+          "text": "This is the “do-not-forget” constraint: Ship the smallest loop that creates real user value."
+        },
+        "punchline": {
+          "visual": "📣",
+          "text": "Narrow wins first; breadth later."
+        }
+      },
+      "quiz": {
+        "question": "What is a thin-slice MVP?",
+        "options": [
+          "Every feature at once",
+          "One valuable end-to-end happy path",
+          "Only UI polish",
+          "Only model upgrades"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t07-when-not-to-use-an-agent",
+      "chapter_id": "ai--agent-builder-lab--ch01-foundations",
+      "title": "When Not to Use an Agent",
+      "description": "A quick win: understand When Not to Use an Agent.",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "visual": "🧪",
+          "text": "Speed-run: When Not to Use an Agent."
+        },
+        "buildup": {
+          "visual": "📍",
+          "text": "The main objective for When Not to Use an Agent is: Avoid agents when rules are stable and strict."
+        },
+        "discovery": {
+          "visual": "🧱",
+          "text": "The simplest implementation step: Ask: can a deterministic function do this?"
+        },
+        "twist": {
+          "visual": "⚠️",
+          "text": "The easy-to-miss pitfall: Using an agent as a fragile replacement for rules."
+        },
+        "climax": {
+          "visual": "📌",
+          "text": "This is the “do-not-forget” constraint: Avoid agents when rules are stable and strict."
+        },
+        "punchline": {
+          "visual": "🔁",
+          "text": "Use code for rules; agents for judgment."
+        }
+      },
+      "quiz": {
+        "question": "When should you avoid an agent?",
+        "options": [
+          "When rules are stable and strict",
+          "When context changes often",
+          "When tool outputs vary",
+          "When you need explanations"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t08-determinism-vs-creativity-temperature",
+      "chapter_id": "ai--agent-builder-lab--ch01-foundations",
+      "title": "Determinism vs Creativity (Temperature)",
+      "description": "Learn Determinism vs Creativity (Temperature) in one minute.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "🛠️",
+          "text": "One minute to de-risk Determinism vs Creativity (Temperature)."
+        },
+        "buildup": {
+          "visual": "🎯",
+          "text": "When in doubt, anchor on this: Use low variance for operations; isolate creativity."
+        },
+        "discovery": {
+          "visual": "🧪",
+          "text": "Start here: Set temperature low for tool calls and structured tasks."
+        },
+        "twist": {
+          "visual": "🔒",
+          "text": "The sneaky risk: Turning up temperature to “fix” reliability."
+        },
+        "climax": {
+          "visual": "🔑",
+          "text": "This is what “good” reduces to: Use low variance for operations; isolate creativity."
+        },
+        "punchline": {
+          "visual": "🧲",
+          "text": "Creativity is a mode, not a default."
+        }
+      },
+      "quiz": {
+        "question": "What’s the best default for tool-heavy tasks?",
+        "options": [
+          "High temperature",
+          "Low temperature",
+          "No constraints",
+          "No retries"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t09-role-goal-constraints",
+      "chapter_id": "ai--agent-builder-lab--ch02-prompts-and-tools",
+      "title": "Role + Goal + Constraints",
+      "description": "A quick, practical guide to Role + Goal + Constraints.",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "visual": "🧭",
+          "text": "You’re building Role + Goal + Constraints. Here’s the 60-second version."
+        },
+        "buildup": {
+          "visual": "🧩",
+          "text": "Your north star: Constraints prevent drift and reduce surprises."
+        },
+        "discovery": {
+          "visual": "🧩",
+          "text": "A clean implementation path begins with: Specify allowed actions and forbidden actions."
+        },
+        "twist": {
+          "visual": "🕳️",
+          "text": "The mistake that ruins it: Vague prompts that allow “helpful” but wrong actions."
+        },
+        "climax": {
+          "visual": "🧱",
+          "text": "Print this on the wall: Constraints prevent drift and reduce surprises."
+        },
+        "punchline": {
+          "visual": "✨",
+          "text": "Constraints are feature, not friction."
+        }
+      },
+      "quiz": {
+        "question": "What do constraints mainly prevent?",
+        "options": [
+          "Any mistakes",
+          "Goal drift and unsafe actions",
+          "The need for tools",
+          "All latency"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t10-input-contracts-what-the-agent-can-assume",
+      "chapter_id": "ai--agent-builder-lab--ch02-prompts-and-tools",
+      "title": "Input Contracts (What the Agent Can Assume)",
+      "description": "A 60-second lesson on Input Contracts (What the Agent Can Assume).",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "visual": "🧭",
+          "text": "Input Contracts (What the Agent Can Assume), explained like you’re shipping it this week."
+        },
+        "buildup": {
+          "visual": "🧩",
+          "text": "The bar you want to clear: Define what inputs are required and what may be missing."
+        },
+        "discovery": {
+          "visual": "🧩",
+          "text": "A reliable next step: Validate inputs and ask for missing fields."
+        },
+        "twist": {
+          "visual": "🕳️",
+          "text": "The failure mode to anticipate: Assuming fields exist and failing unpredictably."
+        },
+        "climax": {
+          "visual": "🧱",
+          "text": "Anchor the whole approach on this: Define what inputs are required and what may be missing."
+        },
+        "punchline": {
+          "visual": "✨",
+          "text": "A contract turns chaos into cases."
+        }
+      },
+      "quiz": {
+        "question": "What’s an input contract for?",
+        "options": [
+          "Hiding errors",
+          "Defining required vs optional inputs",
+          "Increasing model creativity",
+          "Reducing logging"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t11-structured-outputs-with-json-schema",
+      "chapter_id": "ai--agent-builder-lab--ch02-prompts-and-tools",
+      "title": "Structured Outputs with JSON Schema",
+      "description": "A 1-minute de-risking session on Structured Outputs with JSON Schema.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "📌",
+          "text": "You’re building Structured Outputs with JSON Schema. Here’s the 60-second version."
+        },
+        "buildup": {
+          "visual": "🧭",
+          "text": "Treat this as the contract: Structure makes downstream code safe."
+        },
+        "discovery": {
+          "visual": "🧰",
+          "text": "Practical shortcut: Return JSON that matches a schema."
+        },
+        "twist": {
+          "visual": "🧱",
+          "text": "What not to do (even if it’s tempting): Free-form text that breaks parsers."
+        },
+        "climax": {
+          "visual": "🏁",
+          "text": "Print this on the wall: Structure makes downstream code safe."
+        },
+        "punchline": {
+          "visual": "🎬",
+          "text": "Structure is how agents become software."
+        }
+      },
+      "quiz": {
+        "question": "Why prefer structured outputs?",
+        "options": [
+          "They look nicer",
+          "They are machine-validated",
+          "They remove the need for tests",
+          "They increase randomness"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t12-tool-selection-one-tool-at-a-time",
+      "chapter_id": "ai--agent-builder-lab--ch02-prompts-and-tools",
+      "title": "Tool Selection: One Tool at a Time",
+      "description": "A 1-minute de-risking session on Tool Selection: One Tool at a Time.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "🔍",
+          "text": "Here’s how Tool Selection: One Tool at a Time works when you’re under pressure."
+        },
+        "buildup": {
+          "visual": "🔑",
+          "text": "Reduce branching by selecting a single next tool. (that’s the whole game)."
+        },
+        "discovery": {
+          "visual": "🔧",
+          "text": "Make it real by doing this: Force a single “next action” decision."
+        },
+        "twist": {
+          "visual": "🪤",
+          "text": "Where teams usually slip: Trying multiple tools and merging guesses."
+        },
+        "climax": {
+          "visual": "✅",
+          "text": "Your final check before you ship: Reduce branching by selecting a single next tool."
+        },
+        "punchline": {
+          "visual": "🧷",
+          "text": "One clear step beats three fuzzy steps."
+        }
+      },
+      "quiz": {
+        "question": "What’s the benefit of one-tool-at-a-time?",
+        "options": [
+          "More parallelism",
+          "Lower branching and easier debugging",
+          "More hallucinations",
+          "Less determinism"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t13-error-handling-prompts-that-recover",
+      "chapter_id": "ai--agent-builder-lab--ch02-prompts-and-tools",
+      "title": "Error-Handling Prompts that Recover",
+      "description": "Learn Error-Handling Prompts that Recover in one minute.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "🧪",
+          "text": "Speed-run: Error-Handling Prompts that Recover."
+        },
+        "buildup": {
+          "visual": "📍",
+          "text": "Keep the outcome simple: Recovery prompts should be specific and stateful."
+        },
+        "discovery": {
+          "visual": "🧱",
+          "text": "If you only do one action today, do: Include error context + a changed strategy on retry."
+        },
+        "twist": {
+          "visual": "⚠️",
+          "text": "A common self-own: Repeating the same failing instruction."
+        },
+        "climax": {
+          "visual": "📌",
+          "text": "This is the “do-not-forget” constraint: Recovery prompts should be specific and stateful."
+        },
+        "punchline": {
+          "visual": "🔁",
+          "text": "Retries must change something."
+        }
+      },
+      "quiz": {
+        "question": "What should a retry include?",
+        "options": [
+          "A longer prompt only",
+          "Error context and a changed strategy",
+          "No context",
+          "No constraints"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t14-few-shot-examples-for-tool-use",
+      "chapter_id": "ai--agent-builder-lab--ch02-prompts-and-tools",
+      "title": "Few-Shot Examples for Tool Use",
+      "description": "Learn Few-Shot Examples for Tool Use in one minute.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "⚡️",
+          "text": "The shortest useful explanation of Few-Shot Examples for Tool Use."
+        },
+        "buildup": {
+          "visual": "🧱",
+          "text": "What you’re really trying to achieve: Examples anchor formatting and decision thresholds."
+        },
+        "discovery": {
+          "visual": "🛠️",
+          "text": "One habit that makes Few-Shot Examples for Tool Use work: Add 1–3 minimal examples for tricky tool calls."
+        },
+        "twist": {
+          "visual": "🧯",
+          "text": "This breaks reliability fast: Assuming the model will infer edge cases."
+        },
+        "climax": {
+          "visual": "🧪",
+          "text": "If you want one rule that survives edge cases: Examples anchor formatting and decision thresholds."
+        },
+        "punchline": {
+          "visual": "📣",
+          "text": "Examples are the shortest documentation."
+        }
+      },
+      "quiz": {
+        "question": "Why add few-shot examples?",
+        "options": [
+          "To increase token use",
+          "To anchor formatting and thresholds",
+          "To avoid schemas",
+          "To remove evaluation"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t15-guarded-tool-use-validate-before-act",
+      "chapter_id": "ai--agent-builder-lab--ch02-prompts-and-tools",
+      "title": "Guarded Tool Use (Validate Before Act)",
+      "description": "A fast breakdown of Guarded Tool Use (Validate Before Act) for builders.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "⚡️",
+          "text": "The shortest useful explanation of Guarded Tool Use (Validate Before Act)."
+        },
+        "buildup": {
+          "visual": "🧱",
+          "text": "The point of Guarded Tool Use (Validate Before Act): Validate tool inputs before executing side effects."
+        },
+        "discovery": {
+          "visual": "🛠️",
+          "text": "This is the lever to pull: Run a validation step before side effects."
+        },
+        "twist": {
+          "visual": "🧯",
+          "text": "Most “it didn’t work” stories start with: Letting the agent call tools with malformed params."
+        },
+        "climax": {
+          "visual": "🧪",
+          "text": "If you want one rule that survives edge cases: Validate tool inputs before executing side effects."
+        },
+        "punchline": {
+          "visual": "📣",
+          "text": "Validate → then act."
+        }
+      },
+      "quiz": {
+        "question": "What does guarded tool use add?",
+        "options": [
+          "More side effects",
+          "A validation gate before acting",
+          "Less safety",
+          "Less observability"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t16-tools-vs-retrieval-when-to-rag",
+      "chapter_id": "ai--agent-builder-lab--ch02-prompts-and-tools",
+      "title": "Tools vs Retrieval (When to RAG)",
+      "description": "One-minute skill: Tools vs Retrieval (When to RAG).",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "🧠",
+          "text": "Let’s make Tools vs Retrieval (When to RAG) concrete."
+        },
+        "buildup": {
+          "visual": "🏁",
+          "text": "A strong default here is: Use tools for actions; retrieval for knowledge."
+        },
+        "discovery": {
+          "visual": "🗺️",
+          "text": "A clean implementation path begins with: Ask: do we need facts or effects?"
+        },
+        "twist": {
+          "visual": "🚧",
+          "text": "The mistake that ruins it: Using RAG as a substitute for doing the action."
+        },
+        "climax": {
+          "visual": "🧠",
+          "text": "Use tools for actions; retrieval for knowledge. — and you’ll avoid most pain."
+        },
+        "punchline": {
+          "visual": "🚀",
+          "text": "Facts come from retrieval; effects come from tools."
+        }
+      },
+      "quiz": {
+        "question": "When should you prefer retrieval?",
+        "options": [
+          "When you need an irreversible side effect",
+          "When you need up-to-date facts",
+          "When you want to send emails",
+          "When you want to write to a DB"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t17-decomposition-strategies",
+      "chapter_id": "ai--agent-builder-lab--ch03-planning-and-control",
+      "title": "Decomposition Strategies",
+      "description": "One-minute skill: Decomposition Strategies.",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "visual": "⚡️",
+          "text": "The shortest useful explanation of Decomposition Strategies."
+        },
+        "buildup": {
+          "visual": "🧱",
+          "text": "What you’re really trying to achieve: Split work into steps with clear inputs/outputs."
+        },
+        "discovery": {
+          "visual": "🛠️",
+          "text": "Try this small experiment: Define step boundaries and expected artifacts."
+        },
+        "twist": {
+          "visual": "🧯",
+          "text": "This is how it quietly breaks: One giant prompt that hides intermediate failures."
+        },
+        "climax": {
+          "visual": "🧪",
+          "text": "If you want one rule that survives edge cases: Split work into steps with clear inputs/outputs."
+        },
+        "punchline": {
+          "visual": "📣",
+          "text": "Small steps are testable steps."
+        }
+      },
+      "quiz": {
+        "question": "What is good decomposition?",
+        "options": [
+          "One huge step",
+          "Steps with clear inputs/outputs",
+          "No intermediate artifacts",
+          "No validation"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t18-plan-vs-execute-two-phase-thinking",
+      "chapter_id": "ai--agent-builder-lab--ch03-planning-and-control",
+      "title": "Plan vs Execute (Two-Phase Thinking)",
+      "description": "A 1-minute de-risking session on Plan vs Execute (Two-Phase Thinking).",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "🤖",
+          "text": "Today’s micro-lesson: Plan vs Execute (Two-Phase Thinking)."
+        },
+        "buildup": {
+          "visual": "📌",
+          "text": "If you had to choose one outcome, choose: Separate planning from execution to reduce chaos."
+        },
+        "discovery": {
+          "visual": "📎",
+          "text": "This is the lever to pull: Generate a plan, then follow it with checks."
+        },
+        "twist": {
+          "visual": "🧨",
+          "text": "Most “it didn’t work” stories start with: Executing while still deciding what to do."
+        },
+        "climax": {
+          "visual": "🧭",
+          "text": "When you’re debugging at 2am, return to: Separate planning from execution to reduce chaos."
+        },
+        "punchline": {
+          "visual": "🧾",
+          "text": "Think first, then act."
+        }
+      },
+      "quiz": {
+        "question": "Why separate plan and execute?",
+        "options": [
+          "To increase drift",
+          "To reduce chaotic tool calls",
+          "To remove logs",
+          "To avoid constraints"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t19-state-machines-for-reliability",
+      "chapter_id": "ai--agent-builder-lab--ch03-planning-and-control",
+      "title": "State Machines for Reliability",
+      "description": "A quick win: understand State Machines for Reliability.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "⚡️",
+          "text": "The shortest useful explanation of State Machines for Reliability."
+        },
+        "buildup": {
+          "visual": "🧱",
+          "text": "The point of State Machines for Reliability: Explicit states prevent weird loops and dead ends."
+        },
+        "discovery": {
+          "visual": "🛠️",
+          "text": "Try this small experiment: Represent state transitions in code."
+        },
+        "twist": {
+          "visual": "🧯",
+          "text": "This is how it quietly breaks: Implicit state stored only in the model’s head."
+        },
+        "climax": {
+          "visual": "🧪",
+          "text": "If you want one rule that survives edge cases: Explicit states prevent weird loops and dead ends."
+        },
+        "punchline": {
+          "visual": "📣",
+          "text": "If you can diagram it, you can debug it."
+        }
+      },
+      "quiz": {
+        "question": "What do state machines provide?",
+        "options": [
+          "More randomness",
+          "Explicit state transitions",
+          "No need for retries",
+          "No need for tests"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t20-retry-policies-what-to-retry-what-not-to",
+      "chapter_id": "ai--agent-builder-lab--ch03-planning-and-control",
+      "title": "Retry Policies (What to Retry, What Not To)",
+      "description": "A short lesson to help you apply Retry Policies (What to Retry, What Not To).",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "🔍",
+          "text": "A quick win: Retry Policies (What to Retry, What Not To)."
+        },
+        "buildup": {
+          "visual": "🔑",
+          "text": "Define “good” as: Retry only when retries can change the outcome."
+        },
+        "discovery": {
+          "visual": "🔧",
+          "text": "Concrete technique: Retry read operations more than writes."
+        },
+        "twist": {
+          "visual": "🪤",
+          "text": "The thing that looks fine… until it isn’t: Retrying side effects without idempotency."
+        },
+        "climax": {
+          "visual": "✅",
+          "text": "The decision you keep making over and over: Retry only when retries can change the outcome."
+        },
+        "punchline": {
+          "visual": "🧷",
+          "text": "Retry reads; guard writes."
+        }
+      },
+      "quiz": {
+        "question": "What should you be careful retrying?",
+        "options": [
+          "Pure reads",
+          "Side effects / writes",
+          "Parsing JSON",
+          "Validation"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t21-stop-conditions-when-to-halt",
+      "chapter_id": "ai--agent-builder-lab--ch03-planning-and-control",
+      "title": "Stop Conditions (When to Halt)",
+      "description": "Learn Stop Conditions (When to Halt) in one minute.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "🧠",
+          "text": "The “don’t waste time” guide to Stop Conditions (When to Halt)."
+        },
+        "buildup": {
+          "visual": "🏁",
+          "text": "Success looks like this: Stop safely when confidence is low or budget is exceeded."
+        },
+        "discovery": {
+          "visual": "🗺️",
+          "text": "If you only do one action today, do: Add max steps and explicit “give up” criteria."
+        },
+        "twist": {
+          "visual": "🚧",
+          "text": "A common self-own: Infinite loops chasing perfect answers."
+        },
+        "climax": {
+          "visual": "🧠",
+          "text": "The shortest summary that’s still correct: Stop safely when confidence is low or budget is exceeded."
+        },
+        "punchline": {
+          "visual": "🚀",
+          "text": "Stopping is a feature."
+        }
+      },
+      "quiz": {
+        "question": "What is a good stop condition?",
+        "options": [
+          "No limits",
+          "Max steps / budget thresholds",
+          "Always continue",
+          "Never escalate"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t22-budgeting-tokens-time-and-money",
+      "chapter_id": "ai--agent-builder-lab--ch03-planning-and-control",
+      "title": "Budgeting Tokens, Time, and Money",
+      "description": "A quick win: understand Budgeting Tokens, Time, and Money.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "🛠️",
+          "text": "The “don’t waste time” guide to Budgeting Tokens, Time, and Money."
+        },
+        "buildup": {
+          "visual": "🎯",
+          "text": "When in doubt, anchor on this: Budgets enforce predictable cost and latency."
+        },
+        "discovery": {
+          "visual": "🧪",
+          "text": "The simplest implementation step: Set per-run ceilings and degrade gracefully."
+        },
+        "twist": {
+          "visual": "🔒",
+          "text": "The easy-to-miss pitfall: Letting the agent run until it “feels done”."
+        },
+        "climax": {
+          "visual": "🔑",
+          "text": "The shortest summary that’s still correct: Budgets enforce predictable cost and latency."
+        },
+        "punchline": {
+          "visual": "🧲",
+          "text": "Budgets keep you in control."
+        }
+      },
+      "quiz": {
+        "question": "Why set budgets?",
+        "options": [
+          "To hide failures",
+          "To cap cost and latency",
+          "To reduce determinism",
+          "To avoid monitoring"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t23-escalation-to-humans-human-in-the-loop",
+      "chapter_id": "ai--agent-builder-lab--ch03-planning-and-control",
+      "title": "Escalation to Humans (Human-in-the-Loop)",
+      "description": "A 60-second lesson on Escalation to Humans (Human-in-the-Loop).",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "🧭",
+          "text": "You’re building Escalation to Humans (Human-in-the-Loop). Here’s the 60-second version."
+        },
+        "buildup": {
+          "visual": "🧩",
+          "text": "Your north star: Escalate when risk or uncertainty crosses a threshold."
+        },
+        "discovery": {
+          "visual": "🧩",
+          "text": "A clean implementation path begins with: Route edge cases to human review."
+        },
+        "twist": {
+          "visual": "🕳️",
+          "text": "The mistake that ruins it: Forcing automation through uncertain cases."
+        },
+        "climax": {
+          "visual": "🧱",
+          "text": "Print this on the wall: Escalate when risk or uncertainty crosses a threshold."
+        },
+        "punchline": {
+          "visual": "✨",
+          "text": "Humans handle ambiguity; agents handle throughput."
+        }
+      },
+      "quiz": {
+        "question": "When should you escalate?",
+        "options": [
+          "When confidence is low / risk is high",
+          "When everything is easy",
+          "When the agent is bored",
+          "When logs are disabled"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t24-logging-and-tracing-what-to-record",
+      "chapter_id": "ai--agent-builder-lab--ch03-planning-and-control",
+      "title": "Logging & Tracing (What to Record)",
+      "description": "One-minute skill: Logging & Tracing (What to Record).",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "🛠️",
+          "text": "One minute to de-risk Logging & Tracing (What to Record)."
+        },
+        "buildup": {
+          "visual": "🎯",
+          "text": "Optimize for: Trace decisions so you can reproduce failures."
+        },
+        "discovery": {
+          "visual": "🧪",
+          "text": "To turn theory into results, do: Log prompts, tool calls, outputs, and decisions."
+        },
+        "twist": {
+          "visual": "🔒",
+          "text": "If you want to avoid a bad week, avoid this: Logging only final answers."
+        },
+        "climax": {
+          "visual": "🔑",
+          "text": "This is what “good” reduces to: Trace decisions so you can reproduce failures."
+        },
+        "punchline": {
+          "visual": "🧲",
+          "text": "If it’s not traced, it’s not fixable."
+        }
+      },
+      "quiz": {
+        "question": "What should tracing include?",
+        "options": [
+          "Only the final response",
+          "Prompts + tool calls + decisions",
+          "No errors",
+          "Only timestamps"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t25-concurrency-and-race-conditions",
+      "chapter_id": "ai--agent-builder-lab--ch03-planning-and-control",
+      "title": "Concurrency and Race Conditions",
+      "description": "A fast breakdown of Concurrency and Race Conditions for builders.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "⚡️",
+          "text": "Speed-run: Concurrency and Race Conditions."
+        },
+        "buildup": {
+          "visual": "🧱",
+          "text": "The point of Concurrency and Race Conditions: Concurrent actions need locks and idempotency."
+        },
+        "discovery": {
+          "visual": "🛠️",
+          "text": "Minimum viable practice: Use unique constraints + idempotency + locking."
+        },
+        "twist": {
+          "visual": "🧯",
+          "text": "Don’t let your system drift into this: Two agent runs writing the same record."
+        },
+        "climax": {
+          "visual": "🧪",
+          "text": "This is the “do-not-forget” constraint: Concurrent actions need locks and idempotency."
+        },
+        "punchline": {
+          "visual": "📣",
+          "text": "Concurrency multiplies edge cases."
+        }
+      },
+      "quiz": {
+        "question": "What’s a common concurrency failure?",
+        "options": [
+          "Faster responses",
+          "Duplicate writes / conflicting updates",
+          "Better determinism",
+          "No need for retries"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t26-memory-types-short-vs-long",
+      "chapter_id": "ai--agent-builder-lab--ch04-memory-and-rag",
+      "title": "Memory Types: Short vs Long",
+      "description": "One-minute skill: Memory Types: Short vs Long.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "🧠",
+          "text": "One minute to de-risk Memory Types: Short vs Long."
+        },
+        "buildup": {
+          "visual": "🏁",
+          "text": "Success looks like this: Short-term context ≠ long-term memory."
+        },
+        "discovery": {
+          "visual": "🗺️",
+          "text": "Make it real by doing this: Define what to store and why."
+        },
+        "twist": {
+          "visual": "🚧",
+          "text": "Where teams usually slip: Storing everything forever by default."
+        },
+        "climax": {
+          "visual": "🧠",
+          "text": "This is what “good” reduces to: Short-term context ≠ long-term memory."
+        },
+        "punchline": {
+          "visual": "🚀",
+          "text": "Remember on purpose, not by accident."
+        }
+      },
+      "quiz": {
+        "question": "What’s the key distinction?",
+        "options": [
+          "Short-term is free",
+          "Short-term context is not long-term memory",
+          "Long-term is always better",
+          "Memory is never needed"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t27-chunking-for-retrieval",
+      "chapter_id": "ai--agent-builder-lab--ch04-memory-and-rag",
+      "title": "Chunking for Retrieval",
+      "description": "A tiny lesson with a big payoff: Chunking for Retrieval.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "🧠",
+          "text": "One minute to de-risk Chunking for Retrieval."
+        },
+        "buildup": {
+          "visual": "🏁",
+          "text": "Success looks like this: Chunk for meaning, not for size."
+        },
+        "discovery": {
+          "visual": "🗺️",
+          "text": "Operational move: Chunk by semantic boundaries."
+        },
+        "twist": {
+          "visual": "🚧",
+          "text": "The trapdoor here is: Splitting sentences and losing context."
+        },
+        "climax": {
+          "visual": "🧠",
+          "text": "This is what “good” reduces to: Chunk for meaning, not for size."
+        },
+        "punchline": {
+          "visual": "🚀",
+          "text": "Good chunks make good retrieval."
+        }
+      },
+      "quiz": {
+        "question": "What is good chunking?",
+        "options": [
+          "Fixed 10-word chunks",
+          "Semantic boundary chunks",
+          "Random splits",
+          "No chunking"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t28-evaluating-retrieval-quality",
+      "chapter_id": "ai--agent-builder-lab--ch04-memory-and-rag",
+      "title": "Evaluating Retrieval Quality",
+      "description": "A tiny lesson with a big payoff: Evaluating Retrieval Quality.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "⚡️",
+          "text": "Evaluating Retrieval Quality — the fast, practical breakdown."
+        },
+        "buildup": {
+          "visual": "🧱",
+          "text": "What you’re really trying to achieve: Measure retrieval, don’t assume it works."
+        },
+        "discovery": {
+          "visual": "🛠️",
+          "text": "Start here: Track recall/precision on known queries."
+        },
+        "twist": {
+          "visual": "🧯",
+          "text": "The sneaky risk: Blaming the model when retrieval is wrong."
+        },
+        "climax": {
+          "visual": "🧪",
+          "text": "This principle keeps you out of trouble: Measure retrieval, don’t assume it works."
+        },
+        "punchline": {
+          "visual": "📣",
+          "text": "Bad retrieval looks like hallucination."
+        }
+      },
+      "quiz": {
+        "question": "What should you measure for retrieval?",
+        "options": [
+          "Only latency",
+          "Recall/precision on known queries",
+          "Temperature",
+          "Emoji usage"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t29-freshness-vs-stability",
+      "chapter_id": "ai--agent-builder-lab--ch04-memory-and-rag",
+      "title": "Freshness vs Stability",
+      "description": "A quick, practical guide to Freshness vs Stability.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "🧭",
+          "text": "You’re building Freshness vs Stability. Here’s the 60-second version."
+        },
+        "buildup": {
+          "visual": "🧩",
+          "text": "The bar you want to clear: Some knowledge must update; some must not."
+        },
+        "discovery": {
+          "visual": "🧩",
+          "text": "One habit that makes Freshness vs Stability work: Tag sources with freshness requirements."
+        },
+        "twist": {
+          "visual": "🕳️",
+          "text": "This breaks reliability fast: Refreshing everything and breaking consistency."
+        },
+        "climax": {
+          "visual": "🧱",
+          "text": "Print this on the wall: Some knowledge must update; some must not."
+        },
+        "punchline": {
+          "visual": "✨",
+          "text": "Fresh when needed; stable when required."
+        }
+      },
+      "quiz": {
+        "question": "Why tag freshness?",
+        "options": [
+          "To increase drift",
+          "To control updates vs stability",
+          "To remove caching",
+          "To avoid monitoring"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t30-memory-writes-policy",
+      "chapter_id": "ai--agent-builder-lab--ch04-memory-and-rag",
+      "title": "Memory Writes Policy",
+      "description": "A quick, practical guide to Memory Writes Policy.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "🤖",
+          "text": "Today’s micro-lesson: Memory Writes Policy."
+        },
+        "buildup": {
+          "visual": "📌",
+          "text": "If you had to choose one outcome, choose: Write memory only when it’s verified and useful."
+        },
+        "discovery": {
+          "visual": "📎",
+          "text": "Try this small experiment: Require validation before storing."
+        },
+        "twist": {
+          "visual": "🧨",
+          "text": "This is how it quietly breaks: Storing guesses as facts."
+        },
+        "climax": {
+          "visual": "🧭",
+          "text": "When you’re debugging at 2am, return to: Write memory only when it’s verified and useful."
+        },
+        "punchline": {
+          "visual": "🧾",
+          "text": "Unverified memory is future debt."
+        }
+      },
+      "quiz": {
+        "question": "What should you avoid writing to memory?",
+        "options": [
+          "Verified facts",
+          "Unverified guesses",
+          "User preferences",
+          "Stable IDs"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t31-citations-and-grounding",
+      "chapter_id": "ai--agent-builder-lab--ch04-memory-and-rag",
+      "title": "Citations and Grounding",
+      "description": "A micro-lesson that makes Citations and Grounding usable.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "📌",
+          "text": "If Citations and Grounding feels fuzzy, this will sharpen it."
+        },
+        "buildup": {
+          "visual": "🧭",
+          "text": "Make this your target condition: Show sources so answers are checkable."
+        },
+        "discovery": {
+          "visual": "🧰",
+          "text": "Operational move: Return citations or links to retrieved chunks."
+        },
+        "twist": {
+          "visual": "🧱",
+          "text": "The trapdoor here is: Confident claims without provenance."
+        },
+        "climax": {
+          "visual": "🏁",
+          "text": "If you’re forced to simplify, simplify to: Show sources so answers are checkable."
+        },
+        "punchline": {
+          "visual": "🎬",
+          "text": "Grounding beats confidence."
+        }
+      },
+      "quiz": {
+        "question": "What’s the point of citations?",
+        "options": [
+          "They look professional",
+          "They make answers checkable",
+          "They increase hallucinations",
+          "They replace evaluation"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t32-privacy-and-pii-in-memory",
+      "chapter_id": "ai--agent-builder-lab--ch04-memory-and-rag",
+      "title": "Privacy & PII in Memory",
+      "description": "A short lesson to help you apply Privacy & PII in Memory.",
+      "difficulty": "Premium",
+      "story": {
+        "hook": {
+          "visual": "📌",
+          "text": "You’re building Privacy & PII in Memory. Here’s the 60-second version."
+        },
+        "buildup": {
+          "visual": "🧭",
+          "text": "Make this your target condition: Don’t store sensitive data unless you must."
+        },
+        "discovery": {
+          "visual": "🧰",
+          "text": "This is the lever to pull: Redact and minimize stored data."
+        },
+        "twist": {
+          "visual": "🧱",
+          "text": "Most “it didn’t work” stories start with: Accidentally persisting PII in logs/memory."
+        },
+        "climax": {
+          "visual": "🏁",
+          "text": "Print this on the wall: Don’t store sensitive data unless you must."
+        },
+        "punchline": {
+          "visual": "🎬",
+          "text": "If you don’t store it, you can’t leak it."
+        }
+      },
+      "quiz": {
+        "question": "What’s the safest default for PII?",
+        "options": [
+          "Store it for convenience",
+          "Don’t store it unless necessary",
+          "Share it across users",
+          "Log it for debugging"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t33-hallucinated-memory",
+      "chapter_id": "ai--agent-builder-lab--ch04-memory-and-rag",
+      "title": "Hallucinated Memory",
+      "description": "A micro-lesson that makes Hallucinated Memory usable.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "📌",
+          "text": "If Hallucinated Memory feels fuzzy, this will sharpen it."
+        },
+        "buildup": {
+          "visual": "🧭",
+          "text": "Make this your target condition: Prevent the system from “remembering” invented facts."
+        },
+        "discovery": {
+          "visual": "🧰",
+          "text": "Convert the idea into a checklist item: Require evidence before writing memory."
+        },
+        "twist": {
+          "visual": "🧱",
+          "text": "The fastest way to regress: Letting the model write memory without checks."
+        },
+        "climax": {
+          "visual": "🏁",
+          "text": "If you’re forced to simplify, simplify to: Prevent the system from “remembering” invented facts."
+        },
+        "punchline": {
+          "visual": "🎬",
+          "text": "Memory must be earned."
+        }
+      },
+      "quiz": {
+        "question": "How do you prevent hallucinated memory?",
+        "options": [
+          "Turn up temperature",
+          "Require evidence/validation before writes",
+          "Disable monitoring",
+          "Avoid test sets"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t34-threat-modeling-an-agent",
+      "chapter_id": "ai--agent-builder-lab--ch05-safety-and-guardrails",
+      "title": "Threat Modeling an Agent",
+      "description": "A quick win: understand Threat Modeling an Agent.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "🧠",
+          "text": "One minute to de-risk Threat Modeling an Agent."
+        },
+        "buildup": {
+          "visual": "🏁",
+          "text": "A strong default here is: List what can go wrong before shipping."
+        },
+        "discovery": {
+          "visual": "🗺️",
+          "text": "Convert the idea into a checklist item: Enumerate assets, attackers, and vectors."
+        },
+        "twist": {
+          "visual": "🚧",
+          "text": "The fastest way to regress: Treating security as a post-launch task."
+        },
+        "climax": {
+          "visual": "🧠",
+          "text": "This is what “good” reduces to: List what can go wrong before shipping."
+        },
+        "punchline": {
+          "visual": "🚀",
+          "text": "Threat models are cheaper than incidents."
+        }
+      },
+      "quiz": {
+        "question": "What’s a threat model used for?",
+        "options": [
+          "UI design",
+          "Enumerating risks and attack vectors",
+          "Increasing token limits",
+          "Avoiding logging"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t35-prompt-injection-basics",
+      "chapter_id": "ai--agent-builder-lab--ch05-safety-and-guardrails",
+      "title": "Prompt Injection Basics",
+      "description": "A short lesson to help you apply Prompt Injection Basics.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "🧭",
+          "text": "Prompt Injection Basics, explained like you’re shipping it this week."
+        },
+        "buildup": {
+          "visual": "🧩",
+          "text": "The bar you want to clear: Assume untrusted text will try to override instructions."
+        },
+        "discovery": {
+          "visual": "🧩",
+          "text": "If you only do one action today, do: Separate data from instructions."
+        },
+        "twist": {
+          "visual": "🕳️",
+          "text": "A common self-own: Letting retrieved text become system policy."
+        },
+        "climax": {
+          "visual": "🧱",
+          "text": "Anchor the whole approach on this: Assume untrusted text will try to override instructions."
+        },
+        "punchline": {
+          "visual": "✨",
+          "text": "Untrusted text is not a command."
+        }
+      },
+      "quiz": {
+        "question": "What’s the core defense against injection?",
+        "options": [
+          "More tools",
+          "Separate data from instructions",
+          "No constraints",
+          "Higher temperature"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t36-data-exfiltration-risks",
+      "chapter_id": "ai--agent-builder-lab--ch05-safety-and-guardrails",
+      "title": "Data Exfiltration Risks",
+      "description": "A quick, practical guide to Data Exfiltration Risks.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "🤖",
+          "text": "Today’s micro-lesson: Data Exfiltration Risks."
+        },
+        "buildup": {
+          "visual": "📌",
+          "text": "If you had to choose one outcome, choose: Prevent the agent from leaking secrets or private data."
+        },
+        "discovery": {
+          "visual": "📎",
+          "text": "Practical shortcut: Least privilege + output filtering."
+        },
+        "twist": {
+          "visual": "🧨",
+          "text": "What not to do (even if it’s tempting): Over-broad tool permissions."
+        },
+        "climax": {
+          "visual": "🧭",
+          "text": "When you’re debugging at 2am, return to: Prevent the agent from leaking secrets or private data."
+        },
+        "punchline": {
+          "visual": "🧾",
+          "text": "Permissions define your blast radius."
+        }
+      },
+      "quiz": {
+        "question": "What reduces exfiltration risk most?",
+        "options": [
+          "Less logging",
+          "Least-privilege permissions",
+          "More retries",
+          "Bigger prompts"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t37-allowed-actions-policy",
+      "chapter_id": "ai--agent-builder-lab--ch05-safety-and-guardrails",
+      "title": "Allowed Actions Policy",
+      "description": "A fast breakdown of Allowed Actions Policy for builders.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "🧠",
+          "text": "One minute to de-risk Allowed Actions Policy."
+        },
+        "buildup": {
+          "visual": "🏁",
+          "text": "Success looks like this: Define the allowed action set explicitly."
+        },
+        "discovery": {
+          "visual": "🗺️",
+          "text": "Start here: Whitelist actions and require confirmations."
+        },
+        "twist": {
+          "visual": "🚧",
+          "text": "The sneaky risk: “Do whatever you need” prompts."
+        },
+        "climax": {
+          "visual": "🧠",
+          "text": "This is what “good” reduces to: Define the allowed action set explicitly."
+        },
+        "punchline": {
+          "visual": "🚀",
+          "text": "Safety starts with whitelists."
+        }
+      },
+      "quiz": {
+        "question": "What’s the safest action policy?",
+        "options": [
+          "Allow anything",
+          "Whitelist allowed actions",
+          "Rely on good intentions",
+          "Disable validation"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t38-secrets-handling-in-tools",
+      "chapter_id": "ai--agent-builder-lab--ch05-safety-and-guardrails",
+      "title": "Secrets Handling in Tools",
+      "description": "A micro-lesson that makes Secrets Handling in Tools usable.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "🧭",
+          "text": "If Secrets Handling in Tools feels fuzzy, this will sharpen it."
+        },
+        "buildup": {
+          "visual": "🧩",
+          "text": "Your north star: Secrets must never be visible to the model."
+        },
+        "discovery": {
+          "visual": "🧩",
+          "text": "To turn theory into results, do: Keep secrets server-side; return redacted outputs."
+        },
+        "twist": {
+          "visual": "🕳️",
+          "text": "If you want to avoid a bad week, avoid this: Passing API keys in prompts."
+        },
+        "climax": {
+          "visual": "🧱",
+          "text": "If you’re forced to simplify, simplify to: Secrets must never be visible to the model."
+        },
+        "punchline": {
+          "visual": "✨",
+          "text": "If the model can see it, it can leak it."
+        }
+      },
+      "quiz": {
+        "question": "Where should secrets live?",
+        "options": [
+          "In the prompt",
+          "Server-side only",
+          "In user messages",
+          "In logs"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t39-rate-limiting-and-abuse",
+      "chapter_id": "ai--agent-builder-lab--ch05-safety-and-guardrails",
+      "title": "Rate Limiting and Abuse",
+      "description": "A quick win: understand Rate Limiting and Abuse.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "🧠",
+          "text": "Let’s make Rate Limiting and Abuse concrete."
+        },
+        "buildup": {
+          "visual": "🏁",
+          "text": "Success looks like this: Protect systems from runaway usage and attacks."
+        },
+        "discovery": {
+          "visual": "🗺️",
+          "text": "Practical shortcut: Rate-limit by user, IP, and action."
+        },
+        "twist": {
+          "visual": "🚧",
+          "text": "What not to do (even if it’s tempting): Unlimited retries on expensive tools."
+        },
+        "climax": {
+          "visual": "🧠",
+          "text": "Protect systems from runaway usage and attacks. — and you’ll avoid most pain."
+        },
+        "punchline": {
+          "visual": "🚀",
+          "text": "Limits are part of reliability."
+        }
+      },
+      "quiz": {
+        "question": "What does rate limiting protect against?",
+        "options": [
+          "Any bug",
+          "Runaway usage and abuse",
+          "Need for monitoring",
+          "Need for budgets"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t40-incident-response-for-agents",
+      "chapter_id": "ai--agent-builder-lab--ch05-safety-and-guardrails",
+      "title": "Incident Response for Agents",
+      "description": "A fast breakdown of Incident Response for Agents for builders.",
+      "difficulty": "Premium",
+      "story": {
+        "hook": {
+          "visual": "🛠️",
+          "text": "Let’s make Incident Response for Agents concrete."
+        },
+        "buildup": {
+          "visual": "🎯",
+          "text": "When in doubt, anchor on this: Prepare a playbook for when the agent misbehaves."
+        },
+        "discovery": {
+          "visual": "🧪",
+          "text": "This is the lever to pull: Have kill-switches, logs, and rollback steps."
+        },
+        "twist": {
+          "visual": "🔒",
+          "text": "Most “it didn’t work” stories start with: No rollback or kill-switch."
+        },
+        "climax": {
+          "visual": "🔑",
+          "text": "Prepare a playbook for when the agent misbehaves. — and you’ll avoid most pain."
+        },
+        "punchline": {
+          "visual": "🧲",
+          "text": "You don’t rise to the occasion; you fall to the plan."
+        }
+      },
+      "quiz": {
+        "question": "What’s a must-have for incident response?",
+        "options": [
+          "No logs",
+          "Kill-switch + rollback plan",
+          "Higher temperature",
+          "More tools"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t41-defining-success-metrics",
+      "chapter_id": "ai--agent-builder-lab--ch06-evaluation",
+      "title": "Defining Success Metrics",
+      "description": "Learn Defining Success Metrics in one minute.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "⚡️",
+          "text": "The shortest useful explanation of Defining Success Metrics."
+        },
+        "buildup": {
+          "visual": "🧱",
+          "text": "The point of Defining Success Metrics: Metrics define what “good” means."
+        },
+        "discovery": {
+          "visual": "🛠️",
+          "text": "A clean implementation path begins with: Pick metrics tied to user value."
+        },
+        "twist": {
+          "visual": "🧯",
+          "text": "The mistake that ruins it: Optimizing vibes instead of outcomes."
+        },
+        "climax": {
+          "visual": "🧪",
+          "text": "If you want one rule that survives edge cases: Metrics define what “good” means."
+        },
+        "punchline": {
+          "visual": "📣",
+          "text": "You get what you measure."
+        }
+      },
+      "quiz": {
+        "question": "Why define success metrics?",
+        "options": [
+          "To avoid shipping",
+          "To align work with user value",
+          "To remove evaluation",
+          "To hide failures"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t42-golden-test-sets",
+      "chapter_id": "ai--agent-builder-lab--ch06-evaluation",
+      "title": "Golden Test Sets",
+      "description": "A short lesson to help you apply Golden Test Sets.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "🧭",
+          "text": "Golden Test Sets, explained like you’re shipping it this week."
+        },
+        "buildup": {
+          "visual": "🧩",
+          "text": "The bar you want to clear: A stable test set catches regressions."
+        },
+        "discovery": {
+          "visual": "🧩",
+          "text": "Concrete technique: Curate representative fixed cases."
+        },
+        "twist": {
+          "visual": "🕳️",
+          "text": "The thing that looks fine… until it isn’t: Only testing on new cases."
+        },
+        "climax": {
+          "visual": "🧱",
+          "text": "Anchor the whole approach on this: A stable test set catches regressions."
+        },
+        "punchline": {
+          "visual": "✨",
+          "text": "Golden sets are your safety net."
+        }
+      },
+      "quiz": {
+        "question": "What’s the purpose of a golden set?",
+        "options": [
+          "UI demos",
+          "Regression detection",
+          "Increasing randomness",
+          "Avoiding monitoring"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t43-offline-vs-online-evaluation",
+      "chapter_id": "ai--agent-builder-lab--ch06-evaluation",
+      "title": "Offline vs Online Evaluation",
+      "description": "A quick win: understand Offline vs Online Evaluation.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "🧪",
+          "text": "The shortest useful explanation of Offline vs Online Evaluation."
+        },
+        "buildup": {
+          "visual": "📍",
+          "text": "The main objective for Offline vs Online Evaluation is: Offline gives speed; online gives truth."
+        },
+        "discovery": {
+          "visual": "🧱",
+          "text": "A clean implementation path begins with: Use offline to iterate, online to validate."
+        },
+        "twist": {
+          "visual": "⚠️",
+          "text": "The mistake that ruins it: Relying on offline scores only."
+        },
+        "climax": {
+          "visual": "📌",
+          "text": "If you want one rule that survives edge cases: Offline gives speed; online gives truth."
+        },
+        "punchline": {
+          "visual": "🔁",
+          "text": "Offline is practice; online is the game."
+        }
+      },
+      "quiz": {
+        "question": "What is online evaluation best for?",
+        "options": [
+          "Fast iteration only",
+          "Real-world validation",
+          "Avoiding test sets",
+          "Replacing monitoring"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t44-quality-rubrics",
+      "chapter_id": "ai--agent-builder-lab--ch06-evaluation",
+      "title": "Quality Rubrics",
+      "description": "A short lesson to help you apply Quality Rubrics.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "📌",
+          "text": "Quality Rubrics, explained like you’re shipping it this week."
+        },
+        "buildup": {
+          "visual": "🧭",
+          "text": "Make this your target condition: Rubrics turn judgment into a repeatable score."
+        },
+        "discovery": {
+          "visual": "🧰",
+          "text": "A reliable next step: Define criteria + examples of pass/fail."
+        },
+        "twist": {
+          "visual": "🧱",
+          "text": "The failure mode to anticipate: Inconsistent human reviews."
+        },
+        "climax": {
+          "visual": "🏁",
+          "text": "Anchor the whole approach on this: Rubrics turn judgment into a repeatable score."
+        },
+        "punchline": {
+          "visual": "🎬",
+          "text": "Rubrics make quality portable."
+        }
+      },
+      "quiz": {
+        "question": "What do rubrics enable?",
+        "options": [
+          "More drift",
+          "Consistent scoring",
+          "No human review",
+          "No monitoring"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t45-regression-harness-for-agents",
+      "chapter_id": "ai--agent-builder-lab--ch06-evaluation",
+      "title": "Regression Harness for Agents",
+      "description": "A 60-second lesson on Regression Harness for Agents.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "🤖",
+          "text": "Here’s how Regression Harness for Agents works when you’re under pressure."
+        },
+        "buildup": {
+          "visual": "📌",
+          "text": "If you’re unsure what to prioritize, prioritize this: Automate checks for known failures."
+        },
+        "discovery": {
+          "visual": "📎",
+          "text": "Make it real by doing this: Add a test when you fix a bug."
+        },
+        "twist": {
+          "visual": "🧨",
+          "text": "Where teams usually slip: Fixing bugs without preventing their return."
+        },
+        "climax": {
+          "visual": "🧭",
+          "text": "Your final check before you ship: Automate checks for known failures."
+        },
+        "punchline": {
+          "visual": "🧾",
+          "text": "Every bug deserves a test."
+        }
+      },
+      "quiz": {
+        "question": "What should you do after fixing a failure?",
+        "options": [
+          "Disable logging",
+          "Add a regression test",
+          "Increase temperature",
+          "Remove constraints"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t46-evaluating-tool-use",
+      "chapter_id": "ai--agent-builder-lab--ch06-evaluation",
+      "title": "Evaluating Tool Use",
+      "description": "A fast breakdown of Evaluating Tool Use for builders.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "⚡️",
+          "text": "The shortest useful explanation of Evaluating Tool Use."
+        },
+        "buildup": {
+          "visual": "🧱",
+          "text": "What you’re really trying to achieve: Tool success includes correctness and safety."
+        },
+        "discovery": {
+          "visual": "🛠️",
+          "text": "One habit that makes Evaluating Tool Use work: Score tool choice + params + result handling."
+        },
+        "twist": {
+          "visual": "🧯",
+          "text": "This breaks reliability fast: Measuring only “did it call the tool”."
+        },
+        "climax": {
+          "visual": "🧪",
+          "text": "If you want one rule that survives edge cases: Tool success includes correctness and safety."
+        },
+        "punchline": {
+          "visual": "📣",
+          "text": "Calls aren’t outcomes."
+        }
+      },
+      "quiz": {
+        "question": "What should tool eval measure?",
+        "options": [
+          "Only call count",
+          "Choice + params + handling",
+          "Only latency",
+          "Only token use"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t47-human-review-calibration",
+      "chapter_id": "ai--agent-builder-lab--ch06-evaluation",
+      "title": "Human Review Calibration",
+      "description": "A micro-lesson that makes Human Review Calibration usable.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "🤖",
+          "text": "A quick win: Human Review Calibration."
+        },
+        "buildup": {
+          "visual": "📌",
+          "text": "If you had to choose one outcome, choose: Align reviewers so scores mean the same thing."
+        },
+        "discovery": {
+          "visual": "📎",
+          "text": "Concrete technique: Run calibration sessions with examples."
+        },
+        "twist": {
+          "visual": "🧨",
+          "text": "The thing that looks fine… until it isn’t: Different reviewers using different standards."
+        },
+        "climax": {
+          "visual": "🧭",
+          "text": "The decision you keep making over and over: Align reviewers so scores mean the same thing."
+        },
+        "punchline": {
+          "visual": "🧾",
+          "text": "Calibration prevents phantom regressions."
+        }
+      },
+      "quiz": {
+        "question": "Why calibrate reviewers?",
+        "options": [
+          "To slow down shipping",
+          "To align scoring standards",
+          "To remove rubrics",
+          "To hide disagreements"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t48-monitoring-quality-drift",
+      "chapter_id": "ai--agent-builder-lab--ch06-evaluation",
+      "title": "Monitoring Quality Drift",
+      "description": "A short lesson to help you apply Monitoring Quality Drift.",
+      "difficulty": "Premium",
+      "story": {
+        "hook": {
+          "visual": "🧭",
+          "text": "If Monitoring Quality Drift feels fuzzy, this will sharpen it."
+        },
+        "buildup": {
+          "visual": "🧩",
+          "text": "The bar you want to clear: Production behavior changes; detect it early."
+        },
+        "discovery": {
+          "visual": "🧩",
+          "text": "Start here: Track quality metrics over time."
+        },
+        "twist": {
+          "visual": "🕳️",
+          "text": "The sneaky risk: Assuming the model never changes."
+        },
+        "climax": {
+          "visual": "🧱",
+          "text": "If you’re forced to simplify, simplify to: Production behavior changes; detect it early."
+        },
+        "punchline": {
+          "visual": "✨",
+          "text": "Drift is inevitable; surprise is optional."
+        }
+      },
+      "quiz": {
+        "question": "What is drift monitoring for?",
+        "options": [
+          "UI polish",
+          "Detecting quality changes over time",
+          "Avoiding metrics",
+          "Replacing test sets"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t49-release-checklist-for-agents",
+      "chapter_id": "ai--agent-builder-lab--ch07-shipping",
+      "title": "Release Checklist for Agents",
+      "description": "A short lesson to help you apply Release Checklist for Agents.",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "visual": "🤖",
+          "text": "A quick win: Release Checklist for Agents."
+        },
+        "buildup": {
+          "visual": "📌",
+          "text": "If you’re unsure what to prioritize, prioritize this: Check safety, metrics, and fallbacks before launch."
+        },
+        "discovery": {
+          "visual": "📎",
+          "text": "The simplest implementation step: Require a checklist gate before prod."
+        },
+        "twist": {
+          "visual": "🧨",
+          "text": "The easy-to-miss pitfall: Launching without a rollback plan."
+        },
+        "climax": {
+          "visual": "🧭",
+          "text": "The decision you keep making over and over: Check safety, metrics, and fallbacks before launch."
+        },
+        "punchline": {
+          "visual": "🧾",
+          "text": "Launches should be boring."
+        }
+      },
+      "quiz": {
+        "question": "What does a release checklist enforce?",
+        "options": [
+          "More randomness",
+          "Pre-launch safety and fallback checks",
+          "No monitoring",
+          "No evaluation"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t50-observability-for-agent-decisions",
+      "chapter_id": "ai--agent-builder-lab--ch07-shipping",
+      "title": "Observability for Agent Decisions",
+      "description": "A quick, practical guide to Observability for Agent Decisions.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "🔍",
+          "text": "A quick win: Observability for Agent Decisions."
+        },
+        "buildup": {
+          "visual": "🔑",
+          "text": "Define “good” as: You need to see why the agent did what it did."
+        },
+        "discovery": {
+          "visual": "🔧",
+          "text": "If you only do one action today, do: Log decisions, tool calls, and key context."
+        },
+        "twist": {
+          "visual": "🪤",
+          "text": "A common self-own: Only tracking success/fail counts."
+        },
+        "climax": {
+          "visual": "✅",
+          "text": "The decision you keep making over and over: You need to see why the agent did what it did."
+        },
+        "punchline": {
+          "visual": "🧷",
+          "text": "If you can’t explain it, you can’t fix it."
+        }
+      },
+      "quiz": {
+        "question": "What should observability capture?",
+        "options": [
+          "Only total requests",
+          "Decisions + tool calls + context",
+          "Only UI clicks",
+          "Only token counts"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t51-cost-monitoring",
+      "chapter_id": "ai--agent-builder-lab--ch07-shipping",
+      "title": "Cost Monitoring",
+      "description": "A quick, practical guide to Cost Monitoring.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "🔍",
+          "text": "Here’s how Cost Monitoring works when you’re under pressure."
+        },
+        "buildup": {
+          "visual": "🔑",
+          "text": "Cost is a product constraint, not an afterthought. (that’s the whole game)."
+        },
+        "discovery": {
+          "visual": "🔧",
+          "text": "Operational move: Track cost per run and per user."
+        },
+        "twist": {
+          "visual": "🪤",
+          "text": "The trapdoor here is: Letting expensive tools run unchecked."
+        },
+        "climax": {
+          "visual": "✅",
+          "text": "Your final check before you ship: Cost is a product constraint, not an afterthought."
+        },
+        "punchline": {
+          "visual": "🧷",
+          "text": "You can’t optimize what you don’t measure."
+        }
+      },
+      "quiz": {
+        "question": "What is the key cost metric?",
+        "options": [
+          "Emoji per answer",
+          "Cost per run / per user",
+          "Temperature",
+          "Number of prompts"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t52-latency-budgets-and-timeouts",
+      "chapter_id": "ai--agent-builder-lab--ch07-shipping",
+      "title": "Latency Budgets and Timeouts",
+      "description": "A fast breakdown of Latency Budgets and Timeouts for builders.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "🧠",
+          "text": "The “don’t waste time” guide to Latency Budgets and Timeouts."
+        },
+        "buildup": {
+          "visual": "🏁",
+          "text": "A strong default here is: Time limits force graceful degradation."
+        },
+        "discovery": {
+          "visual": "🗺️",
+          "text": "A reliable next step: Set timeouts and provide fallbacks."
+        },
+        "twist": {
+          "visual": "🚧",
+          "text": "The failure mode to anticipate: Slow tools causing cascading failures."
+        },
+        "climax": {
+          "visual": "🧠",
+          "text": "The shortest summary that’s still correct: Time limits force graceful degradation."
+        },
+        "punchline": {
+          "visual": "🚀",
+          "text": "Fast enough beats perfect."
+        }
+      },
+      "quiz": {
+        "question": "Why set timeouts?",
+        "options": [
+          "To increase drift",
+          "To prevent slow cascades",
+          "To remove fallbacks",
+          "To avoid monitoring"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t53-fallbacks-and-degradation",
+      "chapter_id": "ai--agent-builder-lab--ch07-shipping",
+      "title": "Fallbacks and Degradation",
+      "description": "A quick, practical guide to Fallbacks and Degradation.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "📌",
+          "text": "If Fallbacks and Degradation feels fuzzy, this will sharpen it."
+        },
+        "buildup": {
+          "visual": "🧭",
+          "text": "Make this your target condition: Plan what to do when tools fail."
+        },
+        "discovery": {
+          "visual": "🧰",
+          "text": "To turn theory into results, do: Add a safe fallback answer or escalation."
+        },
+        "twist": {
+          "visual": "🧱",
+          "text": "If you want to avoid a bad week, avoid this: No response path on tool outage."
+        },
+        "climax": {
+          "visual": "🏁",
+          "text": "If you’re forced to simplify, simplify to: Plan what to do when tools fail."
+        },
+        "punchline": {
+          "visual": "🎬",
+          "text": "Failure is expected; chaos isn’t."
+        }
+      },
+      "quiz": {
+        "question": "What is a fallback?",
+        "options": [
+          "A new model",
+          "A safe alternative path on failure",
+          "More retries always",
+          "No logging"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t54-versioning-prompts-and-policies",
+      "chapter_id": "ai--agent-builder-lab--ch07-shipping",
+      "title": "Versioning Prompts and Policies",
+      "description": "A 60-second lesson on Versioning Prompts and Policies.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "📌",
+          "text": "You’re building Versioning Prompts and Policies. Here’s the 60-second version."
+        },
+        "buildup": {
+          "visual": "🧭",
+          "text": "Treat this as the contract: Versioning makes changes traceable."
+        },
+        "discovery": {
+          "visual": "🧰",
+          "text": "This is the lever to pull: Track prompt/policy versions in logs."
+        },
+        "twist": {
+          "visual": "🧱",
+          "text": "Most “it didn’t work” stories start with: Changing prompts silently and losing comparability."
+        },
+        "climax": {
+          "visual": "🏁",
+          "text": "Print this on the wall: Versioning makes changes traceable."
+        },
+        "punchline": {
+          "visual": "🎬",
+          "text": "No version, no blame."
+        }
+      },
+      "quiz": {
+        "question": "Why version prompts?",
+        "options": [
+          "To hide changes",
+          "To make changes traceable",
+          "To increase randomness",
+          "To avoid evaluation"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t55-rollback-strategy",
+      "chapter_id": "ai--agent-builder-lab--ch07-shipping",
+      "title": "Rollback Strategy",
+      "description": "A micro-lesson that makes Rollback Strategy usable.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "visual": "🔍",
+          "text": "A quick win: Rollback Strategy."
+        },
+        "buildup": {
+          "visual": "🔑",
+          "text": "Define “good” as: Be able to revert quickly after a bad deploy."
+        },
+        "discovery": {
+          "visual": "🔧",
+          "text": "If you only do one action today, do: Keep last-known-good prompt/tool configs."
+        },
+        "twist": {
+          "visual": "🪤",
+          "text": "A common self-own: No previous known-good configuration."
+        },
+        "climax": {
+          "visual": "✅",
+          "text": "The decision you keep making over and over: Be able to revert quickly after a bad deploy."
+        },
+        "punchline": {
+          "visual": "🧷",
+          "text": "Rollback is your parachute."
+        }
+      },
+      "quiz": {
+        "question": "What does rollback require?",
+        "options": [
+          "No logs",
+          "A known-good previous version",
+          "Higher temperature",
+          "More tools"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--agent-builder-lab--t56-continuous-improvement-loop",
+      "chapter_id": "ai--agent-builder-lab--ch07-shipping",
+      "title": "Continuous Improvement Loop",
+      "description": "A short lesson to help you apply Continuous Improvement Loop.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "visual": "🔍",
+          "text": "A quick win: Continuous Improvement Loop."
+        },
+        "buildup": {
+          "visual": "🔑",
+          "text": "Turn failures into tests and updates. (that’s the whole game)."
+        },
+        "discovery": {
+          "visual": "🔧",
+          "text": "The simplest implementation step: Collect failures → cluster → prioritize → test."
+        },
+        "twist": {
+          "visual": "🪤",
+          "text": "The easy-to-miss pitfall: Fixing bugs without learning patterns."
+        },
+        "climax": {
+          "visual": "✅",
+          "text": "The decision you keep making over and over: Turn failures into tests and updates."
+        },
+        "punchline": {
+          "visual": "🧷",
+          "text": "Every failure is training data (for you)."
+        }
+      },
+      "quiz": {
+        "question": "What is the improvement loop?",
+        "options": [
+          "Ignore failures",
+          "Collect → cluster → prioritize → test",
+          "Increase temperature",
+          "Remove metrics"
+        ],
+        "correct": 1
+      }
+    }
+  ]
+}

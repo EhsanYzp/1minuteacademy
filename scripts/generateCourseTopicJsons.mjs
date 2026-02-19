@@ -1,0 +1,296 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { TOPICS_DIR } from './_contentPaths.mjs';
+
+function slugify(input) {
+  return String(input ?? '')
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .replace(/--+/g, '-');
+}
+
+function fnv1a32(input) {
+  const str = String(input ?? '');
+  let hash = 0x811c9dc5;
+  for (let i = 0; i < str.length; i += 1) {
+    // eslint-disable-next-line no-bitwise
+    hash ^= str.charCodeAt(i);
+    // eslint-disable-next-line no-bitwise
+    hash = Math.imul(hash, 0x01000193);
+  }
+  // eslint-disable-next-line no-bitwise
+  return hash >>> 0;
+}
+
+function pick(list, seed) {
+  if (!Array.isArray(list) || list.length === 0) throw new Error('pick() requires a non-empty list');
+  const i = Math.abs(Number(seed)) % list.length;
+  return list[i];
+}
+
+function formatTemplate(template, vars) {
+  return String(template).replace(/\{(\w+)\}/g, (_, key) => String(vars?.[key] ?? ''));
+}
+
+function requiredString(obj, key) {
+  const v = obj?.[key];
+  if (typeof v !== 'string' || !v.trim()) throw new Error(`Missing/invalid string: ${key}`);
+  return v.trim();
+}
+
+function requiredInt(obj, key) {
+  const v = obj?.[key];
+  if (!Number.isInteger(v)) throw new Error(`Missing/invalid int: ${key}`);
+  return v;
+}
+
+function clamp(n, min, max) {
+  return Math.max(min, Math.min(max, n));
+}
+
+async function writeFileEnsuringDir(filePath, content) {
+  await fs.mkdir(path.dirname(filePath), { recursive: true });
+  const next = String(content ?? '');
+  try {
+    const prev = await fs.readFile(filePath, 'utf8');
+    if (prev === next) return false;
+  } catch {
+    // ignore
+  }
+  await fs.writeFile(filePath, next, 'utf8');
+  return true;
+}
+
+function parseArgs(argv) {
+  const args = {
+    plan: null,
+    dryRun: false,
+    write: true,
+  };
+
+  for (let i = 0; i < argv.length; i += 1) {
+    const a = argv[i];
+    if (a === '--plan') {
+      const v = argv[i + 1];
+      if (!v || v.startsWith('--')) throw new Error('Missing value for --plan');
+      args.plan = v;
+      i += 1;
+    } else if (a === '--dry-run') {
+      args.dryRun = true;
+    } else if (a === '--no-write') {
+      args.write = false;
+    } else if (a === '--help' || a === '-h') {
+      console.log(`\nUsage:\n  node scripts/generateCourseTopicJsons.mjs --plan content/course-plans/<course>.json [--dry-run] [--no-write]\n\nNotes:\n  - Authored-only: every topic must provide a full story (all 6 beats).\n`);
+      process.exit(0);
+    } else {
+      throw new Error(`Unknown arg: ${a}`);
+    }
+  }
+
+  if (!args.plan) throw new Error('Missing required arg: --plan <path-to-json>');
+  if (args.dryRun) args.write = false;
+  return args;
+}
+
+function normalizeDifficulty(d) {
+  const v = String(d ?? '').trim();
+  const allowed = new Set(['Beginner', 'Intermediate', 'Advanced', 'Premium']);
+  if (!allowed.has(v)) throw new Error(`Invalid difficulty: ${v}`);
+  return v;
+}
+
+function validateStoryShape(story, ctxLabel) {
+  const label = ctxLabel ? ` (${ctxLabel})` : '';
+  if (!story || typeof story !== 'object') throw new Error(`Invalid story object${label}`);
+  const beats = ['hook', 'buildup', 'discovery', 'twist', 'climax', 'punchline'];
+  for (const beat of beats) {
+    const node = story[beat];
+    if (!node || typeof node !== 'object') throw new Error(`Missing story.${beat}${label}`);
+    if (typeof node.text !== 'string' || !node.text.trim()) throw new Error(`Missing story.${beat}.text${label}`);
+    if (typeof node.visual !== 'string' || !node.visual.trim()) throw new Error(`Missing story.${beat}.visual${label}`);
+  }
+}
+
+function quizFromPlan({ title, quiz }) {
+  const q = String(quiz?.question ?? quiz?.q ?? '').trim() || `What’s the best next step for: ${title}?`;
+  const options = Array.isArray(quiz?.options) ? quiz.options.map((o) => String(o ?? '').trim()).filter(Boolean) : [];
+  if (options.length < 2) throw new Error(`Invalid quiz options for ${title}`);
+  if (options.length > 4) throw new Error(`Too many quiz options for ${title}`);
+  const correct = Number(quiz?.correct);
+  if (!Number.isInteger(correct) || correct < 0 || correct >= options.length) {
+    throw new Error(`Invalid quiz.correct for ${title}`);
+  }
+
+  // Note: keep schema-safe fields only.
+  return { question: q, options, correct };
+}
+
+function buildDescription({ topicId, title }) {
+  const base = fnv1a32(`${topicId}:desc`);
+  const templates = [
+    'A 60-second lesson on {title}.',
+    'Learn {title} in one minute.',
+    'A quick, practical guide to {title}.',
+    'One-minute skill: {title}.',
+    'A micro-lesson that makes {title} usable.',
+    'A fast breakdown of {title} for builders.',
+    'A short lesson to help you apply {title}.',
+    'A quick win: understand {title}.',
+    'A 1-minute de-risking session on {title}.',
+    'A tiny lesson with a big payoff: {title}.',
+  ];
+  return formatTemplate(pick(templates, base), { title });
+}
+
+function computeDifficultyCounts(topics) {
+  const counts = new Map();
+  for (const t of topics) {
+    const k = String(t?.difficulty ?? '');
+    counts.set(k, (counts.get(k) ?? 0) + 1);
+  }
+  return Object.fromEntries(Array.from(counts.entries()).sort(([a], [b]) => a.localeCompare(b)));
+}
+
+function buildTopicId({ courseId, title }) {
+  const slug = slugify(title);
+  if (!slug) throw new Error('Cannot build topic id from empty title');
+  return `${courseId}--t-${slug}`;
+}
+
+async function loadPlan(planPath) {
+  const raw = await fs.readFile(planPath, 'utf8');
+  const parsed = JSON.parse(raw);
+
+  const categoryId = requiredString(parsed, 'categoryId');
+  const subject = requiredString(parsed, 'subject');
+  const courseId = requiredString(parsed, 'courseId');
+  const courseTitle = requiredString(parsed, 'courseTitle');
+  const color = requiredString(parsed, 'color');
+  const emoji = requiredString(parsed, 'emoji');
+
+  const chapters = Array.isArray(parsed.chapters) ? parsed.chapters : null;
+  if (!chapters || chapters.length < 5 || chapters.length > 10) {
+    throw new Error(`Invalid chapters count: ${chapters?.length ?? 0} (must be 5..10)`);
+  }
+
+  const chapterById = new Map();
+  for (const ch of chapters) {
+    const id = requiredString(ch, 'id');
+    requiredString(ch, 'title');
+    requiredInt(ch, 'position');
+    if (!id.startsWith(`${courseId}--ch`)) {
+      throw new Error(`Chapter id must start with "${courseId}--ch": ${id}`);
+    }
+    if (chapterById.has(id)) throw new Error(`Duplicate chapter id: ${id}`);
+    chapterById.set(id, ch);
+  }
+
+  const topics = Array.isArray(parsed.topics) ? parsed.topics : null;
+  if (!topics || topics.length < 30 || topics.length > 60) {
+    throw new Error(`Invalid topic count: ${topics?.length ?? 0} (must be 30..60)`);
+  }
+
+  // Authored-only mode is mandatory.
+  if (parsed.requireAuthoredStory === false) {
+    throw new Error('Invalid plan: requireAuthoredStory=false is not allowed (authored stories are required).');
+  }
+  const requireAuthoredStory = true;
+
+  return {
+    categoryId,
+    subject,
+    courseId,
+    courseTitle,
+    color,
+    emoji,
+    requireAuthoredStory,
+    chapters,
+    chapterById,
+    topics,
+  };
+}
+
+async function main() {
+  const args = parseArgs(process.argv.slice(2));
+  const planPath = path.resolve(process.cwd(), args.plan);
+  const plan = await loadPlan(planPath);
+
+  const difficultyCounts = computeDifficultyCounts(plan.topics);
+  console.log(`[content:gen-topics] plan=${path.relative(process.cwd(), planPath)}`);
+  console.log(`[content:gen-topics] chapters=${plan.chapters.length} topics=${plan.topics.length}`);
+  console.log(`[content:gen-topics] difficultyCounts: ${JSON.stringify(difficultyCounts)}`);
+
+  const ids = new Set();
+
+  const writes = [];
+  for (const t of plan.topics) {
+    const title = requiredString(t, 'title');
+    const chapterId = requiredString(t, 'chapter_id');
+    if (!plan.chapterById.has(chapterId)) throw new Error(`Topic references unknown chapter_id: ${chapterId}`);
+
+    const topicId = String(t.id ?? '').trim() || buildTopicId({ courseId: plan.courseId, title });
+    if (ids.has(topicId)) throw new Error(`Duplicate topic id: ${topicId}`);
+    ids.add(topicId);
+
+    const difficulty = normalizeDifficulty(t.difficulty);
+
+    let story;
+    if (t.story) {
+      validateStoryShape(t.story, topicId);
+      story = t.story;
+    } else {
+      throw new Error(
+        [
+          `Missing story for topic: ${topicId}`,
+          `Authored stories are required. Add a full "story" object (all 6 beats) to the course plan for this topic.`,
+        ].join('\n')
+      );
+    }
+    const quiz = quizFromPlan({ title, quiz: t.quiz });
+
+    const json = {
+      id: topicId,
+      version: 1,
+      subject: plan.subject,
+      subcategory: plan.courseTitle,
+      course_id: plan.courseId,
+      chapter_id: chapterId,
+      title,
+      emoji: plan.emoji,
+      color: plan.color,
+      description: String(t.description ?? '').trim() || buildDescription({ topicId, title }),
+      difficulty,
+      published: true,
+      story,
+      quiz,
+    };
+
+    const outDir = path.join(TOPICS_DIR, plan.categoryId, plan.courseId, chapterId);
+    const outPath = path.join(outDir, `${topicId}.topic.json`);
+    writes.push({ outPath, json });
+  }
+
+  if (!args.write) {
+    for (const w of writes.slice(0, 10)) console.log(`(dry-run) ${path.relative(process.cwd(), w.outPath)}`);
+    if (writes.length > 10) console.log(`(dry-run) …and ${writes.length - 10} more`);
+    return;
+  }
+
+  let changed = 0;
+  for (const w of writes) {
+    const content = `${JSON.stringify(w.json, null, 2)}\n`;
+    // eslint-disable-next-line no-await-in-loop
+    const didWrite = await writeFileEnsuringDir(w.outPath, content);
+    if (didWrite) changed += 1;
+  }
+
+  console.log(`✅ Generated ${writes.length} topic JSON file(s). Changed: ${changed}.`);
+}
+
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
