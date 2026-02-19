@@ -5,7 +5,12 @@ import addFormats from 'ajv-formats';
 import { SCHEMA_DIR, TOPICS_DIR } from './_contentPaths.mjs';
 
 async function listTopicFiles(dir) {
-  const entries = await fs.readdir(dir, { withFileTypes: true });
+  let entries;
+  try {
+    entries = await fs.readdir(dir, { withFileTypes: true });
+  } catch {
+    return [];
+  }
   const out = [];
   for (const entry of entries) {
     const full = path.join(dir, entry.name);

@@ -37,7 +37,12 @@ async function readJson(filePath) {
 
 async function listTopicFilesRecursive(dir) {
   const out = [];
-  const entries = await fs.readdir(dir, { withFileTypes: true });
+  let entries;
+  try {
+    entries = await fs.readdir(dir, { withFileTypes: true });
+  } catch {
+    return out;
+  }
   for (const e of entries) {
     const p = path.join(dir, e.name);
     if (e.isDirectory()) {

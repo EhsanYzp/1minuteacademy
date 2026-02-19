@@ -99,7 +99,12 @@ function forbidEnv(name) {
 }
 
 async function listTopicFiles(dir) {
-  const entries = await fs.readdir(dir, { withFileTypes: true });
+  let entries;
+  try {
+    entries = await fs.readdir(dir, { withFileTypes: true });
+  } catch {
+    return [];
+  }
   const out = [];
   for (const entry of entries) {
     const full = path.join(dir, entry.name);
