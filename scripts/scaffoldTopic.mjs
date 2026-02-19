@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { TOPICS_DIR } from './_contentPaths.mjs';
+import { CATALOG_DIR, TOPICS_DIR } from './_contentPaths.mjs';
 import { compileJourneyFromTopic } from '../src/engine/journey/compileJourney.js';
 
 function parseArgs(argv) {
@@ -9,6 +9,10 @@ function parseArgs(argv) {
     subject: null,
     courseId: null,
     chapterId: null,
+    chapterTitle: null,
+    chapterDescription: null,
+    chapterPosition: null,
+    noCatalogUpdate: false,
     title: null,
     description: '',
     difficulty: 'Beginner',
@@ -17,7 +21,7 @@ function parseArgs(argv) {
     published: true,
     seed: null,
     dryRun: false,
-    subcategory: 'Core Concepts',
+    subcategory: null,
     force: false,
   };
 
@@ -28,6 +32,10 @@ function parseArgs(argv) {
     else if (a === '--subject') args.subject = argv[++i];
     else if (a === '--courseId') args.courseId = argv[++i];
     else if (a === '--chapterId') args.chapterId = argv[++i];
+    else if (a === '--chapterTitle') args.chapterTitle = argv[++i];
+    else if (a === '--chapterDescription') args.chapterDescription = argv[++i];
+    else if (a === '--chapterPosition') args.chapterPosition = argv[++i];
+    else if (a === '--no-catalog-update') args.noCatalogUpdate = true;
     else if (a === '--title') args.title = argv[++i];
     else if (a === '--description') args.description = argv[++i] ?? '';
     else if (a === '--difficulty') args.difficulty = argv[++i];
@@ -39,7 +47,7 @@ function parseArgs(argv) {
     else if (a === '--subcategory') args.subcategory = argv[++i];
     else if (a === '--force') args.force = true;
     else if (a === '--help' || a === '-h') {
-      console.log(`\nUsage:\n  npm run content:scaffold -- --id <topicId> --subject <Subject> --title <Title> [options]\n\nOptions:\n  --courseId <courseId>\n  --chapterId <chapterId>\n  --subcategory <text>\n  --description <text>\n  --difficulty Beginner|Intermediate|Advanced\n  --emoji <emoji>\n  --color <#RRGGBB>\n  --unpublished\n  --seed <any>\n  --dry-run\n  --force   (overwrite if file exists)\n\nThis scaffolds a story-based topic JSON with 6 narrative beats + quiz.\n`);
+      console.log(`\nUsage:\n  npm run content:scaffold -- --id <topicId> --title <Title> [options]\n\nOptions:\n  --subject <Subject>\n  --subcategory <text>\n\n  --courseId <courseId>\n  --chapterId <chapterId>\n  --chapterTitle <text>\n  --chapterDescription <text>\n  --chapterPosition <number>\n  --no-catalog-update   (do not auto-add chapter to content/catalog)\n\n  --description <text>\n  --difficulty Beginner|Intermediate|Advanced\n  --emoji <emoji>\n  --color <#RRGGBB>\n  --unpublished\n  --seed <any>\n  --dry-run\n  --force   (overwrite if file exists)\n\nNotes:\n- If you pass --courseId and --chapterId, the script will infer subject/subcategory from content/catalog/catalog.json and write the file to:\n  content/topics/<categoryId>/<courseId>/<chapterId>/<topicId>.topic.json\n\nThis scaffolds a story-based topic JSON with 6 narrative beats + quiz.\n`);
       process.exit(0);
     } else {
       throw new Error(`Unknown arg: ${a}`);
@@ -47,11 +55,17 @@ function parseArgs(argv) {
   }
 
   if (!args.id) throw new Error('Missing --id');
-  if (!args.subject) throw new Error('Missing --subject');
-  if (!args.subcategory) throw new Error('Missing --subcategory');
   if (!args.title) throw new Error('Missing --title');
   if (!['Beginner', 'Intermediate', 'Advanced'].includes(args.difficulty)) {
     throw new Error('Invalid --difficulty (Beginner|Intermediate|Advanced)');
+  }
+
+  if (args.courseId && !args.chapterId) {
+    throw new Error('Missing --chapterId (required when using --courseId to scaffold into category/course/chapter folders)');
+  }
+
+  if (!args.subject && !args.courseId) {
+    throw new Error('Missing --subject (or provide --courseId to infer subject from the local catalog)');
   }
 
   return args;
@@ -103,21 +117,142 @@ async function pathExists(p) {
   }
 }
 
+function assertSafePathSegment(v, label) {
+  const s = String(v ?? '').trim();
+  if (!s) throw new Error(`Missing ${label}`);
+  if (s.includes('/') || s.includes('\\') || s.includes('..')) {
+    throw new Error(`Invalid ${label}: '${s}'`);
+  }
+  return s;
+}
+
+function titleFromId(id) {
+  const s = String(id ?? '').trim();
+  if (!s) return '';
+  return s
+    .split('-')
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
+
+async function readJson(filePath) {
+  const raw = await fs.readFile(filePath, 'utf8');
+  return JSON.parse(raw);
+}
+
+async function writeJson(filePath, data) {
+  await fs.writeFile(filePath, JSON.stringify(data, null, 2) + '\n', 'utf8');
+}
+
+async function loadLocalCatalog() {
+  const catalogPath = path.join(CATALOG_DIR, 'catalog.json');
+  const data = await readJson(catalogPath);
+  return { catalogPath, data };
+}
+
+function resolveHierarchyFromCatalog(catalog, courseId) {
+  const course = (Array.isArray(catalog?.courses) ? catalog.courses : []).find((c) => String(c?.id ?? '') === courseId);
+  if (!course) throw new Error(`Course not found in content/catalog/catalog.json: ${courseId}`);
+  const categoryId = String(course?.categoryId ?? '').trim();
+  if (!categoryId) throw new Error(`Course is missing categoryId in catalog: ${courseId}`);
+  const category = (Array.isArray(catalog?.categories) ? catalog.categories : []).find(
+    (c) => String(c?.id ?? '') === categoryId
+  );
+  return {
+    categoryId,
+    categoryTitle: String(category?.title ?? '').trim() || categoryId,
+    courseTitle: String(course?.title ?? '').trim() || courseId,
+  };
+}
+
+function ensureChapterInCatalog({ catalog, courseId, chapterId, chapterTitle, chapterDescription, chapterPosition }) {
+  const chapters = Array.isArray(catalog?.chapters) ? catalog.chapters : [];
+  const existing = chapters.find((c) => String(c?.id ?? '') === chapterId);
+  if (existing) return { catalog, created: false };
+
+  const pos = Number(chapterPosition);
+  const courseChapters = chapters.filter((c) => String(c?.courseId ?? '') === courseId);
+  const maxPos = courseChapters.reduce((m, c) => Math.max(m, Number(c?.position ?? 0) || 0), 0);
+  const nextPos = Number.isFinite(pos) ? pos : (maxPos ? maxPos + 10 : 10);
+
+  const next = {
+    ...catalog,
+    chapters: chapters
+      .concat([
+        {
+          id: chapterId,
+          courseId,
+          title: String(chapterTitle ?? '').trim() || titleFromId(chapterId),
+          position: nextPos,
+          description: String(chapterDescription ?? '').trim() || '',
+          published: true,
+        },
+      ])
+      .slice()
+      .sort((a, b) => {
+        const ac = String(a?.courseId ?? '');
+        const bc = String(b?.courseId ?? '');
+        if (ac !== bc) return ac.localeCompare(bc);
+        const ap = Number(a?.position ?? 0) || 0;
+        const bp = Number(b?.position ?? 0) || 0;
+        if (ap !== bp) return ap - bp;
+        return String(a?.id ?? '').localeCompare(String(b?.id ?? ''));
+      }),
+  };
+
+  return { catalog: next, created: true };
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
 
-  const seed = seedToInt(args.seed ?? args.id);
+  const topicId = assertSafePathSegment(args.id, '--id');
+  const courseId = args.courseId ? assertSafePathSegment(args.courseId, '--courseId') : null;
+  const chapterId = args.chapterId ? assertSafePathSegment(args.chapterId, '--chapterId') : null;
+
+  let inferred = null;
+  let catalogMeta = null;
+
+  if (courseId) {
+    const { catalogPath, data } = await loadLocalCatalog();
+    catalogMeta = { catalogPath, catalog: data };
+    inferred = resolveHierarchyFromCatalog(data, courseId);
+
+    if (!args.subject) args.subject = inferred.categoryTitle;
+    if (!args.subcategory) args.subcategory = inferred.courseTitle;
+
+    if (!args.dryRun && chapterId && !args.noCatalogUpdate) {
+      const { catalog: nextCatalog, created } = ensureChapterInCatalog({
+        catalog: data,
+        courseId,
+        chapterId,
+        chapterTitle: args.chapterTitle,
+        chapterDescription: args.chapterDescription,
+        chapterPosition: args.chapterPosition,
+      });
+      if (created) {
+        await writeJson(catalogPath, nextCatalog);
+        console.log(`✅ Added chapter to local catalog: ${chapterId} (courseId: ${courseId})`);
+        catalogMeta.catalog = nextCatalog;
+      }
+    }
+  }
+
+  if (!args.subcategory) args.subcategory = 'Core Concepts';
+
+  const seed = seedToInt(args.seed ?? topicId);
   const rand = mulberry32(seed);
 
   const color = args.color ?? pickPaletteColor(args.subject, rand);
 
   // Create story-based topic structure
   const topic = {
-    id: args.id,
+    id: topicId,
     subject: args.subject,
     subcategory: args.subcategory,
-    ...(args.courseId ? { courseId: args.courseId } : {}),
-    ...(args.chapterId ? { chapterId: args.chapterId } : {}),
+    ...(courseId ? { courseId } : {}),
+    ...(chapterId ? { chapterId } : {}),
     title: args.title,
     emoji: args.emoji,
     color,
@@ -160,8 +295,15 @@ async function main() {
   // Add auto-generated journey spec
   topic.journey = compileJourneyFromTopic(topic);
 
-  const outDir = path.join(TOPICS_DIR, args.subject);
-  const outPath = path.join(outDir, `${args.id}.topic.json`);
+  const outDir = courseId
+    ? path.join(
+        TOPICS_DIR,
+        assertSafePathSegment(inferred?.categoryId, 'categoryId (from catalog)'),
+        courseId,
+        chapterId
+      )
+    : path.join(TOPICS_DIR, assertSafePathSegment(args.subject, '--subject'));
+  const outPath = path.join(outDir, `${topicId}.topic.json`);
 
   if (args.dryRun) {
     console.log(JSON.stringify(topic, null, 2));

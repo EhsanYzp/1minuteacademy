@@ -32,19 +32,41 @@ function loadDotenv(syncEnvName) {
   //
   // With --env <name> (e.g. staging):
   //   - .env
+  //   - .env.local
   //   - .env.<name>
   //   - .env.<name>.local
   //
   // Note: dotenv does not override existing process.env by default.
-  dotenv.config({ path: '.env' });
+  const loaded = [];
+  const load = (p) => {
+    const res = dotenv.config({ path: p });
+    if (!res.error) loaded.push(p);
+  };
+
+  load('.env');
+  // Load local developer secrets (gitignored). Keep this before env-specific so
+  // .env.<name>.local can override it when needed.
+  load('.env.local');
 
   if (syncEnvName) {
-    dotenv.config({ path: `.env.${syncEnvName}` });
-    dotenv.config({ path: `.env.${syncEnvName}.local` });
-  } else {
-    // Load local developer secrets for sync (gitignored).
-    dotenv.config({ path: '.env.local' });
+    load(`.env.${syncEnvName}`);
+    load(`.env.${syncEnvName}.local`);
   }
+
+  // Diagnostics (safe): show which files were found and which keys are present.
+  // Never print secret values.
+  const present = (name) => (process.env[name] ? 'present' : 'missing');
+  const envLabel = syncEnvName ? `--env ${syncEnvName}` : '(no --env)';
+  console.log(`[content:sync] dotenv loaded (${envLabel}): ${loaded.length ? loaded.join(', ') : '(none found)'}`);
+  console.log(
+    `[content:sync] env check: ` +
+      [
+        `SUPABASE_URL=${present('SUPABASE_URL')}`,
+        `VITE_SUPABASE_URL=${present('VITE_SUPABASE_URL')}`,
+        `SUPABASE_SERVICE_ROLE_KEY=${present('SUPABASE_SERVICE_ROLE_KEY')}`,
+        `VITE_SUPABASE_SERVICE_ROLE_KEY=${present('VITE_SUPABASE_SERVICE_ROLE_KEY')}`,
+      ].join(' ')
+  );
 }
 
 const requestedEnv = normalizeSyncEnvName(parseEnvNameFromArgv(process.argv.slice(2)));
