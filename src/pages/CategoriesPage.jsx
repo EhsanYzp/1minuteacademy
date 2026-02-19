@@ -101,7 +101,6 @@ export default function CategoriesPage() {
             {visibleCategories.map((cat) => {
               const id = String(cat?.id ?? '').trim();
               const title = String(cat?.title ?? 'Untitled');
-              const description = String(cat?.description ?? '');
               const borderColor = cat?.color ? String(cat.color) : null;
               const courseCount = courseCountsByCategory.get(id) ?? 0;
 
@@ -116,7 +115,6 @@ export default function CategoriesPage() {
                     <h2 className="catflow-cardTitle catflow-cardTitleTop">{title}</h2>
                     <div className="catflow-badge">{courseCount} courses</div>
                   </div>
-                  <p className="catflow-cardDesc">{description}</p>
                 </Link>
               );
             })}

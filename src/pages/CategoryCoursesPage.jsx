@@ -163,7 +163,6 @@ export default function CategoryCoursesPage() {
             {visibleCourses.map((c) => {
               const courseId = String(c?.id ?? '').trim();
               const courseTitle = String(c?.title ?? 'Untitled course');
-              const desc = String(c?.description ?? '');
               const borderColor = c?.color ? String(c.color) : null;
               const counts = countsByCourseId.get(courseId) ?? null;
               const chapters = counts?.chapters;
@@ -186,7 +185,6 @@ export default function CategoryCoursesPage() {
                       <div className="catflow-badge">{topicsText}</div>
                     </div>
                   </div>
-                  <p className="catflow-cardDesc">{desc}</p>
                 </Link>
               );
             })}
