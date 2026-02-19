@@ -82,6 +82,39 @@ Minimum lesson payload per topic:
 - A 6-beat story: `hook`, `buildup`, `discovery`, `twist`, `climax`, `punchline`
 - A quiz with 2–4 options and one correct answer.
 
+### Story beat text length limits (STRICT — enforced at 3 layers)
+
+Each topic has a 6-beat story. Every beat displays for **8 seconds**.
+At comfortable reading speed (~2.5 words/sec) that's ~20 words / ~120 characters.
+Punchline is the mic-drop and must be even shorter.
+
+| Beat       | Max chars | ~Max words | Role |
+|------------|-----------|-----------|------|
+| hook       | 120       | ~20       | Grab attention — a moment or question |
+| buildup    | 120       | ~20       | Build context / tension |
+| discovery  | 120       | ~20       | Introduce the core insight |
+| twist      | 120       | ~20       | Complicate or reframe |
+| climax     | 120       | ~20       | Resolve or crystallize |
+| punchline  | **80**    | ~13       | Mic-drop — punchy, memorable |
+
+**Where enforced (all three must pass):**
+1. `content/schema/story.schema.json` → `maxLength` on beat `text` property
+2. `scripts/generateCourseTopicJsons.mjs` → `BEAT_TEXT_MAX = 120`, `PUNCHLINE_TEXT_MAX = 80`
+3. `scripts/validateContent.mjs` → uses the schema via AJV, catches violations automatically
+4. CI → runs `content:validate` on every push
+
+**Writing tips:**
+- One idea per beat. If you need a comma, you probably need two beats.
+- Prefer concrete over abstract ("predicts the next word" > "uses statistical methods").
+- Use the visual emoji to carry context so text doesn't have to repeat it.
+- Punchline = mic-drop. Short, punchy, memorable.
+- If a beat is over 120 chars, split the idea across two beats or simplify.
+
+**What happens when violated:**
+- Generation script throws immediately and names the offending beat + topic.
+- Validation script reports schema errors with the exact path.
+- CI blocks the push.
+
 ### Authored mode (STRICT requirement)
 For new courses, topics must be created in **authored mode**:
 - Every topic must include a fully written `story` object (all 6 beats, each with its own unique wording).
