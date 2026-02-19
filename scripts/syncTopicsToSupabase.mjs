@@ -354,14 +354,20 @@ async function main() {
   }
 
   // Fetch remote versions to prevent accidental overwrites.
+  // Batch the .in() calls to avoid exceeding HTTP header / URL limits
+  // (Supabase encodes the filter in the query-string; 400+ IDs ≈ 20 KB).
+  const FETCH_BATCH = 100;
   const remoteById = new Map();
-  const { data: remoteRows, error: remoteErr } = await supabase
-    .from('topics')
-    .select('id, subject, subcategory, title, emoji, color, description, difficulty, published, lesson, journey')
-    .in('id', ids);
+  for (let i = 0; i < ids.length; i += FETCH_BATCH) {
+    const slice = ids.slice(i, i + FETCH_BATCH);
+    const { data: remoteRows, error: remoteErr } = await supabase
+      .from('topics')
+      .select('id, subject, subcategory, title, emoji, color, description, difficulty, published, lesson, journey')
+      .in('id', slice);
 
-  if (remoteErr) throw remoteErr;
-  for (const r of remoteRows ?? []) remoteById.set(r.id, r);
+    if (remoteErr) throw remoteErr;
+    for (const r of remoteRows ?? []) remoteById.set(r.id, r);
+  }
 
   const toInsert = [];
   const toUpdate = [];
