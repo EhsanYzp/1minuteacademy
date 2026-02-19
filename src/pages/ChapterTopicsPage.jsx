@@ -7,7 +7,7 @@ import Breadcrumbs from '../components/Breadcrumbs';
 import { getCourse, listCategories, listChapters, listTopicsForChapter } from '../services/catalog';
 import { useAuth } from '../context/AuthContext';
 import { getContentSource } from '../services/_contentSource';
-import { listUserTopicProgress } from '../services/progress';
+import { listUserTopicProgressForChapter } from '../services/progress';
 import './CategoriesFlow.css';
 
 const DIFFICULTY_FILTERS = ['all', 'beginner', 'intermediate', 'advanced', 'premium'];
@@ -54,7 +54,7 @@ export default function ChapterTopicsPage() {
       }
 
       try {
-        const rows = await listUserTopicProgress();
+        const rows = await listUserTopicProgressForChapter({ courseId: course, chapterId: chapter });
         if (!mounted) return;
         const ids = new Set(
           (Array.isArray(rows) ? rows : [])
@@ -277,11 +277,17 @@ export default function ChapterTopicsPage() {
                   style={accent ? { '--row-accent': accent } : undefined}
                 >
                   <div className="catflow-rowMeta">
-                    <h3 className="catflow-rowTitle">{title}</h3>
+                    <h3 className="catflow-rowTitle">
+                      {completed && (
+                        <span className="catflow-check" aria-label="Completed" title="Completed">
+                          ✓
+                        </span>
+                      )}
+                      <span className="catflow-rowTitleText">{title}</span>
+                    </h3>
                     {desc && <p className="catflow-rowDesc">{desc}</p>}
                     <div className="catflow-rowBadges">
                       {difficulty && <span className="catflow-pill">{difficulty}</span>}
-                      {completed && <span className="catflow-pill">Watched</span>}
                     </div>
                   </div>
 

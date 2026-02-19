@@ -1,4 +1,5 @@
 import { getSupabaseClient, isSupabaseConfigured } from '../lib/supabaseClient';
+import { clearCache, makeCacheKey, withCache } from './cache';
 
 function requireSupabase() {
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
@@ -47,11 +48,70 @@ export async function completeTopic({ topicId, seconds = 60 }) {
 
   // Supabase returns an array for table returns
   const row = Array.isArray(data) ? data[0] : data;
+
+  // Invalidate user progress caches so UI updates quickly.
+  try {
+    const userId = sessionData?.session?.user?.id;
+    if (userId) clearCache({ prefix: makeCacheKey(['progress', userId]) });
+  } catch {
+    // ignore
+  }
+
   return {
     expert_minutes: Number(row?.one_ma_balance ?? 0) || 0,
     streak: Number(row?.streak ?? 0) || 0,
     awarded_minutes: Number(row?.awarded_one_ma ?? 0) || 0,
   };
+}
+
+async function getSignedInUserId(supabase) {
+  const { data: sessionData } = await supabase.auth.getSession();
+  const userId = sessionData?.session?.user?.id;
+  return userId ? String(userId) : null;
+}
+
+export async function listUserTopicProgressForCourse({ courseId } = {}) {
+  const course = String(courseId ?? '').trim();
+  if (!course) return [];
+
+  const supabase = requireSupabase();
+  const userId = await getSignedInUserId(supabase);
+  if (!userId) return [];
+
+  const cacheKey = makeCacheKey(['progress', userId, 'course', course]);
+  return withCache(cacheKey, { ttlMs: 20 * 1000 }, async () => {
+    const { data, error } = await supabase
+      .from('user_topic_progress')
+      .select('topic_id, best_seconds, completed_count, last_completed_at, topics!inner ( id, course_id, chapter_id )')
+      .eq('topics.course_id', course)
+      .order('last_completed_at', { ascending: false });
+
+    if (error) throw error;
+    return data ?? [];
+  });
+}
+
+export async function listUserTopicProgressForChapter({ courseId, chapterId } = {}) {
+  const course = String(courseId ?? '').trim();
+  const chapter = String(chapterId ?? '').trim();
+  if (!course || !chapter) return [];
+
+  const supabase = requireSupabase();
+  const userId = await getSignedInUserId(supabase);
+  if (!userId) return [];
+
+  const cacheKey = makeCacheKey(['progress', userId, 'chapter', course, chapter]);
+  return withCache(cacheKey, { ttlMs: 20 * 1000 }, async () => {
+    const { data, error } = await supabase
+      .from('user_topic_progress')
+      .select('topic_id, best_seconds, completed_count, last_completed_at, topics!inner ( id, course_id, chapter_id )')
+      .eq('topics.course_id', course)
+      .eq('topics.chapter_id', chapter)
+      .order('last_completed_at', { ascending: false });
+
+    if (error) throw error;
+    return data ?? [];
+  });
 }
 
 export async function listUserTopicProgress() {
