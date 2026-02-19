@@ -1,0 +1,50 @@
+{
+  "id": "ai--ai-agents--t14-state-management",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "AI Agents",
+  "course_id": "ai--ai-agents",
+  "chapter_id": "ai--ai-agents--ch04-memory",
+  "title": "State Management",
+  "emoji": "🤖",
+  "color": "#EF4444",
+  "description": "Tracking what the agent knows and where it is in a task.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "📊",
+      "text": "Your agent is halfway through a 10-step task. The API call fails. When you restart the agent, it starts from step 1. All progress lost."
+    },
+    "buildup": {
+      "visual": "💾",
+      "text": "State management persists the agent's progress: which steps are complete, what data has been collected, what the current plan is. Think of it as a save file for the agent."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "LangGraph models state as a graph: nodes are steps, edges are transitions, and the current state is a checkpoint. If the agent crashes, resume from the last checkpoint."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "State adds complexity: now you need to serialize intermediate results, handle partial failures, and manage state cleanup. For simple agents, a message history is sufficient state."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Use explicit state management for multi-step tasks that take more than a few seconds. For quick single-turn tool calls, the message history is your state."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Can your agent survive a crash and pick up where it left off? That's the state management test."
+    }
+  },
+  "quiz": {
+    "question": "Why is state management important for agents?",
+    "options": [
+      "It makes the agent faster",
+      "It allows resuming from where the agent left off after failures",
+      "It reduces the number of API calls",
+      "State management is only for databases"
+    ],
+    "correct": 1
+  }
+}

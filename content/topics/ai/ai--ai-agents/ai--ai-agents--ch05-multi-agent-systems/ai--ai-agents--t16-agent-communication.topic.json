@@ -1,0 +1,50 @@
+{
+  "id": "ai--ai-agents--t16-agent-communication",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "AI Agents",
+  "course_id": "ai--ai-agents",
+  "chapter_id": "ai--ai-agents--ch05-multi-agent-systems",
+  "title": "Agent Communication",
+  "emoji": "🤖",
+  "color": "#EF4444",
+  "description": "How agents pass messages and coordinate.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "💬",
+      "text": "The research agent found three relevant articles. The writer agent needs them. How do they communicate? There's no shared brain — they're separate LLM calls."
+    },
+    "buildup": {
+      "visual": "📨",
+      "text": "Common patterns: (1) Shared memory — agents read/write to a shared state object. (2) Message passing — agents send structured messages to each other. (3) Orchestrator — a manager agent coordinates and relays information."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "The orchestrator pattern is most common: one 'manager' agent decides which specialist to call next and passes context between them. It's like a project manager routing tasks."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Information loss at handoffs is real. When the research agent's output is summarized for the writer agent, important details can be dropped. Pass raw data when possible."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Keep communication structured: define clear input/output schemas for each agent. Unstructured message passing leads to confusion and dropped information."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Multi-agent coordination is a communication problem. Clear interfaces between agents matter more than the agents themselves."
+    }
+  },
+  "quiz": {
+    "question": "What is the orchestrator pattern in multi-agent systems?",
+    "options": [
+      "All agents communicate directly with each other",
+      "A manager agent coordinates and routes tasks between specialist agents",
+      "Agents share the same LLM instance",
+      "Agents run without any coordination"
+    ],
+    "correct": 1
+  }
+}

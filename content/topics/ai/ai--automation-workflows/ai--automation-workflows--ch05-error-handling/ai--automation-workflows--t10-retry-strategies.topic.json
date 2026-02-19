@@ -1,0 +1,50 @@
+{
+  "id": "ai--automation-workflows--t10-retry-strategies",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "Automation Workflows",
+  "course_id": "ai--automation-workflows",
+  "chapter_id": "ai--automation-workflows--ch05-error-handling",
+  "title": "Retry Strategies",
+  "emoji": "⚙️",
+  "color": "#EF4444",
+  "description": "When to retry failed steps and how to do it safely.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🔁",
+      "text": "The AI API returns a 429 (rate limited). Your workflow crashes. But this is a transient error — waiting 5 seconds and retrying would have worked."
+    },
+    "buildup": {
+      "visual": "📋",
+      "text": "Retry strategies: (1) Immediate retry for transient errors, (2) Exponential backoff for rate limits (wait 1s, 2s, 4s, 8s...), (3) No retry for permanent errors (400 bad request)."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Classify errors: transient (timeout, rate limit, 5xx) → retry with backoff. Permanent (invalid input, auth failure, 4xx) → fail immediately and alert. Unknown → retry once, then fail."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Retrying non-idempotent actions is dangerous: if the email send succeeded but the response timed out, retrying sends a duplicate email. Track which steps completed before retrying the workflow."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Build retry logic into every external call: API calls, database writes, file uploads. Use exponential backoff with jitter to avoid thundering herd problems."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Retry transient errors. Fail fast on permanent ones. And always check if the action already succeeded before retrying."
+    }
+  },
+  "quiz": {
+    "question": "Why is retrying non-idempotent actions dangerous?",
+    "options": [
+      "Retries are always safe",
+      "The action might have already succeeded, causing duplicates (e.g., sending the same email twice)",
+      "Non-idempotent actions can't be retried",
+      "Retries only work for database queries"
+    ],
+    "correct": 1
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "id": "ai--model-limitations--t29-positional-bias",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "Model Limitations",
+  "course_id": "ai--model-limitations",
+  "chapter_id": "ai--model-limitations--ch05-behavioral-quirks",
+  "title": "Positional Bias",
+  "emoji": "🚧",
+  "color": "#EF4444",
+  "description": "Models favor options based on their position, not their quality.",
+  "difficulty": "Intermediate",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "1️⃣",
+      "text": "You give the model 4 options and ask it to pick the best. It picks option A. You shuffle the order. Now it picks the option that's in position A — a different option. It's biased toward the first choice."
+    },
+    "buildup": {
+      "visual": "📋",
+      "text": "Positional bias: models systematically prefer options in certain positions (usually first or last) regardless of content quality. This affects evaluations, rankings, and multiple-choice tasks."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "This bias comes from training data patterns: correct answers in multiple-choice tests are often in certain positions, and first-mentioned items receive more attention."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "This makes AI-as-judge unreliable without correction. If you're using an LLM to rank items, the ranking is contaminated by position. The 'best' item might just be the first one the model saw."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Fix: randomize option order across multiple evaluations and aggregate results. Or present items in pairs rather than lists. Test for positional bias in any ranking or selection task."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Position A isn't the best answer. It's just the model's favourite position."
+    }
+  },
+  "quiz": {
+    "question": "How can you mitigate positional bias in LLM evaluations?",
+    "options": [
+      "Always put the best option first",
+      "Randomize option order across multiple evaluations and aggregate results",
+      "Use longer prompts",
+      "Positional bias can't be mitigated"
+    ],
+    "correct": 1
+  }
+}

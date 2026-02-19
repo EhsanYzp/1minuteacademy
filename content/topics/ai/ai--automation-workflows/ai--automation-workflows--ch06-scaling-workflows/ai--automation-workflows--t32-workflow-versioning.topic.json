@@ -1,0 +1,50 @@
+{
+  "id": "ai--automation-workflows--t32-workflow-versioning",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "Automation Workflows",
+  "course_id": "ai--automation-workflows",
+  "chapter_id": "ai--automation-workflows--ch06-scaling-workflows",
+  "title": "Workflow Versioning",
+  "emoji": "⚙️",
+  "color": "#EF4444",
+  "description": "Safely updating workflows without breaking in-flight processing.",
+  "difficulty": "Premium",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🏷️",
+      "text": "You update the classification prompt in production. Halfway through the queue, results change: old items used prompt v1, new items use prompt v2. Your analytics are now comparing apples to oranges."
+    },
+    "buildup": {
+      "visual": "📋",
+      "text": "Workflow versioning: tagging each workflow run with the version of prompts, models, and logic used. This ensures reproducibility and makes it safe to update workflows."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Version everything: prompt templates, model names, model versions, workflow logic, and output schemas. Store the version with each processed item so you can trace what produced what."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "In-flight transitions are tricky: when you deploy v2, items already in the queue were prepared for v1. Strategies: drain the queue before switching, run v1 and v2 in parallel, or make versions backward-compatible."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Versioning enables: safe rollbacks, A/B testing between versions, compliance auditing, and debugging. If something breaks, you know exactly which version caused it."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "If you don't version your workflows, every update is a one-way door. Version everything."
+    }
+  },
+  "quiz": {
+    "question": "Why is workflow versioning important for AI workflows?",
+    "options": [
+      "It has no practical benefit",
+      "It enables safe rollbacks, A/B testing, debugging, and ensures reproducibility of results",
+      "It slows down development",
+      "Only traditional software needs versioning"
+    ],
+    "correct": 1
+  }
+}

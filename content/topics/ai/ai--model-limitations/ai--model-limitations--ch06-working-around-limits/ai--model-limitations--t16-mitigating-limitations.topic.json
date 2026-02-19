@@ -1,0 +1,50 @@
+{
+  "id": "ai--model-limitations--t16-mitigating-limitations",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "Model Limitations",
+  "course_id": "ai--model-limitations",
+  "chapter_id": "ai--model-limitations--ch06-working-around-limits",
+  "title": "Mitigating Limitations",
+  "emoji": "🚧",
+  "color": "#EF4444",
+  "description": "Practical strategies for working within model constraints.",
+  "difficulty": "Premium",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🛠️",
+      "text": "You know the model hallucinates, can't do math, and sometimes ignores instructions. You're shipping the product anyway. How do you build something reliable on an unreliable foundation?"
+    },
+    "buildup": {
+      "visual": "📋",
+      "text": "Mitigation strategies: (1) RAG for factual grounding, (2) Tool use for math and data retrieval, (3) Output validation for format compliance, (4) Retry with rephrasing for instruction following, (5) Human-in-the-loop for high stakes."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "The key insight: treat the model as a probabilistic component in a deterministic system. Wrap it with validation, retry logic, and fallback paths — just like you'd handle any unreliable external service."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Every mitigation adds latency and cost. A system with RAG + reranking + validation + retry can take 10 seconds per query. Design for the trade-off between reliability and speed."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "The best AI systems don't pretend models are perfect. They architect around the imperfections: ground when possible, validate always, fail gracefully."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "You can't fix the model. But you can build systems that handle its failures. That's the job."
+    }
+  },
+  "quiz": {
+    "question": "What is the key principle for building reliable systems with unreliable LLMs?",
+    "options": [
+      "Wait for models to become perfect",
+      "Treat the model as a probabilistic component wrapped in validation, retry logic, and fallback paths",
+      "Never use LLMs in production",
+      "Rely entirely on the model's output"
+    ],
+    "correct": 1
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "id": "ai--ai-agents--t20-testing-agents",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "AI Agents",
+  "course_id": "ai--ai-agents",
+  "chapter_id": "ai--ai-agents--ch06-reliability-and-safety",
+  "title": "Testing Agents",
+  "emoji": "🤖",
+  "color": "#EF4444",
+  "description": "How to evaluate whether an agent works correctly.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🧪",
+      "text": "Your agent passes 10 test cases beautifully. User #1 asks something slightly different and the agent takes 47 steps and never finishes. How do you test something non-deterministic?"
+    },
+    "buildup": {
+      "visual": "📋",
+      "text": "Agent testing requires: (1) Task completion tests — does it achieve the goal? (2) Trajectory tests — did it take reasonable steps? (3) Safety tests — does it respect constraints? (4) Edge case tests — what happens with adversarial or ambiguous inputs?"
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Mock your tools for testing: replace real APIs with deterministic fakes that return known results. This lets you test the agent's reasoning and planning without external dependencies."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Agents are non-deterministic — the same input might produce different tool call sequences. Test for outcomes (was the task completed correctly?) rather than exact step sequences."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Build an eval suite: 50+ test cases covering happy paths, edge cases, and adversarial inputs. Run it after every change. Measure task success rate, average steps, and safety violations."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Don't test exact steps. Test outcomes: did the agent finish? Was it correct? Did it stay safe?"
+    }
+  },
+  "quiz": {
+    "question": "How should agent testing handle non-deterministic behavior?",
+    "options": [
+      "Only test once and assume it works",
+      "Test for task completion outcomes rather than exact step sequences",
+      "Make agents deterministic by setting temperature to 0",
+      "Agent testing is impossible"
+    ],
+    "correct": 1
+  }
+}

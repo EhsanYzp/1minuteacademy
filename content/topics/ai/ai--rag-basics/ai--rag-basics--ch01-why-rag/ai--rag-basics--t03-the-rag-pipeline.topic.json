@@ -1,0 +1,50 @@
+{
+  "id": "ai--rag-basics--t03-the-rag-pipeline",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "RAG Basics",
+  "course_id": "ai--rag-basics",
+  "chapter_id": "ai--rag-basics--ch01-why-rag",
+  "title": "The RAG Pipeline",
+  "emoji": "🔎",
+  "color": "#EF4444",
+  "description": "End-to-end flow from user question to grounded answer.",
+  "difficulty": "Beginner",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🔄",
+      "text": "RAG sounds simple until you build it. There are five moving parts, and each one can break independently."
+    },
+    "buildup": {
+      "visual": "🧩",
+      "text": "The pipeline: (1) Ingest documents, (2) Chunk them, (3) Embed chunks into vectors, (4) At query time, embed the question and search for similar chunks, (5) Feed retrieved chunks + question to the LLM."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Each step has its own failure mode: bad chunks → irrelevant retrieval. Bad embeddings → semantic mismatches. Bad prompting → the model ignores the context."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Most RAG failures aren't in the LLM — they're in retrieval. If the right document isn't retrieved, the model can't use it. Garbage in, hallucination out."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Debug RAG from retrieval backward: first check if the right chunks are being retrieved. Only then look at the LLM's behavior."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Five steps, five failure points. Debug from retrieval, not from the answer."
+    }
+  },
+  "quiz": {
+    "question": "Where do most RAG failures originate?",
+    "options": [
+      "In the LLM's reasoning ability",
+      "In the retrieval step — the right documents aren't found",
+      "In the user's question",
+      "In the embedding model's speed"
+    ],
+    "correct": 1
+  }
+}

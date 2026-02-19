@@ -1,0 +1,893 @@
+{
+  "categoryId": "ai",
+  "subject": "AI",
+  "courseId": "ai--ai-foundations",
+  "courseTitle": "AI Foundations",
+  "emoji": "📘",
+  "color": "#EF4444",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "ai--ai-foundations--ch01-what-is-ai",
+      "title": "What Is AI?",
+      "position": 1
+    },
+    {
+      "id": "ai--ai-foundations--ch02-how-machines-learn",
+      "title": "How Machines Learn",
+      "position": 2
+    },
+    {
+      "id": "ai--ai-foundations--ch03-data-matters",
+      "title": "Data Matters",
+      "position": 3
+    },
+    {
+      "id": "ai--ai-foundations--ch04-neural-networks",
+      "title": "Neural Networks",
+      "position": 4
+    },
+    {
+      "id": "ai--ai-foundations--ch05-ai-in-practice",
+      "title": "AI in Practice",
+      "position": 5
+    },
+    {
+      "id": "ai--ai-foundations--ch06-risks-and-ethics",
+      "title": "Risks & Ethics",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "id": "ai--ai-foundations--t01-what-counts-as-ai",
+      "chapter_id": "ai--ai-foundations--ch01-what-is-ai",
+      "title": "What Counts as AI?",
+      "description": "Strip away the hype and see what AI actually means in practice.",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "visual": "🤔", "text": "Your friend says their new coffee maker uses AI. You're skeptical. Where's the line?" },
+        "buildup": { "visual": "📖", "text": "AI is any system that takes in information, makes a decision or prediction, and improves from feedback — without being told every step." },
+        "discovery": { "visual": "💡", "text": "A spam filter learns which emails are junk by studying thousands of examples. Nobody wrote a rule for every spam trick — it figured patterns out." },
+        "twist": { "visual": "⚡", "text": "That coffee maker? It just follows a fixed timer. No learning, no adapting. Marketing slapped 'AI' on the box." },
+        "climax": { "visual": "🏁", "text": "Real AI changes its behavior when the data changes. Everything else is regular software with good branding." },
+        "punchline": { "visual": "🎬", "text": "If it can't learn, it's not AI — it's an if-statement in a fancy case." }
+      },
+      "quiz": {
+        "question": "What separates real AI from regular software?",
+        "options": [
+          "AI uses more code",
+          "AI learns and adapts from data",
+          "AI requires an internet connection",
+          "AI always uses neural networks"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t02-narrow-vs-general-ai",
+      "chapter_id": "ai--ai-foundations--ch01-what-is-ai",
+      "title": "Narrow vs General AI",
+      "description": "Understand the gap between today's AI and science-fiction AI.",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "visual": "🎯", "text": "A chess engine can beat every grandmaster alive, but it can't order you a pizza. Why not?" },
+        "buildup": { "visual": "🧩", "text": "Narrow AI is built for one task — image recognition, translation, playing Go. It's extremely good at that task and useless at everything else." },
+        "discovery": { "visual": "🌐", "text": "General AI (AGI) would handle any intellectual task a human can. We don't have it yet, and nobody agrees on when — or if — we will." },
+        "twist": { "visual": "⚡", "text": "Large language models feel general because they handle many text tasks, but they still fail at simple things like reliable arithmetic." },
+        "climax": { "visual": "🏁", "text": "Every AI product you use today is narrow. It excels inside its training boundary and breaks outside it." },
+        "punchline": { "visual": "🎬", "text": "Today's AI is a specialist, not a generalist. Respect the boundary." }
+      },
+      "quiz": {
+        "question": "What is narrow AI?",
+        "options": [
+          "AI that works only on small datasets",
+          "AI designed for a specific task",
+          "AI that runs on edge devices",
+          "AI that doesn't use deep learning"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t03-brief-history-of-ai",
+      "chapter_id": "ai--ai-foundations--ch01-what-is-ai",
+      "title": "Brief History of AI",
+      "description": "The key turning points from 1956 to today in under a minute.",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "visual": "📅", "text": "The term 'artificial intelligence' was coined at a summer workshop in 1956. What happened between then and ChatGPT?" },
+        "buildup": { "visual": "📉", "text": "Early AI was rule-based: expert systems with hand-coded logic. They worked for narrow domains but couldn't handle ambiguity, and funding dried up twice — the 'AI winters.'" },
+        "discovery": { "visual": "🚀", "text": "Everything changed around 2012 when deep learning crushed an image competition by a huge margin. Suddenly, learning from raw data beat hand-coded rules." },
+        "twist": { "visual": "⚡", "text": "The math behind neural networks existed since the 1980s. What was missing was cheap GPUs and massive datasets — not smarter theory." },
+        "climax": { "visual": "🏁", "text": "From that inflection point: AlphaGo (2016), GPT-3 (2020), ChatGPT (2022). Each leap was powered by scale, not a fundamentally new idea." },
+        "punchline": { "visual": "🎬", "text": "AI's story isn't genius breakthroughs — it's old ideas finally meeting enough compute and data." }
+      },
+      "quiz": {
+        "question": "What primarily drove the deep learning revolution around 2012?",
+        "options": [
+          "A brand-new mathematical theory",
+          "Government regulation requiring AI",
+          "Cheap GPUs and large datasets",
+          "Quantum computing breakthroughs"
+        ],
+        "correct": 2
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t04-rules-vs-learning",
+      "chapter_id": "ai--ai-foundations--ch01-what-is-ai",
+      "title": "Rules vs Learning",
+      "description": "When to write rules and when to let the machine figure it out.",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "visual": "🔧", "text": "You need to detect fraudulent credit-card charges. Do you write 500 if-statements, or show the system a million transactions?" },
+        "buildup": { "visual": "📋", "text": "Rule-based systems are transparent: you know exactly why a decision was made. But fraud patterns shift weekly, and your rules fall behind." },
+        "discovery": { "visual": "💡", "text": "A learning system spots new patterns as they emerge because it trains on fresh data. You trade transparency for adaptability." },
+        "twist": { "visual": "⚡", "text": "In practice, the best fraud systems combine both: rules for known patterns, ML for novel ones. It's not either/or." },
+        "climax": { "visual": "🏁", "text": "Use rules when the logic is stable and must be auditable. Use learning when the patterns are too complex or shift too fast to hand-code." },
+        "punchline": { "visual": "🎬", "text": "Rules give you control. Learning gives you coverage. Pick based on how fast the world changes." }
+      },
+      "quiz": {
+        "question": "When is machine learning preferred over hand-coded rules?",
+        "options": [
+          "When patterns are simple and stable",
+          "When you need an audit trail for every decision",
+          "When patterns are complex or shift frequently",
+          "When the dataset is very small"
+        ],
+        "correct": 2
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t05-ai-vs-ml-vs-deep-learning",
+      "chapter_id": "ai--ai-foundations--ch01-what-is-ai",
+      "title": "AI vs ML vs Deep Learning",
+      "description": "Untangle the three terms everyone mixes up.",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "visual": "🪆", "text": "A job posting asks for 'AI/ML/Deep Learning experience.' Are those three different things or the same thing?" },
+        "buildup": { "visual": "🔍", "text": "AI is the broadest term: any system that mimics intelligent behavior. Machine learning is a subset: systems that learn from data. Deep learning is a subset of ML: models with many neural-network layers." },
+        "discovery": { "visual": "💡", "text": "Think of it like vehicles → cars → electric cars. Every electric car is a car, but not every car is electric." },
+        "twist": { "visual": "⚡", "text": "Most people say 'AI' when they mean 'ML,' and 'ML' when they mean 'deep learning.' The imprecision creates confusion in meetings and vendor pitches." },
+        "climax": { "visual": "🏁", "text": "Next time you hear 'our AI does X,' ask: is it rules, classical ML, or a deep neural network? The answer changes everything about cost, speed, and reliability." },
+        "punchline": { "visual": "🎬", "text": "AI is the goal, ML is the approach, deep learning is a specific tool. Nesting dolls, not synonyms." }
+      },
+      "quiz": {
+        "question": "How do AI, ML, and deep learning relate?",
+        "options": [
+          "They are three competing approaches",
+          "Deep learning contains AI and ML",
+          "AI ⊃ ML ⊃ Deep Learning",
+          "They are the same thing"
+        ],
+        "correct": 2
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t06-supervised-learning",
+      "chapter_id": "ai--ai-foundations--ch02-how-machines-learn",
+      "title": "Supervised Learning",
+      "description": "The most common way machines learn: from labeled examples.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🏷️", "text": "You hand a child 200 photos: 'this is a cat, this is not a cat.' After a while, they get it right on photos they've never seen." },
+        "buildup": { "visual": "📊", "text": "Supervised learning works the same way. You give the model inputs paired with correct answers. It finds patterns that map inputs to outputs." },
+        "discovery": { "visual": "💡", "text": "Email spam filters are supervised: someone labeled thousands of emails as spam or not-spam, and the model learned the signals." },
+        "twist": { "visual": "⚡", "text": "The bottleneck is usually labeling, not model complexity. Getting 10,000 accurate labels can cost more than the model training itself." },
+        "climax": { "visual": "🏁", "text": "Supervised learning dominates industry because business problems usually come with historical labeled data — past sales, support tickets, medical diagnoses." },
+        "punchline": { "visual": "🎬", "text": "Good labels in, good predictions out. Garbage labels in, confident garbage out." }
+      },
+      "quiz": {
+        "question": "What does supervised learning require?",
+        "options": [
+          "A human supervisor watching the model",
+          "Labeled training data with correct answers",
+          "A reward function for good behavior",
+          "Unlabeled data only"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t07-unsupervised-learning",
+      "chapter_id": "ai--ai-foundations--ch02-how-machines-learn",
+      "title": "Unsupervised Learning",
+      "description": "Finding hidden structure in data without labels.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🧩", "text": "You dump a pile of unlabeled customer records on the table. No categories, no answers. Can a model still find something useful?" },
+        "buildup": { "visual": "🔍", "text": "Unsupervised learning finds structure on its own — clusters of similar customers, anomalies that don't fit, hidden dimensions in the data." },
+        "discovery": { "visual": "💡", "text": "A retailer ran clustering on purchase history and discovered a segment that buys diapers and beer together. No one labeled that — the algorithm surfaced it." },
+        "twist": { "visual": "⚡", "text": "The catch: the model finds patterns, but you have to decide what they mean. Clusters don't come with names. 'Group 7' is meaningless until a human interprets it." },
+        "climax": { "visual": "🏁", "text": "Use unsupervised learning for exploration: when you don't know what categories exist yet, or when labeling is too expensive to start." },
+        "punchline": { "visual": "🎬", "text": "No labels needed — but you still need judgment to make the patterns actionable." }
+      },
+      "quiz": {
+        "question": "What's a key challenge of unsupervised learning?",
+        "options": [
+          "It requires too many labels",
+          "It can't process large datasets",
+          "The discovered patterns need human interpretation",
+          "It only works with images"
+        ],
+        "correct": 2
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t08-reinforcement-learning",
+      "chapter_id": "ai--ai-foundations--ch02-how-machines-learn",
+      "title": "Reinforcement Learning",
+      "description": "Learning by trial and error with rewards and penalties.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🎮", "text": "A robot arm tries to pick up a cup. It misses 10,000 times, but each miss tells it something. On attempt 10,001, it nails it." },
+        "buildup": { "visual": "🧠", "text": "Reinforcement learning (RL) works through rewards: the agent takes actions, gets feedback (good or bad), and adjusts its strategy to maximize reward over time." },
+        "discovery": { "visual": "💡", "text": "This is how AlphaGo learned Go. It played millions of games against itself, rewarding wins and penalizing losses, until it found strategies humans never imagined." },
+        "twist": { "visual": "⚡", "text": "RL is notoriously sample-hungry. That robot arm needed millions of simulated tries. In the real world, each try might cost time, money, or broken cups." },
+        "climax": { "visual": "🏁", "text": "RL shines where you can simulate cheaply (games, routing, robotics in simulation) and the reward signal is clear." },
+        "punchline": { "visual": "🎬", "text": "No teacher needed — just a score. But be ready to wait while the agent fails its way to brilliance." }
+      },
+      "quiz": {
+        "question": "How does a reinforcement learning agent improve?",
+        "options": [
+          "By memorizing labeled examples",
+          "By clustering similar inputs",
+          "By receiving rewards and penalties for its actions",
+          "By copying human demonstrations exactly"
+        ],
+        "correct": 2
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t09-training-vs-inference",
+      "chapter_id": "ai--ai-foundations--ch02-how-machines-learn",
+      "title": "Training vs Inference",
+      "description": "Two phases of every ML system and why both matter.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🏋️", "text": "Training a model is like studying for an exam. Inference is taking the exam. Very different effort, very different cost." },
+        "buildup": { "visual": "📚", "text": "During training, the model processes your dataset many times, adjusting its internal weights to reduce errors. This is computationally expensive and can take hours, days, or weeks." },
+        "discovery": { "visual": "💡", "text": "Inference is when the trained model handles new inputs in real time — a user uploads a photo and gets a classification in milliseconds." },
+        "twist": { "visual": "⚡", "text": "Training costs dominate upfront, but inference costs dominate at scale. A model serving a million users per day can outspend its training budget in weeks." },
+        "climax": { "visual": "🏁", "text": "Optimizing training gets you a better model. Optimizing inference keeps your cloud bill sane. You need both." },
+        "punchline": { "visual": "🎬", "text": "Train once (expensive), serve forever (cheap per call — until you multiply by millions)." }
+      },
+      "quiz": {
+        "question": "What happens during inference?",
+        "options": [
+          "The model learns from new data",
+          "The model applies what it learned to new inputs",
+          "The model's weights are updated",
+          "The model retrains on live data"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t10-overfitting",
+      "chapter_id": "ai--ai-foundations--ch02-how-machines-learn",
+      "title": "Overfitting",
+      "description": "When your model memorizes instead of learning.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "📝", "text": "Your model gets 99% accuracy on training data and 60% on new data. Something went very wrong." },
+        "buildup": { "visual": "🔍", "text": "Overfitting means the model memorized the training examples — including the noise — instead of learning the underlying pattern." },
+        "discovery": { "visual": "💡", "text": "Imagine memorizing every answer on a practice test instead of understanding the material. You ace the practice test and bomb the real one." },
+        "twist": { "visual": "⚡", "text": "Bigger models overfit more easily because they have enough capacity to memorize. More data, regularization, or simpler architectures can help." },
+        "climax": { "visual": "🏁", "text": "Always check performance on held-out data the model never trained on. That gap between train and test accuracy is your overfitting signal." },
+        "punchline": { "visual": "🎬", "text": "A model that memorizes is impressive in the lab and useless in production." }
+      },
+      "quiz": {
+        "question": "What is a sign of overfitting?",
+        "options": [
+          "Low accuracy on both training and test data",
+          "High accuracy on training data, low on test data",
+          "Equal accuracy on training and test data",
+          "The model takes too long to train"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t11-underfitting",
+      "chapter_id": "ai--ai-foundations--ch02-how-machines-learn",
+      "title": "Underfitting",
+      "description": "When your model is too simple to capture the pattern.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "📉", "text": "You trained a model and it's bad at everything — training data, test data, all of it. It's not lazy; it's too simple." },
+        "buildup": { "visual": "🧩", "text": "Underfitting happens when the model doesn't have enough capacity (parameters, layers, features) to capture the real pattern in the data." },
+        "discovery": { "visual": "💡", "text": "Fitting a straight line through data that's clearly curved is textbook underfitting. The model can't bend enough to match reality." },
+        "twist": { "visual": "⚡", "text": "Sometimes underfitting isn't the model's fault — it's bad features. If you feed a house-price model only the house color, no architecture will save it." },
+        "climax": { "visual": "🏁", "text": "Fix underfitting by adding relevant features, using a more expressive model, or training longer. If train accuracy is low, you haven't even memorized — let alone learned." },
+        "punchline": { "visual": "🎬", "text": "A model that can't fit training data has nothing useful to generalize." }
+      },
+      "quiz": {
+        "question": "What causes underfitting?",
+        "options": [
+          "Too much training data",
+          "A model too complex for the task",
+          "A model too simple to capture the pattern",
+          "Too many features in the data"
+        ],
+        "correct": 2
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t12-why-data-quality-beats-quantity",
+      "chapter_id": "ai--ai-foundations--ch03-data-matters",
+      "title": "Quality Beats Quantity",
+      "description": "Why clean data matters more than massive data.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🗑️", "text": "A team scraped 10 million images to train a medical model. The model learned to detect the hospital's watermark instead of the disease." },
+        "buildup": { "visual": "📊", "text": "More data helps, but only if the data actually represents the problem. Noisy labels, duplicates, and artifacts teach the model the wrong things." },
+        "discovery": { "visual": "💡", "text": "Curating 50,000 well-labeled examples often outperforms dumping 5 million messy ones. The signal-to-noise ratio matters more than volume." },
+        "twist": { "visual": "⚡", "text": "Cleaning data isn't glamorous, so teams skip it. Then they spend months debugging a model that was doomed by dirty inputs." },
+        "climax": { "visual": "🏁", "text": "Before you add more data, audit what you already have. Fix label errors, remove duplicates, and check for leakage." },
+        "punchline": { "visual": "🎬", "text": "Garbage in, garbage out isn't a cliché — it's the most expensive lesson in ML." }
+      },
+      "quiz": {
+        "question": "Why can more data sometimes hurt model performance?",
+        "options": [
+          "Models can only handle small datasets",
+          "Noisy or mislabeled data teaches wrong patterns",
+          "Large datasets always cause overfitting",
+          "Training on more data is always better"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t13-labeling-data",
+      "chapter_id": "ai--ai-foundations--ch03-data-matters",
+      "title": "Labeling Data",
+      "description": "The unglamorous work that makes or breaks your model.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🏷️", "text": "You need 50,000 labeled images by next month. You hire a team of annotators. Three weeks in, you realize they all disagree on edge cases." },
+        "buildup": { "visual": "📋", "text": "Labeling is the process of tagging data with the correct answer so supervised models can learn. It sounds simple until you hit ambiguity." },
+        "discovery": { "visual": "💡", "text": "Clear labeling guidelines with examples cut disagreement dramatically. 'Is this photo a hot dog?' needs a guide for photos of hot dog costumes, drawings, and half-eaten ones." },
+        "twist": { "visual": "⚡", "text": "Cheap crowdsourced labels save money upfront but cost you in model quality. Specialist labels (doctors, lawyers) are expensive but can be the only option for critical tasks." },
+        "climax": { "visual": "🏁", "text": "Measure inter-annotator agreement. If your labelers disagree 30% of the time, your model's ceiling is already capped." },
+        "punchline": { "visual": "🎬", "text": "The model is only as smart as the labels it learned from." }
+      },
+      "quiz": {
+        "question": "What's the biggest risk with crowdsourced data labels?",
+        "options": [
+          "Labels arrive too quickly",
+          "Annotators may disagree or mislabel ambiguous cases",
+          "Crowdsourced labels are always wrong",
+          "It's impossible to measure label quality"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t14-bias-in-data",
+      "chapter_id": "ai--ai-foundations--ch03-data-matters",
+      "title": "Bias in Data",
+      "description": "How biased training data creates biased models.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "⚖️", "text": "A hiring model rejects qualified candidates because the training data was 90% male resumes. The model learned that male = hirable." },
+        "buildup": { "visual": "🔍", "text": "Bias in AI starts with the data. If your dataset over-represents one group or under-represents another, the model inherits that skew." },
+        "discovery": { "visual": "💡", "text": "Amazon's real recruiting tool did exactly this. It penalized resumes that mentioned women's colleges. The bias was in the historical hiring data, not the algorithm." },
+        "twist": { "visual": "⚡", "text": "Removing the biased feature (gender) doesn't always fix it. The model can still learn proxies — hobbies, schools, zip codes that correlate with the removed feature." },
+        "climax": { "visual": "🏁", "text": "Audit your data before training. Check representation across groups. Test model outputs for disparate impact. Bias is a data problem first and an algorithm problem second." },
+        "punchline": { "visual": "🎬", "text": "An unbiased algorithm trained on biased data is still biased. Fix the data." }
+      },
+      "quiz": {
+        "question": "Why doesn't removing a biased feature (like gender) always fix model bias?",
+        "options": [
+          "The model ignores features anyway",
+          "Other features can act as proxies for the removed one",
+          "Removing features always improves accuracy",
+          "Bias only exists in labels, not features"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t15-train-test-split",
+      "chapter_id": "ai--ai-foundations--ch03-data-matters",
+      "title": "Train/Test Split",
+      "description": "Why you must hide data from your model to trust it.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🎯", "text": "A student peeks at the answer key before the exam and aces it. Did they actually learn the material? You'd never know." },
+        "buildup": { "visual": "📊", "text": "Same idea: if your model trains on all the data, you can't tell if it learned real patterns or just memorized answers. You need data it's never seen." },
+        "discovery": { "visual": "💡", "text": "Split your data: typically 80% for training, 20% for testing. The test set is the exam — evaluate once, honestly." },
+        "twist": { "visual": "⚡", "text": "If you tune your model repeatedly based on test results, you're indirectly leaking test data into training. Add a validation set in between for tuning." },
+        "climax": { "visual": "🏁", "text": "Three splits: train (learn), validation (tune), test (final honest score). The test set should be touched only once." },
+        "punchline": { "visual": "🎬", "text": "Never let your model study the answer key. Hold out data, or your metrics are fiction." }
+      },
+      "quiz": {
+        "question": "What is the purpose of a test set?",
+        "options": [
+          "To give the model more training examples",
+          "To provide an honest evaluation on unseen data",
+          "To speed up model training",
+          "To increase the dataset size"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t16-data-leakage",
+      "chapter_id": "ai--ai-foundations--ch03-data-matters",
+      "title": "Data Leakage",
+      "description": "The silent bug that makes your model look brilliant — until production.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "🕵️", "text": "Your model hits 99.5% accuracy in testing and 70% in production. It's not degrading — it was never that good. Something leaked." },
+        "buildup": { "visual": "🔍", "text": "Data leakage means information from the future or the test set accidentally bleeds into training. The model uses it as a shortcut." },
+        "discovery": { "visual": "💡", "text": "Classic example: predicting hospital readmissions. The dataset included 'discharge summary' text — which only exists after the patient leaves. The model used future data." },
+        "twist": { "visual": "⚡", "text": "Leakage is tricky to detect because the model performs great in testing. You only catch it when real-world performance tanks or when someone audits the features." },
+        "climax": { "visual": "🏁", "text": "For every feature, ask: 'Would I have this information at prediction time in production?' If no, drop it." },
+        "punchline": { "visual": "🎬", "text": "If your model seems too good to be true, it probably learned the answer key by accident." }
+      },
+      "quiz": {
+        "question": "What is data leakage?",
+        "options": [
+          "When the dataset is too small",
+          "When future or test information leaks into training",
+          "When training takes too long",
+          "When the model has too many parameters"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t17-feature-engineering",
+      "chapter_id": "ai--ai-foundations--ch03-data-matters",
+      "title": "Feature Engineering",
+      "description": "Turning raw data into signals the model can actually use.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "🛠️", "text": "You're predicting taxi ride duration. You have pickup time as a Unix timestamp. The model ignores it. But 'is it rush hour?' is gold." },
+        "buildup": { "visual": "🧪", "text": "Feature engineering is creating new input columns from raw data — extracting the hour from a timestamp, computing distance from coordinates, encoding text as numbers." },
+        "discovery": { "visual": "💡", "text": "A well-crafted feature can do more for accuracy than switching to a fancier model. Domain knowledge is your biggest advantage here." },
+        "twist": { "visual": "⚡", "text": "Deep learning reduced the need for manual features in some domains (images, text), but tabular data still benefits enormously from thoughtful engineering." },
+        "climax": { "visual": "🏁", "text": "Start with simple features, measure impact, iterate. The best features are the ones that capture causality, not just correlation." },
+        "punchline": { "visual": "🎬", "text": "Models see numbers. Feature engineering translates your domain insight into numbers the model can exploit." }
+      },
+      "quiz": {
+        "question": "What is feature engineering?",
+        "options": [
+          "Selecting which model architecture to use",
+          "Creating informative input variables from raw data",
+          "Removing all features except one",
+          "Training the model for more epochs"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t18-what-is-a-neural-network",
+      "chapter_id": "ai--ai-foundations--ch04-neural-networks",
+      "title": "What Is a Neural Network?",
+      "description": "Layers, weights, and how they combine to make predictions.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🧠", "text": "Everyone says 'neural network' like it's magic. Under the hood, it's just multiply, add, and squish — repeated a lot." },
+        "buildup": { "visual": "🔢", "text": "A neural network is layers of nodes. Each node takes inputs, multiplies by weights, adds a bias, and applies a function. Layer by layer, simple math builds complex patterns." },
+        "discovery": { "visual": "💡", "text": "The first layer might detect edges in an image. The next layer combines edges into shapes. The last layer says 'that's a dog.' Each layer builds on the previous one." },
+        "twist": { "visual": "⚡", "text": "Despite the name, neural networks barely resemble biological neurons. The name is marketing from the 1940s. What matters is the math, not the metaphor." },
+        "climax": { "visual": "🏁", "text": "Think of a neural network as a chain of simple transformations. Each one is trivial; together, they approximate incredibly complex functions." },
+        "punchline": { "visual": "🎬", "text": "Not magic, not brains — just stacked math that gets surprisingly powerful." }
+      },
+      "quiz": {
+        "question": "What does each layer in a neural network do?",
+        "options": [
+          "Stores a copy of the training data",
+          "Transforms inputs with weights, biases, and activation functions",
+          "Randomly generates new features",
+          "Directly outputs the final prediction"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t19-how-backpropagation-works",
+      "chapter_id": "ai--ai-foundations--ch04-neural-networks",
+      "title": "How Backpropagation Works",
+      "description": "The algorithm that lets neural networks learn from mistakes.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "🔄", "text": "The network predicted 'cat' but the image was a truck. How does it know which of its millions of weights to blame?" },
+        "buildup": { "visual": "📐", "text": "Backpropagation computes how much each weight contributed to the error, working backward from output to input using the chain rule of calculus." },
+        "discovery": { "visual": "💡", "text": "Each weight gets a gradient: 'if I increase this weight slightly, the error goes up by this much.' Then you nudge every weight in the direction that reduces error." },
+        "twist": { "visual": "⚡", "text": "Backprop is efficient — it reuses intermediate calculations. Without it, computing gradients for millions of weights would be impossibly slow." },
+        "climax": { "visual": "🏁", "text": "Repeat this forward pass → compute error → backward pass → update weights cycle thousands of times, and the network converges on good weights." },
+        "punchline": { "visual": "🎬", "text": "Backprop: make a prediction, measure the mistake, trace the blame, adjust. Repeat until smart." }
+      },
+      "quiz": {
+        "question": "What does backpropagation calculate?",
+        "options": [
+          "The optimal number of layers",
+          "How much each weight contributed to the prediction error",
+          "The ideal learning rate",
+          "Which training examples to use"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t20-activation-functions",
+      "chapter_id": "ai--ai-foundations--ch04-neural-networks",
+      "title": "Activation Functions",
+      "description": "The nonlinear twist that gives networks their power.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "📈", "text": "Stack ten layers of multiply-and-add. Mathematically, it collapses into one layer. Your deep network is secretly shallow. How do you fix that?" },
+        "buildup": { "visual": "🔧", "text": "Activation functions inject nonlinearity after each layer. ReLU (rectified linear unit) is the most common: if the value is negative, output zero; if positive, keep it." },
+        "discovery": { "visual": "💡", "text": "This tiny kink — zeroing out negatives — is enough to let stacked layers model curves, edges, complex boundaries that a straight line never could." },
+        "twist": { "visual": "⚡", "text": "Before ReLU, people used sigmoid and tanh, but they had a vanishing gradient problem in deep networks. ReLU's simplicity accidentally solved a decade-old bottleneck." },
+        "climax": { "visual": "🏁", "text": "Without activation functions, depth is an illusion. With them, each layer genuinely adds representational power." },
+        "punchline": { "visual": "🎬", "text": "ReLU: the simplest function that makes deep learning deep." }
+      },
+      "quiz": {
+        "question": "Why are activation functions essential in neural networks?",
+        "options": [
+          "They speed up training by reducing data size",
+          "They add nonlinearity so layers don't collapse into one",
+          "They prevent the network from overfitting",
+          "They convert text into numbers"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t21-loss-functions",
+      "chapter_id": "ai--ai-foundations--ch04-neural-networks",
+      "title": "Loss Functions",
+      "description": "How the model measures its own mistakes.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "📏", "text": "The model predicts a house is worth $300K. It's actually $350K. How do you turn that $50K gap into a single number the model can minimize?" },
+        "buildup": { "visual": "🎯", "text": "A loss function scores how wrong the prediction is. For regression, mean squared error squares each gap. For classification, cross-entropy measures probability mismatch." },
+        "discovery": { "visual": "💡", "text": "The entire training process is just gradient descent on the loss function. Pick the wrong loss, and the model optimizes for the wrong thing." },
+        "twist": { "visual": "⚡", "text": "In some problems, accuracy is misleading. A fraud model that predicts 'not fraud' every time is 99.8% accurate but catches zero fraud. You'd need a loss that penalizes missed frauds heavily." },
+        "climax": { "visual": "🏁", "text": "Choose your loss function to match your business goal, not just your data type. It's the single most important design decision before training." },
+        "punchline": { "visual": "🎬", "text": "The loss function is the model's compass. Point it at the wrong target and it'll march there confidently." }
+      },
+      "quiz": {
+        "question": "What does a loss function do?",
+        "options": [
+          "Removes bad data from the dataset",
+          "Measures how wrong the model's predictions are",
+          "Controls the learning rate",
+          "Decides when to stop training"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t22-cnns-for-images",
+      "chapter_id": "ai--ai-foundations--ch04-neural-networks",
+      "title": "CNNs for Images",
+      "description": "How convolutional networks see patterns in pixels.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "🖼️", "text": "A regular neural network sees an image as a flat list of pixels. Move the cat two pixels left and it's confused. Something's missing." },
+        "buildup": { "visual": "🔲", "text": "Convolutional Neural Networks (CNNs) use small filters that slide across the image, detecting local patterns — edges, textures, corners — regardless of where they appear." },
+        "discovery": { "visual": "💡", "text": "Early layers find edges. Middle layers combine edges into ears, eyes, wheels. Final layers say 'that collection of parts is a cat.' It's a hierarchy of pattern recognition." },
+        "twist": { "visual": "⚡", "text": "CNNs share the same filter weights across the entire image, so they use far fewer parameters than fully connected networks. Efficiency and translation invariance in one trick." },
+        "climax": { "visual": "🏁", "text": "CNNs power image classification, object detection, medical imaging, and self-driving car perception. Almost every image AI task starts with a CNN backbone." },
+        "punchline": { "visual": "🎬", "text": "Slide a small window across the image, stack the findings. Simple idea, extraordinary results." }
+      },
+      "quiz": {
+        "question": "What makes CNNs well-suited for image tasks?",
+        "options": [
+          "They process images pixel by pixel sequentially",
+          "They detect local patterns using sliding filters",
+          "They require less training data than any other model",
+          "They only work with grayscale images"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t23-transformers-explained",
+      "chapter_id": "ai--ai-foundations--ch04-neural-networks",
+      "title": "Transformers Explained",
+      "description": "The architecture behind ChatGPT and modern AI.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "🔮", "text": "GPT, BERT, Gemini, Claude — all built on the same architecture. What makes transformers so dominant?" },
+        "buildup": { "visual": "🧩", "text": "Transformers process all tokens in a sequence simultaneously (not one by one like older models) and use 'attention' to figure out which tokens matter to each other." },
+        "discovery": { "visual": "💡", "text": "In the sentence 'The cat sat on the mat because it was tired,' attention links 'it' to 'cat' — not 'mat.' The model learns these relationships from millions of examples." },
+        "twist": { "visual": "⚡", "text": "The 2017 paper was called 'Attention Is All You Need' and it was right. Removing recurrence and convolutions made training massively parallelizable on GPUs." },
+        "climax": { "visual": "🏁", "text": "Transformers now dominate NLP, vision (ViT), audio, protein folding, and more. The architecture generalized far beyond text." },
+        "punchline": { "visual": "🎬", "text": "Attention is all you need — and it turns out you need it everywhere." }
+      },
+      "quiz": {
+        "question": "What is the key innovation of the transformer architecture?",
+        "options": [
+          "Processing tokens sequentially for accuracy",
+          "Using attention to relate all tokens simultaneously",
+          "Eliminating the need for training data",
+          "Using convolutional filters on text"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t24-nlp-basics",
+      "chapter_id": "ai--ai-foundations--ch05-ai-in-practice",
+      "title": "NLP Basics",
+      "description": "How AI processes and understands human language.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "💬", "text": "You type 'book a flight to Paris' and the AI understands intent, entity, and action. How does raw text become structured understanding?" },
+        "buildup": { "visual": "🔤", "text": "Natural Language Processing (NLP) converts text to numbers (tokenization), finds meaning (embeddings), and performs tasks like classification, translation, or summarization." },
+        "discovery": { "visual": "💡", "text": "Modern NLP uses pretrained language models that have read billions of words. You fine-tune them on your specific task with far less data than training from scratch." },
+        "twist": { "visual": "⚡", "text": "NLP still struggles with sarcasm, ambiguity, and cultural context. 'Nice job' after a mistake means the opposite of its literal words. Models miss this often." },
+        "climax": { "visual": "🏁", "text": "NLP powers chatbots, search, content moderation, translation, and voice assistants. If it involves text, NLP is probably under the hood." },
+        "punchline": { "visual": "🎬", "text": "Teaching machines to read is hard. Teaching them to read between the lines is still an open problem." }
+      },
+      "quiz": {
+        "question": "What is a key challenge in NLP?",
+        "options": [
+          "Converting images to text",
+          "Handling sarcasm and ambiguity in language",
+          "Processing numerical data",
+          "Training models without GPUs"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t25-computer-vision-basics",
+      "chapter_id": "ai--ai-foundations--ch05-ai-in-practice",
+      "title": "Computer Vision Basics",
+      "description": "Teaching machines to understand what they see.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "👁️", "text": "Your phone unlocks by looking at your face. A factory camera rejects defective parts. Both use computer vision, but how?" },
+        "buildup": { "visual": "🖼️", "text": "Computer vision converts pixel grids into structured understanding: 'there's a face here,' 'this part has a crack,' 'that's a stop sign.'" },
+        "discovery": { "visual": "💡", "text": "The breakthrough was ImageNet 2012: a deep CNN cut error rates in half. Since then, vision models classify, detect objects, segment regions, and generate images." },
+        "twist": { "visual": "⚡", "text": "Vision models are fooled by adversarial examples — tiny pixel changes invisible to humans that flip a model's prediction from 'panda' to 'gibbon' with high confidence." },
+        "climax": { "visual": "🏁", "text": "Computer vision drives self-driving cars, medical imaging, quality control, AR filters, and document scanning. Anywhere a camera exists, CV can add intelligence." },
+        "punchline": { "visual": "🎬", "text": "Machines can see — but they don't see the way we do. Understanding the difference keeps you safe." }
+      },
+      "quiz": {
+        "question": "What event marked a major breakthrough in computer vision?",
+        "options": [
+          "The invention of the digital camera",
+          "A deep CNN winning ImageNet 2012 by a large margin",
+          "The release of the first smartphone",
+          "The creation of the JPEG format"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t26-recommendation-systems",
+      "chapter_id": "ai--ai-foundations--ch05-ai-in-practice",
+      "title": "Recommendation Systems",
+      "description": "How Netflix, Spotify, and Amazon guess what you want next.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🎵", "text": "Spotify suggests a song you've never heard and you love it. How did it know?" },
+        "buildup": { "visual": "🔍", "text": "Two main approaches: collaborative filtering (people like you also liked X) and content-based filtering (this song has similar features to songs you already like)." },
+        "discovery": { "visual": "💡", "text": "Netflix's recommendation engine saves them an estimated $1 billion per year by reducing churn. People stay when they find things they enjoy." },
+        "twist": { "visual": "⚡", "text": "Recommendations create filter bubbles: you see more of what you already like, less of what's different. The model optimizes for engagement, not exploration." },
+        "climax": { "visual": "🏁", "text": "Good recommender systems balance relevance (you'll like this) with diversity (try something new). Pure optimization leads to echo chambers." },
+        "punchline": { "visual": "🎬", "text": "The algorithm knows your taste — but it also shapes it. Be aware of the loop." }
+      },
+      "quiz": {
+        "question": "What is collaborative filtering?",
+        "options": [
+          "Filtering out low-quality content",
+          "Recommending items based on similar users' preferences",
+          "Using content features to match items",
+          "Letting users manually filter results"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t27-ai-in-healthcare",
+      "chapter_id": "ai--ai-foundations--ch05-ai-in-practice",
+      "title": "AI in Healthcare",
+      "description": "Where AI helps doctors and where it falls short.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "🏥", "text": "An AI spots a tumor on a scan that three radiologists missed. It also confidently flags a shadow as cancer when it's just an artifact. Both happen." },
+        "buildup": { "visual": "📋", "text": "Medical AI assists in diagnostics (reading scans, pathology slides), drug discovery (screening molecules), and administrative tasks (coding billing records)." },
+        "discovery": { "visual": "💡", "text": "In dermatology, AI models match or exceed dermatologists at classifying skin lesions — but only on populations well-represented in the training data." },
+        "twist": { "visual": "⚡", "text": "FDA-cleared doesn't mean perfect. Regulations test safety, but real-world performance can differ from clinical trials — especially with different patient demographics." },
+        "climax": { "visual": "🏁", "text": "AI in healthcare works best as a second opinion, not a replacement. The doctor uses AI to catch what they might miss; the doctor catches what AI gets wrong." },
+        "punchline": { "visual": "🎬", "text": "AI + doctor beats AI alone and doctor alone. That's the sweet spot." }
+      },
+      "quiz": {
+        "question": "How is medical AI best used currently?",
+        "options": [
+          "As a complete replacement for doctors",
+          "Only for administrative tasks",
+          "As a second opinion alongside physicians",
+          "Only in drug discovery"
+        ],
+        "correct": 2
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t28-ai-for-text-generation",
+      "chapter_id": "ai--ai-foundations--ch05-ai-in-practice",
+      "title": "AI for Text Generation",
+      "description": "How models write paragraphs from a prompt.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "✍️", "text": "You type three words and GPT writes a whole essay. It reads like a human wrote it. But did the model 'understand' anything?" },
+        "buildup": { "visual": "🔤", "text": "Text generation models predict the next word, over and over. Given 'The cat sat on the,' the model assigns probabilities to every possible next word and picks one." },
+        "discovery": { "visual": "💡", "text": "This simple mechanism — next token prediction — trained on enough text produces coherent paragraphs, code, poetry, and dialogue. Scale turned a simple idea into something uncanny." },
+        "twist": { "visual": "⚡", "text": "The model doesn't know if what it writes is true. It produces plausible text, not verified facts. Fluent bullshit is still bullshit." },
+        "climax": { "visual": "🏁", "text": "Use generated text as a first draft, not a final answer. Verify facts, check logic, and edit for your voice. The model is a writing accelerator, not a source of truth." },
+        "punchline": { "visual": "🎬", "text": "It writes brilliantly. It also makes things up brilliantly. You must tell the difference." }
+      },
+      "quiz": {
+        "question": "How do text generation models produce output?",
+        "options": [
+          "By retrieving text from a database",
+          "By predicting the next token repeatedly",
+          "By translating from a hidden language",
+          "By copying from training examples verbatim"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t29-hallucinations",
+      "chapter_id": "ai--ai-foundations--ch06-risks-and-ethics",
+      "title": "Hallucinations",
+      "description": "When AI confidently states things that aren't true.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "🫧", "text": "You ask a chatbot for a legal citation. It gives you a case name, court, year — all completely made up. A lawyer filed it in court and got sanctioned." },
+        "buildup": { "visual": "🔍", "text": "Hallucination is when a model generates text that is fluent and confident but factually wrong. It's not lying — it has no concept of truth. It generates plausible next tokens." },
+        "discovery": { "visual": "💡", "text": "Hallucinations happen because the model is optimized for fluency, not accuracy. If the most probable next word leads to a false statement, the model writes it without hesitation." },
+        "twist": { "visual": "⚡", "text": "You can't reliably detect hallucinations from the model's output alone. The confidence sounds the same whether the fact is real or invented." },
+        "climax": { "visual": "🏁", "text": "Mitigate hallucinations with retrieval-augmented generation (RAG), fact-checking layers, or restricting the model to domains with verified sources." },
+        "punchline": { "visual": "🎬", "text": "The model will never tell you it's guessing. That's your job to figure out." }
+      },
+      "quiz": {
+        "question": "Why do language models hallucinate?",
+        "options": [
+          "They intentionally deceive users",
+          "They are optimized for fluency, not factual accuracy",
+          "They have too little training data",
+          "They can only process short inputs"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t30-ai-and-jobs",
+      "chapter_id": "ai--ai-foundations--ch06-risks-and-ethics",
+      "title": "AI and Jobs",
+      "description": "Which jobs AI changes, which it replaces, and which it creates.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "💼", "text": "A paralegal who used to spend 40 hours reviewing contracts now uses AI and finishes in 4. Is that job loss or job transformation?" },
+        "buildup": { "visual": "📊", "text": "AI automates tasks, not whole jobs (usually). Most roles are bundles of tasks — some automate easily, others need human judgment, empathy, or creativity." },
+        "discovery": { "visual": "💡", "text": "ATMs didn't eliminate bank tellers. They shifted tellers from counting cash to advising customers. Total teller jobs actually grew for decades after ATMs arrived." },
+        "twist": { "visual": "⚡", "text": "The risk is concentrated: repetitive, data-heavy tasks in stable environments automate fastest. Creative, relational, and physically dexterous work is much harder to automate." },
+        "climax": { "visual": "🏁", "text": "The winning strategy is complementarity: learn to work with AI tools so you're more productive, not redundant. The person using AI beats the person ignoring it." },
+        "punchline": { "visual": "🎬", "text": "AI probably won't take your job. Someone using AI might." }
+      },
+      "quiz": {
+        "question": "How does AI typically affect jobs?",
+        "options": [
+          "It eliminates entire professions overnight",
+          "It automates specific tasks within jobs, transforming roles",
+          "It only affects manufacturing jobs",
+          "It creates jobs but never eliminates any"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t31-privacy-and-ai",
+      "chapter_id": "ai--ai-foundations--ch06-risks-and-ethics",
+      "title": "Privacy and AI",
+      "description": "What happens to your data when AI systems use it.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "🔐", "text": "You upload a selfie to a fun aging app. Three months later, your face is in a facial recognition training set you never consented to." },
+        "buildup": { "visual": "📋", "text": "AI models need data to train, and that data often includes personal information — faces, medical records, browsing history, conversations." },
+        "discovery": { "visual": "💡", "text": "Even 'anonymized' data can be re-identified. Researchers deanonymized Netflix viewing records by cross-referencing with public IMDB reviews." },
+        "twist": { "visual": "⚡", "text": "Models can memorize training data. Researchers have extracted verbatim personal information from large language models that was in their training corpus." },
+        "climax": { "visual": "🏁", "text": "Read the terms of service. Prefer tools that don't train on your data. Support regulations that give you control over how your data is used." },
+        "punchline": { "visual": "🎬", "text": "If you're not paying for the AI product, your data is probably the product." }
+      },
+      "quiz": {
+        "question": "Why is 'anonymized' data not always safe for AI training?",
+        "options": [
+          "Anonymization is illegal",
+          "It can be re-identified by cross-referencing other data sources",
+          "Anonymized data is always too small to be useful",
+          "Models can't learn from anonymized data"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t32-responsible-ai",
+      "chapter_id": "ai--ai-foundations--ch06-risks-and-ethics",
+      "title": "Responsible AI",
+      "description": "Building AI systems that are fair, transparent, and accountable.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "⚖️", "text": "A loan-approval AI rejects applicants from certain zip codes at 3x the rate. Nobody intended discrimination — the model found a profitable shortcut." },
+        "buildup": { "visual": "🛡️", "text": "Responsible AI means designing systems that are fair (don't discriminate), transparent (explain decisions), and accountable (someone is responsible when things go wrong)." },
+        "discovery": { "visual": "💡", "text": "Google's Model Cards and Microsoft's Responsible AI Standard are frameworks that document a model's capabilities, limitations, and intended use — before deployment." },
+        "twist": { "visual": "⚡", "text": "Responsible AI isn't just ethics — it's risk management. Biased models create lawsuits, regulatory fines, and brand damage. Fairness is also good business." },
+        "climax": { "visual": "🏁", "text": "Build responsible AI by auditing data for bias, testing across demographic groups, documenting limitations, and keeping a human in the loop for high-stakes decisions." },
+        "punchline": { "visual": "🎬", "text": "If you can't explain why the model decided something, you're not ready to deploy it." }
+      },
+      "quiz": {
+        "question": "What is a key component of responsible AI?",
+        "options": [
+          "Making models as large as possible",
+          "Auditing for fairness and documenting limitations",
+          "Removing humans from all decision loops",
+          "Prioritizing speed over accuracy"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t33-ai-regulation-landscape",
+      "chapter_id": "ai--ai-foundations--ch06-risks-and-ethics",
+      "title": "AI Regulation Landscape",
+      "description": "A snapshot of how governments are approaching AI rules.",
+      "difficulty": "Premium",
+      "story": {
+        "hook": { "visual": "🏛️", "text": "The EU passed the AI Act, China requires algorithm registration, and the US is still debating. You build one product — which rules apply?" },
+        "buildup": { "visual": "🌍", "text": "The EU AI Act classifies systems by risk: unacceptable (banned), high (strict rules), limited (transparency needed), minimal (mostly free). It's the most comprehensive framework so far." },
+        "discovery": { "visual": "💡", "text": "China requires companies to register recommendation algorithms and disclose how they work. The US has sector-specific guidelines but no single federal AI law yet." },
+        "twist": { "visual": "⚡", "text": "Regulation moves slower than technology. By the time a law passes, the AI landscape may have shifted. Companies that self-regulate early often adapt faster when rules arrive." },
+        "climax": { "visual": "🏁", "text": "Know where your users are and which regulations apply. Build compliance into your process now — retrofitting is always more expensive." },
+        "punchline": { "visual": "🎬", "text": "The rules are coming. The smart move is to be ahead of them, not surprised by them." }
+      },
+      "quiz": {
+        "question": "How does the EU AI Act classify AI systems?",
+        "options": [
+          "By the company's revenue",
+          "By risk level: unacceptable, high, limited, minimal",
+          "By the number of users",
+          "By the programming language used"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--ai-foundations--t34-where-to-go-from-here",
+      "chapter_id": "ai--ai-foundations--ch06-risks-and-ethics",
+      "title": "Where to Go from Here",
+      "description": "Practical next steps after learning AI foundations.",
+      "difficulty": "Premium",
+      "story": {
+        "hook": { "visual": "🗺️", "text": "You now know what AI is, how it learns, and what can go wrong. The question is: what do you actually do with that knowledge?" },
+        "buildup": { "visual": "📚", "text": "If you want to build: learn Python, pick up scikit-learn or PyTorch, and follow a hands-on tutorial. Start with tabular data — it's the fastest path to real results." },
+        "discovery": { "visual": "💡", "text": "If you want to apply: learn prompt engineering, understand model limitations, and focus on integrating AI into existing workflows rather than building models from scratch." },
+        "twist": { "visual": "⚡", "text": "The biggest mistake is trying to learn everything. Pick one path — build, apply, or evaluate — and go deep. You can branch later." },
+        "climax": { "visual": "🏁", "text": "Build a small project: a spam classifier, a chatbot, a recommendation engine. Nothing cements understanding like shipping something real." },
+        "punchline": { "visual": "🎬", "text": "Foundations are done. Now pick a direction and start making things." }
+      },
+      "quiz": {
+        "question": "What's the best way to solidify AI foundations knowledge?",
+        "options": [
+          "Read more theory before doing anything",
+          "Build a small, real project",
+          "Wait for AI to become more mature",
+          "Memorize all the terminology first"
+        ],
+        "correct": 1
+      }
+    }
+  ]
+}

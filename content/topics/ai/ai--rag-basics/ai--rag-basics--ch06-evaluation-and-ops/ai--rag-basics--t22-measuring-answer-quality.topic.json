@@ -1,0 +1,50 @@
+{
+  "id": "ai--rag-basics--t22-measuring-answer-quality",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "RAG Basics",
+  "course_id": "ai--rag-basics",
+  "chapter_id": "ai--rag-basics--ch06-evaluation-and-ops",
+  "title": "Measuring Answer Quality",
+  "emoji": "🔎",
+  "color": "#EF4444",
+  "description": "Evaluate the final generated answer, not just the retrieval.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "✅",
+      "text": "The retrieval is perfect — the right chunk is in the top 3. But the model still gives a wrong answer. Retrieval quality alone doesn't guarantee answer quality."
+    },
+    "buildup": {
+      "visual": "📋",
+      "text": "Answer quality metrics: faithfulness (does the answer only use information from the context?), relevance (does it actually address the question?), and completeness (does it cover all necessary details?)."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Use an LLM-as-judge: a second model evaluates the answer against the source context and question. 'Is this answer supported by the provided context? Score 1–5.' Automate the evaluation loop."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "LLM judges have their own biases — they tend to rate longer, more detailed answers higher. Calibrate your judge with human-annotated examples."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Combine automated metrics (LLM-as-judge) with periodic human review. Neither alone is sufficient; together they catch most quality issues."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Measure the whole pipeline: retrieval and generation. A chain is only as strong as its weakest link."
+    }
+  },
+  "quiz": {
+    "question": "What does 'faithfulness' measure in RAG evaluation?",
+    "options": [
+      "How fast the answer is generated",
+      "Whether the answer only uses information from the retrieved context",
+      "How many chunks were retrieved",
+      "Whether the user liked the answer"
+    ],
+    "correct": 1
+  }
+}

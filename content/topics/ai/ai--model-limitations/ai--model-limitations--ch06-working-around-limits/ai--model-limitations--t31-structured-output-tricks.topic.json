@@ -1,0 +1,50 @@
+{
+  "id": "ai--model-limitations--t31-structured-output-tricks",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "Model Limitations",
+  "course_id": "ai--model-limitations",
+  "chapter_id": "ai--model-limitations--ch06-working-around-limits",
+  "title": "Structured Output Tricks",
+  "emoji": "🚧",
+  "color": "#EF4444",
+  "description": "Forcing reliable JSON, XML, and structured data from unreliable models.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🏗️",
+      "text": "You need valid JSON from the model. It usually works. But 3% of the time, the JSON is malformed — a missing bracket, trailing comma, or extra text before the JSON starts."
+    },
+    "buildup": {
+      "visual": "📋",
+      "text": "Getting reliable structured output requires multiple techniques: explicit format instructions, few-shot examples, output parsing with error recovery, and model-native features like JSON mode."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Best practices: (1) Use the model's JSON mode if available. (2) Provide a schema in the prompt. (3) Use Pydantic/Zod for validation. (4) Implement retry with specific error messages if parsing fails."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Even with JSON mode, the structure might be valid JSON but semantically wrong: wrong field names, missing required fields, wrong value types. Validation is still essential."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Layer it: JSON mode → schema validation → type coercion → retry on failure. Most applications need fewer than 3 retries when the original prompt includes a clear schema."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "LLMs are unreliable formatters wrapped in reliable parsers. Build the parser."
+    }
+  },
+  "quiz": {
+    "question": "Why isn't JSON mode alone sufficient for reliable structured output?",
+    "options": [
+      "JSON mode doesn't exist",
+      "The JSON may be syntactically valid but semantically wrong — wrong fields, missing data, wrong types",
+      "JSON mode always produces perfect output",
+      "Structured output is impossible with LLMs"
+    ],
+    "correct": 1
+  }
+}

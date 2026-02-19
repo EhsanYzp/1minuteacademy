@@ -1,0 +1,50 @@
+{
+  "id": "ai--prompt-engineering--t22-classification-prompts",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "Prompt Engineering",
+  "course_id": "ai--prompt-engineering",
+  "chapter_id": "ai--prompt-engineering--ch05-real-world-patterns",
+  "title": "Classification Prompts",
+  "emoji": "✏️",
+  "color": "#EF4444",
+  "description": "Sort text into categories reliably.",
+  "difficulty": "Intermediate",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🏷️",
+      "text": "You need to route 1,000 support tickets to the right team. Manual triage takes 3 hours. A well-crafted classification prompt does it in minutes."
+    },
+    "buildup": {
+      "visual": "📋",
+      "text": "Define your categories explicitly in the prompt: 'Classify each ticket as: billing, technical, account, or other. Return only the category label.'"
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Add a one-line description for each category: 'billing: payment issues, invoices, refunds. technical: bugs, errors, feature questions.' This eliminates ambiguity on edge cases."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Without an 'other' or 'unknown' category, the model forces everything into your labels — even things that don't fit. Always include an escape hatch."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Test on 50 diverse examples before scaling. Measure per-category accuracy, not just overall. A classifier that nails billing but misses technical is hiding a problem."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Define the buckets clearly, include edge-case guidance, and always leave a door marked 'other.'"
+    }
+  },
+  "quiz": {
+    "question": "Why should classification prompts include an 'other' or 'unknown' category?",
+    "options": [
+      "To increase the total number of categories",
+      "To prevent the model from forcing non-fitting inputs into wrong categories",
+      "To make the model produce longer outputs",
+      "To reduce API costs"
+    ],
+    "correct": 1
+  }
+}

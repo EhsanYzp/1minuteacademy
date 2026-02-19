@@ -1,0 +1,50 @@
+{
+  "id": "ai--llms-101--t06-how-tokenizers-work",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "LLMs 101",
+  "course_id": "ai--llms-101",
+  "chapter_id": "ai--llms-101--ch02-tokenization-and-embeddings",
+  "title": "How Tokenizers Work",
+  "emoji": "🧠",
+  "color": "#EF4444",
+  "description": "BPE, SentencePiece, and the algorithms behind token splits.",
+  "difficulty": "Intermediate",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🔧",
+      "text": "Why does the model split 'playing' into 'play' + 'ing' but keep 'the' as one token? There's an algorithm making these choices."
+    },
+    "buildup": {
+      "visual": "📐",
+      "text": "Most LLMs use Byte Pair Encoding (BPE): start with individual characters, then iteratively merge the most frequent pairs into new tokens. 't'+'h' → 'th', 'th'+'e' → 'the'."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "After thousands of merges, you get a vocabulary of ~50,000 tokens that efficiently encodes common words whole and rare words as pieces. It's a compression algorithm for language."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "The tokenizer is trained separately from the model, on a specific corpus. If your domain uses unusual words (medical terms, chemical names), they'll be split into many tokens — costing more and potentially reducing quality."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "You can't change the tokenizer of a pretrained model. But you can check how your text is tokenized to understand cost and behavior."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "The tokenizer decides how the model sees your text. It runs before anything else."
+    }
+  },
+  "quiz": {
+    "question": "How does Byte Pair Encoding (BPE) build its vocabulary?",
+    "options": [
+      "By using a dictionary of English words",
+      "By iteratively merging the most frequent character pairs",
+      "By randomly selecting word boundaries",
+      "By counting sentence lengths"
+    ],
+    "correct": 1
+  }
+}

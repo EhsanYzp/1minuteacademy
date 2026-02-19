@@ -1,0 +1,50 @@
+{
+  "id": "ai--rag-basics--t28-parent-document-retrieval",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "RAG Basics",
+  "course_id": "ai--rag-basics",
+  "chapter_id": "ai--rag-basics--ch04-retrieval",
+  "title": "Parent Document Retrieval",
+  "emoji": "🔎",
+  "color": "#EF4444",
+  "description": "Retrieve small chunks for precision, then expand to parent documents for context.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🔎",
+      "text": "Small chunks match queries precisely but lack context. Large chunks have context but match poorly. What if you could have both?"
+    },
+    "buildup": {
+      "visual": "🧩",
+      "text": "Parent document retrieval is a two-stage strategy: index small chunks for precise matching, but when a chunk is retrieved, return its parent (the larger section or full document) to the LLM."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Index chunks of ~200 tokens for search. Store a mapping from each child chunk to its parent (the full section of ~2000 tokens). On retrieval, swap the child for its parent before sending to the LLM."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "This technique dramatically reduces 'lost context' hallucinations. The model sees the surrounding paragraphs, not just the matching sentence, so it can ground its answer in complete context."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Parent document retrieval is the best of both worlds: search precision of small chunks + answer quality of large chunks."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Find with a scalpel, read with a magnifying glass."
+    }
+  },
+  "quiz": {
+    "question": "What does parent document retrieval do after finding a matching small chunk?",
+    "options": [
+      "Deletes the parent document",
+      "Returns only the small chunk to the LLM",
+      "Expands to the larger parent section for more context",
+      "Re-embeds the chunk with a different model"
+    ],
+    "correct": 2
+  }
+}

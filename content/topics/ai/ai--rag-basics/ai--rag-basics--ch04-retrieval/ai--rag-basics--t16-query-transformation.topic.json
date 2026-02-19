@@ -1,0 +1,50 @@
+{
+  "id": "ai--rag-basics--t16-query-transformation",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "RAG Basics",
+  "course_id": "ai--rag-basics",
+  "chapter_id": "ai--rag-basics--ch04-retrieval",
+  "title": "Query Transformation",
+  "emoji": "🔎",
+  "color": "#EF4444",
+  "description": "Rewrite the user's question to improve retrieval.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🔄",
+      "text": "The user asks: 'Why isn't my thing working?' Your knowledge base has articles about 'troubleshooting widget connectivity errors.' The semantic gap is too wide for raw search."
+    },
+    "buildup": {
+      "visual": "✏️",
+      "text": "Query transformation uses an LLM to rewrite the user's question into something more searchable: 'widget not working → troubleshooting steps for widget connectivity issues.'"
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "HyDE (Hypothetical Document Embeddings) is an advanced variant: generate a hypothetical answer, embed that, and search for real documents similar to the hypothetical answer."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Query transformation adds an LLM call before retrieval — extra latency and cost. Only use it when raw queries consistently fail to retrieve relevant results."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Start without query transformation. Add it when you see a pattern: users ask in casual language, your docs are formal, and semantic search alone can't bridge the gap."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "If the user's words don't match your docs, rewrite the question — not the docs."
+    }
+  },
+  "quiz": {
+    "question": "What is the purpose of query transformation in RAG?",
+    "options": [
+      "To correct the user's grammar",
+      "To rewrite queries into forms that better match the knowledge base",
+      "To translate queries into other languages",
+      "To reduce the number of tokens in the query"
+    ],
+    "correct": 1
+  }
+}

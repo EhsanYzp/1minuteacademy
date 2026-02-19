@@ -1,0 +1,50 @@
+{
+  "id": "ai--evaluation-and-testing--t11-eval-pipelines",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "Evaluation & Testing",
+  "course_id": "ai--evaluation-and-testing",
+  "chapter_id": "ai--evaluation-and-testing--ch04-automated-evaluation",
+  "title": "Eval Pipelines",
+  "emoji": "🧪",
+  "color": "#EF4444",
+  "description": "Automating evaluation to run on every change.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🔄",
+      "text": "You changed a system prompt. Did it make things better or worse? Without an automated eval pipeline, you'll find out from user complaints."
+    },
+    "buildup": {
+      "visual": "⚙️",
+      "text": "An eval pipeline: (1) Load the eval dataset, (2) Run each question through your system, (3) Score each answer with your metrics, (4) Compare scores to the previous run. Run it on every PR."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Integrate eval into CI/CD: block merges if accuracy drops below a threshold. This catches regressions before they reach production."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Non-determinism means scores fluctuate between runs. Run each eval question 3 times and average, or accept a small variance band (±2%) as normal."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "An eval pipeline turns 'I think this change is good' into 'this change improved accuracy from 84% to 87%.' Data beats intuition."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Every prompt change gets a score. Every score gets compared to the last. Regressions get caught."
+    }
+  },
+  "quiz": {
+    "question": "How should non-determinism be handled in eval pipelines?",
+    "options": [
+      "Ignore score fluctuations",
+      "Run each question multiple times and average, or accept a small variance band",
+      "Only run evals once per year",
+      "Non-determinism doesn't affect eval scores"
+    ],
+    "correct": 1
+  }
+}

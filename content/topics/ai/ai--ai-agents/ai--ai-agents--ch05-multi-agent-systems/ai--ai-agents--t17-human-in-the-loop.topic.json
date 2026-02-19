@@ -1,0 +1,50 @@
+{
+  "id": "ai--ai-agents--t17-human-in-the-loop",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "AI Agents",
+  "course_id": "ai--ai-agents",
+  "chapter_id": "ai--ai-agents--ch05-multi-agent-systems",
+  "title": "Human-in-the-Loop",
+  "emoji": "🤖",
+  "color": "#EF4444",
+  "description": "Pausing the agent for human approval before critical actions.",
+  "difficulty": "Intermediate",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🖐️",
+      "text": "The agent is about to send an email to your CEO with its analysis. Are you sure it's right? Human-in-the-loop pauses the agent for approval before irreversible actions."
+    },
+    "buildup": {
+      "visual": "⏸️",
+      "text": "Define which actions are 'safe' (read database, search web) and which need approval (send email, delete files, make purchases). The agent pauses before approved actions."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Implementation: tag tools as 'auto-approve' or 'require-approval.' When the agent calls a require-approval tool, show the user the proposed action and wait for confirmation."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Too many approval gates make the agent useless — the user might as well do it themselves. Too few make the agent dangerous. Calibrate based on reversibility: can you undo this action?"
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "The rule of thumb: auto-approve reads, require approval for writes and deletes, always require approval for external communication."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Let the agent run freely on safe actions. Put guardrails on the dangerous ones. Trust is earned, not assumed."
+    }
+  },
+  "quiz": {
+    "question": "Which actions should typically require human approval?",
+    "options": [
+      "All actions, no matter how small",
+      "Irreversible or externally-facing actions like sending emails or deleting data",
+      "No actions — agents should be fully autonomous",
+      "Only database reads"
+    ],
+    "correct": 1
+  }
+}

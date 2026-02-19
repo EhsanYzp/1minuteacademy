@@ -1,0 +1,50 @@
+{
+  "id": "ai--automation-workflows--t31-rate-limit-management",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "Automation Workflows",
+  "course_id": "ai--automation-workflows",
+  "chapter_id": "ai--automation-workflows--ch06-scaling-workflows",
+  "title": "Rate Limit Management",
+  "emoji": "⚙️",
+  "color": "#EF4444",
+  "description": "Staying within API limits while maximising throughput.",
+  "difficulty": "Intermediate",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🚦",
+      "text": "Your workflow sends 100 requests per second. The API limit is 60 per second. You get rate limited. 40 requests fail. The retry logic hammers the API. Now you're rate limited for 60 seconds."
+    },
+    "buildup": {
+      "visual": "⏳",
+      "text": "Rate limit management: controlling how fast your workflow sends requests to stay within provider limits. Key metrics: requests per minute (RPM) and tokens per minute (TPM)."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Strategies: (1) Token bucket — allow bursts but limit sustained rate. (2) Sliding window — count requests in a rolling time window. (3) Exponential backoff — wait longer after each rate limit error."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Different models have different limits. GPT-4 has lower limits than GPT-3.5. Rate limits vary by account tier. A workflow that works on your paid tier might fail on a cheaper tier."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Build a rate-limit-aware client: track remaining quota, pause before hitting limits, use exponential backoff on 429 errors, and monitor utilisation to right-size your API tier."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "The fastest workflow isn't one that sends the most requests. It's one that sends the most requests without getting rate limited."
+    }
+  },
+  "quiz": {
+    "question": "What is the best response to a 429 (rate limit) error from an AI API?",
+    "options": [
+      "Immediately retry as fast as possible",
+      "Exponential backoff — wait longer after each consecutive rate limit error",
+      "Switch to a different API permanently",
+      "Ignore the error and continue"
+    ],
+    "correct": 1
+  }
+}

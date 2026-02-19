@@ -1,0 +1,50 @@
+{
+  "id": "ai--rag-basics--t26-embedding-dimensions",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "RAG Basics",
+  "course_id": "ai--rag-basics",
+  "chapter_id": "ai--rag-basics--ch02-embeddings-and-vectors",
+  "title": "Embedding Dimensions",
+  "emoji": "🔎",
+  "color": "#EF4444",
+  "description": "How the number of dimensions affects quality, speed, and cost.",
+  "difficulty": "Intermediate",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "📐",
+      "text": "text-embedding-3-small produces 1536-dimensional vectors. text-embedding-3-large produces 3072. Does doubling the dimensions double the quality?"
+    },
+    "buildup": {
+      "visual": "📊",
+      "text": "Each dimension captures one facet of meaning. More dimensions let the model encode finer distinctions — like having a 3072-colour palette instead of 1536."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Higher dimensions generally improve retrieval accuracy, but with diminishing returns. Going from 384 to 768 dimensions helps a lot. Going from 1536 to 3072 helps a little."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "More dimensions mean bigger vectors, more storage, slower similarity search, and higher costs. A 3072-dim index costs roughly 2x a 1536-dim index to store and query."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Many teams use Matryoshka embeddings — models trained so you can truncate dimensions (use the first 512 of 1536) with graceful quality degradation."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "More dimensions aren't always worth it. Match your embedding size to your quality needs and your budget."
+    }
+  },
+  "quiz": {
+    "question": "What is the main tradeoff of using higher-dimensional embeddings?",
+    "options": [
+      "They are always worse at retrieval",
+      "They improve accuracy but increase storage and search costs",
+      "They require a different LLM",
+      "They can only embed English text"
+    ],
+    "correct": 1
+  }
+}

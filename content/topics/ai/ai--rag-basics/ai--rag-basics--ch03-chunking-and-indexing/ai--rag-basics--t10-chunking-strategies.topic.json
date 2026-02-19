@@ -1,0 +1,50 @@
+{
+  "id": "ai--rag-basics--t10-chunking-strategies",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "RAG Basics",
+  "course_id": "ai--rag-basics",
+  "chapter_id": "ai--rag-basics--ch03-chunking-and-indexing",
+  "title": "Chunking Strategies",
+  "emoji": "🔎",
+  "color": "#EF4444",
+  "description": "Fixed-size, semantic, and recursive approaches compared.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🔧",
+      "text": "You split every document at exactly 500 characters. A sentence gets cut in half mid-word. The embedding is nonsense. There's a better way."
+    },
+    "buildup": {
+      "visual": "📐",
+      "text": "Fixed-size chunking is fast but dumb — it ignores sentence boundaries. Recursive chunking splits by paragraphs first, then sentences, then characters as fallback. Semantic chunking uses embedding similarity to detect natural topic breaks."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Recursive chunking (what LangChain uses by default) handles most document types well: it preserves paragraph structure while keeping chunks under a size limit."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Markdown, HTML, and code need different splitters. Splitting Python code at arbitrary character counts breaks function definitions. Use language-aware chunkers for structured content."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Match your chunking strategy to your content type: recursive for prose, header-based for markdown, AST-based for code. One size doesn't fit all."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Respect the structure of your content. Smart splits beat arbitrary cuts every time."
+    }
+  },
+  "quiz": {
+    "question": "Why should different content types use different chunking strategies?",
+    "options": [
+      "All content should be chunked the same way",
+      "Different structures (prose, code, markdown) break meaningfully at different boundaries",
+      "Only code needs special chunking",
+      "Chunking strategy doesn't affect retrieval quality"
+    ],
+    "correct": 1
+  }
+}

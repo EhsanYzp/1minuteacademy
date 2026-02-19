@@ -1,0 +1,50 @@
+{
+  "id": "ai--rag-basics--t11-overlapping-chunks",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "RAG Basics",
+  "course_id": "ai--rag-basics",
+  "chapter_id": "ai--rag-basics--ch03-chunking-and-indexing",
+  "title": "Overlapping Chunks",
+  "emoji": "🔎",
+  "color": "#EF4444",
+  "description": "Use overlap to preserve context across chunk boundaries.",
+  "difficulty": "Intermediate",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🔗",
+      "text": "A critical sentence spans two chunks. Chunk A has the beginning, Chunk B has the ending. Neither chunk alone makes sense. You've created a retrieval blind spot."
+    },
+    "buildup": {
+      "visual": "📏",
+      "text": "Overlap means each chunk includes some tokens from the previous chunk. With 50-token overlap on 300-token chunks, boundary sentences appear in both adjacent chunks."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Overlap costs extra storage and compute (more chunks to index and search), but it dramatically reduces information loss at boundaries. 10–20% overlap is a common starting point."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Too much overlap creates near-duplicate chunks that clutter retrieval results. If 80% of two chunks are identical, you're wasting retrieval slots on redundant information."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Use enough overlap to capture boundary context (50–100 tokens) but not so much that chunks become redundant. Deduplicate results after retrieval if needed."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "A little overlap prevents lost context at boundaries. A lot of overlap wastes everything else."
+    }
+  },
+  "quiz": {
+    "question": "What is the purpose of chunk overlap in RAG?",
+    "options": [
+      "To increase the total document count",
+      "To preserve context that spans chunk boundaries",
+      "To reduce the number of embeddings needed",
+      "To speed up indexing"
+    ],
+    "correct": 1
+  }
+}

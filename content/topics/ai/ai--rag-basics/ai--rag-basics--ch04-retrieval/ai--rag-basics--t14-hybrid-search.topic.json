@@ -1,0 +1,50 @@
+{
+  "id": "ai--rag-basics--t14-hybrid-search",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "RAG Basics",
+  "course_id": "ai--rag-basics",
+  "chapter_id": "ai--rag-basics--ch04-retrieval",
+  "title": "Hybrid Search",
+  "emoji": "🔎",
+  "color": "#EF4444",
+  "description": "Combine keyword and semantic search for the best of both.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🔀",
+      "text": "Semantic search finds conceptually related chunks. But when the user searches for 'error code E-4021,' you need exact keyword matching. One method alone isn't enough."
+    },
+    "buildup": {
+      "visual": "⚖️",
+      "text": "Hybrid search runs both keyword (BM25) and semantic (vector) search in parallel, then combines the results. You get exact matches when they exist and fuzzy matches when they don't."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Reciprocal Rank Fusion (RRF) is a common merging strategy: it weights results by their rank in each search and produces a unified ranking. No magic tuning needed."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "The weight between keyword and semantic matters. For technical docs with specific terms, lean toward keywords. For conversational queries, lean semantic. One ratio doesn't fit all use cases."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Most production RAG systems use hybrid search. It's more robust than either method alone and only slightly more complex to implement."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Keywords for precision. Semantics for recall. Hybrid for both."
+    }
+  },
+  "quiz": {
+    "question": "What does hybrid search combine?",
+    "options": [
+      "Two different LLMs",
+      "Keyword search (BM25) and semantic vector search",
+      "Two different embedding models",
+      "Search and generation in one step"
+    ],
+    "correct": 1
+  }
+}

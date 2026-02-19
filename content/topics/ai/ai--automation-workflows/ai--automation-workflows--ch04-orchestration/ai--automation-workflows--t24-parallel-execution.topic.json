@@ -1,0 +1,50 @@
+{
+  "id": "ai--automation-workflows--t24-parallel-execution",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "Automation Workflows",
+  "course_id": "ai--automation-workflows",
+  "chapter_id": "ai--automation-workflows--ch04-orchestration",
+  "title": "Parallel Execution",
+  "emoji": "⚙️",
+  "color": "#EF4444",
+  "description": "Running independent workflow steps simultaneously for speed.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "⚡",
+      "text": "Your workflow has 4 AI steps: summarise, extract entities, classify sentiment, and detect language. Each takes 2 seconds. Sequentially: 8 seconds. In parallel: 2 seconds."
+    },
+    "buildup": {
+      "visual": "🔀",
+      "text": "Parallel execution: when workflow steps don't depend on each other's output, run them simultaneously. This dramatically reduces total workflow latency."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Identify parallelisable steps: if step B doesn't need step A's output, they can run in parallel. Draw the dependency graph — independent branches can execute concurrently."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Parallel API calls can hit rate limits fast. If you're processing 100 documents with 4 parallel AI steps each, that's 400 concurrent API calls. Budget your concurrency."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Use Promise.all (or asyncio.gather) for parallel steps. Set concurrency limits. Handle partial failures — if 3 of 4 parallel steps succeed, can you still proceed?"
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Sequential when you must. Parallel when you can. Latency is the enemy of user experience."
+    }
+  },
+  "quiz": {
+    "question": "What is the main risk of running many AI steps in parallel?",
+    "options": [
+      "Parallel execution is slower than sequential",
+      "Hitting API rate limits with too many concurrent calls",
+      "Models can't run in parallel",
+      "Parallel execution always fails"
+    ],
+    "correct": 1
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "id": "ai--rag-basics--t17-grounded-generation",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "RAG Basics",
+  "course_id": "ai--rag-basics",
+  "chapter_id": "ai--rag-basics--ch05-generation",
+  "title": "Grounded Generation",
+  "emoji": "🔎",
+  "color": "#EF4444",
+  "description": "Making the model answer from retrieved context, not from memory.",
+  "difficulty": "Intermediate",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "⚓",
+      "text": "You retrieved the perfect chunk. You put it in the prompt. The model ignores it and answers from its own training data. Why?"
+    },
+    "buildup": {
+      "visual": "📐",
+      "text": "Grounded generation requires explicit instructions: 'Answer ONLY based on the provided context. If the context doesn't contain the answer, say you don't know.'"
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Place the context before the question in the prompt. Use clear delimiters: 'Context: [chunks]. Question: [query]. Answer based only on the context above.'"
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Even with strong instructions, models sometimes blend retrieved context with training knowledge — especially when the context is vague and the model's prior knowledge is strong."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Add a citation requirement: 'Cite which context passage supports each claim.' This forces the model to trace its answers back to specific chunks, reducing unsupported claims."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Retrieval gets the data in. The prompt decides whether the model uses it."
+    }
+  },
+  "quiz": {
+    "question": "How do you ensure the LLM uses retrieved context instead of its training data?",
+    "options": [
+      "Use a larger model",
+      "Explicitly instruct the model to answer only from the provided context",
+      "Remove the context from the prompt",
+      "Increase the temperature"
+    ],
+    "correct": 1
+  }
+}

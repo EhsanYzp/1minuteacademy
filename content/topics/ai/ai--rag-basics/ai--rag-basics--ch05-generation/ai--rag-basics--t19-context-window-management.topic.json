@@ -1,0 +1,50 @@
+{
+  "id": "ai--rag-basics--t19-context-window-management",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "RAG Basics",
+  "course_id": "ai--rag-basics",
+  "chapter_id": "ai--rag-basics--ch05-generation",
+  "title": "Context Window Management",
+  "emoji": "🔎",
+  "color": "#EF4444",
+  "description": "Fit the right amount of context without overflowing the window.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "📦",
+      "text": "You stuff 15 retrieved chunks into the prompt. The model runs out of space for its answer. Or worse, it ignores chunks 8–14 completely."
+    },
+    "buildup": {
+      "visual": "📏",
+      "text": "Budget your context window: system prompt + retrieved chunks + conversation history + the model's response all share the same limit. Reserve enough tokens for the answer."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "A practical budget: 20% for system prompt and instructions, 50% for retrieved context, 10% for conversation history, 20% reserved for the model's response."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "More context isn't always better. After about 5 well-chosen chunks, adding more can actually dilute the signal and reduce answer quality. Quality of retrieval beats quantity."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Rerank aggressively and include only the top 3–5 most relevant chunks. This leaves room for a good answer and keeps the model focused."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Don't fill the window. Budget it. The model needs room to think and respond."
+    }
+  },
+  "quiz": {
+    "question": "Why shouldn't you fill the entire context window with retrieved chunks?",
+    "options": [
+      "It's against API terms of service",
+      "The model needs room for its response, and too many chunks dilute signal quality",
+      "More chunks always improve answer quality",
+      "The context window is unlimited"
+    ],
+    "correct": 1
+  }
+}

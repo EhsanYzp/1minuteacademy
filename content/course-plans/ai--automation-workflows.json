@@ -1,0 +1,843 @@
+{
+  "categoryId": "ai",
+  "subject": "AI",
+  "courseId": "ai--automation-workflows",
+  "courseTitle": "Automation Workflows",
+  "emoji": "⚙️",
+  "color": "#EF4444",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "ai--automation-workflows--ch01-workflow-thinking",
+      "title": "Workflow Thinking",
+      "position": 1
+    },
+    {
+      "id": "ai--automation-workflows--ch02-triggers-and-inputs",
+      "title": "Triggers & Inputs",
+      "position": 2
+    },
+    {
+      "id": "ai--automation-workflows--ch03-ai-in-the-middle",
+      "title": "AI in the Middle",
+      "position": 3
+    },
+    {
+      "id": "ai--automation-workflows--ch04-orchestration",
+      "title": "Orchestration",
+      "position": 4
+    },
+    {
+      "id": "ai--automation-workflows--ch05-error-handling",
+      "title": "Error Handling",
+      "position": 5
+    },
+    {
+      "id": "ai--automation-workflows--ch06-scaling-workflows",
+      "title": "Scaling Workflows",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "id": "ai--automation-workflows--t01-what-is-an-ai-workflow",
+      "chapter_id": "ai--automation-workflows--ch01-workflow-thinking",
+      "title": "What Is an AI Workflow?",
+      "description": "Chaining AI steps with traditional code to automate tasks.",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "visual": "⚙️", "text": "Every morning, a marketer reads customer emails, categorizes them, drafts replies, and updates a spreadsheet. That's 2 hours of repetitive work. An AI workflow does it in 2 minutes." },
+        "buildup": { "visual": "🔄", "text": "An AI workflow is a pipeline that combines AI steps (classify, summarize, generate) with traditional steps (fetch data, send email, update database) into an automated sequence." },
+        "discovery": { "visual": "💡", "text": "The workflow isn't just AI — it's AI glued together with regular code. The AI classifies the email, a function routes it to the right team, the AI drafts a reply, and a function sends it." },
+        "twist": { "visual": "⚡", "text": "The AI steps are the flashy part, but the glue code is where most bugs live: parsing API responses, handling edge cases, managing retries. The boring parts matter most." },
+        "climax": { "visual": "🏁", "text": "Think of AI workflows as recipes: AI ingredients (classification, generation, extraction) combined with traditional steps (API calls, database writes, notifications) in a specific order." },
+        "punchline": { "visual": "🎬", "text": "AI is one ingredient in the recipe. The recipe is the workflow. Both matter." }
+      },
+      "quiz": {
+        "question": "What makes an AI workflow different from just using an AI model?",
+        "options": [
+          "AI workflows don't use AI models",
+          "Workflows chain AI steps with traditional code steps into automated sequences",
+          "Workflows are always simpler than single model calls",
+          "There is no difference"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t02-identifying-automation-opportunities",
+      "chapter_id": "ai--automation-workflows--ch01-workflow-thinking",
+      "title": "Finding Automation Opportunities",
+      "description": "Spotting tasks that are ripe for AI automation.",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "visual": "🔍", "text": "Your team spends 30 hours a week on tasks that follow the same pattern every time. Some of those hours can be automated. Others can't. How do you tell which is which?" },
+        "buildup": { "visual": "📋", "text": "Good automation candidates: high-volume, repetitive, well-defined inputs and outputs, tolerance for occasional errors. Bad candidates: one-off tasks, high-stakes decisions, tasks requiring physical world interaction." },
+        "discovery": { "visual": "💡", "text": "Score each task: (frequency × time per task × automation feasibility). A task done 100 times a day that takes 5 minutes each and can be automated is worth 500 minutes/day. Start there." },
+        "twist": { "visual": "⚡", "text": "Partial automation often beats full automation. Automating the data collection step while keeping human decision-making captures 80% of the value with 20% of the risk." },
+        "climax": { "visual": "🏁", "text": "Map your team's workflows. Find the repetitive steps. Score them by volume and feasibility. Start with the highest-value, lowest-risk automation." },
+        "punchline": { "visual": "🎬", "text": "Automate the boring parts. Let humans handle the interesting parts. That's the sweet spot." }
+      },
+      "quiz": {
+        "question": "What makes a task a good candidate for AI automation?",
+        "options": [
+          "It's done once a year",
+          "High volume, repetitive, well-defined inputs/outputs, and tolerance for occasional errors",
+          "It requires physical world interaction",
+          "It's a one-off creative task"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t03-event-triggers",
+      "chapter_id": "ai--automation-workflows--ch02-triggers-and-inputs",
+      "title": "Event Triggers",
+      "description": "What starts a workflow — events, schedules, and webhooks.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🔔", "text": "A customer submits a support ticket. Within 30 seconds, the AI classifies it, suggests a response, and routes it to the right team. What triggered that workflow? The ticket creation event." },
+        "buildup": { "visual": "📋", "text": "Trigger types: event-based (new email, form submission, database change), schedule-based (every day at 9am, every hour), manual (user clicks a button), and webhook-based (external service notifies your system)." },
+        "discovery": { "visual": "💡", "text": "Event triggers are the most responsive: the workflow starts immediately when something happens. Schedule triggers are simpler but add latency — the 9am job misses the 8:45am email until tomorrow." },
+        "twist": { "visual": "⚡", "text": "Event triggers can cause cascading workflows: ticket created → AI classifies → classification triggers routing → routing triggers notification → notification triggers logging. Design for this chain and prevent infinite loops." },
+        "climax": { "visual": "🏁", "text": "Match the trigger to the urgency: real-time events for customer-facing workflows, scheduled jobs for batch processing, manual triggers for review steps." },
+        "punchline": { "visual": "🎬", "text": "The trigger determines the speed. Pick the right one for the job: instant, scheduled, or manual." }
+      },
+      "quiz": {
+        "question": "What risk do event-based triggers introduce?",
+        "options": [
+          "They're too slow",
+          "Cascading workflows and potential infinite loops",
+          "They only work on schedules",
+          "Events can't trigger AI workflows"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t04-input-validation",
+      "chapter_id": "ai--automation-workflows--ch02-triggers-and-inputs",
+      "title": "Input Validation",
+      "description": "Checking data quality before feeding it to the AI.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🛡️", "text": "Your email classification workflow receives an email that's just an empty subject line and a 50MB attachment. The AI tries to classify it and returns nonsense. Garbage in, garbage out." },
+        "buildup": { "visual": "📋", "text": "Validate inputs before AI processing: check for required fields, reasonable lengths, expected formats, and suspicious content. Reject or route invalid inputs before they waste API calls." },
+        "discovery": { "visual": "💡", "text": "Validation layers: (1) Schema validation — are all required fields present? (2) Content validation — is the text readable? Not empty? Not too long? (3) Safety check — does the input contain malicious content?" },
+        "twist": { "visual": "⚡", "text": "Overly strict validation blocks legitimate inputs: an email in a foreign language fails your English-only text check. Validate structure, not content. Let the AI handle content variety." },
+        "climax": { "visual": "🏁", "text": "Validate early, fail fast. A rejected input at the start costs nothing. A failed AI call after processing costs tokens and time." },
+        "punchline": { "visual": "🎬", "text": "Validate the inputs before the AI sees them. It's cheaper to reject bad data than to process it." }
+      },
+      "quiz": {
+        "question": "What should input validation in an AI workflow check?",
+        "options": [
+          "Only the AI model's accuracy",
+          "Required fields, reasonable lengths, expected formats, and safety before AI processing",
+          "Nothing — the AI handles all validation",
+          "Only the output format"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t05-classification-steps",
+      "chapter_id": "ai--automation-workflows--ch03-ai-in-the-middle",
+      "title": "Classification Steps",
+      "description": "Using AI to categorize inputs and route workflow branches.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🏷️", "text": "A support ticket arrives. Is it a billing issue, a technical bug, or a feature request? The answer determines which team handles it and which template response is used." },
+        "buildup": { "visual": "🔀", "text": "Classification is the most common AI workflow step: take an input, assign it to a category, and branch the workflow based on the result. It's the router of AI automation." },
+        "discovery": { "visual": "💡", "text": "Implementation: 'Classify this support ticket into one of: billing, technical, feature_request, general. Respond with only the category name.' Parse the output, branch the workflow." },
+        "twist": { "visual": "⚡", "text": "The model sometimes returns categories not in your list ('pricing' instead of 'billing') or adds explanations. Use structured output (JSON mode) and validate the response against your allowed categories." },
+        "climax": { "visual": "🏁", "text": "Classification steps should be fast and cheap: use a small model, structured output, and strict validation. Save expensive models for generation steps." },
+        "punchline": { "visual": "🎬", "text": "Classify first, route second, generate third. Get the category right and the rest falls into place." }
+      },
+      "quiz": {
+        "question": "What should you do when the AI returns a classification not in your predefined list?",
+        "options": [
+          "Accept any classification the model returns",
+          "Use structured output and validate against allowed categories, with a fallback",
+          "Ignore the classification step entirely",
+          "Add every new classification to your list automatically"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t06-extraction-steps",
+      "chapter_id": "ai--automation-workflows--ch03-ai-in-the-middle",
+      "title": "Extraction Steps",
+      "description": "Pulling structured data from unstructured text.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "📋", "text": "An invoice arrives as a PDF. You need: vendor name, total amount, due date, and line items. A human reads it in 2 minutes. An AI extraction step does it in 2 seconds." },
+        "buildup": { "visual": "🔍", "text": "Extraction takes unstructured input (email, PDF, web page) and outputs structured data (JSON with specific fields). It's the bridge between messy real-world data and clean database records." },
+        "discovery": { "visual": "💡", "text": "Use structured output: 'Extract the following fields from this invoice as JSON: {vendor_name, total_amount, due_date, line_items}.' Validate the JSON schema and the data types of each field." },
+        "twist": { "visual": "⚡", "text": "Extraction quality depends heavily on input quality. A scanned PDF with OCR errors → wrong extraction. A well-formatted email → perfect extraction. Preprocess inputs to improve AI accuracy." },
+        "climax": { "visual": "🏁", "text": "Extraction + validation is the pattern: AI extracts, code validates. If validation fails (missing fields, wrong types), route to human review instead of storing bad data." },
+        "punchline": { "visual": "🎬", "text": "Let the AI read the messy documents. Let code validate the output. Together they turn chaos into structure." }
+      },
+      "quiz": {
+        "question": "What should happen when AI extraction produces invalid structured data?",
+        "options": [
+          "Store the data anyway",
+          "Route to human review rather than storing bad data",
+          "Delete the original document",
+          "Retry infinitely"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t07-generation-steps",
+      "chapter_id": "ai--automation-workflows--ch03-ai-in-the-middle",
+      "title": "Generation Steps",
+      "description": "Creating new content as part of a workflow.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "✍️", "text": "The support ticket is classified as 'billing.' The customer's info is retrieved from the database. Now the AI generates a personalized reply using the customer's data and the billing template." },
+        "buildup": { "visual": "📝", "text": "Generation steps create new content: draft replies, write summaries, generate reports, create descriptions. They combine context (customer data, retrieved documents) with instructions (tone, format, constraints)." },
+        "discovery": { "visual": "💡", "text": "The power is in the combination: classification routes to the right template, extraction provides the data, generation fills in the template with a natural, personalized response." },
+        "twist": { "visual": "⚡", "text": "Generation is the most expensive and error-prone step. It's where hallucinations happen, tone goes wrong, and unexpected content appears. Always review generated content for high-stakes workflows." },
+        "climax": { "visual": "🏁", "text": "Use generation as the last AI step in the workflow, after classification and extraction have prepared the context. More context → better generation." },
+        "punchline": { "visual": "🎬", "text": "Classify, extract, then generate. Each step feeds the next. The generation is only as good as the context it receives." }
+      },
+      "quiz": {
+        "question": "Why should generation be the last AI step in a workflow?",
+        "options": [
+          "Generation doesn't need any context",
+          "Earlier steps (classification, extraction) prepare the context that makes generation more accurate",
+          "Generation should always be first",
+          "The order of steps doesn't matter"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t08-sequential-vs-parallel",
+      "chapter_id": "ai--automation-workflows--ch04-orchestration",
+      "title": "Sequential vs Parallel",
+      "description": "Running workflow steps one after another or at the same time.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🔀", "text": "Your workflow classifies an email, then summarizes it, then extracts entities. Each step takes 2 seconds. Total: 6 seconds. But the summary and entity extraction are independent — they could run in parallel for 4 seconds." },
+        "buildup": { "visual": "⚡", "text": "Sequential: each step waits for the previous one. Parallel: independent steps run simultaneously. Fan-out/fan-in: split into parallel branches, then merge results." },
+        "discovery": { "visual": "💡", "text": "Identify dependencies: if step B needs step A's output, they must be sequential. If steps B and C only need step A's output but not each other's, they can run in parallel." },
+        "twist": { "visual": "⚡", "text": "Parallel execution introduces complexity: what if one branch fails and the other succeeds? Do you retry the failed branch? Cancel the successful one? Design error handling for partial failures." },
+        "climax": { "visual": "🏁", "text": "Default to sequential — it's simpler. Parallelize only when latency is a problem and steps are truly independent. Premature optimization applies to workflows too." },
+        "punchline": { "visual": "🎬", "text": "Sequential is simple. Parallel is fast. Choose based on whether latency or simplicity matters more." }
+      },
+      "quiz": {
+        "question": "When should workflow steps run in parallel?",
+        "options": [
+          "Always — parallel is always better",
+          "When steps are independent and don't need each other's output",
+          "When steps depend on each other",
+          "Parallel execution isn't possible in workflows"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t09-conditional-branching",
+      "chapter_id": "ai--automation-workflows--ch04-orchestration",
+      "title": "Conditional Branching",
+      "description": "Different paths based on AI classification or data checks.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "🔀", "text": "The AI classifies a customer message as 'urgent.' The workflow takes the fast path: skip the queue, escalate to a senior agent, and send an immediate acknowledgment. Non-urgent messages take the normal path." },
+        "buildup": { "visual": "🌳", "text": "Conditional branching routes the workflow based on conditions: AI classification results, data thresholds (order > $1000), user attributes (VIP customer), or time-based rules (after hours)." },
+        "discovery": { "visual": "💡", "text": "Combine AI and rule-based conditions: AI classifies the intent, then a rule checks the customer tier, then the workflow chooses from 6 possible paths. The decision tree mixes AI judgment with business logic." },
+        "twist": { "visual": "⚡", "text": "Every branch needs testing. With 6 possible paths, you need test cases for each. Untested branches are where production bugs hide — especially the rare ones that only trigger under specific conditions." },
+        "climax": { "visual": "🏁", "text": "Design branches visually first: draw the decision tree, label each path, and define test cases for each. Then implement. Visual design catches logic gaps before code does." },
+        "punchline": { "visual": "🎬", "text": "One input, many paths. Each path needs testing. Draw the tree before you code it." }
+      },
+      "quiz": {
+        "question": "Why should every conditional branch in a workflow be tested?",
+        "options": [
+          "Only the common branches need testing",
+          "Untested rare branches are where production bugs hide, especially edge cases",
+          "Branches don't need testing",
+          "Testing one branch is enough"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t10-retry-strategies",
+      "chapter_id": "ai--automation-workflows--ch05-error-handling",
+      "title": "Retry Strategies",
+      "description": "When to retry failed steps and how to do it safely.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "🔁", "text": "The AI API returns a 429 (rate limited). Your workflow crashes. But this is a transient error — waiting 5 seconds and retrying would have worked." },
+        "buildup": { "visual": "📋", "text": "Retry strategies: (1) Immediate retry for transient errors, (2) Exponential backoff for rate limits (wait 1s, 2s, 4s, 8s...), (3) No retry for permanent errors (400 bad request)." },
+        "discovery": { "visual": "💡", "text": "Classify errors: transient (timeout, rate limit, 5xx) → retry with backoff. Permanent (invalid input, auth failure, 4xx) → fail immediately and alert. Unknown → retry once, then fail." },
+        "twist": { "visual": "⚡", "text": "Retrying non-idempotent actions is dangerous: if the email send succeeded but the response timed out, retrying sends a duplicate email. Track which steps completed before retrying the workflow." },
+        "climax": { "visual": "🏁", "text": "Build retry logic into every external call: API calls, database writes, file uploads. Use exponential backoff with jitter to avoid thundering herd problems." },
+        "punchline": { "visual": "🎬", "text": "Retry transient errors. Fail fast on permanent ones. And always check if the action already succeeded before retrying." }
+      },
+      "quiz": {
+        "question": "Why is retrying non-idempotent actions dangerous?",
+        "options": [
+          "Retries are always safe",
+          "The action might have already succeeded, causing duplicates (e.g., sending the same email twice)",
+          "Non-idempotent actions can't be retried",
+          "Retries only work for database queries"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t11-dead-letter-queues",
+      "chapter_id": "ai--automation-workflows--ch05-error-handling",
+      "title": "Dead-Letter Queues",
+      "description": "What to do with messages that fail repeatedly.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "📪", "text": "An email can't be classified after 3 retries. Do you lose it? Ignore it? The dead-letter queue catches it — a holding area for messages that couldn't be processed." },
+        "buildup": { "visual": "📋", "text": "A dead-letter queue (DLQ) stores messages that failed processing after all retries. Instead of losing the data, you park it for human review or later reprocessing." },
+        "discovery": { "visual": "💡", "text": "Monitor the DLQ: if it grows, something systemic is wrong (model degradation, API changes, data format shifts). The DLQ is an early warning system for workflow health." },
+        "twist": { "visual": "⚡", "text": "DLQs can grow silently. A hundred failed messages per day don't trigger alerts if nobody set one up. Monitor DLQ size and age — old messages indicate forgotten failures." },
+        "climax": { "visual": "🏁", "text": "Every production workflow needs a DLQ: catch failures, monitor volume, alert on growth, and review regularly. No data should silently disappear." },
+        "punchline": { "visual": "🎬", "text": "If you can't process it, don't lose it. Dead-letter queues turn silent failures into visible ones." }
+      },
+      "quiz": {
+        "question": "What does a dead-letter queue indicate when it grows rapidly?",
+        "options": [
+          "Everything is working correctly",
+          "Something systemic is wrong — model degradation, API changes, or data format shifts",
+          "The workflow is running too fast",
+          "Dead-letter queues should always be growing"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t12-cost-optimization",
+      "chapter_id": "ai--automation-workflows--ch06-scaling-workflows",
+      "title": "Cost Optimization",
+      "description": "Keeping AI workflow costs under control at scale.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "💰", "text": "Your workflow processes 10,000 documents per day. Each passes through 3 AI steps using GPT-4. Monthly cost: $15,000. Can you get the same quality for less?" },
+        "buildup": { "visual": "📊", "text": "Cost levers: (1) Model tiering — use GPT-3.5 for classification, GPT-4 for generation. (2) Caching — same inputs get same outputs, skip the API call. (3) Batching — process multiple items per API call." },
+        "discovery": { "visual": "💡", "text": "The biggest win is usually model tiering: classification with a small model costs 1/10th of GPT-4 and often has the same accuracy. Reserve expensive models for the steps that need them." },
+        "twist": { "visual": "⚡", "text": "Caching AI responses needs care: if the model generates slightly different outputs each time (temperature > 0), caching might return stale or irrelevant cached responses. Cache classification steps (deterministic) more aggressively than generation steps." },
+        "climax": { "visual": "🏁", "text": "Track cost per workflow run, not just total monthly spend. If a workflow costs $0.15 per run and processes 10,000 items, that's $1,500/month. Optimize the most expensive step first." },
+        "punchline": { "visual": "🎬", "text": "Cheap models for easy steps. Expensive models for hard steps. Cache what you can. That's the playbook." }
+      },
+      "quiz": {
+        "question": "What is typically the most effective cost optimization for AI workflows?",
+        "options": [
+          "Using the most expensive model for every step",
+          "Model tiering — using cheaper models for simpler steps like classification",
+          "Removing all AI steps",
+          "Running fewer workflows"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t13-monitoring-workflows",
+      "chapter_id": "ai--automation-workflows--ch06-scaling-workflows",
+      "title": "Monitoring Workflows",
+      "description": "Observability for AI-powered automation.",
+      "difficulty": "Premium",
+      "story": {
+        "hook": { "visual": "📈", "text": "Your workflow ran 50,000 times last month. How many failed? How many produced low-quality results? How much did it cost? Without monitoring, you're flying blind." },
+        "buildup": { "visual": "📊", "text": "Monitor: success/failure rates per step, end-to-end latency, cost per run, AI quality metrics (classification accuracy, generation quality scores), and queue depths." },
+        "discovery": { "visual": "💡", "text": "Dashboard it: a single view showing total runs, success rate, average latency, cost trend, and recent errors. Review daily. This is how you catch degradation before users do." },
+        "twist": { "visual": "⚡", "text": "AI quality monitoring is harder than traditional monitoring: a workflow can 'succeed' (no errors, status 200) while producing terrible results. You need quality metrics, not just health metrics." },
+        "climax": { "visual": "🏁", "text": "Combine health monitoring (did it run?) with quality monitoring (did it produce good results?). Sample 1% of outputs for automated quality scoring. Alert on both health and quality degradation." },
+        "punchline": { "visual": "🎬", "text": "A workflow that runs without errors but produces garbage is worse than one that fails loudly. Monitor quality, not just health." }
+      },
+      "quiz": {
+        "question": "Why isn't traditional health monitoring sufficient for AI workflows?",
+        "options": [
+          "It's always sufficient",
+          "A workflow can succeed technically (no errors) while producing low-quality AI outputs",
+          "AI workflows don't need monitoring",
+          "Health monitoring already includes quality metrics"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t14-manual-to-automated",
+      "chapter_id": "ai--automation-workflows--ch01-workflow-thinking",
+      "title": "Manual to Automated",
+      "description": "The step-by-step process of converting manual work into AI workflows.",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "visual": "🔄", "text": "A support agent reads a ticket, looks up the customer, checks their plan, and writes a reply. They do this 80 times a day. Every step is automatable." },
+        "buildup": { "visual": "📋", "text": "Converting manual to automated: (1) Document the current process step by step. (2) Identify which steps are AI-suitable (language, classification) vs code-suitable (lookup, routing). (3) Build incrementally." },
+        "discovery": { "visual": "💡", "text": "Start with the simplest workflow: one input, one AI step, one output. A single-step automation that works beats a complex multi-step one that doesn't." },
+        "twist": { "visual": "⚡", "text": "Not everything should be automated. If a step requires empathy, judgment, or context that changes daily, keep a human in the loop. Automate the boring parts, not the important parts." },
+        "climax": { "visual": "🏁", "text": "The 80/20 rule applies: automate the 80% of cases that are repetitive and straightforward. Route the 20% edge cases to humans. You don't need 100% automation." },
+        "punchline": { "visual": "🎬", "text": "Map the process. Automate the boring bits. Keep humans for the hard bits. Ship." }
+      },
+      "quiz": {
+        "question": "What is the best approach to converting manual work to AI workflows?",
+        "options": [
+          "Automate everything at once",
+          "Start with the simplest workflow incrementally and keep humans for judgment-heavy steps",
+          "Replace all human workers immediately",
+          "Only automate if you can achieve 100% automation"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t15-identifying-automatable-tasks",
+      "chapter_id": "ai--automation-workflows--ch01-workflow-thinking",
+      "title": "Identifying Automatable Tasks",
+      "description": "A framework for deciding which tasks are good candidates for AI automation.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🎯", "text": "Your team has 50 manual processes. Budget for automating 5. Which 5? You need a scoring framework, not a gut feeling." },
+        "buildup": { "visual": "📊", "text": "Score each task on: (1) Volume — how often is it done? (2) Consistency — is the process the same each time? (3) AI suitability — does it involve language, classification, or extraction? (4) Error tolerance — can you accept occasional mistakes?" },
+        "discovery": { "visual": "💡", "text": "High-value targets: high volume + consistent process + AI-suitable + error-tolerant. Email classification: ✅. Legal contract review: only partially. One-off creative strategy: ❌." },
+        "twist": { "visual": "⚡", "text": "The highest volume task isn't always the best candidate. A rare but expensive task (like incident response triage) might deliver more ROI than a common but cheap task (like email sorting)." },
+        "climax": { "visual": "🏁", "text": "Calculate ROI: (time saved per instance × frequency × labor cost) - (development cost + running cost). Prioritise by ROI, not by coolness factor." },
+        "punchline": { "visual": "🎬", "text": "Automate what matters most, not what's easiest or flashiest. Follow the money." }
+      },
+      "quiz": {
+        "question": "Which factor is most important when evaluating tasks for AI automation?",
+        "options": [
+          "How interesting the task is technically",
+          "A combination of volume, consistency, AI suitability, and ROI",
+          "Only the volume of the task",
+          "Whether the CEO wants it automated"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t16-workflow-decomposition",
+      "chapter_id": "ai--automation-workflows--ch01-workflow-thinking",
+      "title": "Workflow Decomposition",
+      "description": "Breaking complex processes into discrete, manageable steps.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🧱", "text": "'Automate our customer onboarding.' That's not one task — it's twenty: verify email, check eligibility, create account, send welcome email, assign plan, trigger tutorial... Each is a separate step." },
+        "buildup": { "visual": "🔪", "text": "Workflow decomposition: break a process into individual steps where each step has a single input, performs one action, and produces one output. Each step should be independently testable." },
+        "discovery": { "visual": "💡", "text": "The MECE principle: Mutually Exclusive (no overlap between steps), Collectively Exhaustive (all cases covered). If two steps do similar things, merge them. If a case isn't handled, add a step." },
+        "twist": { "visual": "⚡", "text": "Over-decomposition is as bad as under-decomposition. Too many tiny steps means too many API calls, too much latency, and too many failure points. Find the right granularity." },
+        "climax": { "visual": "🏁", "text": "Draw the workflow before coding it. Use a simple diagram: boxes for steps, arrows for data flow, diamonds for decisions. If you can't draw it clearly, you can't build it." },
+        "punchline": { "visual": "🎬", "text": "A complex workflow is just simple steps in the right order. Break it down." }
+      },
+      "quiz": {
+        "question": "What is the key principle of workflow decomposition?",
+        "options": [
+          "Make as many steps as possible",
+          "Each step should have a single input, perform one action, and produce one output",
+          "Combine all steps into one large AI prompt",
+          "Only decompose into exactly 3 steps"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t17-webhook-triggers",
+      "chapter_id": "ai--automation-workflows--ch02-triggers-and-inputs",
+      "title": "Webhook Triggers",
+      "description": "Starting workflows automatically when external events happen.",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "visual": "🔔", "text": "A customer submits a form on your website. Instantly, a workflow triggers: classify the inquiry, route it, draft a response, and notify the team. No human clicked 'start.'" },
+        "buildup": { "visual": "📡", "text": "Webhooks: an external system sends an HTTP POST to your endpoint when an event occurs. Your workflow receives the payload and starts processing. It's event-driven automation." },
+        "discovery": { "visual": "💡", "text": "Common webhook sources: form submissions, payment events (Stripe), repository pushes (GitHub), message events (Slack), CRM updates (Salesforce), and email arrivals." },
+        "twist": { "visual": "⚡", "text": "Webhook reliability matters: if your server is down when the webhook fires, you miss the event. Implement idempotency (handle duplicate deliveries) and dead-letter handling (catch missed events)." },
+        "climax": { "visual": "🏁", "text": "Webhook best practices: validate signatures (security), respond with 200 immediately (then process async), implement retry handling, and log every received event." },
+        "punchline": { "visual": "🎬", "text": "Webhooks turn 'check if something happened' into 'react when something happens.' That's the difference between polling and event-driven." }
+      },
+      "quiz": {
+        "question": "What should you do if your server is down when a webhook fires?",
+        "options": [
+          "Nothing — the event is lost forever",
+          "Implement idempotency and dead-letter handling to catch missed events",
+          "Webhooks never fail",
+          "Manually replay all events"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t18-file-and-folder-watchers",
+      "chapter_id": "ai--automation-workflows--ch02-triggers-and-inputs",
+      "title": "File & Folder Watchers",
+      "description": "Triggering AI workflows when files appear or change.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "📂", "text": "A salesperson drops a contract PDF into a shared folder. Within seconds, an AI workflow extracts key terms, checks for red flags, and updates the CRM. No one had to ask." },
+        "buildup": { "visual": "👀", "text": "File watchers monitor directories for new or modified files. When detected: read the file, validate the format, and trigger the appropriate workflow. Works with cloud storage (S3, Google Drive) and local filesystems." },
+        "discovery": { "visual": "💡", "text": "Implementation: cloud storage events (S3 triggers Lambda), polling (check folder every N seconds), or OS-level watching (fsnotify, inotify). Cloud events are most reliable." },
+        "twist": { "visual": "⚡", "text": "Watch out for partial uploads: a large file might trigger the watcher before it's fully written. Add a delay or check file stability (size hasn't changed in 5 seconds) before processing." },
+        "climax": { "visual": "🏁", "text": "File watcher workflows are great for document processing: invoices, contracts, reports, images. Drop files in a folder → AI extracts/classifies → results appear downstream." },
+        "punchline": { "visual": "🎬", "text": "Drop a file. AI does the rest. That's the simplest automation pattern there is." }
+      },
+      "quiz": {
+        "question": "What is a common pitfall with file watcher triggers?",
+        "options": [
+          "Files can never be watched",
+          "The watcher may trigger on partially uploaded files before they're complete",
+          "File watchers are too slow to be useful",
+          "They only work with text files"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t19-human-initiated-triggers",
+      "chapter_id": "ai--automation-workflows--ch02-triggers-and-inputs",
+      "title": "Human-Initiated Triggers",
+      "description": "Letting humans kick off AI workflows with buttons, commands, and forms.",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": { "visual": "🖱️", "text": "A manager highlights 50 emails and clicks 'Summarise All.' An AI workflow processes each email and delivers a one-page digest in 30 seconds. The trigger was human, the work was AI." },
+        "buildup": { "visual": "🎛️", "text": "Not all workflows should be fully automatic. Human-initiated triggers: buttons in apps, Slack commands (/summarise), form submissions, or manual API calls. The human decides when to start." },
+        "discovery": { "visual": "💡", "text": "Human triggers are ideal when: the workflow needs context the human provides, the output is high-stakes (human reviews first), or the task is on-demand rather than continuous." },
+        "twist": { "visual": "⚡", "text": "Human triggers + automated workflows is often the sweet spot. The human handles ambiguity and context. The AI handles volume and speed. Neither does the other's job." },
+        "climax": { "visual": "🏁", "text": "Design the trigger UX: make it obvious what will happen ('Summarise these 50 emails'), show progress, and present results clearly. The best trigger is one click that saves an hour." },
+        "punchline": { "visual": "🎬", "text": "One click to start. AI does the work. Human reviews the result. Best of both worlds." }
+      },
+      "quiz": {
+        "question": "When are human-initiated triggers preferred over fully automatic ones?",
+        "options": [
+          "Never — full automation is always better",
+          "When the workflow needs human context, is high-stakes, or is on-demand",
+          "Only for simple tasks",
+          "Human triggers are always slower"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t20-prompt-templates-in-workflows",
+      "chapter_id": "ai--automation-workflows--ch03-ai-in-the-middle",
+      "title": "Prompt Templates in Workflows",
+      "description": "Building reusable, parameterised prompts for workflow steps.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "📝", "text": "Your email reply workflow has a hardcoded prompt. The marketing team wants a different tone. The sales team wants product mentions. You need templates, not hardcoded strings." },
+        "buildup": { "visual": "🧩", "text": "Prompt templates: reusable prompts with variables. 'Classify this {document_type} into {categories}. Respond in {format}.' The workflow fills in the variables at runtime." },
+        "discovery": { "visual": "💡", "text": "Template best practices: separate the system prompt (role, tone, rules) from the user prompt (the actual data). Version your templates. A/B test different versions in production." },
+        "twist": { "visual": "⚡", "text": "Template injection risk: if user data fills a template variable, they can inject prompt instructions. Always sanitise user inputs and use delimiters to separate template text from user data." },
+        "climax": { "visual": "🏁", "text": "Store templates in config, not code. This lets non-engineers update prompts without deployments. Track which template version produced which output for debugging." },
+        "punchline": { "visual": "🎬", "text": "Hardcoded prompts are tech debt. Templates are maintainable prompts. Use templates." }
+      },
+      "quiz": {
+        "question": "Why should prompt templates be stored in config rather than code?",
+        "options": [
+          "It doesn't matter where they're stored",
+          "To allow non-engineers to update prompts without code deployments",
+          "Config files are faster to read",
+          "Prompts should always be hardcoded"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t21-chaining-llm-steps",
+      "chapter_id": "ai--automation-workflows--ch03-ai-in-the-middle",
+      "title": "Chaining LLM Steps",
+      "description": "Passing output from one AI step as input to the next.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🔗", "text": "Step 1: Extract key points from a document. Step 2: Translate the key points to Spanish. Step 3: Generate a summary tweet. Each step's output feeds the next step's input." },
+        "buildup": { "visual": "⛓️", "text": "LLM chaining: connecting multiple AI calls where each call's output becomes the next call's input. The chain transforms data step by step, with each step focused on one task." },
+        "discovery": { "visual": "💡", "text": "Chaining benefits: each step has a focused prompt (better accuracy), intermediate outputs can be validated, and individual steps can be swapped or upgraded independently." },
+        "twist": { "visual": "⚡", "text": "Chains amplify errors: if step 1 makes a mistake, step 2 works with wrong input, and step 3 compounds it. Always validate intermediate outputs, especially after extraction or classification steps." },
+        "climax": { "visual": "🏁", "text": "Chain design: keep steps independent (each step should work with clean input), validate between steps, and log intermediate outputs for debugging." },
+        "punchline": { "visual": "🎬", "text": "One AI call for one task. Chain them for complex tasks. Validate between each link." }
+      },
+      "quiz": {
+        "question": "What is the main risk of chaining multiple LLM steps?",
+        "options": [
+          "Chains are always slower than single calls",
+          "Errors compound — a mistake in an early step affects all subsequent steps",
+          "LLMs can't produce output that other LLMs can read",
+          "Chaining is not technically possible"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t22-output-parsing",
+      "chapter_id": "ai--automation-workflows--ch03-ai-in-the-middle",
+      "title": "Output Parsing",
+      "description": "Reliably extracting structured data from AI responses.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🔧", "text": "The AI returns: 'The sentiment is positive, confidence 0.85.' Your next step needs {sentiment: 'positive', confidence: 0.85}. How do you reliably convert free text to structured data?" },
+        "buildup": { "visual": "📋", "text": "Output parsing: converting the AI's natural language response into structured data your code can use. This is the bridge between AI steps and code steps in a workflow." },
+        "discovery": { "visual": "💡", "text": "Approaches: (1) Ask the AI to respond in JSON directly. (2) Use JSON mode (model feature). (3) Parse with regex for simple formats. (4) Use a second AI call to extract structure from the first call's output." },
+        "twist": { "visual": "⚡", "text": "Parsing failures are the #1 cause of workflow crashes. The model adds extra text before the JSON, uses single quotes instead of double, or includes comments. Always wrap parsing in try-catch with retry logic." },
+        "climax": { "visual": "🏁", "text": "Robust parsing: JSON mode → Zod/Pydantic validation → error message back to model for retry → fallback to regex extraction → DLQ if all else fails." },
+        "punchline": { "visual": "🎬", "text": "The AI speaks prose. Your code speaks JSON. Output parsing is the translator." }
+      },
+      "quiz": {
+        "question": "What is the #1 cause of AI workflow crashes?",
+        "options": [
+          "Network failures",
+          "Output parsing failures when the model's response doesn't match expected format",
+          "Running out of memory",
+          "API key expiration"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t23-conditional-branching",
+      "chapter_id": "ai--automation-workflows--ch04-orchestration",
+      "title": "Conditional Branching",
+      "description": "Routing workflow execution based on AI-generated decisions.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🔀", "text": "An AI classifies an incoming ticket as 'billing', 'technical', or 'complaint.' Each category triggers a completely different workflow path. One input, three possible journeys." },
+        "buildup": { "visual": "💎", "text": "Conditional branching: using the output of an AI step to decide which path the workflow takes next. It's an if/else powered by AI instead of code." },
+        "discovery": { "visual": "💡", "text": "Branch patterns: (1) Classification routing — AI categorises, code routes. (2) Threshold branching — AI scores, branch on score (>0.8 = auto-handle, <0.8 = human review). (3) Content detection — branch on what the AI found." },
+        "twist": { "visual": "⚡", "text": "AI branches are non-deterministic: the same input might be classified differently on different days. Always include a default/catch-all branch and handle classification ambiguity gracefully." },
+        "climax": { "visual": "🏁", "text": "Design branches defensively: every classification needs a fallback, every threshold needs edge-case handling, and every branch needs monitoring to detect drift." },
+        "punchline": { "visual": "🎬", "text": "AI decides the direction. Code follows the path. Build paths for every possible direction — especially 'unknown.'" }
+      },
+      "quiz": {
+        "question": "Why is a default/catch-all branch important in AI-driven workflows?",
+        "options": [
+          "It's not important",
+          "AI classification is non-deterministic and may produce unexpected outputs",
+          "It makes the workflow faster",
+          "Default branches are only needed for testing"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t24-parallel-execution",
+      "chapter_id": "ai--automation-workflows--ch04-orchestration",
+      "title": "Parallel Execution",
+      "description": "Running independent workflow steps simultaneously for speed.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "⚡", "text": "Your workflow has 4 AI steps: summarise, extract entities, classify sentiment, and detect language. Each takes 2 seconds. Sequentially: 8 seconds. In parallel: 2 seconds." },
+        "buildup": { "visual": "🔀", "text": "Parallel execution: when workflow steps don't depend on each other's output, run them simultaneously. This dramatically reduces total workflow latency." },
+        "discovery": { "visual": "💡", "text": "Identify parallelisable steps: if step B doesn't need step A's output, they can run in parallel. Draw the dependency graph — independent branches can execute concurrently." },
+        "twist": { "visual": "⚡", "text": "Parallel API calls can hit rate limits fast. If you're processing 100 documents with 4 parallel AI steps each, that's 400 concurrent API calls. Budget your concurrency." },
+        "climax": { "visual": "🏁", "text": "Use Promise.all (or asyncio.gather) for parallel steps. Set concurrency limits. Handle partial failures — if 3 of 4 parallel steps succeed, can you still proceed?" },
+        "punchline": { "visual": "🎬", "text": "Sequential when you must. Parallel when you can. Latency is the enemy of user experience." }
+      },
+      "quiz": {
+        "question": "What is the main risk of running many AI steps in parallel?",
+        "options": [
+          "Parallel execution is slower than sequential",
+          "Hitting API rate limits with too many concurrent calls",
+          "Models can't run in parallel",
+          "Parallel execution always fails"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t25-state-management",
+      "chapter_id": "ai--automation-workflows--ch04-orchestration",
+      "title": "State Management",
+      "description": "Tracking workflow progress and data across multiple steps.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "💾", "text": "Your workflow crashes at step 7 of 10. You fix the bug and restart. Do you reprocess steps 1-6? Or pick up from step 7? Without state management, you don't know where you stopped." },
+        "buildup": { "visual": "📊", "text": "State management: tracking which step the workflow is on, what data has been processed, and what intermediate results exist. Essential for debugging, recovery, and auditability." },
+        "discovery": { "visual": "💡", "text": "Approaches: (1) In-memory state (fast but lost on crash). (2) Database state (persistent, good for recovery). (3) Event sourcing (record every step, replay to reconstruct state)." },
+        "twist": { "visual": "⚡", "text": "State management is especially important for AI workflows because AI steps are expensive. Re-running a $0.10 API call 10,000 times because you lost state costs $1,000. Checkpoint after expensive steps." },
+        "climax": { "visual": "🏁", "text": "Save state after every AI step. Include: step name, input hash, output, timestamp, cost, and status. This enables recovery, debugging, and cost tracking." },
+        "punchline": { "visual": "🎬", "text": "If your workflow crashes, state management is the difference between 'resume' and 'start over.'" }
+      },
+      "quiz": {
+        "question": "Why is state management especially important for AI workflows?",
+        "options": [
+          "AI steps are simple and cheap to re-run",
+          "AI steps are expensive, so re-running them due to lost state wastes significant money",
+          "State management isn't important for workflows",
+          "AI workflows never crash"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t26-queue-based-orchestration",
+      "chapter_id": "ai--automation-workflows--ch04-orchestration",
+      "title": "Queue-Based Orchestration",
+      "description": "Using message queues to decouple and scale workflow steps.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "📬", "text": "Step 1 processes 1,000 items per minute. Step 2 (the AI call) handles 100 per minute. Without a queue, step 1 overwhelms step 2 and everything crashes." },
+        "buildup": { "visual": "📮", "text": "Queue-based orchestration: each step reads from an input queue and writes to an output queue. Steps are decoupled — they don't need to run at the same speed. The queue absorbs the difference." },
+        "discovery": { "visual": "💡", "text": "Benefits: (1) Each step scales independently. (2) Slow steps don't block fast ones. (3) Failed items can be retried without affecting others. (4) You can add consumers to a slow step to catch up." },
+        "twist": { "visual": "⚡", "text": "Queues add complexity: message ordering, exactly-once processing, and dead-letter handling all need attention. Don't add a queue unless you actually need the decoupling." },
+        "climax": { "visual": "🏁", "text": "Use queues when: steps have different throughput rates, you need independent scaling, or you need resilience to individual step failures. For simple 3-step workflows, direct orchestration is fine." },
+        "punchline": { "visual": "🎬", "text": "Queues are shock absorbers for workflows. They smooth out speed differences between steps." }
+      },
+      "quiz": {
+        "question": "When should you use queue-based orchestration?",
+        "options": [
+          "For every workflow regardless of complexity",
+          "When steps have different throughput rates and need independent scaling or resilience",
+          "Only for real-time workflows",
+          "Queues are never appropriate for AI workflows"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t27-timeout-strategies",
+      "chapter_id": "ai--automation-workflows--ch05-error-handling",
+      "title": "Timeout Strategies",
+      "description": "Handling AI steps that take too long or never respond.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "⏱️", "text": "An AI API call usually takes 3 seconds. Today, it's taking 45 seconds. Your user is staring at a loading spinner. Without a timeout, they'll wait forever." },
+        "buildup": { "visual": "⌛", "text": "Timeouts define how long you'll wait for a step before giving up. Too short: you abort good requests. Too long: users wait forever on hung requests." },
+        "discovery": { "visual": "💡", "text": "Set timeouts based on P99 latency, not average. If the average is 3s but P99 is 15s, set timeout at 20s. Check your model provider's latency dashboard for real numbers." },
+        "twist": { "visual": "⚡", "text": "Timeouts interact with retries: a 30-second timeout with 3 retries means a user could wait 90 seconds in the worst case. Set a total budget (e.g., 60 seconds) and split between retries." },
+        "climax": { "visual": "🏁", "text": "Implement: per-step timeouts, total workflow timeout, and user-visible progress indicators. When a timeout fires, fail gracefully — return a cached result, a simpler response, or a helpful error." },
+        "punchline": { "visual": "🎬", "text": "Waiting forever is not a strategy. Set timeouts. Handle them gracefully." }
+      },
+      "quiz": {
+        "question": "How should timeouts be set for AI API calls?",
+        "options": [
+          "Based on the average latency",
+          "Based on P99 latency with a total budget split across retries",
+          "Always 5 seconds",
+          "Timeouts are not needed for AI APIs"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t28-fallback-models",
+      "chapter_id": "ai--automation-workflows--ch05-error-handling",
+      "title": "Fallback Models",
+      "description": "Using backup AI models when the primary model fails or is slow.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "🔄", "text": "OpenAI is having an outage. Your entire product is down because every workflow depends on GPT-4. The solution: a fallback model from a different provider." },
+        "buildup": { "visual": "🛡️", "text": "Fallback models: if the primary model fails (error, timeout, rate limit), automatically retry with a backup model. Different provider = different failure domains." },
+        "discovery": { "visual": "💡", "text": "Fallback chain: GPT-4 → Claude → Llama (self-hosted). Each level trades quality for availability. The user gets a slightly worse response instead of no response." },
+        "twist": { "visual": "⚡", "text": "Different models produce different output formats and styles. Your parsing and validation logic must handle outputs from any model in the fallback chain. Test all fallback paths." },
+        "climax": { "visual": "🏁", "text": "Implement: try primary → if error/timeout, try fallback → if all fail, use cached response or graceful error. Log which model served each request for quality monitoring." },
+        "punchline": { "visual": "🎬", "text": "One model goes down? Switch to another. Multi-provider resilience is production 101." }
+      },
+      "quiz": {
+        "question": "What is the main challenge of using fallback models?",
+        "options": [
+          "Fallback models don't exist",
+          "Different models produce different output formats, so parsing must handle all of them",
+          "Fallback models are always more expensive",
+          "Users prefer seeing errors over fallback responses"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t29-alerting-on-failures",
+      "chapter_id": "ai--automation-workflows--ch05-error-handling",
+      "title": "Alerting on Failures",
+      "description": "Setting up meaningful alerts for AI workflow failures.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🚨", "text": "Your workflow has been silently failing for 3 hours. 500 documents are unprocessed. No one noticed because there's no alerting. The customer calls to complain." },
+        "buildup": { "visual": "📢", "text": "Alert on: failure rate exceeding threshold (>5% in 10 minutes), queue depth growing (processing falling behind), latency spike (steps taking 3x longer than normal), and cost spike (unexpected API charges)." },
+        "discovery": { "visual": "💡", "text": "Good alerts are actionable: 'Classification step failure rate at 12% (threshold 5%) — likely model provider issue. Check status page. Fallback model active.' Not just 'ERROR IN WORKFLOW.'" },
+        "twist": { "visual": "⚡", "text": "Alert fatigue is real. If you alert on every minor fluctuation, people start ignoring alerts. Set thresholds that indicate real problems. A 2% error rate might be normal; 10% is a problem." },
+        "climax": { "visual": "🏁", "text": "Alert pyramid: critical (pager) → warning (Slack) → info (dashboard). Critical: workflow fully broken. Warning: degraded quality. Info: minor anomalies worth reviewing." },
+        "punchline": { "visual": "🎬", "text": "If your workflow breaks and nobody gets alerted, did it really break? Yes. Set up alerts." }
+      },
+      "quiz": {
+        "question": "What makes a good AI workflow alert?",
+        "options": [
+          "Alert on every single error",
+          "Actionable alerts with context, thresholds, and severity levels",
+          "Only alert on complete system failure",
+          "Send all alerts to the CEO"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t30-horizontal-scaling",
+      "chapter_id": "ai--automation-workflows--ch06-scaling-workflows",
+      "title": "Horizontal Scaling",
+      "description": "Processing more items by adding workflow workers, not bigger machines.",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": { "visual": "📈", "text": "Your workflow processes 100 documents/hour. Business needs 1,000/hour. You can't make GPT-4 faster. But you can run 10 workflow instances in parallel." },
+        "buildup": { "visual": "🔢", "text": "Horizontal scaling: add more workers running the same workflow code. Each worker pulls items from a shared queue and processes independently. Throughput scales linearly." },
+        "discovery": { "visual": "💡", "text": "Requirements for horizontal scaling: (1) Shared work queue (items distributed across workers). (2) No shared state between workers. (3) Idempotent processing (running the same item twice is safe)." },
+        "twist": { "visual": "⚡", "text": "Scaling workers is easy. Scaling API rate limits is hard. Ten workers sending requests to the same API still share one rate limit. Implement a rate limiter that coordinates across workers." },
+        "climax": { "visual": "🏁", "text": "Scale plan: queue-based input → stateless workers → shared rate limiter → output storage. Monitor: throughput per worker, queue depth, API rate limit headroom." },
+        "punchline": { "visual": "🎬", "text": "One worker can't go faster. Ten workers can go 10x. Scale out, not up." }
+      },
+      "quiz": {
+        "question": "What is the main bottleneck when horizontally scaling AI workflows?",
+        "options": [
+          "Worker memory",
+          "All workers share one API rate limit that doesn't scale with worker count",
+          "Network bandwidth",
+          "Horizontal scaling doesn't work for AI workflows"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t31-rate-limit-management",
+      "chapter_id": "ai--automation-workflows--ch06-scaling-workflows",
+      "title": "Rate Limit Management",
+      "description": "Staying within API limits while maximising throughput.",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": { "visual": "🚦", "text": "Your workflow sends 100 requests per second. The API limit is 60 per second. You get rate limited. 40 requests fail. The retry logic hammers the API. Now you're rate limited for 60 seconds." },
+        "buildup": { "visual": "⏳", "text": "Rate limit management: controlling how fast your workflow sends requests to stay within provider limits. Key metrics: requests per minute (RPM) and tokens per minute (TPM)." },
+        "discovery": { "visual": "💡", "text": "Strategies: (1) Token bucket — allow bursts but limit sustained rate. (2) Sliding window — count requests in a rolling time window. (3) Exponential backoff — wait longer after each rate limit error." },
+        "twist": { "visual": "⚡", "text": "Different models have different limits. GPT-4 has lower limits than GPT-3.5. Rate limits vary by account tier. A workflow that works on your paid tier might fail on a cheaper tier." },
+        "climax": { "visual": "🏁", "text": "Build a rate-limit-aware client: track remaining quota, pause before hitting limits, use exponential backoff on 429 errors, and monitor utilisation to right-size your API tier." },
+        "punchline": { "visual": "🎬", "text": "The fastest workflow isn't one that sends the most requests. It's one that sends the most requests without getting rate limited." }
+      },
+      "quiz": {
+        "question": "What is the best response to a 429 (rate limit) error from an AI API?",
+        "options": [
+          "Immediately retry as fast as possible",
+          "Exponential backoff — wait longer after each consecutive rate limit error",
+          "Switch to a different API permanently",
+          "Ignore the error and continue"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "id": "ai--automation-workflows--t32-workflow-versioning",
+      "chapter_id": "ai--automation-workflows--ch06-scaling-workflows",
+      "title": "Workflow Versioning",
+      "description": "Safely updating workflows without breaking in-flight processing.",
+      "difficulty": "Premium",
+      "story": {
+        "hook": { "visual": "🏷️", "text": "You update the classification prompt in production. Halfway through the queue, results change: old items used prompt v1, new items use prompt v2. Your analytics are now comparing apples to oranges." },
+        "buildup": { "visual": "📋", "text": "Workflow versioning: tagging each workflow run with the version of prompts, models, and logic used. This ensures reproducibility and makes it safe to update workflows." },
+        "discovery": { "visual": "💡", "text": "Version everything: prompt templates, model names, model versions, workflow logic, and output schemas. Store the version with each processed item so you can trace what produced what." },
+        "twist": { "visual": "⚡", "text": "In-flight transitions are tricky: when you deploy v2, items already in the queue were prepared for v1. Strategies: drain the queue before switching, run v1 and v2 in parallel, or make versions backward-compatible." },
+        "climax": { "visual": "🏁", "text": "Versioning enables: safe rollbacks, A/B testing between versions, compliance auditing, and debugging. If something breaks, you know exactly which version caused it." },
+        "punchline": { "visual": "🎬", "text": "If you don't version your workflows, every update is a one-way door. Version everything." }
+      },
+      "quiz": {
+        "question": "Why is workflow versioning important for AI workflows?",
+        "options": [
+          "It has no practical benefit",
+          "It enables safe rollbacks, A/B testing, debugging, and ensures reproducibility of results",
+          "It slows down development",
+          "Only traditional software needs versioning"
+        ],
+        "correct": 1
+      }
+    }
+  ]
+}

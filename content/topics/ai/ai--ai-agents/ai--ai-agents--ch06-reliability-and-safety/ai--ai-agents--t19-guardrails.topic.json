@@ -1,0 +1,50 @@
+{
+  "id": "ai--ai-agents--t19-guardrails",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "AI Agents",
+  "course_id": "ai--ai-agents",
+  "chapter_id": "ai--ai-agents--ch06-reliability-and-safety",
+  "title": "Agent Guardrails",
+  "emoji": "🤖",
+  "color": "#EF4444",
+  "description": "Constraining what agents can do to prevent harmful actions.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🚧",
+      "text": "Your agent has database access. A user asks it to 'delete all records from last month.' The agent happily calls DELETE FROM orders WHERE... That's not what guardrails look like."
+    },
+    "buildup": {
+      "visual": "🔒",
+      "text": "Guardrails constrain agent behavior: read-only database access, spending limits on purchases, approved recipient lists for emails, file system sandboxes."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Layer guardrails: (1) System prompt — 'Never delete records.' (2) Tool-level — the database tool only accepts SELECT queries. (3) Application-level — a middleware checks all actions against a policy."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Prompt-level guardrails are suggestions, not enforcement. A clever prompt injection can bypass 'never delete records.' Tool-level and application-level guardrails are the only reliable constraints."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Never rely solely on the prompt for safety. Enforce constraints in code: read-only database roles, API rate limits, action allowlists. The model decides what to try; your code decides what's allowed."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Prompts suggest. Code enforces. For safety, always choose enforcement."
+    }
+  },
+  "quiz": {
+    "question": "Why shouldn't you rely only on prompt-level guardrails?",
+    "options": [
+      "Prompts are too long",
+      "Prompt instructions can be bypassed by injection; code-level enforcement is more reliable",
+      "Guardrails aren't needed for agents",
+      "Prompts are always followed perfectly"
+    ],
+    "correct": 1
+  }
+}

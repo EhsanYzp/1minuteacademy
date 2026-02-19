@@ -1,0 +1,50 @@
+{
+  "id": "ai--llms-101--t14-api-basics",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "LLMs 101",
+  "course_id": "ai--llms-101",
+  "chapter_id": "ai--llms-101--ch04-using-llms",
+  "title": "API Basics",
+  "emoji": "🧠",
+  "color": "#EF4444",
+  "description": "How to send prompts and receive completions programmatically.",
+  "difficulty": "Intermediate",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🔌",
+      "text": "ChatGPT is a chat window. The API is the raw pipe: send JSON, get JSON back. Building products means using the API, not the chat UI."
+    },
+    "buildup": {
+      "visual": "📡",
+      "text": "You send a POST request with your prompt, model name, temperature, and max_tokens. The API returns the model's completion. That's the entire interface."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "The API separates system messages (persistent instructions), user messages (the query), and assistant messages (previous responses). This structure lets you build multi-turn conversations programmatically."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "The API is stateless. The model doesn't remember previous calls. You must send the full conversation history each time. 'Memory' is your code's job, not the model's."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Learn the basics: authentication, message format, streaming vs. non-streaming, error handling. Everything you build on LLMs goes through this pipe."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "The API is simple: send text, get text. The complexity is in what you send and what you do with what comes back."
+    }
+  },
+  "quiz": {
+    "question": "Why must you send the full conversation history with each API call?",
+    "options": [
+      "Because the API charges per character sent",
+      "Because the API is stateless and the model has no memory between calls",
+      "Because the model needs to relearn from each conversation",
+      "Because older messages are always the most important"
+    ],
+    "correct": 1
+  }
+}

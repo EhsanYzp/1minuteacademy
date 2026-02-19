@@ -1,0 +1,50 @@
+{
+  "id": "ai--automation-workflows--t25-state-management",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "Automation Workflows",
+  "course_id": "ai--automation-workflows",
+  "chapter_id": "ai--automation-workflows--ch04-orchestration",
+  "title": "State Management",
+  "emoji": "⚙️",
+  "color": "#EF4444",
+  "description": "Tracking workflow progress and data across multiple steps.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "💾",
+      "text": "Your workflow crashes at step 7 of 10. You fix the bug and restart. Do you reprocess steps 1-6? Or pick up from step 7? Without state management, you don't know where you stopped."
+    },
+    "buildup": {
+      "visual": "📊",
+      "text": "State management: tracking which step the workflow is on, what data has been processed, and what intermediate results exist. Essential for debugging, recovery, and auditability."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Approaches: (1) In-memory state (fast but lost on crash). (2) Database state (persistent, good for recovery). (3) Event sourcing (record every step, replay to reconstruct state)."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "State management is especially important for AI workflows because AI steps are expensive. Re-running a $0.10 API call 10,000 times because you lost state costs $1,000. Checkpoint after expensive steps."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Save state after every AI step. Include: step name, input hash, output, timestamp, cost, and status. This enables recovery, debugging, and cost tracking."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "If your workflow crashes, state management is the difference between 'resume' and 'start over.'"
+    }
+  },
+  "quiz": {
+    "question": "Why is state management especially important for AI workflows?",
+    "options": [
+      "AI steps are simple and cheap to re-run",
+      "AI steps are expensive, so re-running them due to lost state wastes significant money",
+      "State management isn't important for workflows",
+      "AI workflows never crash"
+    ],
+    "correct": 1
+  }
+}

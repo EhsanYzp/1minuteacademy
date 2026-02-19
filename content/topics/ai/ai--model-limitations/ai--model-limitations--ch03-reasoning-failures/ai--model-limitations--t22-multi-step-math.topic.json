@@ -1,0 +1,50 @@
+{
+  "id": "ai--model-limitations--t22-multi-step-math",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "Model Limitations",
+  "course_id": "ai--model-limitations",
+  "chapter_id": "ai--model-limitations--ch03-reasoning-failures",
+  "title": "Multi-Step Math Failures",
+  "emoji": "🚧",
+  "color": "#EF4444",
+  "description": "Why LLMs struggle with calculations that require multiple steps.",
+  "difficulty": "Beginner",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🧮",
+      "text": "You ask: 'If I buy 7 items at $12.99 each with 8.5% tax, what's my total?' The model confidently says $98.62. The correct answer is $98.72. Close, but wrong."
+    },
+    "buildup": {
+      "visual": "📐",
+      "text": "LLMs do math by pattern matching, not computation. For simple math (2+2), the pattern is strong enough. For multi-step problems, errors compound at each step because the model isn't actually calculating."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Each step in a chain of reasoning has some probability of error. A 5-step problem where each step has 95% accuracy has only 77% overall accuracy. More steps = more errors."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Chain-of-thought prompting helps because it breaks problems into visible steps, but it doesn't fix the core issue: the model is predicting likely numeric tokens, not computing exact values."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "For any task requiring precise calculation: use code execution tools. Let the model write the math as code, execute it, and return the result. Models as calculators = bad. Models writing calculator code = good."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "LLMs predict numbers, they don't calculate them. For math, use a calculator."
+    }
+  },
+  "quiz": {
+    "question": "Why do LLMs fail at multi-step math?",
+    "options": [
+      "They don't have enough memory",
+      "They predict likely numeric tokens rather than computing exact values, and errors compound across steps",
+      "They were trained without math data",
+      "Multi-step math is impossible for any computer"
+    ],
+    "correct": 1
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "id": "ai--ai-safety-basics--t09-output-filtering",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "AI Safety Basics",
+  "course_id": "ai--ai-safety-basics",
+  "chapter_id": "ai--ai-safety-basics--ch03-security-threats",
+  "title": "Output Filtering",
+  "emoji": "🛡️",
+  "color": "#EF4444",
+  "description": "Catching harmful outputs before they reach users.",
+  "difficulty": "Intermediate",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🚫",
+      "text": "Your chatbot generates a response that includes a customer's credit card number from the training data. It reaches the user's screen before anyone notices."
+    },
+    "buildup": {
+      "visual": "🛡️",
+      "text": "Output filtering scans the model's response before delivery: regex for PII (credit cards, SSNs, emails), classification models for harmful content, and business rule checks."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Layer filters: (1) Pattern matching for PII, (2) Content safety classifier for harmful/toxic output, (3) Business rules (never mention competitors, never make promises about SLAs)."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Overly strict filtering creates a bad experience: blocking legitimate medical questions because they contain 'sensitive' keywords. Tune filters to your domain — a healthcare bot needs different rules than a shopping bot."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Filter outputs, not just inputs. The model might generate harmful content even from innocent queries. Defense at the output layer is your last line of protection."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Trust the model to be helpful. Verify the output before it reaches the user."
+    }
+  },
+  "quiz": {
+    "question": "Why is output filtering important even when input filtering exists?",
+    "options": [
+      "Input filtering catches everything",
+      "The model might generate harmful content from innocent queries, so the output is the last checkpoint",
+      "Output filtering is only for logging",
+      "Models never produce unexpected outputs"
+    ],
+    "correct": 1
+  }
+}

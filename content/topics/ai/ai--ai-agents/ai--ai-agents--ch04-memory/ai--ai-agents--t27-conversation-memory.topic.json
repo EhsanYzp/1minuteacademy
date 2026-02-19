@@ -1,0 +1,50 @@
+{
+  "id": "ai--ai-agents--t27-conversation-memory",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "AI Agents",
+  "course_id": "ai--ai-agents",
+  "chapter_id": "ai--ai-agents--ch04-memory",
+  "title": "Conversation Memory",
+  "emoji": "🤖",
+  "color": "#EF4444",
+  "description": "Maintaining coherent multi-turn conversations within an agent session.",
+  "difficulty": "Intermediate",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "💬",
+      "text": "Turn 1: 'Book me a flight to Paris.' Turn 5: 'What about hotels there?' The agent asks: 'Hotels where?' It forgot Paris."
+    },
+    "buildup": {
+      "visual": "📜",
+      "text": "Conversation memory keeps the full message history available to the agent. Each new turn includes all previous turns as context."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "The simplest approach: append every user message and agent response to a messages array. Send the full array with each LLM call. The model sees the complete conversation."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Long conversations hit the context window limit. Use a sliding window (last N messages), summary-based compression (summarize old messages), or a hybrid of both."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Good conversation memory creates the illusion of continuous understanding. The user feels like they're talking to something that remembers, even though each call is stateless."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Memory makes agents feel intelligent. Without it, every turn is a fresh stranger."
+    }
+  },
+  "quiz": {
+    "question": "What happens when conversation history exceeds the context window?",
+    "options": [
+      "The model automatically summarizes old messages",
+      "You must use a sliding window or summary compression to fit within limits",
+      "The conversation restarts automatically",
+      "The context window expands on demand"
+    ],
+    "correct": 1
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "id": "ai--rag-basics--t12-metadata-enrichment",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "RAG Basics",
+  "course_id": "ai--rag-basics",
+  "chapter_id": "ai--rag-basics--ch03-chunking-and-indexing",
+  "title": "Metadata Enrichment",
+  "emoji": "🔎",
+  "color": "#EF4444",
+  "description": "Attach metadata to chunks to improve filtering and retrieval.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🏷️",
+      "text": "A user asks about 'return policy for electronics.' Your vector search finds similar text in 'return policy for groceries.' Semantic similarity doesn't know about product categories."
+    },
+    "buildup": {
+      "visual": "📋",
+      "text": "Metadata enrichment tags each chunk with structured attributes: source document, section title, category, date, product type. You can then filter by metadata before or after vector search."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Hybrid retrieval: first filter by metadata ('category = electronics'), then run vector search within that subset. This combines precision of structured queries with flexibility of semantic search."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Over-filtering can exclude relevant results. If no chunk matches the filter, the system returns nothing. Always have a fallback: broaden filters or fall back to pure semantic search."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Every chunk should carry at least: source URL, document title, section header, and creation date. These cost nothing to store and unlock powerful filtering."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Vectors find similar meaning. Metadata finds the right context. Use both."
+    }
+  },
+  "quiz": {
+    "question": "How does metadata improve RAG retrieval?",
+    "options": [
+      "It replaces vector search entirely",
+      "It enables filtering by structured attributes before or alongside semantic search",
+      "It reduces the size of embeddings",
+      "It is only useful for sorting results by date"
+    ],
+    "correct": 1
+  }
+}

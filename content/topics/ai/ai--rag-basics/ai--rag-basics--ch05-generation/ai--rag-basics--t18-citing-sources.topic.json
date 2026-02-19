@@ -1,0 +1,50 @@
+{
+  "id": "ai--rag-basics--t18-citing-sources",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "RAG Basics",
+  "course_id": "ai--rag-basics",
+  "chapter_id": "ai--rag-basics--ch05-generation",
+  "title": "Citing Sources",
+  "emoji": "🔎",
+  "color": "#EF4444",
+  "description": "Make the model point to where it found the answer.",
+  "difficulty": "Intermediate",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "📎",
+      "text": "The user asks about your pricing plan. The model says '$49/month.' Is that from your docs or hallucinated? Without citations, there's no way to verify."
+    },
+    "buildup": {
+      "visual": "📋",
+      "text": "Include chunk labels in the prompt: '[Source A: pricing.md] Our plans start at $49/month...' Then instruct the model: 'Cite sources by label (e.g., [Source A]) for each claim.'"
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Citations serve two purposes: users can verify the answer, and developers can audit which chunks the model actually used. Both build trust."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Models sometimes cite the wrong source — attributing a claim to Source A when it came from Source B. Validate citations programmatically by checking if the cited source actually contains the claim."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Link citations to the original document. Users click a citation and see the full source. This turns a chatbot answer into a verifiable reference."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "If you can't point to where the answer came from, you can't trust it. Citations make RAG trustworthy."
+    }
+  },
+  "quiz": {
+    "question": "Why should RAG systems include citations in their answers?",
+    "options": [
+      "To increase the response length",
+      "To let users verify claims and developers audit model behavior",
+      "To reduce hallucinations entirely",
+      "Citations are only needed for academic papers"
+    ],
+    "correct": 1
+  }
+}

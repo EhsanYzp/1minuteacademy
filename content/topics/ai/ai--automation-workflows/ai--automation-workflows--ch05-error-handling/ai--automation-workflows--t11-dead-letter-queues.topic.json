@@ -1,0 +1,50 @@
+{
+  "id": "ai--automation-workflows--t11-dead-letter-queues",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "Automation Workflows",
+  "course_id": "ai--automation-workflows",
+  "chapter_id": "ai--automation-workflows--ch05-error-handling",
+  "title": "Dead-Letter Queues",
+  "emoji": "⚙️",
+  "color": "#EF4444",
+  "description": "What to do with messages that fail repeatedly.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "📪",
+      "text": "An email can't be classified after 3 retries. Do you lose it? Ignore it? The dead-letter queue catches it — a holding area for messages that couldn't be processed."
+    },
+    "buildup": {
+      "visual": "📋",
+      "text": "A dead-letter queue (DLQ) stores messages that failed processing after all retries. Instead of losing the data, you park it for human review or later reprocessing."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Monitor the DLQ: if it grows, something systemic is wrong (model degradation, API changes, data format shifts). The DLQ is an early warning system for workflow health."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "DLQs can grow silently. A hundred failed messages per day don't trigger alerts if nobody set one up. Monitor DLQ size and age — old messages indicate forgotten failures."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Every production workflow needs a DLQ: catch failures, monitor volume, alert on growth, and review regularly. No data should silently disappear."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "If you can't process it, don't lose it. Dead-letter queues turn silent failures into visible ones."
+    }
+  },
+  "quiz": {
+    "question": "What does a dead-letter queue indicate when it grows rapidly?",
+    "options": [
+      "Everything is working correctly",
+      "Something systemic is wrong — model degradation, API changes, or data format shifts",
+      "The workflow is running too fast",
+      "Dead-letter queues should always be growing"
+    ],
+    "correct": 1
+  }
+}

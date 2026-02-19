@@ -1,0 +1,50 @@
+{
+  "id": "ai--ai-agents--t18-error-handling",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "AI Agents",
+  "course_id": "ai--ai-agents",
+  "chapter_id": "ai--ai-agents--ch06-reliability-and-safety",
+  "title": "Error Handling",
+  "emoji": "🤖",
+  "color": "#EF4444",
+  "description": "What happens when a tool call fails or returns unexpected results.",
+  "difficulty": "Intermediate",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "💥",
+      "text": "The agent calls the weather API. It's down. The agent crashes. Users see 'Internal Server Error.' A 30-second outage in one tool killed the entire agent."
+    },
+    "buildup": {
+      "visual": "🛡️",
+      "text": "Every tool call can fail: timeouts, bad data, rate limits, permissions errors. The agent needs to handle each gracefully — retry, use an alternative, or inform the user."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Return errors as observations: instead of crashing, tell the model 'The weather API returned an error: service unavailable. Try a different approach or inform the user.'"
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Some models handle errors well — they adapt and try alternatives. Others get stuck in retry loops. Test your agent's error recovery explicitly with intentionally broken tools."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Wrap every tool call in try-catch. Return structured error messages to the model. Set retry limits. And always have a 'graceful failure' path that explains the issue to the user."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "The best agents aren't the ones that never fail. They're the ones that handle failure gracefully."
+    }
+  },
+  "quiz": {
+    "question": "How should agent tool errors be handled?",
+    "options": [
+      "Crash the entire agent",
+      "Return structured error messages to the model so it can adapt or inform the user",
+      "Ignore all errors",
+      "Retry infinitely until it works"
+    ],
+    "correct": 1
+  }
+}

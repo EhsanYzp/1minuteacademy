@@ -1,0 +1,50 @@
+{
+  "id": "ai--automation-workflows--t27-timeout-strategies",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "Automation Workflows",
+  "course_id": "ai--automation-workflows",
+  "chapter_id": "ai--automation-workflows--ch05-error-handling",
+  "title": "Timeout Strategies",
+  "emoji": "⚙️",
+  "color": "#EF4444",
+  "description": "Handling AI steps that take too long or never respond.",
+  "difficulty": "Intermediate",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "⏱️",
+      "text": "An AI API call usually takes 3 seconds. Today, it's taking 45 seconds. Your user is staring at a loading spinner. Without a timeout, they'll wait forever."
+    },
+    "buildup": {
+      "visual": "⌛",
+      "text": "Timeouts define how long you'll wait for a step before giving up. Too short: you abort good requests. Too long: users wait forever on hung requests."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Set timeouts based on P99 latency, not average. If the average is 3s but P99 is 15s, set timeout at 20s. Check your model provider's latency dashboard for real numbers."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Timeouts interact with retries: a 30-second timeout with 3 retries means a user could wait 90 seconds in the worst case. Set a total budget (e.g., 60 seconds) and split between retries."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Implement: per-step timeouts, total workflow timeout, and user-visible progress indicators. When a timeout fires, fail gracefully — return a cached result, a simpler response, or a helpful error."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Waiting forever is not a strategy. Set timeouts. Handle them gracefully."
+    }
+  },
+  "quiz": {
+    "question": "How should timeouts be set for AI API calls?",
+    "options": [
+      "Based on the average latency",
+      "Based on P99 latency with a total budget split across retries",
+      "Always 5 seconds",
+      "Timeouts are not needed for AI APIs"
+    ],
+    "correct": 1
+  }
+}

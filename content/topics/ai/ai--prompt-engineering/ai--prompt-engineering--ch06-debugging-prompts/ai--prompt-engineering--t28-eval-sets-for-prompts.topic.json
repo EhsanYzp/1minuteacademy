@@ -1,0 +1,50 @@
+{
+  "id": "ai--prompt-engineering--t28-eval-sets-for-prompts",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "Prompt Engineering",
+  "course_id": "ai--prompt-engineering",
+  "chapter_id": "ai--prompt-engineering--ch06-debugging-prompts",
+  "title": "Eval Sets for Prompts",
+  "emoji": "✏️",
+  "color": "#EF4444",
+  "description": "Build a test suite that catches regressions in your prompts.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "✅",
+      "text": "You improve the prompt for one use case and break three others you didn't check. Without a test suite, every change is a gamble."
+    },
+    "buildup": {
+      "visual": "📋",
+      "text": "An eval set is a collection of (input, expected_output) pairs. Run your prompt against all of them after every change, just like running unit tests after a code change."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Include happy paths, edge cases, adversarial inputs, and known failure modes. 20 diverse examples catch more bugs than 100 similar ones."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Grading can't always be exact match. For free-text outputs, use another LLM call as a judge: 'Does this output match the expected answer? Score 0–5.' Automate the loop."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Treat prompt eval sets like test suites: add a new test case every time you find a bug. Over time, your eval set becomes the best documentation of your prompt's behavior."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "You wouldn't ship code without tests. Don't ship prompts without evals."
+    }
+  },
+  "quiz": {
+    "question": "What should an eval set for prompts include?",
+    "options": [
+      "Only happy-path examples",
+      "Happy paths, edge cases, adversarial inputs, and known failures",
+      "Only examples where the model already succeeds",
+      "A single comprehensive test case"
+    ],
+    "correct": 1
+  }
+}

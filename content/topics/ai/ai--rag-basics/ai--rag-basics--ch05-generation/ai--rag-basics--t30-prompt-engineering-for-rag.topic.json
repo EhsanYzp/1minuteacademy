@@ -1,0 +1,50 @@
+{
+  "id": "ai--rag-basics--t30-prompt-engineering-for-rag",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "RAG Basics",
+  "course_id": "ai--rag-basics",
+  "chapter_id": "ai--rag-basics--ch05-generation",
+  "title": "Prompt Engineering for RAG",
+  "emoji": "🔎",
+  "color": "#EF4444",
+  "description": "Craft generation prompts that keep the LLM faithful to retrieved context.",
+  "difficulty": "Intermediate",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "✍️",
+      "text": "You retrieve perfect chunks but the LLM ignores them and answers from its training data instead. The retrieval worked — the prompt didn't."
+    },
+    "buildup": {
+      "visual": "📋",
+      "text": "The generation prompt must explicitly instruct the model: 'Answer ONLY based on the context below. If the context doesn't contain the answer, say you don't know.'"
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Structure matters: place the context before the question, use XML tags or clear delimiters to separate context from instructions, and repeat key constraints at the end of the prompt."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Even with perfect prompts, models sometimes 'leak' training knowledge into RAG answers. Adding 'Do not use prior knowledge' helps but isn't bulletproof — always verify critical outputs."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "The best RAG prompts are specific, structured, and defensive: they tell the model what to do, how to format it, and what to do when context is insufficient."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "The retrieval finds the signal. The prompt determines whether the model listens."
+    }
+  },
+  "quiz": {
+    "question": "What is a key instruction to include in a RAG generation prompt?",
+    "options": [
+      "Always use your training data",
+      "Answer only based on the provided context",
+      "Ignore the retrieved documents",
+      "Generate the longest possible response"
+    ],
+    "correct": 1
+  }
+}

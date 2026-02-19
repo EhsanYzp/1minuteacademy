@@ -1,0 +1,50 @@
+{
+  "id": "ai--ai-agents--t07-tool-selection",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "AI Agents",
+  "course_id": "ai--ai-agents",
+  "chapter_id": "ai--ai-agents--ch02-tool-use",
+  "title": "Tool Selection",
+  "emoji": "🤖",
+  "color": "#EF4444",
+  "description": "How agents decide which tool to use and when.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🎯",
+      "text": "Your agent has 15 tools. The user says 'find revenue data for Q3.' The agent calls the email tool instead of the database tool. Tool selection went wrong."
+    },
+    "buildup": {
+      "visual": "⚖️",
+      "text": "The model reads all tool descriptions, the user's query, and any conversation history, then decides which tool (if any) to call. It's essentially a classification problem."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Reduce ambiguity: give tools distinct, non-overlapping descriptions. If two tools sound similar, the model will pick randomly. Differentiate by when and why, not just what."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "More tools doesn't mean more capable. After about 10–15 tools, selection accuracy drops. Group related tools into namespaces or use a routing agent that narrows the tool set."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Test tool selection explicitly: give the agent 20 test queries and check if it picks the right tool each time. This is a separate eval from end-to-end task success."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Fewer tools, clearer descriptions. The agent picks correctly when the choices are obvious."
+    }
+  },
+  "quiz": {
+    "question": "What happens to tool selection accuracy as the number of tools increases?",
+    "options": [
+      "It always improves",
+      "It tends to decrease after about 10-15 tools due to ambiguity",
+      "It stays exactly the same",
+      "The number of tools doesn't affect selection"
+    ],
+    "correct": 1
+  }
+}

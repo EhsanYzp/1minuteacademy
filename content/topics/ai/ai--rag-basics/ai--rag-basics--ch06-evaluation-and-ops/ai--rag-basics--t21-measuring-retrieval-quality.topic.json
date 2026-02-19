@@ -1,0 +1,50 @@
+{
+  "id": "ai--rag-basics--t21-measuring-retrieval-quality",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "RAG Basics",
+  "course_id": "ai--rag-basics",
+  "chapter_id": "ai--rag-basics--ch06-evaluation-and-ops",
+  "title": "Measuring Retrieval Quality",
+  "emoji": "🔎",
+  "color": "#EF4444",
+  "description": "Metrics that tell you if your retrieval pipeline works.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "📊",
+      "text": "Users say answers are wrong but your LLM prompts look perfect. The problem isn't generation — it's retrieval. But how do you measure retrieval separately?"
+    },
+    "buildup": {
+      "visual": "📐",
+      "text": "Key metrics: Recall@K (was the correct chunk in the top K results?), Precision@K (what fraction of top K results are relevant?), and MRR (how high was the first relevant result ranked?)."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Build a retrieval eval set: 50 questions paired with the chunks that should be retrieved. Run queries, check if the right chunks appear in the top 5. That's your Recall@5."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "High recall with low precision means you're retrieving the right chunk plus a lot of noise. The LLM gets confused by irrelevant chunks. Both metrics matter."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Evaluate retrieval and generation separately. If retrieval quality is low, no amount of prompt engineering fixes the answers. Fix retrieval first."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "You can't improve what you don't measure. Track retrieval quality independently."
+    }
+  },
+  "quiz": {
+    "question": "What does Recall@K measure in RAG evaluation?",
+    "options": [
+      "The speed of retrieval",
+      "Whether the correct chunk appears in the top K retrieved results",
+      "The total number of chunks in the database",
+      "How fast the LLM generates an answer"
+    ],
+    "correct": 1
+  }
+}

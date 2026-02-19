@@ -1,0 +1,50 @@
+{
+  "id": "ai--model-limitations--t13-sensitivity-to-phrasing",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "Model Limitations",
+  "course_id": "ai--model-limitations",
+  "chapter_id": "ai--model-limitations--ch05-behavioral-quirks",
+  "title": "Sensitivity to Phrasing",
+  "emoji": "🚧",
+  "color": "#EF4444",
+  "description": "The same question asked differently gets different answers.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🔄",
+      "text": "'What are the benefits of remote work?' gets a positive response. 'What are the problems with remote work?' gets a negative response. 'Analyze remote work.' gets a balanced response. Same topic, different framing, different answers."
+    },
+    "buildup": {
+      "visual": "📋",
+      "text": "LLMs are highly sensitive to how questions are phrased: word choice, question framing, order of options, and even punctuation can change the output significantly."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "This means: the person writing the prompt has enormous influence over the output. A slightly reworded question can flip the model's recommendation. It's not reasoning — it's reflecting the framing."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "In production, this means user phrasing affects answer quality unpredictably. 'How do I cancel?' might work great while 'Cancel my account' gets a confused response — because the training data had different patterns."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Test with diverse phrasings of the same question. If the answer changes significantly with minor rewording, the model isn't reliable for that task. Add query normalization if needed."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "The answer depends on how you ask. Test many ways to find out how fragile your system really is."
+    }
+  },
+  "quiz": {
+    "question": "Why is prompt phrasing sensitivity a practical problem?",
+    "options": [
+      "It only matters for creative writing",
+      "Users phrase questions differently, leading to inconsistent answers for the same underlying question",
+      "Models aren't sensitive to phrasing",
+      "It makes the model faster"
+    ],
+    "correct": 1
+  }
+}

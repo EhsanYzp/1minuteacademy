@@ -1,0 +1,50 @@
+{
+  "id": "ai--rag-basics--t32-chunking-for-tables-and-code",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "RAG Basics",
+  "course_id": "ai--rag-basics",
+  "chapter_id": "ai--rag-basics--ch03-chunking-and-indexing",
+  "title": "Chunking Tables & Code",
+  "emoji": "🔎",
+  "color": "#EF4444",
+  "description": "Special chunking strategies for structured content like tables and code blocks.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "📊",
+      "text": "Your document has a pricing table. The chunker splits it after row 3. The retrieved chunk says 'Enterprise plan: $—' because the price was in the next chunk."
+    },
+    "buildup": {
+      "visual": "🧱",
+      "text": "Tables, code blocks, and lists are fundamentally different from prose. Splitting them mid-structure destroys their meaning. Standard chunkers treat them as regular text and break them apart."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Detect structured elements first: use regex or HTML/Markdown parsing to identify tables, code fences, and lists. Keep them as atomic units — never split inside a table or code block."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Sometimes a table exceeds your chunk size limit. Convert it to natural language ('The Enterprise plan costs $499/month and includes...') or split by rows with repeated headers."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "A chunking pipeline should have element-aware splitting: prose gets recursive splitting, tables stay whole, code blocks stay whole, and oversized elements get special handling."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Not all text is paragraphs. Chunk tables and code as the structured data they are."
+    }
+  },
+  "quiz": {
+    "question": "Why do tables need special chunking treatment in RAG?",
+    "options": [
+      "Tables are always too small to chunk",
+      "Splitting mid-table destroys the relationship between rows and columns",
+      "Tables don't contain useful information",
+      "Standard chunkers already handle tables perfectly"
+    ],
+    "correct": 1
+  }
+}

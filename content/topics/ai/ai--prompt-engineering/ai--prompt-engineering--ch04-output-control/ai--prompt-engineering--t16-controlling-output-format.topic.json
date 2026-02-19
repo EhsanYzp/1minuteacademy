@@ -1,0 +1,50 @@
+{
+  "id": "ai--prompt-engineering--t16-controlling-output-format",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "Prompt Engineering",
+  "course_id": "ai--prompt-engineering",
+  "chapter_id": "ai--prompt-engineering--ch04-output-control",
+  "title": "Controlling Output Format",
+  "emoji": "✏️",
+  "color": "#EF4444",
+  "description": "Make the model return exactly the structure you need.",
+  "difficulty": "Intermediate",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "📐",
+      "text": "Your app expects a JSON array. The model returns a paragraph with the data buried inside prose. Your parser breaks. This is avoidable."
+    },
+    "buildup": {
+      "visual": "📋",
+      "text": "Specify the output format explicitly: 'Return a JSON array where each element has keys: name, score, reason.' Don't leave structure to chance."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Include an example of the exact output shape. One concrete example beats a paragraph of format instructions: 'Output like: [{\"name\": \"X\", \"score\": 8}]'"
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Models sometimes add extra text around the structured output ('Sure! Here's the JSON: ...'). Add 'Output only the JSON, with no explanation' to suppress wrapper text."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "For production systems, use APIs that support structured output modes (like JSON mode) to guarantee valid format. Belt and suspenders."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "If you need JSON, ask for JSON, show an example of JSON, and tell it to output nothing but JSON."
+    }
+  },
+  "quiz": {
+    "question": "What's the most reliable way to get structured output from a model?",
+    "options": [
+      "Hope the model guesses the format you need",
+      "Specify the format, show an example, and use structured output mode",
+      "Only use small models for structured output",
+      "Avoid JSON entirely"
+    ],
+    "correct": 1
+  }
+}

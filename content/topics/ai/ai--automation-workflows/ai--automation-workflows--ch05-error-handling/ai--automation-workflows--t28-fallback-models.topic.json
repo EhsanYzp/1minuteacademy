@@ -1,0 +1,50 @@
+{
+  "id": "ai--automation-workflows--t28-fallback-models",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "Automation Workflows",
+  "course_id": "ai--automation-workflows",
+  "chapter_id": "ai--automation-workflows--ch05-error-handling",
+  "title": "Fallback Models",
+  "emoji": "⚙️",
+  "color": "#EF4444",
+  "description": "Using backup AI models when the primary model fails or is slow.",
+  "difficulty": "Advanced",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🔄",
+      "text": "OpenAI is having an outage. Your entire product is down because every workflow depends on GPT-4. The solution: a fallback model from a different provider."
+    },
+    "buildup": {
+      "visual": "🛡️",
+      "text": "Fallback models: if the primary model fails (error, timeout, rate limit), automatically retry with a backup model. Different provider = different failure domains."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Fallback chain: GPT-4 → Claude → Llama (self-hosted). Each level trades quality for availability. The user gets a slightly worse response instead of no response."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Different models produce different output formats and styles. Your parsing and validation logic must handle outputs from any model in the fallback chain. Test all fallback paths."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Implement: try primary → if error/timeout, try fallback → if all fail, use cached response or graceful error. Log which model served each request for quality monitoring."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "One model goes down? Switch to another. Multi-provider resilience is production 101."
+    }
+  },
+  "quiz": {
+    "question": "What is the main challenge of using fallback models?",
+    "options": [
+      "Fallback models don't exist",
+      "Different models produce different output formats, so parsing must handle all of them",
+      "Fallback models are always more expensive",
+      "Users prefer seeing errors over fallback responses"
+    ],
+    "correct": 1
+  }
+}

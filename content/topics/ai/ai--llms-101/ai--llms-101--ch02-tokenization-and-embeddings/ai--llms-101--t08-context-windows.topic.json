@@ -1,0 +1,50 @@
+{
+  "id": "ai--llms-101--t08-context-windows",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "LLMs 101",
+  "course_id": "ai--llms-101",
+  "chapter_id": "ai--llms-101--ch02-tokenization-and-embeddings",
+  "title": "Context Windows",
+  "emoji": "🧠",
+  "color": "#EF4444",
+  "description": "The model's memory limit and what happens when you hit it.",
+  "difficulty": "Intermediate",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "📦",
+      "text": "You paste a 200-page book into Claude and it summarizes beautifully. You try the same with GPT-3.5 and it chokes after 10 pages. The difference? Context window size."
+    },
+    "buildup": {
+      "visual": "📏",
+      "text": "The context window is the total number of tokens the model can process at once (input + output). GPT-4 Turbo: 128K. Claude 3: 200K. Llama 3: 8K–128K depending on version."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Bigger windows let you include more background, longer documents, and longer conversations without truncating. But they don't eliminate attention degradation in the middle."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "A 128K context window doesn't mean the model uses all 128K tokens equally well. Retrieval accuracy drops for information buried in the middle of very long contexts."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Don't just check if your text fits the window — check if the critical information is positioned where the model pays attention: the beginning and end."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "The window tells you how much fits. Attention tells you how much gets used."
+    }
+  },
+  "quiz": {
+    "question": "What is the context window of an LLM?",
+    "options": [
+      "The screen size of the chat interface",
+      "The maximum tokens the model can process in one call (input + output)",
+      "The number of conversations the model remembers",
+      "The training dataset size"
+    ],
+    "correct": 1
+  }
+}

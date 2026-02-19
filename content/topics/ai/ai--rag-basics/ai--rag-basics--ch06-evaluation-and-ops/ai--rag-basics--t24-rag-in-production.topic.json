@@ -1,0 +1,50 @@
+{
+  "id": "ai--rag-basics--t24-rag-in-production",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "RAG Basics",
+  "course_id": "ai--rag-basics",
+  "chapter_id": "ai--rag-basics--ch06-evaluation-and-ops",
+  "title": "RAG in Production",
+  "emoji": "🔎",
+  "color": "#EF4444",
+  "description": "Operational considerations for production RAG systems.",
+  "difficulty": "Premium",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "🏭",
+      "text": "Your RAG prototype works perfectly on 10 test queries. You deploy it and real users break it in ways you never imagined."
+    },
+    "buildup": {
+      "visual": "📋",
+      "text": "Production RAG needs: monitoring (latency, retrieval quality, answer quality), logging (every query, every retrieval, every response), caching (repeated queries), and graceful degradation (what happens when the vector DB is down?)."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Build a feedback loop: let users flag bad answers, log the query + retrieved chunks + response, and review flagged cases weekly. This is your best source of real-world eval data."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "The biggest production surprise: users ask questions your knowledge base doesn't cover. Without a 'I don't know' path, the system hallucinates confidently. Handle out-of-scope queries explicitly."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Treat RAG like any production system: observability, alerts, fallback paths, and continuous improvement. The prototype is 20% of the work."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "Demo-ready is not production-ready. The gap is monitoring, edge cases, and graceful failure."
+    }
+  },
+  "quiz": {
+    "question": "What's the most common production surprise in RAG systems?",
+    "options": [
+      "The vector database is too fast",
+      "Users ask questions the knowledge base doesn't cover",
+      "Retrieval always returns perfect results",
+      "LLMs never hallucinate in production"
+    ],
+    "correct": 1
+  }
+}

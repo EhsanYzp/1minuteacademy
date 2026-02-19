@@ -1,0 +1,50 @@
+{
+  "id": "ai--prompt-engineering--t18-token-limits-and-context-windows",
+  "version": 1,
+  "subject": "AI",
+  "subcategory": "Prompt Engineering",
+  "course_id": "ai--prompt-engineering",
+  "chapter_id": "ai--prompt-engineering--ch04-output-control",
+  "title": "Token Limits & Context Windows",
+  "emoji": "✏️",
+  "color": "#EF4444",
+  "description": "Understand the hard ceiling on what the model can see.",
+  "difficulty": "Intermediate",
+  "published": true,
+  "story": {
+    "hook": {
+      "visual": "📦",
+      "text": "You paste a 100-page document into the prompt and ask for a summary. The model ignores the last 60 pages. You just hit the context window."
+    },
+    "buildup": {
+      "visual": "📏",
+      "text": "Every model has a context window — the maximum number of tokens (prompt + response) it can handle. GPT-4 Turbo: 128K tokens. Claude: 200K. Smaller models: 4K–8K."
+    },
+    "discovery": {
+      "visual": "💡",
+      "text": "Tokens aren't words. 'Uncomfortable' is 3 tokens. A 4K-token limit is roughly 3,000 words. Always estimate token count before assuming your prompt fits."
+    },
+    "twist": {
+      "visual": "⚡",
+      "text": "Even within the window, models lose attention in the middle — the 'lost in the middle' effect. Critical info at the very start or very end gets more attention."
+    },
+    "climax": {
+      "visual": "🏁",
+      "text": "Put your most important instructions and context at the top and bottom of long prompts. If the document exceeds the window, chunk it and process in passes."
+    },
+    "punchline": {
+      "visual": "🎬",
+      "text": "The window is finite. Treat tokens like money — spend them on what matters most."
+    }
+  },
+  "quiz": {
+    "question": "What is the 'lost in the middle' effect?",
+    "options": [
+      "Models forget their training data over time",
+      "Models pay less attention to information in the middle of long prompts",
+      "Models only read the first token",
+      "Models can't process even-numbered tokens"
+    ],
+    "correct": 1
+  }
+}
