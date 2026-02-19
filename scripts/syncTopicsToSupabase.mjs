@@ -415,6 +415,46 @@ async function main() {
     }
   }
 
+  // --- Prune stale courses ---
+  // For every category that has course plans, remove any DB courses that are
+  // NOT in the plan list.  This cleans up ghost rows left by older seed runs
+  // without touching categories that have no plans yet (e.g. Music, Design).
+  const planCourseIds = new Set(courseRows.map((c) => c.id));
+  const planCategoryIds = [...new Set(categoryRows.map((c) => c.id))];
+
+  if (planCategoryIds.length > 0) {
+    const { data: dbCourses, error: dbCrsErr } = await supabase
+      .from('courses')
+      .select('id')
+      .in('category_id', planCategoryIds);
+    if (dbCrsErr) throw dbCrsErr;
+
+    const staleCourseIds = (dbCourses ?? [])
+      .map((r) => String(r?.id ?? '').trim())
+      .filter((id) => id && !planCourseIds.has(id));
+
+    if (staleCourseIds.length > 0) {
+      if (args.dryRun) {
+        console.log(`(dry-run) would prune ${staleCourseIds.length} stale course(s):`);
+        for (const id of staleCourseIds) console.log(`  - ${id}`);
+      } else {
+        // Delete child chapters first (FK), then the stale courses themselves.
+        const { error: chDelErr } = await supabase
+          .from('chapters')
+          .delete()
+          .in('course_id', staleCourseIds);
+        if (chDelErr) throw chDelErr;
+
+        const { error: crsDelErr, count: pruned } = await supabase
+          .from('courses')
+          .delete({ count: 'exact' })
+          .in('id', staleCourseIds);
+        if (crsDelErr) throw crsDelErr;
+        console.log(`🗑️  Pruned ${pruned} stale course(s) from Supabase: ${staleCourseIds.join(', ')}`);
+      }
+    }
+  }
+
   // --- Upsert chapters ---
   const chapterRowsFromPlans = await loadChaptersFromPlans({ courseIds: courseIdsInSync });
   if (chapterRowsFromPlans.length > 0) {
