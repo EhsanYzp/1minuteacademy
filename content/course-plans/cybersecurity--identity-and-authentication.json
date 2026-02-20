@@ -1,0 +1,1243 @@
+{
+  "categoryId": "cybersecurity",
+  "subject": "Cybersecurity",
+  "courseId": "cybersecurity--identity-and-authentication",
+  "courseTitle": "Identity & Authentication",
+  "emoji": "🔑",
+  "color": "#F39C12",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "cybersecurity--identity-and-authentication--ch01-the-password-problem",
+      "title": "The Password Problem",
+      "position": 1
+    },
+    {
+      "id": "cybersecurity--identity-and-authentication--ch02-multi-factor-authentication",
+      "title": "Multi-Factor Authentication",
+      "position": 2
+    },
+    {
+      "id": "cybersecurity--identity-and-authentication--ch03-biometric-security",
+      "title": "Biometric Security",
+      "position": 3
+    },
+    {
+      "id": "cybersecurity--identity-and-authentication--ch04-identity-management",
+      "title": "Identity Management",
+      "position": 4
+    },
+    {
+      "id": "cybersecurity--identity-and-authentication--ch05-attacks-on-identity",
+      "title": "Attacks on Identity",
+      "position": 5
+    },
+    {
+      "id": "cybersecurity--identity-and-authentication--ch06-the-future-of-identity",
+      "title": "The Future of Identity",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "title": "A Brief History of Passwords",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch01-the-password-problem",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "text": "The first computer password was created in 1961 at MIT. Within a year, someone stole the password file.",
+          "visual": "🔒"
+        },
+        "buildup": {
+          "text": "Fernando Corbató invented the computer password for MIT's time-sharing system so users could have private files.",
+          "visual": "🖥️"
+        },
+        "discovery": {
+          "text": "PhD student Allan Scherr printed the entire password file to get more computer time. The first password breach ever.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Corbató later called passwords a 'nightmare' and admitted the system was never designed to scale to the modern internet.",
+          "visual": "😰"
+        },
+        "climax": {
+          "text": "60 years later, passwords remain the dominant authentication method — despite being fundamentally broken from day one.",
+          "visual": "📅"
+        },
+        "punchline": {
+          "text": "The inventor of passwords called them a nightmare.",
+          "visual": "💀"
+        }
+      },
+      "quiz": {
+        "question": "What happened to the first computer password system at MIT?",
+        "options": [
+          "It was never hacked",
+          "A student printed the entire password file within a year",
+          "It was replaced by biometrics"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Why People Choose Terrible Passwords",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch01-the-password-problem",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "text": "The most popular password globally is '123456.' The second most popular is 'password.' It's been this way for decades.",
+          "visual": "🤦"
+        },
+        "buildup": {
+          "text": "Humans are bad at randomness. We pick patterns, names, birthdays, and keyboard walks (qwerty) because they're easy.",
+          "visual": "🧠"
+        },
+        "discovery": {
+          "text": "Analysis of breached databases shows the same 100 passwords appear in over 10% of all accounts worldwide.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Password complexity rules (uppercase, symbols, numbers) make passwords harder for humans but barely harder.",
+          "visual": "💻"
+        },
+        "climax": {
+          "text": "A long passphrase like 'correct horse battery staple' is far more secure than 'P@ssw0rd!' despite feeling simpler.",
+          "visual": "🐴"
+        },
+        "punchline": {
+          "text": "The password you think is clever is in a hacker's dictionary.",
+          "visual": "📖"
+        }
+      },
+      "quiz": {
+        "question": "Why are complex passwords with symbols not necessarily more secure?",
+        "options": [
+          "Symbols aren't supported by all systems",
+          "They're harder for humans but barely harder for computers to crack",
+          "They take too long to type"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Password Hashing: How Passwords Are Stored",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch01-the-password-problem",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "Good websites never store your actual password. They store a mathematical fingerprint that can't be reversed.",
+          "visual": "🧮"
+        },
+        "buildup": {
+          "text": "Hashing converts a password into a fixed-length string. The same input always produces the same hash, but you.",
+          "visual": "🔄"
+        },
+        "discovery": {
+          "text": "Salting adds random data before hashing, so even identical passwords produce different hashes in the database.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "LinkedIn stored passwords with unsalted SHA-1 in 2012. When breached, 6.5 million passwords were cracked in hours.",
+          "visual": "💼"
+        },
+        "climax": {
+          "text": "Modern algorithms like bcrypt and Argon2 are deliberately slow, making brute-force attacks impractically expensive.",
+          "visual": "🐢"
+        },
+        "punchline": {
+          "text": "The best password storage is deliberately slow. Speed is the enemy.",
+          "visual": "⏳"
+        }
+      },
+      "quiz": {
+        "question": "Why is salting important in password hashing?",
+        "options": [
+          "It makes passwords easier to remember",
+          "It ensures identical passwords produce different hashes, preventing rainbow table attacks",
+          "It speeds up the login process"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Password Managers: One Password to Rule Them All",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch01-the-password-problem",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "The average person has 100+ online accounts. Nobody can remember 100 unique, strong passwords without help.",
+          "visual": "🔐"
+        },
+        "buildup": {
+          "text": "Password managers generate and store unique random passwords for every site, locked behind one master password.",
+          "visual": "🗄️"
+        },
+        "discovery": {
+          "text": "Using a password manager means a breach on one site doesn't compromise all your other accounts — no password reuse.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "LastPass was breached in 2022. Encrypted vaults were stolen, and weak master passwords could be cracked offline.",
+          "visual": "💥"
+        },
+        "climax": {
+          "text": "Password managers are still the best practical option, but they create a single point of failure that must be.",
+          "visual": "🛡️"
+        },
+        "punchline": {
+          "text": "One password protects all your passwords. Choose it wisely.",
+          "visual": "⚠️"
+        }
+      },
+      "quiz": {
+        "question": "What is the main risk of using a password manager?",
+        "options": [
+          "They're too difficult to use",
+          "They create a single point of failure — if breached, all passwords are at risk",
+          "They only work on desktop computers"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Credential Stuffing: One Breach Unlocks Many Doors",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch01-the-password-problem",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "You used the same email and password on a forum in 2015. That site was breached. Now attackers try it on every.",
+          "visual": "🚪"
+        },
+        "buildup": {
+          "text": "Credential stuffing uses breached username-password pairs to log into other services. Billions of credentials.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Automated tools test millions of credential pairs per hour across banking, email, and shopping sites. 0.1% success.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Disney+ was hit by credential stuffing on its launch day. Thousands of accounts were compromised – not because.",
+          "visual": "🏰"
+        },
+        "climax": {
+          "text": "Credential stuffing succeeds because 65% of people reuse passwords. One breach cascades across every service.",
+          "visual": "🌊"
+        },
+        "punchline": {
+          "text": "Your Netflix password is your bank password? So does the hacker know.",
+          "visual": "🏦"
+        }
+      },
+      "quiz": {
+        "question": "Why does credential stuffing work?",
+        "options": [
+          "Services have weak security",
+          "Most people reuse passwords across multiple services",
+          "Passwords are stored in plain text"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Two-Factor Authentication: Something You Know + Something You Have",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch02-multi-factor-authentication",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "text": "A stolen password alone can't get in if the attacker also needs your physical phone. That's two-factor authentication.",
+          "visual": "📱"
+        },
+        "buildup": {
+          "text": "2FA requires two different factors: knowledge (password), possession (phone/token), or inherence (biometric).",
+          "visual": "🔐"
+        },
+        "discovery": {
+          "text": "Even if your password is compromised, 2FA blocks 99.9% of automated attacks because attackers lack the second factor.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Despite being almost free to implement, only 28% of Microsoft users enable 2FA. Most breaches could have been prevented.",
+          "visual": "📉"
+        },
+        "climax": {
+          "text": "2FA dramatically raises the cost of an attack. Stealing a password is easy; stealing a password AND a phone is.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "99.9% of attacks stopped. Only 28% of people bother.",
+          "visual": "🤷"
+        }
+      },
+      "quiz": {
+        "question": "What percentage of automated attacks does 2FA block?",
+        "options": [
+          "About 50%",
+          "About 99.9%",
+          "About 75%"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "SMS Codes: Convenient but Vulnerable",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch02-multi-factor-authentication",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "That 6-digit code texted to your phone? Attackers can intercept it before it reaches you.",
+          "visual": "📨"
+        },
+        "buildup": {
+          "text": "SMS-based 2FA sends a one-time code via text message. It's the most widely deployed second factor worldwide.",
+          "visual": "📱"
+        },
+        "discovery": {
+          "text": "SMS travels through the SS7 network, built in the 1970s with no security. Attackers can intercept messages in transit.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "SIM swapping is easier: an attacker convinces your carrier to transfer your number to their SIM card. Now they get.",
+          "visual": "🔀"
+        },
+        "climax": {
+          "text": "SMS 2FA is better than no 2FA, but app-based TOTP or hardware keys are far more resistant to interception.",
+          "visual": "📊"
+        },
+        "punchline": {
+          "text": "Better than nothing. But 'better than nothing' is a low bar.",
+          "visual": "📏"
+        }
+      },
+      "quiz": {
+        "question": "Why is SMS-based 2FA considered vulnerable?",
+        "options": [
+          "Text messages are too slow",
+          "SMS travels through the insecure SS7 network and can be intercepted or SIM-swapped",
+          "SMS codes are too short"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "TOTP: Time-Based One-Time Passwords",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch02-multi-factor-authentication",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "Every 30 seconds, your authenticator app generates a new 6-digit code. How does it know the right number without.",
+          "visual": "⏱️"
+        },
+        "buildup": {
+          "text": "TOTP uses a shared secret and the current time to generate codes. Both your phone and the server compute the.",
+          "visual": "🔢"
+        },
+        "discovery": {
+          "text": "Since the code changes every 30 seconds and never travels over a network, it can't be intercepted like an SMS code.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "If you lose your phone and didn't save backup codes, you can be permanently locked out of your own accounts.",
+          "visual": "😱"
+        },
+        "climax": {
+          "text": "TOTP is a major upgrade over SMS: no network interception, no SIM swapping, and it works offline.",
+          "visual": "✅"
+        },
+        "punchline": {
+          "text": "Your phone and the server agree on a code without ever speaking.",
+          "visual": "🤫"
+        }
+      },
+      "quiz": {
+        "question": "Why can't TOTP codes be intercepted like SMS codes?",
+        "options": [
+          "They use stronger encryption",
+          "They're generated locally using a shared secret and time, never sent over a network",
+          "They change too quickly to intercept"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Hardware Security Keys: The Gold Standard",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch02-multi-factor-authentication",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "Google gave every employee a tiny USB key. Account takeovers dropped to zero. Not reduced — zero.",
+          "visual": "🔑"
+        },
+        "buildup": {
+          "text": "Hardware security keys use FIDO2/WebAuthn protocols with public-key cryptography to prove identity to websites.",
+          "visual": "🔐"
+        },
+        "discovery": {
+          "text": "The key signs a cryptographic challenge that's bound to the website's domain. Phishing pages can't trigger it.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "After deploying 85,000 YubiKeys, Google reported zero successful phishing attacks on employees – a problem that.",
+          "visual": "🎯"
+        },
+        "climax": {
+          "text": "Hardware keys are phishing-proof because the authentication is tied to the real website's domain — fakes are ignored.",
+          "visual": "🛡️"
+        },
+        "punchline": {
+          "text": "85,000 employees. Zero phishing successes. A $20 key did it.",
+          "visual": "💰"
+        }
+      },
+      "quiz": {
+        "question": "Why are hardware security keys phishing-proof?",
+        "options": [
+          "They're too expensive for hackers to buy",
+          "Authentication is cryptographically bound to the real website's domain",
+          "They use fingerprint scanning"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "MFA Fatigue: Bombarding Users Into Approval",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch02-multi-factor-authentication",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "Your phone buzzes with an approval request. Then again. And again. At 3 AM, exhausted, you finally tap 'Approve'.",
+          "visual": "📱"
+        },
+        "buildup": {
+          "text": "MFA fatigue attacks spam push notifications until the victim accidentally or deliberately approves one to stop.",
+          "visual": "🔔"
+        },
+        "discovery": {
+          "text": "Uber was breached in 2022 exactly this way. A teenager spammed an employee with MFA pushes until they approved one.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "The attacker was 18 years old and part of the Lapsus$ group. They gained access to Uber's internal systems.",
+          "visual": "👤"
+        },
+        "climax": {
+          "text": "Push-based MFA without number matching or context is vulnerable. 'Was this you?' needs to become 'Enter the.",
+          "visual": "🔢"
+        },
+        "punchline": {
+          "text": "Uber's security was beaten by an 18-year-old pressing a button.",
+          "visual": "🔘"
+        }
+      },
+      "quiz": {
+        "question": "How did the 2022 Uber breach exploit MFA?",
+        "options": [
+          "They cracked the encryption",
+          "An attacker spammed push notifications until an employee approved one",
+          "They bypassed MFA entirely"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Fingerprint Scanning: Unique but Not Foolproof",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch03-biometric-security",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "text": "Your fingerprint is unique. But unlike a password, you can't change it when it's stolen — and it can be stolen.",
+          "visual": "👆"
+        },
+        "buildup": {
+          "text": "Fingerprint scanners compare ridge patterns, minutiae points, and loops against stored templates. No two prints.",
+          "visual": "🔍"
+        },
+        "discovery": {
+          "text": "Modern scanners use capacitive, ultrasonic, or optical sensors. Each has different accuracy and spoofing resistance.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "In 2014, a hacker recreated Germany's defense minister's fingerprint from high-resolution press photos – no.",
+          "visual": "📸"
+        },
+        "climax": {
+          "text": "Fingerprints are excellent for convenience. But they're not secrets — you leave them on everything you touch.",
+          "visual": "🖐️"
+        },
+        "punchline": {
+          "text": "You leave your password on every surface you touch.",
+          "visual": "🔓"
+        }
+      },
+      "quiz": {
+        "question": "What is a fundamental weakness of fingerprint authentication?",
+        "options": [
+          "Fingerprints change over time",
+          "Fingerprints are left on surfaces and can be copied, and can't be changed if stolen",
+          "Fingerprint scanners are too expensive"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Facial Recognition: The Convenience-Privacy Tradeoff",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch03-biometric-security",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "You unlock your phone by looking at it. But that same technology can identify you in a crowd without your consent.",
+          "visual": "👤"
+        },
+        "buildup": {
+          "text": "Facial recognition maps 80+ nodal points on a face: distance between eyes, jaw width, nose shape, and forehead depth.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Apple's Face ID uses 30,000 infrared dots to create a 3D depth map, making it resistant to flat photos and masks.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Clearview AI scraped 3 billion photos from social media to build a facial recognition database, used by police.",
+          "visual": "🕵️"
+        },
+        "climax": {
+          "text": "Facial recognition is both incredibly convenient and potentially the most invasive surveillance technology ever created.",
+          "visual": "⚖️"
+        },
+        "punchline": {
+          "text": "The technology that unlocks your phone can track you across a city.",
+          "visual": "🏙️"
+        }
+      },
+      "quiz": {
+        "question": "What makes Apple's Face ID more secure than basic facial recognition?",
+        "options": [
+          "It uses a higher resolution camera",
+          "It creates a 3D depth map using 30,000 infrared dots, resisting flat photos",
+          "It requires you to smile"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Iris and Retina Scanning: The Most Unique Biometric",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch03-biometric-security",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "Your iris has 266 unique characteristics – six times more than a fingerprint. Even identical twins have.",
+          "visual": "👁️"
+        },
+        "buildup": {
+          "text": "Iris scanning photographs the colored ring of muscle around your pupil. Retina scanning maps blood vessels at the.",
+          "visual": "🔬"
+        },
+        "discovery": {
+          "text": "The iris pattern stabilizes by age 2 and remains unchanged for life. It's the most stable biometric identifier known.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "India's Aadhaar system enrolled 1.3 billion people's iris scans. When the database was breached, you can't issue.",
+          "visual": "🇮🇳"
+        },
+        "climax": {
+          "text": "Iris scanning is the most accurate biometric — but like all biometrics, stolen data is compromised forever.",
+          "visual": "♾️"
+        },
+        "punchline": {
+          "text": "1.3 billion iris scans in one database. Breached. No replacements available.",
+          "visual": "😶"
+        }
+      },
+      "quiz": {
+        "question": "How many unique characteristics does an iris have compared to a fingerprint?",
+        "options": [
+          "About the same number",
+          "About six times more (266 vs ~40)",
+          "About half as many"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Behavioral Biometrics: How You Type Reveals Who You Are",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch03-biometric-security",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "You don't type like anyone else. The rhythm, pressure, and speed of your keystrokes form a unique signature.",
+          "visual": "⌨️"
+        },
+        "buildup": {
+          "text": "Behavioral biometrics analyze typing patterns, mouse movements, gait, and touchscreen gestures to identify.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Unlike passwords checked once at login, behavioral biometrics verify identity continuously throughout all session.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "During WWII, telegraph operators were identified by their 'fist' – their unique Morse code rhythm..",
+          "visual": "📻"
+        },
+        "climax": {
+          "text": "Behavioral biometrics can detect account takeover mid-session: if typing patterns change, the user may have changed too.",
+          "visual": "🔄"
+        },
+        "punchline": {
+          "text": "WWII operators were identified by their tapping rhythm. Same idea.",
+          "visual": "🕰️"
+        }
+      },
+      "quiz": {
+        "question": "What advantage do behavioral biometrics have over traditional authentication?",
+        "options": [
+          "They're cheaper to implement",
+          "They verify identity continuously throughout a session, not just at login",
+          "They don't require any hardware"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Spoofing Biometrics: Fooling the Sensors",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch03-biometric-security",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "Samsung's Galaxy S10 facial recognition was fooled by a photograph. A $1,000 phone defeated by a printed picture.",
+          "visual": "📸"
+        },
+        "buildup": {
+          "text": "Biometric spoofing uses replicas: silicone fingerprints, 3D-printed masks, high-res iris photos, or recorded.",
+          "visual": "🎭"
+        },
+        "discovery": {
+          "text": "Liveness detection counters spoofing by checking for pulse, eye movement, skin texture, or asking for random actions.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Researchers fooled Apple's Face ID with a $150 3D-printed mask in 2017. The arms race between spoofers and.",
+          "visual": "🏃"
+        },
+        "climax": {
+          "text": "Biometrics are not passwords — they're probabilities. A system decides if you're 'close enough' to the stored template.",
+          "visual": "📊"
+        },
+        "punchline": {
+          "text": "Your face is a probability score, not a perfect match.",
+          "visual": "🎲"
+        }
+      },
+      "quiz": {
+        "question": "How do modern biometric systems counter spoofing?",
+        "options": [
+          "They use longer scan times",
+          "Liveness detection checks for pulse, eye movement, and skin texture",
+          "They require multiple biometrics simultaneously"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Single Sign-On: One Login for Everything",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch04-identity-management",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "text": "'Sign in with Google' lets you access hundreds of apps without creating new accounts. Convenient — and risky.",
+          "visual": "🔓"
+        },
+        "buildup": {
+          "text": "SSO lets users authenticate once and access multiple services. SAML and OAuth protocols handle the.",
+          "visual": "🔗"
+        },
+        "discovery": {
+          "text": "SSO reduces password fatigue and eliminates password reuse across services. One strong credential replaces dozens.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "If your SSO provider is compromised, every connected application is compromised. One key opens all doors – for you.",
+          "visual": "🗝️"
+        },
+        "climax": {
+          "text": "SSO concentrates risk into one identity provider. It must be the most heavily defended part of your.",
+          "visual": "🏰"
+        },
+        "punchline": {
+          "text": "One login for everything means one breach for everything.",
+          "visual": "⚠️"
+        }
+      },
+      "quiz": {
+        "question": "What is the primary security risk of Single Sign-On?",
+        "options": [
+          "It's too slow for large organizations",
+          "Compromising the SSO provider gives access to all connected applications",
+          "It doesn't support strong passwords"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "OAuth: Delegated Authorization Without Sharing Passwords",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch04-identity-management",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "You give a fitness app access to your Google Calendar without sharing your Google password. How does that work?",
+          "visual": "🔄"
+        },
+        "buildup": {
+          "text": "OAuth issues tokens that grant specific, limited access. The app gets a token to read your calendar – not your.",
+          "visual": "🎟️"
+        },
+        "discovery": {
+          "text": "OAuth separates authentication (who you are) from authorization (what you can do). Tokens can be scoped and revoked.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Malicious OAuth apps have tricked users into granting broad permissions. One click on 'Allow' and the app has access.",
+          "visual": "📧"
+        },
+        "climax": {
+          "text": "OAuth is powerful but dangerous when users don't read permission scopes. 'Allow' is the most dangerous button on.",
+          "visual": "🔘"
+        },
+        "punchline": {
+          "text": "Read the permissions before you click 'Allow.' Nobody does.",
+          "visual": "🙈"
+        }
+      },
+      "quiz": {
+        "question": "How does OAuth protect user credentials?",
+        "options": [
+          "It encrypts passwords before sharing",
+          "It issues scoped tokens instead of sharing the actual password",
+          "It uses biometric verification"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Active Directory: The Corporate Gatekeeper",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch04-identity-management",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "When a company of 50,000 employees needs to control who accesses what, one system manages it all: Active Directory.",
+          "visual": "🏢"
+        },
+        "buildup": {
+          "text": "AD stores user accounts, group memberships, and access policies. It authenticates employees and controls.",
+          "visual": "📋"
+        },
+        "discovery": {
+          "text": "Kerberos authentication in AD uses time-limited tickets. You prove identity once and get tickets for specific services.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Compromising AD is the 'holy grail' for attackers. The 2020 SolarWinds attack specifically targeted AD to create.",
+          "visual": "🎯"
+        },
+        "climax": {
+          "text": "Active Directory is the single most critical system in corporate security. Owning AD means owning all organization.",
+          "visual": "👑"
+        },
+        "punchline": {
+          "text": "Control the directory, control the company.",
+          "visual": "🏰"
+        }
+      },
+      "quiz": {
+        "question": "Why is Active Directory a prime target for attackers?",
+        "options": [
+          "It stores all company documents",
+          "Compromising AD grants control over all user accounts and resource access",
+          "It's always exposed to the internet"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Privileged Access Management: Guarding the Super Users",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch04-identity-management",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "A database admin's credentials can delete every record in the company. What happens when those credentials are stolen?",
+          "visual": "👤"
+        },
+        "buildup": {
+          "text": "Privileged accounts (root, admin, DBA) have elevated permissions. PAM systems vault these credentials and control.",
+          "visual": "🔐"
+        },
+        "discovery": {
+          "text": "PAM provides just-in-time access: admins check out credentials for a specific task, then they're automatically rotated.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "80% of breaches involve compromised privileged credentials. Attackers don't hack systems – they log in.",
+          "visual": "📊"
+        },
+        "climax": {
+          "text": "Privileged access is the ultimate prize. PAM ensures that even admins must prove need, get approval, and be recorded.",
+          "visual": "🎥"
+        },
+        "punchline": {
+          "text": "Hackers don't break in. They log in as the admin.",
+          "visual": "🔑"
+        }
+      },
+      "quiz": {
+        "question": "What percentage of breaches involve compromised privileged credentials?",
+        "options": [
+          "About 30%",
+          "About 80%",
+          "About 50%"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Identity Federation: Trust Across Organizations",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch04-identity-management",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "You work for Company A but need access to Company B's tools. Neither company wants to manage each other's users.",
+          "visual": "🤝"
+        },
+        "buildup": {
+          "text": "Federation lets organizations trust each other's identity providers. Your employer vouches for you, and the.",
+          "visual": "🌐"
+        },
+        "discovery": {
+          "text": "SAML assertions carry identity claims between organizations. Company A says 'this is a verified employee' and Company.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "The 2020 SolarWinds attack forged SAML tokens to impersonate trusted users. Federation's trust chain became the.",
+          "visual": "⛓️"
+        },
+        "climax": {
+          "text": "Federation enables seamless cross-organization access but extends the blast radius of a breach across trust boundaries.",
+          "visual": "💥"
+        },
+        "punchline": {
+          "text": "Trust is federation's strength. Misplaced trust is its weakness.",
+          "visual": "⚖️"
+        }
+      },
+      "quiz": {
+        "question": "How did the SolarWinds attack exploit identity federation?",
+        "options": [
+          "They disabled federation entirely",
+          "They forged SAML tokens to impersonate trusted users across organizations",
+          "They stole physical security keys"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Phishing: The #1 Identity Attack",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch05-attacks-on-identity",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "text": "The email looks exactly like it's from your bank. The login page is pixel-perfect. But the URL.",
+          "visual": "🎣"
+        },
+        "buildup": {
+          "text": "Phishing creates convincing replicas of legitimate login pages to capture credentials. It's the #1 method of.",
+          "visual": "📧"
+        },
+        "discovery": {
+          "text": "Spear phishing targets specific individuals with personalized content. Whaling targets executives with.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "AI now generates phishing emails without grammar mistakes in any language, eliminating the traditional red flags.",
+          "visual": "🤖"
+        },
+        "climax": {
+          "text": "Phishing exploits human trust, not technical flaws. No firewall can stop an employee from entering their password on.",
+          "visual": "🧠"
+        },
+        "punchline": {
+          "text": "AI writes perfect phishing emails now. Grammar checking won't save you.",
+          "visual": "✍️"
+        }
+      },
+      "quiz": {
+        "question": "Why is AI making phishing more dangerous?",
+        "options": [
+          "AI can bypass firewalls",
+          "AI generates grammatically perfect phishing emails in any language, removing traditional red flags",
+          "AI can crack passwords faster"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "SIM Swapping: Stealing Your Phone Number",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch05-attacks-on-identity",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "Your phone suddenly loses signal. Someone convinced your carrier to transfer your number. Now they receive all.",
+          "visual": "📵"
+        },
+        "buildup": {
+          "text": "SIM swapping exploits carrier customer service. Attackers use personal info to impersonate you and request a.",
+          "visual": "📞"
+        },
+        "discovery": {
+          "text": "Once the number is transferred, attackers receive your SMS 2FA codes and can reset passwords on banking and.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Twitter CEO Jack Dorsey was SIM-swapped in 2019. The attacker posted offensive messages from his personal @jack account.",
+          "visual": "🐦"
+        },
+        "climax": {
+          "text": "SIM swapping turns your phone number — something you trust as secure — into an attack vector controlled by criminals.",
+          "visual": "☠️"
+        },
+        "punchline": {
+          "text": "The Twitter CEO's own phone number was hijacked.",
+          "visual": "📱"
+        }
+      },
+      "quiz": {
+        "question": "What does a SIM swap attack enable?",
+        "options": [
+          "Hacking the phone's hardware",
+          "Receiving the victim's calls, texts, and 2FA codes to take over accounts",
+          "Installing malware remotely"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Session Hijacking: Stealing Your Login Without a Password",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch05-attacks-on-identity",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "You logged in once and your browser remembers you. But that memory — a session token — can be stolen and used by others.",
+          "visual": "🍪"
+        },
+        "buildup": {
+          "text": "After login, websites issue session tokens (cookies) that prove you're authenticated. Whoever has the token IS you.",
+          "visual": "🎟️"
+        },
+        "discovery": {
+          "text": "Session hijacking steals these tokens through XSS attacks, packet sniffing, or malware. No password needed – the.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Infostealer malware exports all browser cookies in seconds. Attackers import them and are instantly logged into.",
+          "visual": "🦠"
+        },
+        "climax": {
+          "text": "Session tokens bypass all authentication. MFA, passwords, biometrics — none matter once the session is stolen.",
+          "visual": "🔓"
+        },
+        "punchline": {
+          "text": "Your session cookie is the master key. And malware can copy it in seconds.",
+          "visual": "⚡"
+        }
+      },
+      "quiz": {
+        "question": "Why does session hijacking bypass MFA?",
+        "options": [
+          "It cracks the MFA codes",
+          "Session tokens are issued after MFA verification, so stealing them skips all authentication",
+          "MFA doesn't protect web sessions"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Golden Ticket Attacks: Forging the Ultimate Credential",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch05-attacks-on-identity",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "Imagine forging a credential so powerful it grants unlimited access to every system in a corporate network – for.",
+          "visual": "🎫"
+        },
+        "buildup": {
+          "text": "Kerberos uses a 'ticket granting ticket' (TGT) signed by the domain controller's secret key (KRBTGT) to.",
+          "visual": "🔐"
+        },
+        "discovery": {
+          "text": "If attackers steal the KRBTGT hash, they can forge TGTs (golden tickets) for any user, including non-existent.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Golden tickets remain valid even after password resets. The only fix is resetting the KRBTGT password twice –.",
+          "visual": "💥"
+        },
+        "climax": {
+          "text": "Golden ticket attacks grant god-mode access to the entire domain. Recovery requires rebuilding trust from scratch.",
+          "visual": "👑"
+        },
+        "punchline": {
+          "text": "One stolen hash. Unlimited access. For a decade.",
+          "visual": "🔑"
+        }
+      },
+      "quiz": {
+        "question": "Why are golden ticket attacks so difficult to remediate?",
+        "options": [
+          "They're undetectable",
+          "The forged tickets remain valid even after password resets, requiring KRBTGT reset",
+          "They only affect one system at a time"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Passkeys: The End of Passwords?",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch06-the-future-of-identity",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "Apple, Google, and Microsoft are replacing passwords with passkeys. No more typing, no more forgetting, no.",
+          "visual": "🔑"
+        },
+        "buildup": {
+          "text": "Passkeys use public-key cryptography. Your device holds a private key; the website holds the public key. No.",
+          "visual": "🔐"
+        },
+        "discovery": {
+          "text": "Authentication happens through biometrics on your device. The private key never leaves your phone or computer.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Passkeys are domain-bound – they only work on the real website. A phishing page can't trigger your passkey for the.",
+          "visual": "🛡️"
+        },
+        "climax": {
+          "text": "Passkeys eliminate the three biggest password problems: reuse, phishing, and breach-exposed credentials. The.",
+          "visual": "🏁"
+        },
+        "punchline": {
+          "text": "No password to steal. No password to forget. No password to phish.",
+          "visual": "✨"
+        }
+      },
+      "quiz": {
+        "question": "Why are passkeys resistant to phishing?",
+        "options": [
+          "They use longer passwords",
+          "They're cryptographically bound to the real website's domain, ignoring fake sites",
+          "They require email verification"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Decentralized Identity: Owning Your Digital Self",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch06-the-future-of-identity",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "Today, Google and Facebook own your digital identity. What if you owned it yourself and could prove who you are.",
+          "visual": "🆔"
+        },
+        "buildup": {
+          "text": "Decentralized identity (DID) uses blockchain or distributed ledgers. You hold verifiable credentials in a.",
+          "visual": "📱"
+        },
+        "discovery": {
+          "text": "You can prove you're over 21 without revealing your birthdate, or prove you graduated without showing your transcript.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "The EU's eIDAS 2.0 regulation will require all member states to offer digital identity wallets by 2026 –.",
+          "visual": "🇪🇺"
+        },
+        "climax": {
+          "text": "Decentralized identity shifts control from corporations to individuals. You decide what to share, with whom, and.",
+          "visual": "🔐"
+        },
+        "punchline": {
+          "text": "Prove who you are without giving away who you are.",
+          "visual": "🕶️"
+        }
+      },
+      "quiz": {
+        "question": "What is selective disclosure in decentralized identity?",
+        "options": [
+          "Choosing which social media to link",
+          "Proving specific claims (like age) without revealing the underlying data (like birthdate)",
+          "Selecting which websites can see your profile"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Zero-Knowledge Proofs: Proving Without Revealing",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch06-the-future-of-identity",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "You can prove you know a secret without revealing it. It sounds impossible, but the math works.",
+          "visual": "🎩"
+        },
+        "buildup": {
+          "text": "Zero-knowledge proofs let one party prove a statement is true without conveying any information beyond the truth.",
+          "visual": "🧮"
+        },
+        "discovery": {
+          "text": "The 'Ali Baba cave' analogy: you can prove you know the magic word to open a cave door by emerging from the.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "ZKPs are already used in cryptocurrency (Zcash) for private transactions. Now they're being applied to.",
+          "visual": "💰"
+        },
+        "climax": {
+          "text": "Zero-knowledge proofs could make authentication truly private: prove you're authorized without revealing anything.",
+          "visual": "🔐"
+        },
+        "punchline": {
+          "text": "Prove you know the secret. Without ever saying it.",
+          "visual": "🤐"
+        }
+      },
+      "quiz": {
+        "question": "What makes zero-knowledge proofs revolutionary for identity?",
+        "options": [
+          "They're faster than passwords",
+          "They let you prove authorization without revealing any personal information",
+          "They eliminate the need for encryption"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Continuous Authentication: Always Verifying, Never Done",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch06-the-future-of-identity",
+      "difficulty": "Premium",
+      "story": {
+        "hook": {
+          "text": "You log in once at 9 AM. By 5 PM, how does the system know it's still you? What if someone took over after lunch?",
+          "visual": "🕐"
+        },
+        "buildup": {
+          "text": "Continuous authentication monitors behavioral signals throughout a session: typing rhythm, mouse movement.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Instead of binary 'logged in or not,' trust scores fluctuate. Drop below the threshold and the system re-challenges.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Banks already use continuous auth invisibly. If your mouse behavior changes mid-transaction, the system may.",
+          "visual": "🏦"
+        },
+        "climax": {
+          "text": "The future of authentication isn't a single gate. It's a continuous assessment that adapts in real time to risk signals.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "Logging in isn't a moment. It's an ongoing conversation.",
+          "visual": "💬"
+        }
+      },
+      "quiz": {
+        "question": "How does continuous authentication improve over traditional login?",
+        "options": [
+          "It uses stronger passwords",
+          "It monitors behavioral signals throughout the session instead of checking only at login",
+          "It requires biometric scanning every hour"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "The Death of the Password: When Will It Happen?",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch06-the-future-of-identity",
+      "difficulty": "Premium",
+      "story": {
+        "hook": {
+          "text": "Bill Gates predicted the death of passwords in 2004. Two decades later, they're still the most common.",
+          "visual": "💀"
+        },
+        "buildup": {
+          "text": "FIDO2, passkeys, biometrics, and behavioral analytics all aim to replace passwords. Each has strengths and.",
+          "visual": "🔄"
+        },
+        "discovery": {
+          "text": "Legacy systems, user habits, and the simplicity of passwords create massive inertia. Change requires all ecosystem.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Even passwordless systems often have password fallbacks 'just in case.' The password becomes the weakest link in.",
+          "visual": "🔗"
+        },
+        "climax": {
+          "text": "Passwords won't die suddenly. They'll fade slowly as passkeys and biometrics gradually become the default –.",
+          "visual": "🌅"
+        },
+        "punchline": {
+          "text": "Passwords have been dying for 20 years. They're still alive.",
+          "visual": "🧟"
+        }
+      },
+      "quiz": {
+        "question": "Why do passwords persist despite better alternatives existing?",
+        "options": [
+          "They're more secure than alternatives",
+          "Legacy systems, user habits, and ecosystem-wide change requirements create massive inertia",
+          "Biometrics are too expensive"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Brute Force Attacks: Trying Every Combination",
+      "chapter_id": "cybersecurity--identity-and-authentication--ch01-the-password-problem",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "A computer can try 100 billion password guesses per second. Your 6-character password lasts about half a second.",
+          "visual": "⚡"
+        },
+        "buildup": {
+          "text": "Brute force attacks systematically try every possible combination. Dictionary attacks try common words and.",
+          "visual": "📖"
+        },
+        "discovery": {
+          "text": "Modern GPUs can test billions of hashes per second. Password length matters exponentially more than complexity.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Adding one character to a password multiplies cracking time by 95x. A 12-character password takes centuries.",
+          "visual": "📈"
+        },
+        "climax": {
+          "text": "Brute force is math, not magic. Longer passwords win because each character multiplies the search space exponentially.",
+          "visual": "🧮"
+        },
+        "punchline": {
+          "text": "Six characters: half a second. Twelve: centuries.",
+          "visual": "⏳"
+        }
+      },
+      "quiz": {
+        "question": "Why does password length matter more than complexity?",
+        "options": [
+          "Complex passwords are harder to remember",
+          "Each additional character multiplies the search space exponentially, greatly increasing cracking time",
+          "Complexity rules are outdated"
+        ],
+        "correct": 1
+      }
+    }
+  ]
+}

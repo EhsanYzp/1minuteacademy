@@ -1,0 +1,1243 @@
+{
+  "categoryId": "cybersecurity",
+  "subject": "Cybersecurity",
+  "courseId": "cybersecurity--network-security-fundamentals",
+  "courseTitle": "Network Security Fundamentals",
+  "emoji": "🛡️",
+  "color": "#27AE60",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "cybersecurity--network-security-fundamentals--ch01-how-networks-work",
+      "title": "How Networks Work",
+      "position": 1
+    },
+    {
+      "id": "cybersecurity--network-security-fundamentals--ch02-firewalls-and-perimeter-defense",
+      "title": "Firewalls & Perimeter Defense",
+      "position": 2
+    },
+    {
+      "id": "cybersecurity--network-security-fundamentals--ch03-wireless-security",
+      "title": "Wireless Security",
+      "position": 3
+    },
+    {
+      "id": "cybersecurity--network-security-fundamentals--ch04-network-attacks",
+      "title": "Network Attacks",
+      "position": 4
+    },
+    {
+      "id": "cybersecurity--network-security-fundamentals--ch05-monitoring-and-detection",
+      "title": "Monitoring & Detection",
+      "position": 5
+    },
+    {
+      "id": "cybersecurity--network-security-fundamentals--ch06-modern-network-architecture",
+      "title": "Modern Network Architecture",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "title": "The OSI Model: Seven Layers of Communication",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch01-how-networks-work",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "text": "Every message you send online passes through seven invisible layers — each one a potential attack surface.",
+          "visual": "📶"
+        },
+        "buildup": {
+          "text": "The OSI model divides networking into seven layers: physical, data link, network, transport, session.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Each layer has a specific job. Attackers target specific layers depending on what they want to accomplish.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Most people interact only with Layer 7 (applications). Attackers exploit layers 2-4, where defenses are often weakest.",
+          "visual": "🎯"
+        },
+        "climax": {
+          "text": "Understanding the OSI model is understanding where attacks happen and where defenses must be placed.",
+          "visual": "🛡️"
+        },
+        "punchline": {
+          "text": "Seven layers. Each one a potential door for attackers.",
+          "visual": "🚪"
+        }
+      },
+      "quiz": {
+        "question": "Why is the OSI model important for cybersecurity?",
+        "options": [
+          "It makes networks faster",
+          "Each layer represents a potential attack surface that needs defense",
+          "It reduces network costs"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "IP Addresses: Your Digital Home Address",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch01-how-networks-work",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "text": "Every device on the internet has a number. That number reveals your approximate location and your internet provider.",
+          "visual": "📍"
+        },
+        "buildup": {
+          "text": "An IP address identifies your device on a network. IPv4 uses four numbers (like 192.168.1.1), IPv6 uses hexadecimal.",
+          "visual": "🔢"
+        },
+        "discovery": {
+          "text": "Public IPs are visible to every website you visit. Private IPs hide behind your router's NAT — invisible from outside.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "IP geolocation databases can pinpoint your city. In 2016, a mapping error directed all 'unknown' U.S. IPs to a.",
+          "visual": "🏠"
+        },
+        "climax": {
+          "text": "Your IP address is the starting point for both network communication and network attacks.",
+          "visual": "🎯"
+        },
+        "punchline": {
+          "text": "A Kansas farmer got blamed for every unlocated IP in America.",
+          "visual": "🌾"
+        }
+      },
+      "quiz": {
+        "question": "What information can an IP address reveal?",
+        "options": [
+          "Your exact home address",
+          "Your approximate location and internet service provider",
+          "Your personal identity and name"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "DNS: The Internet's Phone Book",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch01-how-networks-work",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "You type 'google.com' but your computer needs a number. Something translates that name — and it can be hijacked.",
+          "visual": "📖"
+        },
+        "buildup": {
+          "text": "DNS translates human-readable domain names into IP addresses. Without it, you'd need to memorize numbers for.",
+          "visual": "🔄"
+        },
+        "discovery": {
+          "text": "DNS queries are usually unencrypted. Anyone monitoring your network can see every website you're trying to visit.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "DNS hijacking redirects your queries to fake servers. You type your bank's URL and arrive at an attacker's replica.",
+          "visual": "🔀"
+        },
+        "climax": {
+          "text": "DNS is critical infrastructure that most users never think about — which makes it a prime target for attacks.",
+          "visual": "🎯"
+        },
+        "punchline": {
+          "text": "You typed the right address. DNS sent you to the wrong place.",
+          "visual": "🗺️"
+        }
+      },
+      "quiz": {
+        "question": "Why is DNS a security concern?",
+        "options": [
+          "It slows down the internet",
+          "DNS queries are often unencrypted and can be hijacked to redirect users",
+          "DNS uses too much bandwidth"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "TCP/IP: The Language of the Internet",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch01-how-networks-work",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "The internet was designed for resilience in nuclear war, not for security. That design choice haunts us today.",
+          "visual": "☢️"
+        },
+        "buildup": {
+          "text": "TCP/IP was created for ARPANET. It breaks data into packets, routes them independently, and reassembles them at.",
+          "visual": "📦"
+        },
+        "discovery": {
+          "text": "TCP ensures reliable delivery with handshakes and acknowledgments. IP handles addressing and routing across networks.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "TCP/IP has no built-in authentication or encryption. Any device can claim to be any IP address. Trust was assumed.",
+          "visual": "🤷"
+        },
+        "climax": {
+          "text": "Every security protocol we layer on top (TLS, IPsec, DNSSEC) is patching the trust that TCP/IP assumed but.",
+          "visual": "🩹"
+        },
+        "punchline": {
+          "text": "The internet works on trust. It was never designed to be suspicious.",
+          "visual": "🤝"
+        }
+      },
+      "quiz": {
+        "question": "Why is TCP/IP considered insecure by design?",
+        "options": [
+          "It's too slow for modern networks",
+          "It was designed for resilience, not security, with no built-in authentication",
+          "It can only handle small data transfers"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "NAT: The Invisible Shield in Your Router",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch01-how-networks-work",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "Your home network has dozens of devices, but the internet sees only one IP address. Your router is hiding them.",
+          "visual": "🏠"
+        },
+        "buildup": {
+          "text": "Network Address Translation (NAT) lets multiple devices share one public IP. It maps internal addresses to.",
+          "visual": "🔄"
+        },
+        "discovery": {
+          "text": "NAT accidentally became a security feature: external attackers can't directly reach devices behind NAT without.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "NAT was invented to save IPv4 addresses (we ran out). Its security benefit was a happy accident, not by design.",
+          "visual": "🎲"
+        },
+        "climax": {
+          "text": "NAT hides your internal network structure. Attackers see one IP — they don't know what's behind the router.",
+          "visual": "🕶️"
+        },
+        "punchline": {
+          "text": "Your router's best security feature was an accident.",
+          "visual": "🤷"
+        }
+      },
+      "quiz": {
+        "question": "How does NAT accidentally improve security?",
+        "options": [
+          "It encrypts all traffic",
+          "External attackers can't directly reach devices behind NAT",
+          "It blocks all incoming traffic permanently"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "What Is a Firewall? The First Line of Defense",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch02-firewalls-and-perimeter-defense",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "text": "A firewall decides which network traffic gets in and which gets blocked — like a bouncer at a digital nightclub.",
+          "visual": "🧱"
+        },
+        "buildup": {
+          "text": "Firewalls filter traffic based on rules: source/destination IP, port numbers, protocols, and connection state.",
+          "visual": "🔍"
+        },
+        "discovery": {
+          "text": "Packet-filtering firewalls check individual packets. Stateful firewalls track entire connections for smarter decisions.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Next-generation firewalls (NGFWs) can inspect encrypted traffic, identify applications, and block malware – far.",
+          "visual": "🔬"
+        },
+        "climax": {
+          "text": "Firewalls are necessary but insufficient. They're just one layer in a defense-in-depth strategy.",
+          "visual": "🛡️"
+        },
+        "punchline": {
+          "text": "A firewall is a bouncer. But determined intruders find other doors.",
+          "visual": "🚪"
+        }
+      },
+      "quiz": {
+        "question": "What is the difference between stateful and packet-filtering firewalls?",
+        "options": [
+          "Stateful firewalls are older",
+          "Stateful firewalls track entire connections while packet-filtering checks individual packets",
+          "Packet-filtering is more advanced"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "DMZ: The Buffer Zone Between Trust and Danger",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch02-firewalls-and-perimeter-defense",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "Your web server needs to be public, but your database must be private. How do you expose one without risking the other?",
+          "visual": "⚔️"
+        },
+        "buildup": {
+          "text": "A DMZ (demilitarized zone) places public-facing servers in a separate network segment between the internet and.",
+          "visual": "🏗️"
+        },
+        "discovery": {
+          "text": "If the web server in the DMZ is compromised, the attacker still faces a second firewall before reaching.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Named after the military DMZ between North and South Korea — a buffer zone where neither side has full control.",
+          "visual": "🇰🇷"
+        },
+        "climax": {
+          "text": "DMZ architecture assumes your public servers will be attacked. The goal is to contain the damage when it happens.",
+          "visual": "🎯"
+        },
+        "punchline": {
+          "text": "Assume the front line will fall. Build a second wall.",
+          "visual": "🧱"
+        }
+      },
+      "quiz": {
+        "question": "What is the purpose of a DMZ in network architecture?",
+        "options": [
+          "To speed up web traffic",
+          "To isolate public-facing servers from internal networks for damage containment",
+          "To connect two offices together"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "VPN Tunnels: Encrypted Passages Through the Internet",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch02-firewalls-and-perimeter-defense",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "Corporate VPNs create an encrypted tunnel through the public internet — like a private highway inside a busy road.",
+          "visual": "🛤️"
+        },
+        "buildup": {
+          "text": "VPNs encrypt all traffic between your device and the corporate network. Even on public Wi-Fi, the data is protected.",
+          "visual": "🔒"
+        },
+        "discovery": {
+          "text": "IPsec and WireGuard create secure tunnels at the network layer. Everything passing through is encrypted.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "VPNs create a trusted tunnel, but if the endpoint is compromised, the tunnel becomes a highway for attackers into.",
+          "visual": "🚗"
+        },
+        "climax": {
+          "text": "VPNs extend the network perimeter to wherever you are — bringing both connectivity and risk.",
+          "visual": "🌐"
+        },
+        "punchline": {
+          "text": "A VPN is a secure tunnel. But tunnels go both ways.",
+          "visual": "↔️"
+        }
+      },
+      "quiz": {
+        "question": "What is a security risk of corporate VPNs?",
+        "options": [
+          "They're too slow for video calls",
+          "A compromised endpoint can use the VPN tunnel as an entry point into the network",
+          "They only work on Windows"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Intrusion Prevention Systems: Blocking Attacks in Real Time",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch02-firewalls-and-perimeter-defense",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "While firewalls guard the door, intrusion prevention systems patrol every room looking for suspicious behavior.",
+          "visual": "🚨"
+        },
+        "buildup": {
+          "text": "An IPS analyzes network traffic in real time, comparing patterns against known attack signatures and anomalies.",
+          "visual": "🔍"
+        },
+        "discovery": {
+          "text": "When an IPS detects an attack, it doesn't just alert – it automatically blocks the malicious traffic before it.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "False positives are the enemy: block legitimate traffic and you disrupt business. Too many false alarms and.",
+          "visual": "😤"
+        },
+        "climax": {
+          "text": "An IPS must balance sensitivity and specificity. Too aggressive blocks work; too passive misses attacks.",
+          "visual": "⚖️"
+        },
+        "punchline": {
+          "text": "The hardest part isn't stopping attacks. It's not stopping everything else.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "What is the biggest challenge for Intrusion Prevention Systems?",
+        "options": [
+          "They're too expensive",
+          "Balancing false positives (blocking legitimate traffic) with detecting real attacks",
+          "They can't analyze encrypted traffic"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "WEP to WPA3: The Evolution of Wi-Fi Security",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch03-wireless-security",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "text": "Early Wi-Fi encryption was so weak that a teenager with a laptop could crack it in 60 seconds.",
+          "visual": "📡"
+        },
+        "buildup": {
+          "text": "WEP (1997) was the first Wi-Fi security protocol. It used a static 40-bit key that was trivially breakable.",
+          "visual": "🔓"
+        },
+        "discovery": {
+          "text": "WPA (2003) added TKIP with per-packet keys. WPA2 (2004) brought AES encryption. WPA3 (2018) added forward secrecy.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Despite WPA3's availability, millions of devices still use WPA2 or even WEP. Legacy hardware holds back.",
+          "visual": "📱"
+        },
+        "climax": {
+          "text": "Wi-Fi security evolved through failure. Each broken protocol taught us what the next one needed.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "60 seconds to crack WEP. Wi-Fi security learned the hard way.",
+          "visual": "⏱️"
+        }
+      },
+      "quiz": {
+        "question": "Why was WEP considered insecure?",
+        "options": [
+          "It was too slow",
+          "It used a static 40-bit key that was trivially breakable",
+          "It didn't support passwords"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Evil Twin Attacks: The Fake Wi-Fi Trap",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch03-wireless-security",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "You connect to 'Starbucks_WiFi' and browse normally. But the hotspot was set up by someone at the next table.",
+          "visual": "☕"
+        },
+        "buildup": {
+          "text": "An evil twin is a rogue access point that mimics a legitimate Wi-Fi network. Your device connects automatically.",
+          "visual": "📡"
+        },
+        "discovery": {
+          "text": "All traffic through the evil twin is visible to the attacker. They can intercept passwords, inject malware, or.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Your phone automatically reconnects to networks it has joined before. An attacker just needs to broadcast a common.",
+          "visual": "📱"
+        },
+        "climax": {
+          "text": "Public Wi-Fi is inherently untrusted. Evil twins exploit that most people don't verify which network they're on.",
+          "visual": "⚠️"
+        },
+        "punchline": {
+          "text": "The free Wi-Fi is free because you're paying with your data.",
+          "visual": "💰"
+        }
+      },
+      "quiz": {
+        "question": "Why do evil twin attacks succeed so easily?",
+        "options": [
+          "They use advanced encryption",
+          "Devices automatically connect to networks with familiar names",
+          "They require physical access to the router"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Bluetooth Attacks: Hacking Through Your Headphones",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch03-wireless-security",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "Your Bluetooth headphones could be the entry point hackers use to access your phone without touching it.",
+          "visual": "🎧"
+        },
+        "buildup": {
+          "text": "Bluetooth vulnerabilities include BlueBorne (remote takeover), KNOB (key negotiation), and BlueSmack (denial.",
+          "visual": "📱"
+        },
+        "discovery": {
+          "text": "BlueBorne in 2017 could spread between devices without pairing. Over 5 billion devices were vulnerable.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Bluetooth range is supposed to be 30 feet, but with directional antennas, attackers can reach Bluetooth devices.",
+          "visual": "📡"
+        },
+        "climax": {
+          "text": "Bluetooth is an often-forgotten attack surface. It's always on, always discoverable, and rarely updated.",
+          "visual": "🔓"
+        },
+        "punchline": {
+          "text": "5 billion devices. One vulnerability. No pairing needed.",
+          "visual": "🌍"
+        }
+      },
+      "quiz": {
+        "question": "What made the BlueBorne vulnerability especially dangerous?",
+        "options": [
+          "It only affected old phones",
+          "It could spread between devices without pairing, affecting 5 billion devices",
+          "It was too complex to exploit"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "ARP Spoofing: Lying About Who You Are on a Network",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch04-network-attacks",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "On a local network, any device can claim to be the router. Other devices will believe it and send all traffic.",
+          "visual": "🎭"
+        },
+        "buildup": {
+          "text": "ARP maps IP addresses to physical MAC addresses. ARP spoofing sends fake ARP replies, redirecting traffic to.",
+          "visual": "🔀"
+        },
+        "discovery": {
+          "text": "Once positioned as the man-in-the-middle, the attacker sees all unencrypted traffic on the local network.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "ARP has no authentication. It was designed when networks were small and trusted. Nobody expected devices to lie.",
+          "visual": "🤝"
+        },
+        "climax": {
+          "text": "ARP spoofing works because network protocols from the 1980s assumed honesty. That assumption was never true.",
+          "visual": "😅"
+        },
+        "punchline": {
+          "text": "Your computer asked 'who's the router?' and the hacker answered.",
+          "visual": "🙋"
+        }
+      },
+      "quiz": {
+        "question": "Why does ARP spoofing work?",
+        "options": [
+          "ARP uses strong encryption",
+          "ARP has no authentication mechanism and trusts all responses",
+          "ARP only works on wireless networks"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "DNS Poisoning: Corrupting the Internet's Address Book",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch04-network-attacks",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "What if someone rewrote the phone book so that your bank's number connected to a criminal instead?",
+          "visual": "☠️"
+        },
+        "buildup": {
+          "text": "DNS cache poisoning inserts false DNS records into a resolver's cache. Users requesting a domain get the wrong IP.",
+          "visual": "📖"
+        },
+        "discovery": {
+          "text": "The Kaminsky attack in 2008 showed that DNS poisoning could affect entire ISPs — redirecting millions of users.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Dan Kaminsky secretly coordinated with every major DNS vendor to patch the flaw before going public. A.",
+          "visual": "🤝"
+        },
+        "climax": {
+          "text": "DNSSEC adds digital signatures to DNS records, preventing poisoning — but adoption remains under 30% of domains.",
+          "visual": "📊"
+        },
+        "punchline": {
+          "text": "One researcher found a flaw that could redirect the entire internet.",
+          "visual": "🌐"
+        }
+      },
+      "quiz": {
+        "question": "What does DNSSEC do to prevent DNS poisoning?",
+        "options": [
+          "It encrypts all DNS traffic",
+          "It adds digital signatures to DNS records to verify authenticity",
+          "It blocks all DNS queries"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "BGP Hijacking: Rerouting the Internet Itself",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch04-network-attacks",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "In 2018, traffic to Amazon's Route 53 DNS was rerouted through Russia. Someone hijacked the internet's routing system.",
+          "visual": "🌐"
+        },
+        "buildup": {
+          "text": "BGP is the protocol that routes traffic between internet providers. It works on trust – any provider can announce.",
+          "visual": "🗺️"
+        },
+        "discovery": {
+          "text": "A BGP hijack advertises a false route. Traffic destined for one network gets diverted through the attacker's network.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Pakistan accidentally knocked YouTube offline worldwide in 2008 when trying to block it domestically – a.",
+          "visual": "📺"
+        },
+        "climax": {
+          "text": "BGP has no built-in verification. The internet's core routing protocol runs on trust between providers – and trust.",
+          "visual": "⚠️"
+        },
+        "punchline": {
+          "text": "Pakistan tried to block YouTube locally. They broke it globally.",
+          "visual": "🌍"
+        }
+      },
+      "quiz": {
+        "question": "Why is BGP hijacking possible?",
+        "options": [
+          "BGP uses weak encryption",
+          "BGP works on trust between providers with no built-in route verification",
+          "BGP is an outdated protocol no longer used"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Packet Sniffing: Eavesdropping on Network Traffic",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch04-network-attacks",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "Anyone on the same network can capture your data as it flows past — if it's not encrypted, they can read it all.",
+          "visual": "👂"
+        },
+        "buildup": {
+          "text": "Packet sniffers capture raw network traffic. Tools like Wireshark show every packet in real time with full content.",
+          "visual": "📡"
+        },
+        "discovery": {
+          "text": "On unencrypted networks, sniffers can capture passwords, emails, file transfers, and web browsing in cleartext.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Wireshark is a legitimate diagnostic tool used by network admins daily. The same tool is used by attackers on.",
+          "visual": "🔧"
+        },
+        "climax": {
+          "text": "Packet sniffing is why HTTPS everywhere matters. Encryption makes captured packets unreadable to eavesdroppers.",
+          "visual": "🔐"
+        },
+        "punchline": {
+          "text": "Same tool, different intent. Admin by day, attacker by night.",
+          "visual": "🌙"
+        }
+      },
+      "quiz": {
+        "question": "What is the primary defense against packet sniffing?",
+        "options": [
+          "Using stronger passwords",
+          "Encrypting network traffic with protocols like HTTPS",
+          "Using a faster internet connection"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "SIEM: The Security Nerve Center",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch05-monitoring-and-detection",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "A large company generates billions of log events daily. Something malicious is hiding in there — but what?",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "Security Information and Event Management (SIEM) collects logs from every device, correlates events, and.",
+          "visual": "🔍"
+        },
+        "discovery": {
+          "text": "A SIEM might connect a failed login in New York, a successful login in Moscow, and a file download to spot an.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "SIEMs generate so many alerts that 'alert fatigue' sets in. Analysts ignore real threats buried in thousands of.",
+          "visual": "😴"
+        },
+        "climax": {
+          "text": "A SIEM is only as good as its rules and the analysts interpreting its output. Technology without expertise is.",
+          "visual": "📢"
+        },
+        "punchline": {
+          "text": "Billions of events. The real attack hides in the noise.",
+          "visual": "🔊"
+        }
+      },
+      "quiz": {
+        "question": "What is the main challenge of using a SIEM?",
+        "options": [
+          "SIEMs are too expensive to run",
+          "Alert fatigue from too many false positives can cause real threats to be missed",
+          "SIEMs can't process logs from modern devices"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Honeypots: Traps for Hackers",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch05-monitoring-and-detection",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "Some servers exist only to be hacked. They're fake targets designed to lure attackers and study their methods.",
+          "visual": "🍯"
+        },
+        "buildup": {
+          "text": "Honeypots mimic vulnerable systems to attract attackers. Every interaction is logged, providing intelligence on.",
+          "visual": "🪤"
+        },
+        "discovery": {
+          "text": "Since no legitimate user should access a honeypot, any connection is suspicious by definition. Zero false positives.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Project Honey Pot tracked email spammers by publishing unique email addresses on web pages. When spammed, the.",
+          "visual": "📧"
+        },
+        "climax": {
+          "text": "Honeypots turn the tables: instead of waiting for attacks, defenders bait them and learn from the attacker's behavior.",
+          "visual": "🔄"
+        },
+        "punchline": {
+          "text": "The easiest system to hack was designed to be hacked.",
+          "visual": "😏"
+        }
+      },
+      "quiz": {
+        "question": "What advantage do honeypots have over other detection methods?",
+        "options": [
+          "They're faster than firewalls",
+          "Any connection to a honeypot is suspicious, giving near-zero false positives",
+          "They can prevent all attacks"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Network Segmentation: Containing the Blast Radius",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch05-monitoring-and-detection",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "A ship has watertight compartments so one leak doesn't sink the whole vessel. Networks need the same principle.",
+          "visual": "🚢"
+        },
+        "buildup": {
+          "text": "Network segmentation divides a network into isolated zones. Traffic between zones is controlled by firewalls.",
+          "visual": "🧱"
+        },
+        "discovery": {
+          "text": "If ransomware hits the marketing department, segmentation prevents it from reaching finance, HR, or engineering.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Target's 2013 breach reached payment systems through an HVAC vendor's network connection. No segmentation between.",
+          "visual": "❄️"
+        },
+        "climax": {
+          "text": "Flat networks are easy to manage and easy to attack. Segmentation trades convenience for survivability.",
+          "visual": "⚖️"
+        },
+        "punchline": {
+          "text": "An air conditioner contractor led to 40 million stolen credit cards.",
+          "visual": "💳"
+        }
+      },
+      "quiz": {
+        "question": "How did lack of segmentation contribute to the Target breach?",
+        "options": [
+          "Segmentation would have been too expensive",
+          "An HVAC vendor's network access path led directly to payment systems",
+          "Target didn't use firewalls"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Threat Intelligence: Knowing Your Enemy",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch05-monitoring-and-detection",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "Defenders who know which threat groups target their industry can prepare for specific attacks before they happen.",
+          "visual": "🔮"
+        },
+        "buildup": {
+          "text": "Threat intelligence collects data on adversary tactics, tools, and infrastructure from global sharing networks.",
+          "visual": "🌐"
+        },
+        "discovery": {
+          "text": "Indicators of Compromise (IOCs) – malicious IPs, domains, file hashes – help organizations detect known.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "The most valuable threat intel isn't technical – it's understanding attacker motivation. A ransomware gang and.",
+          "visual": "🧠"
+        },
+        "climax": {
+          "text": "Threat intelligence turns security from reactive to proactive. You stop waiting for attacks and start anticipating them.",
+          "visual": "🛡️"
+        },
+        "punchline": {
+          "text": "The best defense isn't just walls. It's knowing who's planning to attack.",
+          "visual": "🗺️"
+        }
+      },
+      "quiz": {
+        "question": "What are Indicators of Compromise (IOCs)?",
+        "options": [
+          "Signs that a firewall is failing",
+          "Known malicious IPs, domains, and file hashes that indicate a threat",
+          "Metrics for employee security awareness"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Zero Trust Architecture: Never Trust, Always Verify",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch06-modern-network-architecture",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "text": "The old model: trust everything inside the firewall. The new model: trust nothing, verify everything, every time.",
+          "visual": "🔒"
+        },
+        "buildup": {
+          "text": "Zero Trust assumes that attackers are already inside the network. Every access request must be authenticated.",
+          "visual": "🔐"
+        },
+        "discovery": {
+          "text": "Instead of a castle-and-moat approach, Zero Trust treats every user, device, and connection as potentially compromised.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Google pioneered Zero Trust with BeyondCorp after being hacked by China in Operation Aurora. They rebuilt their.",
+          "visual": "🏗️"
+        },
+        "climax": {
+          "text": "Zero Trust eliminates the concept of an internal 'safe zone.' Location no longer determines access — identity does.",
+          "visual": "🆔"
+        },
+        "punchline": {
+          "text": "Being inside the network means nothing. Prove who you are. Every time.",
+          "visual": "✅"
+        }
+      },
+      "quiz": {
+        "question": "What is the core principle of Zero Trust architecture?",
+        "options": [
+          "Trust employees but verify contractors",
+          "Never trust any connection by default, always verify identity and authorization",
+          "Trust internal network traffic only"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Cloud Security: When Your Network Is Everywhere",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch06-modern-network-architecture",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "Your data isn't in your building anymore. It's in AWS, Azure, or Google Cloud — on someone else's computer.",
+          "visual": "☁️"
+        },
+        "buildup": {
+          "text": "Cloud computing shifts security responsibility. The provider secures the infrastructure; you secure your data.",
+          "visual": "🤝"
+        },
+        "discovery": {
+          "text": "The 'shared responsibility model' means cloud providers protect the physical servers. You protect everything you put.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Most cloud breaches aren't caused by provider failures. They're caused by customers misconfiguring their own S3.",
+          "visual": "🪣"
+        },
+        "climax": {
+          "text": "The cloud is more secure than most companies' on-premise setups. The risk is misconfiguration by users, not.",
+          "visual": "⚙️"
+        },
+        "punchline": {
+          "text": "The cloud is secure. What you put in it might not be.",
+          "visual": "🔓"
+        }
+      },
+      "quiz": {
+        "question": "What is the most common cause of cloud security breaches?",
+        "options": [
+          "Cloud provider infrastructure failures",
+          "Customer misconfigurations like open S3 buckets",
+          "Physical theft of cloud servers"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "IoT Security: Billions of Devices, Minimal Protection",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch06-modern-network-architecture",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "Your smart fridge, baby monitor, and thermostat are connected to the internet. None of them gets security updates.",
+          "visual": "🏠"
+        },
+        "buildup": {
+          "text": "The Internet of Things adds billions of devices to networks: cameras, sensors, medical devices, and.",
+          "visual": "📡"
+        },
+        "discovery": {
+          "text": "Most IoT devices have default passwords, no encryption, and no way to update firmware. They're permanently vulnerable.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "A casino was hacked through a smart fish tank thermometer connected to the network. Attackers pivoted from the tank.",
+          "visual": "🐟"
+        },
+        "climax": {
+          "text": "Every IoT device is a potential entry point. The more smart devices you add, the larger your attack surface becomes.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "A fish tank thermometer was the backdoor into a casino.",
+          "visual": "🎰"
+        }
+      },
+      "quiz": {
+        "question": "Why are IoT devices a major security concern?",
+        "options": [
+          "They use too much bandwidth",
+          "Most have default passwords, no encryption, and can't be updated",
+          "They're too expensive to secure"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "SD-WAN and SASE: The Network of the Future",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch06-modern-network-architecture",
+      "difficulty": "Premium",
+      "story": {
+        "hook": {
+          "text": "Traditional networks routed all traffic through headquarters. Modern workers are everywhere — the network must follow.",
+          "visual": "🌍"
+        },
+        "buildup": {
+          "text": "SD-WAN virtualizes the network, routing traffic intelligently. SASE adds security directly into the network fabric.",
+          "visual": "🔀"
+        },
+        "discovery": {
+          "text": "Instead of backhauling traffic to headquarters for security inspection, SASE applies security at the edge –.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "The pandemic forced instant adoption. Companies that had planned 5-year SASE migrations did it in 5 months.",
+          "visual": "🦠"
+        },
+        "climax": {
+          "text": "SASE merges networking and security into one cloud-delivered service. The network and its protection are inseparable.",
+          "visual": "🔗"
+        },
+        "punchline": {
+          "text": "The pandemic compressed a 5-year plan into 5 months.",
+          "visual": "⏩"
+        }
+      },
+      "quiz": {
+        "question": "What does SASE (Secure Access Service Edge) combine?",
+        "options": [
+          "Hardware firewalls and VPNs",
+          "Networking and security into a single cloud-delivered service",
+          "Physical and wireless networks"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Defense in Depth: No Single Point of Failure",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch06-modern-network-architecture",
+      "difficulty": "Premium",
+      "story": {
+        "hook": {
+          "text": "Medieval castles had moats, walls, towers, and inner keeps. If one defense failed, others still protected the core.",
+          "visual": "🏰"
+        },
+        "buildup": {
+          "text": "Defense in depth layers multiple security controls: firewalls, IPS, segmentation, EDR, SIEM, and access controls.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "No single security tool stops everything. But each layer catches what others miss, creating overlapping coverage.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "The weakest link in any defense-in-depth strategy is usually humans. All layers can be bypassed by one careless click.",
+          "visual": "👤"
+        },
+        "climax": {
+          "text": "Defense in depth accepts that any single control will fail. Security comes from the combination, not any.",
+          "visual": "🧅"
+        },
+        "punchline": {
+          "text": "Every wall can be breached. Stack enough walls and attackers give up.",
+          "visual": "🧱"
+        }
+      },
+      "quiz": {
+        "question": "What is the core philosophy of defense in depth?",
+        "options": [
+          "One strong defense is enough",
+          "Multiple overlapping security layers compensate for individual failures",
+          "Focus all resources on the perimeter"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Ports and Protocols: The Doors to Your Computer",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch01-how-networks-work",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "Your computer has 65,535 ports. Each one is a potential door. Attackers scan them all looking for one that's open.",
+          "visual": "🚪"
+        },
+        "buildup": {
+          "text": "Ports direct network traffic to specific services: HTTP on 80, HTTPS on 443, SSH on 22, DNS on 53.",
+          "visual": "🔢"
+        },
+        "discovery": {
+          "text": "Open ports are not inherently dangerous, but services running on them may have vulnerabilities attackers can exploit.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "The Mirai botnet scanned the internet for devices with port 23 (Telnet) open and default passwords — finding millions.",
+          "visual": "🤖"
+        },
+        "climax": {
+          "text": "Port management is basic hygiene: close what you don't need, patch what you keep open, monitor everything.",
+          "visual": "🔒"
+        },
+        "punchline": {
+          "text": "65,535 doors. Attackers only need one left unlocked.",
+          "visual": "🔓"
+        }
+      },
+      "quiz": {
+        "question": "How did the Mirai botnet find vulnerable devices?",
+        "options": [
+          "Through phishing emails",
+          "By scanning for devices with Telnet port 23 open and default passwords",
+          "By exploiting zero-day vulnerabilities"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "TLS/SSL: The Lock Icon in Your Browser",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch02-firewalls-and-perimeter-defense",
+      "difficulty": "Beginner",
+      "story": {
+        "hook": {
+          "text": "That padlock icon in your browser means your connection is encrypted. But it doesn't mean the website is trustworthy.",
+          "visual": "🔒"
+        },
+        "buildup": {
+          "text": "TLS (Transport Layer Security) encrypts data between your browser and a server. It replaced the older, broken.",
+          "visual": "🔐"
+        },
+        "discovery": {
+          "text": "TLS uses certificates issued by trusted authorities to verify the server's identity and establish.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Phishing sites now use HTTPS too. The padlock means encrypted, not safe — a distinction most users don't understand.",
+          "visual": "🎣"
+        },
+        "climax": {
+          "text": "TLS protects data in transit but says nothing about the destination. Encrypted communication to a criminal is.",
+          "visual": "⚠️"
+        },
+        "punchline": {
+          "text": "Padlock doesn't mean safe. It means encrypted. Big difference.",
+          "visual": "🔍"
+        }
+      },
+      "quiz": {
+        "question": "What does the padlock icon in a browser actually indicate?",
+        "options": [
+          "The website is completely safe",
+          "The connection is encrypted, but the website may still be malicious",
+          "The website has been verified by the government"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "DDoS Attacks: Death by a Million Requests",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch04-network-attacks",
+      "difficulty": "Intermediate",
+      "story": {
+        "hook": {
+          "text": "In 2016, a botnet of hacked cameras and DVRs knocked major websites offline — including Twitter, Netflix, and Reddit.",
+          "visual": "📹"
+        },
+        "buildup": {
+          "text": "DDoS attacks flood targets with traffic from thousands of sources, overwhelming servers until they crash.",
+          "visual": "🌊"
+        },
+        "discovery": {
+          "text": "The Mirai botnet used 600,000 IoT devices to generate 1.2 Tbps of traffic — the largest DDoS attack at that time.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "DDoS-for-hire services (booters) let anyone launch attacks for as little as $10. No hacking skills required.",
+          "visual": "💵"
+        },
+        "climax": {
+          "text": "DDoS attacks can't steal data, but they can shut down businesses, hospitals, and government services for hours or days.",
+          "visual": "🏥"
+        },
+        "punchline": {
+          "text": "$10 to knock a website offline. No skills needed.",
+          "visual": "💸"
+        }
+      },
+      "quiz": {
+        "question": "What made the 2016 Mirai DDoS attack significant?",
+        "options": [
+          "It was the first DDoS attack ever",
+          "It used 600,000 hacked IoT devices to generate 1.2 Tbps of traffic",
+          "It only affected one website"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Network Forensics: Reconstructing the Crime Scene",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch05-monitoring-and-detection",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "Every packet that crosses your network is a potential clue. After a breach, forensic analysts reconstruct what happened.",
+          "visual": "🔍"
+        },
+        "buildup": {
+          "text": "Network forensics captures and analyzes traffic to identify attack patterns, data theft, and attacker infrastructure.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Full packet capture records everything. Metadata capture records connection details. Both help reconstruct.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Most organizations don't retain enough network data for forensics. When breached, the evidence is already gone.",
+          "visual": "🗑️"
+        },
+        "climax": {
+          "text": "Network forensics is like a security camera for your network – but only useful if it was recording when the.",
+          "visual": "📹"
+        },
+        "punchline": {
+          "text": "The breach happened. The evidence wasn't recorded.",
+          "visual": "😶"
+        }
+      },
+      "quiz": {
+        "question": "What is the biggest challenge in network forensics?",
+        "options": [
+          "Tools are too expensive",
+          "Most organizations don't retain enough network data, so evidence is lost before investigation",
+          "Network forensics is unreliable"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Microsegmentation: Zero Trust at the Network Level",
+      "chapter_id": "cybersecurity--network-security-fundamentals--ch06-modern-network-architecture",
+      "difficulty": "Advanced",
+      "story": {
+        "hook": {
+          "text": "Traditional segmentation divides networks into zones. Microsegmentation goes further – isolating every.",
+          "visual": "🔬"
+        },
+        "buildup": {
+          "text": "Microsegmentation applies security policies to individual VMs, containers, or applications rather than network segments.",
+          "visual": "🧱"
+        },
+        "discovery": {
+          "text": "If one container is compromised, it can't reach any other container. Every communication must be explicitly allowed.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "Implementing microsegmentation in legacy environments can break applications that assume free internal communication.",
+          "visual": "💥"
+        },
+        "climax": {
+          "text": "Microsegmentation is Zero Trust applied at the network layer — assume nothing inside is safe, verify everything.",
+          "visual": "🔐"
+        },
+        "punchline": {
+          "text": "Every workload is an island. No free movement inside.",
+          "visual": "🏝️"
+        }
+      },
+      "quiz": {
+        "question": "How does microsegmentation differ from traditional network segmentation?",
+        "options": [
+          "It's the same thing with a different name",
+          "It isolates individual workloads rather than network zones, applying per-workload policies",
+          "It only works in cloud environments"
+        ],
+        "correct": 1
+      }
+    }
+  ]
+}
