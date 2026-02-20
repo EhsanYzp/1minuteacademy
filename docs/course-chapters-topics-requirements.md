@@ -125,6 +125,21 @@ Enforcement notes:
 - The generator enforces authored-only. If `requireAuthoredStory` is missing, it is treated as `true`.
 - Template-based story generation is not allowed.
 
+### Story-teachable content (STRICT requirement)
+Every course must teach **knowledge that can be meaningfully conveyed through short text stories**.
+Lessons are 6-beat text narratives read in 60 seconds — there is no video, no images, no hands-on demo.
+
+**Good fits** (knowledge/concept-driven):
+- History, theory, principles, psychology, cultural context, famous works/people.
+- Example: "Art History Highlights" — learners absorb stories about movements, artists, and masterpieces.
+
+**Bad fits** (require visual/physical demonstration):
+- Step-by-step motor skills, spatial techniques, tool-specific tutorials.
+- Example: "Drawing Basics" — you cannot teach someone to draw with 120-character text beats.
+
+**Litmus test:** *Can a learner walk away smarter after reading six short sentences, without needing to see or do anything?*
+If the answer is no, the course does not belong on this platform.
+
 ---
 
 ## 4) File output requirements (`.topic.json` files)

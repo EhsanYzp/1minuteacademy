@@ -132,6 +132,7 @@ Reference docs (read before starting):
 
 ## Tips
 
+- **Story-teachable content only (STRICT).** Every course must teach knowledge that works as short text stories. No hands-on skills that require visual demonstration (e.g. "Drawing Basics" is a bad fit — you can't teach someone to draw with text). Good fits: history, theory, principles, psychology, cultural context. Litmus test: *Can a learner walk away smarter after reading six short sentences, without seeing or doing anything?*
 - **Always validate before committing.** `npm run content:validate` catches schema violations, beat length overages, and structural issues.
 - **Beat length is the #1 rejection reason.** If the generator throws, the fix is always to shorten the beat text — never to raise the limit.
 - **Punchline ≤ 80 chars** — this is the mic-drop line. If it's longer than 80 characters, it's not punchy enough.
