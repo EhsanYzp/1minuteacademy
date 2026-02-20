@@ -1,5 +1,6 @@
 import { getSupabaseClient, isSupabaseConfigured } from '../lib/supabaseClient';
 import { makeCacheKey, withCache } from './cache';
+import { listCategories } from './catalog';
 
 function requireSupabase() {
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
@@ -17,18 +18,18 @@ export async function getHomeStats() {
   return withCache(cacheKey, { ttlMs: 5 * 60 * 1000 }, async () => {
     const supabase = requireSupabase();
 
-    const [categoriesRes, coursesRes, topicsRes] = await Promise.all([
-      supabase.from('categories').select('id', { count: 'exact', head: true }).eq('published', true),
+    const [cats, coursesRes, topicsRes] = await Promise.all([
+      // Use the same category logic as /categories (hides known alias duplicates).
+      listCategories().catch(() => []),
       supabase.from('courses').select('id', { count: 'exact', head: true }).eq('published', true),
       supabase.from('topics').select('id', { count: 'exact', head: true }).eq('published', true),
     ]);
 
-    if (categoriesRes.error) throw categoriesRes.error;
     if (coursesRes.error) throw coursesRes.error;
     if (topicsRes.error) throw topicsRes.error;
 
     return {
-      categories: typeof categoriesRes.count === 'number' ? categoriesRes.count : 0,
+      categories: Array.isArray(cats) ? cats.length : 0,
       courses: typeof coursesRes.count === 'number' ? coursesRes.count : 0,
       topics: typeof topicsRes.count === 'number' ? topicsRes.count : 0,
     };
