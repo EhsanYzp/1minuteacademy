@@ -11,6 +11,12 @@ function requireSupabase() {
 export async function listCategories() {
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
+  const DUPLICATE_CATEGORY_TITLES = new Map([
+    // Only hide these legacy/alias category titles when a canonical category exists.
+    ['AI & Agents', 'AI'],
+    ['Art & Design', 'Art'],
+  ]);
+
   const cacheKey = makeCacheKey(['catalog', 'categories', 'supabase']);
   return withCache(cacheKey, { ttlMs: 5 * 60 * 1000 }, async () => {
     const supabase = requireSupabase();
@@ -21,12 +27,28 @@ export async function listCategories() {
       .order('title', { ascending: true });
     if (error) throw error;
 
-    return (data ?? []).map((c) => {
-      const id = String(c?.id ?? '').trim().toLowerCase();
-      if (id !== 'ai') return c;
+    const normalized = (data ?? []).map((c) => {
+      const rawId = String(c?.id ?? '').trim();
+      const id = rawId.toLowerCase();
       const title = String(c?.title ?? '').trim();
-      if (title !== 'AI & Agents') return c;
-      return { ...c, title: 'AI' };
+
+      // Canonical display labels (do NOT rewrite all rows; only the canonical ids).
+      if (id === 'ai' && title === 'AI & Agents') return { ...c, id: rawId, title: 'AI' };
+      if (id === 'art' && title === 'Art & Design') return { ...c, id: rawId, title: 'Art' };
+      return { ...c, id: rawId };
+    });
+
+    const ids = new Set(normalized.map((c) => String(c?.id ?? '').trim().toLowerCase()).filter(Boolean));
+    const titles = new Set(normalized.map((c) => String(c?.title ?? '').trim()).filter(Boolean));
+
+    // Hide only known duplicate alias categories (keep other 0-course categories).
+    return normalized.filter((c) => {
+      const title = String(c?.title ?? '').trim();
+      const canonicalTitle = DUPLICATE_CATEGORY_TITLES.get(title);
+      if (!canonicalTitle) return true;
+      const canonicalId = canonicalTitle.toLowerCase();
+      const hasCanonical = titles.has(canonicalTitle) || ids.has(canonicalId);
+      return !hasCanonical;
     });
   });
 }
