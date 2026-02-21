@@ -1,4 +1,4 @@
-import { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './story.css';
 
@@ -23,6 +23,7 @@ export default function StoryRenderer({
   presentationStyle = 'focus',
   totalSeconds = 60,
 }) {
+  const topbarRef = useRef(null);
   const quizQuestionId = useId();
   const [currentBeat, setCurrentBeat] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
@@ -48,7 +49,36 @@ export default function StoryRenderer({
     setAnswered(false);
     setAutoRevealed(false);
     setWaitingForTimer(false);
+    setActiveOptionIndex(0);
   }, [timeRemaining, totalSeconds, currentBeat, showQuiz, answered, selectedAnswer]);
+
+  useLayoutEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (hideTopbar) return;
+    const el = topbarRef.current;
+    if (!el) return;
+
+    const setVar = () => {
+      const height = el.getBoundingClientRect().height;
+      if (Number.isFinite(height) && height > 0) {
+        document.documentElement.style.setProperty('--story-topbar-height', `${Math.ceil(height)}px`);
+      }
+    };
+
+    setVar();
+    window.addEventListener('resize', setVar);
+
+    let observer;
+    if (typeof window.ResizeObserver !== 'undefined') {
+      observer = new window.ResizeObserver(() => setVar());
+      observer.observe(el);
+    }
+
+    return () => {
+      window.removeEventListener('resize', setVar);
+      observer?.disconnect?.();
+    };
+  }, [hideTopbar]);
 
   // Derive story beat / quiz visibility from the 1Hz lesson timer.
   // This keeps beats aligned to wall-clock time without a high-frequency interval.
@@ -159,7 +189,7 @@ export default function StoryRenderer({
     <div className={`story-renderer style-${style}`}>
       {/* Topbar - can be hidden when rendered via journey blocks */}
       {!hideTopbar && (
-        <div className="story-topbar">
+        <div className="story-topbar" ref={topbarRef}>
           <button className="story-close-btn" onClick={onClose} aria-label="Close">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>

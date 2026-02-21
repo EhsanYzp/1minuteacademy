@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 
 export default function LessonTopbar({
   topicEmoji,
@@ -11,8 +11,37 @@ export default function LessonTopbar({
   presentationStyleOptions,
   timeRemaining,
 }) {
+  const topbarRef = useRef(null);
+
+  useLayoutEffect(() => {
+    if (typeof window === 'undefined') return;
+    const el = topbarRef.current;
+    if (!el) return;
+
+    const setVar = () => {
+      const height = el.getBoundingClientRect().height;
+      if (Number.isFinite(height) && height > 0) {
+        document.documentElement.style.setProperty('--story-topbar-height', `${Math.ceil(height)}px`);
+      }
+    };
+
+    setVar();
+    window.addEventListener('resize', setVar);
+
+    let observer;
+    if (typeof window.ResizeObserver !== 'undefined') {
+      observer = new window.ResizeObserver(() => setVar());
+      observer.observe(el);
+    }
+
+    return () => {
+      window.removeEventListener('resize', setVar);
+      observer?.disconnect?.();
+    };
+  }, []);
+
   return (
-    <div className="story-topbar">
+    <div className="story-topbar" ref={topbarRef}>
       <button className="story-close-btn" onClick={onClose} aria-label="Close">
         <svg
           width="24"
