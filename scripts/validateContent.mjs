@@ -48,9 +48,16 @@ async function readJson(filePath) {
 }
 
 /**
- * Validate that a story's beats are "complete":
+ * Validate that a story's beats are "complete" and not mechanically truncated.
+ *
+ * Checks (in order):
  *  1. Text ends with valid sentence-ending punctuation.
  *  2. Text does not exceed the character limit.
+ *  3. No ellipsis (… or ...) — classic truncation marker.
+ *  4. No space directly before final punctuation (e.g. "text .").
+ *  5. No unbalanced opening quotes/parens (truncation cut off the close).
+ *  6. No dangling conjunction/preposition before final punctuation
+ *     (e.g. "She ran and." — sentence cut mid-thought).
  *
  * @param {object} story - { hook, buildup, discovery, twist, climax, punchline }
  * @param {string} label - human-readable label for error messages
@@ -67,21 +74,64 @@ function validateBeats(story, label) {
     const text = node.text.trim();
     if (text.length === 0) continue;
 
-    // 1. Proper ending
+    const tag = `${label} → ${beat}`;
+    const preview = text.length > 80 ? text.slice(0, 77) + '...' : text;
+
+    // 1. Proper ending punctuation.
     const lastChar = text[text.length - 1];
     if (!VALID_ENDINGS.has(lastChar)) {
       errors.push(
-        `${label} → ${beat}: text does not end with valid punctuation ` +
+        `${tag}: text does not end with valid punctuation ` +
         `(last char: ${JSON.stringify(lastChar)} U+${lastChar.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')})\n` +
-        `    "${text.length > 80 ? text.slice(0, 77) + '...' : text}"`
+        `    "${preview}"`
       );
     }
 
-    // 2. Character limit
+    // 2. Character limit.
     const max = BEAT_MAX[beat];
     if (text.length > max) {
       errors.push(
-        `${label} → ${beat}: text exceeds ${max}-char limit (${text.length} chars)`
+        `${tag}: text exceeds ${max}-char limit (${text.length} chars)\n` +
+        `    "${preview}"`
+      );
+    }
+
+    // 3. Ellipsis near the end of text — truncation marker.
+    //    (Ellipsis inside quoted dialogue mid-text is intentional and allowed.)
+    const tail10 = text.slice(-10);
+    if (tail10.includes('\u2026') || tail10.includes('...')) {
+      errors.push(
+        `${tag}: text ends with an ellipsis (truncation marker) — "…${text.slice(-20)}"\n` +
+        `    "${preview}"`
+      );
+    }
+
+    // 4. Space directly before final punctuation → "some text ."
+    if (text.length >= 2 && text[text.length - 2] === ' ') {
+      errors.push(
+        `${tag}: space before final punctuation ("${text.slice(-6)}") — looks truncated\n` +
+        `    "${preview}"`
+      );
+    }
+
+    // 5. Unbalanced quotes / parentheses.
+    const opens  = (text.match(/[\u201C(]/g) || []).length;
+    const closes = (text.match(/[\u201D)]/g) || []).length;
+    if (opens > closes) {
+      errors.push(
+        `${tag}: unbalanced quotes/parens (${opens} open, ${closes} close) — possible truncation\n` +
+        `    "${preview}"`
+      );
+    }
+
+    // 6. Ends with an article or bare comparative + punctuation → "the.", "a.", "than."
+    //    These words NEVER validly end an English sentence and signal truncation.
+    const articleEnding = /\b(the|a|an|than)\s*[.!?;:\u201D"')]+$/i;
+    if (articleEnding.test(text)) {
+      const tail = text.slice(-25);
+      errors.push(
+        `${tag}: ends with an article/comparative before punctuation ("…${tail}") — sentence truncated\n` +
+        `    "${preview}"`
       );
     }
   }

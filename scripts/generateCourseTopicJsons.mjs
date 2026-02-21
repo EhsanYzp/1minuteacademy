@@ -105,6 +105,58 @@ function normalizeDifficulty(d) {
 const BEAT_TEXT_MAX = 120; // characters — must match story.schema.json beat maxLength
 const PUNCHLINE_TEXT_MAX = 80; // punchline is the mic-drop: even shorter
 
+// Every beat must end with one of these characters.
+const VALID_BEAT_ENDINGS = new Set([
+  '.', '!', '?', ')', "'", '"', ':', ';',
+  '\u2019', // ' right single curly quote
+  '\u201D', // " right double curly quote
+]);
+
+/**
+ * Detect signs that a beat was mechanically truncated rather than
+ * properly rewritten. Any match is a hard error.
+ */
+function detectTruncationArtifacts(text, beat, label) {
+  const errors = [];
+
+  // 1. Ellipsis near the end — classic truncation marker.
+  //    (Ellipsis inside quoted dialogue mid-text is intentional and allowed.)
+  const tail10 = text.slice(-10);
+  if (tail10.includes('\u2026') || tail10.includes('...')) {
+    errors.push(`story.${beat}.text ends with an ellipsis (truncation marker)${label}`);
+  }
+
+  // 2. Space directly before final punctuation → "some text ." — sloppy cut.
+  if (text.length >= 2 && text[text.length - 2] === ' ') {
+    errors.push(
+      `story.${beat}.text has a space before its final punctuation ("${text.slice(-6)}")${label} — ` +
+      `looks like a truncation artifact`
+    );
+  }
+
+  // 3. Unbalanced quotes — opening " or ( without its closing pair.
+  const opens  = (text.match(/[\u201C(]/g) || []).length;
+  const closes = (text.match(/[\u201D)]/g) || []).length;
+  if (opens > closes) {
+    errors.push(
+      `story.${beat}.text has unbalanced quotes/parens (${opens} open, ${closes} close)${label} — ` +
+      `possible truncation`
+    );
+  }
+
+  // 4. Ends with article/comparative + punctuation → "the.", "a.", "than." — always truncated.
+  const articleEnding = /\b(the|a|an|than)\s*[.!?;:\u201D"')]+$/i;
+  if (articleEnding.test(text)) {
+    const tail = text.slice(-25);
+    errors.push(
+      `story.${beat}.text ends with an article/comparative ("…${tail}")${label} — ` +
+      `sentence is truncated`
+    );
+  }
+
+  return errors;
+}
+
 function validateStoryShape(story, ctxLabel) {
   const label = ctxLabel ? ` (${ctxLabel})` : '';
   if (!story || typeof story !== 'object') throw new Error(`Invalid story object${label}`);
@@ -114,12 +166,31 @@ function validateStoryShape(story, ctxLabel) {
     if (!node || typeof node !== 'object') throw new Error(`Missing story.${beat}${label}`);
     if (typeof node.text !== 'string' || !node.text.trim()) throw new Error(`Missing story.${beat}.text${label}`);
     if (typeof node.visual !== 'string' || !node.visual.trim()) throw new Error(`Missing story.${beat}.visual${label}`);
+
+    const text = node.text.trim();
     const maxLen = beat === 'punchline' ? PUNCHLINE_TEXT_MAX : BEAT_TEXT_MAX;
-    if (node.text.length > maxLen) {
+
+    // Hard length cap.
+    if (text.length > maxLen) {
       throw new Error(
-        `story.${beat}.text is ${node.text.length} chars (max ${maxLen})${label}. ` +
-        `Shorten to fit an 8-second reading window.`
+        `story.${beat}.text is ${text.length} chars (max ${maxLen})${label}. ` +
+        `REWRITE the beat to be shorter — never truncate.`
       );
+    }
+
+    // Must end with valid punctuation.
+    const lastChar = text[text.length - 1];
+    if (!VALID_BEAT_ENDINGS.has(lastChar)) {
+      throw new Error(
+        `story.${beat}.text does not end with valid punctuation ` +
+        `(last char: ${JSON.stringify(lastChar)} U+${lastChar.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')})${label}`
+      );
+    }
+
+    // Truncation-artifact detection.
+    const artifacts = detectTruncationArtifacts(text, beat, label);
+    if (artifacts.length > 0) {
+      throw new Error(artifacts.join('\n'));
     }
   }
 }
