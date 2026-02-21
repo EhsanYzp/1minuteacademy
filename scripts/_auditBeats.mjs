@@ -13,7 +13,8 @@ import path from 'node:path';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const TOPICS_DIR = path.join(ROOT, 'content', 'topics');
-const REPORT_PATH = path.join(ROOT, 'docs', 'beat-audit-report.md');
+const AUDITS_DIR = path.join(ROOT, 'docs', 'content-audits');
+const REPORT_PATH = path.join(AUDITS_DIR, `content-audit-${new Date().toISOString().slice(0, 10)}.md`);
 
 const BEAT_NAMES = ['hook', 'buildup', 'discovery', 'twist', 'climax', 'punchline'];
 
