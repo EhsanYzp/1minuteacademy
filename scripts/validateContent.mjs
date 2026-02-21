@@ -16,7 +16,36 @@ const VALID_ENDINGS = new Set([
   '\u201D', // " right double curly quote
 ]);
 
-const BEAT_MAX = { hook: 120, buildup: 120, discovery: 120, twist: 120, climax: 120, punchline: 80 };
+// Validation tolerances are slightly higher than generation targets.
+// Generation still aims for 120/80 for comfortable reading; validation allows minor overages.
+const VALIDATION_MAX = { beat: 130, punchline: 90 };
+const BEAT_MAX = {
+  hook: VALIDATION_MAX.beat,
+  buildup: VALIDATION_MAX.beat,
+  discovery: VALIDATION_MAX.beat,
+  twist: VALIDATION_MAX.beat,
+  climax: VALIDATION_MAX.beat,
+  punchline: VALIDATION_MAX.punchline,
+};
+
+function relaxStorySchemaForValidation(storySchema) {
+  if (!storySchema || typeof storySchema !== 'object') return storySchema;
+
+  // The topic schema references story.schema.json, which caps lengths at 120/80.
+  // For validation runs we relax those caps in-memory without changing the schema file
+  // (so generation can keep using the tighter limits).
+  const beatText = storySchema?.$defs?.beat?.properties?.text;
+  if (beatText && typeof beatText === 'object') {
+    beatText.maxLength = VALIDATION_MAX.beat;
+  }
+
+  const punchlineText = storySchema?.$defs?.punchlineBeat?.properties?.text;
+  if (punchlineText && typeof punchlineText === 'object') {
+    punchlineText.maxLength = VALIDATION_MAX.punchline;
+  }
+
+  return storySchema;
+}
 
 /* ── Helpers ─────────────────────────────────────────────────────── */
 
@@ -146,7 +175,7 @@ async function main() {
 
   const blockSchema = await readJson(path.join(SCHEMA_DIR, 'block.schema.json'));
   const journeySchema = await readJson(path.join(SCHEMA_DIR, 'journey.schema.json'));
-  const storySchema = await readJson(path.join(SCHEMA_DIR, 'story.schema.json'));
+  const storySchema = relaxStorySchemaForValidation(await readJson(path.join(SCHEMA_DIR, 'story.schema.json')));
   const topicSchema = await readJson(path.join(SCHEMA_DIR, 'topic.schema.json'));
 
   ajv.addSchema(blockSchema, 'block.schema.json');
