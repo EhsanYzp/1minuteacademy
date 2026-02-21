@@ -4,12 +4,12 @@
 -- This migration is idempotent — safe to run multiple times.
 
 -- 1. Delete topic-level data (FK constraints require child-first order)
-DELETE FROM topic_ratings    WHERE topic_id LIKE 'education--%';
-DELETE FROM topic_progress   WHERE topic_id LIKE 'education--%';
-DELETE FROM topics           WHERE id       LIKE 'education--%';
+DELETE FROM public.topic_ratings       WHERE topic_id LIKE 'education--%';
+DELETE FROM public.user_topic_progress WHERE topic_id LIKE 'education--%';
+DELETE FROM public.topics              WHERE id       LIKE 'education--%';
 
 -- 2. Delete chapters
-DELETE FROM chapters         WHERE course_id LIKE 'education--%';
+DELETE FROM public.chapters            WHERE course_id LIKE 'education--%';
 
 -- 3. Delete courses (keeps the "education" category row)
-DELETE FROM courses          WHERE id        LIKE 'education--%';
+DELETE FROM public.courses             WHERE id        LIKE 'education--%';
