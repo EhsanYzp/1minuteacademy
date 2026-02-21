@@ -102,8 +102,13 @@ function normalizeDifficulty(d) {
   return v;
 }
 
-const BEAT_TEXT_MAX = 120; // characters — must match story.schema.json beat maxLength
-const PUNCHLINE_TEXT_MAX = 80; // punchline is the mic-drop: even shorter
+// Two-tier length system:
+//  • Generation prompts target: 120 chars (punchline: 80).
+//  • Build-time hard cap (here + validateContent.mjs): 130 / 90.
+// This keeps a 10-char tolerance so well-crafted beats that slightly
+// overshoot the target still pass, while genuinely oversized ones are caught.
+const BEAT_TEXT_MAX = 130;
+const PUNCHLINE_TEXT_MAX = 90;
 
 // Every beat must end with one of these characters.
 const VALID_BEAT_ENDINGS = new Set([

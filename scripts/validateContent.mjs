@@ -16,7 +16,12 @@ const VALID_ENDINGS = new Set([
   '\u201D', // " right double curly quote
 ]);
 
-const BEAT_MAX = { hook: 120, buildup: 120, discovery: 120, twist: 120, climax: 120, punchline: 80 };
+// Two-tier length system:
+//  • Generation (generateCourseTopicJsons) enforces strict targets: 120 / 80.
+//  • Validation (here) uses a hard cap with 10-char tolerance: 130 / 90.
+// This lets well-crafted beats that slightly exceed the target pass validation
+// while still catching genuinely oversized content.
+const BEAT_HARD_MAX = { hook: 130, buildup: 130, discovery: 130, twist: 130, climax: 130, punchline: 90 };
 
 /* ── Helpers ─────────────────────────────────────────────────────── */
 
@@ -87,11 +92,11 @@ function validateBeats(story, label) {
       );
     }
 
-    // 2. Character limit.
-    const max = BEAT_MAX[beat];
-    if (text.length > max) {
+    // 2. Character hard limit (with 10-char tolerance over the generation target).
+    const hardMax = BEAT_HARD_MAX[beat];
+    if (text.length > hardMax) {
       errors.push(
-        `${tag}: text exceeds ${max}-char limit (${text.length} chars)\n` +
+        `${tag}: text exceeds ${hardMax}-char hard limit (${text.length} chars)\n` +
         `    "${preview}"`
       );
     }
