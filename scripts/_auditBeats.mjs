@@ -5,7 +5,7 @@
  * Deep-audit every beat in every .topic.json file.
  * Flags beats that look corrupted, incomplete, or damaged.
  *
- * Outputs a Markdown report to docs/beat-audit-report.md
+ * Outputs a timestamped Markdown report to docs/content-audits/
  */
 
 import fs from 'node:fs/promises';
@@ -14,15 +14,97 @@ import path from 'node:path';
 const ROOT = path.resolve(import.meta.dirname, '..');
 const TOPICS_DIR = path.join(ROOT, 'content', 'topics');
 const AUDITS_DIR = path.join(ROOT, 'docs', 'content-audits');
-const REPORT_PATH = path.join(AUDITS_DIR, `content-audit-${new Date().toISOString().slice(0, 10)}.md`);
+
+function localDateYYYYMMDD(d = new Date()) {
+  const yyyy = String(d.getFullYear());
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+const DEFAULT_REPORT_PATH = path.join(AUDITS_DIR, `content-audit-${localDateYYYYMMDD()}.md`);
 
 const BEAT_NAMES = ['hook', 'buildup', 'discovery', 'twist', 'climax', 'punchline'];
+
+// Validation tolerances (generation targets are stricter elsewhere)
+const MAX_LEN = { hook: 130, buildup: 130, discovery: 130, twist: 130, climax: 130, punchline: 90 };
 
 const VALID_ENDINGS = new Set([
   '.', '!', '?', ')', "'", '"', ':', ';',
   '\u2019', // right single curly quote
   '\u201D', // right double curly quote
 ]);
+
+const SEVERITY = {
+  high: 'high',
+  medium: 'medium',
+  low: 'low',
+};
+
+const CHECK_SEVERITY = {
+  // High signal / likely broken
+  'bad-json': SEVERITY.high,
+  'missing-story': SEVERITY.high,
+  'missing-beat': SEVERITY.high,
+  'empty-text': SEVERITY.high,
+  'bad-ending': SEVERITY.high,
+  'ellipsis-ending': SEVERITY.high,
+  'dangling-preposition': SEVERITY.high,
+  'dangling-conjunction': SEVERITY.high,
+  'unbalanced-quotes': SEVERITY.high,
+  'unbalanced-parens': SEVERITY.high,
+  'unbalanced-ascii-quotes': SEVERITY.high,
+  'over-limit': SEVERITY.high,
+
+  // Medium signal
+  'missing-visual': SEVERITY.medium,
+  'markup-artifacts': SEVERITY.medium,
+  'control-chars': SEVERITY.medium,
+  'replacement-char': SEVERITY.medium,
+  'duplicate-beat': SEVERITY.medium,
+  'near-duplicate': SEVERITY.medium,
+  'template-placeholders': SEVERITY.medium,
+  'contains-url': SEVERITY.medium,
+
+  // Low signal / style issues
+  'too-short': SEVERITY.low,
+  'lowercase-start': SEVERITY.low,
+  'space-before-punct': SEVERITY.low,
+  'repeated-word': SEVERITY.low,
+  'double-space': SEVERITY.low,
+  'contains-newline': SEVERITY.low,
+  'repeated-punct': SEVERITY.low,
+  'title-as-text': SEVERITY.low,
+};
+
+function severityForCheck(check) {
+  return CHECK_SEVERITY[check] ?? SEVERITY.medium;
+}
+
+function countMatches(str, re) {
+  const m = str.match(re);
+  return m ? m.length : 0;
+}
+
+async function fileExists(fp) {
+  try {
+    await fs.access(fp);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function chooseNonCollidingPath(basePath) {
+  if (!(await fileExists(basePath))) return basePath;
+  const ext = path.extname(basePath);
+  const stem = basePath.slice(0, -ext.length);
+  for (let i = 2; i < 1000; i++) {
+    const candidate = `${stem}-${i}${ext}`;
+    if (!(await fileExists(candidate))) return candidate;
+  }
+  return basePath;
+}
 
 /* ── Helpers ──────────────────────────────────────────────────────── */
 
@@ -66,6 +148,15 @@ function auditBeat(beatName, node, topicTitle) {
     issues.push({ check: 'too-short', detail: `Beat "${beatName}" is only ${text.length} chars: "${text}"` });
   }
 
+  // 3b. Over length limit (validation tolerance)
+  const maxLen = MAX_LEN[beatName];
+  if (typeof maxLen === 'number' && text.length > maxLen) {
+    issues.push({
+      check: 'over-limit',
+      detail: `Beat "${beatName}" is ${text.length} chars (max ${maxLen}). Tail: "…${text.slice(-30)}"`,
+    });
+  }
+
   // 4. Doesn't end with valid punctuation
   const lastChar = text[text.length - 1];
   if (!VALID_ENDINGS.has(lastChar)) {
@@ -99,6 +190,25 @@ function auditBeat(beatName, node, topicTitle) {
     issues.push({
       check: 'unbalanced-quotes',
       detail: `Beat "${beatName}" has ${openQ} open vs ${closeQ} close quotes/parens — possible truncation.`,
+    });
+  }
+
+  // 7b. Unbalanced ASCII parentheses
+  const openParens = countMatches(text, /\(/g);
+  const closeParens = countMatches(text, /\)/g);
+  if (openParens !== closeParens) {
+    issues.push({
+      check: 'unbalanced-parens',
+      detail: `Beat "${beatName}" has ${openParens} "(" vs ${closeParens} ")" — possible truncation.`,
+    });
+  }
+
+  // 7c. Unbalanced ASCII double-quotes
+  const asciiQuotes = countMatches(text, /"/g);
+  if (asciiQuotes % 2 === 1) {
+    issues.push({
+      check: 'unbalanced-ascii-quotes',
+      detail: `Beat "${beatName}" has an odd number of ASCII quotes (\").`,
     });
   }
 
@@ -138,6 +248,31 @@ function auditBeat(beatName, node, topicTitle) {
     }
   }
 
+  // 9b. Template placeholders (common content-gen artifacts)
+  // Examples: "I help [audience] achieve [outcome]" or "{verb} {object}" or "{{name}}"
+  if (/\[[^\]]{2,}\]/.test(text) || /\{\{[^}]+\}\}/.test(text) || /\{[a-z_][a-z0-9_]*\}/i.test(text)) {
+    issues.push({
+      check: 'template-placeholders',
+      detail: `Beat "${beatName}" may contain template placeholders: "${text.slice(0, 80)}"`,
+    });
+  }
+
+  // 9c. URLs inside beats (often unintended)
+  if (/\bhttps?:\/\//i.test(text)) {
+    issues.push({
+      check: 'contains-url',
+      detail: `Beat "${beatName}" contains a URL — verify it's intended.`,
+    });
+  }
+
+  // 9d. Replacement character (usually decoding/copy-paste damage)
+  if (text.includes('\uFFFD')) {
+    issues.push({
+      check: 'replacement-char',
+      detail: `Beat "${beatName}" contains the Unicode replacement character (\uFFFD).`,
+    });
+  }
+
   // 10. Repeated words at end — "the the." or "is is."
   if (/\b(\w+)\s+\1\s*[.!?;:]+$/i.test(text)) {
     issues.push({
@@ -159,6 +294,30 @@ function auditBeat(beatName, node, topicTitle) {
     issues.push({
       check: 'control-chars',
       detail: `Beat "${beatName}" contains control characters.`,
+    });
+  }
+
+  // 12b. Newlines/tabs inside the beat text (formatting damage)
+  if (/[\r\n\t]/.test(node.text ?? '')) {
+    issues.push({
+      check: 'contains-newline',
+      detail: `Beat "${beatName}" contains newline/tab characters.`,
+    });
+  }
+
+  // 12c. Double spaces (often a minor formatting artifact)
+  if (/\s{2,}/.test(text)) {
+    issues.push({
+      check: 'double-space',
+      detail: `Beat "${beatName}" contains repeated whitespace.`,
+    });
+  }
+
+  // 12d. Repeated punctuation at end ("??" / "!!" / "..")
+  if (/[!?]{2,}$/.test(text) || /\.{2,}$/.test(text)) {
+    issues.push({
+      check: 'repeated-punct',
+      detail: `Beat "${beatName}" ends with repeated punctuation: "…${text.slice(-10)}"`,
     });
   }
 
@@ -223,6 +382,10 @@ function auditStory(story, topicTitle) {
 /* ── Main ────────────────────────────────────────────────────────── */
 
 async function main() {
+  const outArg = process.argv.find(a => a.startsWith('--out='));
+  const requestedPath = outArg ? path.resolve(ROOT, outArg.slice('--out='.length)) : DEFAULT_REPORT_PATH;
+  const reportPath = outArg ? requestedPath : await chooseNonCollidingPath(requestedPath);
+
   const files = await listFiles(TOPICS_DIR, n => n.endsWith('.topic.json'));
   files.sort();
 
@@ -252,11 +415,14 @@ async function main() {
 
   /* ── Build report ──────────────────────────────────────────────── */
 
+  await fs.mkdir(path.dirname(reportPath), { recursive: true });
+
   const lines = [
     '# Beat Audit Report',
     '',
-    `> Generated ${new Date().toISOString().slice(0, 10)}`,
+    `> Generated ${new Date().toISOString()}`,
     `> Scanned **${files.length}** topic files — found **${totalIssues}** issues across **${findings.length}** files.`,
+    `> Output: \`${path.relative(ROOT, reportPath)}\``,
     '',
   ];
 
@@ -265,13 +431,23 @@ async function main() {
   } else {
     // Summary by check type
     const byCat = {};
+    const bySeverity = { [SEVERITY.high]: 0, [SEVERITY.medium]: 0, [SEVERITY.low]: 0 };
     for (const f of findings) for (const i of f.issues) {
       byCat[i.check] = (byCat[i.check] || 0) + 1;
+      bySeverity[severityForCheck(i.check)]++;
     }
+
+    lines.push('## Summary by severity', '');
+    lines.push('| Severity | Count |', '|----------|------:|');
+    lines.push(`| high | ${bySeverity[SEVERITY.high]} |`);
+    lines.push(`| medium | ${bySeverity[SEVERITY.medium]} |`);
+    lines.push(`| low | ${bySeverity[SEVERITY.low]} |`);
+    lines.push('');
+
     lines.push('## Summary by issue type', '');
-    lines.push('| Check | Count |', '|-------|------:|');
+    lines.push('| Check | Severity | Count |', '|-------|----------|------:|');
     for (const [k, v] of Object.entries(byCat).sort((a, b) => b[1] - a[1])) {
-      lines.push(`| ${k} | ${v} |`);
+      lines.push(`| ${k} | ${severityForCheck(k)} | ${v} |`);
     }
     lines.push('');
 
@@ -281,14 +457,14 @@ async function main() {
       lines.push(`### ${f.title}`, '');
       lines.push(`**File:** \`${f.file}\``, '');
       for (const i of f.issues) {
-        lines.push(`- **${i.check}** — ${i.detail}`);
+        lines.push(`- **${severityForCheck(i.check)} / ${i.check}** — ${i.detail}`);
       }
       lines.push('');
     }
   }
 
-  await fs.writeFile(REPORT_PATH, lines.join('\n'), 'utf8');
-  console.log(`\nWrote report to ${path.relative(ROOT, REPORT_PATH)}`);
+  await fs.writeFile(reportPath, lines.join('\n'), 'utf8');
+  console.log(`\nWrote report to ${path.relative(ROOT, reportPath)}`);
   console.log(`  ${files.length} files scanned, ${totalIssues} issues in ${findings.length} files.`);
 }
 

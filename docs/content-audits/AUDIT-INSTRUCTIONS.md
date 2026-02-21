@@ -13,17 +13,20 @@ across all `.topic.json` files.
    node scripts/_auditBeats.mjs
    ```
 
-2. The script scans **every** `.topic.json` in `content/topics/`, runs 15+
-   heuristic checks on each beat, and writes a Markdown report to
-   `docs/beat-audit-report.md`.
+   Optional: write to a specific path:
 
-3. **Rename** (or copy) the generated report into this folder with a timestamp:
-
-   ```
-   content-audit-YYYY-MM-DD.md
+   ```bash
+   node scripts/_auditBeats.mjs --out=docs/content-audits/content-audit-YYYY-MM-DD.md
    ```
 
-   For example: `content-audit-2026-02-22.md`
+2. The script scans **every** `.topic.json` in `content/topics/` and writes a
+   timestamped Markdown report directly into this folder:
+
+   - `docs/content-audits/content-audit-YYYY-MM-DD.md`
+
+   If a report for that date already exists, the script auto-suffixes:
+
+   - `content-audit-YYYY-MM-DD-2.md`, `content-audit-YYYY-MM-DD-3.md`, etc.
 
 > **Copilot / AI assistant rule:** whenever the user asks for a content audit,
 > run the script above, then save the resulting report in this folder using the
@@ -61,3 +64,12 @@ content-audit-YYYY-MM-DD-2.md
 | 13 | title-as-text | Beat text = topic title (placeholder) |
 | 14 | duplicate-beat | Two beats have identical text |
 | 15 | near-duplicate | Two beats share first 40 chars |
+| 16 | over-limit | Beat exceeds max length (130 beats / 90 punchline) |
+| 17 | unbalanced-parens | Mismatched `(` and `)` |
+| 18 | unbalanced-ascii-quotes | Odd number of `"` characters |
+| 19 | template-placeholders | Contains `[audience]`, `{verb}`, `{{name}}` placeholders |
+| 20 | contains-url | Beat contains `http(s)://` |
+| 21 | replacement-char | Contains `\uFFFD` (encoding damage) |
+| 22 | contains-newline | Beat contains newline/tab characters |
+| 23 | double-space | Beat contains repeated whitespace |
+| 24 | repeated-punct | Beat ends with `??` / `!!` / `..` |
