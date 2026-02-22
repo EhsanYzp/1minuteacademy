@@ -16,9 +16,44 @@ const VALID_ENDINGS = new Set([
   '\u201D', // " right double curly quote
 ]);
 
+function parseArgs(argv) {
+  const args = {
+    strictLengths: false,
+    plansPrefix: null,
+    topicsPrefix: null,
+  };
+
+  for (let i = 0; i < argv.length; i += 1) {
+    const a = argv[i];
+    if (a === '--strict-lengths') {
+      args.strictLengths = true;
+    } else if (a === '--plans-prefix') {
+      const v = argv[i + 1];
+      if (!v || v.startsWith('--')) throw new Error('Missing value for --plans-prefix');
+      args.plansPrefix = v;
+      i += 1;
+    } else if (a === '--topics-prefix') {
+      const v = argv[i + 1];
+      if (!v || v.startsWith('--')) throw new Error('Missing value for --topics-prefix');
+      args.topicsPrefix = v;
+      i += 1;
+    } else if (a === '--help' || a === '-h') {
+      console.log(`\nUsage:\n  node scripts/validateContent.mjs [--strict-lengths] [--plans-prefix <prefix>] [--topics-prefix <prefix>]\n\nNotes:\n  - Default validation is slightly more tolerant than generation targets.\n  - With --strict-lengths, enforces 120/80 for story beats.\n\nScoping:\n  --plans-prefix entrepreneurship--   Only validate course plans whose filename starts with this prefix\n  --topics-prefix entrepreneurship--  Only validate topic JSONs whose filename starts with this prefix\n`);
+      process.exit(0);
+    } else {
+      throw new Error(`Unknown arg: ${a}`);
+    }
+  }
+
+  return args;
+}
+
 // Validation tolerances are slightly higher than generation targets.
 // Generation still aims for 120/80 for comfortable reading; validation allows minor overages.
-const VALIDATION_MAX = { beat: 130, punchline: 90 };
+const ARGS = parseArgs(process.argv.slice(2));
+const VALIDATION_MAX = ARGS.strictLengths
+  ? { beat: 120, punchline: 80 }
+  : { beat: 130, punchline: 90 };
 const BEAT_MAX = {
   hook: VALIDATION_MAX.beat,
   buildup: VALIDATION_MAX.beat,
@@ -68,8 +103,19 @@ async function listFiles(dir, predicate) {
   return out;
 }
 
-const listTopicFiles = (dir) => listFiles(dir, (n) => n.endsWith('.topic.json'));
-const listCoursePlanFiles = (dir) => listFiles(dir, (n) => n.endsWith('.json'));
+const listTopicFiles = (dir, extraPredicate) => listFiles(
+  dir,
+  (n) => n.endsWith('.topic.json') && (extraPredicate ? extraPredicate(n) : true)
+);
+const listCoursePlanFiles = (dir, extraPredicate) => listFiles(
+  dir,
+  (n) => n.endsWith('.json') && (extraPredicate ? extraPredicate(n) : true)
+);
+
+function prefixPredicate(prefix) {
+  if (!prefix) return () => true;
+  return (filename) => filename.startsWith(prefix);
+}
 
 async function readJson(filePath) {
   const raw = await fs.readFile(filePath, 'utf8');
@@ -187,7 +233,7 @@ async function main() {
 
   /* ─── Phase 1: Course-plan beat validation ─────────────────────── */
   console.log('── Phase 1: Course-plan beat completeness ──');
-  const planFiles = await listCoursePlanFiles(COURSE_PLANS_DIR);
+  const planFiles = await listCoursePlanFiles(COURSE_PLANS_DIR, prefixPredicate(ARGS.plansPrefix));
   let planTopicsChecked = 0;
   let planBeatErrors = 0;
 
@@ -222,7 +268,7 @@ async function main() {
 
   /* ─── Phase 2: Topic JSON schema + beat validation ─────────────── */
   console.log('\n── Phase 2: Topic JSON schema + beat completeness ──');
-  const files = await listTopicFiles(TOPICS_DIR);
+  const files = await listTopicFiles(TOPICS_DIR, prefixPredicate(ARGS.topicsPrefix));
   let validated = 0;
   let topicBeatErrors = 0;
 

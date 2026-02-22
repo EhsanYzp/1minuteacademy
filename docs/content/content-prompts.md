@@ -40,6 +40,15 @@ Steps — do ALL of them in order:
    ```
    npm run content:validate
    ```
+   For strict (generator-target) beat length enforcement (120/80), run:
+   ```
+   npm run content:validate:strict
+   ```
+   If strict fails due to older content elsewhere, you can scope strict validation to just your new category/course:
+   ```
+   node scripts/validateCoursePlans.mjs --strict-lengths --prefix <categoryId>--
+   node scripts/validateContent.mjs --strict-lengths --plans-prefix <categoryId>-- --topics-prefix <categoryId>--
+   ```
    Fix any errors before proceeding.
 
 5. **Generate SEO assets** — Run:
@@ -102,6 +111,15 @@ c) Generate topic JSONs:
 d) Validate:
    ```
    npm run content:validate
+   ```
+   For strict (generator-target) beat length enforcement (120/80), run:
+   ```
+   npm run content:validate:strict
+   ```
+   Or scope strict validation to just your new category/course:
+   ```
+   node scripts/validateCoursePlans.mjs --strict-lengths --prefix <categoryId>--
+   node scripts/validateContent.mjs --strict-lengths --plans-prefix <categoryId>-- --topics-prefix <categoryId>--
    ```
    Fix any failures before moving to the next course.
 
