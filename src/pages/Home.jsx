@@ -420,10 +420,25 @@ function Home() {
                     </div>
                     <div className="home-pickedMeta">
                       <div className="home-pickedTitle">{String(spinOverlay?.selectedTopic?.title ?? 'Selected topic')}</div>
-                      <div className="home-pickedSub">
-                        {toDisplaySubject(spinOverlay?.selectedTopic?.subject)}
-                        {spinOverlay?.selectedTopic?.subcategory ? ` • ${String(spinOverlay.selectedTopic.subcategory)}` : ''}
-                        {spinOverlay?.selectedTopic?.difficulty ? ` • ${String(spinOverlay.selectedTopic.difficulty)}` : ''}
+                      <div className="home-pickedTags">
+                        {toDisplaySubject(spinOverlay?.selectedTopic?.subject) && (
+                          <span className="home-pickedTag home-pickedTag--cat">
+                            <span className="home-pickedTagLabel">Category</span>
+                            <span className="home-pickedTagValue">{toDisplaySubject(spinOverlay.selectedTopic.subject)}</span>
+                          </span>
+                        )}
+                        {spinOverlay?.selectedTopic?.subcategory && (
+                          <span className="home-pickedTag home-pickedTag--course">
+                            <span className="home-pickedTagLabel">Course</span>
+                            <span className="home-pickedTagValue">{String(spinOverlay.selectedTopic.subcategory)}</span>
+                          </span>
+                        )}
+                        {spinOverlay?.selectedTopic?.difficulty && (
+                          <span className="home-pickedTag home-pickedTag--diff">
+                            <span className="home-pickedTagLabel">Level</span>
+                            <span className="home-pickedTagValue">{String(spinOverlay.selectedTopic.difficulty)}</span>
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>
