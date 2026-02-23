@@ -3,6 +3,7 @@ import path from 'node:path';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import { SCHEMA_DIR, TOPICS_DIR, COURSE_PLANS_DIR } from './_contentPaths.mjs';
+import { GENERATION_LIMITS, VALIDATION_TOLERANCE } from './_beatLimits.mjs';
 
 /* ── Beat-completeness constants ────────────────────────────────── */
 
@@ -38,7 +39,7 @@ function parseArgs(argv) {
       args.topicsPrefix = v;
       i += 1;
     } else if (a === '--help' || a === '-h') {
-      console.log(`\nUsage:\n  node scripts/validateContent.mjs [--strict-lengths] [--plans-prefix <prefix>] [--topics-prefix <prefix>]\n\nNotes:\n  - Default validation is slightly more tolerant than generation targets.\n  - With --strict-lengths, enforces 120/80 for story beats.\n\nScoping:\n  --plans-prefix entrepreneurship--   Only validate course plans whose filename starts with this prefix\n  --topics-prefix entrepreneurship--  Only validate topic JSONs whose filename starts with this prefix\n`);
+      console.log(`\nUsage:\n  node scripts/validateContent.mjs [--strict-lengths] [--plans-prefix <prefix>] [--topics-prefix <prefix>]\n\nNotes:\n  - Default validation is tolerant: ${VALIDATION_TOLERANCE.beat}/${VALIDATION_TOLERANCE.punchline} for story beats.\n  - With --strict-lengths, enforces generation limits: ${GENERATION_LIMITS.beat}/${GENERATION_LIMITS.punchline}.\n\nScoping:\n  --plans-prefix entrepreneurship--   Only validate course plans whose filename starts with this prefix\n  --topics-prefix entrepreneurship--  Only validate topic JSONs whose filename starts with this prefix\n`);
       process.exit(0);
     } else {
       throw new Error(`Unknown arg: ${a}`);
@@ -52,8 +53,8 @@ function parseArgs(argv) {
 // Generation still aims for 120/80 for comfortable reading; validation allows minor overages.
 const ARGS = parseArgs(process.argv.slice(2));
 const VALIDATION_MAX = ARGS.strictLengths
-  ? { beat: 120, punchline: 80 }
-  : { beat: 130, punchline: 90 };
+  ? { ...GENERATION_LIMITS }
+  : { ...VALIDATION_TOLERANCE };
 const BEAT_MAX = {
   hook: VALIDATION_MAX.beat,
   buildup: VALIDATION_MAX.beat,

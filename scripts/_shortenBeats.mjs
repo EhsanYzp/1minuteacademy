@@ -2,15 +2,20 @@
 /**
  * _shortenBeats.mjs
  *
- * Automatically shortens beat texts that exceed the character limits
- * enforced by generateCourseTopicJsons.mjs.
+ * Validation-phase helper: tries to rewrite over-length beats down to the
+ * validation tolerance (default 130/90), without mechanical truncation.
  *
- * Limits:
- *   hook / buildup / discovery / twist / climax  ≤ 120 chars
- *   punchline                                     ≤  80 chars
+ * Important:
+ * - This script will NOT add ellipses or hard-truncate.
+ * - It may be unable to fix some beats; those require manual rewrite.
  *
  * Usage:
- *   node scripts/_shortenBeats.mjs [--write]
+ *   node scripts/_shortenBeats.mjs [--write] [--plans-prefix investing--] [--strict]
+ *
+ * Options:
+ *   --write                 Actually modify files (default: dry-run)
+ *   --plans-prefix <pref>   Only process course plan filenames that start with <pref>
+ *   --strict                Target generation limits (120/80) instead of validation tolerance (130/90)
  */
 
 import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
@@ -19,23 +24,64 @@ import { argv } from 'node:process';
 
 const ROOT = resolve(import.meta.dirname, '..');
 
-const BEAT_TEXT_MAX = 120;
-const PUNCHLINE_TEXT_MAX = 80;
+import { GENERATION_LIMITS, VALIDATION_TOLERANCE } from './_beatLimits.mjs';
+
+function argValue(flag) {
+  const i = argv.indexOf(flag);
+  if (i === -1) return null;
+  const v = argv[i + 1];
+  if (!v || v.startsWith('--')) throw new Error(`Missing value for ${flag}`);
+  return v;
+}
+
+const strict = argv.includes('--strict');
+const plansPrefix = argValue('--plans-prefix');
+
+const LIMITS = strict ? GENERATION_LIMITS : VALIDATION_TOLERANCE;
+const BEAT_TEXT_MAX = LIMITS.beat;
+const PUNCHLINE_TEXT_MAX = LIMITS.punchline;
 const BEATS = ['hook', 'buildup', 'discovery', 'twist', 'climax', 'punchline'];
 
 const write = argv.includes('--write');
 
 /* ── helpers ──────────────────────────────────────────────────────── */
 
-/** Apply a series of shortening transforms until text fits maxLen. */
+const VALID_ENDINGS = new Set([
+  '.', '!', '?', ')', "'", '"', ':', ';',
+  '\u2019',
+  '\u201D',
+]);
+
+function splitEndingPunctuation(s) {
+  const t = String(s ?? '').trim();
+  if (!t) return { core: '', ending: '.' };
+  const last = t[t.length - 1];
+  if (VALID_ENDINGS.has(last)) return { core: t.slice(0, -1).trim(), ending: last };
+  return { core: t, ending: '.' };
+}
+
+function ensureEndingPunctuation(s, preferredEnding = '.') {
+  const t = String(s ?? '').trim();
+  if (!t) return t;
+  const last = t[t.length - 1];
+  if (VALID_ENDINGS.has(last)) return t;
+  return `${t}${preferredEnding}`;
+}
+
+function containsEllipsis(text) {
+  const t = String(text ?? '');
+  return t.includes('\u2026') || t.includes('...');
+}
+
+/** Try to shorten text to maxLen using safe transforms (no truncation/ellipsis). */
 function shorten(text, maxLen) {
-  if (text.length <= maxLen) return text;
+  if (typeof text !== 'string') return text;
+  const original = text.trim();
+  if (original.length <= maxLen) return ensureEndingPunctuation(original);
+  if (containsEllipsis(original)) return original; // don't touch; likely already "truncated".
 
-  let t = text;
-
-  // 1. Remove trailing period (saves 1 char, acceptable for beats)
-  t = t.replace(/\.\s*$/, '');
-  if (t.length <= maxLen) return t;
+  const { core: originalCore, ending } = splitEndingPunctuation(original);
+  let core = originalCore;
 
   // 2. Replace common long phrases with shorter equivalents
   const replacements = [
@@ -96,8 +142,8 @@ function shorten(text, maxLen) {
     [/\bmanufactured\b/gi, 'made'],
     [/\bmanufacturing\b/gi, 'making'],
     [/\bconstruction\b/gi, 'building'],
-    [/ — /g, '—'],
-    [/ – /g, '–'],
+    [/\s+—\s+/g, '—'],
+    [/\s+–\s+/g, '–'],
     [/\bthat is\b/gi, 'i.e.'],
     [/\bfor example\b/gi, 'e.g.'],
     [/\band also\b/gi, 'and'],
@@ -116,61 +162,71 @@ function shorten(text, maxLen) {
   ];
 
   for (const [rx, rep] of replacements) {
-    t = t.replace(rx, rep);
+    core = core.replace(rx, rep);
     // Collapse any resulting double spaces
-    t = t.replace(/  +/g, ' ').trim();
-    if (t.length <= maxLen) return t;
+    core = core.replace(/  +/g, ' ').trim();
+    const candidate = ensureEndingPunctuation(core, ending);
+    if (candidate.length <= maxLen) return candidate;
   }
 
   // 3. Remove parenthetical asides
-  t = t.replace(/\s*\([^)]+\)\s*/g, ' ').replace(/  +/g, ' ').trim();
-  if (t.length <= maxLen) return t;
+  core = core.replace(/\s*\([^)]+\)\s*/g, ' ').replace(/  +/g, ' ').trim();
+  {
+    const candidate = ensureEndingPunctuation(core, ending);
+    if (candidate.length <= maxLen) return candidate;
+  }
 
   // 4. Remove leading "And " / "But " / "So " / "Yet "
-  t = t.replace(/^(And|But|So|Yet|Now|Then|Still)\s+/i, '');
-  if (t.length <= maxLen) return t;
+  core = core.replace(/^(And|But|So|Yet|Now|Then|Still)\s+/i, '');
+  {
+    const candidate = ensureEndingPunctuation(core, ending);
+    if (candidate.length <= maxLen) return candidate;
+  }
 
   // 5. Remove subordinate clause after last comma if that helps
-  const lastComma = t.lastIndexOf(', ');
+  const lastComma = core.lastIndexOf(', ');
   if (lastComma > 20) {
-    const candidate = t.slice(0, lastComma);
-    if (candidate.length <= maxLen && candidate.length >= maxLen * 0.6) {
-      return candidate;
+    const shortenedCore = core.slice(0, lastComma).trim();
+    const candidate = ensureEndingPunctuation(shortenedCore, ending);
+    if (candidate.length <= maxLen && candidate.length >= maxLen * 0.6) return candidate;
+  }
+
+  // 6. If multiple clauses separated by em-dash/colon/semicolon, keep the first clause.
+  for (const sep of ['—', ':', ';']) {
+    const i = core.indexOf(sep);
+    if (i > 20) {
+      const shortenedCore = core.slice(0, i).trim();
+      const candidate = ensureEndingPunctuation(shortenedCore, ending);
+      if (candidate.length <= maxLen && candidate.length >= maxLen * 0.6) return candidate;
     }
   }
 
-  // 6. Truncate at last sentence boundary that fits
-  const sentences = t.split(/(?<=[.!?])\s+/);
+  // 7. If the text contains multiple sentences, keep the first full sentence.
+  const withEnding = ensureEndingPunctuation(core, ending);
+  const sentences = withEnding.split(/(?<=[.!?])\s+/).filter(Boolean);
   if (sentences.length > 1) {
-    let acc = '';
-    for (const s of sentences) {
-      if ((acc + (acc ? ' ' : '') + s).length <= maxLen) {
-        acc = acc ? acc + ' ' + s : s;
-      } else break;
-    }
-    if (acc.length >= maxLen * 0.5) return acc;
+    const first = sentences[0].trim();
+    if (first.length <= maxLen && first.length >= maxLen * 0.5) return first;
   }
 
-  // 7. Hard truncate at word boundary + ellipsis
-  if (t.length > maxLen) {
-    const cut = t.slice(0, maxLen - 1);
-    const lastSpace = cut.lastIndexOf(' ');
-    if (lastSpace > maxLen * 0.5) {
-      t = cut.slice(0, lastSpace) + '…';
-    } else {
-      t = cut + '…';
-    }
-  }
-
-  return t;
+  // Could not safely shorten.
+  return ensureEndingPunctuation(original, ending);
 }
 
 /* ── main ─────────────────────────────────────────────────────────── */
 
+if (argv.includes('--help') || argv.includes('-h')) {
+  console.log(
+    `\nUsage:\n  node scripts/_shortenBeats.mjs [--write] [--plans-prefix <prefix>] [--strict]\n\nDefault limits (validation tolerance): ${VALIDATION_TOLERANCE.beat}/${VALIDATION_TOLERANCE.punchline}\nStrict limits (generation): ${GENERATION_LIMITS.beat}/${GENERATION_LIMITS.punchline}\n\nExamples:\n  node scripts/_shortenBeats.mjs --plans-prefix investing--\n  node scripts/_shortenBeats.mjs --plans-prefix investing-- --write\n  node scripts/_shortenBeats.mjs --plans-prefix investing-- --strict --write\n`
+  );
+  process.exit(0);
+}
+
 const dir = resolve(ROOT, 'content/course-plans');
 const files = readdirSync(dir)
-  .filter(f => f.startsWith('home-diy--') && f.endsWith('.json'))
-  .map(f => resolve(dir, f));
+  .filter((f) => f.endsWith('.json'))
+  .filter((f) => (plansPrefix ? f.startsWith(plansPrefix) : true))
+  .map((f) => resolve(dir, f));
 
 let totalFixed = 0;
 let totalViolations = 0;

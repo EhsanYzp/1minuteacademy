@@ -102,8 +102,16 @@ function normalizeDifficulty(d) {
   return v;
 }
 
-const BEAT_TEXT_MAX = 120; // characters — must match story.schema.json beat maxLength
-const PUNCHLINE_TEXT_MAX = 80; // punchline is the mic-drop: even shorter
+import { GENERATION_LIMITS, VALIDATION_TOLERANCE } from './_beatLimits.mjs';
+
+// Generation guidelines (soft) vs validation tolerance (hard).
+// - We *aim* for GENERATION_LIMITS for best readability.
+// - We *allow* up to VALIDATION_TOLERANCE so generation can proceed;
+//   anything above tolerance is a hard error.
+const BEAT_TEXT_GUIDE = GENERATION_LIMITS.beat;
+const PUNCHLINE_TEXT_GUIDE = GENERATION_LIMITS.punchline;
+const BEAT_TEXT_HARD_MAX = VALIDATION_TOLERANCE.beat;
+const PUNCHLINE_TEXT_HARD_MAX = VALIDATION_TOLERANCE.punchline;
 
 // Every beat must end with one of these characters.
 const VALID_BEAT_ENDINGS = new Set([
@@ -168,15 +176,19 @@ function validateStoryShape(story, ctxLabel) {
     if (typeof node.visual !== 'string' || !node.visual.trim()) throw new Error(`Missing story.${beat}.visual${label}`);
 
     const text = node.text.trim();
-    const maxLen = beat === 'punchline' ? PUNCHLINE_TEXT_MAX : BEAT_TEXT_MAX;
+    const guideLen = beat === 'punchline' ? PUNCHLINE_TEXT_GUIDE : BEAT_TEXT_GUIDE;
+    const hardMaxLen = beat === 'punchline' ? PUNCHLINE_TEXT_HARD_MAX : BEAT_TEXT_HARD_MAX;
 
-    // Hard length cap.
-    if (text.length > maxLen) {
+    // Hard length cap (validation tolerance).
+    if (text.length > hardMaxLen) {
       throw new Error(
-        `story.${beat}.text is ${text.length} chars (max ${maxLen})${label}. ` +
+        `story.${beat}.text is ${text.length} chars (max ${hardMaxLen})${label}. ` +
         `REWRITE the beat to be shorter — never truncate.`
       );
     }
+
+    // Soft guideline (generation target): intentionally does not warn.
+    // We keep generation quiet for any text within the validation tolerance.
 
     // Must end with valid punctuation.
     const lastChar = text[text.length - 1];
