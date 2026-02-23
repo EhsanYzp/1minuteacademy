@@ -11,8 +11,6 @@ import { listUserTopicProgressForChapter } from '../services/progress';
 import { getCurrentTier, getTopicGate } from '../services/entitlements';
 import './CategoriesFlow.css';
 
-const DIFFICULTY_FILTERS = ['all', 'beginner', 'intermediate', 'advanced', 'premium'];
-
 function norm(s) {
   return String(s ?? '').trim();
 }
@@ -39,7 +37,6 @@ export default function ChapterTopicsPage() {
   const [topics, setTopics] = useState([]);
   const [query, setQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all'); // all | completed | new
-  const [difficultyFilter, setDifficultyFilter] = useState('all'); // all | beginner | intermediate | advanced | premium
   const [completedIds, setCompletedIds] = useState(() => new Set());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -144,14 +141,6 @@ export default function ChapterTopicsPage() {
     if (statusFilter === 'completed') rows = rows.filter((t) => t.completed);
     if (statusFilter === 'new') rows = rows.filter((t) => !t.completed);
 
-    if (difficultyFilter !== 'all') {
-      const desired = String(difficultyFilter ?? 'all').toLowerCase();
-      const safeDesired = DIFFICULTY_FILTERS.includes(desired) ? desired : 'all';
-      if (safeDesired !== 'all') {
-        rows = rows.filter((t) => String(t?.difficulty ?? 'Beginner').toLowerCase() === safeDesired);
-      }
-    }
-
     rows.sort((a, b) => {
       // Watched first, then alphabetical (same as old /topics behavior)
       const ac = a.completed ? 1 : 0;
@@ -161,12 +150,11 @@ export default function ChapterTopicsPage() {
     });
 
     return rows;
-  }, [topics, query, completedIds, statusFilter, difficultyFilter]);
+  }, [topics, query, completedIds, statusFilter]);
 
   function resetFilters() {
     setQuery('');
     setStatusFilter('all');
-    setDifficultyFilter('all');
   }
 
   return (
@@ -219,21 +207,6 @@ export default function ChapterTopicsPage() {
 
               <div className="catflow-filtersRow" aria-label="Filters">
                 <label className="catflow-filter">
-                  <span className="catflow-filterLabel">Difficulty</span>
-                  <select
-                    value={difficultyFilter}
-                    onChange={(e) => setDifficultyFilter(e.target.value)}
-                    aria-label="Difficulty"
-                  >
-                    <option value="all">All</option>
-                    <option value="beginner">Beginner</option>
-                    <option value="intermediate">Intermediate</option>
-                    <option value="advanced">Advanced</option>
-                    <option value="premium">Premium</option>
-                  </select>
-                </label>
-
-                <label className="catflow-filter">
                   <span className="catflow-filterLabel">Status</span>
                   <select
                     value={statusFilter}
@@ -268,7 +241,6 @@ export default function ChapterTopicsPage() {
               const id = norm(t?.id);
               const title = String(t?.title ?? id);
               const desc = String(t?.description ?? '');
-              const difficulty = String(t?.difficulty ?? '').trim();
               const completed = Boolean(t?.completed);
               const accent = t?.color ? String(t.color) : '';
               const topicGate = getTopicGate({ tier, topicRow: t });
@@ -291,7 +263,6 @@ export default function ChapterTopicsPage() {
                     </h3>
                     {desc && <p className="catflow-rowDesc">{desc}</p>}
                     <div className="catflow-rowBadges">
-                      {difficulty && <span className="catflow-pill">{difficulty}</span>}
                       {topicGate?.locked && topicGate?.label ? (
                         <span className="catflow-pill catflow-pill-locked">{topicGate.label}</span>
                       ) : null}

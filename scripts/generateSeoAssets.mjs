@@ -291,7 +291,7 @@ async function main() {
         description: String(data.description ?? ''),
         emoji: String(data.emoji ?? ''),
         color: String(data.color ?? ''),
-        difficulty: String(data.difficulty ?? ''),
+        is_free: Boolean(data.is_free),
         version,
         updatedAt: deterministicUpdatedAtFromVersion(version),
       });
@@ -422,7 +422,6 @@ async function main() {
       const description = String(t.description ?? '').replace(/\s+/g, ' ').trim();
       const subject = String(t.subject ?? '').replace(/\s+/g, ' ').trim();
       const subcategory = String(t.subcategory ?? '').replace(/\s+/g, ' ').trim();
-      const difficulty = String(t.difficulty ?? '').replace(/\s+/g, ' ').trim();
       const urlPath = `/topic/${encodeURIComponent(String(t.id))}`;
       return {
         id: String(t.id),
@@ -430,7 +429,7 @@ async function main() {
         description,
         subject: subject || null,
         subcategory: subcategory || null,
-        difficulty: difficulty || null,
+        is_free: Boolean(t.is_free),
         url: `${base}${urlPath}`,
         path: urlPath,
         updatedAt: t.updatedAt instanceof Date ? t.updatedAt.toISOString() : null,
@@ -454,7 +453,7 @@ async function main() {
     lines.push(`# Generated: ${generatedAt}`);
     lines.push(`# Site: ${base}`);
     lines.push('# Format: TSV');
-    lines.push('id\ttitle\tdescription\turl\tsubject\tsubcategory\tdifficulty\tupdatedAt');
+    lines.push('id\ttitle\tdescription\turl\tsubject\tsubcategory\tis_free\tupdatedAt');
     for (const t of cleaned) {
       const row = [
         t.id,
@@ -463,7 +462,7 @@ async function main() {
         t.url,
         t.subject || '',
         t.subcategory || '',
-        t.difficulty || '',
+        t.is_free ? 'free' : 'pro',
         t.updatedAt,
       ]
         .map((v) => String(v).replace(/\t/g, ' ').replace(/\r?\n/g, ' ').trim())

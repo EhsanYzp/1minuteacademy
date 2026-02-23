@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
 import SubjectCard from '../components/SubjectCard';
@@ -46,8 +46,6 @@ function includesQuery(topic, q) {
   const hay = `${topic.title ?? ''} ${topic.description ?? ''} ${topic.subject ?? ''} ${topic.subcategory ?? ''}`.toLowerCase();
   return hay.includes(q.toLowerCase());
 }
-
-const DIFFICULTY_FILTERS = ['all', 'beginner', 'intermediate', 'advanced', 'premium'];
 
 const FEATURED_TRACKS = [
   {
@@ -130,7 +128,6 @@ export default function TopicsBrowserPage() {
   const { user, isSupabaseConfigured } = useAuth();
   const contentSource = getContentSource();
   const tier = getCurrentTier(user);
-  const [searchParams, setSearchParams] = useSearchParams();
 
   const [viewMode, setViewMode] = useState('curated'); // curated | grid
   const gridRef = useRef(null);
@@ -140,7 +137,7 @@ export default function TopicsBrowserPage() {
     loading: true,
     error: null,
     trending: [],
-    beginnerPicks: [],
+    freePicks: [],
     bySubject: {},
   }));
 
@@ -157,7 +154,6 @@ export default function TopicsBrowserPage() {
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [filter, setFilter] = useState('all'); // all | completed | new
-  const [difficultyFilter, setDifficultyFilter] = useState('all'); // all | beginner | intermediate | advanced | premium
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -167,16 +163,14 @@ export default function TopicsBrowserPage() {
       Boolean(q) ||
       activeCategory !== 'All' ||
       activeSubcategory !== 'All' ||
-      filter !== 'all' ||
-      difficultyFilter !== 'all'
+      filter !== 'all'
     );
-  }, [query, activeCategory, activeSubcategory, filter, difficultyFilter]);
+  }, [query, activeCategory, activeSubcategory, filter]);
 
   function resetBrowseState() {
     setActiveCategory('All');
     setActiveSubcategory('All');
     setFilter('all');
-    setDifficultyFilter('all');
     setQuery('');
     setTopics([]);
     setTotalTopics(null);
@@ -184,59 +178,13 @@ export default function TopicsBrowserPage() {
     setHasMore(false);
     lastGridStateRef.current = null;
     setViewMode('curated');
-
-    // Clear URL-driven grid triggers.
-    try {
-      if (searchParams.has('difficulty')) {
-        const next = new URLSearchParams(searchParams);
-        next.delete('difficulty');
-        setSearchParams(next, { replace: true });
-      }
-    } catch {
-      // ignore
-    }
   }
-
-  const urlDifficulty = useMemo(() => {
-    const raw = String(searchParams.get('difficulty') ?? 'all').toLowerCase();
-    return DIFFICULTY_FILTERS.includes(raw) ? raw : 'all';
-  }, [searchParams]);
-
-  useEffect(() => {
-    // Sync UI state from URL (supports shareable links + browser back/forward).
-    setDifficultyFilter((prev) => (prev === urlDifficulty ? prev : urlDifficulty));
-  }, [urlDifficulty]);
-
-  useEffect(() => {
-    // If user has a difficulty pinned in the URL, assume they want the grid.
-    if (urlDifficulty !== 'all') setViewMode('grid');
-  }, [urlDifficulty]);
 
   useEffect(() => {
     // If the user touches any filters (besides search which has its own effect),
     // they expect to see results immediately.
     if (viewMode === 'curated' && hasActiveFilters) setViewMode('grid');
   }, [viewMode, hasActiveFilters]);
-
-  useEffect(() => {
-    // Sync URL from UI state (without clobbering other query params).
-    const current = String(searchParams.get('difficulty') ?? 'all').toLowerCase();
-    const desired = String(difficultyFilter ?? 'all').toLowerCase();
-
-    const nextDesired = DIFFICULTY_FILTERS.includes(desired) ? desired : 'all';
-    if (nextDesired === 'all') {
-      if (!searchParams.has('difficulty')) return;
-      const next = new URLSearchParams(searchParams);
-      next.delete('difficulty');
-      setSearchParams(next, { replace: true });
-      return;
-    }
-
-    if (current === nextDesired) return;
-    const next = new URLSearchParams(searchParams);
-    next.set('difficulty', nextDesired);
-    setSearchParams(next, { replace: true });
-  }, [difficultyFilter, searchParams, setSearchParams]);
 
   const isLocalDev = import.meta.env.DEV && contentSource === 'local';
 
@@ -517,8 +465,8 @@ export default function TopicsBrowserPage() {
           })
           .slice(0, 12);
 
-        const beginnerPicks = decoratedPool
-          .filter((t) => String(t?.difficulty ?? '').toLowerCase() === 'beginner')
+        const freePicks = decoratedPool
+          .filter((t) => Boolean(t?.is_free))
           .slice(0, 12);
 
         const decoratedBySubject = {};
@@ -532,7 +480,7 @@ export default function TopicsBrowserPage() {
           loading: false,
           error: null,
           trending,
-          beginnerPicks,
+          freePicks,
           bySubject: decoratedBySubject,
         });
       } catch (e) {
@@ -541,7 +489,7 @@ export default function TopicsBrowserPage() {
           loading: false,
           error: e,
           trending: [],
-          beginnerPicks: [],
+          freePicks: [],
           bySubject: {},
         });
       }
@@ -620,10 +568,6 @@ export default function TopicsBrowserPage() {
     if (filter === 'completed') out = out.filter((t) => t.completed);
     if (filter === 'new') out = out.filter((t) => !t.completed);
 
-    if (difficultyFilter !== 'all') {
-      out = out.filter((t) => String(t?.difficulty ?? 'Beginner').toLowerCase() === difficultyFilter);
-    }
-
     out.sort((a, b) => {
       // Completed first, then alphabetical
       const ac = a.completed ? 1 : 0;
@@ -633,7 +577,7 @@ export default function TopicsBrowserPage() {
     });
 
     return out;
-  }, [topics, ratingMap, completedIds, activeCategory, activeSubcategory, query, filter, difficultyFilter, contentSource]);
+  }, [topics, ratingMap, completedIds, activeCategory, activeSubcategory, query, filter, contentSource]);
 
   const subcategoryCounts = useMemo(() => {
     if (activeCategory === 'All') return new Map([['All', 0]]);
@@ -704,7 +648,6 @@ export default function TopicsBrowserPage() {
       activeSubcategory,
       query,
       filter,
-      difficultyFilter,
     };
   }
 
@@ -718,18 +661,6 @@ export default function TopicsBrowserPage() {
     setActiveSubcategory('All');
     setFilter('all');
     setQuery('');
-    setDifficultyFilter('all');
-
-    // Prevent URL params from snapping us back into grid.
-    try {
-      if (searchParams.has('difficulty')) {
-        const next = new URLSearchParams(searchParams);
-        next.delete('difficulty');
-        setSearchParams(next, { replace: true });
-      }
-    } catch {
-      // ignore
-    }
 
     setTimeout(() => {
       try {
@@ -747,14 +678,12 @@ export default function TopicsBrowserPage() {
     setActiveSubcategory(last.activeSubcategory ?? 'All');
     setFilter(last.filter ?? 'all');
     setQuery(last.query ?? '');
-    setDifficultyFilter(last.difficultyFilter ?? 'all');
     enterGridMode();
   }
 
   function handleTrackClick(subject) {
     setQuery('');
     setFilter('all');
-    setDifficultyFilter('all');
     setActiveSubcategory('All');
     setActiveCategory(subject);
     enterGridMode();
@@ -764,7 +693,6 @@ export default function TopicsBrowserPage() {
     setActiveCategory('All');
     setActiveSubcategory('All');
     setFilter('all');
-    setDifficultyFilter('all');
     enterGridMode();
   }
 
@@ -772,7 +700,7 @@ export default function TopicsBrowserPage() {
     <motion.div className="topics-browser" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Seo
         title="Topics"
-        description="Browse 1 minute lessons by category, course, difficulty, and search."
+        description="Browse 1 minute lessons by category, course, and search."
         path="/topics"
         canonicalPath="/topics"
         jsonLd={itemListJsonLd}
@@ -866,25 +794,6 @@ export default function TopicsBrowserPage() {
                 </div>
 
                 <div className="filter-group">
-                  <label className="filter-label" htmlFor="topics-filter-difficulty">Difficulty</label>
-                  <select
-                    id="topics-filter-difficulty"
-                    value={difficultyFilter}
-                    onChange={(e) => {
-                      setDifficultyFilter(e.target.value);
-                      setViewMode('grid');
-                    }}
-                    aria-label="Difficulty"
-                  >
-                    <option value="all">All</option>
-                    <option value="beginner">Beginner</option>
-                    <option value="intermediate">Intermediate</option>
-                    <option value="advanced">Advanced</option>
-                    <option value="premium">Premium</option>
-                  </select>
-                </div>
-
-                <div className="filter-group">
                   <label className="filter-label" htmlFor="topics-filter-status">Status</label>
                   <select
                     id="topics-filter-status"
@@ -950,20 +859,6 @@ export default function TopicsBrowserPage() {
                       Browse all topics
                     </button>
                   )}
-                  <div className="curated-quick">
-                    <button type="button" className="curated-chip" onClick={() => { setDifficultyFilter('beginner'); enterGridMode(); }}>
-                      Beginner
-                    </button>
-                    <button type="button" className="curated-chip" onClick={() => { setDifficultyFilter('intermediate'); enterGridMode(); }}>
-                      Intermediate
-                    </button>
-                    <button type="button" className="curated-chip" onClick={() => { setDifficultyFilter('advanced'); enterGridMode(); }}>
-                      Advanced
-                    </button>
-                    <button type="button" className="curated-chip" onClick={() => { setDifficultyFilter('premium'); enterGridMode(); }}>
-                      Premium
-                    </button>
-                  </div>
                 </div>
 
                 <div className="curated-section">
@@ -1023,18 +918,18 @@ export default function TopicsBrowserPage() {
 
                 <div className="curated-section">
                   <div className="curated-header">
-                    <h2>Beginner-friendly</h2>
-                    <div className="curated-sub">Fast wins to build momentum.</div>
+                    <h2>Free to try</h2>
+                    <div className="curated-sub">Jump in — no account needed.</div>
                   </div>
 
                   {curated.loading ? (
                     <TopicsGridSkeleton count={6} />
-                  ) : curated.beginnerPicks.length === 0 ? (
-                    <div className="topics-empty">No beginner topics found — try another difficulty.</div>
+                  ) : curated.freePicks.length === 0 ? (
+                    <div className="topics-empty">No free topics found.</div>
                   ) : (
-                    <div className="topics-carousel" role="region" aria-label="Beginner topics">
+                    <div className="topics-carousel" role="region" aria-label="Free topics">
                       <div className="topics-carousel-row">
-                        {curated.beginnerPicks.map((t) => (
+                        {curated.freePicks.map((t) => (
                           <div key={t.id} className="topics-carousel-item">
                             <SubjectCard subject={t} gate={getTopicGate({ tier, topicRow: t })} />
                           </div>

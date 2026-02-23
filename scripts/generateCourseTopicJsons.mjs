@@ -95,11 +95,11 @@ function parseArgs(argv) {
   return args;
 }
 
-function normalizeDifficulty(d) {
-  const v = String(d ?? '').trim();
-  const allowed = new Set(['Beginner', 'Intermediate', 'Advanced', 'Premium']);
-  if (!allowed.has(v)) throw new Error(`Invalid difficulty: ${v}`);
-  return v;
+function normalizeIsFree(v) {
+  if (typeof v === 'boolean') return v;
+  // Legacy: treat Beginner as free during migration.
+  if (typeof v === 'string' && String(v).toLowerCase() === 'beginner') return true;
+  return false;
 }
 
 import { GENERATION_LIMITS, VALIDATION_TOLERANCE } from './_beatLimits.mjs';
@@ -238,13 +238,14 @@ function buildDescription({ topicId, title }) {
   return formatTemplate(pick(templates, base), { title });
 }
 
-function computeDifficultyCounts(topics) {
-  const counts = new Map();
+function computeAccessCounts(topics) {
+  let free = 0;
+  let pro = 0;
   for (const t of topics) {
-    const k = String(t?.difficulty ?? '');
-    counts.set(k, (counts.get(k) ?? 0) + 1);
+    if (t?.is_free) free += 1;
+    else pro += 1;
   }
-  return Object.fromEntries(Array.from(counts.entries()).sort(([a], [b]) => a.localeCompare(b)));
+  return { free, pro };
 }
 
 function buildTopicId({ courseId, title }) {
@@ -311,10 +312,10 @@ async function main() {
   const planPath = path.resolve(process.cwd(), args.plan);
   const plan = await loadPlan(planPath);
 
-  const difficultyCounts = computeDifficultyCounts(plan.topics);
+  const accessCounts = computeAccessCounts(plan.topics);
   console.log(`[content:gen-topics] plan=${path.relative(process.cwd(), planPath)}`);
   console.log(`[content:gen-topics] chapters=${plan.chapters.length} topics=${plan.topics.length}`);
-  console.log(`[content:gen-topics] difficultyCounts: ${JSON.stringify(difficultyCounts)}`);
+  console.log(`[content:gen-topics] accessCounts: ${JSON.stringify(accessCounts)}`);
 
   const ids = new Set();
 
@@ -328,7 +329,7 @@ async function main() {
     if (ids.has(topicId)) throw new Error(`Duplicate topic id: ${topicId}`);
     ids.add(topicId);
 
-    const difficulty = normalizeDifficulty(t.difficulty);
+    const isFree = normalizeIsFree(t.is_free);
 
     let story;
     if (t.story) {
@@ -355,7 +356,7 @@ async function main() {
       emoji: plan.emoji,
       color: plan.color,
       description: String(t.description ?? '').trim() || buildDescription({ topicId, title }),
-      difficulty,
+      is_free: isFree,
       published: true,
       story,
       quiz,

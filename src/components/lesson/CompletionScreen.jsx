@@ -246,9 +246,6 @@ export default function CompletionScreen({
                                   🔒 {String(gate?.label ?? 'Pro only')}
                                 </span>
                               ) : null}
-                              {t?.difficulty ? (
-                                <span className="related-topic-card__badge">📊 {t.difficulty}</span>
-                              ) : null}
                               {t?.subcategory ? (
                                 <span className="related-topic-card__badge related-topic-card__badge--muted">
                                   {t.subcategory}

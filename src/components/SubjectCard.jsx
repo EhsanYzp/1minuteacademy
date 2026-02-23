@@ -4,7 +4,7 @@ import StarRating from './StarRating';
 import './SubjectCard.css';
 
 function SubjectCard({ subject, gate }) {
-  const { id, title, emoji, color, description, difficulty, comingSoon, completed, ratingAvg, ratingCount } = subject;
+  const { id, title, emoji, color, description, is_free, comingSoon, completed, ratingAvg, ratingCount } = subject;
   const hasRating = Number(ratingCount ?? 0) > 0 && Number.isFinite(Number(ratingAvg));
   const isLocked = Boolean(gate?.locked);
   const lockLabel = String(gate?.label ?? 'Pro only');
@@ -30,7 +30,7 @@ function SubjectCard({ subject, gate }) {
           <h3 className="card-title">{title}</h3>
           <p className="card-description">{description}</p>
           <div className="card-footer">
-            <span className="difficulty-badge">{difficulty}</span>
+            <span className="difficulty-badge">{is_free ? 'Free' : 'Pro'}</span>
             {comingSoon ? (
               <span className="coming-soon-badge">Coming Soon</span>
             ) : (
@@ -60,7 +60,7 @@ function SubjectCard({ subject, gate }) {
             <h3 className="card-title">{title}</h3>
             <p className="card-description">{description}</p>
             <div className="card-footer">
-              <span className="difficulty-badge">{difficulty}</span>
+              <span className="difficulty-badge">{is_free ? 'Free' : 'Pro'}</span>
               {hasRating && (
                 <span className="rating-badge" title={`${Number(ratingAvg).toFixed(1)} / 5 (${Number(ratingCount)} ratings)`}>
                   <StarRating value={Number(ratingAvg)} readOnly size="sm" />

@@ -433,10 +433,10 @@ function Home() {
                             <span className="home-pickedTagValue">{String(spinOverlay.selectedTopic.subcategory)}</span>
                           </span>
                         )}
-                        {spinOverlay?.selectedTopic?.difficulty && (
+                        {spinOverlay?.selectedTopic != null && (
                           <span className="home-pickedTag home-pickedTag--diff">
-                            <span className="home-pickedTagLabel">Level</span>
-                            <span className="home-pickedTagValue">{String(spinOverlay.selectedTopic.difficulty)}</span>
+                            <span className="home-pickedTagLabel">Access</span>
+                            <span className="home-pickedTagValue">{spinOverlay.selectedTopic.is_free ? 'Free' : 'Pro'}</span>
                           </span>
                         )}
                       </div>

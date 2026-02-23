@@ -363,7 +363,7 @@ async function main() {
       emoji: t.emoji,
       color: t.color,
       description: t.description,
-      difficulty: t.difficulty,
+      is_free: Boolean(t.is_free),
       lesson: lesson,
       journey: t.journey ?? null,
       published: Boolean(t.published),
@@ -505,7 +505,7 @@ async function main() {
     const slice = ids.slice(i, i + FETCH_BATCH);
     const { data: remoteRows, error: remoteErr } = await supabase
       .from('topics')
-      .select('id, subject, subcategory, title, emoji, color, description, difficulty, published, lesson, journey')
+      .select('id, subject, subcategory, title, emoji, color, description, is_free, published, lesson, journey')
       .in('id', slice);
 
     if (remoteErr) throw remoteErr;
@@ -543,7 +543,7 @@ async function main() {
     const emojiChanged = (local.emoji ?? null) !== (remote.emoji ?? null);
     const colorChanged = (local.color ?? null) !== (remote.color ?? null);
     const descriptionChanged = (local.description ?? null) !== (remote.description ?? null);
-    const difficultyChanged = (local.difficulty ?? null) !== (remote.difficulty ?? null);
+    const isFreeChanged = Boolean(local.is_free) !== Boolean(remote.is_free);
 
     const metaChanged =
       publishedChanged ||
@@ -553,7 +553,7 @@ async function main() {
       emojiChanged ||
       colorChanged ||
       descriptionChanged ||
-      difficultyChanged;
+      isFreeChanged;
 
     if (args.force) {
       toUpdate.push(local);

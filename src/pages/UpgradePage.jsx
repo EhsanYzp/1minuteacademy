@@ -356,12 +356,12 @@ export default function UpgradePage() {
                   <div className="pricing-glossary-def">Pro-only shareable certificates you earn when you complete every module in a category.</div>
                 </div>
                 <div className="pricing-glossary-item">
-                  <div className="pricing-glossary-term">Premium topics</div>
-                  <div className="pricing-glossary-def">Higher-difficulty topics reserved for Pro.</div>
+                  <div className="pricing-glossary-term">Pro topics</div>
+                  <div className="pricing-glossary-def">Topics beyond the free preview in each chapter, reserved for Pro.</div>
                 </div>
                 <div className="pricing-glossary-item">
                   <div className="pricing-glossary-term">Surprise shuffle</div>
-                  <div className="pricing-glossary-def">The “Surprise me” button that picks a topic for you. Free shuffles Beginner only; Pro shuffles everything.</div>
+                  <div className="pricing-glossary-def">The "Surprise me" button that picks a topic for you. Free shuffles free topics only; Pro shuffles everything.</div>
                 </div>
                 <div className="pricing-glossary-item">
                   <div className="pricing-glossary-term">Lesson styles</div>
@@ -391,21 +391,14 @@ export default function UpgradePage() {
                   </thead>
                   <tbody>
                     <tr>
-                      <th scope="row" className="compare-feature">Beginner topics</th>
+                      <th scope="row" className="compare-feature">Free topics</th>
                       <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
                       <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
                       <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
                     </tr>
 
                     <tr>
-                      <th scope="row" className="compare-feature">Intermediate + Advanced topics</th>
-                      <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
-                      <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
-                      <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
-                    </tr>
-
-                    <tr>
-                      <th scope="row" className="compare-feature">Premium topics</th>
+                      <th scope="row" className="compare-feature">Pro topics</th>
                       <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
                       <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
                       <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
@@ -416,13 +409,13 @@ export default function UpgradePage() {
                       <td className="compare-cell">
                         <div className="compare-cell-stack">
                           <span className="mark yes" aria-label="Available" title="Available">✓</span>
-                          <span className="compare-cell-note">Beginner</span>
+                          <span className="compare-cell-note">Free only</span>
                         </div>
                       </td>
                       <td className="compare-cell">
                         <div className="compare-cell-stack">
                           <span className="mark yes" aria-label="Available" title="Available">✓</span>
-                          <span className="compare-cell-note">Beginner</span>
+                          <span className="compare-cell-note">Free only</span>
                         </div>
                       </td>
                       <td className="compare-cell">

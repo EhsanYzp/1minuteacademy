@@ -68,12 +68,9 @@ export default function FaqPage() {
 
             <FaqItem q="Why are some topics locked?">
               <p>
-                Some topics are locked based on difficulty:
+                Each chapter offers one free topic as a preview. The remaining topics are Pro-only.
+                Upgrade to Pro to unlock them all.
               </p>
-              <ul>
-                <li><strong>Intermediate/Advanced:</strong> Pro-only.</li>
-                <li><strong>Premium:</strong> Pro-only.</li>
-              </ul>
             </FaqItem>
 
             <FaqItem q="Can I review a lesson after the timer ends?">

@@ -390,7 +390,7 @@ async function main() {
       emoji,
       color: categoryColor || '#4ECDC4',
       description: `A 1-minute lesson: ${title}.`,
-      difficulty: 'Beginner',
+      is_free: true,
       published: true,
       // Keep story/quiz in lesson (matches our canonical content shape)
       story: null,

@@ -774,9 +774,6 @@ function LessonPage() {
               )}.
             </p>
             <div className="lesson-gate-meta">
-              {topicRow?.difficulty ? (
-                <span className="lesson-gate-badge">{String(topicRow.difficulty)}</span>
-              ) : null}
               <span className="lesson-gate-badge">1 minute</span>
             </div>
             <div className="lesson-gate-actions">
@@ -799,7 +796,7 @@ function LessonPage() {
                 className="lesson-gate-btn tertiary"
                 onClick={() => navigate('/categories')}
               >
-                Browse beginner topics
+                Browse free topics
               </button>
             </div>
           </div>

@@ -111,7 +111,7 @@ async function main() {
       chapter_id: json.chapter_id,
       title: json.title,
       description: json.description,
-      difficulty: json.difficulty,
+      is_free: Boolean(json.is_free),
       story: json.story,
       quiz: json.quiz,
     };

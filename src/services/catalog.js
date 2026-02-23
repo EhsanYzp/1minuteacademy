@@ -124,7 +124,7 @@ export async function listTopicsForCourse({ courseId } = {}) {
     const supabase = requireSupabase();
     const { data, error } = await supabase
       .from('topics')
-      .select('id, subject, subcategory, course_id, chapter_id, title, emoji, color, description, difficulty, published')
+      .select('id, subject, subcategory, course_id, chapter_id, title, emoji, color, description, is_free, published')
       .eq('published', true)
       .eq('course_id', id)
       .order('title', { ascending: true });
@@ -145,7 +145,7 @@ export async function listTopicsForChapter({ courseId, chapterId } = {}) {
     const supabase = requireSupabase();
     const { data, error } = await supabase
       .from('topics')
-      .select('id, subject, subcategory, course_id, chapter_id, title, emoji, color, description, difficulty, published')
+      .select('id, subject, subcategory, course_id, chapter_id, title, emoji, color, description, is_free, published')
       .eq('published', true)
       .eq('course_id', course)
       .eq('chapter_id', chapter)

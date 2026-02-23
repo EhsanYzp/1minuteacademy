@@ -3,7 +3,6 @@ import path from 'node:path';
 import { COURSE_PLANS_DIR } from './_contentPaths.mjs';
 
 const BEAT_NAMES = ['hook', 'buildup', 'discovery', 'twist', 'climax', 'punchline'];
-const DIFFICULTIES = new Set(['Beginner', 'Intermediate', 'Advanced', 'Premium']);
 
 function parseArgs(argv) {
   const args = {
@@ -27,7 +26,7 @@ function parseArgs(argv) {
       args.plans.push(v);
       i += 1;
     } else if (a === '--help' || a === '-h') {
-      console.log(`\nUsage:\n  node scripts/validateCoursePlans.mjs [--strict-lengths] [--prefix <filePrefix>] [--plan <path>]\n\nChecks:\n  - Course plan JSON parses\n  - Chapters count 5–10, topics count 30–60\n  - requireAuthoredStory === true\n  - Topic chapter_id exists in chapters\n  - Difficulty is one of Beginner/Intermediate/Advanced/Premium\n  - Quiz has 3 options and valid correct index\n  - (Optional) Beat text length targets 120/80 when --strict-lengths is set\n\nScoping:\n  --prefix entrepreneurship--   Validate only course plans whose filename starts with a prefix\n  --plan content/course-plans/x.json   Validate only a specific plan (repeatable)\n`);
+      console.log(`\nUsage:\n  node scripts/validateCoursePlans.mjs [--strict-lengths] [--prefix <filePrefix>] [--plan <path>]\n\nChecks:\n  - Course plan JSON parses\n  - Chapters count 5\u201310, topics count 30\u201360\n  - requireAuthoredStory === true\n  - Topic chapter_id exists in chapters\n  - is_free is a boolean\n  - Quiz has 3 options and valid correct index\n  - (Optional) Beat text length targets 120/80 when --strict-lengths is set\n\nScoping:\n  --prefix entrepreneurship--   Validate only course plans whose filename starts with a prefix\n  --plan content/course-plans/x.json   Validate only a specific plan (repeatable)\n`);
       process.exit(0);
     } else {
       throw new Error(`Unknown arg: ${a}`);
@@ -113,8 +112,8 @@ function validatePlan(plan, relPath, { strictLengths }) {
       errors.push(`${label}: missing/empty title`);
     }
 
-    if (!DIFFICULTIES.has(topic.difficulty)) {
-      errors.push(`${label}: invalid difficulty: ${JSON.stringify(topic.difficulty)}`);
+    if (typeof topic.is_free !== 'boolean') {
+      errors.push(`${label}: is_free must be a boolean (got ${JSON.stringify(topic.is_free)})`);
     }
 
     const quiz = topic.quiz;

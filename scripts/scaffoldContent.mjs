@@ -66,7 +66,7 @@ function parseArgs(argv) {
     id: null,
     title: null,
     description: '',
-    difficulty: 'Beginner',
+    is_free: false,
     emoji: '🎯',
     color: null,
     published: true,
@@ -105,7 +105,7 @@ function parseArgs(argv) {
     if (a === '--id') args.id = argv[++i];
     else if (a === '--title') args.title = argv[++i];
     else if (a === '--description') args.description = argv[++i] ?? '';
-    else if (a === '--difficulty') args.difficulty = argv[++i];
+    else if (a === '--is-free') args.is_free = true;
     else if (a === '--emoji') args.emoji = argv[++i];
     else if (a === '--color') args.color = argv[++i];
     else if (a === '--unpublished') args.published = false;
@@ -136,7 +136,7 @@ function parseArgs(argv) {
     else if (a === '--no-catalog-update') args.noCatalogUpdate = true;
     else if (a === '--env') args.env = argv[++i];
     else if (a === '--help' || a === '-h') {
-      console.log(`\nUsage:\n  npm run content:scaffold -- --id <topicId> --title <Title> [options]\n\nOptions:\n  Topic:\n  --description <text>\n  --difficulty Beginner|Intermediate|Advanced\n  --emoji <emoji>\n  --color <#RRGGBB>\n  --unpublished\n  --seed <any>\n  --dry-run\n  --force   (overwrite if file exists)\n\n  Classification (optional):\n  --subject <Subject>\n  --subcategory <text>\n\n  Hierarchy (recommended):\n  --courseId <courseId>\n  --chapterId <chapterId>\n\n  Folder (only used when NOT using --courseId):\n  --categoryId <categoryId>   (defaults to slugified --subject)\n\n  Environment:\n  --env staging|production    (defaults to staging)\n\nNotes:\n- If you pass --courseId and --chapterId, the script resolves category via Supabase and writes:\n  content/topics/<categoryId>/<courseId>/<chapterId>/<topicId>.topic.json\n- Local catalog mode is retired.\n`);
+      console.log(`\nUsage:\n  npm run content:scaffold -- --id <topicId> --title <Title> [options]\n\nOptions:\n  Topic:\n  --description <text>\n  --is-free\n  --emoji <emoji>\n  --color <#RRGGBB>\n  --unpublished\n  --seed <any>\n  --dry-run\n  --force   (overwrite if file exists)\n\n  Classification (optional):\n  --subject <Subject>\n  --subcategory <text>\n\n  Hierarchy (recommended):\n  --courseId <courseId>\n  --chapterId <chapterId>\n\n  Folder (only used when NOT using --courseId):\n  --categoryId <categoryId>   (defaults to slugified --subject)\n\n  Environment:\n  --env staging|production    (defaults to staging)\n\nNotes:\n- If you pass --courseId and --chapterId, the script resolves category via Supabase and writes:\n  content/topics/<categoryId>/<courseId>/<chapterId>/<topicId>.topic.json\n- Local catalog mode is retired.\n`);
       process.exit(0);
     } else {
       throw new Error(`Unknown arg: ${a}`);
@@ -145,10 +145,6 @@ function parseArgs(argv) {
 
   if (!args.id) throw new Error('Missing --id');
   if (!args.title) throw new Error('Missing --title');
-  if (!['Beginner', 'Intermediate', 'Advanced'].includes(args.difficulty)) {
-    throw new Error('Invalid --difficulty (Beginner|Intermediate|Advanced)');
-  }
-
   if (args.courseId && !args.chapterId) {
     throw new Error('Missing --chapterId (required when using --courseId)');
   }
@@ -313,7 +309,7 @@ async function main() {
     emoji: args.emoji,
     color,
     description: args.description || 'Learn this concept in 1 minute.',
-    difficulty: args.difficulty,
+    is_free: Boolean(args.is_free),
     published: Boolean(args.published),
     story: {
       hook: {

@@ -49,7 +49,7 @@ export async function listTopicsPage({ limit = 30, offset = 0, subject = null } 
     async () => {
       const supabase = requireSupabase();
 
-      const columns = 'id, subject, subcategory, title, emoji, color, description, difficulty';
+      const columns = 'id, subject, subcategory, title, emoji, color, description, is_free';
       let q = supabase
         .from('topics')
         .select(columns, { count: 'exact' })
@@ -118,7 +118,7 @@ export async function listTopics({ pageSize = 500 } = {}) {
   const supabase = requireSupabase();
 
   const safePageSize = Math.min(1000, Math.max(1, Number(pageSize) || 500));
-  const columns = 'id, subject, subcategory, title, emoji, color, description, difficulty';
+  const columns = 'id, subject, subcategory, title, emoji, color, description, is_free';
 
   const out = [];
   let offset = 0;
@@ -161,7 +161,7 @@ export async function listRelatedTopics({
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
   const supabase = requireSupabase();
 
-  const columns = 'id, subject, subcategory, title, emoji, color, description, difficulty';
+  const columns = 'id, subject, subcategory, title, emoji, color, description, is_free';
 
   const run = async ({ includeSubcategory }) => {
     let q = supabase
@@ -219,8 +219,8 @@ export async function listTopicsByIds(topicIds, { includeLesson = false } = {}) 
   const supabase = requireSupabase();
 
   const columns = includeLesson
-    ? 'id, subject, title, emoji, color, description, difficulty, lesson'
-    : 'id, subject, title, emoji, color, description, difficulty';
+    ? 'id, subject, title, emoji, color, description, is_free, lesson'
+    : 'id, subject, title, emoji, color, description, is_free';
 
   const { data, error } = await supabase
     .from('topics')

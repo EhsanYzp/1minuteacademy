@@ -8,7 +8,7 @@ import { getTopic } from '../services/topics';
 import { listUserTopicProgress } from '../services/progress';
 import { getContentSource } from '../services/_contentSource';
 import { useAuth } from '../context/AuthContext';
-import { canReview, canStartTopic, formatTierLabel, getCurrentTier, getTopicGate, isBeginnerTopic } from '../services/entitlements';
+import { canReview, canStartTopic, formatTierLabel, getCurrentTier, getTopicGate, isFreeTopic } from '../services/entitlements';
 import { toAbsoluteUrl } from '../services/seo';
 import StarRating from '../components/StarRating';
 import { getMyTopicRating, getTopicRatingSummaries, setMyTopicRating } from '../services/ratings';
@@ -23,7 +23,7 @@ const fallbackTopics = {
     emoji: '🔗',
     color: '#4ECDC4',
     description: 'Connect Supabase to load topics from the database.',
-    difficulty: 'Beginner',
+    is_free: true,
   },
 };
 
@@ -38,7 +38,7 @@ function normalizeTopic(topicRow, topicId) {
     color: topicRow?.color ?? '#4ECDC4',
     description: topicRow?.description ?? 'No description yet.',
     duration: '60 seconds',
-    difficulty: topicRow?.difficulty ?? 'Beginner',
+    is_free: Boolean(topicRow?.is_free),
     learningPoints:
       learningPoints.length > 0
         ? learningPoints
@@ -176,7 +176,6 @@ function TopicPage() {
   const topicJsonLd = useMemo(() => {
     if (!topic) return null;
     const topicUrl = toAbsoluteUrl(`/topic/${encodeURIComponent(String(topicId))}`);
-    const isFree = String(topic?.difficulty ?? '').toLowerCase() === 'beginner';
     return {
       '@context': 'https://schema.org',
       '@type': 'LearningResource',
@@ -185,8 +184,7 @@ function TopicPage() {
       url: topicUrl,
       inLanguage: 'en',
       timeRequired: 'PT1M',
-      educationalLevel: String(topic.difficulty ?? ''),
-      isAccessibleForFree: isFree,
+      isAccessibleForFree: Boolean(topic?.is_free),
       provider: {
         '@type': 'Organization',
         name: '1 Minute Academy',
@@ -197,7 +195,7 @@ function TopicPage() {
 
 
   const isCompleted = Number(completedCount) > 0;
-  const beginner = useMemo(() => isBeginnerTopic(topicRow ?? fallbackTopics[topicId]), [topicRow, topicId]);
+  const isFree = useMemo(() => isFreeTopic(topicRow ?? fallbackTopics[topicId]), [topicRow, topicId]);
   const canStart = useMemo(
     () => canStartTopic({ tier, topicRow: topicRow ?? fallbackTopics[topicId] }),
     [tier, topicRow, topicId]
@@ -257,12 +255,12 @@ function TopicPage() {
               </p>
               <div className="topic-meta">
                 <span className="meta-badge" style={{ background: 'rgba(245, 158, 11, 0.12)', color: 'rgba(120, 53, 15, 0.95)' }}>
-                  {topic?.difficulty ?? 'Intermediate'}
+                  Pro only
                 </span>
               </div>
               <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
                 <button type="button" onClick={() => navigate('/upgrade')}>Upgrade</button>
-                <button type="button" onClick={() => navigate('/categories')}>Browse beginner topics</button>
+                <button type="button" onClick={() => navigate('/categories')}>Browse free topics</button>
               </div>
             </div>
           </div>
@@ -410,9 +408,6 @@ function TopicPage() {
               <span className="meta-badge duration">
                 ⏱️ {normalizeDurationLabel(topic.duration)}
               </span>
-              <span className="meta-badge difficulty">
-                📊 {topic.difficulty}
-              </span>
               <span className="meta-badge beats">
                 🎬 6 beats
               </span>
@@ -433,7 +428,7 @@ function TopicPage() {
               {!canStart
                 ? (tier === 'paused'
                   ? 'Your account is paused. Resume it to start lessons.'
-                  : `${beginner ? '' : 'This lesson is Pro-only. '}Your plan: ${formatTierLabel(tier)}.`)
+                  : `${isFree ? '' : 'This lesson is Pro-only. '}Your plan: ${formatTierLabel(tier)}.`)
                 : isCompleted && !canUseReview
                   ? 'Review mode is Pro-only.'
                   : 'Tip: find a quiet 60 seconds, then press Start.'}

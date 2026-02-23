@@ -1,9 +1,9 @@
 const DEV_TIER_KEY = 'oma_dev_tier';
 
 // Tiers:
-// - guest: not signed in (web), can play Beginner only, no progress, no review
-// - free: signed in but not Pro, can play Beginner only, progress enabled, no review
-// - pro: signed in and Pro, can play all, progress enabled, review enabled
+// - guest: not signed in (web), can play free topics only, no progress, no review
+// - free: signed in but not Pro, can play free topics only, progress enabled, no review
+// - pro: signed in and Pro, can play all topics, progress enabled, review enabled
 
 export function getTierFromUser(user) {
   if (!user) return 'guest';
@@ -50,20 +50,12 @@ export function getCurrentTier(user) {
   return getTierFromUser(user);
 }
 
-export function isBeginnerTopic(topicRow) {
-  const difficulty = String(topicRow?.difficulty ?? 'Beginner');
-  return difficulty.toLowerCase() === 'beginner';
-}
-
-export function isPremiumTopic(topicRow) {
-  const difficulty = String(topicRow?.difficulty ?? 'Beginner');
-  return difficulty.toLowerCase() === 'premium';
+export function isFreeTopic(topicRow) {
+  return Boolean(topicRow?.is_free);
 }
 
 export function isProOnlyTopic(topicRow) {
-  // Premium is Pro-only. Intermediate/Advanced are also Pro-only.
-  if (isPremiumTopic(topicRow)) return true;
-  return !isBeginnerTopic(topicRow);
+  return !isFreeTopic(topicRow);
 }
 
 export function getTopicGate({ tier, topicRow, expertMinutes = 0 }) {
@@ -71,8 +63,7 @@ export function getTopicGate({ tier, topicRow, expertMinutes = 0 }) {
     return { locked: true, reason: 'paused', label: 'Account paused' };
   }
 
-  // expertMinutes is intentionally not used for access. Minute Expert + badges are Pro-only,
-  // and Premium topics remain Pro-only.
+  // expertMinutes is intentionally not used for access gating.
   void expertMinutes;
 
   if (tier === 'pro') {
