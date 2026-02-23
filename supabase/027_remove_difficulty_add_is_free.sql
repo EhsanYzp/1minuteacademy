@@ -8,8 +8,41 @@
 alter table public.topics
   add column if not exists is_free boolean not null default false;
 
--- 2) Backfill: mark existing Beginner topics as free (temporary bridge)
-update public.topics set is_free = true where difficulty = 'Beginner';
+-- 2) Backfill (only if legacy difficulty exists): pick exactly one free topic per chapter.
+-- We prefer a legacy Beginner topic if present; otherwise we pick deterministically by id.
+do $$
+begin
+  if exists (
+    select 1
+    from information_schema.columns
+    where table_schema = 'public'
+      and table_name = 'topics'
+      and column_name = 'difficulty'
+  ) then
+    -- Standalone topics (no chapter) preserve the old free bridge.
+    update public.topics
+    set is_free = (difficulty = 'Beginner')
+    where course_id is null
+       or chapter_id is null;
+
+    with ranked as (
+      select
+        id,
+        row_number() over (
+          partition by course_id, chapter_id
+          order by (difficulty = 'Beginner') desc, id asc
+        ) as rn
+      from public.topics
+      where course_id is not null
+        and chapter_id is not null
+    )
+    update public.topics t
+    set is_free = true
+    from ranked r
+    where t.id = r.id
+      and r.rn = 1;
+  end if;
+end $$;
 
 -- 3) Drop difficulty column
 alter table public.topics drop column if exists difficulty;
@@ -20,6 +53,7 @@ on public.topics (is_free)
 where published = true;
 
 -- 5) Recreate search_topics_page RPC without difficulty
+drop function if exists public.search_topics_page(text, text, integer, integer);
 create or replace function public.search_topics_page(
   p_query text,
   p_subject text default null,
@@ -95,6 +129,10 @@ begin
   offset v_offset;
 end;
 $$;
+
+revoke all on function public.search_topics_page(text, text, integer, integer) from public;
+grant execute on function public.search_topics_page(text, text, integer, integer) to anon;
+grant execute on function public.search_topics_page(text, text, integer, integer) to authenticated;
 
 -- 6) Recreate sync_topics_batch RPC without difficulty, with is_free
 create or replace function public.sync_topics_batch(
