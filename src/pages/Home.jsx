@@ -531,21 +531,24 @@ function Home() {
             {error && <div className="home-error" role="status">{error}</div>}
 
             <section className="home-stats" aria-label="Learning stats">
-              <div className="home-ticker" role="status" aria-live="polite">
-                <span className="home-tickerMetric">
-                  <span className="home-tickerNum">{fmt.format(ticker.categories)}</span>{' '}
-                  <span className="home-tickerLabel">categories</span>
-                </span>
-                <span className="home-tickerDot" aria-hidden="true">·</span>
-                <span className="home-tickerMetric">
-                  <span className="home-tickerNum">{fmt.format(ticker.courses)}</span>{' '}
-                  <span className="home-tickerLabel">courses</span>
-                </span>
-                <span className="home-tickerDot" aria-hidden="true">·</span>
-                <span className="home-tickerMetric">
-                  <span className="home-tickerNum">{fmt.format(ticker.topics)}</span>{' '}
-                  <span className="home-tickerLabel">1-minute lessons</span>
-                </span>
+              <div className="home-statsGrid" role="status" aria-live="polite">
+                <div className="home-statPillar">
+                  <span className="home-statIcon" aria-hidden="true">📚</span>
+                  <span className="home-statNum">{fmt.format(ticker.categories)}</span>
+                  <span className="home-statLabel">Categories</span>
+                </div>
+                <div className="home-statDivider" aria-hidden="true" />
+                <div className="home-statPillar">
+                  <span className="home-statIcon" aria-hidden="true">🎓</span>
+                  <span className="home-statNum">{fmt.format(ticker.courses)}</span>
+                  <span className="home-statLabel">Courses</span>
+                </div>
+                <div className="home-statDivider" aria-hidden="true" />
+                <div className="home-statPillar">
+                  <span className="home-statIcon" aria-hidden="true">⏱️</span>
+                  <span className="home-statNum">{fmt.format(ticker.topics)}</span>
+                  <span className="home-statLabel">1-Minute Lessons</span>
+                </div>
               </div>
             </section>
           </div>
