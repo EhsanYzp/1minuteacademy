@@ -781,6 +781,7 @@ export default function ProfilePage() {
           emoji: topic?.emoji ?? '🎯',
           color: topic?.color ?? '#4ECDC4',
           subject: topic?.subject ?? 'General',
+          difficulty: topic?.difficulty ?? 'Beginner',
           completed: Number(r.completed_count ?? 0),
           bestSeconds: r.best_seconds,
           lastCompletedAt: r.last_completed_at,
@@ -1431,6 +1432,7 @@ export default function ProfilePage() {
                     setProgressQuery={setProgressQuery}
                     setProgressView={setProgressView}
                     showReview={showReview}
+                    tier={tier}
                   />
                 )}
 

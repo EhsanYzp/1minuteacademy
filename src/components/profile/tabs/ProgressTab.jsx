@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { getTopicGate } from '../../../services/entitlements';
 
 export default function ProgressTab({
   contentSource,
@@ -13,6 +14,7 @@ export default function ProgressTab({
   setProgressQuery,
   setProgressView,
   showReview,
+  tier,
 }) {
   return (
     <>
@@ -97,6 +99,10 @@ export default function ProgressTab({
                 <div className="progress-list" style={{ marginTop: 10 }}>
                   {group.rows.map((p) => {
                     const completed = Number(p.completed ?? 0) > 0;
+                    const topicGate = getTopicGate({ tier, topicRow: p });
+                    const canStart = !topicGate?.locked;
+                    const restartTo = canStart ? `/lesson/${p.topicId}` : topicGate?.reason === 'paused' ? '/me' : '/upgrade';
+                    const restartLabel = canStart ? '🔄 Restart' : topicGate?.reason === 'paused' ? '⏸️ Account paused' : '🔒 Pro only';
 
                     return (
                       <details key={p.topicId} className="progress-details">
@@ -129,8 +135,8 @@ export default function ProgressTab({
                                   🔒 Unlock review
                                 </Link>
                               )}
-                              <Link className="action-pill secondary" to={`/lesson/${p.topicId}`}>
-                                🔄 Restart
+                              <Link className={canStart ? 'action-pill secondary' : 'action-pill'} to={restartTo}>
+                                {restartLabel}
                               </Link>
                             </div>
                           )}
@@ -147,6 +153,10 @@ export default function ProgressTab({
         <div className="progress-list">
           {progressFiltered.map((p) => {
             const completed = Number(p.completed ?? 0) > 0;
+            const topicGate = getTopicGate({ tier, topicRow: p });
+            const canStart = !topicGate?.locked;
+            const restartTo = canStart ? `/lesson/${p.topicId}` : topicGate?.reason === 'paused' ? '/me' : '/upgrade';
+            const restartLabel = canStart ? '🔄 Restart' : topicGate?.reason === 'paused' ? '⏸️ Account paused' : '🔒 Pro only';
 
             return (
               <details key={p.topicId} className="progress-details">
@@ -179,8 +189,8 @@ export default function ProgressTab({
                           🔒 Unlock review
                         </Link>
                       )}
-                      <Link className="action-pill secondary" to={`/lesson/${p.topicId}`}>
-                        🔄 Restart
+                      <Link className={canStart ? 'action-pill secondary' : 'action-pill'} to={restartTo}>
+                        {restartLabel}
                       </Link>
                     </div>
                   )}

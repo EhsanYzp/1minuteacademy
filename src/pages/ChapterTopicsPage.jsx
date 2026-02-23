@@ -8,6 +8,7 @@ import { getCourse, listCategories, listChapters, listTopicsForChapter } from '.
 import { useAuth } from '../context/AuthContext';
 import { getContentSource } from '../services/_contentSource';
 import { listUserTopicProgressForChapter } from '../services/progress';
+import { getCurrentTier, getTopicGate } from '../services/entitlements';
 import './CategoriesFlow.css';
 
 const DIFFICULTY_FILTERS = ['all', 'beginner', 'intermediate', 'advanced', 'premium'];
@@ -29,6 +30,7 @@ export default function ChapterTopicsPage() {
   const chapter = norm(chapterId);
 
   const { user, isSupabaseConfigured } = useAuth();
+  const tier = getCurrentTier(user);
   const contentSource = getContentSource();
 
   const [categoryRow, setCategoryRow] = useState(null);
@@ -269,6 +271,8 @@ export default function ChapterTopicsPage() {
               const difficulty = String(t?.difficulty ?? '').trim();
               const completed = Boolean(t?.completed);
               const accent = t?.color ? String(t.color) : '';
+              const topicGate = getTopicGate({ tier, topicRow: t });
+              const canStart = !topicGate?.locked;
 
               return (
                 <div
@@ -288,12 +292,42 @@ export default function ChapterTopicsPage() {
                     {desc && <p className="catflow-rowDesc">{desc}</p>}
                     <div className="catflow-rowBadges">
                       {difficulty && <span className="catflow-pill">{difficulty}</span>}
+                      {topicGate?.locked && topicGate?.label ? (
+                        <span className="catflow-pill catflow-pill-locked">{topicGate.label}</span>
+                      ) : null}
                     </div>
                   </div>
 
                   <div className="catflow-actions">
                     <Link className="catflow-button" to={`${chapterBasePath}/topic/${encodeURIComponent(id)}`} state={fromChapterState}>Details</Link>
-                    <Link className="catflow-button primary" to={`${chapterBasePath}/lesson/${encodeURIComponent(id)}`} state={fromChapterState}>Start</Link>
+                    {canStart ? (
+                      <Link className="catflow-button primary" to={`${chapterBasePath}/lesson/${encodeURIComponent(id)}`} state={fromChapterState}>Start</Link>
+                    ) : topicGate?.reason === 'paused' ? (
+                      <Link
+                        className="catflow-button primary locked"
+                        to="/me"
+                        state={fromChapterState}
+                        title="Your account is paused. Resume it to start lessons."
+                      >
+                        Account paused
+                      </Link>
+                    ) : (
+                      <Link
+                        className="catflow-button primary locked"
+                        to="/upgrade"
+                        state={{
+                          ...fromChapterState,
+                          upgradeIntent: {
+                            kind: 'topic',
+                            topicId: id,
+                            from: chapterBasePath,
+                          },
+                        }}
+                        title="Upgrade to Pro to unlock this lesson"
+                      >
+                        🔒 Pro only
+                      </Link>
+                    )}
                   </div>
                 </div>
               );

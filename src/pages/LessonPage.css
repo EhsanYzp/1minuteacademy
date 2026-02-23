@@ -732,6 +732,126 @@
   cursor: pointer;
 }
 
+/* Pro-only gate (richer than .lesson-error) */
+.lesson-gate {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 18px 54px;
+}
+
+.lesson-gate-card {
+  width: min(720px, 100%);
+  border-radius: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.76) 100%);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.12);
+  padding: 22px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.lesson-gate-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.8;
+  background:
+    radial-gradient(900px 260px at 0% 0%, color-mix(in srgb, var(--topic-color, #4ECDC4) 22%, transparent), transparent 60%),
+    radial-gradient(700px 220px at 100% 0%, rgba(37, 99, 235, 0.14), transparent 58%);
+}
+
+.lesson-gate-emoji {
+  position: relative;
+  font-size: 44px;
+  height: 74px;
+  width: 74px;
+  margin: 0 auto 10px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.10);
+}
+
+.lesson-gate-title {
+  position: relative;
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.lesson-gate-desc {
+  position: relative;
+  margin: 12px auto 0;
+  max-width: 560px;
+  color: rgba(45, 52, 54, 0.82);
+}
+
+.lesson-gate-meta {
+  position: relative;
+  margin-top: 14px;
+  display: inline-flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.lesson-gate-badge {
+  font-size: 12px;
+  font-weight: 950;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  color: rgba(45, 52, 54, 0.88);
+}
+
+.lesson-gate-actions {
+  position: relative;
+  margin-top: 18px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.lesson-gate-btn {
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.85);
+  color: rgba(45, 52, 54, 0.94);
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.lesson-gate-btn.primary {
+  border-color: rgba(37, 99, 235, 0.32);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.20) 0%, rgba(96, 165, 250, 0.14) 100%);
+  color: rgba(30, 64, 175, 0.98);
+}
+
+.lesson-gate-btn.secondary {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.lesson-gate-btn.tertiary {
+  background: rgba(245, 158, 11, 0.10);
+  border-color: rgba(245, 158, 11, 0.26);
+  color: rgba(120, 53, 15, 0.95);
+}
+
+.lesson-gate-btn:hover {
+  filter: brightness(0.98);
+}
+
 @media (max-width: 768px) {
   .lesson-header {
     padding: var(--space-sm) var(--space-md);

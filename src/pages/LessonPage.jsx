@@ -163,6 +163,15 @@ function LessonPage() {
 
   const canStart = useMemo(() => canStartTopic({ tier, topicRow, expertMinutes }), [tier, topicRow, expertMinutes]);
 
+  const backToChapterTo = useMemo(() => {
+    const s = location?.state?.fromChapter;
+    const categoryId = String(s?.categoryId ?? routeCategoryId ?? '').trim();
+    const courseId = String(s?.courseId ?? routeCourseId ?? '').trim();
+    const chapterId = String(s?.chapterId ?? routeChapterId ?? '').trim();
+    if (!categoryId || !courseId || !chapterId) return null;
+    return `/categories/${encodeURIComponent(categoryId)}/courses/${encodeURIComponent(courseId)}/chapters/${encodeURIComponent(chapterId)}`;
+  }, [location?.state, routeCategoryId, routeCourseId, routeChapterId]);
+
   // Fixed 60 seconds for story-based lessons
   const totalSeconds = 60;
 
@@ -751,16 +760,50 @@ function LessonPage() {
     return (
       <div className="lesson-page">
         <Seo title="Pro-only lesson" description="Upgrade to Pro to start this lesson." path={location?.pathname} canonicalPath={`/topic/${topicId}`} noindex />
-        <div className="lesson-error">
-          <h2>🔒 Pro-only lesson</h2>
-          <p style={{ opacity: 0.85, maxWidth: 520 }}>
-            Your plan: <strong>{formatTierLabel(tier)}</strong>. Upgrade to Pro to start this module.
-          </p>
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
-            <button onClick={() => navigate('/upgrade')}>Upgrade</button>
-            <button onClick={() => navigate(`/topic/${topicId}`)}>Back to topic</button>
+        <Header />
+        <main className="lesson-gate">
+          <div className="lesson-gate-card" style={{ '--topic-color': topicRow?.color ?? '#4ECDC4' }}>
+            <div className="lesson-gate-emoji">🔒</div>
+            <h1 className="lesson-gate-title">Pro-only lesson</h1>
+            <p className="lesson-gate-desc">
+              Your plan: <strong>{formatTierLabel(tier)}</strong>. Upgrade to Pro to start
+              {topicRow?.title ? (
+                <> <strong>{String(topicRow.title)}</strong></>
+              ) : (
+                ' this lesson'
+              )}.
+            </p>
+            <div className="lesson-gate-meta">
+              {topicRow?.difficulty ? (
+                <span className="lesson-gate-badge">{String(topicRow.difficulty)}</span>
+              ) : null}
+              <span className="lesson-gate-badge">1 minute</span>
+            </div>
+            <div className="lesson-gate-actions">
+              <button
+                type="button"
+                className="lesson-gate-btn primary"
+                onClick={() => navigate('/upgrade', { state: location?.state })}
+              >
+                Upgrade to Pro
+              </button>
+              <button
+                type="button"
+                className="lesson-gate-btn secondary"
+                onClick={() => navigate(backToChapterTo || `/topic/${topicId}`, { state: location?.state })}
+              >
+                {backToChapterTo ? 'Back to chapter' : 'Back to topic'}
+              </button>
+              <button
+                type="button"
+                className="lesson-gate-btn tertiary"
+                onClick={() => navigate('/categories')}
+              >
+                Browse beginner topics
+              </button>
+            </div>
           </div>
-        </div>
+        </main>
       </div>
     );
   }
