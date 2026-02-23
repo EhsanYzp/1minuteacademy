@@ -7,553 +7,1237 @@
   "color": "#DB2777",
   "requireAuthoredStory": true,
   "chapters": [
-    { "id": "ai--generative-ai--ch01-foundations", "title": "Generative Foundations", "position": 1 },
-    { "id": "ai--generative-ai--ch02-text", "title": "Text Generation", "position": 2 },
-    { "id": "ai--generative-ai--ch03-image", "title": "Image Generation", "position": 3 },
-    { "id": "ai--generative-ai--ch04-audio-video", "title": "Audio & Video", "position": 4 },
-    { "id": "ai--generative-ai--ch05-applications", "title": "Applications & Workflows", "position": 5 },
-    { "id": "ai--generative-ai--ch06-risks", "title": "Risks & Responsibility", "position": 6 }
+    {
+      "id": "ai--generative-ai--ch01-foundations",
+      "title": "Generative Foundations",
+      "position": 1
+    },
+    {
+      "id": "ai--generative-ai--ch02-text",
+      "title": "Text Generation",
+      "position": 2
+    },
+    {
+      "id": "ai--generative-ai--ch03-image",
+      "title": "Image Generation",
+      "position": 3
+    },
+    {
+      "id": "ai--generative-ai--ch04-audio-video",
+      "title": "Audio & Video",
+      "position": 4
+    },
+    {
+      "id": "ai--generative-ai--ch05-applications",
+      "title": "Applications & Workflows",
+      "position": 5
+    },
+    {
+      "id": "ai--generative-ai--ch06-risks",
+      "title": "Risks & Responsibility",
+      "position": 6
+    }
   ],
   "topics": [
     {
       "chapter_id": "ai--generative-ai--ch01-foundations",
       "title": "What Makes AI 'Generative'?",
-      "difficulty": "Beginner",
       "story": {
-        "hook": { "text": "Traditional AI classifies cats vs dogs. Generative AI creates a new cat that never existed.", "visual": "🐱" },
-        "buildup": { "text": "Generative models learn the distribution of training data, then sample new examples from it.", "visual": "📊" },
-        "discovery": { "text": "They produce: text, images, audio, video, code, 3D models, and even molecules.", "visual": "🧪" },
-        "twist": { "text": "Generation looks creative but it's pattern interpolation—remixing learned structures.", "visual": "🔀" },
-        "climax": { "text": "The breakthrough: models large enough to generate coherent, high-quality output at scale.", "visual": "📈" },
-        "punchline": { "text": "Not intelligence. Pattern synthesis at scale.", "visual": "✨" }
+        "hook": {
+          "text": "Traditional AI classifies cats vs dogs. Generative AI creates a new cat that never existed.",
+          "visual": "🐱"
+        },
+        "buildup": {
+          "text": "Generative models learn the distribution of training data, then sample new examples from it.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "They produce: text, images, audio, video, code, 3D models, and even molecules.",
+          "visual": "🧪"
+        },
+        "twist": {
+          "text": "Generation looks creative but it's pattern interpolation—remixing learned structures.",
+          "visual": "🔀"
+        },
+        "climax": {
+          "text": "The breakthrough: models large enough to generate coherent, high-quality output at scale.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "Not intelligence. Pattern synthesis at scale.",
+          "visual": "✨"
+        }
       },
       "quiz": {
         "question": "What does a generative model learn?",
-        "options": ["The distribution of training data to sample new examples", "Fixed classification rules", "Exact copies of training data"],
+        "options": [
+          "The distribution of training data to sample new examples",
+          "Fixed classification rules",
+          "Exact copies of training data"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": true
     },
     {
       "chapter_id": "ai--generative-ai--ch01-foundations",
       "title": "Autoencoders: Compress and Reconstruct",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Squeeze an image through a tiny bottleneck, then rebuild it. What survives is the essence.", "visual": "🗜️" },
-        "buildup": { "text": "Autoencoders have an encoder (compress) and decoder (reconstruct) with a narrow middle layer.", "visual": "📐" },
-        "discovery": { "text": "The bottleneck forces the model to learn a compact, meaningful representation.", "visual": "💎" },
-        "twist": { "text": "Standard autoencoders don't generate well. VAEs add randomness to the bottleneck.", "visual": "🎲" },
-        "climax": { "text": "VAEs (variational autoencoders) enable smooth interpolation between data points.", "visual": "🌊" },
-        "punchline": { "text": "Compress to understand. Sample to create.", "visual": "🔮" }
+        "hook": {
+          "text": "Squeeze an image through a tiny bottleneck, then rebuild it. What survives is the essence.",
+          "visual": "🗜️"
+        },
+        "buildup": {
+          "text": "Autoencoders have an encoder (compress) and decoder (reconstruct) with a narrow middle layer.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "The bottleneck forces the model to learn a compact, meaningful representation.",
+          "visual": "💎"
+        },
+        "twist": {
+          "text": "Standard autoencoders don't generate well. VAEs add randomness to the bottleneck.",
+          "visual": "🎲"
+        },
+        "climax": {
+          "text": "VAEs (variational autoencoders) enable smooth interpolation between data points.",
+          "visual": "🌊"
+        },
+        "punchline": {
+          "text": "Compress to understand. Sample to create.",
+          "visual": "🔮"
+        }
       },
       "quiz": {
         "question": "What do VAEs add to standard autoencoders?",
-        "options": ["Randomness in the bottleneck for generation", "More layers", "Faster training"],
+        "options": [
+          "Randomness in the bottleneck for generation",
+          "More layers",
+          "Faster training"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch01-foundations",
       "title": "The GAN Framework Revisited",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "A counterfeiter vs a detective. The counterfeiter keeps improving until the detective gives up.", "visual": "🎭" },
-        "buildup": { "text": "GANs use adversarial training: generator creates, discriminator judges, both improve.", "visual": "⚔️" },
-        "discovery": { "text": "Nash equilibrium: the generator produces images the discriminator can't distinguish from real.", "visual": "🤝" },
-        "twist": { "text": "Training instability plagued early GANs. Wasserstein loss and spectral normalization helped.", "visual": "📉" },
-        "climax": { "text": "GANs excel at sharp, photorealistic output but are largely replaced by diffusion models now.", "visual": "🔄" },
-        "punchline": { "text": "The rivalry that birthed an era of generation.", "visual": "🏛️" }
+        "hook": {
+          "text": "A counterfeiter vs a detective. The counterfeiter keeps improving until the detective gives up.",
+          "visual": "🎭"
+        },
+        "buildup": {
+          "text": "GANs use adversarial training: generator creates, discriminator judges, both improve.",
+          "visual": "⚔️"
+        },
+        "discovery": {
+          "text": "Nash equilibrium: the generator produces images the discriminator can't distinguish from real.",
+          "visual": "🤝"
+        },
+        "twist": {
+          "text": "Training instability plagued early GANs. Wasserstein loss and spectral normalization helped.",
+          "visual": "📉"
+        },
+        "climax": {
+          "text": "GANs excel at sharp, photorealistic output but are largely replaced by diffusion models now.",
+          "visual": "🔄"
+        },
+        "punchline": {
+          "text": "The rivalry that birthed an era of generation.",
+          "visual": "🏛️"
+        }
       },
       "quiz": {
         "question": "What stabilized GAN training?",
-        "options": ["Wasserstein loss and spectral normalization", "Larger datasets only", "Removing the discriminator"],
+        "options": [
+          "Wasserstein loss and spectral normalization",
+          "Larger datasets only",
+          "Removing the discriminator"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch01-foundations",
       "title": "Diffusion Models: The New Default",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "Add noise until an image becomes static. Learn to reverse it. That's diffusion.", "visual": "📺" },
-        "buildup": { "text": "Forward process: gradually destroy data with Gaussian noise over T timesteps.", "visual": "🌫️" },
-        "discovery": { "text": "Reverse process: a neural network learns to predict and remove the noise at each step.", "visual": "🧹" },
-        "twist": { "text": "Latent diffusion (Stable Diffusion) runs in compressed space—10× faster than pixel-level.", "visual": "⚡" },
-        "climax": { "text": "Diffusion models are now the backbone of DALL-E 3, Midjourney, and Stable Diffusion.", "visual": "🎨" },
-        "punchline": { "text": "Destroy systematically. Reconstruct creatively.", "visual": "🔄" }
+        "hook": {
+          "text": "Add noise until an image becomes static. Learn to reverse it. That's diffusion.",
+          "visual": "📺"
+        },
+        "buildup": {
+          "text": "Forward process: gradually destroy data with Gaussian noise over T timesteps.",
+          "visual": "🌫️"
+        },
+        "discovery": {
+          "text": "Reverse process: a neural network learns to predict and remove the noise at each step.",
+          "visual": "🧹"
+        },
+        "twist": {
+          "text": "Latent diffusion (Stable Diffusion) runs in compressed space—10× faster than pixel-level.",
+          "visual": "⚡"
+        },
+        "climax": {
+          "text": "Diffusion models are now the backbone of DALL-E 3, Midjourney, and Stable Diffusion.",
+          "visual": "🎨"
+        },
+        "punchline": {
+          "text": "Destroy systematically. Reconstruct creatively.",
+          "visual": "🔄"
+        }
       },
       "quiz": {
         "question": "What makes latent diffusion faster?",
-        "options": ["It operates in compressed latent space instead of pixel space", "It uses fewer timesteps", "It skips the reverse process"],
+        "options": [
+          "It operates in compressed latent space instead of pixel space",
+          "It uses fewer timesteps",
+          "It skips the reverse process"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch01-foundations",
       "title": "Flow Matching: Straight-Line Generation",
-      "difficulty": "Premium",
       "story": {
-        "hook": { "text": "What if instead of T noisy steps, you could go from noise to image in a straight line?", "visual": "📏" },
-        "buildup": { "text": "Flow matching learns a velocity field that transports noise to data in continuous time.", "visual": "🌊" },
-        "discovery": { "text": "Unlike diffusion, flow paths can be straight—faster sampling with fewer function evaluations.", "visual": "⚡" },
-        "twist": { "text": "Stable Diffusion 3 and Flux switched from DDPM-style diffusion to flow matching.", "visual": "🔀" },
-        "climax": { "text": "Flow matching offers a cleaner theoretical framework and better training stability.", "visual": "📐" },
-        "punchline": { "text": "Why zigzag when you can go straight?", "visual": "➡️" }
+        "hook": {
+          "text": "What if instead of T noisy steps, you could go from noise to image in a straight line?",
+          "visual": "📏"
+        },
+        "buildup": {
+          "text": "Flow matching learns a velocity field that transports noise to data in continuous time.",
+          "visual": "🌊"
+        },
+        "discovery": {
+          "text": "Unlike diffusion, flow paths can be straight—faster sampling with fewer function evaluations.",
+          "visual": "⚡"
+        },
+        "twist": {
+          "text": "Stable Diffusion 3 and Flux switched from DDPM-style diffusion to flow matching.",
+          "visual": "🔀"
+        },
+        "climax": {
+          "text": "Flow matching offers a cleaner theoretical framework and better training stability.",
+          "visual": "📐"
+        },
+        "punchline": {
+          "text": "Why zigzag when you can go straight?",
+          "visual": "➡️"
+        }
       },
       "quiz": {
         "question": "How does flow matching differ from traditional diffusion?",
-        "options": ["It uses straight transport paths instead of noisy zigzag steps", "It only works with text", "It requires more compute"],
+        "options": [
+          "It uses straight transport paths instead of noisy zigzag steps",
+          "It only works with text",
+          "It requires more compute"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch02-text",
       "title": "Autoregressive Text Generation",
-      "difficulty": "Beginner",
       "story": {
-        "hook": { "text": "The model writes one word, then uses it to predict the next. Repeat until done.", "visual": "✍️" },
-        "buildup": { "text": "Autoregressive generation produces tokens left to right, each conditioned on all previous ones.", "visual": "➡️" },
-        "discovery": { "text": "This is how GPT, Claude, and Llama generate every response you read.", "visual": "💬" },
-        "twist": { "text": "Errors compound: one bad token early on can derail the entire generation.", "visual": "💥" },
-        "climax": { "text": "Techniques like beam search and nucleus sampling balance quality and diversity.", "visual": "⚖️" },
-        "punchline": { "text": "One token at a time. That's all it ever does.", "visual": "🔤" }
+        "hook": {
+          "text": "The model writes one word, then uses it to predict the next. Repeat until done.",
+          "visual": "✍️"
+        },
+        "buildup": {
+          "text": "Autoregressive generation produces tokens left to right, each conditioned on all previous ones.",
+          "visual": "➡️"
+        },
+        "discovery": {
+          "text": "This is how GPT, Claude, and Llama generate every response you read.",
+          "visual": "💬"
+        },
+        "twist": {
+          "text": "Errors compound: one bad token early on can derail the entire generation.",
+          "visual": "💥"
+        },
+        "climax": {
+          "text": "Techniques like beam search and nucleus sampling balance quality and diversity.",
+          "visual": "⚖️"
+        },
+        "punchline": {
+          "text": "One token at a time. That's all it ever does.",
+          "visual": "🔤"
+        }
       },
       "quiz": {
         "question": "How does autoregressive generation work?",
-        "options": ["Produces tokens one at a time, each conditioned on previous ones", "Generates all tokens at once", "Copies from training data"],
+        "options": [
+          "Produces tokens one at a time, each conditioned on previous ones",
+          "Generates all tokens at once",
+          "Copies from training data"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": true
     },
     {
       "chapter_id": "ai--generative-ai--ch02-text",
       "title": "Sampling Strategies: Temperature and Top-p",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Temperature 0: always the same answer. Temperature 2: creative nonsense.", "visual": "🌡️" },
-        "buildup": { "text": "Temperature scales the probability distribution before sampling. Lower = more deterministic.", "visual": "📊" },
-        "discovery": { "text": "Top-p (nucleus sampling) cuts the tail: only sample from tokens covering p% of probability.", "visual": "✂️" },
-        "twist": { "text": "Top-k limits to the k most likely tokens. Combine top-p and top-k for best control.", "visual": "🎚️" },
-        "climax": { "text": "For factual tasks: temperature 0. For creative writing: temperature 0.7–1.0 + top-p 0.9.", "visual": "🎯" },
-        "punchline": { "text": "Tune the randomness. Shape the creativity.", "visual": "🎨" }
+        "hook": {
+          "text": "Temperature 0: always the same answer. Temperature 2: creative nonsense.",
+          "visual": "🌡️"
+        },
+        "buildup": {
+          "text": "Temperature scales the probability distribution before sampling. Lower = more deterministic.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Top-p (nucleus sampling) cuts the tail: only sample from tokens covering p% of probability.",
+          "visual": "✂️"
+        },
+        "twist": {
+          "text": "Top-k limits to the k most likely tokens. Combine top-p and top-k for best control.",
+          "visual": "🎚️"
+        },
+        "climax": {
+          "text": "For factual tasks: temperature 0. For creative writing: temperature 0.7–1.0 + top-p 0.9.",
+          "visual": "🎯"
+        },
+        "punchline": {
+          "text": "Tune the randomness. Shape the creativity.",
+          "visual": "🎨"
+        }
       },
       "quiz": {
         "question": "What does a lower temperature produce?",
-        "options": ["More deterministic, predictable output", "More creative, diverse output", "Longer responses"],
+        "options": [
+          "More deterministic, predictable output",
+          "More creative, diverse output",
+          "Longer responses"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch02-text",
       "title": "Structured Output: JSON, XML, and Schemas",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "You need valid JSON. The model returns: {name: 'Alice'—missing quotes and closing brace.", "visual": "🔧" },
-        "buildup": { "text": "LLMs generate free-form text. Structured output forces a specific format.", "visual": "📋" },
-        "discovery": { "text": "Constrained decoding only allows tokens that keep the output valid at every step.", "visual": "🔒" },
-        "twist": { "text": "OpenAI's JSON mode and tools like Outlines guarantee syntactic validity. No retry needed.", "visual": "✅" },
-        "climax": { "text": "Define a Pydantic or JSON Schema. Let the library enforce it during generation.", "visual": "📐" },
-        "punchline": { "text": "Don't parse and pray. Constrain and ship.", "visual": "🚀" }
+        "hook": {
+          "text": "You need valid JSON. The model returns: {name: 'Alice'—missing quotes and closing brace.",
+          "visual": "🔧"
+        },
+        "buildup": {
+          "text": "LLMs generate free-form text. Structured output forces a specific format.",
+          "visual": "📋"
+        },
+        "discovery": {
+          "text": "Constrained decoding only allows tokens that keep the output valid at every step.",
+          "visual": "🔒"
+        },
+        "twist": {
+          "text": "OpenAI's JSON mode and tools like Outlines guarantee syntactic validity. No retry needed.",
+          "visual": "✅"
+        },
+        "climax": {
+          "text": "Define a Pydantic or JSON Schema. Let the library enforce it during generation.",
+          "visual": "📐"
+        },
+        "punchline": {
+          "text": "Don't parse and pray. Constrain and ship.",
+          "visual": "🚀"
+        }
       },
       "quiz": {
         "question": "What does constrained decoding guarantee?",
-        "options": ["Output always matches the required format", "Faster generation speed", "Smaller model size"],
+        "options": [
+          "Output always matches the required format",
+          "Faster generation speed",
+          "Smaller model size"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch02-text",
       "title": "Code Generation: From Prompt to Program",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "'Write a Python function to sort a list of dicts by key.' Done in 3 seconds.", "visual": "💻" },
-        "buildup": { "text": "Code LLMs are trained on billions of lines of code from GitHub, Stack Overflow, and docs.", "visual": "📚" },
-        "discovery": { "text": "They handle: code completion, bug fixing, refactoring, test generation, and documentation.", "visual": "🔧" },
-        "twist": { "text": "Generated code can contain bugs, security flaws, and license violations. Always review.", "visual": "⚠️" },
-        "climax": { "text": "GitHub Copilot, Cursor, and Codeium integrate code generation directly into your editor.", "visual": "🖥️" },
-        "punchline": { "text": "AI writes the first draft. You write the final version.", "visual": "✏️" }
+        "hook": {
+          "text": "'Write a Python function to sort a list of dicts by key.' Done in 3 seconds.",
+          "visual": "💻"
+        },
+        "buildup": {
+          "text": "Code LLMs are trained on billions of lines of code from GitHub, Stack Overflow, and docs.",
+          "visual": "📚"
+        },
+        "discovery": {
+          "text": "They handle: code completion, bug fixing, refactoring, test generation, and documentation.",
+          "visual": "🔧"
+        },
+        "twist": {
+          "text": "Generated code can contain bugs, security flaws, and license violations. Always review.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "GitHub Copilot, Cursor, and Codeium integrate code generation directly into your editor.",
+          "visual": "🖥️"
+        },
+        "punchline": {
+          "text": "AI writes the first draft. You write the final version.",
+          "visual": "✏️"
+        }
       },
       "quiz": {
         "question": "What risk does AI-generated code carry?",
-        "options": ["Bugs, security flaws, and license violations", "It's always perfect", "It only works in Python"],
+        "options": [
+          "Bugs, security flaws, and license violations",
+          "It's always perfect",
+          "It only works in Python"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch02-text",
       "title": "RAG: Grounding Generation in Facts",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "The model makes up a legal citation. With RAG, it quotes the actual statute.", "visual": "⚖️" },
-        "buildup": { "text": "RAG retrieves relevant documents from a knowledge base and injects them into the prompt.", "visual": "🔍" },
-        "discovery": { "text": "Pipeline: query → embed → retrieve top-k chunks → append to prompt → generate answer.", "visual": "🔗" },
-        "twist": { "text": "Retrieval quality is the bottleneck. Bad retrieval = bad answers, regardless of model quality.", "visual": "📉" },
-        "climax": { "text": "Hybrid search + reranking + citation verification = production-grade RAG.", "visual": "🏗️" },
-        "punchline": { "text": "Don't generate from memory. Generate from evidence.", "visual": "📄" }
+        "hook": {
+          "text": "The model makes up a legal citation. With RAG, it quotes the actual statute.",
+          "visual": "⚖️"
+        },
+        "buildup": {
+          "text": "RAG retrieves relevant documents from a knowledge base and injects them into the prompt.",
+          "visual": "🔍"
+        },
+        "discovery": {
+          "text": "Pipeline: query → embed → retrieve top-k chunks → append to prompt → generate answer.",
+          "visual": "🔗"
+        },
+        "twist": {
+          "text": "Retrieval quality is the bottleneck. Bad retrieval = bad answers, regardless of model quality.",
+          "visual": "📉"
+        },
+        "climax": {
+          "text": "Hybrid search + reranking + citation verification = production-grade RAG.",
+          "visual": "🏗️"
+        },
+        "punchline": {
+          "text": "Don't generate from memory. Generate from evidence.",
+          "visual": "📄"
+        }
       },
       "quiz": {
         "question": "What is the biggest bottleneck in RAG systems?",
-        "options": ["Retrieval quality determines answer quality", "Model size", "Prompt length"],
+        "options": [
+          "Retrieval quality determines answer quality",
+          "Model size",
+          "Prompt length"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch03-image",
       "title": "Text-to-Image: How It Works",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Type 'sunset over a cyberpunk city, neon lights, rain.' An image materializes.", "visual": "🌆" },
-        "buildup": { "text": "A text encoder (CLIP) converts the prompt into an embedding that guides diffusion.", "visual": "🧭" },
-        "discovery": { "text": "Cross-attention layers let the denoising network 'see' the text at every step.", "visual": "👁️" },
-        "twist": { "text": "Classifier-free guidance (CFG) strengthens text adherence—higher CFG = more prompt-faithful.", "visual": "🎚️" },
-        "climax": { "text": "SDXL, DALL-E 3, and Midjourney v6 produce near-photorealistic results from text alone.", "visual": "📸" },
-        "punchline": { "text": "Words in. Worlds out.", "visual": "🌍" }
+        "hook": {
+          "text": "Type 'sunset over a cyberpunk city, neon lights, rain.' An image materializes.",
+          "visual": "🌆"
+        },
+        "buildup": {
+          "text": "A text encoder (CLIP) converts the prompt into an embedding that guides diffusion.",
+          "visual": "🧭"
+        },
+        "discovery": {
+          "text": "Cross-attention layers let the denoising network 'see' the text at every step.",
+          "visual": "👁️"
+        },
+        "twist": {
+          "text": "Classifier-free guidance (CFG) strengthens text adherence—higher CFG = more prompt-faithful.",
+          "visual": "🎚️"
+        },
+        "climax": {
+          "text": "SDXL, DALL-E 3, and Midjourney v6 produce near-photorealistic results from text alone.",
+          "visual": "📸"
+        },
+        "punchline": {
+          "text": "Words in. Worlds out.",
+          "visual": "🌍"
+        }
       },
       "quiz": {
         "question": "What does classifier-free guidance control?",
-        "options": ["How closely the image follows the text prompt", "The number of diffusion steps", "Image resolution"],
+        "options": [
+          "How closely the image follows the text prompt",
+          "The number of diffusion steps",
+          "Image resolution"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": true
     },
     {
       "chapter_id": "ai--generative-ai--ch03-image",
       "title": "Image-to-Image: Editing with AI",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Upload a sketch. The model turns it into a photorealistic scene.", "visual": "🖌️" },
-        "buildup": { "text": "Image-to-image starts from a partially noised input image instead of pure noise.", "visual": "🔄" },
-        "discovery": { "text": "The denoising strength controls how much the model changes: low = minor edits, high = full redraw.", "visual": "🎚️" },
-        "twist": { "text": "Inpainting masks specific regions for editing while keeping the rest untouched.", "visual": "🎭" },
-        "climax": { "text": "ControlNet adds structural guidance: edges, poses, and depth maps constrain the output.", "visual": "📐" },
-        "punchline": { "text": "Edit images with words and masks. No Photoshop needed.", "visual": "✨" }
+        "hook": {
+          "text": "Upload a sketch. The model turns it into a photorealistic scene.",
+          "visual": "🖌️"
+        },
+        "buildup": {
+          "text": "Image-to-image starts from a partially noised input image instead of pure noise.",
+          "visual": "🔄"
+        },
+        "discovery": {
+          "text": "The denoising strength controls how much the model changes: low = minor edits, high = full redraw.",
+          "visual": "🎚️"
+        },
+        "twist": {
+          "text": "Inpainting masks specific regions for editing while keeping the rest untouched.",
+          "visual": "🎭"
+        },
+        "climax": {
+          "text": "ControlNet adds structural guidance: edges, poses, and depth maps constrain the output.",
+          "visual": "📐"
+        },
+        "punchline": {
+          "text": "Edit images with words and masks. No Photoshop needed.",
+          "visual": "✨"
+        }
       },
       "quiz": {
         "question": "What does ControlNet provide?",
-        "options": ["Structural guidance like edges and poses for image generation", "Text-only prompting", "Faster training"],
+        "options": [
+          "Structural guidance like edges and poses for image generation",
+          "Text-only prompting",
+          "Faster training"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch03-image",
       "title": "Style Transfer and LoRA Customization",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "Train on 20 photos of your art style. Now the model generates new art in that style.", "visual": "🎨" },
-        "buildup": { "text": "LoRA (Low-Rank Adaptation) fine-tunes a tiny fraction of model weights for a custom concept.", "visual": "🔧" },
-        "discovery": { "text": "LoRA files are small (10–100 MB) and can be swapped in and out of the base model.", "visual": "🔀" },
-        "twist": { "text": "Multiple LoRAs can be combined: one for style, one for character, one for lighting.", "visual": "🧩" },
-        "climax": { "text": "Civitai and HuggingFace host thousands of community LoRAs for every style imaginable.", "visual": "🌐" },
-        "punchline": { "text": "Your style. The model's speed. Together.", "visual": "🤝" }
+        "hook": {
+          "text": "Train on 20 photos of your art style. Now the model generates new art in that style.",
+          "visual": "🎨"
+        },
+        "buildup": {
+          "text": "LoRA (Low-Rank Adaptation) fine-tunes a tiny fraction of model weights for a custom concept.",
+          "visual": "🔧"
+        },
+        "discovery": {
+          "text": "LoRA files are small (10–100 MB) and can be swapped in and out of the base model.",
+          "visual": "🔀"
+        },
+        "twist": {
+          "text": "Multiple LoRAs can be combined: one for style, one for character, one for lighting.",
+          "visual": "🧩"
+        },
+        "climax": {
+          "text": "Civitai and HuggingFace host thousands of community LoRAs for every style imaginable.",
+          "visual": "🌐"
+        },
+        "punchline": {
+          "text": "Your style. The model's speed. Together.",
+          "visual": "🤝"
+        }
       },
       "quiz": {
         "question": "What makes LoRA efficient for customization?",
-        "options": ["It only updates a tiny fraction of model weights", "It retrains the entire model", "It doesn't need training data"],
+        "options": [
+          "It only updates a tiny fraction of model weights",
+          "It retrains the entire model",
+          "It doesn't need training data"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch03-image",
       "title": "Upscaling and Super-Resolution",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "A 256×256 image becomes 2048×2048 with sharp details that weren't in the original.", "visual": "🔍" },
-        "buildup": { "text": "Super-resolution models hallucinate plausible high-frequency details during upscaling.", "visual": "📈" },
-        "discovery": { "text": "Real-ESRGAN and diffusion-based upscalers add texture, edges, and detail convincingly.", "visual": "✨" },
-        "twist": { "text": "The model invents details. Upscaled medical or forensic images can be misleading.", "visual": "⚠️" },
-        "climax": { "text": "Tiled upscaling processes large images in overlapping patches to avoid memory limits.", "visual": "🧩" },
-        "punchline": { "text": "More pixels. Invented, not discovered.", "visual": "🔮" }
+        "hook": {
+          "text": "A 256×256 image becomes 2048×2048 with sharp details that weren't in the original.",
+          "visual": "🔍"
+        },
+        "buildup": {
+          "text": "Super-resolution models hallucinate plausible high-frequency details during upscaling.",
+          "visual": "📈"
+        },
+        "discovery": {
+          "text": "Real-ESRGAN and diffusion-based upscalers add texture, edges, and detail convincingly.",
+          "visual": "✨"
+        },
+        "twist": {
+          "text": "The model invents details. Upscaled medical or forensic images can be misleading.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Tiled upscaling processes large images in overlapping patches to avoid memory limits.",
+          "visual": "🧩"
+        },
+        "punchline": {
+          "text": "More pixels. Invented, not discovered.",
+          "visual": "🔮"
+        }
       },
       "quiz": {
         "question": "Why can upscaled images be misleading?",
-        "options": ["The model invents details that weren't in the original", "They lose all quality", "They only work on faces"],
+        "options": [
+          "The model invents details that weren't in the original",
+          "They lose all quality",
+          "They only work on faces"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch04-audio-video",
       "title": "AI Music Generation",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "'Lo-fi jazz with rain sounds, 90 BPM.' An original track plays in seconds.", "visual": "🎵" },
-        "buildup": { "text": "Music generation models learn patterns from millions of songs across genres and instruments.", "visual": "🎹" },
-        "discovery": { "text": "Suno and Udio generate full songs with vocals, instruments, and structure from text prompts.", "visual": "🎤" },
-        "twist": { "text": "Copyright questions loom: who owns AI-generated music trained on copyrighted songs?", "visual": "©️" },
-        "climax": { "text": "Music AI is useful for background tracks, prototyping, and inspiration—not replacing artists.", "visual": "🎨" },
-        "punchline": { "text": "Describe the mood. Hear the track.", "visual": "🎧" }
+        "hook": {
+          "text": "'Lo-fi jazz with rain sounds, 90 BPM.' An original track plays in seconds.",
+          "visual": "🎵"
+        },
+        "buildup": {
+          "text": "Music generation models learn patterns from millions of songs across genres and instruments.",
+          "visual": "🎹"
+        },
+        "discovery": {
+          "text": "Suno and Udio generate full songs with vocals, instruments, and structure from text prompts.",
+          "visual": "🎤"
+        },
+        "twist": {
+          "text": "Copyright questions loom: who owns AI-generated music trained on copyrighted songs?",
+          "visual": "©️"
+        },
+        "climax": {
+          "text": "Music AI is useful for background tracks, prototyping, and inspiration—not replacing artists.",
+          "visual": "🎨"
+        },
+        "punchline": {
+          "text": "Describe the mood. Hear the track.",
+          "visual": "🎧"
+        }
       },
       "quiz": {
         "question": "What legal concern does AI music generation raise?",
-        "options": ["Copyright ownership of AI-generated works", "The music is always bad", "It only works in one genre"],
+        "options": [
+          "Copyright ownership of AI-generated works",
+          "The music is always bad",
+          "It only works in one genre"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": true
     },
     {
       "chapter_id": "ai--generative-ai--ch04-audio-video",
       "title": "Voice Cloning and Speech Synthesis",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "Three seconds of your voice. Now the AI speaks anything in your exact voice.", "visual": "🗣️" },
-        "buildup": { "text": "Voice cloning extracts speaker characteristics and applies them to synthesized speech.", "visual": "🧬" },
-        "discovery": { "text": "Zero-shot cloning needs minimal audio. Fine-tuned cloning needs minutes but sounds better.", "visual": "🎤" },
-        "twist": { "text": "Voice cloning enables fraud: fake CEO calls, phishing, and identity theft.", "visual": "🚨" },
-        "climax": { "text": "Defenses: voice watermarking, liveness detection, and speaker verification challenges.", "visual": "🛡️" },
-        "punchline": { "text": "Your voice is now a clonable asset. Guard it.", "visual": "🔐" }
+        "hook": {
+          "text": "Three seconds of your voice. Now the AI speaks anything in your exact voice.",
+          "visual": "🗣️"
+        },
+        "buildup": {
+          "text": "Voice cloning extracts speaker characteristics and applies them to synthesized speech.",
+          "visual": "🧬"
+        },
+        "discovery": {
+          "text": "Zero-shot cloning needs minimal audio. Fine-tuned cloning needs minutes but sounds better.",
+          "visual": "🎤"
+        },
+        "twist": {
+          "text": "Voice cloning enables fraud: fake CEO calls, phishing, and identity theft.",
+          "visual": "🚨"
+        },
+        "climax": {
+          "text": "Defenses: voice watermarking, liveness detection, and speaker verification challenges.",
+          "visual": "🛡️"
+        },
+        "punchline": {
+          "text": "Your voice is now a clonable asset. Guard it.",
+          "visual": "🔐"
+        }
       },
       "quiz": {
         "question": "What risk does voice cloning create?",
-        "options": ["Fraud through fake calls and identity theft", "Better podcast audio", "Slower speech synthesis"],
+        "options": [
+          "Fraud through fake calls and identity theft",
+          "Better podcast audio",
+          "Slower speech synthesis"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch04-audio-video",
       "title": "Video Generation: Text to Motion",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "'A golden retriever surfing a wave at sunset.' A 4-second video clip appears.", "visual": "🏄" },
-        "buildup": { "text": "Video generation extends image diffusion with temporal consistency across frames.", "visual": "🎬" },
-        "discovery": { "text": "Sora, Runway Gen-3, and Kling generate coherent short clips from text descriptions.", "visual": "📹" },
-        "twist": { "text": "Temporal coherence is hard: objects morph, physics break, and people gain extra limbs.", "visual": "🤪" },
-        "climax": { "text": "Current models handle 4–60 seconds. Feature-length video generation is still years away.", "visual": "⏱️" },
-        "punchline": { "text": "Still images learned to move. Imperfectly, but improving fast.", "visual": "🚀" }
+        "hook": {
+          "text": "'A golden retriever surfing a wave at sunset.' A 4-second video clip appears.",
+          "visual": "🏄"
+        },
+        "buildup": {
+          "text": "Video generation extends image diffusion with temporal consistency across frames.",
+          "visual": "🎬"
+        },
+        "discovery": {
+          "text": "Sora, Runway Gen-3, and Kling generate coherent short clips from text descriptions.",
+          "visual": "📹"
+        },
+        "twist": {
+          "text": "Temporal coherence is hard: objects morph, physics break, and people gain extra limbs.",
+          "visual": "🤪"
+        },
+        "climax": {
+          "text": "Current models handle 4–60 seconds. Feature-length video generation is still years away.",
+          "visual": "⏱️"
+        },
+        "punchline": {
+          "text": "Still images learned to move. Imperfectly, but improving fast.",
+          "visual": "🚀"
+        }
       },
       "quiz": {
         "question": "What is the main challenge in video generation?",
-        "options": ["Maintaining temporal consistency across frames", "Generating individual frames", "File compression"],
+        "options": [
+          "Maintaining temporal consistency across frames",
+          "Generating individual frames",
+          "File compression"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch04-audio-video",
       "title": "3D Generation: Objects from Text",
-      "difficulty": "Premium",
       "story": {
-        "hook": { "text": "'A medieval sword with a dragon-head pommel.' A 3D model rotates on screen.", "visual": "⚔️" },
-        "buildup": { "text": "3D generation creates meshes, point clouds, or NeRFs from text or image prompts.", "visual": "🧊" },
-        "discovery": { "text": "Score distillation sampling uses a 2D diffusion model to guide 3D shape optimization.", "visual": "📐" },
-        "twist": { "text": "Generated 3D models often have artifacts: holes, flat textures, and the 'Janus problem' (multi-faced).", "visual": "👹" },
-        "climax": { "text": "Instant3D and TripoSR generate usable 3D assets in under a minute from a single image.", "visual": "⚡" },
-        "punchline": { "text": "Flat prompts create 3D worlds. Almost.", "visual": "🌐" }
+        "hook": {
+          "text": "'A medieval sword with a dragon-head pommel.' A 3D model rotates on screen.",
+          "visual": "⚔️"
+        },
+        "buildup": {
+          "text": "3D generation creates meshes, point clouds, or NeRFs from text or image prompts.",
+          "visual": "🧊"
+        },
+        "discovery": {
+          "text": "Score distillation sampling uses a 2D diffusion model to guide 3D shape optimization.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Generated 3D models often have artifacts: holes, flat textures, and the 'Janus problem' (multi-faced).",
+          "visual": "👹"
+        },
+        "climax": {
+          "text": "Instant3D and TripoSR generate usable 3D assets in under a minute from a single image.",
+          "visual": "⚡"
+        },
+        "punchline": {
+          "text": "Flat prompts create 3D worlds. Almost.",
+          "visual": "🌐"
+        }
       },
       "quiz": {
         "question": "What is the Janus problem in 3D generation?",
-        "options": ["Objects having multiple faces or duplicate features", "Slow rendering speed", "Low polygon count"],
+        "options": [
+          "Objects having multiple faces or duplicate features",
+          "Slow rendering speed",
+          "Low polygon count"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch05-applications",
       "title": "AI Agents: Models That Take Actions",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "'Book me a flight to Tokyo under $800.' The agent searches, compares, and books.", "visual": "✈️" },
-        "buildup": { "text": "AI agents combine LLMs with tools: web search, APIs, code execution, and databases.", "visual": "🔧" },
-        "discovery": { "text": "The agent loop: observe → think → act → observe result → repeat until goal is achieved.", "visual": "🔁" },
-        "twist": { "text": "Agents hallucinate actions too. Without guardrails, they can send wrong emails or delete files.", "visual": "⚠️" },
-        "climax": { "text": "Frameworks: LangChain, CrewAI, and AutoGen orchestrate multi-step agent workflows.", "visual": "🏗️" },
-        "punchline": { "text": "Not just answers. Actions.", "visual": "⚡" }
+        "hook": {
+          "text": "'Book me a flight to Tokyo under $800.' The agent searches, compares, and books.",
+          "visual": "✈️"
+        },
+        "buildup": {
+          "text": "AI agents combine LLMs with tools: web search, APIs, code execution, and databases.",
+          "visual": "🔧"
+        },
+        "discovery": {
+          "text": "The agent loop: observe → think → act → observe result → repeat until goal is achieved.",
+          "visual": "🔁"
+        },
+        "twist": {
+          "text": "Agents hallucinate actions too. Without guardrails, they can send wrong emails or delete files.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Frameworks: LangChain, CrewAI, and AutoGen orchestrate multi-step agent workflows.",
+          "visual": "🏗️"
+        },
+        "punchline": {
+          "text": "Not just answers. Actions.",
+          "visual": "⚡"
+        }
       },
       "quiz": {
         "question": "What distinguishes AI agents from basic LLMs?",
-        "options": ["Agents take actions using tools and APIs", "Agents are always more accurate", "Agents don't use language models"],
+        "options": [
+          "Agents take actions using tools and APIs",
+          "Agents are always more accurate",
+          "Agents don't use language models"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": true
     },
     {
       "chapter_id": "ai--generative-ai--ch05-applications",
       "title": "Chatbots and Conversational AI",
-      "difficulty": "Beginner",
       "story": {
-        "hook": { "text": "You message customer support. The 'agent' replies in 2 seconds. It's not human.", "visual": "🤖" },
-        "buildup": { "text": "Conversational AI uses LLMs to maintain multi-turn dialogues with context memory.", "visual": "💬" },
-        "discovery": { "text": "System prompts define personality, boundaries, and domain knowledge for the chatbot.", "visual": "📋" },
-        "twist": { "text": "Memory management is key: too much history overflows context, too little loses coherence.", "visual": "🧠" },
-        "climax": { "text": "Handoff to humans when confidence is low—the bot should know when it doesn't know.", "visual": "👤" },
-        "punchline": { "text": "Talk to a model. Get real answers. Escalate when needed.", "visual": "📞" }
+        "hook": {
+          "text": "You message customer support. The 'agent' replies in 2 seconds. It's not human.",
+          "visual": "🤖"
+        },
+        "buildup": {
+          "text": "Conversational AI uses LLMs to maintain multi-turn dialogues with context memory.",
+          "visual": "💬"
+        },
+        "discovery": {
+          "text": "System prompts define personality, boundaries, and domain knowledge for the chatbot.",
+          "visual": "📋"
+        },
+        "twist": {
+          "text": "Memory management is key: too much history overflows context, too little loses coherence.",
+          "visual": "🧠"
+        },
+        "climax": {
+          "text": "Handoff to humans when confidence is low—the bot should know when it doesn't know.",
+          "visual": "👤"
+        },
+        "punchline": {
+          "text": "Talk to a model. Get real answers. Escalate when needed.",
+          "visual": "📞"
+        }
       },
       "quiz": {
         "question": "What should a chatbot do when uncertain?",
-        "options": ["Escalate to a human agent", "Guess confidently", "Shut down"],
+        "options": [
+          "Escalate to a human agent",
+          "Guess confidently",
+          "Shut down"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch05-applications",
       "title": "Content Creation Workflows",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Outline → draft → edit → illustrate → publish. AI assists at every step.", "visual": "📝" },
-        "buildup": { "text": "LLMs generate outlines, first drafts, social media posts, and email campaigns.", "visual": "📧" },
-        "discovery": { "text": "Image models create illustrations, thumbnails, and ad creatives from text descriptions.", "visual": "🖼️" },
-        "twist": { "text": "AI-generated content needs human editing: fact-checking, tone adjustment, and brand alignment.", "visual": "✏️" },
-        "climax": { "text": "The workflow: AI generates 80%, human polishes 20%. Speed × quality.", "visual": "⚡" },
-        "punchline": { "text": "AI is the first draft machine. You're the editor.", "visual": "🎯" }
+        "hook": {
+          "text": "Outline → draft → edit → illustrate → publish. AI assists at every step.",
+          "visual": "📝"
+        },
+        "buildup": {
+          "text": "LLMs generate outlines, first drafts, social media posts, and email campaigns.",
+          "visual": "📧"
+        },
+        "discovery": {
+          "text": "Image models create illustrations, thumbnails, and ad creatives from text descriptions.",
+          "visual": "🖼️"
+        },
+        "twist": {
+          "text": "AI-generated content needs human editing: fact-checking, tone adjustment, and brand alignment.",
+          "visual": "✏️"
+        },
+        "climax": {
+          "text": "The workflow: AI generates 80%, human polishes 20%. Speed × quality.",
+          "visual": "⚡"
+        },
+        "punchline": {
+          "text": "AI is the first draft machine. You're the editor.",
+          "visual": "🎯"
+        }
       },
       "quiz": {
         "question": "What role should humans play in AI content creation?",
-        "options": ["Editing for facts, tone, and brand alignment", "No role—AI handles everything", "Only writing the prompt"],
+        "options": [
+          "Editing for facts, tone, and brand alignment",
+          "No role—AI handles everything",
+          "Only writing the prompt"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch05-applications",
       "title": "Synthetic Data Generation",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "No real data? Generate synthetic data that looks real enough to train on.", "visual": "🏭" },
-        "buildup": { "text": "Synthetic data generation creates artificial training examples that mimic real distributions.", "visual": "📊" },
-        "discovery": { "text": "Use cases: privacy (no real PII), rare events (fraud simulation), and data augmentation.", "visual": "🔒" },
-        "twist": { "text": "Models trained on synthetic data can inherit the generator's biases and blind spots.", "visual": "⚠️" },
-        "climax": { "text": "Validate synthetic data against real data distributions before using it for training.", "visual": "✅" },
-        "punchline": { "text": "Fake data, real utility. If done carefully.", "visual": "🎯" }
+        "hook": {
+          "text": "No real data? Generate synthetic data that looks real enough to train on.",
+          "visual": "🏭"
+        },
+        "buildup": {
+          "text": "Synthetic data generation creates artificial training examples that mimic real distributions.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Use cases: privacy (no real PII), rare events (fraud simulation), and data augmentation.",
+          "visual": "🔒"
+        },
+        "twist": {
+          "text": "Models trained on synthetic data can inherit the generator's biases and blind spots.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Validate synthetic data against real data distributions before using it for training.",
+          "visual": "✅"
+        },
+        "punchline": {
+          "text": "Fake data, real utility. If done carefully.",
+          "visual": "🎯"
+        }
       },
       "quiz": {
         "question": "Why is synthetic data useful for privacy?",
-        "options": ["It contains no real personal information", "It's always more accurate", "It's smaller in size"],
+        "options": [
+          "It contains no real personal information",
+          "It's always more accurate",
+          "It's smaller in size"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch06-risks",
       "title": "Copyright and Training Data",
-      "difficulty": "Beginner",
       "story": {
-        "hook": { "text": "An artist's exact style appears in AI art. They never consented to their work being used.", "visual": "🎨" },
-        "buildup": { "text": "Generative models train on web-scraped data that includes copyrighted works.", "visual": "🌐" },
-        "discovery": { "text": "Lawsuits: NYT vs OpenAI, Getty vs Stability AI—the legal battles have begun.", "visual": "⚖️" },
-        "twist": { "text": "Fair use is unclear for AI training. Courts in different countries may rule differently.", "visual": "🌍" },
-        "climax": { "text": "Some models now train on licensed or public domain data to avoid legal risk.", "visual": "📜" },
-        "punchline": { "text": "The law hasn't caught up. But it's coming.", "visual": "⏳" }
+        "hook": {
+          "text": "An artist's exact style appears in AI art. They never consented to their work being used.",
+          "visual": "🎨"
+        },
+        "buildup": {
+          "text": "Generative models train on web-scraped data that includes copyrighted works.",
+          "visual": "🌐"
+        },
+        "discovery": {
+          "text": "Lawsuits: NYT vs OpenAI, Getty vs Stability AI—the legal battles have begun.",
+          "visual": "⚖️"
+        },
+        "twist": {
+          "text": "Fair use is unclear for AI training. Courts in different countries may rule differently.",
+          "visual": "🌍"
+        },
+        "climax": {
+          "text": "Some models now train on licensed or public domain data to avoid legal risk.",
+          "visual": "📜"
+        },
+        "punchline": {
+          "text": "The law hasn't caught up. But it's coming.",
+          "visual": "⏳"
+        }
       },
       "quiz": {
         "question": "Why are AI companies facing copyright lawsuits?",
-        "options": ["Training on copyrighted works without consent", "Making models too small", "Generating only text"],
+        "options": [
+          "Training on copyrighted works without consent",
+          "Making models too small",
+          "Generating only text"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": true
     },
     {
       "chapter_id": "ai--generative-ai--ch06-risks",
       "title": "Watermarking AI-Generated Content",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "Is this photo real or AI-generated? A hidden watermark could tell you instantly.", "visual": "🔏" },
-        "buildup": { "text": "Watermarking embeds invisible signals in generated content to prove AI origin.", "visual": "🔬" },
-        "discovery": { "text": "Text watermarks bias token selection in statistically detectable ways.", "visual": "📊" },
-        "twist": { "text": "Watermarks can be removed by paraphrasing text or re-encoding images. It's an arms race.", "visual": "⚔️" },
-        "climax": { "text": "C2PA and SynthID aim to become standards for AI content provenance tracking.", "visual": "🏷️" },
-        "punchline": { "text": "Invisible marks for an invisible problem.", "visual": "👁️" }
+        "hook": {
+          "text": "Is this photo real or AI-generated? A hidden watermark could tell you instantly.",
+          "visual": "🔏"
+        },
+        "buildup": {
+          "text": "Watermarking embeds invisible signals in generated content to prove AI origin.",
+          "visual": "🔬"
+        },
+        "discovery": {
+          "text": "Text watermarks bias token selection in statistically detectable ways.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Watermarks can be removed by paraphrasing text or re-encoding images. It's an arms race.",
+          "visual": "⚔️"
+        },
+        "climax": {
+          "text": "C2PA and SynthID aim to become standards for AI content provenance tracking.",
+          "visual": "🏷️"
+        },
+        "punchline": {
+          "text": "Invisible marks for an invisible problem.",
+          "visual": "👁️"
+        }
       },
       "quiz": {
         "question": "How can text watermarks be defeated?",
-        "options": ["By paraphrasing the text", "By reading it aloud", "By printing it"],
+        "options": [
+          "By paraphrasing the text",
+          "By reading it aloud",
+          "By printing it"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch06-risks",
       "title": "Model Collapse: When AI Trains on AI",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "The internet fills with AI text. New models train on it. Quality spirals downward.", "visual": "🌀" },
-        "buildup": { "text": "Model collapse happens when generative models train on data produced by earlier models.", "visual": "📉" },
-        "discovery": { "text": "Each generation amplifies errors and narrows diversity—like a photocopy of a photocopy.", "visual": "📠" },
-        "twist": { "text": "Without fresh human-generated data, future models may degrade rather than improve.", "visual": "⚠️" },
-        "climax": { "text": "Solutions: curate human-only data, label synthetic content, and diversify training sources.", "visual": "🧹" },
-        "punchline": { "text": "AI eating AI output. The ouroboros of data.", "visual": "🐍" }
+        "hook": {
+          "text": "The internet fills with AI text. New models train on it. Quality spirals downward.",
+          "visual": "🌀"
+        },
+        "buildup": {
+          "text": "Model collapse happens when generative models train on data produced by earlier models.",
+          "visual": "📉"
+        },
+        "discovery": {
+          "text": "Each generation amplifies errors and narrows diversity—like a photocopy of a photocopy.",
+          "visual": "📠"
+        },
+        "twist": {
+          "text": "Without fresh human-generated data, future models may degrade rather than improve.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Solutions: curate human-only data, label synthetic content, and diversify training sources.",
+          "visual": "🧹"
+        },
+        "punchline": {
+          "text": "AI eating AI output. The ouroboros of data.",
+          "visual": "🐍"
+        }
       },
       "quiz": {
         "question": "What causes model collapse?",
-        "options": ["Training on AI-generated data from earlier models", "Using too much human data", "Making models too large"],
+        "options": [
+          "Training on AI-generated data from earlier models",
+          "Using too much human data",
+          "Making models too large"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch06-risks",
       "title": "Environmental Cost of Generative AI",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Generating one image uses as much energy as charging your phone. Multiply by millions.", "visual": "🔋" },
-        "buildup": { "text": "Training large generative models emits hundreds of tons of CO2 equivalent.", "visual": "🏭" },
-        "discovery": { "text": "Inference costs add up: billions of API calls daily across all generative AI services.", "visual": "📈" },
-        "twist": { "text": "Efficiency improvements (distillation, quantization) offset some growth but usage scales faster.", "visual": "📉" },
-        "climax": { "text": "Measure and report compute costs. Choose efficient models when quality is comparable.", "visual": "📊" },
-        "punchline": { "text": "Every generation has a carbon cost. Make it count.", "visual": "🌿" }
+        "hook": {
+          "text": "Generating one image uses as much energy as charging your phone. Multiply by millions.",
+          "visual": "🔋"
+        },
+        "buildup": {
+          "text": "Training large generative models emits hundreds of tons of CO2 equivalent.",
+          "visual": "🏭"
+        },
+        "discovery": {
+          "text": "Inference costs add up: billions of API calls daily across all generative AI services.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "Efficiency improvements (distillation, quantization) offset some growth but usage scales faster.",
+          "visual": "📉"
+        },
+        "climax": {
+          "text": "Measure and report compute costs. Choose efficient models when quality is comparable.",
+          "visual": "📊"
+        },
+        "punchline": {
+          "text": "Every generation has a carbon cost. Make it count.",
+          "visual": "🌿"
+        }
       },
       "quiz": {
         "question": "What contributes most to generative AI's environmental cost?",
-        "options": ["Billions of inference API calls daily", "Model download sizes", "Storing training data"],
+        "options": [
+          "Billions of inference API calls daily",
+          "Model download sizes",
+          "Storing training data"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch02-text",
       "title": "Instruction Tuning: Teaching Models to Follow Orders",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Base GPT-3 rambles endlessly. Instruction-tuned GPT-3.5 answers questions precisely. What changed?", "visual": "🎯" },
-        "buildup": { "text": "Instruction tuning fine-tunes base models on prompt-response pairs to follow user instructions.", "visual": "📝" },
-        "discovery": { "text": "RLHF and DPO further align outputs with human preferences for helpfulness and safety.", "visual": "👤" },
-        "twist": { "text": "Instruction tuning sacrifices some creativity for reliability. The base model is wilder but less useful.", "visual": "🎭" },
-        "climax": { "text": "The instruction-tuned version is what users interact with. The base model is the foundation.", "visual": "🏗️" },
-        "punchline": { "text": "Raw knowledge is useless without the ability to follow directions.", "visual": "🧭" }
+        "hook": {
+          "text": "Base GPT-3 rambles endlessly. Instruction-tuned GPT-3.5 answers questions precisely. What changed?",
+          "visual": "🎯"
+        },
+        "buildup": {
+          "text": "Instruction tuning fine-tunes base models on prompt-response pairs to follow user instructions.",
+          "visual": "📝"
+        },
+        "discovery": {
+          "text": "RLHF and DPO further align outputs with human preferences for helpfulness and safety.",
+          "visual": "👤"
+        },
+        "twist": {
+          "text": "Instruction tuning sacrifices some creativity for reliability. The base model is wilder but less useful.",
+          "visual": "🎭"
+        },
+        "climax": {
+          "text": "The instruction-tuned version is what users interact with. The base model is the foundation.",
+          "visual": "🏗️"
+        },
+        "punchline": {
+          "text": "Raw knowledge is useless without the ability to follow directions.",
+          "visual": "🧭"
+        }
       },
       "quiz": {
         "question": "What does instruction tuning achieve?",
-        "options": ["It teaches models to follow user instructions reliably", "It increases model size", "It removes all model knowledge"],
+        "options": [
+          "It teaches models to follow user instructions reliably",
+          "It increases model size",
+          "It removes all model knowledge"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch03-image",
       "title": "ControlNet: Guiding Image Generation",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "You want the AI to generate an image in a specific pose. Without guidance, it ignores your layout.", "visual": "🎨" },
-        "buildup": { "text": "ControlNet adds spatial conditioning to diffusion models using edges, depth maps, or poses.", "visual": "📐" },
-        "discovery": { "text": "It takes a reference structure (skeleton, edge map) and generates images matching that structure.", "visual": "🦴" },
-        "twist": { "text": "ControlNet preserves creativity—same structure, infinite styles. Control without killing imagination.", "visual": "✨" },
-        "climax": { "text": "Use cases: consistent character poses, architectural rendering, and product mockups.", "visual": "🏢" },
-        "punchline": { "text": "Guide the canvas. Let creativity fill the rest.", "visual": "🖌️" }
+        "hook": {
+          "text": "You want the AI to generate an image in a specific pose. Without guidance, it ignores your layout.",
+          "visual": "🎨"
+        },
+        "buildup": {
+          "text": "ControlNet adds spatial conditioning to diffusion models using edges, depth maps, or poses.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "It takes a reference structure (skeleton, edge map) and generates images matching that structure.",
+          "visual": "🦴"
+        },
+        "twist": {
+          "text": "ControlNet preserves creativity—same structure, infinite styles. Control without killing imagination.",
+          "visual": "✨"
+        },
+        "climax": {
+          "text": "Use cases: consistent character poses, architectural rendering, and product mockups.",
+          "visual": "🏢"
+        },
+        "punchline": {
+          "text": "Guide the canvas. Let creativity fill the rest.",
+          "visual": "🖌️"
+        }
       },
       "quiz": {
         "question": "What does ControlNet add to image generation?",
-        "options": ["Spatial conditioning from reference structures like poses or edges", "Random noise", "Text-only prompts"],
+        "options": [
+          "Spatial conditioning from reference structures like poses or edges",
+          "Random noise",
+          "Text-only prompts"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch04-audio-video",
       "title": "Music Generation: AI as Composer",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "An AI composed a 3-minute orchestral piece in 10 seconds. A human composer takes weeks.", "visual": "🎵" },
-        "buildup": { "text": "Music generation models create melodies, harmonies, and full arrangements from text prompts.", "visual": "🎹" },
-        "discovery": { "text": "Models like MusicGen and Suno learn musical structure from millions of songs and compositions.", "visual": "📚" },
-        "twist": { "text": "Copyright is murky: who owns AI-generated music? The user, the model creator, or no one?", "visual": "⚖️" },
-        "climax": { "text": "Current use: background music, prototyping, and inspiration. Full replacement of composers is distant.", "visual": "🎧" },
-        "punchline": { "text": "AI composes the draft. Humans add the soul.", "visual": "❤️" }
+        "hook": {
+          "text": "An AI composed a 3-minute orchestral piece in 10 seconds. A human composer takes weeks.",
+          "visual": "🎵"
+        },
+        "buildup": {
+          "text": "Music generation models create melodies, harmonies, and full arrangements from text prompts.",
+          "visual": "🎹"
+        },
+        "discovery": {
+          "text": "Models like MusicGen and Suno learn musical structure from millions of songs and compositions.",
+          "visual": "📚"
+        },
+        "twist": {
+          "text": "Copyright is murky: who owns AI-generated music? The user, the model creator, or no one?",
+          "visual": "⚖️"
+        },
+        "climax": {
+          "text": "Current use: background music, prototyping, and inspiration. Full replacement of composers is distant.",
+          "visual": "🎧"
+        },
+        "punchline": {
+          "text": "AI composes the draft. Humans add the soul.",
+          "visual": "❤️"
+        }
       },
       "quiz": {
         "question": "What is a key challenge with AI-generated music?",
-        "options": ["Copyright ownership is unclear", "AI can't generate any music", "It always sounds identical"],
+        "options": [
+          "Copyright ownership is unclear",
+          "AI can't generate any music",
+          "It always sounds identical"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--generative-ai--ch05-applications",
       "title": "Code Generation: AI as Developer Assistant",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Copilot suggests 10 lines of code. You accept 7 and fix 3. Net productivity gain: massive.", "visual": "💻" },
-        "buildup": { "text": "Code generation models autocomplete, explain, refactor, and even write tests from descriptions.", "visual": "📝" },
-        "discovery": { "text": "Models trained on open-source code learn APIs, patterns, and idioms across hundreds of languages.", "visual": "🌐" },
-        "twist": { "text": "Generated code can have bugs, security flaws, or license issues. Review is non-negotiable.", "visual": "🔍" },
-        "climax": { "text": "Best use: boilerplate, repetitive tasks, and exploration. Worst use: blindly trusting complex logic.", "visual": "⚖️" },
-        "punchline": { "text": "AI writes the first draft. You own the final version.", "visual": "✍️" }
+        "hook": {
+          "text": "Copilot suggests 10 lines of code. You accept 7 and fix 3. Net productivity gain: massive.",
+          "visual": "💻"
+        },
+        "buildup": {
+          "text": "Code generation models autocomplete, explain, refactor, and even write tests from descriptions.",
+          "visual": "📝"
+        },
+        "discovery": {
+          "text": "Models trained on open-source code learn APIs, patterns, and idioms across hundreds of languages.",
+          "visual": "🌐"
+        },
+        "twist": {
+          "text": "Generated code can have bugs, security flaws, or license issues. Review is non-negotiable.",
+          "visual": "🔍"
+        },
+        "climax": {
+          "text": "Best use: boilerplate, repetitive tasks, and exploration. Worst use: blindly trusting complex logic.",
+          "visual": "⚖️"
+        },
+        "punchline": {
+          "text": "AI writes the first draft. You own the final version.",
+          "visual": "✍️"
+        }
       },
       "quiz": {
         "question": "Why must AI-generated code be reviewed?",
-        "options": ["It can contain bugs, security flaws, or license issues", "It's always perfect", "Reviews are optional"],
+        "options": [
+          "It can contain bugs, security flaws, or license issues",
+          "It's always perfect",
+          "Reviews are optional"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     }
   ]
 }

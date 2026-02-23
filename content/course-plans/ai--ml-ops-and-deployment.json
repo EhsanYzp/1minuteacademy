@@ -7,553 +7,1237 @@
   "color": "#4F46E5",
   "requireAuthoredStory": true,
   "chapters": [
-    { "id": "ai--ml-ops-and-deployment--ch01-lifecycle", "title": "The ML Lifecycle", "position": 1 },
-    { "id": "ai--ml-ops-and-deployment--ch02-data-ops", "title": "Data Operations", "position": 2 },
-    { "id": "ai--ml-ops-and-deployment--ch03-training", "title": "Training at Scale", "position": 3 },
-    { "id": "ai--ml-ops-and-deployment--ch04-serving", "title": "Model Serving", "position": 4 },
-    { "id": "ai--ml-ops-and-deployment--ch05-monitoring", "title": "Monitoring & Observability", "position": 5 },
-    { "id": "ai--ml-ops-and-deployment--ch06-governance", "title": "Governance & Reproducibility", "position": 6 }
+    {
+      "id": "ai--ml-ops-and-deployment--ch01-lifecycle",
+      "title": "The ML Lifecycle",
+      "position": 1
+    },
+    {
+      "id": "ai--ml-ops-and-deployment--ch02-data-ops",
+      "title": "Data Operations",
+      "position": 2
+    },
+    {
+      "id": "ai--ml-ops-and-deployment--ch03-training",
+      "title": "Training at Scale",
+      "position": 3
+    },
+    {
+      "id": "ai--ml-ops-and-deployment--ch04-serving",
+      "title": "Model Serving",
+      "position": 4
+    },
+    {
+      "id": "ai--ml-ops-and-deployment--ch05-monitoring",
+      "title": "Monitoring & Observability",
+      "position": 5
+    },
+    {
+      "id": "ai--ml-ops-and-deployment--ch06-governance",
+      "title": "Governance & Reproducibility",
+      "position": 6
+    }
   ],
   "topics": [
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch01-lifecycle",
       "title": "What Is MLOps?",
-      "difficulty": "Beginner",
       "story": {
-        "hook": { "text": "Your model works in a notebook. Getting it into production is a whole different battle.", "visual": "📓" },
-        "buildup": { "text": "MLOps applies DevOps principles—CI/CD, monitoring, automation—to machine learning.", "visual": "🔄" },
-        "discovery": { "text": "It bridges the gap between data science (experimentation) and engineering (production systems).", "visual": "🌉" },
-        "twist": { "text": "87% of ML models never make it to production. MLOps exists to fix that.", "visual": "📉" },
-        "climax": { "text": "Key pillars: versioning, automation, monitoring, reproducibility, and collaboration.", "visual": "🏗️" },
-        "punchline": { "text": "ML isn't done when the model trains. It's done when users benefit.", "visual": "👤" }
+        "hook": {
+          "text": "Your model works in a notebook. Getting it into production is a whole different battle.",
+          "visual": "📓"
+        },
+        "buildup": {
+          "text": "MLOps applies DevOps principles—CI/CD, monitoring, automation—to machine learning.",
+          "visual": "🔄"
+        },
+        "discovery": {
+          "text": "It bridges the gap between data science (experimentation) and engineering (production systems).",
+          "visual": "🌉"
+        },
+        "twist": {
+          "text": "87% of ML models never make it to production. MLOps exists to fix that.",
+          "visual": "📉"
+        },
+        "climax": {
+          "text": "Key pillars: versioning, automation, monitoring, reproducibility, and collaboration.",
+          "visual": "🏗️"
+        },
+        "punchline": {
+          "text": "ML isn't done when the model trains. It's done when users benefit.",
+          "visual": "👤"
+        }
       },
       "quiz": {
         "question": "What problem does MLOps solve?",
-        "options": ["Getting ML models from notebooks into production reliably", "Training models faster", "Writing better code"],
+        "options": [
+          "Getting ML models from notebooks into production reliably",
+          "Training models faster",
+          "Writing better code"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": true
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch01-lifecycle",
       "title": "Experiment Tracking: Know What You Tried",
-      "difficulty": "Beginner",
       "story": {
-        "hook": { "text": "You trained 47 models last week. Which hyperparameters gave the best F1 score?", "visual": "🔬" },
-        "buildup": { "text": "Experiment trackers log parameters, metrics, artifacts, and code versions for every run.", "visual": "📋" },
-        "discovery": { "text": "MLflow, Weights & Biases, and Neptune let you compare runs side by side.", "visual": "📊" },
-        "twist": { "text": "Without tracking, you'll re-run experiments, lose winning configs, and waste GPU hours.", "visual": "🔥" },
-        "climax": { "text": "Log everything from day one. Future you will thank present you.", "visual": "🙏" },
-        "punchline": { "text": "If you didn't log it, it didn't happen.", "visual": "📝" }
+        "hook": {
+          "text": "You trained 47 models last week. Which hyperparameters gave the best F1 score?",
+          "visual": "🔬"
+        },
+        "buildup": {
+          "text": "Experiment trackers log parameters, metrics, artifacts, and code versions for every run.",
+          "visual": "📋"
+        },
+        "discovery": {
+          "text": "MLflow, Weights & Biases, and Neptune let you compare runs side by side.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Without tracking, you'll re-run experiments, lose winning configs, and waste GPU hours.",
+          "visual": "🔥"
+        },
+        "climax": {
+          "text": "Log everything from day one. Future you will thank present you.",
+          "visual": "🙏"
+        },
+        "punchline": {
+          "text": "If you didn't log it, it didn't happen.",
+          "visual": "📝"
+        }
       },
       "quiz": {
         "question": "What do experiment trackers log?",
-        "options": ["Parameters, metrics, artifacts, and code versions", "Only the final accuracy", "Just the model name"],
+        "options": [
+          "Parameters, metrics, artifacts, and code versions",
+          "Only the final accuracy",
+          "Just the model name"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch01-lifecycle",
       "title": "The ML Development Loop",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Data → train → evaluate → deploy → monitor → retrain. It never stops.", "visual": "🔁" },
-        "buildup": { "text": "ML development is iterative: each cycle improves data, features, or model architecture.", "visual": "📈" },
-        "discovery": { "text": "The bottleneck is usually data quality, not model architecture. Fix the data first.", "visual": "🧹" },
-        "twist": { "text": "Production data drifts from training data. Models degrade silently without monitoring.", "visual": "📉" },
-        "climax": { "text": "Automate the loop: scheduled retraining, automated evaluation, gated deployments.", "visual": "⚙️" },
-        "punchline": { "text": "Ship, monitor, improve. Repeat forever.", "visual": "♻️" }
+        "hook": {
+          "text": "Data → train → evaluate → deploy → monitor → retrain. It never stops.",
+          "visual": "🔁"
+        },
+        "buildup": {
+          "text": "ML development is iterative: each cycle improves data, features, or model architecture.",
+          "visual": "📈"
+        },
+        "discovery": {
+          "text": "The bottleneck is usually data quality, not model architecture. Fix the data first.",
+          "visual": "🧹"
+        },
+        "twist": {
+          "text": "Production data drifts from training data. Models degrade silently without monitoring.",
+          "visual": "📉"
+        },
+        "climax": {
+          "text": "Automate the loop: scheduled retraining, automated evaluation, gated deployments.",
+          "visual": "⚙️"
+        },
+        "punchline": {
+          "text": "Ship, monitor, improve. Repeat forever.",
+          "visual": "♻️"
+        }
       },
       "quiz": {
         "question": "What is usually the biggest bottleneck in ML development?",
-        "options": ["Data quality, not model architecture", "GPU speed", "Model size"],
+        "options": [
+          "Data quality, not model architecture",
+          "GPU speed",
+          "Model size"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch01-lifecycle",
       "title": "Maturity Levels: From Manual to Fully Automated",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Level 0: a data scientist manually deploys a pickle file. Level 3: everything is automated.", "visual": "🪜" },
-        "buildup": { "text": "Google's MLOps maturity model defines three levels of automation.", "visual": "📊" },
-        "discovery": { "text": "Level 1: automated training pipeline. Level 2: automated CI/CD for models.", "visual": "🏗️" },
-        "twist": { "text": "Most teams are at Level 0. Getting to Level 1 delivers the biggest ROI.", "visual": "💰" },
-        "climax": { "text": "Start manual, automate the pain points, and level up incrementally.", "visual": "📈" },
-        "punchline": { "text": "Don't automate everything at once. Automate what hurts.", "visual": "🎯" }
+        "hook": {
+          "text": "Level 0: a data scientist manually deploys a pickle file. Level 3: everything is automated.",
+          "visual": "🪜"
+        },
+        "buildup": {
+          "text": "Google's MLOps maturity model defines three levels of automation.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Level 1: automated training pipeline. Level 2: automated CI/CD for models.",
+          "visual": "🏗️"
+        },
+        "twist": {
+          "text": "Most teams are at Level 0. Getting to Level 1 delivers the biggest ROI.",
+          "visual": "💰"
+        },
+        "climax": {
+          "text": "Start manual, automate the pain points, and level up incrementally.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "Don't automate everything at once. Automate what hurts.",
+          "visual": "🎯"
+        }
       },
       "quiz": {
         "question": "What is MLOps maturity Level 1?",
-        "options": ["Automated training pipeline", "Fully manual deployment", "No ML at all"],
+        "options": [
+          "Automated training pipeline",
+          "Fully manual deployment",
+          "No ML at all"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch02-data-ops",
       "title": "Feature Stores: Reusable ML Inputs",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Five teams compute the same 'user_age' feature five different ways. None match.", "visual": "🤦" },
-        "buildup": { "text": "A feature store centralizes feature computation, storage, and serving.", "visual": "🏪" },
-        "discovery": { "text": "It ensures training and serving use the exact same feature values—no skew.", "visual": "✅" },
-        "twist": { "text": "Feature stores add infrastructure complexity. Don't adopt one until you have 10+ shared features.", "visual": "⚠️" },
-        "climax": { "text": "Feast (open source) and Tecton (managed) are popular choices.", "visual": "🔧" },
-        "punchline": { "text": "Compute once. Serve everywhere. No skew.", "visual": "🎯" }
+        "hook": {
+          "text": "Five teams compute the same 'user_age' feature five different ways. None match.",
+          "visual": "🤦"
+        },
+        "buildup": {
+          "text": "A feature store centralizes feature computation, storage, and serving.",
+          "visual": "🏪"
+        },
+        "discovery": {
+          "text": "It ensures training and serving use the exact same feature values—no skew.",
+          "visual": "✅"
+        },
+        "twist": {
+          "text": "Feature stores add infrastructure complexity. Don't adopt one until you have 10+ shared features.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Feast (open source) and Tecton (managed) are popular choices.",
+          "visual": "🔧"
+        },
+        "punchline": {
+          "text": "Compute once. Serve everywhere. No skew.",
+          "visual": "🎯"
+        }
       },
       "quiz": {
         "question": "What problem do feature stores solve?",
-        "options": ["Inconsistent feature computation across teams", "Slow model training", "Missing training data"],
+        "options": [
+          "Inconsistent feature computation across teams",
+          "Slow model training",
+          "Missing training data"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": true
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch02-data-ops",
       "title": "Data Versioning: Track What Changed",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "The model degraded after retraining. Was it the code or the data that changed?", "visual": "🔍" },
-        "buildup": { "text": "Data versioning tracks changes to datasets the same way Git tracks code changes.", "visual": "📦" },
-        "discovery": { "text": "DVC (Data Version Control) stores data separately but links it to code commits.", "visual": "🔗" },
-        "twist": { "text": "Without data versioning, reproducing a past experiment is nearly impossible.", "visual": "🚫" },
-        "climax": { "text": "Version your data, your features, your labels, and your splits. All of them.", "visual": "📋" },
-        "punchline": { "text": "You version code. Version your data too.", "visual": "💾" }
+        "hook": {
+          "text": "The model degraded after retraining. Was it the code or the data that changed?",
+          "visual": "🔍"
+        },
+        "buildup": {
+          "text": "Data versioning tracks changes to datasets the same way Git tracks code changes.",
+          "visual": "📦"
+        },
+        "discovery": {
+          "text": "DVC (Data Version Control) stores data separately but links it to code commits.",
+          "visual": "🔗"
+        },
+        "twist": {
+          "text": "Without data versioning, reproducing a past experiment is nearly impossible.",
+          "visual": "🚫"
+        },
+        "climax": {
+          "text": "Version your data, your features, your labels, and your splits. All of them.",
+          "visual": "📋"
+        },
+        "punchline": {
+          "text": "You version code. Version your data too.",
+          "visual": "💾"
+        }
       },
       "quiz": {
         "question": "What does DVC (Data Version Control) track?",
-        "options": ["Dataset changes linked to code commits", "Only model weights", "API endpoints"],
+        "options": [
+          "Dataset changes linked to code commits",
+          "Only model weights",
+          "API endpoints"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch02-data-ops",
       "title": "Data Validation: Catch Problems Early",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "A pipeline runs for 8 hours, then fails because a column changed from int to string.", "visual": "💥" },
-        "buildup": { "text": "Data validation checks schemas, distributions, and business rules before training starts.", "visual": "🔍" },
-        "discovery": { "text": "Great Expectations and TensorFlow Data Validation define assertions on data properties.", "visual": "📋" },
-        "twist": { "text": "Distribution shifts are subtle: the mean stays the same but the variance doubles.", "visual": "📊" },
-        "climax": { "text": "Run validation at ingestion, before training, and before serving. Three checkpoints minimum.", "visual": "🚦" },
-        "punchline": { "text": "Validate early. Fail fast. Save GPU hours.", "visual": "⚡" }
+        "hook": {
+          "text": "A pipeline runs for 8 hours, then fails because a column changed from int to string.",
+          "visual": "💥"
+        },
+        "buildup": {
+          "text": "Data validation checks schemas, distributions, and business rules before training starts.",
+          "visual": "🔍"
+        },
+        "discovery": {
+          "text": "Great Expectations and TensorFlow Data Validation define assertions on data properties.",
+          "visual": "📋"
+        },
+        "twist": {
+          "text": "Distribution shifts are subtle: the mean stays the same but the variance doubles.",
+          "visual": "📊"
+        },
+        "climax": {
+          "text": "Run validation at ingestion, before training, and before serving. Three checkpoints minimum.",
+          "visual": "🚦"
+        },
+        "punchline": {
+          "text": "Validate early. Fail fast. Save GPU hours.",
+          "visual": "⚡"
+        }
       },
       "quiz": {
         "question": "When should data validation run?",
-        "options": ["At ingestion, before training, and before serving", "Only after deployment", "Never—models handle bad data"],
+        "options": [
+          "At ingestion, before training, and before serving",
+          "Only after deployment",
+          "Never—models handle bad data"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch02-data-ops",
       "title": "Label Management and Annotation",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "Your model is only as good as its labels. One annotator calls it 'cat,' another says 'kitten.'", "visual": "🐱" },
-        "buildup": { "text": "Label management covers annotation workflows, quality assurance, and inter-annotator agreement.", "visual": "🏷️" },
-        "discovery": { "text": "Cohen's kappa measures how much annotators agree beyond chance—aim for > 0.8.", "visual": "📊" },
-        "twist": { "text": "Active learning prioritizes labeling the most informative examples, saving annotation budget.", "visual": "💰" },
-        "climax": { "text": "Tools: Label Studio, Labelbox, Prodigy. All support custom workflows and QA.", "visual": "🔧" },
-        "punchline": { "text": "Good labels are expensive. Bad labels are more expensive.", "visual": "💸" }
+        "hook": {
+          "text": "Your model is only as good as its labels. One annotator calls it 'cat,' another says 'kitten.'",
+          "visual": "🐱"
+        },
+        "buildup": {
+          "text": "Label management covers annotation workflows, quality assurance, and inter-annotator agreement.",
+          "visual": "🏷️"
+        },
+        "discovery": {
+          "text": "Cohen's kappa measures how much annotators agree beyond chance—aim for > 0.8.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Active learning prioritizes labeling the most informative examples, saving annotation budget.",
+          "visual": "💰"
+        },
+        "climax": {
+          "text": "Tools: Label Studio, Labelbox, Prodigy. All support custom workflows and QA.",
+          "visual": "🔧"
+        },
+        "punchline": {
+          "text": "Good labels are expensive. Bad labels are more expensive.",
+          "visual": "💸"
+        }
       },
       "quiz": {
         "question": "What does active learning do for annotation?",
-        "options": ["Prioritizes labeling the most informative examples", "Labels everything automatically", "Removes the need for annotators"],
+        "options": [
+          "Prioritizes labeling the most informative examples",
+          "Labels everything automatically",
+          "Removes the need for annotators"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch03-training",
       "title": "Distributed Training: Multiple GPUs",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "Your model takes 30 days to train on one GPU. On 8 GPUs, it takes 4 days.", "visual": "⏱️" },
-        "buildup": { "text": "Distributed training splits work across multiple GPUs to reduce training time.", "visual": "🔀" },
-        "discovery": { "text": "Data parallelism: each GPU trains on a different batch, gradients are averaged.", "visual": "📊" },
-        "twist": { "text": "Communication overhead between GPUs can eat your speedup if batch sizes are too small.", "visual": "📡" },
-        "climax": { "text": "Model parallelism splits the model itself across GPUs—needed for models too large for one card.", "visual": "🧩" },
-        "punchline": { "text": "More GPUs, less time. If you do it right.", "visual": "⚡" }
+        "hook": {
+          "text": "Your model takes 30 days to train on one GPU. On 8 GPUs, it takes 4 days.",
+          "visual": "⏱️"
+        },
+        "buildup": {
+          "text": "Distributed training splits work across multiple GPUs to reduce training time.",
+          "visual": "🔀"
+        },
+        "discovery": {
+          "text": "Data parallelism: each GPU trains on a different batch, gradients are averaged.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Communication overhead between GPUs can eat your speedup if batch sizes are too small.",
+          "visual": "📡"
+        },
+        "climax": {
+          "text": "Model parallelism splits the model itself across GPUs—needed for models too large for one card.",
+          "visual": "🧩"
+        },
+        "punchline": {
+          "text": "More GPUs, less time. If you do it right.",
+          "visual": "⚡"
+        }
       },
       "quiz": {
         "question": "What is data parallelism?",
-        "options": ["Each GPU trains on a different batch, gradients are averaged", "Splitting the model across GPUs", "Using CPUs instead of GPUs"],
+        "options": [
+          "Each GPU trains on a different batch, gradients are averaged",
+          "Splitting the model across GPUs",
+          "Using CPUs instead of GPUs"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": true
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch03-training",
       "title": "Hyperparameter Tuning: Finding the Best Settings",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Learning rate 0.001 or 0.0001? Batch size 32 or 128? The difference is 5% accuracy.", "visual": "🎚️" },
-        "buildup": { "text": "Hyperparameter tuning searches for the configuration that maximizes model performance.", "visual": "🔍" },
-        "discovery": { "text": "Bayesian optimization (Optuna, Ray Tune) is smarter than grid search—learns from past trials.", "visual": "🧠" },
-        "twist": { "text": "Tuning is expensive: 100 trials × 2 hours each = 200 GPU hours. Budget carefully.", "visual": "💰" },
-        "climax": { "text": "Early stopping kills bad trials fast, saving compute for promising configurations.", "visual": "⏱️" },
-        "punchline": { "text": "Don't guess hyperparameters. Search for them. Smartly.", "visual": "🎯" }
+        "hook": {
+          "text": "Learning rate 0.001 or 0.0001? Batch size 32 or 128? The difference is 5% accuracy.",
+          "visual": "🎚️"
+        },
+        "buildup": {
+          "text": "Hyperparameter tuning searches for the configuration that maximizes model performance.",
+          "visual": "🔍"
+        },
+        "discovery": {
+          "text": "Bayesian optimization (Optuna, Ray Tune) is smarter than grid search—learns from past trials.",
+          "visual": "🧠"
+        },
+        "twist": {
+          "text": "Tuning is expensive: 100 trials × 2 hours each = 200 GPU hours. Budget carefully.",
+          "visual": "💰"
+        },
+        "climax": {
+          "text": "Early stopping kills bad trials fast, saving compute for promising configurations.",
+          "visual": "⏱️"
+        },
+        "punchline": {
+          "text": "Don't guess hyperparameters. Search for them. Smartly.",
+          "visual": "🎯"
+        }
       },
       "quiz": {
         "question": "Why is Bayesian optimization better than grid search?",
-        "options": ["It learns from past trials to search smarter", "It's always faster", "It uses no compute"],
+        "options": [
+          "It learns from past trials to search smarter",
+          "It's always faster",
+          "It uses no compute"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch03-training",
       "title": "Training Pipelines with Orchestrators",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "Step 1: fetch data. Step 2: preprocess. Step 3: train. Step 4: evaluate. Manually? No.", "visual": "🔗" },
-        "buildup": { "text": "Pipeline orchestrators automate multi-step ML workflows with dependency management.", "visual": "🏗️" },
-        "discovery": { "text": "Kubeflow Pipelines, Airflow, and Prefect define DAGs of tasks that execute in order.", "visual": "📊" },
-        "twist": { "text": "Orchestrators add complexity. For small teams, a Makefile or shell script may be enough.", "visual": "📝" },
-        "climax": { "text": "Caching intermediate results prevents re-running expensive steps when only downstream changes.", "visual": "💾" },
-        "punchline": { "text": "Automate the pipeline. Focus on the science.", "visual": "🔬" }
+        "hook": {
+          "text": "Step 1: fetch data. Step 2: preprocess. Step 3: train. Step 4: evaluate. Manually? No.",
+          "visual": "🔗"
+        },
+        "buildup": {
+          "text": "Pipeline orchestrators automate multi-step ML workflows with dependency management.",
+          "visual": "🏗️"
+        },
+        "discovery": {
+          "text": "Kubeflow Pipelines, Airflow, and Prefect define DAGs of tasks that execute in order.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Orchestrators add complexity. For small teams, a Makefile or shell script may be enough.",
+          "visual": "📝"
+        },
+        "climax": {
+          "text": "Caching intermediate results prevents re-running expensive steps when only downstream changes.",
+          "visual": "💾"
+        },
+        "punchline": {
+          "text": "Automate the pipeline. Focus on the science.",
+          "visual": "🔬"
+        }
       },
       "quiz": {
         "question": "What do ML pipeline orchestrators manage?",
-        "options": ["Multi-step workflows with dependency order", "Single model training only", "Data storage"],
+        "options": [
+          "Multi-step workflows with dependency order",
+          "Single model training only",
+          "Data storage"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch03-training",
       "title": "GPU Cost Optimization",
-      "difficulty": "Premium",
       "story": {
-        "hook": { "text": "Your cloud GPU bill hit $50,000 last month. Half of it was idle time.", "visual": "💸" },
-        "buildup": { "text": "GPU costs dominate ML budgets. Optimization starts with utilization monitoring.", "visual": "📊" },
-        "discovery": { "text": "Spot/preemptible instances cost 60–90% less but can be interrupted at any time.", "visual": "💰" },
-        "twist": { "text": "Checkpoint frequently when using spot instances—losing progress costs more than the savings.", "visual": "💾" },
-        "climax": { "text": "Right-size your instances, use mixed precision training, and shut down idle GPUs automatically.", "visual": "⚙️" },
-        "punchline": { "text": "The cheapest GPU hour is the one you don't waste.", "visual": "🎯" }
+        "hook": {
+          "text": "Your cloud GPU bill hit $50,000 last month. Half of it was idle time.",
+          "visual": "💸"
+        },
+        "buildup": {
+          "text": "GPU costs dominate ML budgets. Optimization starts with utilization monitoring.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Spot/preemptible instances cost 60–90% less but can be interrupted at any time.",
+          "visual": "💰"
+        },
+        "twist": {
+          "text": "Checkpoint frequently when using spot instances—losing progress costs more than the savings.",
+          "visual": "💾"
+        },
+        "climax": {
+          "text": "Right-size your instances, use mixed precision training, and shut down idle GPUs automatically.",
+          "visual": "⚙️"
+        },
+        "punchline": {
+          "text": "The cheapest GPU hour is the one you don't waste.",
+          "visual": "🎯"
+        }
       },
       "quiz": {
         "question": "Why should you checkpoint frequently with spot instances?",
-        "options": ["Spot instances can be interrupted, losing unsaved progress", "Checkpoints make training faster", "It reduces GPU cost directly"],
+        "options": [
+          "Spot instances can be interrupted, losing unsaved progress",
+          "Checkpoints make training faster",
+          "It reduces GPU cost directly"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch04-serving",
       "title": "Model Serving Patterns: Batch vs Real-Time",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Recommendation scores at midnight for all users vs instant fraud detection per transaction.", "visual": "⏰" },
-        "buildup": { "text": "Batch serving precomputes predictions on a schedule. Real-time serves per request.", "visual": "🔀" },
-        "discovery": { "text": "Batch: high throughput, no latency constraint. Real-time: low latency, lower throughput.", "visual": "📊" },
-        "twist": { "text": "Many systems use both: batch for 90% of predictions, real-time for the rest.", "visual": "🤝" },
-        "climax": { "text": "Choose based on freshness requirements: stale data OK → batch, milliseconds matter → real-time.", "visual": "🎯" },
-        "punchline": { "text": "Not everything needs to be real-time. Not everything can wait.", "visual": "⚖️" }
+        "hook": {
+          "text": "Recommendation scores at midnight for all users vs instant fraud detection per transaction.",
+          "visual": "⏰"
+        },
+        "buildup": {
+          "text": "Batch serving precomputes predictions on a schedule. Real-time serves per request.",
+          "visual": "🔀"
+        },
+        "discovery": {
+          "text": "Batch: high throughput, no latency constraint. Real-time: low latency, lower throughput.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Many systems use both: batch for 90% of predictions, real-time for the rest.",
+          "visual": "🤝"
+        },
+        "climax": {
+          "text": "Choose based on freshness requirements: stale data OK → batch, milliseconds matter → real-time.",
+          "visual": "🎯"
+        },
+        "punchline": {
+          "text": "Not everything needs to be real-time. Not everything can wait.",
+          "visual": "⚖️"
+        }
       },
       "quiz": {
         "question": "When should you use batch serving?",
-        "options": ["When predictions don't need to be real-time", "When latency must be under 10ms", "When the model is very small"],
+        "options": [
+          "When predictions don't need to be real-time",
+          "When latency must be under 10ms",
+          "When the model is very small"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": true
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch04-serving",
       "title": "Containerizing Models with Docker",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "'It works on my laptop' is not a deployment strategy. Docker makes it reproducible.", "visual": "🐳" },
-        "buildup": { "text": "Docker packages your model, dependencies, and runtime into a portable container image.", "visual": "📦" },
-        "discovery": { "text": "One Dockerfile: base image → install deps → copy model → expose API → done.", "visual": "📋" },
-        "twist": { "text": "ML containers are huge (5–10 GB). Multi-stage builds and slim base images help.", "visual": "📉" },
-        "climax": { "text": "Container registries (ECR, GCR, Docker Hub) store and version your model images.", "visual": "🏪" },
-        "punchline": { "text": "Build once. Run anywhere. Same result.", "visual": "✅" }
+        "hook": {
+          "text": "'It works on my laptop' is not a deployment strategy. Docker makes it reproducible.",
+          "visual": "🐳"
+        },
+        "buildup": {
+          "text": "Docker packages your model, dependencies, and runtime into a portable container image.",
+          "visual": "📦"
+        },
+        "discovery": {
+          "text": "One Dockerfile: base image → install deps → copy model → expose API → done.",
+          "visual": "📋"
+        },
+        "twist": {
+          "text": "ML containers are huge (5–10 GB). Multi-stage builds and slim base images help.",
+          "visual": "📉"
+        },
+        "climax": {
+          "text": "Container registries (ECR, GCR, Docker Hub) store and version your model images.",
+          "visual": "🏪"
+        },
+        "punchline": {
+          "text": "Build once. Run anywhere. Same result.",
+          "visual": "✅"
+        }
       },
       "quiz": {
         "question": "What problem does Docker solve for ML deployment?",
-        "options": ["Reproducible environments across machines", "Faster model training", "Better model accuracy"],
+        "options": [
+          "Reproducible environments across machines",
+          "Faster model training",
+          "Better model accuracy"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch04-serving",
       "title": "API Design for ML Services",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "Your model returns a float. Your API should return a decision with confidence and metadata.", "visual": "📡" },
-        "buildup": { "text": "Wrap models in REST or gRPC APIs with clear input schemas, output schemas, and error codes.", "visual": "📋" },
-        "discovery": { "text": "Include: prediction, confidence score, model version, and latency in every response.", "visual": "📊" },
-        "twist": { "text": "Versioning matters: /v1/predict and /v2/predict can run different models simultaneously.", "visual": "🔀" },
-        "climax": { "text": "Tools: FastAPI + Uvicorn for REST, Triton for high-performance GPU serving.", "visual": "⚡" },
-        "punchline": { "text": "The model is the brain. The API is the interface.", "visual": "🧠" }
+        "hook": {
+          "text": "Your model returns a float. Your API should return a decision with confidence and metadata.",
+          "visual": "📡"
+        },
+        "buildup": {
+          "text": "Wrap models in REST or gRPC APIs with clear input schemas, output schemas, and error codes.",
+          "visual": "📋"
+        },
+        "discovery": {
+          "text": "Include: prediction, confidence score, model version, and latency in every response.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Versioning matters: /v1/predict and /v2/predict can run different models simultaneously.",
+          "visual": "🔀"
+        },
+        "climax": {
+          "text": "Tools: FastAPI + Uvicorn for REST, Triton for high-performance GPU serving.",
+          "visual": "⚡"
+        },
+        "punchline": {
+          "text": "The model is the brain. The API is the interface.",
+          "visual": "🧠"
+        }
       },
       "quiz": {
         "question": "What should an ML API response include besides the prediction?",
-        "options": ["Confidence score, model version, and latency", "Only the raw model output", "The training data"],
+        "options": [
+          "Confidence score, model version, and latency",
+          "Only the raw model output",
+          "The training data"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch04-serving",
       "title": "A/B Testing Models in Production",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "The new model scores better on benchmarks. Will it actually improve the business metric?", "visual": "📊" },
-        "buildup": { "text": "A/B testing splits traffic between the old and new model to compare real-world performance.", "visual": "🔀" },
-        "discovery": { "text": "Route 10% of traffic to the new model. Measure conversion, latency, and error rates.", "visual": "📈" },
-        "twist": { "text": "Statistical significance takes time. Don't declare a winner after 100 requests.", "visual": "⏳" },
-        "climax": { "text": "Use feature flags (LaunchDarkly, Unleash) to control traffic splits without redeploying.", "visual": "🚦" },
-        "punchline": { "text": "Offline metrics propose. Online metrics decide.", "visual": "⚖️" }
+        "hook": {
+          "text": "The new model scores better on benchmarks. Will it actually improve the business metric?",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "A/B testing splits traffic between the old and new model to compare real-world performance.",
+          "visual": "🔀"
+        },
+        "discovery": {
+          "text": "Route 10% of traffic to the new model. Measure conversion, latency, and error rates.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "Statistical significance takes time. Don't declare a winner after 100 requests.",
+          "visual": "⏳"
+        },
+        "climax": {
+          "text": "Use feature flags (LaunchDarkly, Unleash) to control traffic splits without redeploying.",
+          "visual": "🚦"
+        },
+        "punchline": {
+          "text": "Offline metrics propose. Online metrics decide.",
+          "visual": "⚖️"
+        }
       },
       "quiz": {
         "question": "Why is A/B testing needed beyond offline evaluation?",
-        "options": ["Benchmark scores don't always predict real-world performance", "It's faster than benchmarks", "It requires no data"],
+        "options": [
+          "Benchmark scores don't always predict real-world performance",
+          "It's faster than benchmarks",
+          "It requires no data"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch05-monitoring",
       "title": "Data Drift: When the World Changes",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Your fraud model was trained on 2023 data. In 2025, fraudsters use completely new tactics.", "visual": "📅" },
-        "buildup": { "text": "Data drift means the distribution of incoming data shifts away from the training distribution.", "visual": "📉" },
-        "discovery": { "text": "Statistical tests (KS test, PSI) detect drift by comparing training and production distributions.", "visual": "📊" },
-        "twist": { "text": "Not all drift is harmful. Seasonal patterns cause expected drift that doesn't hurt performance.", "visual": "🌊" },
-        "climax": { "text": "Monitor drift continuously and trigger retraining when performance drops below a threshold.", "visual": "🔔" },
-        "punchline": { "text": "The world moves. Your model stays still. Drift fills the gap.", "visual": "🌍" }
+        "hook": {
+          "text": "Your fraud model was trained on 2023 data. In 2025, fraudsters use completely new tactics.",
+          "visual": "📅"
+        },
+        "buildup": {
+          "text": "Data drift means the distribution of incoming data shifts away from the training distribution.",
+          "visual": "📉"
+        },
+        "discovery": {
+          "text": "Statistical tests (KS test, PSI) detect drift by comparing training and production distributions.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Not all drift is harmful. Seasonal patterns cause expected drift that doesn't hurt performance.",
+          "visual": "🌊"
+        },
+        "climax": {
+          "text": "Monitor drift continuously and trigger retraining when performance drops below a threshold.",
+          "visual": "🔔"
+        },
+        "punchline": {
+          "text": "The world moves. Your model stays still. Drift fills the gap.",
+          "visual": "🌍"
+        }
       },
       "quiz": {
         "question": "What causes data drift?",
-        "options": ["Production data distribution shifting from training data", "Model weights changing randomly", "API latency increasing"],
+        "options": [
+          "Production data distribution shifting from training data",
+          "Model weights changing randomly",
+          "API latency increasing"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": true
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch05-monitoring",
       "title": "Model Performance Monitoring",
-      "difficulty": "Beginner",
       "story": {
-        "hook": { "text": "Your model was 95% accurate at launch. Six months later, it's 80%. Nobody noticed.", "visual": "📉" },
-        "buildup": { "text": "Performance monitoring tracks accuracy, latency, error rates, and throughput in production.", "visual": "📊" },
-        "discovery": { "text": "Dashboard key metrics: P50/P99 latency, prediction distribution, error rate, and feature drift.", "visual": "📋" },
-        "twist": { "text": "Ground truth labels often arrive late—you may not know accuracy for days or weeks.", "visual": "⏳" },
-        "climax": { "text": "Use proxy metrics (prediction confidence, distribution stability) until labels arrive.", "visual": "🔍" },
-        "punchline": { "text": "If you're not watching, you're guessing.", "visual": "👁️" }
+        "hook": {
+          "text": "Your model was 95% accurate at launch. Six months later, it's 80%. Nobody noticed.",
+          "visual": "📉"
+        },
+        "buildup": {
+          "text": "Performance monitoring tracks accuracy, latency, error rates, and throughput in production.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Dashboard key metrics: P50/P99 latency, prediction distribution, error rate, and feature drift.",
+          "visual": "📋"
+        },
+        "twist": {
+          "text": "Ground truth labels often arrive late—you may not know accuracy for days or weeks.",
+          "visual": "⏳"
+        },
+        "climax": {
+          "text": "Use proxy metrics (prediction confidence, distribution stability) until labels arrive.",
+          "visual": "🔍"
+        },
+        "punchline": {
+          "text": "If you're not watching, you're guessing.",
+          "visual": "👁️"
+        }
       },
       "quiz": {
         "question": "Why are proxy metrics used in production monitoring?",
-        "options": ["Ground truth labels often arrive late", "They're more accurate", "They replace all other metrics"],
+        "options": [
+          "Ground truth labels often arrive late",
+          "They're more accurate",
+          "They replace all other metrics"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch05-monitoring",
       "title": "Alerting on Model Degradation",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "At 3 AM, the model starts returning garbage predictions. Nobody finds out until Monday.", "visual": "🚨" },
-        "buildup": { "text": "Alerts trigger when metrics cross thresholds: accuracy drops, latency spikes, error rates climb.", "visual": "🔔" },
-        "discovery": { "text": "Define SLOs (service level objectives) for your model: P99 latency < 200ms, error rate < 0.1%.", "visual": "📋" },
-        "twist": { "text": "Too many alerts = alert fatigue. Too few = missed incidents. Calibrate carefully.", "visual": "⚖️" },
-        "climax": { "text": "Integrate with PagerDuty, Slack, or OpsGenie for escalation and on-call rotation.", "visual": "📱" },
-        "punchline": { "text": "Know before your users know.", "visual": "⚡" }
+        "hook": {
+          "text": "At 3 AM, the model starts returning garbage predictions. Nobody finds out until Monday.",
+          "visual": "🚨"
+        },
+        "buildup": {
+          "text": "Alerts trigger when metrics cross thresholds: accuracy drops, latency spikes, error rates climb.",
+          "visual": "🔔"
+        },
+        "discovery": {
+          "text": "Define SLOs (service level objectives) for your model: P99 latency < 200ms, error rate < 0.1%.",
+          "visual": "📋"
+        },
+        "twist": {
+          "text": "Too many alerts = alert fatigue. Too few = missed incidents. Calibrate carefully.",
+          "visual": "⚖️"
+        },
+        "climax": {
+          "text": "Integrate with PagerDuty, Slack, or OpsGenie for escalation and on-call rotation.",
+          "visual": "📱"
+        },
+        "punchline": {
+          "text": "Know before your users know.",
+          "visual": "⚡"
+        }
       },
       "quiz": {
         "question": "What is an SLO for an ML service?",
-        "options": ["A target performance level like P99 latency < 200ms", "A type of model architecture", "A training hyperparameter"],
+        "options": [
+          "A target performance level like P99 latency < 200ms",
+          "A type of model architecture",
+          "A training hyperparameter"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch05-monitoring",
       "title": "Logging Predictions for Auditing",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "A user says your model gave a wrong prediction last Tuesday. Can you reproduce it?", "visual": "🔍" },
-        "buildup": { "text": "Prediction logging stores every input, output, model version, and timestamp.", "visual": "📝" },
-        "discovery": { "text": "Logs enable debugging, auditing, retraining on production data, and compliance reporting.", "visual": "📋" },
-        "twist": { "text": "Logging everything is expensive at scale. Sample strategically—100% for errors, 1% for normal.", "visual": "💰" },
-        "climax": { "text": "Store logs in a queryable format (BigQuery, S3 + Athena) for easy analysis.", "visual": "🗄️" },
-        "punchline": { "text": "Log the prediction. Debug it later.", "visual": "🔧" }
+        "hook": {
+          "text": "A user says your model gave a wrong prediction last Tuesday. Can you reproduce it?",
+          "visual": "🔍"
+        },
+        "buildup": {
+          "text": "Prediction logging stores every input, output, model version, and timestamp.",
+          "visual": "📝"
+        },
+        "discovery": {
+          "text": "Logs enable debugging, auditing, retraining on production data, and compliance reporting.",
+          "visual": "📋"
+        },
+        "twist": {
+          "text": "Logging everything is expensive at scale. Sample strategically—100% for errors, 1% for normal.",
+          "visual": "💰"
+        },
+        "climax": {
+          "text": "Store logs in a queryable format (BigQuery, S3 + Athena) for easy analysis.",
+          "visual": "🗄️"
+        },
+        "punchline": {
+          "text": "Log the prediction. Debug it later.",
+          "visual": "🔧"
+        }
       },
       "quiz": {
         "question": "Why should you log predictions at different sample rates?",
-        "options": ["100% logging at scale is too expensive", "Sampling improves accuracy", "Logging reduces latency"],
+        "options": [
+          "100% logging at scale is too expensive",
+          "Sampling improves accuracy",
+          "Logging reduces latency"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch06-governance",
       "title": "Model Registry: Single Source of Truth",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Which model version is running in production? Who approved it? When was it trained?", "visual": "🔍" },
-        "buildup": { "text": "A model registry stores model artifacts, metadata, lineage, and deployment status.", "visual": "🏪" },
-        "discovery": { "text": "MLflow Model Registry tracks stages: None → Staging → Production → Archived.", "visual": "🔄" },
-        "twist": { "text": "Without a registry, teams deploy different versions to different environments accidentally.", "visual": "🎭" },
-        "climax": { "text": "Add approval gates: no model goes to production without review and automated testing.", "visual": "🚦" },
-        "punchline": { "text": "One place for all models. No guessing.", "visual": "📍" }
+        "hook": {
+          "text": "Which model version is running in production? Who approved it? When was it trained?",
+          "visual": "🔍"
+        },
+        "buildup": {
+          "text": "A model registry stores model artifacts, metadata, lineage, and deployment status.",
+          "visual": "🏪"
+        },
+        "discovery": {
+          "text": "MLflow Model Registry tracks stages: None → Staging → Production → Archived.",
+          "visual": "🔄"
+        },
+        "twist": {
+          "text": "Without a registry, teams deploy different versions to different environments accidentally.",
+          "visual": "🎭"
+        },
+        "climax": {
+          "text": "Add approval gates: no model goes to production without review and automated testing.",
+          "visual": "🚦"
+        },
+        "punchline": {
+          "text": "One place for all models. No guessing.",
+          "visual": "📍"
+        }
       },
       "quiz": {
         "question": "What does a model registry track?",
-        "options": ["Model artifacts, metadata, lineage, and deployment status", "Only the model name", "Training data exclusively"],
+        "options": [
+          "Model artifacts, metadata, lineage, and deployment status",
+          "Only the model name",
+          "Training data exclusively"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": true
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch06-governance",
       "title": "Reproducibility: Same Input, Same Output",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "You retrain the same model on the same data and get different results. Why?", "visual": "🎲" },
-        "buildup": { "text": "Reproducibility requires fixing: random seeds, library versions, hardware, and data order.", "visual": "🔒" },
-        "discovery": { "text": "Pin dependency versions, version datasets, and log the exact commit hash for every run.", "visual": "📌" },
-        "twist": { "text": "GPU non-determinism (floating point order) can cause small differences even with fixed seeds.", "visual": "⚠️" },
-        "climax": { "text": "Docker + DVC + Git + experiment tracking = reproducible ML. Use all four.", "visual": "🏗️" },
-        "punchline": { "text": "If you can't reproduce it, you can't trust it.", "visual": "🔬" }
+        "hook": {
+          "text": "You retrain the same model on the same data and get different results. Why?",
+          "visual": "🎲"
+        },
+        "buildup": {
+          "text": "Reproducibility requires fixing: random seeds, library versions, hardware, and data order.",
+          "visual": "🔒"
+        },
+        "discovery": {
+          "text": "Pin dependency versions, version datasets, and log the exact commit hash for every run.",
+          "visual": "📌"
+        },
+        "twist": {
+          "text": "GPU non-determinism (floating point order) can cause small differences even with fixed seeds.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Docker + DVC + Git + experiment tracking = reproducible ML. Use all four.",
+          "visual": "🏗️"
+        },
+        "punchline": {
+          "text": "If you can't reproduce it, you can't trust it.",
+          "visual": "🔬"
+        }
       },
       "quiz": {
         "question": "Why can GPU training produce different results with the same seed?",
-        "options": ["Floating point operation order varies on GPUs", "Seeds don't work on GPUs", "GPUs use different algorithms"],
+        "options": [
+          "Floating point operation order varies on GPUs",
+          "Seeds don't work on GPUs",
+          "GPUs use different algorithms"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch06-governance",
       "title": "CI/CD for Machine Learning",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "In software, every PR triggers tests. In ML, every model change should too.", "visual": "🔄" },
-        "buildup": { "text": "ML CI/CD automates testing, validation, and deployment of both code and models.", "visual": "🏗️" },
-        "discovery": { "text": "CI: lint code, run unit tests, validate data schema. CD: evaluate model, gate on metrics, deploy.", "visual": "📋" },
-        "twist": { "text": "ML tests include data tests (schema, drift), model tests (accuracy, bias), and infra tests.", "visual": "🧪" },
-        "climax": { "text": "GitHub Actions or GitLab CI can run the full ML pipeline on every commit.", "visual": "⚙️" },
-        "punchline": { "text": "Ship models like software: tested, reviewed, automated.", "visual": "🚀" }
+        "hook": {
+          "text": "In software, every PR triggers tests. In ML, every model change should too.",
+          "visual": "🔄"
+        },
+        "buildup": {
+          "text": "ML CI/CD automates testing, validation, and deployment of both code and models.",
+          "visual": "🏗️"
+        },
+        "discovery": {
+          "text": "CI: lint code, run unit tests, validate data schema. CD: evaluate model, gate on metrics, deploy.",
+          "visual": "📋"
+        },
+        "twist": {
+          "text": "ML tests include data tests (schema, drift), model tests (accuracy, bias), and infra tests.",
+          "visual": "🧪"
+        },
+        "climax": {
+          "text": "GitHub Actions or GitLab CI can run the full ML pipeline on every commit.",
+          "visual": "⚙️"
+        },
+        "punchline": {
+          "text": "Ship models like software: tested, reviewed, automated.",
+          "visual": "🚀"
+        }
       },
       "quiz": {
         "question": "What extra tests does ML CI/CD include beyond software tests?",
-        "options": ["Data validation, model accuracy, and bias checks", "Only unit tests", "No tests are needed"],
+        "options": [
+          "Data validation, model accuracy, and bias checks",
+          "Only unit tests",
+          "No tests are needed"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch06-governance",
       "title": "Rollback Strategies for Bad Models",
-      "difficulty": "Premium",
       "story": {
-        "hook": { "text": "The new model went live at noon. By 1 PM, conversion dropped 20%. Roll it back—now.", "visual": "🚨" },
-        "buildup": { "text": "Rollback means reverting to the previous model version when the new one causes harm.", "visual": "⏪" },
-        "discovery": { "text": "Blue-green deployment: keep the old model running alongside the new one, switch traffic instantly.", "visual": "🔀" },
-        "twist": { "text": "Canary deployment: send 5% of traffic to the new model first. If it fails, only 5% is affected.", "visual": "🐤" },
-        "climax": { "text": "Automated rollback: monitoring detects degradation and reverts without human intervention.", "visual": "🤖" },
-        "punchline": { "text": "Deploy with confidence. Rollback in seconds.", "visual": "⏱️" }
+        "hook": {
+          "text": "The new model went live at noon. By 1 PM, conversion dropped 20%. Roll it back—now.",
+          "visual": "🚨"
+        },
+        "buildup": {
+          "text": "Rollback means reverting to the previous model version when the new one causes harm.",
+          "visual": "⏪"
+        },
+        "discovery": {
+          "text": "Blue-green deployment: keep the old model running alongside the new one, switch traffic instantly.",
+          "visual": "🔀"
+        },
+        "twist": {
+          "text": "Canary deployment: send 5% of traffic to the new model first. If it fails, only 5% is affected.",
+          "visual": "🐤"
+        },
+        "climax": {
+          "text": "Automated rollback: monitoring detects degradation and reverts without human intervention.",
+          "visual": "🤖"
+        },
+        "punchline": {
+          "text": "Deploy with confidence. Rollback in seconds.",
+          "visual": "⏱️"
+        }
       },
       "quiz": {
         "question": "What is canary deployment?",
-        "options": ["Sending a small percentage of traffic to the new model first", "Deploying to all users at once", "Rolling back immediately"],
+        "options": [
+          "Sending a small percentage of traffic to the new model first",
+          "Deploying to all users at once",
+          "Rolling back immediately"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch02-data-ops",
       "title": "Data Versioning with DVC",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Git tracks code changes. But who tracks which dataset trained which model version?", "visual": "📂" },
-        "buildup": { "text": "Data Version Control (DVC) adds Git-like versioning for datasets and ML pipelines.", "visual": "🔄" },
-        "discovery": { "text": "DVC stores lightweight pointers in Git while large files live in remote storage (S3, GCS).", "visual": "📦" },
-        "twist": { "text": "Without data versioning, reproducing a model from 3 months ago is nearly impossible.", "visual": "⚠️" },
-        "climax": { "text": "Pin every experiment to a data version. Reproducibility becomes a command, not a prayer.", "visual": "🔒" },
-        "punchline": { "text": "Version your data like you version your code.", "visual": "📋" }
+        "hook": {
+          "text": "Git tracks code changes. But who tracks which dataset trained which model version?",
+          "visual": "📂"
+        },
+        "buildup": {
+          "text": "Data Version Control (DVC) adds Git-like versioning for datasets and ML pipelines.",
+          "visual": "🔄"
+        },
+        "discovery": {
+          "text": "DVC stores lightweight pointers in Git while large files live in remote storage (S3, GCS).",
+          "visual": "📦"
+        },
+        "twist": {
+          "text": "Without data versioning, reproducing a model from 3 months ago is nearly impossible.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Pin every experiment to a data version. Reproducibility becomes a command, not a prayer.",
+          "visual": "🔒"
+        },
+        "punchline": {
+          "text": "Version your data like you version your code.",
+          "visual": "📋"
+        }
       },
       "quiz": {
         "question": "What problem does DVC solve?",
-        "options": ["Versioning large datasets alongside code in Git", "Writing faster code", "Deploying models to production"],
+        "options": [
+          "Versioning large datasets alongside code in Git",
+          "Writing faster code",
+          "Deploying models to production"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch03-training",
       "title": "Hyperparameter Tuning at Scale",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "Learning rate 0.001 or 0.0001? Batch size 32 or 256? The right combo can double accuracy.", "visual": "🎛️" },
-        "buildup": { "text": "Hyperparameters control training behavior but aren't learned—they must be searched.", "visual": "🔍" },
-        "discovery": { "text": "Methods: grid search, random search, Bayesian optimization, and population-based training.", "visual": "📊" },
-        "twist": { "text": "Random search beats grid search most of the time—important hyperparameters vary per problem.", "visual": "🎲" },
-        "climax": { "text": "Tools like Optuna, Ray Tune, and W&B Sweeps automate distributed hyperparameter search.", "visual": "🔧" },
-        "punchline": { "text": "Don't guess hyperparameters. Search them systematically.", "visual": "🎯" }
+        "hook": {
+          "text": "Learning rate 0.001 or 0.0001? Batch size 32 or 256? The right combo can double accuracy.",
+          "visual": "🎛️"
+        },
+        "buildup": {
+          "text": "Hyperparameters control training behavior but aren't learned—they must be searched.",
+          "visual": "🔍"
+        },
+        "discovery": {
+          "text": "Methods: grid search, random search, Bayesian optimization, and population-based training.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Random search beats grid search most of the time—important hyperparameters vary per problem.",
+          "visual": "🎲"
+        },
+        "climax": {
+          "text": "Tools like Optuna, Ray Tune, and W&B Sweeps automate distributed hyperparameter search.",
+          "visual": "🔧"
+        },
+        "punchline": {
+          "text": "Don't guess hyperparameters. Search them systematically.",
+          "visual": "🎯"
+        }
       },
       "quiz": {
         "question": "Why does random search often beat grid search?",
-        "options": ["It covers the important dimensions more efficiently", "It's slower", "It uses more compute"],
+        "options": [
+          "It covers the important dimensions more efficiently",
+          "It's slower",
+          "It uses more compute"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch04-serving",
       "title": "GPU Serving: Maximizing Throughput",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "One GPU costs $2/hour. Serving one request at a time wastes 90% of its capacity.", "visual": "💰" },
-        "buildup": { "text": "GPU utilization depends on batching requests together to fill the GPU's parallel compute.", "visual": "🔧" },
-        "discovery": { "text": "Dynamic batching collects requests within a time window and processes them in one GPU call.", "visual": "📦" },
-        "twist": { "text": "Larger batches improve throughput but increase latency. The sweet spot depends on SLAs.", "visual": "⚖️" },
-        "climax": { "text": "Serving frameworks (Triton, vLLM, TGI) handle batching, scheduling, and memory management.", "visual": "🏗️" },
-        "punchline": { "text": "Fill the GPU. Every idle cycle is wasted money.", "visual": "📈" }
+        "hook": {
+          "text": "One GPU costs $2/hour. Serving one request at a time wastes 90% of its capacity.",
+          "visual": "💰"
+        },
+        "buildup": {
+          "text": "GPU utilization depends on batching requests together to fill the GPU's parallel compute.",
+          "visual": "🔧"
+        },
+        "discovery": {
+          "text": "Dynamic batching collects requests within a time window and processes them in one GPU call.",
+          "visual": "📦"
+        },
+        "twist": {
+          "text": "Larger batches improve throughput but increase latency. The sweet spot depends on SLAs.",
+          "visual": "⚖️"
+        },
+        "climax": {
+          "text": "Serving frameworks (Triton, vLLM, TGI) handle batching, scheduling, and memory management.",
+          "visual": "🏗️"
+        },
+        "punchline": {
+          "text": "Fill the GPU. Every idle cycle is wasted money.",
+          "visual": "📈"
+        }
       },
       "quiz": {
         "question": "Why is dynamic batching important for GPU serving?",
-        "options": ["It groups requests to maximize GPU utilization", "It reduces accuracy", "It eliminates the need for GPUs"],
+        "options": [
+          "It groups requests to maximize GPU utilization",
+          "It reduces accuracy",
+          "It eliminates the need for GPUs"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch05-monitoring",
       "title": "Alerting on Model Performance Drops",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Your model's accuracy dropped 15% last Tuesday. You found out on Friday. Three days of bad predictions.", "visual": "📉" },
-        "buildup": { "text": "Alerting systems detect model degradation and notify the team before users complain.", "visual": "🔔" },
-        "discovery": { "text": "Set thresholds on key metrics: accuracy, latency p99, error rate, and prediction distribution.", "visual": "📊" },
-        "twist": { "text": "Too many alerts cause fatigue. Too few miss real problems. Calibrate sensitivity carefully.", "visual": "⚠️" },
-        "climax": { "text": "Use anomaly detection on metric time series to catch subtle drifts, not just hard thresholds.", "visual": "📈" },
-        "punchline": { "text": "Detect problems in minutes, not days.", "visual": "⏱️" }
+        "hook": {
+          "text": "Your model's accuracy dropped 15% last Tuesday. You found out on Friday. Three days of bad predictions.",
+          "visual": "📉"
+        },
+        "buildup": {
+          "text": "Alerting systems detect model degradation and notify the team before users complain.",
+          "visual": "🔔"
+        },
+        "discovery": {
+          "text": "Set thresholds on key metrics: accuracy, latency p99, error rate, and prediction distribution.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Too many alerts cause fatigue. Too few miss real problems. Calibrate sensitivity carefully.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Use anomaly detection on metric time series to catch subtle drifts, not just hard thresholds.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "Detect problems in minutes, not days.",
+          "visual": "⏱️"
+        }
       },
       "quiz": {
         "question": "What causes alert fatigue?",
-        "options": ["Too many alerts firing on non-critical issues", "Too few alerts", "Perfectly calibrated thresholds"],
+        "options": [
+          "Too many alerts firing on non-critical issues",
+          "Too few alerts",
+          "Perfectly calibrated thresholds"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch06-governance",
       "title": "Cost Optimization for ML Infrastructure",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Your ML team's cloud bill tripled this quarter. Nobody knows which experiments caused it.", "visual": "💸" },
-        "buildup": { "text": "ML infrastructure costs: GPU training, serving compute, data storage, and experiment tracking.", "visual": "📊" },
-        "discovery": { "text": "Tag every resource by team, project, and experiment. Visibility is the first step to control.", "visual": "🏷️" },
-        "twist": { "text": "Spot instances cut training costs 70% but can be interrupted—checkpoint frequently.", "visual": "💰" },
-        "climax": { "text": "Right-size GPUs, auto-scale serving, archive cold data, and kill idle notebooks.", "visual": "🔧" },
-        "punchline": { "text": "Track every dollar. Optimize the expensive parts first.", "visual": "🎯" }
+        "hook": {
+          "text": "Your ML team's cloud bill tripled this quarter. Nobody knows which experiments caused it.",
+          "visual": "💸"
+        },
+        "buildup": {
+          "text": "ML infrastructure costs: GPU training, serving compute, data storage, and experiment tracking.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Tag every resource by team, project, and experiment. Visibility is the first step to control.",
+          "visual": "🏷️"
+        },
+        "twist": {
+          "text": "Spot instances cut training costs 70% but can be interrupted—checkpoint frequently.",
+          "visual": "💰"
+        },
+        "climax": {
+          "text": "Right-size GPUs, auto-scale serving, archive cold data, and kill idle notebooks.",
+          "visual": "🔧"
+        },
+        "punchline": {
+          "text": "Track every dollar. Optimize the expensive parts first.",
+          "visual": "🎯"
+        }
       },
       "quiz": {
         "question": "How can spot instances reduce ML training costs?",
-        "options": ["They offer 60-90% discounts but can be interrupted", "They're always available", "They cost more but are faster"],
+        "options": [
+          "They offer 60-90% discounts but can be interrupted",
+          "They're always available",
+          "They cost more but are faster"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--ml-ops-and-deployment--ch01-lifecycle",
       "title": "The ML Project Lifecycle",
-      "difficulty": "Beginner",
       "story": {
-        "hook": { "text": "Building a model is 10% of the work. The other 90% is data, deployment, and monitoring.", "visual": "📊" },
-        "buildup": { "text": "The ML lifecycle: define → collect data → train → evaluate → deploy → monitor → iterate.", "visual": "🔄" },
-        "discovery": { "text": "Each stage has unique tools, roles, and failure modes. Skipping any stage invites disaster.", "visual": "⚠️" },
-        "twist": { "text": "Most ML projects fail not at training but at data collection or deployment stages.", "visual": "💥" },
-        "climax": { "text": "MLOps automates and standardizes every lifecycle stage for reliability and speed.", "visual": "🏗️" },
-        "punchline": { "text": "Models are the tip. The lifecycle is the iceberg.", "visual": "🧊" }
+        "hook": {
+          "text": "Building a model is 10% of the work. The other 90% is data, deployment, and monitoring.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "The ML lifecycle: define → collect data → train → evaluate → deploy → monitor → iterate.",
+          "visual": "🔄"
+        },
+        "discovery": {
+          "text": "Each stage has unique tools, roles, and failure modes. Skipping any stage invites disaster.",
+          "visual": "⚠️"
+        },
+        "twist": {
+          "text": "Most ML projects fail not at training but at data collection or deployment stages.",
+          "visual": "💥"
+        },
+        "climax": {
+          "text": "MLOps automates and standardizes every lifecycle stage for reliability and speed.",
+          "visual": "🏗️"
+        },
+        "punchline": {
+          "text": "Models are the tip. The lifecycle is the iceberg.",
+          "visual": "🧊"
+        }
       },
       "quiz": {
         "question": "Where do most ML projects fail?",
-        "options": ["At data collection or deployment, not model training", "Always at training", "They never fail"],
+        "options": [
+          "At data collection or deployment, not model training",
+          "Always at training",
+          "They never fail"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     }
   ]
 }

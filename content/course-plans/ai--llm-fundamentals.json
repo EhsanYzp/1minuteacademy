@@ -7,553 +7,1237 @@
   "color": "#0891B2",
   "requireAuthoredStory": true,
   "chapters": [
-    { "id": "ai--llm-fundamentals--ch01-how-llms-work", "title": "How LLMs Work", "position": 1 },
-    { "id": "ai--llm-fundamentals--ch02-training", "title": "Training & Data", "position": 2 },
-    { "id": "ai--llm-fundamentals--ch03-architectures", "title": "Architectures", "position": 3 },
-    { "id": "ai--llm-fundamentals--ch04-inference", "title": "Inference & Serving", "position": 4 },
-    { "id": "ai--llm-fundamentals--ch05-evaluation", "title": "Evaluation & Benchmarks", "position": 5 },
-    { "id": "ai--llm-fundamentals--ch06-frontier", "title": "Frontier Topics", "position": 6 }
+    {
+      "id": "ai--llm-fundamentals--ch01-how-llms-work",
+      "title": "How LLMs Work",
+      "position": 1
+    },
+    {
+      "id": "ai--llm-fundamentals--ch02-training",
+      "title": "Training & Data",
+      "position": 2
+    },
+    {
+      "id": "ai--llm-fundamentals--ch03-architectures",
+      "title": "Architectures",
+      "position": 3
+    },
+    {
+      "id": "ai--llm-fundamentals--ch04-inference",
+      "title": "Inference & Serving",
+      "position": 4
+    },
+    {
+      "id": "ai--llm-fundamentals--ch05-evaluation",
+      "title": "Evaluation & Benchmarks",
+      "position": 5
+    },
+    {
+      "id": "ai--llm-fundamentals--ch06-frontier",
+      "title": "Frontier Topics",
+      "position": 6
+    }
   ],
   "topics": [
     {
       "chapter_id": "ai--llm-fundamentals--ch01-how-llms-work",
       "title": "Predicting the Next Token",
-      "difficulty": "Beginner",
       "story": {
-        "hook": { "text": "Type 'the cat sat on the' and the model guesses 'mat.' That's the entire trick.", "visual": "🔮" },
-        "buildup": { "text": "LLMs are next-token predictors trained on billions of sentences from the web.", "visual": "📚" },
-        "discovery": { "text": "Given all previous tokens, the model outputs a probability for every possible next token.", "visual": "📊" },
-        "twist": { "text": "This simple objective produces translation, code, and reasoning as side effects.", "visual": "🤯" },
-        "climax": { "text": "The 'intelligence' is compressed patterns—not understanding, not memory, not beliefs.", "visual": "🗜️" },
-        "punchline": { "text": "One trick, endless emergent behaviors.", "visual": "✨" }
+        "hook": {
+          "text": "Type 'the cat sat on the' and the model guesses 'mat.' That's the entire trick.",
+          "visual": "🔮"
+        },
+        "buildup": {
+          "text": "LLMs are next-token predictors trained on billions of sentences from the web.",
+          "visual": "📚"
+        },
+        "discovery": {
+          "text": "Given all previous tokens, the model outputs a probability for every possible next token.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "This simple objective produces translation, code, and reasoning as side effects.",
+          "visual": "🤯"
+        },
+        "climax": {
+          "text": "The 'intelligence' is compressed patterns—not understanding, not memory, not beliefs.",
+          "visual": "🗜️"
+        },
+        "punchline": {
+          "text": "One trick, endless emergent behaviors.",
+          "visual": "✨"
+        }
       },
       "quiz": {
         "question": "What is the core task of a large language model?",
-        "options": ["Predicting the most likely next token", "Searching the internet", "Storing a knowledge database"],
+        "options": [
+          "Predicting the most likely next token",
+          "Searching the internet",
+          "Storing a knowledge database"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": true
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch01-how-llms-work",
       "title": "Embeddings: Words as Numbers",
-      "difficulty": "Beginner",
       "story": {
-        "hook": { "text": "How does a machine know that 'king' is closer to 'queen' than to 'banana'?", "visual": "👑" },
-        "buildup": { "text": "Embeddings convert words into high-dimensional vectors—lists of numbers.", "visual": "🔢" },
-        "discovery": { "text": "Words with similar meaning land near each other in vector space.", "visual": "📍" },
-        "twist": { "text": "Embeddings capture relationships: king - man + woman ≈ queen.", "visual": "🧮" },
-        "climax": { "text": "Every LLM starts by turning your text into embeddings before doing anything else.", "visual": "🔄" },
-        "punchline": { "text": "To a model, words are coordinates.", "visual": "🗺️" }
+        "hook": {
+          "text": "How does a machine know that 'king' is closer to 'queen' than to 'banana'?",
+          "visual": "👑"
+        },
+        "buildup": {
+          "text": "Embeddings convert words into high-dimensional vectors—lists of numbers.",
+          "visual": "🔢"
+        },
+        "discovery": {
+          "text": "Words with similar meaning land near each other in vector space.",
+          "visual": "📍"
+        },
+        "twist": {
+          "text": "Embeddings capture relationships: king - man + woman ≈ queen.",
+          "visual": "🧮"
+        },
+        "climax": {
+          "text": "Every LLM starts by turning your text into embeddings before doing anything else.",
+          "visual": "🔄"
+        },
+        "punchline": {
+          "text": "To a model, words are coordinates.",
+          "visual": "🗺️"
+        }
       },
       "quiz": {
         "question": "What do embeddings represent?",
-        "options": ["Words as numerical vectors in high-dimensional space", "Pixel values of images", "Database row IDs"],
+        "options": [
+          "Words as numerical vectors in high-dimensional space",
+          "Pixel values of images",
+          "Database row IDs"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch01-how-llms-work",
       "title": "Attention: What the Model Focuses On",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "In 'The bank by the river,' how does the model know it's about water, not money?", "visual": "🏦" },
-        "buildup": { "text": "Attention lets each token look at every other token and decide which ones matter.", "visual": "👁️" },
-        "discovery": { "text": "Each token asks 'who should I pay attention to?' via query-key-value dot products.", "visual": "🔑" },
-        "twist": { "text": "Multi-head attention runs this process multiple times in parallel—different perspectives.", "visual": "🔀" },
-        "climax": { "text": "'Attention is all you need' replaced recurrence and convolution for language.", "visual": "📜" },
-        "punchline": { "text": "Context isn't given. It's computed.", "visual": "⚡" }
+        "hook": {
+          "text": "In 'The bank by the river,' how does the model know it's about water, not money?",
+          "visual": "🏦"
+        },
+        "buildup": {
+          "text": "Attention lets each token look at every other token and decide which ones matter.",
+          "visual": "👁️"
+        },
+        "discovery": {
+          "text": "Each token asks 'who should I pay attention to?' via query-key-value dot products.",
+          "visual": "🔑"
+        },
+        "twist": {
+          "text": "Multi-head attention runs this process multiple times in parallel—different perspectives.",
+          "visual": "🔀"
+        },
+        "climax": {
+          "text": "'Attention is all you need' replaced recurrence and convolution for language.",
+          "visual": "📜"
+        },
+        "punchline": {
+          "text": "Context isn't given. It's computed.",
+          "visual": "⚡"
+        }
       },
       "quiz": {
         "question": "What does the attention mechanism do?",
-        "options": ["Lets each token decide which other tokens matter", "Compresses the model size", "Replaces embeddings"],
+        "options": [
+          "Lets each token decide which other tokens matter",
+          "Compresses the model size",
+          "Replaces embeddings"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch01-how-llms-work",
       "title": "Parameters: What the Model Has Learned",
-      "difficulty": "Beginner",
       "story": {
-        "hook": { "text": "GPT-4 has over a trillion parameters. What even is a parameter?", "visual": "🔢" },
-        "buildup": { "text": "Parameters are the numbers (weights) inside a neural network, adjusted during training.", "visual": "⚖️" },
-        "discovery": { "text": "They encode patterns: grammar rules, facts, coding syntax—all as weight values.", "visual": "📦" },
-        "twist": { "text": "More parameters ≠ always smarter. A well-trained small model can beat a lazy large one.", "visual": "🥊" },
-        "climax": { "text": "Parameters are the model's compressed 'memory' of everything it read during training.", "visual": "🧠" },
-        "punchline": { "text": "Billions of tiny knobs, each turned by data.", "visual": "🎛️" }
+        "hook": {
+          "text": "GPT-4 has over a trillion parameters. What even is a parameter?",
+          "visual": "🔢"
+        },
+        "buildup": {
+          "text": "Parameters are the numbers (weights) inside a neural network, adjusted during training.",
+          "visual": "⚖️"
+        },
+        "discovery": {
+          "text": "They encode patterns: grammar rules, facts, coding syntax—all as weight values.",
+          "visual": "📦"
+        },
+        "twist": {
+          "text": "More parameters ≠ always smarter. A well-trained small model can beat a lazy large one.",
+          "visual": "🥊"
+        },
+        "climax": {
+          "text": "Parameters are the model's compressed 'memory' of everything it read during training.",
+          "visual": "🧠"
+        },
+        "punchline": {
+          "text": "Billions of tiny knobs, each turned by data.",
+          "visual": "🎛️"
+        }
       },
       "quiz": {
         "question": "What do parameters store?",
-        "options": ["Patterns learned during training", "User conversations", "API keys"],
+        "options": [
+          "Patterns learned during training",
+          "User conversations",
+          "API keys"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch01-how-llms-work",
       "title": "Tokenization: Splitting Text for Models",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "The word 'unhappiness' becomes three tokens: 'un', 'happiness', and sometimes more.", "visual": "✂️" },
-        "buildup": { "text": "Tokenizers break text into sub-word pieces the model can process.", "visual": "🧩" },
-        "discovery": { "text": "BPE (byte pair encoding) merges frequent character pairs into single tokens.", "visual": "🔗" },
-        "twist": { "text": "Tokenization is language-dependent: English is cheap; CJK and code can cost 2–4× more.", "visual": "💰" },
-        "climax": { "text": "Always use the model's own tokenizer to count tokens accurately before sending.", "visual": "🧮" },
-        "punchline": { "text": "The model doesn't see words. It sees tokens.", "visual": "👀" }
+        "hook": {
+          "text": "The word 'unhappiness' becomes three tokens: 'un', 'happiness', and sometimes more.",
+          "visual": "✂️"
+        },
+        "buildup": {
+          "text": "Tokenizers break text into sub-word pieces the model can process.",
+          "visual": "🧩"
+        },
+        "discovery": {
+          "text": "BPE (byte pair encoding) merges frequent character pairs into single tokens.",
+          "visual": "🔗"
+        },
+        "twist": {
+          "text": "Tokenization is language-dependent: English is cheap; CJK and code can cost 2–4× more.",
+          "visual": "💰"
+        },
+        "climax": {
+          "text": "Always use the model's own tokenizer to count tokens accurately before sending.",
+          "visual": "🧮"
+        },
+        "punchline": {
+          "text": "The model doesn't see words. It sees tokens.",
+          "visual": "👀"
+        }
       },
       "quiz": {
         "question": "What is BPE?",
-        "options": ["Byte pair encoding—merges frequent character pairs", "A type of neural network", "A fine-tuning method"],
+        "options": [
+          "Byte pair encoding—merges frequent character pairs",
+          "A type of neural network",
+          "A fine-tuning method"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch02-training",
       "title": "Pre-Training: Learning from the Whole Internet",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "How does a model learn to code, write poetry, and answer science questions?", "visual": "🌐" },
-        "buildup": { "text": "Pre-training feeds the model trillions of tokens from books, websites, and code repos.", "visual": "📚" },
-        "discovery": { "text": "The objective is simple: predict the next token. Repeat billions of times.", "visual": "🔁" },
-        "twist": { "text": "Quality matters more than quantity—web garbage in, web garbage out.", "visual": "🗑️" },
-        "climax": { "text": "Pre-training takes weeks on thousands of GPUs and costs millions of dollars.", "visual": "💵" },
-        "punchline": { "text": "Read everything. Remember patterns. Forget nothing.", "visual": "🧠" }
+        "hook": {
+          "text": "How does a model learn to code, write poetry, and answer science questions?",
+          "visual": "🌐"
+        },
+        "buildup": {
+          "text": "Pre-training feeds the model trillions of tokens from books, websites, and code repos.",
+          "visual": "📚"
+        },
+        "discovery": {
+          "text": "The objective is simple: predict the next token. Repeat billions of times.",
+          "visual": "🔁"
+        },
+        "twist": {
+          "text": "Quality matters more than quantity—web garbage in, web garbage out.",
+          "visual": "🗑️"
+        },
+        "climax": {
+          "text": "Pre-training takes weeks on thousands of GPUs and costs millions of dollars.",
+          "visual": "💵"
+        },
+        "punchline": {
+          "text": "Read everything. Remember patterns. Forget nothing.",
+          "visual": "🧠"
+        }
       },
       "quiz": {
         "question": "What is the objective during LLM pre-training?",
-        "options": ["Predict the next token", "Classify images", "Answer user questions directly"],
+        "options": [
+          "Predict the next token",
+          "Classify images",
+          "Answer user questions directly"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": true
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch02-training",
       "title": "Fine-Tuning: Teaching New Tricks",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "The base model knows English but can't follow instructions. Fine-tuning bridges that gap.", "visual": "🎓" },
-        "buildup": { "text": "Fine-tuning continues training on a smaller, curated dataset for a specific task.", "visual": "🎯" },
-        "discovery": { "text": "Instruction tuning teaches the model to follow commands instead of just completing text.", "visual": "📋" },
-        "twist": { "text": "Fine-tune too much and the model 'forgets' general knowledge—catastrophic forgetting.", "visual": "🧊" },
-        "climax": { "text": "Use LoRA or QLoRA to fine-tune cheaply by updating only a fraction of the weights.", "visual": "🔧" },
-        "punchline": { "text": "A little targeted data goes a long way.", "visual": "💎" }
+        "hook": {
+          "text": "The base model knows English but can't follow instructions. Fine-tuning bridges that gap.",
+          "visual": "🎓"
+        },
+        "buildup": {
+          "text": "Fine-tuning continues training on a smaller, curated dataset for a specific task.",
+          "visual": "🎯"
+        },
+        "discovery": {
+          "text": "Instruction tuning teaches the model to follow commands instead of just completing text.",
+          "visual": "📋"
+        },
+        "twist": {
+          "text": "Fine-tune too much and the model 'forgets' general knowledge—catastrophic forgetting.",
+          "visual": "🧊"
+        },
+        "climax": {
+          "text": "Use LoRA or QLoRA to fine-tune cheaply by updating only a fraction of the weights.",
+          "visual": "🔧"
+        },
+        "punchline": {
+          "text": "A little targeted data goes a long way.",
+          "visual": "💎"
+        }
       },
       "quiz": {
         "question": "What risk does excessive fine-tuning carry?",
-        "options": ["Catastrophic forgetting of general knowledge", "Making the model faster", "Reducing the parameter count"],
+        "options": [
+          "Catastrophic forgetting of general knowledge",
+          "Making the model faster",
+          "Reducing the parameter count"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch02-training",
       "title": "RLHF: Learning from Human Preferences",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "The model writes two answers. A human picks the better one. That signal trains the model.", "visual": "👆" },
-        "buildup": { "text": "RLHF (reinforcement learning from human feedback) aligns models with human preferences.", "visual": "🤝" },
-        "discovery": { "text": "Step 1: train a reward model on human rankings. Step 2: optimize the LLM against it.", "visual": "🏆" },
-        "twist": { "text": "RLHF can over-optimize: the model becomes sycophantic, agreeing to please the reward model.", "visual": "🪞" },
-        "climax": { "text": "Newer methods like DPO skip the reward model and learn directly from preference pairs.", "visual": "⚡" },
-        "punchline": { "text": "Human taste, baked into weights.", "visual": "🧬" }
+        "hook": {
+          "text": "The model writes two answers. A human picks the better one. That signal trains the model.",
+          "visual": "👆"
+        },
+        "buildup": {
+          "text": "RLHF (reinforcement learning from human feedback) aligns models with human preferences.",
+          "visual": "🤝"
+        },
+        "discovery": {
+          "text": "Step 1: train a reward model on human rankings. Step 2: optimize the LLM against it.",
+          "visual": "🏆"
+        },
+        "twist": {
+          "text": "RLHF can over-optimize: the model becomes sycophantic, agreeing to please the reward model.",
+          "visual": "🪞"
+        },
+        "climax": {
+          "text": "Newer methods like DPO skip the reward model and learn directly from preference pairs.",
+          "visual": "⚡"
+        },
+        "punchline": {
+          "text": "Human taste, baked into weights.",
+          "visual": "🧬"
+        }
       },
       "quiz": {
         "question": "What does RLHF optimize for?",
-        "options": ["Human preference rankings", "Token prediction accuracy", "Faster inference speed"],
+        "options": [
+          "Human preference rankings",
+          "Token prediction accuracy",
+          "Faster inference speed"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch02-training",
       "title": "Data Quality: Garbage In, Garbage Out",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "A model trained on spam, hate speech, and wrong math will produce exactly that.", "visual": "🗑️" },
-        "buildup": { "text": "Training data quality determines model quality more than model size.", "visual": "⚖️" },
-        "discovery": { "text": "Curation steps: deduplication, toxicity filtering, quality scoring, and domain balancing.", "visual": "🧹" },
-        "twist": { "text": "Even 'clean' data has biases—who wrote it, when, in which language, from which culture.", "visual": "🌍" },
-        "climax": { "text": "Document your data sources. Audit for gaps. Update as the world changes.", "visual": "📋" },
-        "punchline": { "text": "The model is only as good as what it read.", "visual": "📖" }
+        "hook": {
+          "text": "A model trained on spam, hate speech, and wrong math will produce exactly that.",
+          "visual": "🗑️"
+        },
+        "buildup": {
+          "text": "Training data quality determines model quality more than model size.",
+          "visual": "⚖️"
+        },
+        "discovery": {
+          "text": "Curation steps: deduplication, toxicity filtering, quality scoring, and domain balancing.",
+          "visual": "🧹"
+        },
+        "twist": {
+          "text": "Even 'clean' data has biases—who wrote it, when, in which language, from which culture.",
+          "visual": "🌍"
+        },
+        "climax": {
+          "text": "Document your data sources. Audit for gaps. Update as the world changes.",
+          "visual": "📋"
+        },
+        "punchline": {
+          "text": "The model is only as good as what it read.",
+          "visual": "📖"
+        }
       },
       "quiz": {
         "question": "Why is data quality more important than model size?",
-        "options": ["Bad data produces bad outputs regardless of size", "Bigger models ignore data quality", "Data doesn't affect training"],
+        "options": [
+          "Bad data produces bad outputs regardless of size",
+          "Bigger models ignore data quality",
+          "Data doesn't affect training"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch02-training",
       "title": "Scaling Laws: Bigger vs Better",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "Double the parameters, double the performance? Not quite—it's a power law.", "visual": "📈" },
-        "buildup": { "text": "Scaling laws predict loss improvement as a function of data, compute, and parameters.", "visual": "🔬" },
-        "discovery": { "text": "Chinchilla showed that many models were undertrained: more data matters as much as more params.", "visual": "🐭" },
-        "twist": { "text": "Scaling eventually hits diminishing returns. 10× compute ≠ 10× smarter.", "visual": "📉" },
-        "climax": { "text": "The frontier is shifting to efficiency: smaller models trained longer on better data.", "visual": "💡" },
-        "punchline": { "text": "Scale smart, not just big.", "visual": "🎯" }
+        "hook": {
+          "text": "Double the parameters, double the performance? Not quite—it's a power law.",
+          "visual": "📈"
+        },
+        "buildup": {
+          "text": "Scaling laws predict loss improvement as a function of data, compute, and parameters.",
+          "visual": "🔬"
+        },
+        "discovery": {
+          "text": "Chinchilla showed that many models were undertrained: more data matters as much as more params.",
+          "visual": "🐭"
+        },
+        "twist": {
+          "text": "Scaling eventually hits diminishing returns. 10× compute ≠ 10× smarter.",
+          "visual": "📉"
+        },
+        "climax": {
+          "text": "The frontier is shifting to efficiency: smaller models trained longer on better data.",
+          "visual": "💡"
+        },
+        "punchline": {
+          "text": "Scale smart, not just big.",
+          "visual": "🎯"
+        }
       },
       "quiz": {
         "question": "What did Chinchilla scaling research show?",
-        "options": ["Many models were undertrained—more data matters", "Bigger models always win", "Training data is irrelevant"],
+        "options": [
+          "Many models were undertrained—more data matters",
+          "Bigger models always win",
+          "Training data is irrelevant"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch03-architectures",
       "title": "The Transformer Architecture",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Before transformers, language models were slow and forgot long sentences.", "visual": "🐌" },
-        "buildup": { "text": "RNNs processed tokens one by one. Transformers process all tokens in parallel.", "visual": "⚡" },
-        "discovery": { "text": "Key ingredients: self-attention, positional encoding, layer normalization, feed-forward layers.", "visual": "🧱" },
-        "twist": { "text": "Parallelism made transformers GPU-friendly—and that's why they scaled so fast.", "visual": "🚀" },
-        "climax": { "text": "Nearly every modern AI system—text, image, audio—uses some form of transformer.", "visual": "🌎" },
-        "punchline": { "text": "One architecture changed everything.", "visual": "🏛️" }
+        "hook": {
+          "text": "Before transformers, language models were slow and forgot long sentences.",
+          "visual": "🐌"
+        },
+        "buildup": {
+          "text": "RNNs processed tokens one by one. Transformers process all tokens in parallel.",
+          "visual": "⚡"
+        },
+        "discovery": {
+          "text": "Key ingredients: self-attention, positional encoding, layer normalization, feed-forward layers.",
+          "visual": "🧱"
+        },
+        "twist": {
+          "text": "Parallelism made transformers GPU-friendly—and that's why they scaled so fast.",
+          "visual": "🚀"
+        },
+        "climax": {
+          "text": "Nearly every modern AI system—text, image, audio—uses some form of transformer.",
+          "visual": "🌎"
+        },
+        "punchline": {
+          "text": "One architecture changed everything.",
+          "visual": "🏛️"
+        }
       },
       "quiz": {
         "question": "What advantage do transformers have over RNNs?",
-        "options": ["Parallel processing of all tokens", "Smaller model sizes", "No need for GPUs"],
+        "options": [
+          "Parallel processing of all tokens",
+          "Smaller model sizes",
+          "No need for GPUs"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": true
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch03-architectures",
       "title": "Encoder vs Decoder vs Encoder-Decoder",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "BERT, GPT, and T5 are all transformers—but they work very differently.", "visual": "🔀" },
-        "buildup": { "text": "Encoder-only (BERT) reads the whole input at once—great for classification.", "visual": "📖" },
-        "discovery": { "text": "Decoder-only (GPT) generates left-to-right—great for text generation.", "visual": "✍️" },
-        "twist": { "text": "Encoder-decoder (T5) does both—reads input fully, then generates output.", "visual": "🔄" },
-        "climax": { "text": "Most modern LLMs are decoder-only because generation is the hardest, most general task.", "visual": "🏆" },
-        "punchline": { "text": "Architecture shapes what the model does best.", "visual": "🧬" }
+        "hook": {
+          "text": "BERT, GPT, and T5 are all transformers—but they work very differently.",
+          "visual": "🔀"
+        },
+        "buildup": {
+          "text": "Encoder-only (BERT) reads the whole input at once—great for classification.",
+          "visual": "📖"
+        },
+        "discovery": {
+          "text": "Decoder-only (GPT) generates left-to-right—great for text generation.",
+          "visual": "✍️"
+        },
+        "twist": {
+          "text": "Encoder-decoder (T5) does both—reads input fully, then generates output.",
+          "visual": "🔄"
+        },
+        "climax": {
+          "text": "Most modern LLMs are decoder-only because generation is the hardest, most general task.",
+          "visual": "🏆"
+        },
+        "punchline": {
+          "text": "Architecture shapes what the model does best.",
+          "visual": "🧬"
+        }
       },
       "quiz": {
         "question": "Which architecture type is GPT?",
-        "options": ["Decoder-only", "Encoder-only", "Encoder-decoder"],
+        "options": [
+          "Decoder-only",
+          "Encoder-only",
+          "Encoder-decoder"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch03-architectures",
       "title": "Mixture of Experts: Conditional Computation",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "What if only 10% of the model activated per token? You'd save 90% of compute.", "visual": "🧩" },
-        "buildup": { "text": "MoE models have many 'expert' sub-networks. A router picks which ones fire.", "visual": "🚦" },
-        "discovery": { "text": "Each token activates only 1–2 experts, making inference cheaper than a dense model.", "visual": "💡" },
-        "twist": { "text": "MoE models have huge total parameter counts but small active parameter counts.", "visual": "🎭" },
-        "climax": { "text": "Mixtral, Switch Transformer, and GPT-4 (rumored) all use MoE variants.", "visual": "🏗️" },
-        "punchline": { "text": "Bigger model, same compute budget.", "visual": "⚡" }
+        "hook": {
+          "text": "What if only 10% of the model activated per token? You'd save 90% of compute.",
+          "visual": "🧩"
+        },
+        "buildup": {
+          "text": "MoE models have many 'expert' sub-networks. A router picks which ones fire.",
+          "visual": "🚦"
+        },
+        "discovery": {
+          "text": "Each token activates only 1–2 experts, making inference cheaper than a dense model.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "MoE models have huge total parameter counts but small active parameter counts.",
+          "visual": "🎭"
+        },
+        "climax": {
+          "text": "Mixtral, Switch Transformer, and GPT-4 (rumored) all use MoE variants.",
+          "visual": "🏗️"
+        },
+        "punchline": {
+          "text": "Bigger model, same compute budget.",
+          "visual": "⚡"
+        }
       },
       "quiz": {
         "question": "What does MoE achieve?",
-        "options": ["Activates only a few experts per token to save compute", "Uses one giant expert for everything", "Eliminates attention layers"],
+        "options": [
+          "Activates only a few experts per token to save compute",
+          "Uses one giant expert for everything",
+          "Eliminates attention layers"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch03-architectures",
       "title": "Positional Encoding: Order Matters",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "'Dog bites man' and 'man bites dog' have the same tokens. Order changes everything.", "visual": "🔄" },
-        "buildup": { "text": "Attention is permutation-invariant—it doesn't know token order without help.", "visual": "🤷" },
-        "discovery": { "text": "Positional encodings inject order info: absolute (sinusoidal) or relative (RoPE, ALiBi).", "visual": "📐" },
-        "twist": { "text": "Relative encodings generalize to longer sequences unseen during training.", "visual": "📏" },
-        "climax": { "text": "RoPE (rotary position embedding) is now the standard in most open-source LLMs.", "visual": "🔧" },
-        "punchline": { "text": "Without position, language is just a bag of words.", "visual": "🎒" }
+        "hook": {
+          "text": "'Dog bites man' and 'man bites dog' have the same tokens. Order changes everything.",
+          "visual": "🔄"
+        },
+        "buildup": {
+          "text": "Attention is permutation-invariant—it doesn't know token order without help.",
+          "visual": "🤷"
+        },
+        "discovery": {
+          "text": "Positional encodings inject order info: absolute (sinusoidal) or relative (RoPE, ALiBi).",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Relative encodings generalize to longer sequences unseen during training.",
+          "visual": "📏"
+        },
+        "climax": {
+          "text": "RoPE (rotary position embedding) is now the standard in most open-source LLMs.",
+          "visual": "🔧"
+        },
+        "punchline": {
+          "text": "Without position, language is just a bag of words.",
+          "visual": "🎒"
+        }
       },
       "quiz": {
         "question": "Why do transformers need positional encoding?",
-        "options": ["Attention is order-agnostic without it", "To reduce model size", "To speed up training"],
+        "options": [
+          "Attention is order-agnostic without it",
+          "To reduce model size",
+          "To speed up training"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch04-inference",
       "title": "How Inference Works: Token by Token",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "You hit send and tokens appear one by one. Each one required a full model forward pass.", "visual": "⏳" },
-        "buildup": { "text": "Autoregressive inference generates one token, appends it, then runs the model again.", "visual": "🔁" },
-        "discovery": { "text": "KV caching stores previous attention computations so you don't recompute them.", "visual": "🗄️" },
-        "twist": { "text": "The first token is slowest (processes full prompt). Subsequent tokens are cheaper.", "visual": "🐢" },
-        "climax": { "text": "Latency = time-to-first-token + (tokens × time-per-token). Optimize both.", "visual": "⏱️" },
-        "punchline": { "text": "Each token waits for the last one.", "visual": "🚶" }
+        "hook": {
+          "text": "You hit send and tokens appear one by one. Each one required a full model forward pass.",
+          "visual": "⏳"
+        },
+        "buildup": {
+          "text": "Autoregressive inference generates one token, appends it, then runs the model again.",
+          "visual": "🔁"
+        },
+        "discovery": {
+          "text": "KV caching stores previous attention computations so you don't recompute them.",
+          "visual": "🗄️"
+        },
+        "twist": {
+          "text": "The first token is slowest (processes full prompt). Subsequent tokens are cheaper.",
+          "visual": "🐢"
+        },
+        "climax": {
+          "text": "Latency = time-to-first-token + (tokens × time-per-token). Optimize both.",
+          "visual": "⏱️"
+        },
+        "punchline": {
+          "text": "Each token waits for the last one.",
+          "visual": "🚶"
+        }
       },
       "quiz": {
         "question": "Why is the first token the slowest during inference?",
-        "options": ["It must process the entire prompt", "The model is loading", "The API is warming up"],
+        "options": [
+          "It must process the entire prompt",
+          "The model is loading",
+          "The API is warming up"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": true
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch04-inference",
       "title": "Quantization: Shrinking Models to Fit",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "A 70B parameter model needs 140 GB of memory. Your GPU has 24 GB. Now what?", "visual": "😰" },
-        "buildup": { "text": "Quantization converts 16-bit weights to 8-bit or 4-bit, slashing memory needs.", "visual": "📉" },
-        "discovery": { "text": "GPTQ and AWQ quantize to 4-bit with minimal quality loss for most tasks.", "visual": "🔧" },
-        "twist": { "text": "Aggressive quantization (2-bit) works for easy tasks but degrades complex reasoning.", "visual": "⚠️" },
-        "climax": { "text": "GGUF format + llama.cpp lets you run quantized models on a laptop CPU.", "visual": "💻" },
-        "punchline": { "text": "Half the bits, most of the brains.", "visual": "🧠" }
+        "hook": {
+          "text": "A 70B parameter model needs 140 GB of memory. Your GPU has 24 GB. Now what?",
+          "visual": "😰"
+        },
+        "buildup": {
+          "text": "Quantization converts 16-bit weights to 8-bit or 4-bit, slashing memory needs.",
+          "visual": "📉"
+        },
+        "discovery": {
+          "text": "GPTQ and AWQ quantize to 4-bit with minimal quality loss for most tasks.",
+          "visual": "🔧"
+        },
+        "twist": {
+          "text": "Aggressive quantization (2-bit) works for easy tasks but degrades complex reasoning.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "GGUF format + llama.cpp lets you run quantized models on a laptop CPU.",
+          "visual": "💻"
+        },
+        "punchline": {
+          "text": "Half the bits, most of the brains.",
+          "visual": "🧠"
+        }
       },
       "quiz": {
         "question": "What does quantization reduce?",
-        "options": ["Memory needed by lowering weight precision", "The number of parameters", "Training data size"],
+        "options": [
+          "Memory needed by lowering weight precision",
+          "The number of parameters",
+          "Training data size"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch04-inference",
       "title": "Batching and Throughput",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "Your API handles one user at a time. A hundred users are waiting.", "visual": "🚶‍♂️" },
-        "buildup": { "text": "Batching groups multiple requests into one GPU pass, filling idle compute.", "visual": "📦" },
-        "discovery": { "text": "Continuous batching (like vLLM) adds new requests to a running batch without waiting.", "visual": "🔄" },
-        "twist": { "text": "Larger batches increase throughput but also increase per-request latency.", "visual": "⚖️" },
-        "climax": { "text": "Measure tokens-per-second (throughput) AND time-to-first-token (latency). Balance both.", "visual": "📊" },
-        "punchline": { "text": "GPUs hate waiting. Keep them busy.", "visual": "🔥" }
+        "hook": {
+          "text": "Your API handles one user at a time. A hundred users are waiting.",
+          "visual": "🚶‍♂️"
+        },
+        "buildup": {
+          "text": "Batching groups multiple requests into one GPU pass, filling idle compute.",
+          "visual": "📦"
+        },
+        "discovery": {
+          "text": "Continuous batching (like vLLM) adds new requests to a running batch without waiting.",
+          "visual": "🔄"
+        },
+        "twist": {
+          "text": "Larger batches increase throughput but also increase per-request latency.",
+          "visual": "⚖️"
+        },
+        "climax": {
+          "text": "Measure tokens-per-second (throughput) AND time-to-first-token (latency). Balance both.",
+          "visual": "📊"
+        },
+        "punchline": {
+          "text": "GPUs hate waiting. Keep them busy.",
+          "visual": "🔥"
+        }
       },
       "quiz": {
         "question": "What does continuous batching improve?",
-        "options": ["Throughput by adding requests to a running batch", "Model accuracy", "Training speed"],
+        "options": [
+          "Throughput by adding requests to a running batch",
+          "Model accuracy",
+          "Training speed"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch04-inference",
       "title": "Speculative Decoding: Guess and Verify",
-      "difficulty": "Premium",
       "story": {
-        "hook": { "text": "What if a tiny model drafts 5 tokens and the big model verifies them in one pass?", "visual": "🏃" },
-        "buildup": { "text": "Speculative decoding uses a small 'draft' model to propose multiple tokens at once.", "visual": "📝" },
-        "discovery": { "text": "The large model checks all 5 tokens in a single forward pass—accepting or correcting.", "visual": "✅" },
-        "twist": { "text": "If most guesses are right, you get 3–5× speedup with identical output quality.", "visual": "⚡" },
-        "climax": { "text": "The trick: verification is parallel (cheap), generation is sequential (expensive).", "visual": "🔀" },
-        "punchline": { "text": "Guess fast. Verify cheap. Ship faster.", "visual": "🚀" }
+        "hook": {
+          "text": "What if a tiny model drafts 5 tokens and the big model verifies them in one pass?",
+          "visual": "🏃"
+        },
+        "buildup": {
+          "text": "Speculative decoding uses a small 'draft' model to propose multiple tokens at once.",
+          "visual": "📝"
+        },
+        "discovery": {
+          "text": "The large model checks all 5 tokens in a single forward pass—accepting or correcting.",
+          "visual": "✅"
+        },
+        "twist": {
+          "text": "If most guesses are right, you get 3–5× speedup with identical output quality.",
+          "visual": "⚡"
+        },
+        "climax": {
+          "text": "The trick: verification is parallel (cheap), generation is sequential (expensive).",
+          "visual": "🔀"
+        },
+        "punchline": {
+          "text": "Guess fast. Verify cheap. Ship faster.",
+          "visual": "🚀"
+        }
       },
       "quiz": {
         "question": "How does speculative decoding speed up inference?",
-        "options": ["A small model drafts tokens, a large model verifies in parallel", "It skips tokens", "It reduces model size"],
+        "options": [
+          "A small model drafts tokens, a large model verifies in parallel",
+          "It skips tokens",
+          "It reduces model size"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch05-evaluation",
       "title": "Perplexity: Measuring Surprise",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "Model A gets 15 perplexity, Model B gets 25. Which is better? Lower is better.", "visual": "📉" },
-        "buildup": { "text": "Perplexity measures how 'surprised' the model is by a text. Lower = more confident.", "visual": "😲" },
-        "discovery": { "text": "It's the exponent of average cross-entropy loss: how well the model predicts tokens.", "visual": "📊" },
-        "twist": { "text": "Low perplexity doesn't mean useful answers—a model can predict well but still hallucinate.", "visual": "⚠️" },
-        "climax": { "text": "Use perplexity to compare base models. Use task-specific evals for real-world quality.", "visual": "🎯" },
-        "punchline": { "text": "Perplexity tells you prediction, not usefulness.", "visual": "🔮" }
+        "hook": {
+          "text": "Model A gets 15 perplexity, Model B gets 25. Which is better? Lower is better.",
+          "visual": "📉"
+        },
+        "buildup": {
+          "text": "Perplexity measures how 'surprised' the model is by a text. Lower = more confident.",
+          "visual": "😲"
+        },
+        "discovery": {
+          "text": "It's the exponent of average cross-entropy loss: how well the model predicts tokens.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Low perplexity doesn't mean useful answers—a model can predict well but still hallucinate.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Use perplexity to compare base models. Use task-specific evals for real-world quality.",
+          "visual": "🎯"
+        },
+        "punchline": {
+          "text": "Perplexity tells you prediction, not usefulness.",
+          "visual": "🔮"
+        }
       },
       "quiz": {
         "question": "What does lower perplexity indicate?",
-        "options": ["The model predicts tokens more confidently", "The model is slower", "The model uses more memory"],
+        "options": [
+          "The model predicts tokens more confidently",
+          "The model is slower",
+          "The model uses more memory"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": true
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch05-evaluation",
       "title": "Benchmarks: MMLU, HumanEval, and Beyond",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "Every model claims to be 'state-of-the-art.' Benchmarks are the receipts.", "visual": "🧾" },
-        "buildup": { "text": "MMLU tests knowledge across 57 subjects. HumanEval tests Python coding ability.", "visual": "📝" },
-        "discovery": { "text": "Good benchmarks isolate specific skills: reasoning, coding, math, instruction following.", "visual": "🔬" },
-        "twist": { "text": "Models can be trained on benchmark data—contamination inflates scores artificially.", "visual": "🎭" },
-        "climax": { "text": "Always pair benchmark scores with your own task-specific evals. Never trust one number.", "visual": "📋" },
-        "punchline": { "text": "Benchmarks are starting points, not finish lines.", "visual": "🏁" }
+        "hook": {
+          "text": "Every model claims to be 'state-of-the-art.' Benchmarks are the receipts.",
+          "visual": "🧾"
+        },
+        "buildup": {
+          "text": "MMLU tests knowledge across 57 subjects. HumanEval tests Python coding ability.",
+          "visual": "📝"
+        },
+        "discovery": {
+          "text": "Good benchmarks isolate specific skills: reasoning, coding, math, instruction following.",
+          "visual": "🔬"
+        },
+        "twist": {
+          "text": "Models can be trained on benchmark data—contamination inflates scores artificially.",
+          "visual": "🎭"
+        },
+        "climax": {
+          "text": "Always pair benchmark scores with your own task-specific evals. Never trust one number.",
+          "visual": "📋"
+        },
+        "punchline": {
+          "text": "Benchmarks are starting points, not finish lines.",
+          "visual": "🏁"
+        }
       },
       "quiz": {
         "question": "What risk do benchmarks face?",
-        "options": ["Data contamination inflating scores", "Being too easy", "Measuring only speed"],
+        "options": [
+          "Data contamination inflating scores",
+          "Being too easy",
+          "Measuring only speed"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch05-evaluation",
       "title": "Human Evaluation: The Gold Standard",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "Your model scores 90% on MMLU but users say the answers are awful. Who's right?", "visual": "🤔" },
-        "buildup": { "text": "Automated metrics miss nuance: tone, helpfulness, safety, and coherence.", "visual": "📊" },
-        "discovery": { "text": "Human eval uses raters to score outputs on specific criteria: accuracy, clarity, safety.", "visual": "👥" },
-        "twist": { "text": "Human eval is expensive and slow. Use it for high-stakes decisions, not daily iteration.", "visual": "💰" },
-        "climax": { "text": "Best practice: automated evals daily, human evals weekly, on a rotating sample.", "visual": "🔄" },
-        "punchline": { "text": "Users are the ultimate benchmark.", "visual": "👤" }
+        "hook": {
+          "text": "Your model scores 90% on MMLU but users say the answers are awful. Who's right?",
+          "visual": "🤔"
+        },
+        "buildup": {
+          "text": "Automated metrics miss nuance: tone, helpfulness, safety, and coherence.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Human eval uses raters to score outputs on specific criteria: accuracy, clarity, safety.",
+          "visual": "👥"
+        },
+        "twist": {
+          "text": "Human eval is expensive and slow. Use it for high-stakes decisions, not daily iteration.",
+          "visual": "💰"
+        },
+        "climax": {
+          "text": "Best practice: automated evals daily, human evals weekly, on a rotating sample.",
+          "visual": "🔄"
+        },
+        "punchline": {
+          "text": "Users are the ultimate benchmark.",
+          "visual": "👤"
+        }
       },
       "quiz": {
         "question": "When should you use human evaluation?",
-        "options": ["For high-stakes quality decisions automated metrics miss", "For every single API call", "Never—benchmarks are enough"],
+        "options": [
+          "For high-stakes quality decisions automated metrics miss",
+          "For every single API call",
+          "Never—benchmarks are enough"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch05-evaluation",
       "title": "LLM-as-Judge: Models Evaluating Models",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "What if GPT-4 grades your smaller model's answers? That's LLM-as-judge.", "visual": "⚖️" },
-        "buildup": { "text": "A strong model scores a weaker model's output on criteria you define in a prompt.", "visual": "📝" },
-        "discovery": { "text": "It's cheaper than human eval and correlates well for structured tasks.", "visual": "💡" },
-        "twist": { "text": "LLM judges have biases: they prefer longer answers, formal tone, and their own outputs.", "visual": "🪞" },
-        "climax": { "text": "Calibrate: compare LLM scores to human scores on 50+ examples before trusting them.", "visual": "📊" },
-        "punchline": { "text": "Useful shortcut, not a replacement for humans.", "visual": "🤝" }
+        "hook": {
+          "text": "What if GPT-4 grades your smaller model's answers? That's LLM-as-judge.",
+          "visual": "⚖️"
+        },
+        "buildup": {
+          "text": "A strong model scores a weaker model's output on criteria you define in a prompt.",
+          "visual": "📝"
+        },
+        "discovery": {
+          "text": "It's cheaper than human eval and correlates well for structured tasks.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "LLM judges have biases: they prefer longer answers, formal tone, and their own outputs.",
+          "visual": "🪞"
+        },
+        "climax": {
+          "text": "Calibrate: compare LLM scores to human scores on 50+ examples before trusting them.",
+          "visual": "📊"
+        },
+        "punchline": {
+          "text": "Useful shortcut, not a replacement for humans.",
+          "visual": "🤝"
+        }
       },
       "quiz": {
         "question": "What is a known bias of LLM-as-judge?",
-        "options": ["Preferring longer, more formal answers", "Always giving low scores", "Ignoring the output entirely"],
+        "options": [
+          "Preferring longer, more formal answers",
+          "Always giving low scores",
+          "Ignoring the output entirely"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch06-frontier",
       "title": "Multimodal Models: Beyond Text",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "You upload a photo and the model describes it. Text-only models can't do that.", "visual": "🖼️" },
-        "buildup": { "text": "Multimodal models process text, images, audio, and video in a shared embedding space.", "visual": "🔀" },
-        "discovery": { "text": "Vision encoders (like CLIP) convert images to embeddings the LLM can attend to.", "visual": "👁️" },
-        "twist": { "text": "Multimodal isn't just input—models now generate images, speech, and code from one prompt.", "visual": "🎨" },
-        "climax": { "text": "GPT-4V, Gemini, and Claude all accept images. The text-only era is ending.", "visual": "🌅" },
-        "punchline": { "text": "One model, every modality.", "visual": "🌐" }
+        "hook": {
+          "text": "You upload a photo and the model describes it. Text-only models can't do that.",
+          "visual": "🖼️"
+        },
+        "buildup": {
+          "text": "Multimodal models process text, images, audio, and video in a shared embedding space.",
+          "visual": "🔀"
+        },
+        "discovery": {
+          "text": "Vision encoders (like CLIP) convert images to embeddings the LLM can attend to.",
+          "visual": "👁️"
+        },
+        "twist": {
+          "text": "Multimodal isn't just input—models now generate images, speech, and code from one prompt.",
+          "visual": "🎨"
+        },
+        "climax": {
+          "text": "GPT-4V, Gemini, and Claude all accept images. The text-only era is ending.",
+          "visual": "🌅"
+        },
+        "punchline": {
+          "text": "One model, every modality.",
+          "visual": "🌐"
+        }
       },
       "quiz": {
         "question": "How do multimodal models handle images?",
-        "options": ["Convert images to embeddings the LLM can process", "Ignore images entirely", "Run a separate program for images"],
+        "options": [
+          "Convert images to embeddings the LLM can process",
+          "Ignore images entirely",
+          "Run a separate program for images"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": true
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch06-frontier",
       "title": "Open Source vs Closed Models",
-      "difficulty": "Beginner",
       "story": {
-        "hook": { "text": "Should you use GPT-4 or Llama? It depends on control, cost, and compliance.", "visual": "🔓" },
-        "buildup": { "text": "Closed models (GPT-4, Claude) offer convenience but you depend on the provider.", "visual": "🏢" },
-        "discovery": { "text": "Open models (Llama, Mistral) let you self-host, fine-tune, and own the stack.", "visual": "🏠" },
-        "twist": { "text": "Open models need infra expertise. Closed models have vendor lock-in. Pick your tradeoff.", "visual": "⚖️" },
-        "climax": { "text": "Many teams use closed for prototyping, then switch to open for production cost control.", "visual": "🔄" },
-        "punchline": { "text": "Open for control. Closed for speed. Both for strategy.", "visual": "🎯" }
+        "hook": {
+          "text": "Should you use GPT-4 or Llama? It depends on control, cost, and compliance.",
+          "visual": "🔓"
+        },
+        "buildup": {
+          "text": "Closed models (GPT-4, Claude) offer convenience but you depend on the provider.",
+          "visual": "🏢"
+        },
+        "discovery": {
+          "text": "Open models (Llama, Mistral) let you self-host, fine-tune, and own the stack.",
+          "visual": "🏠"
+        },
+        "twist": {
+          "text": "Open models need infra expertise. Closed models have vendor lock-in. Pick your tradeoff.",
+          "visual": "⚖️"
+        },
+        "climax": {
+          "text": "Many teams use closed for prototyping, then switch to open for production cost control.",
+          "visual": "🔄"
+        },
+        "punchline": {
+          "text": "Open for control. Closed for speed. Both for strategy.",
+          "visual": "🎯"
+        }
       },
       "quiz": {
         "question": "What's an advantage of open-source models?",
-        "options": ["You can self-host and fine-tune them", "They're always more accurate", "They require no infrastructure"],
+        "options": [
+          "You can self-host and fine-tune them",
+          "They're always more accurate",
+          "They require no infrastructure"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch06-frontier",
       "title": "Emergent Abilities: What Scale Unlocks",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "A 1B model can't do arithmetic. A 100B model can. Nobody explicitly taught it.", "visual": "✨" },
-        "buildup": { "text": "Emergent abilities are skills that appear suddenly at certain model scales.", "visual": "📈" },
-        "discovery": { "text": "Examples: multi-step reasoning, code generation, translation between rare languages.", "visual": "🌍" },
-        "twist": { "text": "Some researchers argue emergence is a measurement artifact, not a real phase transition.", "visual": "🔬" },
-        "climax": { "text": "Regardless of cause, larger models reliably unlock capabilities smaller ones lack.", "visual": "🔓" },
-        "punchline": { "text": "Scale doesn't just add—it unlocks.", "visual": "🔑" }
+        "hook": {
+          "text": "A 1B model can't do arithmetic. A 100B model can. Nobody explicitly taught it.",
+          "visual": "✨"
+        },
+        "buildup": {
+          "text": "Emergent abilities are skills that appear suddenly at certain model scales.",
+          "visual": "📈"
+        },
+        "discovery": {
+          "text": "Examples: multi-step reasoning, code generation, translation between rare languages.",
+          "visual": "🌍"
+        },
+        "twist": {
+          "text": "Some researchers argue emergence is a measurement artifact, not a real phase transition.",
+          "visual": "🔬"
+        },
+        "climax": {
+          "text": "Regardless of cause, larger models reliably unlock capabilities smaller ones lack.",
+          "visual": "🔓"
+        },
+        "punchline": {
+          "text": "Scale doesn't just add—it unlocks.",
+          "visual": "🔑"
+        }
       },
       "quiz": {
         "question": "What are emergent abilities?",
-        "options": ["Skills that appear at larger model scales", "Pre-programmed features", "Bugs in the model"],
+        "options": [
+          "Skills that appear at larger model scales",
+          "Pre-programmed features",
+          "Bugs in the model"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch06-frontier",
       "title": "Knowledge Cutoff and Real-Time Data",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "You ask 'who won the election?' and the model gives last year's answer. It's stuck in the past.", "visual": "📅" },
-        "buildup": { "text": "LLMs have a knowledge cutoff—they know nothing after their training data ends.", "visual": "✂️" },
-        "discovery": { "text": "RAG (retrieval-augmented generation) injects fresh documents into the prompt at runtime.", "visual": "📰" },
-        "twist": { "text": "Even with RAG, the model may ignore retrieved context if its prior belief is strong.", "visual": "🧲" },
-        "climax": { "text": "For time-sensitive apps, always pair the LLM with a live data source and citation check.", "visual": "🔗" },
-        "punchline": { "text": "Models remember training. RAG remembers today.", "visual": "📆" }
+        "hook": {
+          "text": "You ask 'who won the election?' and the model gives last year's answer. It's stuck in the past.",
+          "visual": "📅"
+        },
+        "buildup": {
+          "text": "LLMs have a knowledge cutoff—they know nothing after their training data ends.",
+          "visual": "✂️"
+        },
+        "discovery": {
+          "text": "RAG (retrieval-augmented generation) injects fresh documents into the prompt at runtime.",
+          "visual": "📰"
+        },
+        "twist": {
+          "text": "Even with RAG, the model may ignore retrieved context if its prior belief is strong.",
+          "visual": "🧲"
+        },
+        "climax": {
+          "text": "For time-sensitive apps, always pair the LLM with a live data source and citation check.",
+          "visual": "🔗"
+        },
+        "punchline": {
+          "text": "Models remember training. RAG remembers today.",
+          "visual": "📆"
+        }
       },
       "quiz": {
         "question": "How do you give an LLM access to recent information?",
-        "options": ["Retrieval-augmented generation (RAG)", "Increasing temperature", "Using more parameters"],
+        "options": [
+          "Retrieval-augmented generation (RAG)",
+          "Increasing temperature",
+          "Using more parameters"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch06-frontier",
       "title": "Distillation: Small Models Learning from Big Ones",
-      "difficulty": "Premium",
       "story": {
-        "hook": { "text": "GPT-4 quality in a model that runs on your phone? Distillation makes it possible.", "visual": "📱" },
-        "buildup": { "text": "Distillation trains a small 'student' model on the outputs of a large 'teacher' model.", "visual": "🎓" },
-        "discovery": { "text": "The student learns the teacher's behavior—not from raw data, but from soft predictions.", "visual": "🌡️" },
-        "twist": { "text": "Distilled models are great at narrow tasks but lose the teacher's breadth and generality.", "visual": "🎯" },
-        "climax": { "text": "Distill for production: fast, cheap, task-specific. Keep the teacher for exploration.", "visual": "🏭" },
-        "punchline": { "text": "Big teaches small. Small ships fast.", "visual": "🚀" }
+        "hook": {
+          "text": "GPT-4 quality in a model that runs on your phone? Distillation makes it possible.",
+          "visual": "📱"
+        },
+        "buildup": {
+          "text": "Distillation trains a small 'student' model on the outputs of a large 'teacher' model.",
+          "visual": "🎓"
+        },
+        "discovery": {
+          "text": "The student learns the teacher's behavior—not from raw data, but from soft predictions.",
+          "visual": "🌡️"
+        },
+        "twist": {
+          "text": "Distilled models are great at narrow tasks but lose the teacher's breadth and generality.",
+          "visual": "🎯"
+        },
+        "climax": {
+          "text": "Distill for production: fast, cheap, task-specific. Keep the teacher for exploration.",
+          "visual": "🏭"
+        },
+        "punchline": {
+          "text": "Big teaches small. Small ships fast.",
+          "visual": "🚀"
+        }
       },
       "quiz": {
         "question": "What does knowledge distillation produce?",
-        "options": ["A smaller model trained on a larger model's outputs", "A larger model", "A copy of the training data"],
+        "options": [
+          "A smaller model trained on a larger model's outputs",
+          "A larger model",
+          "A copy of the training data"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch06-frontier",
       "title": "Retrieval-Augmented Generation (RAG)",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "The model's knowledge is frozen at training time. RAG gives it a live library card.", "visual": "📚" },
-        "buildup": { "text": "RAG retrieves relevant documents and injects them into the prompt before generation.", "visual": "🔍" },
-        "discovery": { "text": "The model generates answers grounded in retrieved facts—reducing hallucination dramatically.", "visual": "📋" },
-        "twist": { "text": "RAG quality depends on retrieval quality. Bad search means bad answers, regardless of the model.", "visual": "⚠️" },
-        "climax": { "text": "Combine vector search, keyword search, and re-ranking for robust retrieval pipelines.", "visual": "🔧" },
-        "punchline": { "text": "Don't memorize everything. Look it up just in time.", "visual": "🎯" }
+        "hook": {
+          "text": "The model's knowledge is frozen at training time. RAG gives it a live library card.",
+          "visual": "📚"
+        },
+        "buildup": {
+          "text": "RAG retrieves relevant documents and injects them into the prompt before generation.",
+          "visual": "🔍"
+        },
+        "discovery": {
+          "text": "The model generates answers grounded in retrieved facts—reducing hallucination dramatically.",
+          "visual": "📋"
+        },
+        "twist": {
+          "text": "RAG quality depends on retrieval quality. Bad search means bad answers, regardless of the model.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Combine vector search, keyword search, and re-ranking for robust retrieval pipelines.",
+          "visual": "🔧"
+        },
+        "punchline": {
+          "text": "Don't memorize everything. Look it up just in time.",
+          "visual": "🎯"
+        }
       },
       "quiz": {
         "question": "What does RAG help reduce?",
-        "options": ["Hallucinations by grounding answers in retrieved documents", "Model size", "Training time"],
+        "options": [
+          "Hallucinations by grounding answers in retrieved documents",
+          "Model size",
+          "Training time"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch04-inference",
       "title": "Context Windows and Long-Context Models",
-      "difficulty": "Intermediate",
       "story": {
-        "hook": { "text": "GPT-3 saw 4K tokens. GPT-4 Turbo sees 128K. That's an entire book at once.", "visual": "📖" },
-        "buildup": { "text": "The context window is the maximum number of tokens the model can process in one call.", "visual": "📏" },
-        "discovery": { "text": "Longer contexts let models summarize documents, compare files, and reason over large inputs.", "visual": "📊" },
-        "twist": { "text": "Attention cost grows quadratically with context length. 128K tokens is very expensive to serve.", "visual": "💰" },
-        "climax": { "text": "Techniques like sliding window, sparse attention, and RoPE scaling extend context efficiently.", "visual": "🔧" },
-        "punchline": { "text": "Bigger windows, bigger understanding, bigger bills.", "visual": "💸" }
+        "hook": {
+          "text": "GPT-3 saw 4K tokens. GPT-4 Turbo sees 128K. That's an entire book at once.",
+          "visual": "📖"
+        },
+        "buildup": {
+          "text": "The context window is the maximum number of tokens the model can process in one call.",
+          "visual": "📏"
+        },
+        "discovery": {
+          "text": "Longer contexts let models summarize documents, compare files, and reason over large inputs.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Attention cost grows quadratically with context length. 128K tokens is very expensive to serve.",
+          "visual": "💰"
+        },
+        "climax": {
+          "text": "Techniques like sliding window, sparse attention, and RoPE scaling extend context efficiently.",
+          "visual": "🔧"
+        },
+        "punchline": {
+          "text": "Bigger windows, bigger understanding, bigger bills.",
+          "visual": "💸"
+        }
       },
       "quiz": {
         "question": "Why are long context windows expensive?",
-        "options": ["Attention cost grows quadratically with context length", "They need more training data", "They require special hardware"],
+        "options": [
+          "Attention cost grows quadratically with context length",
+          "They need more training data",
+          "They require special hardware"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     },
     {
       "chapter_id": "ai--llm-fundamentals--ch05-evaluation",
       "title": "Contamination: When the Test Is in the Training Data",
-      "difficulty": "Advanced",
       "story": {
-        "hook": { "text": "The model aces the benchmark. Then you realize the benchmark questions were in its training set.", "visual": "📝" },
-        "buildup": { "text": "Data contamination occurs when test data leaks into the training set, inflating scores.", "visual": "📈" },
-        "discovery": { "text": "Web-scale training data inevitably includes published benchmarks, papers, and answer keys.", "visual": "🌐" },
-        "twist": { "text": "A contaminated model memorizes answers instead of learning skills. It fails on novel variants.", "visual": "🧠" },
-        "climax": { "text": "Mitigation: use held-out benchmarks, canary strings, and novel rephrased test sets.", "visual": "🔒" },
-        "punchline": { "text": "A test you've seen isn't a test. It's a memory quiz.", "visual": "📋" }
+        "hook": {
+          "text": "The model aces the benchmark. Then you realize the benchmark questions were in its training set.",
+          "visual": "📝"
+        },
+        "buildup": {
+          "text": "Data contamination occurs when test data leaks into the training set, inflating scores.",
+          "visual": "📈"
+        },
+        "discovery": {
+          "text": "Web-scale training data inevitably includes published benchmarks, papers, and answer keys.",
+          "visual": "🌐"
+        },
+        "twist": {
+          "text": "A contaminated model memorizes answers instead of learning skills. It fails on novel variants.",
+          "visual": "🧠"
+        },
+        "climax": {
+          "text": "Mitigation: use held-out benchmarks, canary strings, and novel rephrased test sets.",
+          "visual": "🔒"
+        },
+        "punchline": {
+          "text": "A test you've seen isn't a test. It's a memory quiz.",
+          "visual": "📋"
+        }
       },
       "quiz": {
         "question": "What is benchmark contamination?",
-        "options": ["Test data appearing in the model's training set", "Using too many benchmarks", "Benchmarks being too easy"],
+        "options": [
+          "Test data appearing in the model's training set",
+          "Using too many benchmarks",
+          "Benchmarks being too easy"
+        ],
         "correct": 0
-      }
+      },
+      "is_free": false
     }
   ]
 }
