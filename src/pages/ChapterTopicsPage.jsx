@@ -262,11 +262,6 @@ export default function ChapterTopicsPage() {
                       <span className="catflow-rowTitleText">{title}</span>
                     </h3>
                     {desc && <p className="catflow-rowDesc">{desc}</p>}
-                    <div className="catflow-rowBadges">
-                      {topicGate?.locked && topicGate?.label ? (
-                        <span className="catflow-pill catflow-pill-locked">{topicGate.label}</span>
-                      ) : null}
-                    </div>
                   </div>
 
                   <div className="catflow-actions">
