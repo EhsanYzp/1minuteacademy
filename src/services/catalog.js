@@ -241,3 +241,41 @@ export async function getCourseOutline({ courseId } = {}) {
     })),
   };
 }
+
+export async function getCategoryCourseCounts() {
+  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+
+  const cacheKey = makeCacheKey(['catalog', 'categoryCourseCounts', 'supabase']);
+  return withCache(cacheKey, { ttlMs: 5 * 60 * 1000 }, async () => {
+    const supabase = requireSupabase();
+    const { data, error } = await supabase.rpc('get_category_course_counts');
+    if (error) throw error;
+
+    const out = new Map();
+    for (const r of Array.isArray(data) ? data : []) {
+      const categoryId = String(r?.category_id ?? '').trim();
+      if (!categoryId) continue;
+      out.set(categoryId, Number(r?.course_count ?? 0) || 0);
+    }
+    return out;
+  });
+}
+
+export async function getCategoryTopicCounts() {
+  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+
+  const cacheKey = makeCacheKey(['catalog', 'categoryTopicCounts', 'supabase']);
+  return withCache(cacheKey, { ttlMs: 5 * 60 * 1000 }, async () => {
+    const supabase = requireSupabase();
+    const { data, error } = await supabase.rpc('get_category_topic_counts');
+    if (error) throw error;
+
+    const out = new Map();
+    for (const r of Array.isArray(data) ? data : []) {
+      const categoryId = String(r?.category_id ?? '').trim();
+      if (!categoryId) continue;
+      out.set(categoryId, Number(r?.topic_count ?? 0) || 0);
+    }
+    return out;
+  });
+}

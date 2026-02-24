@@ -193,3 +193,36 @@ export async function getUserCompletedTopicsByCourse({ courseIds = null } = {}) 
     }
   });
 }
+
+export async function getUserCompletedTopicsByCategory({ categoryIds = null } = {}) {
+  const supabase = requireSupabase();
+
+  const userId = await getSignedInUserId(supabase);
+  if (!userId) return new Map();
+
+  const ids = Array.isArray(categoryIds)
+    ? categoryIds.map((c) => String(c ?? '').trim()).filter(Boolean)
+    : null;
+
+  const cacheKey = makeCacheKey(['progress', userId, 'completedTopicsByCategory', ids ? ids.join(',') : 'all']);
+  return withCache(cacheKey, { ttlMs: 20 * 1000 }, async () => {
+    try {
+      const { data, error } = await supabase.rpc('get_user_completed_topics_by_category', {
+        p_category_ids: ids && ids.length > 0 ? ids : null,
+      });
+      if (error) throw error;
+
+      const out = new Map();
+      for (const r of Array.isArray(data) ? data : []) {
+        const categoryId = String(r?.category_id ?? '').trim();
+        if (!categoryId) continue;
+        out.set(categoryId, Number(r?.completed_topics ?? 0) || 0);
+      }
+      return out;
+    } catch {
+      // If RPC isn't deployed yet, fail closed (no progress bars) rather than
+      // downloading all courses/topics which would be expensive at scale.
+      return new Map();
+    }
+  });
+}

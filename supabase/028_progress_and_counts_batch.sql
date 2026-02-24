@@ -71,3 +71,80 @@ $$;
 
 revoke all on function public.get_user_completed_topics_by_course(text[]) from public;
 grant execute on function public.get_user_completed_topics_by_course(text[]) to authenticated;
+
+-- -----------------------------------------------------------------------------
+-- RPC: get course counts per category (published)
+-- -----------------------------------------------------------------------------
+create or replace function public.get_category_course_counts()
+returns table(category_id text, course_count bigint)
+language sql
+stable
+set search_path = public
+as $$
+  select
+    c.category_id,
+    count(*)::bigint as course_count
+  from public.courses c
+  where c.published = true
+  group by c.category_id
+  order by 1;
+$$;
+
+revoke all on function public.get_category_course_counts() from public;
+grant execute on function public.get_category_course_counts() to anon, authenticated;
+
+-- -----------------------------------------------------------------------------
+-- RPC: get topic counts per category (published)
+-- -----------------------------------------------------------------------------
+create or replace function public.get_category_topic_counts()
+returns table(category_id text, topic_count bigint)
+language sql
+stable
+set search_path = public
+as $$
+  select
+    c.category_id,
+    count(*)::bigint as topic_count
+  from public.topics t
+  join public.courses c on c.id = t.course_id
+  where t.published = true
+    and c.published = true
+  group by c.category_id
+  order by 1;
+$$;
+
+revoke all on function public.get_category_topic_counts() from public;
+grant execute on function public.get_category_topic_counts() to anon, authenticated;
+
+-- -----------------------------------------------------------------------------
+-- RPC: get completed topic counts per category for signed-in user
+-- -----------------------------------------------------------------------------
+create or replace function public.get_user_completed_topics_by_category(
+  p_category_ids text[] default null
+)
+returns table(category_id text, completed_topics bigint)
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select
+    c.category_id,
+    count(*)::bigint as completed_topics
+  from public.user_topic_progress utp
+  join public.topics t on t.id = utp.topic_id
+  join public.courses c on c.id = t.course_id
+  where utp.user_id = auth.uid()
+    and coalesce(utp.completed_count, 0) > 0
+    and t.published = true
+    and c.published = true
+    and (
+      p_category_ids is null
+      or c.category_id = any(p_category_ids)
+    )
+  group by c.category_id
+  order by 1;
+$$;
+
+revoke all on function public.get_user_completed_topics_by_category(text[]) from public;
+grant execute on function public.get_user_completed_topics_by_category(text[]) to authenticated;

@@ -3,16 +3,17 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
-import { listCategories, listCourses } from '../services/catalog';
+import { getCategoryCourseCounts, getCategoryTopicCounts, listCategories } from '../services/catalog';
 import { useAuth } from '../context/AuthContext';
-import { getUserCompletedTopicsByCourse } from '../services/progress';
+import { getUserCompletedTopicsByCategory } from '../services/progress';
 import './CategoriesFlow.css';
 
 export default function CategoriesPage() {
   const { user, isSupabaseConfigured } = useAuth();
   const [categories, setCategories] = useState([]);
-  const [courses, setCourses] = useState([]);
-  const [startedCourseIds, setStartedCourseIds] = useState(() => new Set());
+  const [courseCountsByCategoryId, setCourseCountsByCategoryId] = useState(() => new Map());
+  const [topicCountsByCategoryId, setTopicCountsByCategoryId] = useState(() => new Map());
+  const [completedTopicsByCategoryId, setCompletedTopicsByCategoryId] = useState(() => new Map());
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,10 +25,15 @@ export default function CategoriesPage() {
       setLoading(true);
       setError(null);
       try {
-        const [cats, allCourses] = await Promise.all([listCategories(), listCourses()]);
+        const [cats, courseCounts, topicCounts] = await Promise.all([
+          listCategories(),
+          getCategoryCourseCounts(),
+          getCategoryTopicCounts(),
+        ]);
         if (cancelled) return;
         setCategories(Array.isArray(cats) ? cats : []);
-        setCourses(Array.isArray(allCourses) ? allCourses : []);
+        setCourseCountsByCategoryId(courseCounts instanceof Map ? courseCounts : new Map());
+        setTopicCountsByCategoryId(topicCounts instanceof Map ? topicCounts : new Map());
       } catch (e) {
         if (cancelled) return;
         setError(e?.message ?? 'Failed to load categories');
@@ -46,52 +52,26 @@ export default function CategoriesPage() {
   useEffect(() => {
     let cancelled = false;
 
-    async function loadStartedCourses() {
+    async function loadCategoryProgress() {
       if (!isSupabaseConfigured || !user) {
-        setStartedCourseIds(new Set());
+        setCompletedTopicsByCategoryId(new Map());
         return;
       }
 
       try {
-        const byCourse = await getUserCompletedTopicsByCourse();
+        const byCategory = await getUserCompletedTopicsByCategory();
         if (cancelled) return;
-        const next = new Set();
-        for (const [courseId, completed] of byCourse.entries()) {
-          if (completed > 0) next.add(courseId);
-        }
-        setStartedCourseIds(next);
+        setCompletedTopicsByCategoryId(byCategory instanceof Map ? byCategory : new Map());
       } catch {
-        if (!cancelled) setStartedCourseIds(new Set());
+        if (!cancelled) setCompletedTopicsByCategoryId(new Map());
       }
     }
 
-    loadStartedCourses();
+    loadCategoryProgress();
     return () => {
       cancelled = true;
     };
   }, [isSupabaseConfigured, user]);
-
-  const courseCountsByCategory = useMemo(() => {
-    const m = new Map();
-    for (const c of Array.isArray(courses) ? courses : []) {
-      const categoryId = String(c?.category_id ?? '').trim();
-      if (!categoryId) continue;
-      m.set(categoryId, (m.get(categoryId) ?? 0) + 1);
-    }
-    return m;
-  }, [courses]);
-
-  const startedCourseCountsByCategory = useMemo(() => {
-    const m = new Map();
-    for (const c of Array.isArray(courses) ? courses : []) {
-      const categoryId = String(c?.category_id ?? '').trim();
-      const courseId = String(c?.id ?? '').trim();
-      if (!categoryId || !courseId) continue;
-      if (!startedCourseIds?.has?.(courseId)) continue;
-      m.set(categoryId, (m.get(categoryId) ?? 0) + 1);
-    }
-    return m;
-  }, [courses, startedCourseIds]);
 
   const visibleCategories = useMemo(() => {
     const q = String(query ?? '').trim().toLowerCase();
@@ -146,9 +126,12 @@ export default function CategoriesPage() {
               const id = String(cat?.id ?? '').trim();
               const title = String(cat?.title ?? 'Untitled');
               const borderColor = cat?.color ? String(cat.color) : null;
-              const courseCount = courseCountsByCategory.get(id) ?? 0;
-              const started = startedCourseCountsByCategory.get(id) ?? 0;
-              const pct = courseCount > 0 ? Math.max(0, Math.min(100, Math.round((started / courseCount) * 100))) : 0;
+              const courseCount = courseCountsByCategoryId.get(id) ?? 0;
+              const completedTopics = completedTopicsByCategoryId.get(id) ?? 0;
+              const totalTopics = topicCountsByCategoryId.get(id) ?? 0;
+              const pct = totalTopics > 0
+                ? Math.max(0, Math.min(100, Math.round((completedTopics / totalTopics) * 100)))
+                : 0;
 
               return (
                 <Link
@@ -162,11 +145,11 @@ export default function CategoriesPage() {
                     <div className="catflow-badge">{courseCount} courses</div>
                   </div>
 
-                  {user && courseCount > 0 && started > 0 && (
+                  {user && totalTopics > 0 && completedTopics > 0 && (
                     <div className="catflow-progress" aria-label="Category progress">
                       <div className="catflow-progressTop">
                         <span>
-                          Started <strong>{started}</strong> of <strong>{courseCount}</strong> courses
+                          <strong>{completedTopics}</strong> / <strong>{totalTopics}</strong> topics
                         </span>
                         <span><strong>{pct}%</strong></span>
                       </div>
