@@ -11,6 +11,11 @@ function requireSupabase() {
 export async function listCategories() {
   if (!isSupabaseConfigured) throw new Error('Supabase not configured');
 
+  const DUPLICATE_CATEGORY_IDS = new Map([
+    // Hide legacy/alias ids when the canonical category exists.
+    ['home-and-diy', 'home-diy'],
+  ]);
+
   const DUPLICATE_CATEGORY_TITLES = new Map([
     // Only hide these legacy/alias category titles when a canonical category exists.
     ['AI & Agents', 'AI'],
@@ -43,11 +48,15 @@ export async function listCategories() {
 
     // Hide only known duplicate alias categories (keep other 0-course categories).
     return normalized.filter((c) => {
+      const id = String(c?.id ?? '').trim().toLowerCase();
+      const canonicalId = DUPLICATE_CATEGORY_IDS.get(id);
+      if (canonicalId && ids.has(String(canonicalId).toLowerCase())) return false;
+
       const title = String(c?.title ?? '').trim();
       const canonicalTitle = DUPLICATE_CATEGORY_TITLES.get(title);
       if (!canonicalTitle) return true;
-      const canonicalId = canonicalTitle.toLowerCase();
-      const hasCanonical = titles.has(canonicalTitle) || ids.has(canonicalId);
+      const canonicalTitleId = canonicalTitle.toLowerCase();
+      const hasCanonical = titles.has(canonicalTitle) || ids.has(canonicalTitleId);
       return !hasCanonical;
     });
   });
