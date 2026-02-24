@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
+import ProgressVisualsToggle from '../components/ProgressVisualsToggle';
 import { getCategoryCourseCounts, getCategoryTopicCounts, listCategories } from '../services/catalog';
 import { useAuth } from '../context/AuthContext';
 import { getUserCompletedTopicsByCategory } from '../services/progress';
@@ -107,20 +108,24 @@ export default function CategoriesPage() {
           <p>Pick a category to see its courses.</p>
 
           <div className="catflow-toolbar" role="region" aria-label="Category search">
-            <label className="catflow-search">
-              <span aria-hidden="true">🔎</span>
-              <input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search categories (e.g., web3, programming…)"
-                aria-label="Search categories"
-              />
-              {query && (
-                <button type="button" onClick={() => setQuery('')} aria-label="Clear search">
-                  ✕
-                </button>
-              )}
-            </label>
+            <div className="catflow-toolbarRow">
+              <label className="catflow-search" style={{ flex: '1 1 260px' }}>
+                <span aria-hidden="true">🔎</span>
+                <input
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search categories (e.g., web3, programming…)"
+                  aria-label="Search categories"
+                />
+                {query && (
+                  <button type="button" onClick={() => setQuery('')} aria-label="Clear search">
+                    ✕
+                  </button>
+                )}
+              </label>
+
+              <ProgressVisualsToggle />
+            </div>
           </div>
         </div>
 

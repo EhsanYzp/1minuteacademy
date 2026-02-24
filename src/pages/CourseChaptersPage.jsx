@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
 import Breadcrumbs from '../components/Breadcrumbs';
+import ProgressVisualsToggle from '../components/ProgressVisualsToggle';
 import { getCourse, listCategories, listChapters, listTopicsForCourse } from '../services/catalog';
 import { useAuth } from '../context/AuthContext';
 import { getContentSource } from '../services/_contentSource';
@@ -196,20 +197,24 @@ export default function CourseChaptersPage() {
           )}
 
           <div className="catflow-toolbar" role="region" aria-label="Chapter search">
-            <label className="catflow-search">
-              <span aria-hidden="true">🔎</span>
-              <input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search chapters"
-                aria-label="Search chapters"
-              />
-              {query && (
-                <button type="button" onClick={() => setQuery('')} aria-label="Clear search">
-                  ✕
-                </button>
-              )}
-            </label>
+            <div className="catflow-toolbarRow">
+              <label className="catflow-search" style={{ flex: '1 1 260px' }}>
+                <span aria-hidden="true">🔎</span>
+                <input
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search chapters"
+                  aria-label="Search chapters"
+                />
+                {query && (
+                  <button type="button" onClick={() => setQuery('')} aria-label="Clear search">
+                    ✕
+                  </button>
+                )}
+              </label>
+
+              <ProgressVisualsToggle />
+            </div>
           </div>
         </div>
 
