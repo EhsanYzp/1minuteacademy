@@ -14,14 +14,16 @@ Create a complete course for 1MinuteAcademy.
 
 Category: <CATEGORY>          (e.g. "AI & Agents", "Art & Design")
 Course title: <COURSE TITLE>  (e.g. "Prompt Engineering")
-Audience level: <LEVEL>       (e.g. "beginner-friendly", "intermediate practitioners")
+Audience: <AUDIENCE>          (e.g. "complete beginners", "busy professionals", "curious generalists")
 
 Steps — do ALL of them in order:
 
 1. **Course plan** — Create `content/course-plans/<category-slug>--<course-slug>.json`
    following the schema and rules in docs/course-chapters-topics-requirements.md.
    - 5–10 chapters, 30–60 topics total (choose dynamically based on content).
-   - Difficulty distribution: ~15% Beginner, ~5% Premium, ~40% Intermediate, ~40% Advanced.
+   - Access model (STRICT): `difficulty` does not exist. Use `is_free: boolean`.
+     - Exactly **1 free topic per chapter**: set `is_free: true` for exactly one topic in each chapter (typically the first topic), all other topics in that chapter must be `is_free: false`.
+     - This usually yields ~20% free topics across a course.
    - Every topic must have a fully authored `story` (all 6 beats) and a `quiz`.
    - Set `requireAuthoredStory: true`.
 
@@ -94,7 +96,9 @@ For EACH course, follow this exact sequence:
 
 a) Create the course plan JSON in `content/course-plans/`.
    - 5–10 chapters, 30–60 topics (dynamic per course).
-   - Difficulty distribution: ~15% Beginner, ~5% Premium, ~40% Intermediate, ~40% Advanced.
+   - Access model (STRICT): `difficulty` does not exist. Use `is_free: boolean`.
+     - Exactly **1 free topic per chapter**: set `is_free: true` for exactly one topic in each chapter (typically the first topic), all other topics in that chapter must be `is_free: false`.
+     - This usually yields ~20% free topics across a course.
    - Every topic needs a fully authored `story` (6 beats) + `quiz`.
    - `requireAuthoredStory: true`.
 

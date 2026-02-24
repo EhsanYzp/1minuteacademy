@@ -42,8 +42,8 @@ export default function FaqPage() {
 
             <FaqItem q="What are the tiers (Guest / Free / Pro)?">
               <ul>
-                <li><strong>Guest:</strong> Beginner topics only, no progress tracking.</li>
-                <li><strong>Free account:</strong> Beginner topics + progress tracking (sign in required).</li>
+                <li><strong>Guest:</strong> Free preview topics only, no progress tracking.</li>
+                <li><strong>Free account:</strong> Free topics + progress tracking (sign in required).</li>
                 <li><strong>Pro:</strong> All topics + review mode.</li>
               </ul>
               <p>

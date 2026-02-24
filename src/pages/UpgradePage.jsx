@@ -189,7 +189,7 @@ export default function UpgradePage() {
     <motion.div className="upgrade-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Seo
         title="Pricing"
-        description="Start free. Upgrade to Pro to unlock all topics (including Premium), certificates, Minute Expert + badges, and review mode."
+        description="Start free. Pro unlocks the full library: all topics, certificates, Minute Expert + badges, and review mode."
         path={location?.pathname || '/pricing'}
         canonicalPath="/pricing"
       />
@@ -246,8 +246,8 @@ export default function UpgradePage() {
                 </div>
 
                 <ul className="pricing-feature-list" aria-label="Guest features">
-                  <li><span className="pricing-check" aria-hidden="true">✓</span>Beginner topics</li>
-                  <li><span className="pricing-check" aria-hidden="true">✓</span>Surprise shuffle (Beginner)</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>Free preview topics</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>Surprise shuffle (free topics)</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>2 lesson styles (Focus + Dark)</li>
                 </ul>
 
@@ -265,8 +265,8 @@ export default function UpgradePage() {
                 </div>
 
                 <ul className="pricing-feature-list" aria-label="Free features">
-                  <li><span className="pricing-check" aria-hidden="true">✓</span>Beginner topics</li>
-                  <li><span className="pricing-check" aria-hidden="true">✓</span>Surprise shuffle (Beginner)</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>Free preview topics</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>Surprise shuffle (free topics)</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>2 lesson styles (Focus + Dark)</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>Progress tracking</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>Rate modules with stars</li>
@@ -286,7 +286,7 @@ export default function UpgradePage() {
                 <div className="pricing-plan-head">
                   <div className="pricing-plan-name">Pro</div>
                   <div className="pricing-plan-price">All access</div>
-                  <div className="pricing-plan-sub">Unlock everything (Premium + advanced).</div>
+                  <div className="pricing-plan-sub">Unlock the full library (free + Pro topics).</div>
                 </div>
 
                 <div className="pricing-toggle" role="group" aria-label="Billing interval">
@@ -295,7 +295,9 @@ export default function UpgradePage() {
                     className={`pricing-toggle-btn ${selectedInterval === 'month' ? 'active' : ''}`}
                     onClick={() => setSelectedInterval('month')}
                     disabled={tier === 'pro' || busy !== null}
+                    aria-pressed={selectedInterval === 'month'}
                   >
+                    <span className="pricing-toggle-mark" aria-hidden="true">✓</span>
                     <span className="pricing-toggle-label">Monthly</span>
                     <span className="pricing-toggle-price">{DEFAULT_PRICE_MONTH}</span>
                   </button>
@@ -304,7 +306,9 @@ export default function UpgradePage() {
                     className={`pricing-toggle-btn ${selectedInterval === 'year' ? 'active' : ''}`}
                     onClick={() => setSelectedInterval('year')}
                     disabled={tier === 'pro' || busy !== null}
+                    aria-pressed={selectedInterval === 'year'}
                   >
+                    <span className="pricing-toggle-mark" aria-hidden="true">✓</span>
                     <span className="pricing-toggle-label">Yearly</span>
                     <span className="pricing-toggle-price">{DEFAULT_PRICE_YEAR}</span>
                     {yearlyDiscountLabel ? <span className="pricing-save">Save {yearlyDiscountLabel}</span> : null}
@@ -312,8 +316,8 @@ export default function UpgradePage() {
                 </div>
 
                 <ul className="pricing-feature-list" aria-label="Pro features">
-                  <li><span className="pricing-check" aria-hidden="true">✓</span>All topics (Intermediate + Advanced)</li>
-                  <li><span className="pricing-check" aria-hidden="true">✓</span>Premium topics</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>All topics (100% library)</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>Everything in Free (progress + ratings)</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>Certificates (complete a category)</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>Minute Expert + badges</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>Review mode (no timer)</li>
@@ -357,7 +361,7 @@ export default function UpgradePage() {
                 </div>
                 <div className="pricing-glossary-item">
                   <div className="pricing-glossary-term">Pro topics</div>
-                  <div className="pricing-glossary-def">Topics beyond the free preview in each chapter, reserved for Pro.</div>
+                  <div className="pricing-glossary-def">The locked portion of the library — everything beyond the free preview.</div>
                 </div>
                 <div className="pricing-glossary-item">
                   <div className="pricing-glossary-term">Surprise shuffle</div>
@@ -490,7 +494,7 @@ export default function UpgradePage() {
               </div>
             </div>
 
-            <div className="tier-rule">Rule of thumb: without Pro you’ll see <strong>Beginner</strong> topics only.</div>
+            <div className="tier-rule">Rule of thumb: without Pro you’ll see <strong>free</strong> preview topics only.</div>
           </div>
 
           {!user ? (

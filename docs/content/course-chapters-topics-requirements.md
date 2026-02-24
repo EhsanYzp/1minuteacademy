@@ -33,34 +33,22 @@ Recommended heuristics (flexible, not hard rules):
 
 ---
 
-## 2) Difficulty distribution rules (per course)
+## 2) Access model rules (STRICT: `is_free`, no `difficulty`)
 
-Across all topics in the course, target this distribution:
-- **~15%** Beginner
-- **~5%** Premium
-- **~40%** Intermediate
-- **~40%** Advanced
+The platform no longer uses difficulty levels.
 
-Flexibility:
-- The distribution can vary slightly, but:
-  - Never produce **too many Beginner** topics.
-  - Never produce **too many Premium** topics.
-  - Premium should stay a **small minority**.
+**Non-negotiable rules:**
+- Do **not** add a `difficulty` field anywhere (course plan JSON, topic JSON, UI copy, etc.).
+- Every topic must have `is_free: boolean`.
+- For course topics (topics with `course_id` + `chapter_id`):
+  - Each chapter must have **exactly 1** free topic: `is_free: true`.
+  - Every other topic in that chapter must be `is_free: false`.
 
-### Practical allocation method (deterministic)
-Given `N` topics (30–60):
-- Beginner: `round(0.15 * N)`
-- Premium: `round(0.05 * N)`
-- Intermediate: `floor((N - beginner - premium) / 2)`
-- Advanced: remainder
+**Practical authoring rule (recommended):**
+- Make the **first topic** listed in each chapter the free one.
 
-Then adjust by at most ±1–2 topics to keep totals exact and keep Premium small.
-
-Allowed difficulty values in topic JSON:
-- `Beginner`
-- `Intermediate`
-- `Advanced`
-- `Premium`
+**Sanity target:**
+- This typically yields ~20% free topics across a course, but the strict invariant is **1 free per chapter** (not a global percentage).
 
 ---
 
@@ -175,7 +163,7 @@ Each `.topic.json` must include (at minimum):
 - `emoji` (string)
 - `color` (hex string)
 - `description` (string)
-- `difficulty` (`Beginner` | `Intermediate` | `Advanced` | `Premium`)
+- `is_free` (boolean)
 - `published` (boolean)
 - `story` (object with 6 beats)
 - `quiz` (question/options/correct)
@@ -202,7 +190,7 @@ Operational note:
 Before syncing:
 - `npm run content:validate` passes.
 - Topic titles are all distinct within the course.
-- Difficulty distribution roughly matches targets.
+- Each chapter has exactly **1** `is_free: true` topic.
 - No chapter is empty; chapter flow makes sense.
 - Topics are correctly linked via `course_id` and `chapter_id`.
 
@@ -210,4 +198,4 @@ After syncing to staging:
 - The course appears under its category.
 - Chapters render in order.
 - Topics load and lessons are playable.
-- Premium topics are correctly gated (Pro-only).
+- Pro-only topics are correctly gated (everything except `is_free: true`).
