@@ -240,7 +240,6 @@ export default function ChapterTopicsPage() {
             {visibleTopics.map((t) => {
               const id = norm(t?.id);
               const title = String(t?.title ?? id);
-              const desc = String(t?.description ?? '');
               const completed = Boolean(t?.completed);
               const accent = t?.color ? String(t.color) : '';
               const topicGate = getTopicGate({ tier, topicRow: t });
@@ -261,7 +260,6 @@ export default function ChapterTopicsPage() {
                       )}
                       <span className="catflow-rowTitleText">{title}</span>
                     </h3>
-                    {desc && <p className="catflow-rowDesc">{desc}</p>}
                   </div>
 
                   <div className="catflow-actions">

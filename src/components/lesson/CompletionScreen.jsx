@@ -234,9 +234,6 @@ export default function CompletionScreen({
                               </div>
                               <div className="related-topic-card__text">
                                 <div className="related-topic-card__title">{t.title}</div>
-                                {t?.description ? (
-                                  <div className="related-topic-card__desc">{t.description}</div>
-                                ) : null}
                               </div>
                             </div>
 
