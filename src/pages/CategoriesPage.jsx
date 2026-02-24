@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import Seo from '../components/Seo';
 import { listCategories, listCourses } from '../services/catalog';
 import { useAuth } from '../context/AuthContext';
-import { listUserCompletedTopicProgressWithCourseIds } from '../services/progress';
+import { getUserCompletedTopicsByCourse } from '../services/progress';
 import './CategoriesFlow.css';
 
 export default function CategoriesPage() {
@@ -53,12 +53,11 @@ export default function CategoriesPage() {
       }
 
       try {
-        const rows = await listUserCompletedTopicProgressWithCourseIds();
+        const byCourse = await getUserCompletedTopicsByCourse();
         if (cancelled) return;
         const next = new Set();
-        for (const r of Array.isArray(rows) ? rows : []) {
-          const courseId = String(r?.topics?.course_id ?? '').trim();
-          if (courseId) next.add(courseId);
+        for (const [courseId, completed] of byCourse.entries()) {
+          if (completed > 0) next.add(courseId);
         }
         setStartedCourseIds(next);
       } catch {

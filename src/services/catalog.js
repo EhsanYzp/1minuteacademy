@@ -188,6 +188,33 @@ export async function getCourseCounts({ courseId } = {}) {
   });
 }
 
+export async function getCourseCountsBatch({ courseIds } = {}) {
+  const ids = Array.isArray(courseIds)
+    ? courseIds.map((c) => String(c ?? '').trim()).filter(Boolean)
+    : [];
+
+  if (ids.length === 0) return new Map();
+  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+
+  const cacheKey = makeCacheKey(['catalog', 'courseCountsBatch', 'supabase', ids.join(',')]);
+  return withCache(cacheKey, { ttlMs: 2 * 60 * 1000 }, async () => {
+    const supabase = requireSupabase();
+    const { data, error } = await supabase.rpc('get_course_counts_batch', { p_course_ids: ids });
+    if (error) throw error;
+
+    const out = new Map();
+    for (const r of Array.isArray(data) ? data : []) {
+      const courseId = String(r?.course_id ?? '').trim();
+      if (!courseId) continue;
+      out.set(courseId, {
+        chapters: typeof r?.chapters === 'number' ? r.chapters : Number(r?.chapters ?? 0) || 0,
+        topics: typeof r?.topics === 'number' ? r.topics : Number(r?.topics ?? 0) || 0,
+      });
+    }
+    return out;
+  });
+}
+
 export async function getCourseOutline({ courseId } = {}) {
   const id = String(courseId ?? '').trim();
   if (!id) throw new Error('Course id missing');

@@ -4,28 +4,10 @@ import { Link, useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
 import Breadcrumbs from '../components/Breadcrumbs';
-import { getCourseCounts, listCategories, listCourses } from '../services/catalog';
+import { getCourseCountsBatch, listCategories, listCourses } from '../services/catalog';
 import { useAuth } from '../context/AuthContext';
-import { listUserCompletedTopicProgressWithCourseIds } from '../services/progress';
+import { getUserCompletedTopicsByCourse } from '../services/progress';
 import './CategoriesFlow.css';
-
-async function mapWithConcurrency(items, limit, mapper) {
-  const out = new Array(items.length);
-  let idx = 0;
-
-  async function worker() {
-    while (idx < items.length) {
-      const i = idx;
-      idx += 1;
-      out[i] = await mapper(items[i], i);
-    }
-  }
-
-  const workers = [];
-  for (let i = 0; i < Math.max(1, limit); i += 1) workers.push(worker());
-  await Promise.all(workers);
-  return out;
-}
 
 export default function CategoryCoursesPage() {
   const { categoryId } = useParams();
@@ -76,20 +58,10 @@ export default function CategoryCoursesPage() {
       if (rows.length === 0) return;
 
       try {
-        const results = await mapWithConcurrency(rows, 4, async (c) => {
-          const courseId = String(c?.id ?? '').trim();
-          if (!courseId) return null;
-          const counts = await getCourseCounts({ courseId });
-          return { courseId, counts };
-        });
-
         if (cancelled) return;
-        const next = new Map();
-        for (const r of results) {
-          if (!r?.courseId) continue;
-          next.set(r.courseId, r.counts ?? { chapters: null, topics: null });
-        }
-        setCountsByCourseId(next);
+        const courseIds = rows.map((c) => String(c?.id ?? '').trim()).filter(Boolean);
+        const next = await getCourseCountsBatch({ courseIds });
+        if (!cancelled) setCountsByCourseId(next);
       } catch {
         // Non-fatal; keep page usable.
       }
@@ -113,16 +85,9 @@ export default function CategoryCoursesPage() {
 
       try {
         const courseIds = rows.map((c) => String(c?.id ?? '').trim()).filter(Boolean);
-        const progressRows = await listUserCompletedTopicProgressWithCourseIds({ courseIds });
         if (cancelled) return;
-
-        const next = new Map();
-        for (const r of Array.isArray(progressRows) ? progressRows : []) {
-          const courseId = String(r?.topics?.course_id ?? '').trim();
-          if (!courseId) continue;
-          next.set(courseId, (next.get(courseId) ?? 0) + 1);
-        }
-        setCompletedByCourseId(next);
+        const next = await getUserCompletedTopicsByCourse({ courseIds });
+        if (!cancelled) setCompletedByCourseId(next);
       } catch {
         if (!cancelled) setCompletedByCourseId(new Map());
       }

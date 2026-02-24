@@ -155,3 +155,41 @@ export async function listUserCompletedTopicProgressWithCourseIds({ courseIds = 
     return data ?? [];
   });
 }
+
+export async function getUserCompletedTopicsByCourse({ courseIds = null } = {}) {
+  const supabase = requireSupabase();
+
+  const userId = await getSignedInUserId(supabase);
+  if (!userId) return new Map();
+
+  const ids = Array.isArray(courseIds) ? courseIds.map((c) => String(c ?? '').trim()).filter(Boolean) : null;
+  const cacheKey = makeCacheKey(['progress', userId, 'completedTopicsByCourse', ids ? ids.join(',') : 'all']);
+
+  return withCache(cacheKey, { ttlMs: 20 * 1000 }, async () => {
+    // Preferred: small aggregated payload from RPC.
+    try {
+      const { data, error } = await supabase.rpc('get_user_completed_topics_by_course', {
+        p_course_ids: ids && ids.length > 0 ? ids : null,
+      });
+      if (error) throw error;
+
+      const out = new Map();
+      for (const r of Array.isArray(data) ? data : []) {
+        const courseId = String(r?.course_id ?? '').trim();
+        if (!courseId) continue;
+        out.set(courseId, Number(r?.completed_topics ?? 0) || 0);
+      }
+      return out;
+    } catch {
+      // Fallback: row-level query + client aggregation.
+      const rows = await listUserCompletedTopicProgressWithCourseIds({ courseIds: ids });
+      const out = new Map();
+      for (const r of Array.isArray(rows) ? rows : []) {
+        const courseId = String(r?.topics?.course_id ?? '').trim();
+        if (!courseId) continue;
+        out.set(courseId, (out.get(courseId) ?? 0) + 1);
+      }
+      return out;
+    }
+  });
+}
