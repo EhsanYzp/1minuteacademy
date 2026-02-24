@@ -8,6 +8,7 @@ import { getCourse, listCategories, listChapters, listTopicsForCourse } from '..
 import { useAuth } from '../context/AuthContext';
 import { getContentSource } from '../services/_contentSource';
 import { listUserTopicProgressForCourse } from '../services/progress';
+import useShowProgressVisuals from '../lib/useShowProgressVisuals';
 import './CategoriesFlow.css';
 
 function norm(s) {
@@ -21,6 +22,7 @@ export default function CourseChaptersPage() {
 
   const { user, isSupabaseConfigured } = useAuth();
   const contentSource = getContentSource();
+  const showProgressVisuals = useShowProgressVisuals();
 
   const [categoryRow, setCategoryRow] = useState(null);
   const [courseRow, setCourseRow] = useState(null);
@@ -35,6 +37,11 @@ export default function CourseChaptersPage() {
     let mounted = true;
 
     async function loadProgress() {
+      if (!showProgressVisuals) {
+        setCompletedIds(new Set());
+        return;
+      }
+
       if (contentSource !== 'local') {
         if (!isSupabaseConfigured || !user) {
           setCompletedIds(new Set());
@@ -60,7 +67,7 @@ export default function CourseChaptersPage() {
     return () => {
       mounted = false;
     };
-  }, [contentSource, isSupabaseConfigured, user, course]);
+  }, [showProgressVisuals, contentSource, isSupabaseConfigured, user, course]);
 
   useEffect(() => {
     let cancelled = false;
@@ -174,7 +181,7 @@ export default function CourseChaptersPage() {
           <h1>{courseTitle}</h1>
           {courseRow?.description ? <p>{String(courseRow.description)}</p> : <p>Pick a chapter to see its topics.</p>}
 
-          {user && courseProgress.total > 0 && (
+          {showProgressVisuals && user && courseProgress.total > 0 && (
             <div className="catflow-progress" aria-label="Course progress">
               <div className="catflow-progressTop">
                 <span>
@@ -233,7 +240,7 @@ export default function CourseChaptersPage() {
                     </div>
                     <p className="catflow-cardDesc">{desc}</p>
 
-                    {user && count > 0 && (
+                    {showProgressVisuals && user && count > 0 && (
                       <div className="catflow-progress" aria-label="Chapter progress">
                         <div className="catflow-progressTop">
                           <span>

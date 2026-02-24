@@ -7,6 +7,7 @@ import Breadcrumbs from '../components/Breadcrumbs';
 import { getCourseCountsBatch, listCategories, listCourses } from '../services/catalog';
 import { useAuth } from '../context/AuthContext';
 import { getUserCompletedTopicsByCourse } from '../services/progress';
+import useShowProgressVisuals from '../lib/useShowProgressVisuals';
 import './CategoriesFlow.css';
 
 export default function CategoryCoursesPage() {
@@ -14,6 +15,7 @@ export default function CategoryCoursesPage() {
   const id = String(categoryId ?? '').trim();
 
   const { user, isSupabaseConfigured } = useAuth();
+  const showProgressVisuals = useShowProgressVisuals();
 
   const [category, setCategory] = useState(null);
   const [courses, setCourses] = useState([]);
@@ -78,6 +80,10 @@ export default function CategoryCoursesPage() {
 
     async function loadCourseProgress() {
       const rows = Array.isArray(courses) ? courses : [];
+      if (!showProgressVisuals) {
+        setCompletedByCourseId(new Map());
+        return;
+      }
       if (!isSupabaseConfigured || !user || rows.length === 0) {
         setCompletedByCourseId(new Map());
         return;
@@ -97,7 +103,7 @@ export default function CategoryCoursesPage() {
     return () => {
       cancelled = true;
     };
-  }, [courses, isSupabaseConfigured, user]);
+  }, [showProgressVisuals, courses, isSupabaseConfigured, user]);
 
   const title = useMemo(() => String(category?.title ?? 'Category'), [category]);
   const description = useMemo(() => String(category?.description ?? ''), [category]);
@@ -195,7 +201,7 @@ export default function CategoryCoursesPage() {
                     </div>
                   </div>
 
-                  {user && totalTopics && totalTopics > 0 && completedTopics > 0 && (
+                  {showProgressVisuals && user && totalTopics && totalTopics > 0 && completedTopics > 0 && (
                     <div className="catflow-progress" aria-label="Course progress">
                       <div className="catflow-progressTop">
                         <span>

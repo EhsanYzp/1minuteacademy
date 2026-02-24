@@ -6,10 +6,12 @@ import Seo from '../components/Seo';
 import { getCategoryCourseCounts, getCategoryTopicCounts, listCategories } from '../services/catalog';
 import { useAuth } from '../context/AuthContext';
 import { getUserCompletedTopicsByCategory } from '../services/progress';
+import useShowProgressVisuals from '../lib/useShowProgressVisuals';
 import './CategoriesFlow.css';
 
 export default function CategoriesPage() {
   const { user, isSupabaseConfigured } = useAuth();
+  const showProgressVisuals = useShowProgressVisuals();
   const [categories, setCategories] = useState([]);
   const [courseCountsByCategoryId, setCourseCountsByCategoryId] = useState(() => new Map());
   const [topicCountsByCategoryId, setTopicCountsByCategoryId] = useState(() => new Map());
@@ -53,6 +55,11 @@ export default function CategoriesPage() {
     let cancelled = false;
 
     async function loadCategoryProgress() {
+      if (!showProgressVisuals) {
+        setCompletedTopicsByCategoryId(new Map());
+        return;
+      }
+
       if (!isSupabaseConfigured || !user) {
         setCompletedTopicsByCategoryId(new Map());
         return;
@@ -71,7 +78,7 @@ export default function CategoriesPage() {
     return () => {
       cancelled = true;
     };
-  }, [isSupabaseConfigured, user]);
+  }, [showProgressVisuals, isSupabaseConfigured, user]);
 
   const visibleCategories = useMemo(() => {
     const q = String(query ?? '').trim().toLowerCase();
@@ -145,7 +152,7 @@ export default function CategoriesPage() {
                     <div className="catflow-badge">{courseCount} courses</div>
                   </div>
 
-                  {user && totalTopics > 0 && completedTopics > 0 && (
+                  {showProgressVisuals && user && totalTopics > 0 && completedTopics > 0 && (
                     <div className="catflow-progress" aria-label="Category progress">
                       <div className="catflow-progressTop">
                         <span>

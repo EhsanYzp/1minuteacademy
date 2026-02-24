@@ -1,4 +1,7 @@
+import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import useShowProgressVisuals from '../../../lib/useShowProgressVisuals';
+import { setLocalShowProgressVisuals } from '../../../lib/progressVisuals';
 
 export default function PreferencesTab({
   avatarInputRef,
@@ -31,6 +34,12 @@ export default function PreferencesTab({
   tier,
   user,
 }) {
+  const showProgressVisuals = useShowProgressVisuals();
+  const progressVisualsLabel = useMemo(
+    () => (showProgressVisuals ? 'On (recommended)' : 'Off'),
+    [showProgressVisuals]
+  );
+
   return (
     <>
       <div className="profile-section-header profile-section-header-spaced">
@@ -185,6 +194,29 @@ export default function PreferencesTab({
             {presentationError?.message ?? String(presentationError)}
           </div>
         ) : null}
+      </div>
+
+      <div className="profile-note" style={{ marginBottom: 12 }}>
+        <strong>Progress visuals</strong>
+        <div className="profile-preference-row">
+          <label className="profile-preference-label" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <input
+              type="checkbox"
+              checked={Boolean(showProgressVisuals)}
+              onChange={(e) => setLocalShowProgressVisuals(Boolean(e?.target?.checked))}
+              aria-label="Show progress tracking visuals"
+            />
+            <span>Show progress bars and completion percentages</span>
+          </label>
+
+          <div className="profile-preference-help" style={{ marginLeft: 'auto' }} aria-label="Current setting">
+            {progressVisualsLabel}
+          </div>
+        </div>
+
+        <div className="profile-preference-help">
+          Affects category, course, and chapter pages. This does not delete your progress.
+        </div>
       </div>
     </>
   );
