@@ -5,6 +5,8 @@ import Header from '../components/Header';
 import Seo from '../components/Seo';
 import Breadcrumbs from '../components/Breadcrumbs';
 import { getCourseCounts, listCategories, listCourses } from '../services/catalog';
+import { useAuth } from '../context/AuthContext';
+import { listUserCompletedTopicProgressWithCourseIds } from '../services/progress';
 import './CategoriesFlow.css';
 
 async function mapWithConcurrency(items, limit, mapper) {
@@ -29,9 +31,12 @@ export default function CategoryCoursesPage() {
   const { categoryId } = useParams();
   const id = String(categoryId ?? '').trim();
 
+  const { user, isSupabaseConfigured } = useAuth();
+
   const [category, setCategory] = useState(null);
   const [courses, setCourses] = useState([]);
   const [countsByCourseId, setCountsByCourseId] = useState(() => new Map());
+  const [completedByCourseId, setCompletedByCourseId] = useState(() => new Map());
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -95,6 +100,39 @@ export default function CategoryCoursesPage() {
       cancelled = true;
     };
   }, [courses]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadCourseProgress() {
+      const rows = Array.isArray(courses) ? courses : [];
+      if (!isSupabaseConfigured || !user || rows.length === 0) {
+        setCompletedByCourseId(new Map());
+        return;
+      }
+
+      try {
+        const courseIds = rows.map((c) => String(c?.id ?? '').trim()).filter(Boolean);
+        const progressRows = await listUserCompletedTopicProgressWithCourseIds({ courseIds });
+        if (cancelled) return;
+
+        const next = new Map();
+        for (const r of Array.isArray(progressRows) ? progressRows : []) {
+          const courseId = String(r?.topics?.course_id ?? '').trim();
+          if (!courseId) continue;
+          next.set(courseId, (next.get(courseId) ?? 0) + 1);
+        }
+        setCompletedByCourseId(next);
+      } catch {
+        if (!cancelled) setCompletedByCourseId(new Map());
+      }
+    }
+
+    loadCourseProgress();
+    return () => {
+      cancelled = true;
+    };
+  }, [courses, isSupabaseConfigured, user]);
 
   const title = useMemo(() => String(category?.title ?? 'Category'), [category]);
   const description = useMemo(() => String(category?.description ?? ''), [category]);
@@ -168,6 +206,12 @@ export default function CategoryCoursesPage() {
               const chapters = counts?.chapters;
               const topics = counts?.topics;
 
+              const totalTopics = Number.isFinite(Number(topics)) ? Number(topics) : null;
+              const completedTopics = completedByCourseId.get(courseId) ?? 0;
+              const pct = totalTopics && totalTopics > 0
+                ? Math.max(0, Math.min(100, Math.round((completedTopics / totalTopics) * 100)))
+                : 0;
+
               const chaptersText = `${Number.isFinite(Number(chapters)) ? chapters : '—'} chapters`;
               const topicsText = `${Number.isFinite(Number(topics)) ? topics : '—'} topics`;
 
@@ -185,6 +229,20 @@ export default function CategoryCoursesPage() {
                       <div className="catflow-badge">{topicsText}</div>
                     </div>
                   </div>
+
+                  {user && totalTopics && totalTopics > 0 && completedTopics > 0 && (
+                    <div className="catflow-progress" aria-label="Course progress">
+                      <div className="catflow-progressTop">
+                        <span>
+                          <strong>{completedTopics}</strong> / <strong>{totalTopics}</strong> topics
+                        </span>
+                        <span><strong>{pct}%</strong></span>
+                      </div>
+                      <div className="catflow-progressTrack">
+                        <div className="catflow-progressFill" style={{ '--progress-pct': `${pct}%` }} />
+                      </div>
+                    </div>
+                  )}
                 </Link>
               );
             })}

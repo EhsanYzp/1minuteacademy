@@ -130,3 +130,28 @@ export async function listUserTopicProgress() {
   if (error) throw error;
   return data ?? [];
 }
+
+export async function listUserCompletedTopicProgressWithCourseIds({ courseIds = null } = {}) {
+  const supabase = requireSupabase();
+
+  const userId = await getSignedInUserId(supabase);
+  if (!userId) return [];
+
+  const ids = Array.isArray(courseIds) ? courseIds.map((c) => String(c ?? '').trim()).filter(Boolean) : null;
+  const cacheKey = makeCacheKey(['progress', userId, 'completedTopicsWithCourseIds', ids ? ids.join(',') : 'all']);
+
+  return withCache(cacheKey, { ttlMs: 20 * 1000 }, async () => {
+    let q = supabase
+      .from('user_topic_progress')
+      .select('topic_id, completed_count, topics!inner ( course_id )')
+      .gt('completed_count', 0);
+
+    if (ids && ids.length > 0) {
+      q = q.in('topics.course_id', ids);
+    }
+
+    const { data, error } = await q;
+    if (error) throw error;
+    return data ?? [];
+  });
+}

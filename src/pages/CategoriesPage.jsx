@@ -4,11 +4,15 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
 import { listCategories, listCourses } from '../services/catalog';
+import { useAuth } from '../context/AuthContext';
+import { listUserCompletedTopicProgressWithCourseIds } from '../services/progress';
 import './CategoriesFlow.css';
 
 export default function CategoriesPage() {
+  const { user, isSupabaseConfigured } = useAuth();
   const [categories, setCategories] = useState([]);
   const [courses, setCourses] = useState([]);
+  const [startedCourseIds, setStartedCourseIds] = useState(() => new Set());
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -39,6 +43,35 @@ export default function CategoriesPage() {
     };
   }, []);
 
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadStartedCourses() {
+      if (!isSupabaseConfigured || !user) {
+        setStartedCourseIds(new Set());
+        return;
+      }
+
+      try {
+        const rows = await listUserCompletedTopicProgressWithCourseIds();
+        if (cancelled) return;
+        const next = new Set();
+        for (const r of Array.isArray(rows) ? rows : []) {
+          const courseId = String(r?.topics?.course_id ?? '').trim();
+          if (courseId) next.add(courseId);
+        }
+        setStartedCourseIds(next);
+      } catch {
+        if (!cancelled) setStartedCourseIds(new Set());
+      }
+    }
+
+    loadStartedCourses();
+    return () => {
+      cancelled = true;
+    };
+  }, [isSupabaseConfigured, user]);
+
   const courseCountsByCategory = useMemo(() => {
     const m = new Map();
     for (const c of Array.isArray(courses) ? courses : []) {
@@ -48,6 +81,18 @@ export default function CategoriesPage() {
     }
     return m;
   }, [courses]);
+
+  const startedCourseCountsByCategory = useMemo(() => {
+    const m = new Map();
+    for (const c of Array.isArray(courses) ? courses : []) {
+      const categoryId = String(c?.category_id ?? '').trim();
+      const courseId = String(c?.id ?? '').trim();
+      if (!categoryId || !courseId) continue;
+      if (!startedCourseIds?.has?.(courseId)) continue;
+      m.set(categoryId, (m.get(categoryId) ?? 0) + 1);
+    }
+    return m;
+  }, [courses, startedCourseIds]);
 
   const visibleCategories = useMemo(() => {
     const q = String(query ?? '').trim().toLowerCase();
@@ -103,6 +148,8 @@ export default function CategoriesPage() {
               const title = String(cat?.title ?? 'Untitled');
               const borderColor = cat?.color ? String(cat.color) : null;
               const courseCount = courseCountsByCategory.get(id) ?? 0;
+              const started = startedCourseCountsByCategory.get(id) ?? 0;
+              const pct = courseCount > 0 ? Math.max(0, Math.min(100, Math.round((started / courseCount) * 100))) : 0;
 
               return (
                 <Link
@@ -115,6 +162,20 @@ export default function CategoriesPage() {
                     <h2 className="catflow-cardTitle catflow-cardTitleTop">{title}</h2>
                     <div className="catflow-badge">{courseCount} courses</div>
                   </div>
+
+                  {user && courseCount > 0 && started > 0 && (
+                    <div className="catflow-progress" aria-label="Category progress">
+                      <div className="catflow-progressTop">
+                        <span>
+                          Started <strong>{started}</strong> of <strong>{courseCount}</strong> courses
+                        </span>
+                        <span><strong>{pct}%</strong></span>
+                      </div>
+                      <div className="catflow-progressTrack">
+                        <div className="catflow-progressFill" style={{ '--progress-pct': `${pct}%` }} />
+                      </div>
+                    </div>
+                  )}
                 </Link>
               );
             })}
