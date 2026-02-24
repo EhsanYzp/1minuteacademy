@@ -402,7 +402,6 @@ function TopicPage() {
             <div className="topic-emoji">{topic.emoji}</div>
             
             <h1 className="topic-title">{topic.title}</h1>
-            <p className="topic-description">{topic.description}</p>
 
             <div className="topic-meta">
               <span className="meta-badge duration">
