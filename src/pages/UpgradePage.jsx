@@ -318,7 +318,7 @@ export default function UpgradePage() {
                 <ul className="pricing-feature-list" aria-label="Pro features">
                   <li><span className="pricing-check" aria-hidden="true">✓</span>All topics (100% library)</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>Everything in Free (progress + ratings)</li>
-                  <li><span className="pricing-check" aria-hidden="true">✓</span>Certificates (complete a category)</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>Certificates (60 topics per category)</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>Minute Expert + badges</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>Review mode (no timer)</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>Surprise shuffle across all modules</li>
@@ -357,7 +357,7 @@ export default function UpgradePage() {
                 </div>
                 <div className="pricing-glossary-item">
                   <div className="pricing-glossary-term">Certificates</div>
-                  <div className="pricing-glossary-def">Pro-only shareable certificates you earn when you complete every module in a category.</div>
+                  <div className="pricing-glossary-def">Shareable certificates you earn when you complete 60 topics in a category.</div>
                 </div>
                 <div className="pricing-glossary-item">
                   <div className="pricing-glossary-term">Pro topics</div>
@@ -452,7 +452,7 @@ export default function UpgradePage() {
                     </tr>
 
                     <tr>
-                      <th scope="row" className="compare-feature">Certificates (complete a category)</th>
+                      <th scope="row" className="compare-feature">Certificates (60 topics per category)</th>
                       <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
                       <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
                       <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>

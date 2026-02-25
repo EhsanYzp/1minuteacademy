@@ -158,6 +158,8 @@ export default function ProfilePage() {
   const planLabel = formatPlanForProfile(user, tier);
   const showReview = canReview(tier);
 
+  const canManageCertificates = hasProAccess && Boolean(user) && contentSource !== 'local' && isSupabaseConfigured;
+
   const hasStripeCustomer = Boolean(user?.user_metadata?.stripe_customer_id);
   const hasStripeSubscription = Boolean(user?.user_metadata?.stripe_subscription_id);
   const showSubscriptionBox = contentSource !== 'local' && Boolean(user) && (hasStripeCustomer || hasStripeSubscription);
@@ -278,7 +280,7 @@ export default function ProfilePage() {
       setIdentityLoaded(true);
       setIdentityNotice('Saved. New reviews will use this name/photo.');
 
-      if (hasProAccess && contentSource !== 'local' && isSupabaseConfigured) {
+      if (canManageCertificates) {
         try {
           const rows = await listMyCertificates();
           const count = Array.isArray(rows) ? rows.length : 0;
@@ -312,7 +314,7 @@ export default function ProfilePage() {
       setIdentityLoaded(true);
       setIdentityNotice('Photo updated.');
 
-      if (hasProAccess && contentSource !== 'local' && isSupabaseConfigured) {
+      if (canManageCertificates) {
         try {
           const rows = await listMyCertificates();
           const count = Array.isArray(rows) ? rows.length : 0;
@@ -894,7 +896,7 @@ export default function ProfilePage() {
       case 'badges':
         return 'Track your Minute Expert badges and milestones.';
       case 'certificates':
-        return 'Earn shareable certificates by completing entire categories.';
+        return 'Earn a certificate for each category after completing 60 topics (Pro-only).';
       case 'ratings':
         return 'View and update your module ratings.';
       case 'account':
@@ -1028,9 +1030,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (activeTab !== 'certificates') return;
-    if (!hasProAccess) return;
-    if (contentSource === 'local') return;
-    if (!isSupabaseConfigured) return;
+    if (!canManageCertificates) return;
     if (certLoading) return;
     if (certBusyId) return;
 
@@ -1041,10 +1041,11 @@ export default function ProfilePage() {
 
     certAutoAttemptedRef.current.add(String(next.id));
     void onGenerateCertificate(next);
-  }, [activeTab, certBusyId, certLoading, certificates, contentSource, hasProAccess, isSupabaseConfigured]);
+  }, [activeTab, certBusyId, certLoading, certificates, canManageCertificates]);
 
   async function onGenerateCertificate(row) {
     if (!row?.id) return;
+    if (!canManageCertificates) return;
     if (certBusyId || certBulkBusy) return;
     setCertBusyId(String(row.id));
     try {
@@ -1079,7 +1080,7 @@ export default function ProfilePage() {
 
   async function onRegenerateCertificate(row) {
     if (!row?.id) return;
-    if (!hasProAccess) return;
+    if (!canManageCertificates) return;
     if (certBusyId || certBulkBusy) return;
 
     setCertBusyId(String(row.id));
@@ -1114,7 +1115,7 @@ export default function ProfilePage() {
   }
 
   async function onRegenerateAllCertificates() {
-    if (!hasProAccess) return;
+    if (!canManageCertificates) return;
     if (certBusyId || certBulkBusy) return;
 
     let rows = Array.isArray(certificates) ? certificates : [];
@@ -1134,7 +1135,7 @@ export default function ProfilePage() {
     }
 
     if (!Array.isArray(rows) || rows.length === 0) {
-      pushToast({ variant: 'success', emoji: '✅', title: 'No certificates to update', message: 'Earn one by completing a category.' });
+      pushToast({ variant: 'success', emoji: '✅', title: 'No certificates to update', message: 'Earn one by completing 60 topics in a category.' });
       return;
     }
 
@@ -1188,6 +1189,10 @@ export default function ProfilePage() {
   }
 
   async function onShareCertificate(row) {
+    if (!canManageCertificates) {
+      pushToast({ variant: 'error', emoji: '⚠️', title: 'Sign in required', message: 'Sign in to share your certificates.' });
+      return;
+    }
     const cacheBuster = row?.updated_at ?? row?.awarded_at ?? null;
     const url =
       getCertificatePublicUrlFromPathWithOptions(row?.png_path, { cacheBuster }) ||
@@ -1372,7 +1377,7 @@ export default function ProfilePage() {
                     certBulkBusy={certBulkBusy}
                     certBulkProgress={certBulkProgress}
                     contentSource={contentSource}
-                    hasProAccess={hasProAccess}
+                    canManageCertificates={canManageCertificates}
                     fmtShortDate={fmtShortDate}
                     getCertificatePublicUrlFromPathWithOptions={getCertificatePublicUrlFromPathWithOptions}
                     onGenerateCertificate={onGenerateCertificate}

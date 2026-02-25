@@ -692,6 +692,7 @@ function LessonPage() {
               });
 
               // Background-generate assets so the Certificates tab has an instant preview.
+              // Background-generate assets so the Certificates tab has an instant preview.
               void generateAndUploadMyCertificate({ certificateRow: newlyAwarded });
             }
           } catch {

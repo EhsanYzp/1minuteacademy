@@ -8,7 +8,7 @@ export default function CertificatesTab({
   certBulkBusy,
   certBulkProgress,
   contentSource,
-  hasProAccess,
+  canManageCertificates,
   fmtShortDate,
   getCertificatePublicUrlFromPathWithOptions,
   onGenerateCertificate,
@@ -21,10 +21,10 @@ export default function CertificatesTab({
     <>
       <div className="profile-section-header profile-section-header-spaced">
         <h2>Certificates</h2>
-        <div className="profile-section-sub">Earn a certificate when you complete every module in a category.</div>
+        <div className="profile-section-sub">Earn a certificate for each category after you complete 60 topics in it.</div>
       </div>
 
-      {hasProAccess && certificates.length > 0 ? (
+      {canManageCertificates && certificates.length > 0 ? (
         <div className="profile-certificates-toolbar">
           <button
             type="button"
@@ -43,10 +43,10 @@ export default function CertificatesTab({
         </div>
       ) : null}
 
-      {!hasProAccess && contentSource !== 'local' ? (
+      {!canManageCertificates && contentSource !== 'local' ? (
         <div className="profile-note" style={{ marginBottom: 12 }}>
           <strong>Pro feature</strong>
-          <div>Certificates are Pro-only. Upgrade to start earning category certificates.</div>
+          <div>Upgrade to Pro to start earning category certificates.</div>
           <div style={{ marginTop: 10 }}>
             <Link className="profile-upgrade-btn" to="/upgrade">
               Upgrade
@@ -69,9 +69,7 @@ export default function CertificatesTab({
           <div className="profile-certificates-empty">Loading certificates…</div>
         ) : certificates.length === 0 ? (
           <div className="profile-certificates-empty">
-            {hasProAccess
-              ? 'No certificates yet. Complete an entire category to earn one.'
-              : 'Certificates appear here after you upgrade and complete a category.'}
+            {'No certificates yet. Complete 60 topics in a category to earn one.'}
           </div>
         ) : (
           <div className="profile-certificates-grid">
@@ -83,7 +81,7 @@ export default function CertificatesTab({
               const ready = Boolean(viewUrl);
               const busy = certBusyId && String(certBusyId) === String(c?.id);
               const subtitle = c?.awarded_at ? `Awarded ${fmtShortDate(c.awarded_at)}` : 'Awarded';
-              const progressNote = Number(c?.total_topics ?? 0) > 0 ? `${Number(c?.completed_topics ?? 0)}/${Number(c?.total_topics ?? 0)} modules` : null;
+              const progressNote = Number(c?.total_topics ?? 0) > 0 ? `${Number(c?.completed_topics ?? 0)}/${Number(c?.total_topics ?? 0)} topics` : null;
 
               return (
                 <div key={c.id} className="profile-certificate-card">
@@ -112,8 +110,8 @@ export default function CertificatesTab({
                         type="button"
                         className="profile-certificate-btn primary"
                         onClick={() => onGenerateCertificate(c)}
-                        disabled={!hasProAccess || busy}
-                        title={!hasProAccess ? 'Pro only' : 'Generate certificate assets'}
+                        disabled={!canManageCertificates || busy}
+                        title={!canManageCertificates ? 'Sign in required' : 'Generate certificate assets'}
                       >
                         {busy ? 'Generating…' : 'Generate'}
                       </button>
@@ -132,8 +130,8 @@ export default function CertificatesTab({
                       type="button"
                       className="profile-certificate-btn"
                       onClick={() => onRegenerateCertificate(c)}
-                      disabled={!hasProAccess || busy}
-                      title={!hasProAccess ? 'Pro only' : 'Regenerate using your current display name and photo'}
+                      disabled={!canManageCertificates || busy}
+                      title={!canManageCertificates ? 'Sign in required' : 'Regenerate using your current display name and photo'}
                     >
                       Regenerate
                     </button>
@@ -142,8 +140,8 @@ export default function CertificatesTab({
                       type="button"
                       className="profile-certificate-btn"
                       onClick={() => onShareCertificate(c)}
-                      disabled={!hasProAccess}
-                      title={!hasProAccess ? 'Pro only' : 'Copy a share link'}
+                      disabled={!canManageCertificates}
+                      title={!canManageCertificates ? 'Sign in required' : 'Copy a share link'}
                     >
                       Share
                     </button>
