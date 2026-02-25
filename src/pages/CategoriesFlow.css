@@ -46,10 +46,10 @@
 
 .catflow-titleRow {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 12px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .catflow-titleActions {
@@ -57,6 +57,24 @@
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
+  flex: 0 0 auto;
+}
+
+.catflow-titleRow > h1 {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .catflow-titleRow {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .catflow-titleActions {
+    width: 100%;
+    justify-content: flex-end;
+  }
 }
 
 .catflow-filterInline {

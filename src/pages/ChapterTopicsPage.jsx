@@ -176,7 +176,11 @@ export default function ChapterTopicsPage() {
 
           <div className="catflow-titleRow">
             <h1>{chapterTitle}</h1>
-            <div className="catflow-titleActions" aria-label="Topic filters">
+          </div>
+          {chapterRow?.description ? <p>{String(chapterRow.description)}</p> : <p>Pick a topic to start.</p>}
+
+          <div className="catflow-toolbarBare" role="region" aria-label="Topic filters">
+            <div className="catflow-controlsRow">
               <label className="catflow-filterInline">
                 <span className="catflow-filterLabel">Status</span>
                 <select
@@ -195,7 +199,6 @@ export default function ChapterTopicsPage() {
               </button>
             </div>
           </div>
-          {chapterRow?.description ? <p>{String(chapterRow.description)}</p> : <p>Pick a topic to start.</p>}
 
           <div className="catflow-toolbarSub">
             Showing <strong>{visibleTopics.length}</strong> topic(s)

@@ -138,11 +138,14 @@ export default function CategoryCoursesPage() {
 
           <div className="catflow-titleRow">
             <h1>{title}</h1>
-            <div className="catflow-titleActions" aria-label="Course controls">
+          </div>
+          <p>{guidance}</p>
+
+          <div className="catflow-toolbarBare" role="region" aria-label="Course controls">
+            <div className="catflow-controlsRow">
               <ProgressVisualsToggle />
             </div>
           </div>
-          <p>{guidance}</p>
         </div>
 
         {loading && <p className="catflow-empty">Loading…</p>}

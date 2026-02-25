@@ -173,11 +173,14 @@ export default function CourseChaptersPage() {
 
           <div className="catflow-titleRow">
             <h1>{courseTitle}</h1>
-            <div className="catflow-titleActions" aria-label="Chapter controls">
+          </div>
+          {courseRow?.description ? <p>{String(courseRow.description)}</p> : <p>Pick a chapter to see its topics.</p>}
+
+          <div className="catflow-toolbarBare" role="region" aria-label="Chapter controls">
+            <div className="catflow-controlsRow">
               <ProgressVisualsToggle />
             </div>
           </div>
-          {courseRow?.description ? <p>{String(courseRow.description)}</p> : <p>Pick a chapter to see its topics.</p>}
 
           {showProgressVisuals && user && courseProgress.total > 0 && (
             <div className="catflow-progress" aria-label="Course progress">
