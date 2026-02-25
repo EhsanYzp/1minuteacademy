@@ -1,0 +1,559 @@
+{
+  "categoryId": "programming",
+  "subject": "Programming",
+  "courseId": "programming--the-science-of-algorithms",
+  "courseTitle": "The Science of Algorithms",
+  "emoji": "🔢",
+  "color": "#3B82F6",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "programming--the-science-of-algorithms--ch01-what-is-an-algorithm", "title": "What Is an Algorithm", "position": 1 },
+    { "id": "programming--the-science-of-algorithms--ch02-searching-and-sorting", "title": "Searching and Sorting", "position": 2 },
+    { "id": "programming--the-science-of-algorithms--ch03-graph-algorithms", "title": "Graph Algorithms", "position": 3 },
+    { "id": "programming--the-science-of-algorithms--ch04-divide-and-conquer", "title": "Divide and Conquer", "position": 4 },
+    { "id": "programming--the-science-of-algorithms--ch05-hard-problems", "title": "Hard Problems", "position": 5 },
+    { "id": "programming--the-science-of-algorithms--ch06-algorithms-in-the-real-world", "title": "Algorithms in the Real World", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch01-what-is-an-algorithm",
+      "title": "What Algorithms Actually Are",
+      "story": {
+        "hook": { "text": "You follow algorithms every day — recipes, driving directions, morning routines.", "visual": "📋" },
+        "buildup": { "text": "An algorithm is a finite set of clear steps that transforms an input into an output.", "visual": "➡️" },
+        "discovery": { "text": "The key word is finite. An algorithm must always terminate. Infinite loops don't count.", "visual": "🔚" },
+        "twist": { "text": "Some problems have no algorithm at all. They're provably unsolvable by any computer.", "visual": "🚫" },
+        "climax": { "text": "Knowing which problems can be solved is just as important as solving them.", "visual": "🧠" },
+        "punchline": { "text": "An algorithm is a recipe that always finishes.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What key property must every algorithm have?",
+        "options": ["It must always terminate", "It must be written in code", "It must run on a computer"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch01-what-is-an-algorithm",
+      "title": "Al-Khwarizmi and the Origin Story",
+      "story": {
+        "hook": { "text": "The word 'algorithm' comes from a ninth-century Persian mathematician's name.", "visual": "📜" },
+        "buildup": { "text": "Al-Khwarizmi wrote a book on solving equations using systematic, repeatable steps.", "visual": "📖" },
+        "discovery": { "text": "His methods spread across Europe and became the foundation of algebra and computation.", "visual": "🌍" },
+        "twist": { "text": "He never saw a computer. His algorithms were designed for humans working with pen and paper.", "visual": "✏️" },
+        "climax": { "text": "Twelve centuries later, every computer on Earth runs on his core idea: follow the steps.", "visual": "💻" },
+        "punchline": { "text": "A ninth-century idea runs every modern machine.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Where does the word 'algorithm' come from?",
+        "options": ["A Persian mathematician's name", "A Greek word for logic", "A Latin term for counting"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch01-what-is-an-algorithm",
+      "title": "Measuring Efficiency with Big O",
+      "story": {
+        "hook": { "text": "Two algorithms can solve the same problem but take wildly different amounts of time.", "visual": "⏱️" },
+        "buildup": { "text": "Big O notation measures how an algorithm's time grows as the input size increases.", "visual": "📈" },
+        "discovery": { "text": "O(n) means time grows linearly. O(n²) means doubling the input quadruples the work.", "visual": "🔢" },
+        "twist": { "text": "A slow algorithm on 100 items might take hours on 10,000. Big O reveals that before you run it.", "visual": "🔮" },
+        "climax": { "text": "Big O doesn't measure exact speed. It predicts how algorithms behave at massive scale.", "visual": "🏔️" },
+        "punchline": { "text": "Big O tells you what breaks at scale.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does O(n²) mean for input growth?",
+        "options": ["Doubling input quadruples the work", "Doubling input doubles the work", "Input size doesn't matter"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch01-what-is-an-algorithm",
+      "title": "Best, Worst, and Average Cases",
+      "story": {
+        "hook": { "text": "An algorithm that's fast on one input can be painfully slow on another.", "visual": "🎲" },
+        "buildup": { "text": "Computer scientists analyze three scenarios: best case, worst case, and average case.", "visual": "📊" },
+        "discovery": { "text": "Worst case guarantees a ceiling. If the worst is acceptable, everything else will be too.", "visual": "🏚️" },
+        "twist": { "text": "Average case is often more useful but harder to calculate. It depends on input distribution.", "visual": "🤔" },
+        "climax": { "text": "Best case is misleading. An algorithm that shines on lucky inputs may choke on real data.", "visual": "🍀" },
+        "punchline": { "text": "Plan for the worst. Hope for the average.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is worst-case analysis valuable?",
+        "options": ["It guarantees a performance ceiling", "It always matches real-world speed", "It's the easiest to compute"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch01-what-is-an-algorithm",
+      "title": "Time Versus Space Tradeoffs",
+      "story": {
+        "hook": { "text": "You can sort a deck of cards faster if you spread them across a huge table.", "visual": "🃏" },
+        "buildup": { "text": "Algorithms often trade memory for speed. Using more space can dramatically cut processing time.", "visual": "💾" },
+        "discovery": { "text": "Hash tables use extra memory to achieve nearly instant lookups — O(1) instead of O(n).", "visual": "⚡" },
+        "twist": { "text": "In low-memory environments, speed must be sacrificed. The tradeoff is never free.", "visual": "⚖️" },
+        "climax": { "text": "Great engineers don't pick the fastest algorithm. They pick the right tradeoff for the constraint.", "visual": "🎯" },
+        "punchline": { "text": "Speed and memory are always in negotiation.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What do hash tables trade to achieve fast lookups?",
+        "options": ["Extra memory for speed", "Speed for simplicity", "Accuracy for speed"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch02-searching-and-sorting",
+      "title": "Linear Search",
+      "story": {
+        "hook": { "text": "You lost your keys. You check every pocket, one by one, until you find them.", "visual": "🔍" },
+        "buildup": { "text": "Linear search checks every element in order. Simple, reliable, and impossible to get wrong.", "visual": "📏" },
+        "discovery": { "text": "It runs in O(n) time. On average, you'll check half the list before finding the target.", "visual": "📊" },
+        "twist": { "text": "On an unsorted list, linear search is the only option. No clever trick can skip elements safely.", "visual": "🤷" },
+        "climax": { "text": "Simple doesn't mean bad. For small lists, linear search often beats complex alternatives.", "visual": "✅" },
+        "punchline": { "text": "Sometimes checking everything is the smartest move.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the time complexity of linear search?",
+        "options": ["O(n)", "O(log n)", "O(1)"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch02-searching-and-sorting",
+      "title": "Binary Search",
+      "story": {
+        "hook": { "text": "Open a dictionary to the middle. Is your word before or after? You just cut the search in half.", "visual": "📖" },
+        "buildup": { "text": "Binary search splits a sorted list in half with each step, eliminating half the options.", "visual": "✂️" },
+        "discovery": { "text": "It runs in O(log n). A billion items take just 30 comparisons instead of a billion.", "visual": "🚀" },
+        "twist": { "text": "The catch: the list must be sorted first. Without order, binary search can't work.", "visual": "📏" },
+        "climax": { "text": "Every time you search Google or look up a contact, a form of binary search is at work.", "visual": "🔍" },
+        "punchline": { "text": "Cut the problem in half, thirty times, done.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How many comparisons does binary search need for a billion items?",
+        "options": ["About 30", "About 1,000", "About 1 million"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch02-searching-and-sorting",
+      "title": "Bubble Sort and Why It's Terrible",
+      "story": {
+        "hook": { "text": "Bubble sort is the first algorithm most students learn — and the first they should abandon.", "visual": "🫧" },
+        "buildup": { "text": "It compares adjacent pairs and swaps them if they're out of order, repeating until done.", "visual": "🔄" },
+        "discovery": { "text": "It runs in O(n²). Doubling the list makes it four times slower. Tripling makes it nine times.", "visual": "🐌" },
+        "twist": { "text": "Despite being awful, bubble sort is used in teaching because its simplicity makes concepts clear.", "visual": "🎓" },
+        "climax": { "text": "Obama once joked that bubble sort was 'not the way to go.' Even presidents know it's slow.", "visual": "🇺🇸" },
+        "punchline": { "text": "Great for learning. Terrible for everything else.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the time complexity of bubble sort?",
+        "options": ["O(n²)", "O(n log n)", "O(n)"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch02-searching-and-sorting",
+      "title": "Merge Sort and Divide and Conquer",
+      "story": {
+        "hook": { "text": "Sorting a thousand items is hard. Sorting two items is trivial. Merge sort exploits this gap.", "visual": "🧩" },
+        "buildup": { "text": "It splits the list in half, sorts each half, then merges the sorted halves back together.", "visual": "✂️" },
+        "discovery": { "text": "This divide-and-conquer approach runs in O(n log n) — vastly faster than O(n²) on large data.", "visual": "⚡" },
+        "twist": { "text": "Merge sort needs extra memory to hold the temporary halves. Speed costs space.", "visual": "💾" },
+        "climax": { "text": "It's guaranteed O(n log n) in every case. No tricky inputs can slow it down.", "visual": "🛡️" },
+        "punchline": { "text": "Split, sort, merge — elegant and guaranteed fast.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What strategy does merge sort use?",
+        "options": ["Divide and conquer", "Brute force comparison", "Random shuffling"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch02-searching-and-sorting",
+      "title": "Quicksort and Practical Speed",
+      "story": {
+        "hook": { "text": "Quicksort was invented in 1960 and is still the default in most programming libraries.", "visual": "⚡" },
+        "buildup": { "text": "It picks a pivot element, partitions the list around it, then recursively sorts both sides.", "visual": "📌" },
+        "discovery": { "text": "On average, quicksort runs in O(n log n) and uses less memory than merge sort.", "visual": "💨" },
+        "twist": { "text": "In the worst case, quicksort degrades to O(n²). Bad pivot choices can ruin performance.", "visual": "🎲" },
+        "climax": { "text": "Randomizing the pivot nearly eliminates worst cases. Quicksort wins in practice, not theory.", "visual": "🏆" },
+        "punchline": { "text": "Theory says it can fail. Practice says it rarely does.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is quicksort's worst-case time complexity?",
+        "options": ["O(n²)", "O(n log n)", "O(n)"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch03-graph-algorithms",
+      "title": "What Graphs Represent",
+      "story": {
+        "hook": { "text": "Social networks, road maps, and the internet are all graphs in disguise.", "visual": "🕸️" },
+        "buildup": { "text": "A graph is a set of nodes connected by edges. Simple structure, infinite applications.", "visual": "🔵" },
+        "discovery": { "text": "Facebook friends are nodes with edges. Roads connect city nodes. Web pages link to each other.", "visual": "🌐" },
+        "twist": { "text": "Graphs can be directed or undirected, weighted or unweighted — and each type needs different algorithms.", "visual": "🔀" },
+        "climax": { "text": "Most of the world's hardest computing problems boil down to graph problems.", "visual": "🧩" },
+        "punchline": { "text": "Everything connected is a graph.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a graph made of?",
+        "options": ["Nodes connected by edges", "Rows and columns of data", "Layers of neural networks"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch03-graph-algorithms",
+      "title": "Breadth-First Search",
+      "story": {
+        "hook": { "text": "Imagine finding the nearest coffee shop by checking every place one block away, then two, then three.", "visual": "☕" },
+        "buildup": { "text": "Breadth-first search explores all neighbors first before moving deeper into the graph.", "visual": "🌊" },
+        "discovery": { "text": "It guarantees the shortest path in unweighted graphs. The first time it reaches a node is the best.", "visual": "📏" },
+        "twist": { "text": "BFS uses a queue and can consume lots of memory on wide graphs with millions of nodes.", "visual": "💾" },
+        "climax": { "text": "Social network features like 'people you may know' run on variations of breadth-first search.", "visual": "👥" },
+        "punchline": { "text": "Go wide before you go deep.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does breadth-first search guarantee on unweighted graphs?",
+        "options": ["The shortest path", "The fastest execution", "The least memory usage"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch03-graph-algorithms",
+      "title": "Depth-First Search",
+      "story": {
+        "hook": { "text": "Imagine exploring a maze by always turning left until you hit a dead end, then backtracking.", "visual": "🏰" },
+        "buildup": { "text": "Depth-first search plunges as deep as possible before backing up and trying another path.", "visual": "⬇️" },
+        "discovery": { "text": "It uses a stack and needs less memory than BFS on deep graphs. It's great for detecting cycles.", "visual": "🔄" },
+        "twist": { "text": "DFS doesn't find shortest paths. It might explore a long detour before finding a nearby node.", "visual": "🗺️" },
+        "climax": { "text": "Web crawlers use DFS to follow links deep into websites before moving to the next domain.", "visual": "🕷️" },
+        "punchline": { "text": "Go deep before you go wide.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What data structure does depth-first search use?",
+        "options": ["A stack", "A queue", "A hash table"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch03-graph-algorithms",
+      "title": "Dijkstra's Shortest Path",
+      "story": {
+        "hook": { "text": "Edsger Dijkstra designed his famous algorithm in 20 minutes while sitting at a café.", "visual": "☕" },
+        "buildup": { "text": "His algorithm finds the shortest path between nodes in a weighted graph.", "visual": "🗺️" },
+        "discovery": { "text": "It greedily picks the closest unvisited node, updates its neighbors, and repeats.", "visual": "📍" },
+        "twist": { "text": "It fails with negative edge weights. If a shortcut costs less than zero, Dijkstra gets confused.", "visual": "➖" },
+        "climax": { "text": "Every GPS navigation app uses a descendant of Dijkstra's 1956 café sketch.", "visual": "📱" },
+        "punchline": { "text": "A 20-minute sketch now routes billions of trips.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "When does Dijkstra's algorithm fail?",
+        "options": ["With negative edge weights", "With too many nodes", "With undirected graphs"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch03-graph-algorithms",
+      "title": "PageRank and the Google Revolution",
+      "story": {
+        "hook": { "text": "In 1998, two Stanford students turned a graph algorithm into the world's most valuable company.", "visual": "🔍" },
+        "buildup": { "text": "Larry Page and Sergey Brin modeled the web as a graph, where links between pages were edges.", "visual": "🌐" },
+        "discovery": { "text": "PageRank scored pages by how many other important pages linked to them. Quality over quantity.", "visual": "⭐" },
+        "twist": { "text": "Spammers gamed it with link farms. Google had to keep evolving the algorithm to stay ahead.", "visual": "🕸️" },
+        "climax": { "text": "A graph algorithm that ranked web pages created a trillion-dollar company.", "visual": "💰" },
+        "punchline": { "text": "One algorithm organized the entire internet.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does PageRank measure?",
+        "options": ["How many important pages link to a page", "How fast a page loads", "How many words a page contains"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch04-divide-and-conquer",
+      "title": "The Divide and Conquer Strategy",
+      "story": {
+        "hook": { "text": "Napoleon won battles by splitting enemy forces and defeating each group separately.", "visual": "⚔️" },
+        "buildup": { "text": "Divide and conquer breaks a problem into smaller subproblems, solves each, then combines results.", "visual": "🧩" },
+        "discovery": { "text": "It turns O(n²) brute force into O(n log n) elegance for sorting, multiplication, and more.", "visual": "📉" },
+        "twist": { "text": "The overhead of splitting and merging can make it slower than brute force on tiny inputs.", "visual": "🐜" },
+        "climax": { "text": "Knowing when to stop dividing and switch to brute force is what makes the strategy practical.", "visual": "⚖️" },
+        "punchline": { "text": "Break big problems into small wins.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does divide and conquer do to a problem?",
+        "options": ["Breaks it into smaller subproblems", "Solves it in one pass", "Ignores hard parts"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch04-divide-and-conquer",
+      "title": "Dynamic Programming",
+      "story": {
+        "hook": { "text": "Some problems solve the same subproblem hundreds of times. That's wasted work.", "visual": "🔄" },
+        "buildup": { "text": "Dynamic programming stores subproblem results so they're computed once and reused.", "visual": "💾" },
+        "discovery": { "text": "The Fibonacci sequence without caching takes billions of steps. With caching, it takes dozens.", "visual": "📊" },
+        "twist": { "text": "Recognizing overlapping subproblems is the hard part. Not every problem has them.", "visual": "🤔" },
+        "climax": { "text": "GPS routing, spell checkers, and DNA sequencing all rely on dynamic programming.", "visual": "🧬" },
+        "punchline": { "text": "Remember the answer. Never solve it twice.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the core idea behind dynamic programming?",
+        "options": ["Store and reuse subproblem results", "Divide the problem into halves", "Randomly guess the answer"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch04-divide-and-conquer",
+      "title": "Greedy Algorithms",
+      "story": {
+        "hook": { "text": "A greedy algorithm always picks the best option right now without looking ahead.", "visual": "🤑" },
+        "buildup": { "text": "Making change is greedy: pick the largest coin that fits, repeat until done.", "visual": "🪙" },
+        "discovery": { "text": "Greedy works perfectly when local choices lead to a global optimum. For coins, it usually does.", "visual": "✅" },
+        "twist": { "text": "But with some coin sets, greedy fails. Local best doesn't always mean global best.", "visual": "❌" },
+        "climax": { "text": "Dijkstra's algorithm is greedy and works. The traveling salesman's greedy approach fails badly.", "visual": "🧳" },
+        "punchline": { "text": "Greedy is fast but only right sometimes.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "When do greedy algorithms work well?",
+        "options": ["When local choices lead to a global optimum", "When the problem is very large", "When speed doesn't matter"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch04-divide-and-conquer",
+      "title": "Recursion and Its Pitfalls",
+      "story": {
+        "hook": { "text": "To understand recursion, you must first understand recursion.", "visual": "🪞" },
+        "buildup": { "text": "Recursive algorithms call themselves with a smaller input until reaching a base case.", "visual": "📉" },
+        "discovery": { "text": "Merge sort, tree traversals, and fractals all use recursion to express complex logic simply.", "visual": "🌳" },
+        "twist": { "text": "Each recursive call uses memory. Too many calls without a base case crash the program.", "visual": "💥" },
+        "climax": { "text": "Stack overflows are the classic recursion bug — the function calls itself until memory runs out.", "visual": "📚" },
+        "punchline": { "text": "Every recursion needs a way to stop.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What happens without a base case in recursion?",
+        "options": ["A stack overflow crash", "The function runs faster", "It returns zero"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch04-divide-and-conquer",
+      "title": "Backtracking",
+      "story": {
+        "hook": { "text": "Solving a Sudoku means trying a number, checking if it works, and undoing it if it doesn't.", "visual": "🔢" },
+        "buildup": { "text": "Backtracking explores all possible solutions by trying options and retreating from dead ends.", "visual": "🚶" },
+        "discovery": { "text": "It prunes impossible branches early, so it doesn't waste time on paths that can't lead to a solution.", "visual": "✂️" },
+        "twist": { "text": "Without pruning, backtracking is just brute force. The smarts are in what you skip.", "visual": "🧠" },
+        "climax": { "text": "Chess engines, constraint solvers, and puzzle games all rely on elegant backtracking.", "visual": "♟️" },
+        "punchline": { "text": "Try, fail, undo, try again — systematically.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What makes backtracking faster than brute force?",
+        "options": ["Pruning impossible branches early", "Using more memory", "Running on faster hardware"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch05-hard-problems",
+      "title": "P Versus NP",
+      "story": {
+        "hook": { "text": "There's a million-dollar prize for anyone who can solve one of math's greatest unsolved problems.", "visual": "💰" },
+        "buildup": { "text": "P problems can be solved quickly. NP problems can be checked quickly but might take forever to solve.", "visual": "⏳" },
+        "discovery": { "text": "The question: does every quickly checkable problem also have a quick solution? Nobody knows.", "visual": "❓" },
+        "twist": { "text": "If P equals NP, all encryption breaks. Passwords and banking security become worthless overnight.", "visual": "🔓" },
+        "climax": { "text": "Most experts believe P does not equal NP, but after 50 years, nobody has proven it.", "visual": "🤷" },
+        "punchline": { "text": "One unsolved question guards all digital security.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What would happen if P equals NP?",
+        "options": ["All encryption would break", "Computers would become slower", "Nothing would change"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch05-hard-problems",
+      "title": "The Traveling Salesman Problem",
+      "story": {
+        "hook": { "text": "Visit every city exactly once and return home by the shortest route. Sounds easy — it isn't.", "visual": "🗺️" },
+        "buildup": { "text": "With 20 cities, there are over 60 quadrillion possible routes to check.", "visual": "🔢" },
+        "discovery": { "text": "No known algorithm solves it efficiently. The best solutions are clever approximations.", "visual": "🧮" },
+        "twist": { "text": "UPS saved $300 million per year by using approximate solutions — perfection isn't necessary.", "visual": "📦" },
+        "climax": { "text": "Sometimes 'good enough' is worth billions more than waiting for the perfect answer.", "visual": "💡" },
+        "punchline": { "text": "Close enough beats perfect but impossible.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why can't the traveling salesman problem be solved exactly for large inputs?",
+        "options": ["The number of routes grows explosively", "Computers can't handle maps", "The distances keep changing"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch05-hard-problems",
+      "title": "The Halting Problem",
+      "story": {
+        "hook": { "text": "Can a program determine whether any other program will finish or loop forever?", "visual": "🔄" },
+        "buildup": { "text": "Alan Turing posed this question in 1936 and proved the answer is no.", "visual": "🚫" },
+        "discovery": { "text": "He showed that any halting detector would contradict itself when given its own code as input.", "visual": "💥" },
+        "twist": { "text": "This means some questions about programs are mathematically unanswerable by any computer.", "visual": "🤯" },
+        "climax": { "text": "The halting problem set the boundary of computation. Some things are provably unsolvable.", "visual": "🧱" },
+        "punchline": { "text": "Not every question has a computable answer.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Who proved the halting problem is unsolvable?",
+        "options": ["Alan Turing", "Albert Einstein", "Ada Lovelace"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch05-hard-problems",
+      "title": "NP-Complete Problems",
+      "story": {
+        "hook": { "text": "In the 1970s, Stephen Cook and Leonid Levin discovered a class of problems all equally hard.", "visual": "🏔️" },
+        "buildup": { "text": "NP-complete problems are the hardest in NP. Solving one efficiently would solve them all.", "visual": "🔗" },
+        "discovery": { "text": "Hundreds of real problems — scheduling, routing, packing — are NP-complete.", "visual": "📋" },
+        "twist": { "text": "If one falls, they all fall. Decades of trying suggests none of them will.", "visual": "🧱" },
+        "climax": { "text": "When you prove a problem is NP-complete, you're saying: give up on perfection, approximate.", "visual": "🏳️" },
+        "punchline": { "text": "Proving something is hard is itself a useful answer.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What happens if you solve one NP-complete problem efficiently?",
+        "options": ["All NP-complete problems become solvable", "Only that one problem is solved", "Computers become obsolete"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch05-hard-problems",
+      "title": "Heuristics and Approximation",
+      "story": {
+        "hook": { "text": "When perfection is impossible, getting close fast is the next best thing.", "visual": "🎯" },
+        "buildup": { "text": "Heuristics use rules of thumb to find good-enough solutions in reasonable time.", "visual": "⏱️" },
+        "discovery": { "text": "Approximation algorithms guarantee solutions within a known factor of optimal — say, 1.5x.", "visual": "📐" },
+        "twist": { "text": "Some heuristics work brilliantly in practice but have no theoretical guarantee at all.", "visual": "🎲" },
+        "climax": { "text": "Real-world engineering runs on approximation. Bridges, routes, and schedules all accept 'close.'", "visual": "🌉" },
+        "punchline": { "text": "Good enough, fast enough, wins every time.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What do approximation algorithms guarantee?",
+        "options": ["Solutions within a known factor of optimal", "Perfect solutions every time", "The fastest possible execution"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch06-algorithms-in-the-real-world",
+      "title": "How Search Engines Work",
+      "story": {
+        "hook": { "text": "You type a query and get results in 0.3 seconds from billions of web pages. How?", "visual": "🔍" },
+        "buildup": { "text": "Search engines build inverted indexes — maps from every word to every page containing it.", "visual": "🗂️" },
+        "discovery": { "text": "Your query hits the index, not the web. Ranking algorithms then sort results by relevance.", "visual": "📊" },
+        "twist": { "text": "The index must be constantly rebuilt as billions of pages change every day.", "visual": "🔄" },
+        "climax": { "text": "Search combines indexing, ranking, caching, and distributed systems — dozens of algorithms in concert.", "visual": "🎶" },
+        "punchline": { "text": "You search the index, not the internet.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a search engine query actually search?",
+        "options": ["An inverted index", "The entire internet live", "A single database"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch06-algorithms-in-the-real-world",
+      "title": "Recommendation Algorithms",
+      "story": {
+        "hook": { "text": "Netflix says 80% of what people watch comes from its recommendation algorithm.", "visual": "🎬" },
+        "buildup": { "text": "Collaborative filtering finds users with similar taste and suggests what they liked.", "visual": "👥" },
+        "discovery": { "text": "If a thousand users who loved Movie A also loved Movie B, you'll probably like Movie B too.", "visual": "🎯" },
+        "twist": { "text": "Filter bubbles form. The algorithm keeps showing what you already like, narrowing your world.", "visual": "🫧" },
+        "climax": { "text": "Recommendation algorithms shape culture. They decide what millions of people see and hear.", "visual": "📡" },
+        "punchline": { "text": "Algorithms curate what the world watches.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is collaborative filtering based on?",
+        "options": ["Users with similar taste", "Random suggestions", "Alphabetical order"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch06-algorithms-in-the-real-world",
+      "title": "Compression Algorithms",
+      "story": {
+        "hook": { "text": "A raw music file is 50 MB. An MP3 is 5 MB. Compression makes that possible.", "visual": "🎵" },
+        "buildup": { "text": "Lossless compression finds patterns and removes redundancy without losing any data.", "visual": "📦" },
+        "discovery": { "text": "Lossy compression throws away data humans can't perceive — inaudible sounds, invisible pixels.", "visual": "👂" },
+        "twist": { "text": "JPEG, MP3, and H.264 all discard information. What you see and hear is an approximation.", "visual": "🖼️" },
+        "climax": { "text": "Without compression, streaming video and music would require ten times the bandwidth.", "visual": "📶" },
+        "punchline": { "text": "Everything you stream is a clever approximation.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does lossy compression throw away?",
+        "options": ["Data humans can't perceive", "The most important data first", "Random sections of the file"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch06-algorithms-in-the-real-world",
+      "title": "Encryption Algorithms",
+      "story": {
+        "hook": { "text": "Every time you shop online, algorithms scramble your credit card number so nobody can steal it.", "visual": "🔐" },
+        "buildup": { "text": "Encryption turns readable text into unreadable gibberish using a mathematical key.", "visual": "🔑" },
+        "discovery": { "text": "Public-key encryption lets strangers communicate securely without ever sharing a secret key.", "visual": "💌" },
+        "twist": { "text": "The security depends on math problems that are easy one way but nearly impossible to reverse.", "visual": "🧮" },
+        "climax": { "text": "Quantum computers may break today's encryption. New algorithms are being designed to survive them.", "visual": "⚛️" },
+        "punchline": { "text": "Math you can't reverse keeps the internet safe.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What makes public-key encryption secure?",
+        "options": ["Math problems that are hard to reverse", "Very long passwords", "Hiding the algorithm from users"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--the-science-of-algorithms--ch06-algorithms-in-the-real-world",
+      "title": "Machine Learning as Algorithms",
+      "story": {
+        "hook": { "text": "Traditional algorithms follow instructions. Machine learning algorithms find their own rules.", "visual": "🤖" },
+        "buildup": { "text": "A ML algorithm takes data, discovers patterns, and builds a model that predicts new outcomes.", "visual": "📊" },
+        "discovery": { "text": "No human writes the rules. The algorithm learns from millions of examples and adjusts itself.", "visual": "🎓" },
+        "twist": { "text": "ML models are often black boxes. They work, but nobody fully understands why.", "visual": "🕳️" },
+        "climax": { "text": "From spam filters to self-driving cars, ML algorithms now make decisions humans can't explain.", "visual": "🚗" },
+        "punchline": { "text": "The algorithm writes its own instructions now.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How do machine learning algorithms differ from traditional ones?",
+        "options": ["They discover their own rules from data", "They run faster on hardware", "They never make mistakes"],
+        "correct": 0
+      },
+      "is_free": false
+    }
+  ]
+}

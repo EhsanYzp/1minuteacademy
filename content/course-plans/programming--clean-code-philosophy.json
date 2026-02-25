@@ -1,0 +1,559 @@
+{
+  "categoryId": "programming",
+  "subject": "Programming",
+  "courseId": "programming--clean-code-philosophy",
+  "courseTitle": "Clean Code Philosophy",
+  "emoji": "✨",
+  "color": "#3B82F6",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "programming--clean-code-philosophy--ch01-why-clean-code-matters", "title": "Why Clean Code Matters", "position": 1 },
+    { "id": "programming--clean-code-philosophy--ch02-naming-and-readability", "title": "Naming and Readability", "position": 2 },
+    { "id": "programming--clean-code-philosophy--ch03-functions-and-structure", "title": "Functions and Structure", "position": 3 },
+    { "id": "programming--clean-code-philosophy--ch04-design-principles", "title": "Design Principles", "position": 4 },
+    { "id": "programming--clean-code-philosophy--ch05-managing-complexity", "title": "Managing Complexity", "position": 5 },
+    { "id": "programming--clean-code-philosophy--ch06-refactoring-and-craft", "title": "Refactoring and Craft", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch01-why-clean-code-matters",
+      "title": "What Clean Code Means",
+      "story": {
+        "hook": { "text": "Code is read ten times more often than it's written. Clean code optimizes for the reader.", "visual": "📖" },
+        "buildup": { "text": "Robert C. Martin defined clean code as code that reads like well-written prose.", "visual": "✍️" },
+        "discovery": { "text": "Clean code does one thing well, has clear intent, and contains no surprises.", "visual": "✅" },
+        "twist": { "text": "Writing clean code takes longer initially. But debugging messy code takes far longer.", "visual": "⏳" },
+        "climax": { "text": "Clean code isn't about beauty. It's about reducing the cost of change over time.", "visual": "💰" },
+        "punchline": { "text": "Write for the reader, not the compiler.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Who defined clean code as reading like well-written prose?",
+        "options": ["Robert C. Martin", "Linus Torvalds", "Donald Knuth"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch01-why-clean-code-matters",
+      "title": "The Cost of Technical Debt",
+      "story": {
+        "hook": { "text": "Every shortcut in code is a loan. Technical debt charges compound interest.", "visual": "💳" },
+        "buildup": { "text": "Ward Cunningham coined the metaphor: messy code is like financial debt that slows future work.", "visual": "🏦" },
+        "discovery": { "text": "Teams with high tech debt spend 40% of their time on unplanned rework instead of new features.", "visual": "📊" },
+        "twist": { "text": "Some debt is strategic — shipping fast to learn. The mistake is never paying it back.", "visual": "🎯" },
+        "climax": { "text": "Interest compounds. Code that was 'good enough' last year becomes next year's emergency.", "visual": "🚨" },
+        "punchline": { "text": "Shortcuts today become slowdowns tomorrow.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Who coined the term 'technical debt'?",
+        "options": ["Ward Cunningham", "Robert C. Martin", "Martin Fowler"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch01-why-clean-code-matters",
+      "title": "The Broken Windows Theory",
+      "story": {
+        "hook": { "text": "One broken window in a building signals neglect. Soon, every window gets smashed.", "visual": "🪟" },
+        "buildup": { "text": "In codebases, one messy function signals that sloppiness is acceptable. Others follow.", "visual": "📉" },
+        "discovery": { "text": "The Pragmatic Programmer applied this theory to software: don't tolerate broken code.", "visual": "📕" },
+        "twist": { "text": "Fixing a small mess takes minutes. Cleaning up after years of neglect takes months.", "visual": "🧹" },
+        "climax": { "text": "Culture spreads through code. Leave it cleaner than you found it and quality compounds.", "visual": "✨" },
+        "punchline": { "text": "One broken window rots the whole codebase.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What book applied the broken windows theory to software?",
+        "options": ["The Pragmatic Programmer", "Clean Code", "Design Patterns"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch01-why-clean-code-matters",
+      "title": "Code Smells",
+      "story": {
+        "hook": { "text": "You can't always prove code is bad, but you can smell it. Something just feels off.", "visual": "👃" },
+        "buildup": { "text": "Martin Fowler coined 'code smell' — surface signs that usually indicate deeper problems.", "visual": "🔍" },
+        "discovery": { "text": "Long methods, duplicated logic, and excessive comments are classic smells that signal trouble.", "visual": "⚠️" },
+        "twist": { "text": "A smell isn't a bug. The code works fine. But it's harder to change, test, and understand.", "visual": "🧩" },
+        "climax": { "text": "Learning to smell bad code is the first step. The fix is refactoring — restructuring without changing behavior.", "visual": "🔧" },
+        "punchline": { "text": "If the code smells, it's time to clean up.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Who coined the term 'code smell'?",
+        "options": ["Martin Fowler", "Robert C. Martin", "Kent Beck"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch01-why-clean-code-matters",
+      "title": "Reading Code Is Harder Than Writing It",
+      "story": {
+        "hook": { "text": "Joel Spolsky warned: never rewrite code from scratch. Reading old code just feels harder.", "visual": "📜" },
+        "buildup": { "text": "Writing code feels creative. Reading someone else's code feels like deciphering a puzzle.", "visual": "🧩" },
+        "discovery": { "text": "Studies show developers spend 60-70% of their time reading code, not writing it.", "visual": "📊" },
+        "twist": { "text": "The temptation to rewrite comes from reading difficulty, not actual quality problems.", "visual": "🤔" },
+        "climax": { "text": "Clean code bridges this gap. When reading feels easy, teams move faster and rewrite less.", "visual": "🚀" },
+        "punchline": { "text": "Easy to read means easy to maintain.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What percentage of time do developers spend reading code?",
+        "options": ["60-70%", "10-20%", "90-100%"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch02-naming-and-readability",
+      "title": "The Power of Good Names",
+      "story": {
+        "hook": { "text": "A variable called 'x' tells you nothing. A variable called 'userAge' tells you everything.", "visual": "🏷️" },
+        "buildup": { "text": "Good names reveal intent. You should never need a comment to explain what a variable holds.", "visual": "💡" },
+        "discovery": { "text": "Rename 'd' to 'elapsedDays' and suddenly the entire function makes sense without reading further.", "visual": "✨" },
+        "twist": { "text": "Naming is one of the two hardest problems in CS. Good names require deep understanding of the domain.", "visual": "🧠" },
+        "climax": { "text": "A name that takes ten seconds longer to type saves ten minutes of confusion for every future reader.", "visual": "⏱️" },
+        "punchline": { "text": "Name things so strangers understand instantly.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why are good variable names important?",
+        "options": ["They reveal intent without comments", "They make code run faster", "They reduce file size"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch02-naming-and-readability",
+      "title": "Avoiding Misleading Names",
+      "story": {
+        "hook": { "text": "A function called 'getData' that also deletes records is a trap waiting to spring.", "visual": "🪤" },
+        "buildup": { "text": "Misleading names create false assumptions. Readers trust the name and skip reading the implementation.", "visual": "🙈" },
+        "discovery": { "text": "A name should be a contract. If it says 'get,' it should only retrieve. Nothing else.", "visual": "📜" },
+        "twist": { "text": "Legacy codebases are full of functions whose names drifted from their behavior over years of edits.", "visual": "📅" },
+        "climax": { "text": "When behavior changes, the name must change too. A wrong name is worse than a bad name.", "visual": "⚖️" },
+        "punchline": { "text": "A misleading name is a bug in disguise.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What's worse than a bad variable name?",
+        "options": ["A misleading name", "A short name", "A long name"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch02-naming-and-readability",
+      "title": "Comments Should Explain Why Not What",
+      "story": {
+        "hook": { "text": "A comment that says 'increment counter by one' above 'counter += 1' adds zero value.", "visual": "📝" },
+        "buildup": { "text": "Comments that restate what the code does are noise. The code already says what it does.", "visual": "🔇" },
+        "discovery": { "text": "Useful comments explain why — the business reason, the regulatory constraint, the workaround.", "visual": "💡" },
+        "twist": { "text": "Comments rot. Code changes but comments often don't, creating lies that mislead future readers.", "visual": "🤥" },
+        "climax": { "text": "The best code needs almost no comments because the names and structure explain everything.", "visual": "✨" },
+        "punchline": { "text": "If you need a comment, the code isn't clear enough.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What should good comments explain?",
+        "options": ["Why the code exists, not what it does", "Every single line of code", "The programming language syntax"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch02-naming-and-readability",
+      "title": "Consistent Formatting",
+      "story": {
+        "hook": { "text": "Tabs versus spaces sparked wars, but the real enemy is inconsistency.", "visual": "⚔️" },
+        "buildup": { "text": "Consistent formatting lets readers scan code without re-adjusting their mental model.", "visual": "👁️" },
+        "discovery": { "text": "Teams that agree on one style and automate it spend zero time arguing about formatting.", "visual": "🤖" },
+        "twist": { "text": "It doesn't matter which style you pick. It matters that everyone uses the same one.", "visual": "🤝" },
+        "climax": { "text": "Prettier, Black, and gofmt ended the debate. Let the tool decide and move on to real problems.", "visual": "🔧" },
+        "punchline": { "text": "Pick a style. Automate it. Never debate again.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the best way to handle code formatting in a team?",
+        "options": ["Agree on one style and automate it", "Let each person use their own style", "Use no formatting rules at all"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch02-naming-and-readability",
+      "title": "The Boy Scout Rule",
+      "story": {
+        "hook": { "text": "Leave the campground cleaner than you found it. Robert C. Martin applied this to code.", "visual": "🏕️" },
+        "buildup": { "text": "Every time you touch a file, improve one small thing — rename a variable, extract a method.", "visual": "🧹" },
+        "discovery": { "text": "Over weeks, thousands of tiny improvements compound into a dramatically cleaner codebase.", "visual": "📈" },
+        "twist": { "text": "No one has time for big cleanups. But everyone has time to fix one thing while they're already there.", "visual": "⏱️" },
+        "climax": { "text": "Quality isn't a project. It's a habit applied one commit at a time.", "visual": "🔁" },
+        "punchline": { "text": "Leave every file a little better than you found it.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does the Boy Scout Rule mean for code?",
+        "options": ["Leave files cleaner than you found them", "Always rewrite from scratch", "Never change existing code"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch03-functions-and-structure",
+      "title": "Small Functions",
+      "story": {
+        "hook": { "text": "A 500-line function is not a function. It's a novel nobody wants to read.", "visual": "📚" },
+        "buildup": { "text": "Clean Code recommends functions be short — ideally under 20 lines, doing exactly one thing.", "visual": "📏" },
+        "discovery": { "text": "Small functions are easy to name, easy to test, and easy to reuse across the codebase.", "visual": "🧩" },
+        "twist": { "text": "Critics say too-small functions create indirection hell. Readers jump between dozens of files.", "visual": "🤯" },
+        "climax": { "text": "The balance: small enough to understand at a glance, large enough to tell a complete story.", "visual": "⚖️" },
+        "punchline": { "text": "If a function needs a scroll bar, it's too long.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does Clean Code recommend for function length?",
+        "options": ["Short, ideally under 20 lines", "At least 100 lines for completeness", "Length doesn't matter"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch03-functions-and-structure",
+      "title": "Do One Thing",
+      "story": {
+        "hook": { "text": "A function called 'processOrder' that also sends emails and logs analytics is doing three things.", "visual": "3️⃣" },
+        "buildup": { "text": "The Single Responsibility Principle for functions: each function should do exactly one thing.", "visual": "1️⃣" },
+        "discovery": { "text": "If you can extract a meaningful sub-function, the original was doing more than one thing.", "visual": "✂️" },
+        "twist": { "text": "Defining 'one thing' is the hard part. The right level of abstraction determines the boundary.", "visual": "🔍" },
+        "climax": { "text": "A function that does one thing can be described in a single sentence without the word 'and.'", "visual": "📝" },
+        "punchline": { "text": "If you need the word 'and,' split it.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How can you tell a function does more than one thing?",
+        "options": ["You can extract a meaningful sub-function", "It has more than five lines", "It uses two variables"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch03-functions-and-structure",
+      "title": "Function Arguments",
+      "story": {
+        "hook": { "text": "A function with seven arguments is a puzzle. Which value goes where?", "visual": "🧩" },
+        "buildup": { "text": "The ideal number of function arguments is zero. Then one. Then two. Three is the maximum.", "visual": "🔢" },
+        "discovery": { "text": "Fewer arguments make functions easier to call, test, and understand at a glance.", "visual": "✅" },
+        "twist": { "text": "If you need many arguments, they probably belong together as an object or configuration.", "visual": "📦" },
+        "climax": { "text": "Boolean flags as arguments are a red flag. They mean the function does two different things.", "visual": "🚩" },
+        "punchline": { "text": "More arguments means more confusion.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why are boolean flag arguments considered a code smell?",
+        "options": ["They mean the function does two different things", "They make code run slower", "They use too much memory"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch03-functions-and-structure",
+      "title": "Error Handling",
+      "story": {
+        "hook": { "text": "Happy path code is easy. The real complexity lives in what happens when things go wrong.", "visual": "⚠️" },
+        "buildup": { "text": "Returning error codes forces callers to check immediately. Miss one and bugs hide silently.", "visual": "🤫" },
+        "discovery": { "text": "Exceptions separate the happy path from error handling, keeping the main logic clean.", "visual": "🧹" },
+        "twist": { "text": "Catching too broadly swallows important errors. 'catch (Exception e)' hides real problems.", "visual": "🕳️" },
+        "climax": { "text": "Good error handling is specific, informative, and never silent. Fail loudly or fix quietly.", "visual": "📢" },
+        "punchline": { "text": "Handle errors, don't hide them.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why are exceptions preferred over error codes?",
+        "options": ["They separate happy path from error handling", "They make code run faster", "They use less memory"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch03-functions-and-structure",
+      "title": "Avoiding Side Effects",
+      "story": {
+        "hook": { "text": "You call a function to check a password and it silently logs you out. That's a side effect.", "visual": "😱" },
+        "buildup": { "text": "Side effects are hidden behaviors — changes to state that the caller doesn't expect.", "visual": "🎭" },
+        "discovery": { "text": "Pure functions take input and return output without modifying anything else. They're predictable.", "visual": "🔮" },
+        "twist": { "text": "Real programs need side effects — writing to databases, sending emails. The trick is isolating them.", "visual": "🔬" },
+        "climax": { "text": "Push side effects to the edges of your code. Keep the core logic pure and testable.", "visual": "🧪" },
+        "punchline": { "text": "Predictable functions are trustworthy functions.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a pure function?",
+        "options": ["One that returns output without modifying external state", "One that has no arguments", "One that runs the fastest"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch04-design-principles",
+      "title": "DRY — Don't Repeat Yourself",
+      "story": {
+        "hook": { "text": "The same validation logic appears in five different files. Change one and you'll forget the others.", "visual": "📋" },
+        "buildup": { "text": "DRY says every piece of knowledge should exist in exactly one place in the codebase.", "visual": "1️⃣" },
+        "discovery": { "text": "Duplication isn't just copied text. It's duplicated knowledge — same rule, different expressions.", "visual": "🔍" },
+        "twist": { "text": "Over-applying DRY creates tight coupling. Sometimes two similar things should remain separate.", "visual": "🔗" },
+        "climax": { "text": "The test: if the two pieces must always change together, merge them. If not, keep them apart.", "visual": "🧪" },
+        "punchline": { "text": "Duplicate knowledge rots. Duplicate code sometimes doesn't.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "When should you NOT apply DRY?",
+        "options": ["When similar code serves different purposes", "When the code is longer than ten lines", "When there are more than two duplicates"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch04-design-principles",
+      "title": "KISS — Keep It Simple",
+      "story": {
+        "hook": { "text": "A developer builds a microservice architecture for a to-do list app. Overkill kills.", "visual": "🔨" },
+        "buildup": { "text": "KISS says the simplest solution that works is almost always the best one.", "visual": "✨" },
+        "discovery": { "text": "Simple code has fewer bugs, is easier to test, and is faster to change when requirements shift.", "visual": "🏃" },
+        "twist": { "text": "Simple doesn't mean easy. Finding the simplest solution often requires the deepest understanding.", "visual": "🧠" },
+        "climax": { "text": "Cleverness is the enemy of maintainability. Write code a junior developer can understand.", "visual": "👶" },
+        "punchline": { "text": "Complexity is easy. Simplicity is the real skill.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does the KISS principle recommend?",
+        "options": ["The simplest working solution is usually best", "Use the most advanced patterns available", "Write as little code as possible"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch04-design-principles",
+      "title": "YAGNI — You Aren't Gonna Need It",
+      "story": {
+        "hook": { "text": "A developer adds a caching layer nobody asked for, 'just in case.' It breaks in production.", "visual": "🏗️" },
+        "buildup": { "text": "YAGNI says don't build features until they're actually needed. Predicted needs are usually wrong.", "visual": "🔮" },
+        "discovery": { "text": "Unneeded code still has to be maintained, tested, and understood by everyone who touches it.", "visual": "🧳" },
+        "twist": { "text": "Engineers fear being unprepared. But unused abstractions cost more than building them later.", "visual": "💰" },
+        "climax": { "text": "Build what you need today. Refactor when requirements change. Most predicted needs never arrive.", "visual": "📅" },
+        "punchline": { "text": "The best code is the code you didn't write.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does YAGNI stand for?",
+        "options": ["You Aren't Gonna Need It", "You Always Get New Ideas", "Your Architecture Gets Neatly Integrated"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch04-design-principles",
+      "title": "The Single Responsibility Principle",
+      "story": {
+        "hook": { "text": "A class that handles user login, sends emails, and formats reports has three reasons to change.", "visual": "3️⃣" },
+        "buildup": { "text": "SRP says every module should have exactly one reason to change — one responsibility.", "visual": "1️⃣" },
+        "discovery": { "text": "When a class has one job, changes in one area don't ripple into unrelated behavior.", "visual": "🛡️" },
+        "twist": { "text": "SRP doesn't mean one function per class. It means one axis of change per module.", "visual": "📐" },
+        "climax": { "text": "Well-separated responsibilities make code modular, testable, and resilient to change.", "visual": "🧩" },
+        "punchline": { "text": "One reason to change. One responsibility. One job.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does the Single Responsibility Principle mean?",
+        "options": ["Every module should have one reason to change", "Every function should be one line", "Every class needs one method"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch04-design-principles",
+      "title": "The Open-Closed Principle",
+      "story": {
+        "hook": { "text": "Adding a new payment method shouldn't require rewriting the entire checkout system.", "visual": "💳" },
+        "buildup": { "text": "The Open-Closed Principle says code should be open for extension but closed for modification.", "visual": "🚪" },
+        "discovery": { "text": "Well-designed systems let you add new behavior by adding new code, not changing existing code.", "visual": "➕" },
+        "twist": { "text": "Achieving this requires forethought — interfaces, abstractions, and plugin architectures.", "visual": "🧠" },
+        "climax": { "text": "The payoff is stability. Existing features don't break when new ones are added.", "visual": "🛡️" },
+        "punchline": { "text": "Add new behavior without touching old code.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does 'open for extension, closed for modification' mean?",
+        "options": ["Add features by adding code, not changing existing code", "Never add new features", "Rewrite everything for each feature"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch05-managing-complexity",
+      "title": "Coupling and Cohesion",
+      "story": {
+        "hook": { "text": "Change one file and twenty others break. That's tight coupling strangling your codebase.", "visual": "🕸️" },
+        "buildup": { "text": "Coupling measures how much modules depend on each other. Less coupling means easier changes.", "visual": "🔗" },
+        "discovery": { "text": "Cohesion measures how well a module's internals belong together. High cohesion means focused code.", "visual": "🎯" },
+        "twist": { "text": "You want low coupling between modules and high cohesion within them. Most codebases get both wrong.", "visual": "❌" },
+        "climax": { "text": "The goal: change one module without the rest of the system knowing or caring.", "visual": "🏝️" },
+        "punchline": { "text": "Loosely connected. Tightly focused.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the ideal combination for code modules?",
+        "options": ["Low coupling, high cohesion", "High coupling, low cohesion", "High coupling, high cohesion"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch05-managing-complexity",
+      "title": "Dependency Injection",
+      "story": {
+        "hook": { "text": "A class that creates its own database connection can never be tested without a real database.", "visual": "🔌" },
+        "buildup": { "text": "Dependency injection means passing dependencies in from outside instead of creating them inside.", "visual": "📥" },
+        "discovery": { "text": "Inject a fake database during tests, a real one in production. Same code, different behavior.", "visual": "🎭" },
+        "twist": { "text": "Over-injecting creates constructor chaos — classes with ten parameters nobody understands.", "visual": "🤯" },
+        "climax": { "text": "Inject what changes. Hard-code what doesn't. Balance beats dogma.", "visual": "⚖️" },
+        "punchline": { "text": "Give objects what they need. Don't let them find it.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What problem does dependency injection solve?",
+        "options": ["Hard-coded dependencies that prevent testing", "Slow code execution", "Memory leaks in applications"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch05-managing-complexity",
+      "title": "Composition Over Inheritance",
+      "story": {
+        "hook": { "text": "Inheritance creates rigid hierarchies. Change the parent and every child might break.", "visual": "🌳" },
+        "buildup": { "text": "A Dog extends Animal extends LivingThing. Three levels deep and you're already confused.", "visual": "😵" },
+        "discovery": { "text": "Composition assembles behavior from small, independent parts. Swap a part without rebuilding the whole.", "visual": "🧩" },
+        "twist": { "text": "The Gang of Four said this in 1994. Thirty years later, developers still reach for inheritance first.", "visual": "📅" },
+        "climax": { "text": "Compose small, focused objects. Inherit only when there's a genuine is-a relationship.", "visual": "✅" },
+        "punchline": { "text": "Build with Lego bricks, not family trees.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is composition preferred over inheritance?",
+        "options": ["It creates more flexible, swappable behavior", "It runs faster at runtime", "It uses less memory"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch05-managing-complexity",
+      "title": "Encapsulation",
+      "story": {
+        "hook": { "text": "A class exposes all its internal variables. Any other code can change them without warning.", "visual": "🔓" },
+        "buildup": { "text": "Encapsulation hides internal state and exposes only what's necessary through a controlled interface.", "visual": "🔐" },
+        "discovery": { "text": "When internals are hidden, you can change how a class works without affecting anything that uses it.", "visual": "🔧" },
+        "twist": { "text": "Java's getter/setter pattern often fakes encapsulation. Exposing every field defeats the purpose.", "visual": "🎭" },
+        "climax": { "text": "True encapsulation means asking an object to do something, not reaching inside to do it yourself.", "visual": "🙏" },
+        "punchline": { "text": "Hide the details. Expose the intent.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does encapsulation protect?",
+        "options": ["Internal state from outside modification", "Code from being compiled", "Functions from being called"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch05-managing-complexity",
+      "title": "Law of Demeter",
+      "story": {
+        "hook": { "text": "user.getAddress().getCity().getZipCode() chains four objects. Change any one and the chain snaps.", "visual": "⛓️" },
+        "buildup": { "text": "The Law of Demeter says only talk to your immediate friends, not strangers down the chain.", "visual": "🤝" },
+        "discovery": { "text": "Instead of reaching deep, ask the top object for what you need. Let it handle the delegation.", "visual": "📬" },
+        "twist": { "text": "Following this strictly can create wrapper methods everywhere. Pragmatism matters.", "visual": "⚖️" },
+        "climax": { "text": "Short chains are resilient chains. Every dot in a chain is a dependency that might break.", "visual": "💥" },
+        "punchline": { "text": "Don't talk to strangers. Talk to friends.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does the Law of Demeter advise?",
+        "options": ["Only interact with immediate dependencies", "Use as many objects as possible", "Chain methods for readability"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch06-refactoring-and-craft",
+      "title": "What Refactoring Really Means",
+      "story": {
+        "hook": { "text": "Refactoring is surgery on code — changing its structure without changing what it does.", "visual": "🔧" },
+        "buildup": { "text": "Martin Fowler defined it as restructuring existing code to improve design while preserving behavior.", "visual": "📘" },
+        "discovery": { "text": "Rename a variable, extract a method, split a class — each is a small, safe transformation.", "visual": "✂️" },
+        "twist": { "text": "Without tests, refactoring is gambling. You can't confirm behavior is preserved if you can't test it.", "visual": "🎲" },
+        "climax": { "text": "Refactoring should be continuous — a daily habit, not a quarterly project.", "visual": "📅" },
+        "punchline": { "text": "Same behavior, better structure, every day.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does refactoring preserve?",
+        "options": ["External behavior while improving structure", "The original code exactly as written", "Only the comments and documentation"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch06-refactoring-and-craft",
+      "title": "Test-Driven Development",
+      "story": {
+        "hook": { "text": "Write the test before the code? That sounds backwards — until you try it.", "visual": "🔄" },
+        "buildup": { "text": "TDD cycles through three steps: write a failing test, make it pass, then refactor.", "visual": "🔴" },
+        "discovery": { "text": "Tests written first define what the code should do. The code exists only to satisfy the test.", "visual": "📋" },
+        "twist": { "text": "TDD feels slow at first. But it catches bugs immediately and builds a safety net as you go.", "visual": "🕸️" },
+        "climax": { "text": "With TDD, refactoring becomes fearless. Every change is verified by the existing test suite.", "visual": "🛡️" },
+        "punchline": { "text": "Red, green, refactor — the rhythm of confident code.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What are the three steps of TDD?",
+        "options": ["Write failing test, make it pass, refactor", "Write code, test it, deploy", "Design, implement, document"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch06-refactoring-and-craft",
+      "title": "Code Reviews as Teaching",
+      "story": {
+        "hook": { "text": "Code reviews aren't about catching mistakes. They're about spreading knowledge across the team.", "visual": "🎓" },
+        "buildup": { "text": "A reviewer sees patterns, alternatives, and risks the author missed while deep in the problem.", "visual": "👁️" },
+        "discovery": { "text": "Junior developers learn faster from reviews than from any course. Real code, real feedback.", "visual": "📈" },
+        "twist": { "text": "Harsh reviews shut people down. The best reviewers ask questions instead of giving orders.", "visual": "❓" },
+        "climax": { "text": "Great review cultures produce great code. Toxic reviews produce fear and hidden shortcuts.", "visual": "🌱" },
+        "punchline": { "text": "Review the code, respect the person.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the primary value of code reviews?",
+        "options": ["Spreading knowledge across the team", "Finding every single bug", "Proving who is the best coder"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch06-refactoring-and-craft",
+      "title": "Technical Excellence as a Habit",
+      "story": {
+        "hook": { "text": "Nobody plans to write bad code. It happens one small compromise at a time.", "visual": "📉" },
+        "buildup": { "text": "Clean code is a discipline, not a talent. It requires deliberate practice every single day.", "visual": "🏋️" },
+        "discovery": { "text": "The Software Craftsmanship movement treats programming as a skill to be honed, not just a job.", "visual": "⚒️" },
+        "twist": { "text": "Perfection isn't the goal. Continuous improvement is. Today's code should be better than yesterday's.", "visual": "📈" },
+        "climax": { "text": "The best codebases aren't written by geniuses. They're maintained by teams that care consistently.", "visual": "🤝" },
+        "punchline": { "text": "Excellence isn't an act. It's a daily habit.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does the Software Craftsmanship movement emphasize?",
+        "options": ["Treating programming as a skill to be honed", "Writing code as fast as possible", "Using only the newest frameworks"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--clean-code-philosophy--ch06-refactoring-and-craft",
+      "title": "When Rules Should Be Broken",
+      "story": {
+        "hook": { "text": "Every principle in this course has exceptions. Blindly following rules creates its own mess.", "visual": "🚧" },
+        "buildup": { "text": "DRY can create coupling. YAGNI can prevent necessary preparation. SRP can over-fragment code.", "visual": "⚠️" },
+        "discovery": { "text": "Principles are guides, not laws. The context — team size, deadline, system age — determines the choice.", "visual": "🧭" },
+        "twist": { "text": "Dogmatic developers cause as much damage as careless ones. Rigid rules ignore real tradeoffs.", "visual": "⚖️" },
+        "climax": { "text": "Wisdom is knowing which rule to apply, which to bend, and which to ignore — right now.", "visual": "🧠" },
+        "punchline": { "text": "Know the rules well enough to know when to break them.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "When should clean code principles be broken?",
+        "options": ["When context and tradeoffs demand it", "Never — rules are absolute", "Whenever it saves time"],
+        "correct": 0
+      },
+      "is_free": false
+    }
+  ]
+}

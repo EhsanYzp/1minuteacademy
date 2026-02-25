@@ -1,0 +1,559 @@
+{
+  "categoryId": "programming",
+  "subject": "Programming",
+  "courseId": "programming--data-structures-explained",
+  "courseTitle": "Data Structures Explained",
+  "emoji": "📊",
+  "color": "#3B82F6",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "programming--data-structures-explained--ch01-foundations", "title": "Foundations", "position": 1 },
+    { "id": "programming--data-structures-explained--ch02-linear-structures", "title": "Linear Structures", "position": 2 },
+    { "id": "programming--data-structures-explained--ch03-trees", "title": "Trees", "position": 3 },
+    { "id": "programming--data-structures-explained--ch04-hash-based-structures", "title": "Hash-Based Structures", "position": 4 },
+    { "id": "programming--data-structures-explained--ch05-graphs", "title": "Graphs", "position": 5 },
+    { "id": "programming--data-structures-explained--ch06-choosing-the-right-structure", "title": "Choosing the Right Structure", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "programming--data-structures-explained--ch01-foundations",
+      "title": "What Data Structures Are",
+      "story": {
+        "hook": { "text": "Data is just raw information. A data structure is how you organize it so computers can use it fast.", "visual": "📦" },
+        "buildup": { "text": "Choosing the right structure is like choosing the right container — a bookshelf, a filing cabinet, a queue.", "visual": "🗄️" },
+        "discovery": { "text": "The same data stored differently can make a program a thousand times faster or slower.", "visual": "⚡" },
+        "twist": { "text": "There is no single best structure. Every choice involves tradeoffs between speed, memory, and simplicity.", "visual": "⚖️" },
+        "climax": { "text": "Understanding data structures is the difference between code that works and code that scales.", "visual": "📈" },
+        "punchline": { "text": "Organization makes the difference between fast and slow.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why do data structures matter?",
+        "options": ["They determine how fast programs can access data", "They make code look prettier", "They only matter for databases"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch01-foundations",
+      "title": "Arrays the Foundation",
+      "story": {
+        "hook": { "text": "An array is a row of numbered boxes. Give the box number and you get the contents instantly.", "visual": "📬" },
+        "buildup": { "text": "Arrays store elements in contiguous memory. Index zero, one, two — each position is directly accessible.", "visual": "🔢" },
+        "discovery": { "text": "Accessing any element by index takes the same time regardless of array size. That's constant time.", "visual": "⚡" },
+        "twist": { "text": "Inserting in the middle is expensive. Every element after the insertion point must shift over.", "visual": "👉" },
+        "climax": { "text": "Arrays are the building block of almost every other data structure. Master them first.", "visual": "🧱" },
+        "punchline": { "text": "Numbered boxes: simple, fast, foundational.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is accessing an array element by index so fast?",
+        "options": ["Elements are stored in contiguous memory", "The array searches through every element", "Arrays are sorted automatically"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch01-foundations",
+      "title": "Big O and Performance",
+      "story": {
+        "hook": { "text": "Your search takes one second with 100 items. How long with a million? Big O tells you.", "visual": "⏱️" },
+        "buildup": { "text": "Big O notation describes how an operation's time grows as the data size increases.", "visual": "📈" },
+        "discovery": { "text": "O(1) means constant time. O(n) means linear. O(n²) means quadratic — and potentially disastrous.", "visual": "📊" },
+        "twist": { "text": "Big O ignores constants. An O(n) algorithm with a huge constant can be slower than O(n²) for small data.", "visual": "🤔" },
+        "climax": { "text": "Choosing the right data structure often means choosing the right Big O for your most common operation.", "visual": "🎯" },
+        "punchline": { "text": "Big O predicts how your code handles growth.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does O(n) mean?",
+        "options": ["Time grows linearly with data size", "Time stays constant regardless of size", "Time doubles with each element"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch01-foundations",
+      "title": "Memory and Storage Tradeoffs",
+      "story": {
+        "hook": { "text": "You can make lookups instant — if you're willing to use more memory. Speed and space always trade.", "visual": "💾" },
+        "buildup": { "text": "Hash tables trade extra memory for near-instant lookups. Compressed structures save space but slow access.", "visual": "⚖️" },
+        "discovery": { "text": "Cache-friendly structures that fit in fast CPU memory outperform theoretically faster structures that don't.", "visual": "🏎️" },
+        "twist": { "text": "Modern hardware makes some textbook analyses wrong. Cache misses cost more than extra comparisons.", "visual": "📉" },
+        "climax": { "text": "The best structure depends not just on Big O but on the actual hardware your code runs on.", "visual": "🖥️" },
+        "punchline": { "text": "Theory says one thing. Hardware says another.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the main tradeoff in data structures?",
+        "options": ["Speed versus memory usage", "Color versus size", "Simplicity versus beauty"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch01-foundations",
+      "title": "Abstract Data Types",
+      "story": {
+        "hook": { "text": "A stack says 'last in, first out.' It doesn't say how — that's the implementation's job.", "visual": "📋" },
+        "buildup": { "text": "Abstract data types define what operations are available without specifying how they're built.", "visual": "🏗️" },
+        "discovery": { "text": "A list, a stack, a queue, and a map are all ADTs. Arrays and linked lists are implementations.", "visual": "🧩" },
+        "twist": { "text": "The same ADT can have wildly different performance depending on which concrete structure backs it.", "visual": "🎭" },
+        "climax": { "text": "Thinking in ADTs lets you swap implementations later without changing the code that uses them.", "visual": "🔄" },
+        "punchline": { "text": "Define the what. Choose the how later.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does an abstract data type define?",
+        "options": ["What operations are available, not how they work", "The exact memory layout of data", "The programming language to use"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch02-linear-structures",
+      "title": "Linked Lists",
+      "story": {
+        "hook": { "text": "A linked list is a chain of nodes. Each node holds data and a pointer to the next one.", "visual": "🔗" },
+        "buildup": { "text": "Unlike arrays, linked lists don't need contiguous memory. Nodes can live anywhere in memory.", "visual": "🏘️" },
+        "discovery": { "text": "Inserting or deleting in the middle is fast — just redirect the pointers. No shifting required.", "visual": "✂️" },
+        "twist": { "text": "Finding an element requires walking the chain one node at a time. No jumping to the middle.", "visual": "🚶" },
+        "climax": { "text": "Arrays win for random access. Linked lists win for frequent insertions. The problem dictates the choice.", "visual": "⚖️" },
+        "punchline": { "text": "A chain of pointers trades access speed for flexibility.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What advantage do linked lists have over arrays?",
+        "options": ["Fast insertion and deletion in the middle", "Faster random access to elements", "Less memory usage overall"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch02-linear-structures",
+      "title": "Stacks and Last In First Out",
+      "story": {
+        "hook": { "text": "Stack a pile of plates. You can only take the top one. That's a stack — last in, first out.", "visual": "🍽️" },
+        "buildup": { "text": "Push adds to the top. Pop removes from the top. Both operations happen in constant time.", "visual": "⬆️" },
+        "discovery": { "text": "Your browser's back button, undo in editors, and function calls all use stacks under the hood.", "visual": "↩️" },
+        "twist": { "text": "Recursive functions use the call stack. Too many nested calls overflow it and crash the program.", "visual": "💥" },
+        "climax": { "text": "Stacks are deceptively simple but power some of the most fundamental operations in computing.", "visual": "🏗️" },
+        "punchline": { "text": "Last in, first out powers undo, recursion, and more.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What principle does a stack follow?",
+        "options": ["Last in, first out", "First in, first out", "Random access"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch02-linear-structures",
+      "title": "Queues and First In First Out",
+      "story": {
+        "hook": { "text": "A queue is a line at a coffee shop. First person in line gets served first. Fair and orderly.", "visual": "☕" },
+        "buildup": { "text": "Enqueue adds to the back. Dequeue removes from the front. Both happen in constant time.", "visual": "➡️" },
+        "discovery": { "text": "Print jobs, web server requests, and message systems all use queues to process work fairly.", "visual": "🖨️" },
+        "twist": { "text": "Priority queues break the fairness rule — urgent items jump ahead. Emergency rooms work this way.", "visual": "🏥" },
+        "climax": { "text": "Queues turn chaos into order. Whenever work arrives faster than it's processed, a queue manages the flow.", "visual": "🌊" },
+        "punchline": { "text": "First in, first out keeps everything fair.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What real-world system uses a queue?",
+        "options": ["A print job spooler", "A stack of plates", "A dictionary lookup"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch02-linear-structures",
+      "title": "Deques and Double-Ended Access",
+      "story": {
+        "hook": { "text": "What if you could add and remove from both ends? A deque gives you the best of stacks and queues.", "visual": "↔️" },
+        "buildup": { "text": "A deque — double-ended queue — supports push and pop at both the front and the back.", "visual": "🔄" },
+        "discovery": { "text": "Sliding window algorithms use deques to efficiently track maximums and minimums in streaming data.", "visual": "📊" },
+        "twist": { "text": "Most programmers rarely use deques directly, but they power important algorithms behind the scenes.", "visual": "🎭" },
+        "climax": { "text": "Understanding deques reveals how flexible a linear structure can be with the right interface.", "visual": "🧩" },
+        "punchline": { "text": "Two doors are better than one.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How does a deque differ from a regular queue?",
+        "options": ["It allows operations at both ends", "It can only hold numbers", "It sorts elements automatically"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch02-linear-structures",
+      "title": "Strings as Data Structures",
+      "story": {
+        "hook": { "text": "A string looks like simple text. Under the hood, it's an array of characters with special powers.", "visual": "🔤" },
+        "buildup": { "text": "Strings support searching, slicing, concatenation, and pattern matching — all with different costs.", "visual": "✂️" },
+        "discovery": { "text": "In many languages, strings are immutable. Modifying one creates a brand new copy in memory.", "visual": "📋" },
+        "twist": { "text": "Concatenating strings in a loop can be O(n²) because each concat copies the entire result.", "visual": "🐢" },
+        "climax": { "text": "String builders and rope data structures solve this by delaying the expensive copy operation.", "visual": "🧵" },
+        "punchline": { "text": "Simple text hides surprising complexity.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is string concatenation in a loop slow?",
+        "options": ["Each concatenation copies the entire result", "Strings use too little memory", "Loops don't support strings"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch03-trees",
+      "title": "What Trees Are",
+      "story": {
+        "hook": { "text": "A tree is a hierarchy — one root, branching into children, each child branching further.", "visual": "🌳" },
+        "buildup": { "text": "File systems, HTML documents, and organizational charts are all trees hiding in plain sight.", "visual": "📁" },
+        "discovery": { "text": "Trees let you narrow a search at each level. Instead of checking everything, you follow a branch.", "visual": "🔍" },
+        "twist": { "text": "A badly balanced tree degrades into a linked list. All the search advantages disappear.", "visual": "📉" },
+        "climax": { "text": "Trees bring order to hierarchical data. Nearly every complex application uses them somewhere.", "visual": "🏗️" },
+        "punchline": { "text": "Branch by branch, trees organize the world.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What happens when a tree becomes badly unbalanced?",
+        "options": ["It degrades into a linked list", "It becomes faster to search", "It uses less memory"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch03-trees",
+      "title": "Binary Search Trees",
+      "story": {
+        "hook": { "text": "Put smaller values left, larger values right. Now finding any value takes only log n steps.", "visual": "🔢" },
+        "buildup": { "text": "A binary search tree keeps elements sorted by structure. Each comparison eliminates half the remaining tree.", "visual": "✂️" },
+        "discovery": { "text": "Search, insert, and delete all run in O(log n) when the tree is balanced. Logarithmic is fast.", "visual": "⚡" },
+        "twist": { "text": "Insert sorted data into a BST and it becomes a straight line — O(n) per operation, like a list.", "visual": "📏" },
+        "climax": { "text": "Self-balancing trees like AVL and Red-Black trees prevent this degeneration automatically.", "visual": "⚖️" },
+        "punchline": { "text": "Halving the search at each step is powerful.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the time complexity of searching a balanced BST?",
+        "options": ["O(log n)", "O(n)", "O(1)"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch03-trees",
+      "title": "Heaps and Priority Queues",
+      "story": {
+        "hook": { "text": "Need the smallest or largest element fast? A heap always keeps it at the top, ready to grab.", "visual": "🏔️" },
+        "buildup": { "text": "A heap is a tree where each parent is smaller (or larger) than its children. The root is the extreme.", "visual": "👑" },
+        "discovery": { "text": "Extracting the top takes O(log n). Inserting a new element also takes O(log n). Both are fast.", "visual": "⚡" },
+        "twist": { "text": "Heaps don't support fast searching. If you need an arbitrary element, you must scan the entire heap.", "visual": "🔍" },
+        "climax": { "text": "Priority queues, scheduling systems, and Dijkstra's algorithm all rely on heaps for efficient access.", "visual": "📋" },
+        "punchline": { "text": "The most important item is always on top.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a min-heap guarantee?",
+        "options": ["The smallest element is always at the root", "All elements are sorted left to right", "Every level has the same number of nodes"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch03-trees",
+      "title": "Tries and Text Search",
+      "story": {
+        "hook": { "text": "Type a letter and autocomplete suggests words instantly. A trie makes this possible.", "visual": "🔤" },
+        "buildup": { "text": "A trie stores strings character by character, sharing prefixes. All words starting with 'pro' share one path.", "visual": "🌿" },
+        "discovery": { "text": "Looking up a word takes time proportional to the word's length, regardless of how many words are stored.", "visual": "⚡" },
+        "twist": { "text": "Tries use more memory than hash tables because each character needs its own node and pointers.", "visual": "💾" },
+        "climax": { "text": "Spell checkers, autocomplete, and IP routing tables all use tries for blazing-fast prefix lookups.", "visual": "🚀" },
+        "punchline": { "text": "Shared prefixes make text search lightning fast.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What makes tries efficient for autocomplete?",
+        "options": ["Words sharing prefixes share the same path", "All words are sorted alphabetically", "Each word is stored as a hash"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch03-trees",
+      "title": "B-Trees and Databases",
+      "story": {
+        "hook": { "text": "Your database searches billions of records in milliseconds. B-Trees make that possible.", "visual": "🗃️" },
+        "buildup": { "text": "B-Trees are wide, shallow trees where each node holds many keys and many children.", "visual": "📊" },
+        "discovery": { "text": "Their wide shape minimizes disk reads. Fewer levels mean fewer slow trips to the hard drive.", "visual": "💾" },
+        "twist": { "text": "Binary trees are too tall for disk storage. B-Trees were invented specifically for slow storage media.", "visual": "🐢" },
+        "climax": { "text": "Every relational database — MySQL, PostgreSQL, SQLite — uses B-Trees for its indexes.", "visual": "🏛️" },
+        "punchline": { "text": "Wide and shallow beats tall and narrow on disk.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why are B-Trees preferred over binary trees for databases?",
+        "options": ["They minimize slow disk reads with fewer levels", "They use less memory", "They are easier to implement"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch04-hash-based-structures",
+      "title": "Hash Tables",
+      "story": {
+        "hook": { "text": "Give me a key, I'll give you the value — instantly. Hash tables are the speed kings of data structures.", "visual": "⚡" },
+        "buildup": { "text": "A hash function converts a key into an array index. Jump directly to the right slot, no searching.", "visual": "🎯" },
+        "discovery": { "text": "Average lookup, insert, and delete all take O(1) — constant time regardless of the table size.", "visual": "🏎️" },
+        "twist": { "text": "Two different keys can hash to the same slot. These collisions must be resolved or performance drops.", "visual": "💥" },
+        "climax": { "text": "Dictionaries in Python, objects in JavaScript, and maps in Java are all hash tables underneath.", "visual": "🗺️" },
+        "punchline": { "text": "The right key opens the right door instantly.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a hash collision?",
+        "options": ["Two keys mapping to the same array slot", "A hash table running out of memory", "A key that cannot be hashed"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch04-hash-based-structures",
+      "title": "Hash Functions",
+      "story": {
+        "hook": { "text": "A hash function turns any input into a fixed-size number. Same input always gives the same output.", "visual": "🔢" },
+        "buildup": { "text": "Good hash functions distribute keys uniformly across the table, minimizing collisions.", "visual": "🎲" },
+        "discovery": { "text": "Even a tiny change in input should produce a completely different hash — the avalanche effect.", "visual": "🌊" },
+        "twist": { "text": "A bad hash function clusters keys in the same slots. Performance degrades from O(1) to O(n).", "visual": "📉" },
+        "climax": { "text": "Hash functions power not just hash tables but also checksums, passwords, and digital signatures.", "visual": "🔐" },
+        "punchline": { "text": "A good hash scatters data evenly and predictably.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the avalanche effect in hashing?",
+        "options": ["Small input changes produce very different outputs", "Large inputs produce small outputs", "Multiple inputs produce the same output"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch04-hash-based-structures",
+      "title": "Sets and Uniqueness",
+      "story": {
+        "hook": { "text": "A set stores unique elements only. Add a duplicate and it quietly ignores it.", "visual": "🎯" },
+        "buildup": { "text": "Sets use hash tables internally, so checking membership is O(1) — instant yes or no.", "visual": "⚡" },
+        "discovery": { "text": "Union, intersection, and difference operations on sets solve problems that loops make messy.", "visual": "🔀" },
+        "twist": { "text": "Sets don't preserve order. If you need both uniqueness and order, you need a different structure.", "visual": "🔀" },
+        "climax": { "text": "Deduplication, permission checks, and tag systems all use sets to enforce uniqueness efficiently.", "visual": "✅" },
+        "punchline": { "text": "No duplicates allowed. Membership is instant.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What makes checking set membership fast?",
+        "options": ["Sets use hash tables internally", "Sets sort all elements first", "Sets store elements in a tree"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch04-hash-based-structures",
+      "title": "Bloom Filters",
+      "story": {
+        "hook": { "text": "A Bloom filter can tell you 'definitely not here' or 'probably here.' Never 'definitely here.'", "visual": "🌸" },
+        "buildup": { "text": "It uses multiple hash functions and a bit array to test set membership with minimal memory.", "visual": "💾" },
+        "discovery": { "text": "Bloom filters use far less memory than hash sets. They trade certainty for space efficiency.", "visual": "⚖️" },
+        "twist": { "text": "False positives are possible. An item might look like a member when it's not. False negatives never happen.", "visual": "🤔" },
+        "climax": { "text": "Databases, spell checkers, and web caches use Bloom filters to avoid expensive lookups.", "visual": "🚀" },
+        "punchline": { "text": "Probably yes, definitely no — and that's enough.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What type of error can a Bloom filter produce?",
+        "options": ["False positives but never false negatives", "False negatives but never false positives", "Both false positives and false negatives"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch04-hash-based-structures",
+      "title": "Caching with LRU",
+      "story": {
+        "hook": { "text": "Memory is limited. When the cache is full, which item do you evict? The least recently used one.", "visual": "🗑️" },
+        "buildup": { "text": "An LRU cache combines a hash table for fast lookups with a linked list to track access order.", "visual": "🔗" },
+        "discovery": { "text": "Every access moves the item to the front. The item at the back hasn't been used the longest.", "visual": "📏" },
+        "twist": { "text": "LRU assumes recent items will be needed again. For some access patterns, this assumption fails badly.", "visual": "📉" },
+        "climax": { "text": "Web browsers, CPU caches, and databases all use LRU eviction to keep hot data fast.", "visual": "🔥" },
+        "punchline": { "text": "Keep the hot data. Drop the forgotten.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does LRU evict when the cache is full?",
+        "options": ["The item accessed least recently", "The largest item", "A random item"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch05-graphs",
+      "title": "What Graphs Are",
+      "story": {
+        "hook": { "text": "Graphs are dots connected by lines. Simple concept, extraordinary power.", "visual": "🕸️" },
+        "buildup": { "text": "Nodes represent things — cities, people, web pages. Edges represent relationships between them.", "visual": "🔗" },
+        "discovery": { "text": "Social networks, road maps, and the internet itself are all graphs with billions of nodes and edges.", "visual": "🌐" },
+        "twist": { "text": "Graphs can be directed or undirected, weighted or unweighted. Each variation changes the algorithms you use.", "visual": "➡️" },
+        "climax": { "text": "If your problem involves relationships between things, there's probably a graph algorithm that solves it.", "visual": "💡" },
+        "punchline": { "text": "Connections between things are graphs in disguise.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What do edges in a graph represent?",
+        "options": ["Relationships between nodes", "The size of each node", "The color of the graph"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch05-graphs",
+      "title": "Adjacency Lists and Matrices",
+      "story": {
+        "hook": { "text": "How do you store a graph in memory? Two main options, each with different strengths.", "visual": "📝" },
+        "buildup": { "text": "An adjacency list stores each node's neighbors in a list. Memory-efficient for sparse graphs.", "visual": "📋" },
+        "discovery": { "text": "An adjacency matrix uses a 2D grid. Checking if two nodes connect is instant but wastes memory.", "visual": "📊" },
+        "twist": { "text": "Most real-world graphs are sparse — few connections relative to possible ones. Lists usually win.", "visual": "🏆" },
+        "climax": { "text": "The representation you choose affects every algorithm's speed and memory usage on that graph.", "visual": "⚡" },
+        "punchline": { "text": "How you store the graph shapes how fast you traverse it.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "When is an adjacency matrix preferred?",
+        "options": ["When the graph is dense with many edges", "When the graph has very few edges", "When the graph is a tree"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch05-graphs",
+      "title": "Breadth-First and Depth-First Search",
+      "story": {
+        "hook": { "text": "BFS explores level by level, like ripples in a pond. DFS dives deep, like exploring a maze.", "visual": "🌊" },
+        "buildup": { "text": "BFS uses a queue to visit the closest nodes first. DFS uses a stack to go as deep as possible.", "visual": "📦" },
+        "discovery": { "text": "BFS finds the shortest path in unweighted graphs. DFS detects cycles and explores all branches.", "visual": "🗺️" },
+        "twist": { "text": "Neither is universally better. The problem determines which traversal gives the right answer fastest.", "visual": "🤔" },
+        "climax": { "text": "Web crawlers use BFS. Puzzle solvers use DFS. Both are fundamental tools in every programmer's kit.", "visual": "🧰" },
+        "punchline": { "text": "Wide or deep — two ways to explore any graph.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does BFS guarantee in an unweighted graph?",
+        "options": ["The shortest path between two nodes", "The fastest execution time", "That all nodes are visited once"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch05-graphs",
+      "title": "Weighted Graphs and Shortest Paths",
+      "story": {
+        "hook": { "text": "Not all roads are equal. Some are longer, more expensive, or slower. Weights capture these differences.", "visual": "🛤️" },
+        "buildup": { "text": "Weighted graphs assign a cost to each edge. Finding the cheapest path requires smarter algorithms.", "visual": "💰" },
+        "discovery": { "text": "Dijkstra's algorithm greedily picks the cheapest next step, guaranteeing the optimal total path.", "visual": "🎯" },
+        "twist": { "text": "Dijkstra fails with negative weights. Bellman-Ford handles them but runs slower.", "visual": "➖" },
+        "climax": { "text": "Every GPS, flight booking, and network router uses weighted shortest path algorithms daily.", "visual": "📡" },
+        "punchline": { "text": "The cheapest path isn't always the shortest one.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why can't Dijkstra's algorithm handle negative weights?",
+        "options": ["Its greedy approach assumes costs only increase", "It requires all edges to be equal", "It only works on trees"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch05-graphs",
+      "title": "Directed Acyclic Graphs",
+      "story": {
+        "hook": { "text": "A DAG flows in one direction with no loops. Tasks that depend on other tasks form a DAG.", "visual": "➡️" },
+        "buildup": { "text": "Build systems, spreadsheet formulas, and course prerequisites are all directed acyclic graphs.", "visual": "📋" },
+        "discovery": { "text": "Topological sort orders a DAG so every task comes after its dependencies. Schedules emerge naturally.", "visual": "📅" },
+        "twist": { "text": "If you find a cycle, there's no valid order. Circular dependencies make the problem impossible.", "visual": "🔄" },
+        "climax": { "text": "DAGs model anything with dependencies and ordering. Git commit history is a DAG you use daily.", "visual": "🌿" },
+        "punchline": { "text": "No loops, clear dependencies, natural order.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a directed acyclic graph used for?",
+        "options": ["Modeling tasks with dependencies and ordering", "Storing sorted numbers", "Compressing images"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch06-choosing-the-right-structure",
+      "title": "Profiling Before Optimizing",
+      "story": {
+        "hook": { "text": "Don't guess where the bottleneck is. Measure it. Most performance intuition is wrong.", "visual": "📏" },
+        "buildup": { "text": "Profilers show exactly where your program spends time and memory. Data replaces guessing.", "visual": "📊" },
+        "discovery": { "text": "Often 90% of time is spent in 10% of the code. Fix that 10% and the whole program flies.", "visual": "🚀" },
+        "twist": { "text": "Premature optimization wastes time on code that doesn't matter. Profile first, optimize second.", "visual": "⏱️" },
+        "climax": { "text": "The right data structure for the hot path can transform performance. But first, find the hot path.", "visual": "🔥" },
+        "punchline": { "text": "Measure first. Optimize what matters.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a profiler reveal?",
+        "options": ["Where the program spends the most time", "How to write new features", "Which language is fastest"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch06-choosing-the-right-structure",
+      "title": "When to Use What",
+      "story": {
+        "hook": { "text": "Need fast lookup by key? Hash table. Need sorted order? Tree. Need FIFO? Queue. Match the need.", "visual": "🧰" },
+        "buildup": { "text": "Each data structure excels at specific operations and struggles with others. Know the tradeoffs.", "visual": "⚖️" },
+        "discovery": { "text": "Arrays for indexed access. Linked lists for frequent insertions. Heaps for priority. Graphs for relationships.", "visual": "🗺️" },
+        "twist": { "text": "Real systems often combine multiple structures. A database uses B-Trees, hash tables, and queues together.", "visual": "🧩" },
+        "climax": { "text": "The skill isn't knowing every structure. It's knowing which question to ask about your data.", "visual": "❓" },
+        "punchline": { "text": "The right structure solves half the problem.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How do you choose the right data structure?",
+        "options": ["Match the structure to your most common operation", "Always use arrays for everything", "Pick the newest data structure available"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch06-choosing-the-right-structure",
+      "title": "Real-World Data Structure Choices",
+      "story": {
+        "hook": { "text": "Google's search index, Spotify's playlists, and your phone's contacts all use different structures.", "visual": "🌍" },
+        "buildup": { "text": "Google uses inverted indexes — hash maps from words to lists of pages that contain them.", "visual": "🔍" },
+        "discovery": { "text": "Spotify uses skip lists and distributed hash tables to serve millions of concurrent listeners.", "visual": "🎵" },
+        "twist": { "text": "These companies often invent custom structures when standard ones don't meet their scale requirements.", "visual": "🏗️" },
+        "climax": { "text": "Understanding fundamentals lets you recognize when a custom solution is needed and build it.", "visual": "💡" },
+        "punchline": { "text": "Fundamentals scale from homework to billions.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What data structure powers Google's search index?",
+        "options": ["Inverted indexes mapping words to pages", "Simple arrays of web pages", "Binary search trees of URLs"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch06-choosing-the-right-structure",
+      "title": "Immutable Data Structures",
+      "story": {
+        "hook": { "text": "What if you never modified data — only created new versions? Bugs from shared state disappear.", "visual": "🧊" },
+        "buildup": { "text": "Immutable structures create new copies on every change. The old version remains untouched.", "visual": "📋" },
+        "discovery": { "text": "Structural sharing means copies reuse most of the original. Only changed parts are new.", "visual": "🌿" },
+        "twist": { "text": "Immutability uses more memory and feels wasteful. But it eliminates entire categories of concurrency bugs.", "visual": "🛡️" },
+        "climax": { "text": "React, Redux, and functional languages embrace immutability for safer, more predictable programs.", "visual": "⚛️" },
+        "punchline": { "text": "Never change the original. Create a better version.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How do immutable structures avoid wasting memory?",
+        "options": ["Structural sharing reuses unchanged parts", "They compress data automatically", "They delete old versions immediately"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--data-structures-explained--ch06-choosing-the-right-structure",
+      "title": "Why Fundamentals Never Expire",
+      "story": {
+        "hook": { "text": "Frameworks come and go every year. Arrays, trees, and hash tables have been here for decades.", "visual": "🏛️" },
+        "buildup": { "text": "Every database, search engine, and operating system is built on the same fundamental structures.", "visual": "🧱" },
+        "discovery": { "text": "Learning data structures teaches you how to think about performance, not just how to use a library.", "visual": "🧠" },
+        "twist": { "text": "AI tools can generate code, but understanding why one structure beats another requires human judgment.", "visual": "⚖️" },
+        "climax": { "text": "The developers who understand fundamentals adapt to any language, framework, or paradigm.", "visual": "🔄" },
+        "punchline": { "text": "Frameworks fade. Fundamentals endure forever.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why are data structure fundamentals still important?",
+        "options": ["They teach performance thinking that transcends tools", "They are required for job applications only", "They are only useful for academic research"],
+        "correct": 0
+      },
+      "is_free": false
+    }
+  ]
+}

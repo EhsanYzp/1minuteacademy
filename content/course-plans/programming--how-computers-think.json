@@ -1,0 +1,559 @@
+{
+  "categoryId": "programming",
+  "subject": "Programming",
+  "courseId": "programming--how-computers-think",
+  "courseTitle": "How Computers Think",
+  "emoji": "💻",
+  "color": "#3B82F6",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "programming--how-computers-think--ch01-the-language-of-machines", "title": "The Language of Machines", "position": 1 },
+    { "id": "programming--how-computers-think--ch02-logic-gates-and-circuits", "title": "Logic Gates and Circuits", "position": 2 },
+    { "id": "programming--how-computers-think--ch03-memory-and-storage", "title": "Memory and Storage", "position": 3 },
+    { "id": "programming--how-computers-think--ch04-the-processor", "title": "The Processor", "position": 4 },
+    { "id": "programming--how-computers-think--ch05-abstraction-layers", "title": "Abstraction Layers", "position": 5 },
+    { "id": "programming--how-computers-think--ch06-the-limits-of-computation", "title": "The Limits of Computation", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "programming--how-computers-think--ch01-the-language-of-machines",
+      "title": "Why Computers Use Binary",
+      "story": {
+        "hook": { "text": "Humans use ten digits. Computers only use two: zero and one.", "visual": "0️⃣" },
+        "buildup": { "text": "Electricity has two reliable states: on and off. Binary maps perfectly to that physical reality.", "visual": "💡" },
+        "discovery": { "text": "Every photo, song, and app is encoded as a massive sequence of ones and zeros.", "visual": "🎵" },
+        "twist": { "text": "Early computers tried using ten states per wire. The error rates were catastrophic.", "visual": "💥" },
+        "climax": { "text": "Two states are easy to distinguish. Ten states blur together. Simplicity won.", "visual": "✅" },
+        "punchline": { "text": "Two digits do everything because electricity is binary.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why do computers use binary?",
+        "options": ["Electricity has two reliable states", "Binary is faster to calculate", "Humans prefer two digits"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch01-the-language-of-machines",
+      "title": "Bits, Bytes, and Beyond",
+      "story": {
+        "hook": { "text": "A single binary digit — a bit — stores exactly one yes-or-no answer.", "visual": "1️⃣" },
+        "buildup": { "text": "Eight bits make a byte. One byte can represent 256 different values — enough for every letter.", "visual": "🔤" },
+        "discovery": { "text": "A kilobyte is 1,024 bytes. A gigabyte is over a billion. A terabyte stores 500 hours of video.", "visual": "📹" },
+        "twist": { "text": "Your phone has more storage than all of NASA had when it landed on the Moon in 1969.", "visual": "🌙" },
+        "climax": { "text": "The entire digital world is measured in bits — the simplest possible unit of information.", "visual": "🌐" },
+        "punchline": { "text": "Everything digital starts with a single bit.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How many values can one byte represent?",
+        "options": ["256", "8", "1024"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch01-the-language-of-machines",
+      "title": "How Text Becomes Numbers",
+      "story": {
+        "hook": { "text": "When you type the letter A, your computer sees the number 65.", "visual": "🔤" },
+        "buildup": { "text": "ASCII assigns a number to each character. A is 65, B is 66, space is 32.", "visual": "📊" },
+        "discovery": { "text": "Unicode expanded this to cover every human script — over 150,000 characters and counting.", "visual": "🌍" },
+        "twist": { "text": "Emoji are Unicode too. The 😀 face is number 128512 in the same system that encodes ancient Greek.", "visual": "😀" },
+        "climax": { "text": "One global numbering system lets any computer display any language on Earth.", "visual": "🗺️" },
+        "punchline": { "text": "Every character you read is secretly a number.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the ASCII number for the letter A?",
+        "options": ["65", "1", "97"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch01-the-language-of-machines",
+      "title": "How Images Are Stored",
+      "story": {
+        "hook": { "text": "Zoom into any photo far enough and you'll see tiny colored squares — pixels.", "visual": "🖼️" },
+        "buildup": { "text": "Each pixel stores three numbers: red, green, and blue values from 0 to 255.", "visual": "🎨" },
+        "discovery": { "text": "A 12-megapixel photo has 12 million pixels, each with three color values. That's 36 million numbers.", "visual": "📸" },
+        "twist": { "text": "Your eyes blend these tiny squares into smooth images. The illusion works because pixels are small.", "visual": "👁️" },
+        "climax": { "text": "Every photo, video frame, and icon is just a grid of numbers your screen lights up.", "visual": "✨" },
+        "punchline": { "text": "Pictures are grids of numbers in disguise.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What three color values does each pixel store?",
+        "options": ["Red, green, and blue", "Cyan, magenta, and yellow", "Hue, saturation, and brightness"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch01-the-language-of-machines",
+      "title": "How Sound Becomes Data",
+      "story": {
+        "hook": { "text": "Sound is a wave. Computers can't store waves — only numbers. So they sample.", "visual": "🔊" },
+        "buildup": { "text": "Sampling measures the wave's height thousands of times per second and records each value.", "visual": "📏" },
+        "discovery": { "text": "CD audio samples 44,100 times per second. Each sample is a 16-bit number.", "visual": "💿" },
+        "twist": { "text": "Between samples, the wave's exact shape is lost. Higher sample rates capture more but cost more space.", "visual": "📈" },
+        "climax": { "text": "Music, podcasts, and voice calls are all reconstructions from tiny numeric snapshots.", "visual": "🎧" },
+        "punchline": { "text": "You're listening to numbers played back as waves.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How many times per second does CD audio sample sound?",
+        "options": ["44,100", "1,000", "1 million"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch02-logic-gates-and-circuits",
+      "title": "The AND Gate",
+      "story": {
+        "hook": { "text": "To unlock your phone, you need the right PIN and face recognition. Both must pass.", "visual": "📱" },
+        "buildup": { "text": "An AND gate outputs 1 only when both inputs are 1. If either is 0, the output is 0.", "visual": "🚪" },
+        "discovery": { "text": "This simple rule powers every security check, every condition, every if-and in software.", "visual": "🔐" },
+        "twist": { "text": "Your processor has billions of these gates. Each makes one tiny yes-or-no decision.", "visual": "🧠" },
+        "climax": { "text": "Combine enough AND gates with other gates and you get a machine that can compute anything.", "visual": "♾️" },
+        "punchline": { "text": "Both must be true. That's all AND does.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "When does an AND gate output 1?",
+        "options": ["Only when both inputs are 1", "When either input is 1", "When both inputs are 0"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch02-logic-gates-and-circuits",
+      "title": "The OR and NOT Gates",
+      "story": {
+        "hook": { "text": "A fire alarm triggers if smoke is detected or if someone pulls the lever. Either one works.", "visual": "🚨" },
+        "buildup": { "text": "An OR gate outputs 1 when at least one input is 1. Both off means the output is 0.", "visual": "🔀" },
+        "discovery": { "text": "A NOT gate flips the input. Give it 1, it returns 0. Give it 0, it returns 1.", "visual": "🔄" },
+        "twist": { "text": "Combining NOT with AND creates NAND — a universal gate that can build any other gate.", "visual": "🧱" },
+        "climax": { "text": "Every computer ever built can be reduced to combinations of these three basic operations.", "visual": "🏗️" },
+        "punchline": { "text": "AND, OR, NOT — that's the entire foundation.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a NOT gate do?",
+        "options": ["Flips the input value", "Combines two inputs", "Stores a value in memory"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch02-logic-gates-and-circuits",
+      "title": "How Circuits Add Numbers",
+      "story": {
+        "hook": { "text": "Your calculator adds millions of numbers per second. Under the hood, it's just flipping gates.", "visual": "🧮" },
+        "buildup": { "text": "A half adder combines AND and XOR gates to add two single bits and produce a sum and carry.", "visual": "➕" },
+        "discovery": { "text": "Chain multiple adders together and you get a full adder that handles multi-digit binary addition.", "visual": "🔗" },
+        "twist": { "text": "There is no multiplication circuit. Computers multiply by adding the same number repeatedly.", "visual": "🔁" },
+        "climax": { "text": "All math your computer does — from spreadsheets to physics — starts with tiny bit additions.", "visual": "📐" },
+        "punchline": { "text": "All computation is just addition in disguise.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What gates does a half adder use?",
+        "options": ["AND and XOR", "OR and NOT", "NAND and NOR"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch02-logic-gates-and-circuits",
+      "title": "Boolean Algebra",
+      "story": {
+        "hook": { "text": "In 1854, George Boole published a system of math with only two values: true and false.", "visual": "📘" },
+        "buildup": { "text": "Boolean algebra defines rules for combining true/false values using AND, OR, and NOT.", "visual": "📐" },
+        "discovery": { "text": "Eighty years later, Claude Shannon realized Boolean algebra perfectly described electrical circuits.", "visual": "💡" },
+        "twist": { "text": "Boole never imagined computers. Shannon saw that switches were physical versions of Boole's logic.", "visual": "🔌" },
+        "climax": { "text": "Every if-statement, every database query, every search filter runs on Boolean logic.", "visual": "🔍" },
+        "punchline": { "text": "True-or-false math runs the digital world.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Who connected Boolean algebra to electrical circuits?",
+        "options": ["Claude Shannon", "George Boole", "Alan Turing"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch02-logic-gates-and-circuits",
+      "title": "From Transistors to Chips",
+      "story": {
+        "hook": { "text": "The first computers used vacuum tubes the size of light bulbs. They burned out constantly.", "visual": "💡" },
+        "buildup": { "text": "In 1947, Bell Labs invented the transistor — a tiny switch with no moving parts.", "visual": "🔬" },
+        "discovery": { "text": "Transistors shrank from centimeters to nanometers. Modern chips hold over 100 billion of them.", "visual": "🔢" },
+        "twist": { "text": "A single transistor does almost nothing. Billions working together create intelligence.", "visual": "🧠" },
+        "climax": { "text": "Your phone's chip has more transistors than there are stars in the Milky Way.", "visual": "⭐" },
+        "punchline": { "text": "Billions of tiny switches create everything digital.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How many transistors can modern chips hold?",
+        "options": ["Over 100 billion", "About 1 million", "A few thousand"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch03-memory-and-storage",
+      "title": "RAM and Short-Term Memory",
+      "story": {
+        "hook": { "text": "Close a program without saving and your work vanishes. That's RAM losing power.", "visual": "💨" },
+        "buildup": { "text": "RAM is volatile memory. It holds data only while electricity flows through it.", "visual": "⚡" },
+        "discovery": { "text": "Every running program, open tab, and clipboard item lives in RAM until you close it.", "visual": "📋" },
+        "twist": { "text": "RAM is fast but expensive. Your phone has 8 GB of RAM but 256 GB of slower storage.", "visual": "💰" },
+        "climax": { "text": "RAM is the brain's working memory — fast, limited, and gone the moment power cuts.", "visual": "🧠" },
+        "punchline": { "text": "RAM remembers only while the power stays on.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What happens to RAM when power is lost?",
+        "options": ["All data is erased", "Data is saved permanently", "Data is compressed"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch03-memory-and-storage",
+      "title": "Hard Drives and Permanent Storage",
+      "story": {
+        "hook": { "text": "A hard drive spins a metal platter at 7,200 RPM while a needle reads magnetic dots.", "visual": "💿" },
+        "buildup": { "text": "Data is written by magnetizing tiny regions on the platter. Each region stores a single bit.", "visual": "🧲" },
+        "discovery": { "text": "Unlike RAM, hard drives keep data without power. Your files survive shutdowns and reboots.", "visual": "🔋" },
+        "twist": { "text": "Mechanical parts wear out. A single head crash can destroy years of data in milliseconds.", "visual": "💥" },
+        "climax": { "text": "SSDs replaced spinning platters with flash memory — no moving parts, faster, more durable.", "visual": "⚡" },
+        "punchline": { "text": "Storage keeps memories even after the power dies.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What advantage do SSDs have over traditional hard drives?",
+        "options": ["No moving parts, faster and more durable", "They are cheaper per gigabyte", "They use magnetic storage"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch03-memory-and-storage",
+      "title": "The Memory Hierarchy",
+      "story": {
+        "hook": { "text": "Your CPU can process data in a nanosecond. Your hard drive takes millions of nanoseconds to respond.", "visual": "⏱️" },
+        "buildup": { "text": "Computers use a hierarchy: registers, cache, RAM, SSD, hard drive — each level slower but larger.", "visual": "📊" },
+        "discovery": { "text": "CPU cache holds the most-used data. Accessing cache is 100 times faster than accessing RAM.", "visual": "🚀" },
+        "twist": { "text": "Cache is tiny — often just megabytes. The art is predicting which data you'll need next.", "visual": "🔮" },
+        "climax": { "text": "The illusion of speed comes from keeping the right data in the right level at the right time.", "visual": "🎯" },
+        "punchline": { "text": "Speed is about where data lives, not just how fast you process.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Which memory level is fastest?",
+        "options": ["CPU registers", "RAM", "SSD"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch03-memory-and-storage",
+      "title": "Pointers and Memory Addresses",
+      "story": {
+        "hook": { "text": "Every byte in your computer's memory has a unique address — like a house number on a street.", "visual": "🏠" },
+        "buildup": { "text": "A pointer is a variable that holds a memory address instead of a value.", "visual": "👉" },
+        "discovery": { "text": "Pointers let programs share data without copying it. One address can link distant parts of memory.", "visual": "🔗" },
+        "twist": { "text": "Dangling pointers and null references cause more crashes than almost any other kind of bug.", "visual": "💣" },
+        "climax": { "text": "Tony Hoare called his invention of the null reference a 'billion-dollar mistake.'", "visual": "💰" },
+        "punchline": { "text": "The most powerful tool in memory is also the most dangerous.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What did Tony Hoare call the null reference?",
+        "options": ["A billion-dollar mistake", "The greatest invention", "A minor inconvenience"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch03-memory-and-storage",
+      "title": "Garbage Collection",
+      "story": {
+        "hook": { "text": "Programs create objects in memory and often forget to clean up after themselves.", "visual": "🗑️" },
+        "buildup": { "text": "Memory leaks happen when unused objects pile up. Eventually the system runs out of memory.", "visual": "📈" },
+        "discovery": { "text": "Garbage collectors automatically find and reclaim memory that programs no longer use.", "visual": "♻️" },
+        "twist": { "text": "GC pauses can freeze your app. Java's infamous 'stop the world' pauses made games stutter.", "visual": "⏸️" },
+        "climax": { "text": "Modern GC algorithms run concurrently, reducing pauses to milliseconds most users never notice.", "visual": "⚡" },
+        "punchline": { "text": "Automatic cleanup keeps memory from drowning.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a garbage collector do?",
+        "options": ["Reclaims memory no longer in use", "Deletes old files from disk", "Clears the CPU cache"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch04-the-processor",
+      "title": "The Fetch-Decode-Execute Cycle",
+      "story": {
+        "hook": { "text": "Your CPU repeats the same three steps billions of times per second: fetch, decode, execute.", "visual": "🔄" },
+        "buildup": { "text": "Fetch grabs the next instruction from memory. Decode figures out what it means.", "visual": "📥" },
+        "discovery": { "text": "Execute carries out the instruction — an addition, a comparison, a memory write.", "visual": "⚙️" },
+        "twist": { "text": "Modern CPUs overlap these steps. While one instruction executes, the next is already being fetched.", "visual": "🏭" },
+        "climax": { "text": "This pipelining lets a 3 GHz chip effectively process far more than 3 billion instructions per second.", "visual": "🚀" },
+        "punchline": { "text": "Fetch, decode, execute — forever, billions of times.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What are the three steps of the CPU cycle?",
+        "options": ["Fetch, decode, execute", "Read, write, delete", "Input, process, output"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch04-the-processor",
+      "title": "Clock Speed and Hertz",
+      "story": {
+        "hook": { "text": "A 3 GHz processor ticks three billion times per second. Each tick is one chance to do work.", "visual": "⏱️" },
+        "buildup": { "text": "Clock speed sets the rhythm. Faster clocks mean more instructions completed per second.", "visual": "🎵" },
+        "discovery": { "text": "Hertz measures ticks per second. One gigahertz equals one billion ticks.", "visual": "📊" },
+        "twist": { "text": "After 2005, clock speeds stopped climbing. Chips got too hot. More speed meant melting silicon.", "visual": "🔥" },
+        "climax": { "text": "Engineers switched to adding more cores instead. Two slower cores outperform one fast one.", "visual": "🧩" },
+        "punchline": { "text": "Speed hit a wall. Parallelism became the detour.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why did CPU clock speeds stop increasing around 2005?",
+        "options": ["Chips generated too much heat", "Memory couldn't keep up", "Users didn't need more speed"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch04-the-processor",
+      "title": "Moore's Law",
+      "story": {
+        "hook": { "text": "In 1965, Gordon Moore predicted transistor counts would double roughly every two years.", "visual": "📈" },
+        "buildup": { "text": "For decades, his prediction held. Chips got smaller, faster, and cheaper at an exponential rate.", "visual": "🚀" },
+        "discovery": { "text": "Moore's Law isn't a law of physics. It's a self-fulfilling prophecy the industry chose to chase.", "visual": "🏃" },
+        "twist": { "text": "Transistors are now just a few atoms wide. Physics is making further shrinking nearly impossible.", "visual": "⚛️" },
+        "climax": { "text": "The era of easy doubling is ending. New approaches like 3D chips and quantum computing are next.", "visual": "🔮" },
+        "punchline": { "text": "Fifty years of doubling reshaped civilization.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What did Moore's Law predict?",
+        "options": ["Transistor counts double roughly every two years", "Computer prices double every decade", "Software gets twice as complex yearly"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch04-the-processor",
+      "title": "Parallel Processing",
+      "story": {
+        "hook": { "text": "One chef takes an hour to cook dinner. Can four chefs do it in fifteen minutes?", "visual": "👨‍🍳" },
+        "buildup": { "text": "Multi-core processors split work across several cores, each running instructions simultaneously.", "visual": "🔀" },
+        "discovery": { "text": "Embarrassingly parallel tasks — like rendering pixels — scale almost perfectly with more cores.", "visual": "🖥️" },
+        "twist": { "text": "Not all tasks can be split. A baby takes nine months no matter how many parents you assign.", "visual": "👶" },
+        "climax": { "text": "Amdahl's Law says speedup is limited by the sequential portion. Some work can't be parallelized.", "visual": "📏" },
+        "punchline": { "text": "More cores help, but only if the work can be split.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does Amdahl's Law describe?",
+        "options": ["Limits on speedup from parallelism", "How transistors shrink over time", "The cost of adding more memory"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch04-the-processor",
+      "title": "GPUs and Massively Parallel Computing",
+      "story": {
+        "hook": { "text": "A CPU has 8 powerful cores. A GPU has thousands of tiny ones. Different tools for different jobs.", "visual": "🎮" },
+        "buildup": { "text": "GPUs were designed to render millions of pixels simultaneously for video games.", "visual": "🖼️" },
+        "discovery": { "text": "Researchers realized GPU parallelism could accelerate scientific simulations and AI training.", "visual": "🤖" },
+        "twist": { "text": "NVIDIA pivoted from gaming to AI. Its GPUs became the engine behind every major AI breakthrough.", "visual": "📈" },
+        "climax": { "text": "ChatGPT, image generators, and self-driving cars all run on GPU clusters, not traditional CPUs.", "visual": "🚗" },
+        "punchline": { "text": "Gaming hardware accidentally powered the AI revolution.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What were GPUs originally designed for?",
+        "options": ["Rendering video game graphics", "Training AI models", "Running databases"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch05-abstraction-layers",
+      "title": "What Abstraction Means",
+      "story": {
+        "hook": { "text": "You drive a car without knowing how the engine works. That's abstraction in action.", "visual": "🚗" },
+        "buildup": { "text": "Abstraction hides complexity behind a simple interface. You interact with the steering wheel, not pistons.", "visual": "🎯" },
+        "discovery": { "text": "Computers are built in layers: hardware, OS, libraries, applications. Each hides the one below.", "visual": "🧱" },
+        "twist": { "text": "Leaky abstractions break the illusion. Sometimes the hidden layer's behavior bleeds through.", "visual": "💧" },
+        "climax": { "text": "Great software engineers know when to trust the abstraction and when to peek underneath.", "visual": "🔍" },
+        "punchline": { "text": "Simplicity on top hides complexity below.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does abstraction do in computing?",
+        "options": ["Hides complexity behind a simple interface", "Makes hardware run faster", "Increases memory capacity"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch05-abstraction-layers",
+      "title": "Operating Systems as Managers",
+      "story": {
+        "hook": { "text": "Without an OS, every program would need to know how to talk to your specific keyboard and screen.", "visual": "⌨️" },
+        "buildup": { "text": "The operating system manages hardware so applications don't have to. It handles files, memory, and devices.", "visual": "🗂️" },
+        "discovery": { "text": "It decides which program gets CPU time, preventing any single app from hogging the processor.", "visual": "⏱️" },
+        "twist": { "text": "A bug in the OS can crash every program at once. The gatekeeper's failure takes down everything.", "visual": "💥" },
+        "climax": { "text": "Windows, macOS, Linux, and Android all do the same job: hide hardware from software.", "visual": "🎭" },
+        "punchline": { "text": "The OS is the translator between apps and hardware.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the primary role of an operating system?",
+        "options": ["Managing hardware for applications", "Running web browsers", "Storing user files permanently"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch05-abstraction-layers",
+      "title": "Compilers and Interpreters",
+      "story": {
+        "hook": { "text": "Code written in Python looks nothing like the binary a CPU executes. Something must translate.", "visual": "🔄" },
+        "buildup": { "text": "A compiler translates the entire program to machine code before it runs. C and Rust use compilers.", "visual": "📦" },
+        "discovery": { "text": "An interpreter translates one line at a time while the program runs. Python and JavaScript do this.", "visual": "📝" },
+        "twist": { "text": "Compiled code runs faster. Interpreted code is easier to debug. Neither approach is strictly better.", "visual": "⚖️" },
+        "climax": { "text": "Modern languages blur the line. Java compiles to bytecode, then a JIT compiler optimizes at runtime.", "visual": "🌀" },
+        "punchline": { "text": "Human-readable code always needs a translator.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a compiler do?",
+        "options": ["Translates entire programs to machine code before running", "Runs code one line at a time", "Stores programs in memory"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch05-abstraction-layers",
+      "title": "APIs as Contracts",
+      "story": {
+        "hook": { "text": "When you check the weather on your phone, the app doesn't measure temperature. It asks an API.", "visual": "🌤️" },
+        "buildup": { "text": "An API is a contract: send this request, get that response. The internals are hidden.", "visual": "📜" },
+        "discovery": { "text": "APIs let different systems talk without understanding each other's code. They agree on the format.", "visual": "🤝" },
+        "twist": { "text": "Breaking an API contract breaks every app that depends on it. Change carefully or break millions.", "visual": "💥" },
+        "climax": { "text": "The modern internet is APIs calling APIs. Your one search query triggers dozens of them.", "visual": "🌐" },
+        "punchline": { "text": "APIs are promises between systems.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does an API define?",
+        "options": ["A contract for how systems communicate", "The speed of a processor", "How files are stored on disk"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch05-abstraction-layers",
+      "title": "Virtual Machines and Containers",
+      "story": {
+        "hook": { "text": "Running untrusted code on your real machine is risky. What if it had its own fake machine?", "visual": "📦" },
+        "buildup": { "text": "Virtual machines simulate an entire computer inside your computer, complete with its own OS.", "visual": "🖥️" },
+        "discovery": { "text": "Containers are lighter. They share the host OS kernel but isolate the application environment.", "visual": "🧊" },
+        "twist": { "text": "Docker made containers mainstream. Now apps ship with their entire environment included.", "visual": "🐳" },
+        "climax": { "text": "Cloud computing runs on VMs and containers. Your Netflix stream runs inside one right now.", "visual": "☁️" },
+        "punchline": { "text": "Computers inside computers power the cloud.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How do containers differ from virtual machines?",
+        "options": ["They share the host OS kernel", "They include their own full OS", "They don't use any isolation"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch06-the-limits-of-computation",
+      "title": "The Turing Machine",
+      "story": {
+        "hook": { "text": "In 1936, Alan Turing imagined the simplest possible machine that could compute anything.", "visual": "📜" },
+        "buildup": { "text": "His theoretical machine has an infinite tape, a read/write head, and a set of rules.", "visual": "📼" },
+        "discovery": { "text": "Despite its simplicity, a Turing machine can compute anything any modern computer can.", "visual": "💻" },
+        "twist": { "text": "Your laptop is no more powerful than Turing's paper design. It's just faster.", "visual": "⚡" },
+        "climax": { "text": "If a Turing machine can't solve a problem, no computer ever built will solve it either.", "visual": "🚫" },
+        "punchline": { "text": "A paper machine from 1936 defines all computation.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What can a Turing machine compute?",
+        "options": ["Anything any modern computer can", "Only mathematical equations", "Only text processing tasks"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch06-the-limits-of-computation",
+      "title": "Undecidable Problems",
+      "story": {
+        "hook": { "text": "Some questions sound simple but no computer can ever answer them. Not today, not in a trillion years.", "visual": "♾️" },
+        "buildup": { "text": "The halting problem asks: will this program finish or loop forever? Turing proved it's undecidable.", "visual": "🔄" },
+        "discovery": { "text": "Undecidable means no algorithm exists — not that we haven't found one, but that none can exist.", "visual": "🚫" },
+        "twist": { "text": "Virus detection is related: perfectly identifying all malware is equivalent to the halting problem.", "visual": "🦠" },
+        "climax": { "text": "Computers have hard limits. There are questions that math itself says cannot be answered by machines.", "visual": "🧱" },
+        "punchline": { "text": "Some problems are unsolvable by any machine, ever.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does 'undecidable' mean in computer science?",
+        "options": ["No algorithm can ever solve it", "It takes too long to compute", "It requires more memory"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch06-the-limits-of-computation",
+      "title": "Quantum Computing Basics",
+      "story": {
+        "hook": { "text": "A classical bit is 0 or 1. A quantum bit can be both at the same time.", "visual": "⚛️" },
+        "buildup": { "text": "Qubits use superposition to explore many possibilities simultaneously.", "visual": "🌀" },
+        "discovery": { "text": "For certain problems, quantum computers could solve in minutes what takes classical machines centuries.", "visual": "⏱️" },
+        "twist": { "text": "Qubits are extremely fragile. A tiny vibration or temperature change destroys the computation.", "visual": "❄️" },
+        "climax": { "text": "Quantum computers won't replace laptops. They'll solve specific problems classical machines can't.", "visual": "🔬" },
+        "punchline": { "text": "Not faster at everything — just impossible things.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What makes qubits different from classical bits?",
+        "options": ["They can be both 0 and 1 simultaneously", "They are twice as fast", "They use less energy"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch06-the-limits-of-computation",
+      "title": "The Church-Turing Thesis",
+      "story": {
+        "hook": { "text": "Can any computing device — present or future — solve problems a Turing machine can't?", "visual": "🤔" },
+        "buildup": { "text": "The Church-Turing thesis says no. Every effective computation can be done by a Turing machine.", "visual": "📐" },
+        "discovery": { "text": "Alonzo Church and Alan Turing independently reached this conclusion using different approaches.", "visual": "🤝" },
+        "twist": { "text": "It's a thesis, not a theorem. It can't be proven, but no counterexample has ever been found.", "visual": "❓" },
+        "climax": { "text": "If true, computation has a universal ceiling. No technology will ever surpass it.", "visual": "🧱" },
+        "punchline": { "text": "All computers share the same fundamental limits.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does the Church-Turing thesis claim?",
+        "options": ["All computation can be done by a Turing machine", "Quantum computers are the most powerful", "AI will surpass human intelligence"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "programming--how-computers-think--ch06-the-limits-of-computation",
+      "title": "Can Computers Ever Think?",
+      "story": {
+        "hook": { "text": "ChatGPT writes essays and passes exams. Does that mean it thinks?", "visual": "🤖" },
+        "buildup": { "text": "John Searle's Chinese Room argument says executing rules isn't the same as understanding.", "visual": "🏮" },
+        "discovery": { "text": "A person following Chinese translation rules can produce perfect Chinese without understanding a word.", "visual": "📝" },
+        "twist": { "text": "Turing sidestepped the question. He said: if it behaves indistinguishably from thinking, does it matter?", "visual": "🎭" },
+        "climax": { "text": "The debate remains unresolved. Computers process. Whether they understand is still philosophy.", "visual": "💭" },
+        "punchline": { "text": "Processing isn't the same as understanding. Maybe.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does Searle's Chinese Room argue?",
+        "options": ["Following rules isn't the same as understanding", "Computers can truly think", "Language is impossible for machines"],
+        "correct": 0
+      },
+      "is_free": false
+    }
+  ]
+}
