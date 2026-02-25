@@ -13,6 +13,7 @@ import {
 } from '../services/catalog';
 import { useAuth } from '../context/AuthContext';
 import { getUserCompletedTopicsByCategory } from '../services/progress';
+import { getCurrentTier } from '../services/entitlements';
 import useShowProgressVisuals from '../lib/useShowProgressVisuals';
 import './CategoriesFlow.css';
 
@@ -35,6 +36,8 @@ function matchesAllTokens(haystack, tokens) {
 
 export default function CategoriesPage() {
   const { user, isSupabaseConfigured } = useAuth();
+  const tier = getCurrentTier(user);
+  const isProUser = tier === 'pro';
   const showProgressVisuals = useShowProgressVisuals();
   const [categories, setCategories] = useState([]);
   const [courses, setCourses] = useState([]);
@@ -263,7 +266,7 @@ export default function CategoriesPage() {
                 <input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search everything (e.g., cryptocurrency, parenting, blockchain…)"
+                  placeholder="Search everything (e.g., sleep, nutrition, confidence…)"
                   aria-label="Search"
                 />
                 {query && (
@@ -474,7 +477,7 @@ export default function CategoriesPage() {
                 )}
 
                 <h2 className="catflow-sectionTitle">Topics</h2>
-                <div className="catflow-grid" aria-label="Topic results">
+                <div className="catflow-resultList" aria-label="Topic results">
                   {limitedResults.topics.map((t) => {
                     const id = String(t?.id ?? '').trim();
                     const title = String(t?.title ?? id);
@@ -482,19 +485,29 @@ export default function CategoriesPage() {
                     const subject = String(t?.subject ?? '').trim();
                     const subcategory = String(t?.subcategory ?? '').trim();
                     const isFree = Boolean(t?.is_free);
+                    const tierLabel = isFree ? 'Free' : 'Pro';
 
                     return (
-                      <Link key={id} to={path} className="catflow-card">
-                        <div className="catflow-cardTop">
-                          <h3 className="catflow-cardTitle catflow-cardTitleTop">{title}</h3>
-                          <div className="catflow-badges" aria-label="Topic meta">
-                            <div className="catflow-badge">Topic</div>
-                            {subject ? <div className="catflow-badge">{subject}</div> : null}
-                            {subcategory ? <div className="catflow-badge">{subcategory}</div> : null}
-                            <div className="catflow-badge">{isFree ? 'Free' : 'Pro'}</div>
-                          </div>
+                      <Link key={id} to={path} className="catflow-result">
+                        <div className="catflow-resultMain">
+                          <h3 className="catflow-resultTitle">{title}</h3>
+                          {(subject || subcategory) ? (
+                            <div className="catflow-resultMeta">
+                              {subject ? <><strong>{subject}</strong></> : null}
+                              {subject && subcategory ? ' • ' : null}
+                              {subcategory ? <>Course: <strong>{subcategory}</strong></> : null}
+                            </div>
+                          ) : null}
+                          {t?.description ? <div className="catflow-resultDesc">{String(t.description)}</div> : null}
                         </div>
-                        {t?.description ? <p className="catflow-cardDesc">{String(t.description)}</p> : null}
+
+                        {!isProUser && (
+                          <div className="catflow-resultSide" aria-label="Access tier">
+                            <span className={isFree ? 'catflow-pill' : 'catflow-pill catflow-pill-locked'}>
+                              {tierLabel}
+                            </span>
+                          </div>
+                        )}
                       </Link>
                     );
                   })}
