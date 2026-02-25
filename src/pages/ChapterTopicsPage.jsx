@@ -174,35 +174,32 @@ export default function ChapterTopicsPage() {
             ]}
           />
 
-          <h1>{chapterTitle}</h1>
+          <div className="catflow-titleRow">
+            <h1>{chapterTitle}</h1>
+            <div className="catflow-titleActions" aria-label="Topic filters">
+              <label className="catflow-filterInline">
+                <span className="catflow-filterLabel">Status</span>
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  aria-label="Status"
+                >
+                  <option value="all">All</option>
+                  <option value="new">To watch</option>
+                  <option value="completed">Watched</option>
+                </select>
+              </label>
+
+              <button type="button" className="catflow-reset" onClick={resetFilters}>
+                Reset
+              </button>
+            </div>
+          </div>
           {chapterRow?.description ? <p>{String(chapterRow.description)}</p> : <p>Pick a topic to start.</p>}
 
-          <div className="catflow-toolbarBare" role="region" aria-label="Topic filters">
-            <div className="catflow-toolbarStack">
-              <div className="catflow-filtersRow" aria-label="Filters">
-                <label className="catflow-filter">
-                  <span className="catflow-filterLabel">Status</span>
-                  <select
-                    value={statusFilter}
-                    onChange={(e) => setStatusFilter(e.target.value)}
-                    aria-label="Status"
-                  >
-                    <option value="all">All</option>
-                    <option value="new">To watch</option>
-                    <option value="completed">Watched</option>
-                  </select>
-                </label>
-
-                <button type="button" className="catflow-reset" onClick={resetFilters}>
-                  Reset
-                </button>
-              </div>
-            </div>
-
-            <div className="catflow-toolbarSub">
-              Showing <strong>{visibleTopics.length}</strong> topic(s)
-              {contentSource === 'local' ? ' (Local Preview)' : user ? '' : ' (sign in to track watched)'}
-            </div>
+          <div className="catflow-toolbarSub">
+            Showing <strong>{visibleTopics.length}</strong> topic(s)
+            {contentSource === 'local' ? ' (Local Preview)' : user ? '' : ' (sign in to track watched)'}
           </div>
         </div>
 

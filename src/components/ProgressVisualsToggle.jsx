@@ -8,19 +8,22 @@ export default function ProgressVisualsToggle({ className = '' } = {}) {
     setLocalShowProgressVisuals(!show);
   }
 
-  const label = show ? 'Progress: On' : 'Progress: Off';
-
   return (
     <button
       type="button"
       className={`catflow-button catflow-progressToggle ${className}`.trim()}
       data-on={show ? 'true' : 'false'}
       onClick={onToggle}
-      aria-pressed={Boolean(show)}
-      aria-label="Toggle progress visuals"
+      role="switch"
+      aria-checked={Boolean(show)}
+      aria-label="Progress visuals"
       title="Show/hide progress bars and percentages"
     >
-      {label}
+      <span className="catflow-progressToggleTrack" aria-hidden="true">
+        <span className="catflow-progressToggleThumb" />
+      </span>
+      <span className="catflow-progressToggleLabel">Progress</span>
+      <span className="catflow-progressToggleState">{show ? 'On' : 'Off'}</span>
     </button>
   );
 }

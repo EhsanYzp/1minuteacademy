@@ -170,7 +170,13 @@ export default function CourseChaptersPage() {
               { label: courseTitle, to: `/categories/${encodeURIComponent(category)}/courses/${encodeURIComponent(course)}` },
             ]}
           />
-          <h1>{courseTitle}</h1>
+
+          <div className="catflow-titleRow">
+            <h1>{courseTitle}</h1>
+            <div className="catflow-titleActions" aria-label="Chapter controls">
+              <ProgressVisualsToggle />
+            </div>
+          </div>
           {courseRow?.description ? <p>{String(courseRow.description)}</p> : <p>Pick a chapter to see its topics.</p>}
 
           {showProgressVisuals && user && courseProgress.total > 0 && (
@@ -187,11 +193,6 @@ export default function CourseChaptersPage() {
             </div>
           )}
 
-          <div className="catflow-toolbarBare" role="region" aria-label="Chapter toolbar">
-            <div className="catflow-controlsRow">
-              <ProgressVisualsToggle />
-            </div>
-          </div>
         </div>
 
         {loading && <p className="catflow-empty">Loading…</p>}

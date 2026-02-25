@@ -44,6 +44,35 @@
   letter-spacing: -0.02em;
 }
 
+.catflow-titleRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.catflow-titleActions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.catflow-filterInline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.catflow-filterInline .catflow-filterLabel {
+  margin: 0;
+}
+
+.catflow-filterInline select {
+  height: 36px;
+}
+
 .catflow-hero p {
   margin: 10px 0 0;
   color: var(--text-secondary);
@@ -148,10 +177,82 @@
 
 .catflow-progressToggle {
   white-space: nowrap;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.80);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.07);
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .catflow-progressToggle[data-on="false"] {
-  opacity: 0.78;
+  opacity: 0.88;
+}
+
+.catflow-progressToggle:hover {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.catflow-progressToggle:focus-visible {
+  outline: 2px solid rgba(37, 99, 235, 0.55);
+  outline-offset: 2px;
+}
+
+.catflow-progressToggleTrack {
+  width: 36px;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.16);
+  padding: 2px;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  transition: background var(--transition-fast);
+}
+
+.catflow-progressToggleThumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.16);
+  transform: translateX(0);
+  transition: transform var(--transition-fast);
+}
+
+.catflow-progressToggleLabel {
+  font-weight: 950;
+  color: rgba(45, 52, 54, 0.92);
+}
+
+.catflow-progressToggleState {
+  font-size: 12px;
+  font-weight: 950;
+  padding: 5px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: rgba(0, 0, 0, 0.04);
+  color: rgba(45, 52, 54, 0.78);
+}
+
+.catflow-progressToggle[data-on="true"] {
+  border-color: rgba(16, 185, 129, 0.28);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.16) 0%, rgba(34, 197, 94, 0.10) 100%);
+}
+
+.catflow-progressToggle[data-on="true"] .catflow-progressToggleTrack {
+  background: rgba(16, 185, 129, 0.48);
+}
+
+.catflow-progressToggle[data-on="true"] .catflow-progressToggleThumb {
+  transform: translateX(16px);
+}
+
+.catflow-progressToggle[data-on="true"] .catflow-progressToggleState {
+  border-color: rgba(16, 185, 129, 0.22);
+  background: rgba(16, 185, 129, 0.12);
+  color: rgba(6, 95, 70, 0.92);
 }
 
 .catflow-filters {
