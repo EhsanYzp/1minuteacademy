@@ -1,0 +1,583 @@
+{
+  "categoryId": "ai",
+  "subject": "AI & Agents",
+  "courseId": "ai--science-of-ml",
+  "courseTitle": "The Science of Machine Learning",
+  "emoji": "🔬",
+  "color": "#7C3AED",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "ai--science-of-ml--ch01-foundations",
+      "title": "What Is Machine Learning?",
+      "position": 1
+    },
+    {
+      "id": "ai--science-of-ml--ch02-supervised",
+      "title": "Supervised Learning",
+      "position": 2
+    },
+    {
+      "id": "ai--science-of-ml--ch03-unsupervised",
+      "title": "Unsupervised Learning",
+      "position": 3
+    },
+    {
+      "id": "ai--science-of-ml--ch04-neural-nets",
+      "title": "Neural Networks Demystified",
+      "position": 4
+    },
+    {
+      "id": "ai--science-of-ml--ch05-training",
+      "title": "The Art of Training",
+      "position": 5
+    },
+    {
+      "id": "ai--science-of-ml--ch06-evaluation",
+      "title": "Measuring Success",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "chapter_id": "ai--science-of-ml--ch01-foundations",
+      "title": "Learning Without Being Programmed",
+      "story": {
+        "hook": { "text": "Nobody programs a spam filter with a list of every spam word. It figures them out by itself.", "visual": "📧" },
+        "buildup": { "text": "Traditional software follows explicit rules. Machine learning discovers rules from data.", "visual": "📐" },
+        "discovery": { "text": "You give it examples of spam and not-spam. It finds the patterns that distinguish them.", "visual": "🔍" },
+        "twist": { "text": "The patterns it finds might not be ones you'd ever think of — like email header timestamps.", "visual": "⏰" },
+        "climax": { "text": "This is the core of ML: show enough examples and let the algorithm find the signal.", "visual": "📡" },
+        "punchline": { "text": "Don't write the rules. Let the data write them.", "visual": "📝" }
+      },
+      "quiz": {
+        "question": "How does machine learning differ from traditional programming?",
+        "options": ["It discovers rules from data instead of following explicit instructions", "It runs faster than regular programs", "It doesn't need computers"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch01-foundations",
+      "title": "Features: What the Model Actually Sees",
+      "story": {
+        "hook": { "text": "A house-price model doesn't know about 'charming kitchens.' It sees: bedrooms=3, sqft=1400, zip=90210.", "visual": "🏠" },
+        "buildup": { "text": "Features are the measurable properties you feed into a model — the raw inputs.", "visual": "📏" },
+        "discovery": { "text": "Good features make learning easy. Bad features make even the best algorithm fail.", "visual": "✅" },
+        "twist": { "text": "Feature engineering — choosing and crafting the right inputs — was once 80% of an ML engineer's job.", "visual": "🔧" },
+        "climax": { "text": "Deep learning changed this by learning features automatically from raw data.", "visual": "🧠" },
+        "punchline": { "text": "What you feed in matters more than the algorithm you choose.", "visual": "🍽️" }
+      },
+      "quiz": {
+        "question": "What are features in machine learning?",
+        "options": ["Measurable input properties fed to the model", "The outputs a model produces", "The programming language used"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch01-foundations",
+      "title": "Labels and Supervision",
+      "story": {
+        "hook": { "text": "A child learns 'dog' because someone points at a dog and says 'dog.' Labels work the same way.", "visual": "🐕" },
+        "buildup": { "text": "In supervised learning, each training example comes paired with the correct answer — the label.", "visual": "🏷️" },
+        "discovery": { "text": "Labels can be categories ('cat' or 'dog') or numbers (house price: $350,000).", "visual": "🔢" },
+        "twist": { "text": "Labeling data is expensive. ImageNet required 25,000 workers to label 14 million images.", "visual": "👥" },
+        "climax": { "text": "The quality of labels directly determines the quality of the model. Garbage labels, garbage model.", "visual": "🗑️" },
+        "punchline": { "text": "AI learns from answers. The answers better be right.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What is a label in supervised learning?",
+        "options": ["The correct answer paired with each training example", "The name of the algorithm", "The model's confidence score"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch01-foundations",
+      "title": "The Three Types of Machine Learning",
+      "story": {
+        "hook": { "text": "There are three ways machines learn: from answers, from patterns, and from rewards.", "visual": "3️⃣" },
+        "buildup": { "text": "Supervised learning uses labeled data. Unsupervised learning finds hidden patterns. RL uses rewards.", "visual": "🎓" },
+        "discovery": { "text": "Spam detection is supervised. Customer segmentation is unsupervised. Game-playing is reinforcement.", "visual": "🎮" },
+        "twist": { "text": "Modern systems often combine all three — pre-train unsupervised, fine-tune supervised, align with RL.", "visual": "🔀" },
+        "climax": { "text": "ChatGPT uses all three in sequence: pre-training, instruction tuning, then RLHF.", "visual": "🤖" },
+        "punchline": { "text": "The best learners use every method available.", "visual": "🧰" }
+      },
+      "quiz": {
+        "question": "What are the three main types of machine learning?",
+        "options": ["Supervised, unsupervised, and reinforcement learning", "Fast, medium, and slow learning", "Text, image, and audio learning"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch01-foundations",
+      "title": "Why Data Quantity and Quality Both Matter",
+      "story": {
+        "hook": { "text": "Feed a model a million blurry photos and it learns blur. Feed it a thousand sharp ones and it learns shape.", "visual": "📸" },
+        "buildup": { "text": "More data generally helps — but only if the data is clean, diverse, and representative.", "visual": "📊" },
+        "discovery": { "text": "Duplicate data wastes compute. Biased data teaches bias. Noisy data teaches noise.", "visual": "🔊" },
+        "twist": { "text": "Small, curated datasets sometimes outperform massive, messy ones for specific tasks.", "visual": "💎" },
+        "climax": { "text": "Data-centric AI is a growing movement: improve the data, not the algorithm.", "visual": "🔬" },
+        "punchline": { "text": "Quality data is the real competitive advantage in ML.", "visual": "🏆" }
+      },
+      "quiz": {
+        "question": "Why can small curated datasets outperform large messy ones?",
+        "options": ["Clean, representative data teaches better patterns", "Smaller datasets train faster on any hardware", "Algorithms prefer fewer examples"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch02-supervised",
+      "title": "Classification: Sorting Into Buckets",
+      "story": {
+        "hook": { "text": "Is this email spam or not? Is this mole cancerous or benign? That's classification.", "visual": "📂" },
+        "buildup": { "text": "Classification assigns inputs to predefined categories based on learned patterns.", "visual": "🏷️" },
+        "discovery": { "text": "The model draws decision boundaries — lines (or curves) that separate one class from another.", "visual": "📐" },
+        "twist": { "text": "Real-world categories overlap. A borderline case might be 51% spam. What do you do?", "visual": "🤷" },
+        "climax": { "text": "Classification powers fraud detection, medical diagnosis, content moderation, and more.", "visual": "🌐" },
+        "punchline": { "text": "Life is messy. Classification draws clean lines through the mess.", "visual": "✂️" }
+      },
+      "quiz": {
+        "question": "What does a classification model do?",
+        "options": ["Assigns inputs to predefined categories", "Predicts a continuous number", "Generates new data from scratch"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch02-supervised",
+      "title": "Regression: Predicting Numbers",
+      "story": {
+        "hook": { "text": "How much will this house sell for? How many users will sign up tomorrow? Regression answers with a number.", "visual": "🔢" },
+        "buildup": { "text": "Regression finds the mathematical relationship between inputs and a continuous output.", "visual": "📈" },
+        "discovery": { "text": "Linear regression fits a straight line. More complex methods fit curves and surfaces.", "visual": "📉" },
+        "twist": { "text": "Extrapolating beyond the training data range is dangerous. The trend might not continue.", "visual": "⚠️" },
+        "climax": { "text": "Regression powers pricing models, demand forecasting, and risk scoring across every industry.", "visual": "🏭" },
+        "punchline": { "text": "Find the line. Predict the number. Hope it's right.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "How does regression differ from classification?",
+        "options": ["Regression predicts continuous numbers, classification predicts categories", "They are exactly the same", "Regression is older and no longer used"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch02-supervised",
+      "title": "Decision Trees: If-Then Intelligence",
+      "story": {
+        "hook": { "text": "Is income > $50K? Yes → Is age > 30? Yes → Approve loan. A tree of questions makes the decision.", "visual": "🌳" },
+        "buildup": { "text": "Decision trees split data by asking the most informative question at each step.", "visual": "❓" },
+        "discovery": { "text": "They're intuitive — you can literally draw the decision process and explain it to anyone.", "visual": "📊" },
+        "twist": { "text": "Single trees overfit easily. Random forests fix this by averaging hundreds of trees together.", "visual": "🌲" },
+        "climax": { "text": "Gradient-boosted trees (XGBoost, LightGBM) dominate tabular data competitions to this day.", "visual": "🏆" },
+        "punchline": { "text": "Sometimes the best AI is a really good game of 20 questions.", "visual": "🤔" }
+      },
+      "quiz": {
+        "question": "Why are random forests better than single decision trees?",
+        "options": ["Averaging many trees reduces overfitting", "They use fewer features", "They're faster to train"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch02-supervised",
+      "title": "k-Nearest Neighbors: You Are Who You're Near",
+      "story": {
+        "hook": { "text": "To classify a new data point, just look at its closest neighbors and go with the majority.", "visual": "👥" },
+        "buildup": { "text": "k-NN stores all training data and classifies new points by proximity.", "visual": "📍" },
+        "discovery": { "text": "If three of your five nearest neighbors are cats, you're probably a cat too.", "visual": "🐱" },
+        "twist": { "text": "It struggles in high dimensions — the 'curse of dimensionality' makes distances meaningless.", "visual": "🌀" },
+        "climax": { "text": "Despite its simplicity, k-NN works surprisingly well for recommendation systems.", "visual": "🎯" },
+        "punchline": { "text": "The simplest algorithm: ask your neighbors.", "visual": "🏘️" }
+      },
+      "quiz": {
+        "question": "How does k-Nearest Neighbors classify a new data point?",
+        "options": ["By majority vote of the closest training examples", "By fitting a complex equation", "By random selection"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch02-supervised",
+      "title": "Naive Bayes: Probability to the Rescue",
+      "story": {
+        "hook": { "text": "An email contains 'winner,' 'prize,' and 'click here.' What's the probability it's spam? Very high.", "visual": "🎰" },
+        "buildup": { "text": "Naive Bayes uses Bayes' theorem to calculate the probability of each class given the evidence.", "visual": "📊" },
+        "discovery": { "text": "It's 'naive' because it assumes features are independent — which is usually wrong but works anyway.", "visual": "🤷" },
+        "twist": { "text": "Despite the wrong assumption, it often beats more complex models on text classification.", "visual": "🏆" },
+        "climax": { "text": "Gmail's original spam filter was built on Naive Bayes. Simplicity won.", "visual": "📧" },
+        "punchline": { "text": "Wrong assumptions, right answers. Classic machine learning.", "visual": "🎭" }
+      },
+      "quiz": {
+        "question": "Why is Naive Bayes called 'naive'?",
+        "options": ["It assumes all features are independent of each other", "It's too simple to be useful", "It was the first algorithm invented"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch03-unsupervised",
+      "title": "Clustering: Finding Natural Groups",
+      "story": {
+        "hook": { "text": "You have a million customers and no labels. How do you find meaningful segments? Let the data cluster.", "visual": "🎯" },
+        "buildup": { "text": "Clustering groups similar data points together without any predefined categories.", "visual": "🔵" },
+        "discovery": { "text": "K-means picks k centers and assigns each point to its nearest center, then readjusts repeatedly.", "visual": "📍" },
+        "twist": { "text": "You must choose k — the number of clusters — before running. Choose wrong, and the groups are useless.", "visual": "🔢" },
+        "climax": { "text": "Clustering powers customer segmentation, gene grouping, and anomaly detection.", "visual": "🧬" },
+        "punchline": { "text": "The data has structure. Clustering reveals it.", "visual": "💎" }
+      },
+      "quiz": {
+        "question": "What does clustering do with unlabeled data?",
+        "options": ["Groups similar data points together automatically", "Assigns predefined labels to each point", "Deletes outlier data points"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch03-unsupervised",
+      "title": "Dimensionality Reduction: Simplifying Complexity",
+      "story": {
+        "hook": { "text": "Your dataset has 10,000 features. Most are redundant. How do you find the ones that matter?", "visual": "🗜️" },
+        "buildup": { "text": "Dimensionality reduction compresses data to fewer features while preserving key patterns.", "visual": "📐" },
+        "discovery": { "text": "PCA finds the axes of maximum variance — the directions along which data varies most.", "visual": "📊" },
+        "twist": { "text": "You can visualize 1000-dimensional data in 2D. It won't be perfect, but patterns pop out.", "visual": "🗺️" },
+        "climax": { "text": "t-SNE and UMAP create stunning visualizations of high-dimensional data clusters.", "visual": "🎨" },
+        "punchline": { "text": "Complexity hides patterns. Simplification reveals them.", "visual": "🔍" }
+      },
+      "quiz": {
+        "question": "What is the purpose of dimensionality reduction?",
+        "options": ["To compress data while preserving important patterns", "To add more features to the data", "To increase model training time"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch03-unsupervised",
+      "title": "Anomaly Detection: Finding the Outliers",
+      "story": {
+        "hook": { "text": "One transaction among a billion doesn't fit the pattern. It might be fraud. Anomaly detection finds it.", "visual": "🔴" },
+        "buildup": { "text": "The model learns what 'normal' looks like, then flags anything that deviates significantly.", "visual": "📊" },
+        "discovery": { "text": "Autoencoders learn to compress and reconstruct normal data. Anomalies reconstruct poorly.", "visual": "🔧" },
+        "twist": { "text": "The definition of 'anomaly' changes over time. What's unusual today may be normal tomorrow.", "visual": "📅" },
+        "climax": { "text": "Anomaly detection guards networks, catches fraud, and monitors industrial equipment.", "visual": "🏭" },
+        "punchline": { "text": "Learn what's normal. Everything else is suspicious.", "visual": "🕵️" }
+      },
+      "quiz": {
+        "question": "How does anomaly detection work?",
+        "options": ["By learning normal patterns and flagging deviations", "By labeling every data point as normal or abnormal", "By randomly selecting suspicious data"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch03-unsupervised",
+      "title": "Reinforcement Learning: Trial, Error, Reward",
+      "story": {
+        "hook": { "text": "A robot tries to walk. It falls. It gets a negative reward. It tries again slightly differently. Better.", "visual": "🤖" },
+        "buildup": { "text": "Reinforcement learning trains agents through interaction with an environment and reward signals.", "visual": "🎮" },
+        "discovery": { "text": "The agent explores, receives rewards or penalties, and adjusts its strategy to maximize total reward.", "visual": "🏆" },
+        "twist": { "text": "RL agents can discover strategies no human ever imagined — like AlphaGo's famous Move 37.", "visual": "💡" },
+        "climax": { "text": "RL trains game-playing AIs, robot controllers, and recommendation algorithms.", "visual": "🌐" },
+        "punchline": { "text": "Fall down seven times. Stand up eight. That's reinforcement learning.", "visual": "🥋" }
+      },
+      "quiz": {
+        "question": "How does reinforcement learning differ from supervised learning?",
+        "options": ["It learns from rewards through interaction, not from labeled examples", "It uses larger datasets", "It doesn't require a computer"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch04-neural-nets",
+      "title": "How a Single Neuron Works",
+      "story": {
+        "hook": { "text": "One artificial neuron: multiply inputs by weights, add them up, apply a function. That's it.", "visual": "⚡" },
+        "buildup": { "text": "Each neuron receives inputs, multiplies each by a learned weight, sums them, and adds a bias.", "visual": "🧮" },
+        "discovery": { "text": "An activation function then decides whether the neuron 'fires' — introducing non-linearity.", "visual": "🔥" },
+        "twist": { "text": "One neuron can only learn a straight line. Millions of them together can learn anything.", "visual": "📈" },
+        "climax": { "text": "This simple unit, repeated billions of times, powers every neural network in existence.", "visual": "🏗️" },
+        "punchline": { "text": "Multiply, add, activate. The atom of intelligence.", "visual": "⚛️" }
+      },
+      "quiz": {
+        "question": "What does an activation function do in a neuron?",
+        "options": ["Introduces non-linearity so the network can learn complex patterns", "Stores the neuron's memory", "Connects the neuron to the internet"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch04-neural-nets",
+      "title": "Layers: Building Depth",
+      "story": {
+        "hook": { "text": "Layer 1 detects edges. Layer 2 detects shapes. Layer 3 detects objects. Depth creates abstraction.", "visual": "🧱" },
+        "buildup": { "text": "Neural networks stack layers. Each layer transforms its input into a more abstract representation.", "visual": "📊" },
+        "discovery": { "text": "Early layers learn simple features. Deeper layers combine them into complex concepts.", "visual": "🔬" },
+        "twist": { "text": "Too few layers and the network can't learn. Too many and it becomes hard to train.", "visual": "⚖️" },
+        "climax": { "text": "GPT-4 has over 100 layers. Each one refines the representation of your text.", "visual": "📜" },
+        "punchline": { "text": "Intelligence is abstraction, and abstraction needs depth.", "visual": "🏔️" }
+      },
+      "quiz": {
+        "question": "What happens as you go deeper in a neural network?",
+        "options": ["Features become more abstract and complex", "The network gets faster", "Features become simpler"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch04-neural-nets",
+      "title": "Convolutional Networks: AI That Sees",
+      "story": {
+        "hook": { "text": "Show a CNN a photo of a cat and it detects whiskers, ears, fur patterns — all automatically.", "visual": "🐈" },
+        "buildup": { "text": "Convolutional Neural Networks slide small filters across images to detect local features.", "visual": "🔲" },
+        "discovery": { "text": "Pooling layers shrink the representation. Multiple conv layers detect increasingly complex patterns.", "visual": "🔍" },
+        "twist": { "text": "CNNs work because visual features are local — an eye is always a small patch, not spread across pixels.", "visual": "👁️" },
+        "climax": { "text": "CNNs power face recognition, medical imaging, self-driving vision, and image search.", "visual": "📷" },
+        "punchline": { "text": "Slide, detect, pool. Repeat until you see the whole picture.", "visual": "🖼️" }
+      },
+      "quiz": {
+        "question": "Why do CNNs work well for images?",
+        "options": ["They exploit the local structure of visual features", "They process text and images identically", "They don't need training data"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch04-neural-nets",
+      "title": "Recurrent Networks: AI That Remembers",
+      "story": {
+        "hook": { "text": "To understand 'it' in 'The cat sat. It purred.' you need to remember 'cat.' RNNs do that.", "visual": "🔄" },
+        "buildup": { "text": "Recurrent Neural Networks pass information from one step to the next, creating a form of memory.", "visual": "🧠" },
+        "discovery": { "text": "LSTMs added gates that control what to remember and what to forget at each step.", "visual": "🚪" },
+        "twist": { "text": "RNNs process sequentially — slow. Transformers replaced them by processing in parallel.", "visual": "⚡" },
+        "climax": { "text": "RNNs pioneered sequence modeling. Transformers inherited the crown and ran with it.", "visual": "👑" },
+        "punchline": { "text": "Remember the past. Transformers just do it faster.", "visual": "🏃" }
+      },
+      "quiz": {
+        "question": "What limitation of RNNs did transformers solve?",
+        "options": ["RNNs process sequentially and are slow; transformers parallelize", "RNNs use too little memory", "Transformers don't need training data"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch05-training",
+      "title": "Gradient Descent: Learning by Sliding Downhill",
+      "story": {
+        "hook": { "text": "Imagine you're blindfolded on a hilly landscape. You feel which way slopes down and step that way.", "visual": "⛰️" },
+        "buildup": { "text": "Gradient descent adjusts model weights in the direction that reduces the error most.", "visual": "📉" },
+        "discovery": { "text": "The gradient tells you the slope. The learning rate tells you how big a step to take.", "visual": "👣" },
+        "twist": { "text": "Too large a step and you overshoot. Too small and training takes forever.", "visual": "🎯" },
+        "climax": { "text": "Every neural network ever trained uses some variant of gradient descent. It's the universal optimizer.", "visual": "🌍" },
+        "punchline": { "text": "Slide downhill toward the answer. One step at a time.", "visual": "🏂" }
+      },
+      "quiz": {
+        "question": "What does gradient descent optimize?",
+        "options": ["It adjusts weights to minimize the model's error", "It increases the number of layers", "It selects the best training data"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch05-training",
+      "title": "Loss Functions: Measuring How Wrong You Are",
+      "story": {
+        "hook": { "text": "The model predicted $300K for a house worth $250K. The loss function says: you're $50K off. Do better.", "visual": "💰" },
+        "buildup": { "text": "A loss function quantifies the gap between the model's prediction and the correct answer.", "visual": "📏" },
+        "discovery": { "text": "Mean squared error punishes big mistakes harshly. Cross-entropy works best for classification.", "visual": "📊" },
+        "twist": { "text": "Choose the wrong loss function and the model optimizes for something you didn't intend.", "visual": "⚠️" },
+        "climax": { "text": "The loss function is the model's definition of success. Get it right, and everything follows.", "visual": "🎯" },
+        "punchline": { "text": "You are what you measure. So measure carefully.", "visual": "📐" }
+      },
+      "quiz": {
+        "question": "What does a loss function measure?",
+        "options": ["The gap between predictions and correct answers", "The speed of the model", "The amount of training data used"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch05-training",
+      "title": "Overfitting: Memorizing Instead of Learning",
+      "story": {
+        "hook": { "text": "A student memorizes every test answer but can't solve a new problem. That's overfitting.", "visual": "📖" },
+        "buildup": { "text": "An overfit model performs perfectly on training data but fails on new, unseen data.", "visual": "📈" },
+        "discovery": { "text": "It memorized noise and quirks in the training set instead of learning general patterns.", "visual": "🔊" },
+        "twist": { "text": "More data, dropout, and regularization all help prevent overfitting — but too much kills learning.", "visual": "⚖️" },
+        "climax": { "text": "The training/validation split is how you catch overfitting: test on data the model hasn't seen.", "visual": "🧪" },
+        "punchline": { "text": "The goal isn't to remember. It's to generalize.", "visual": "🌐" }
+      },
+      "quiz": {
+        "question": "What causes overfitting?",
+        "options": ["The model memorizes training data instead of learning patterns", "The model is too simple", "The training data is too clean"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch05-training",
+      "title": "Batch Size, Epochs, and Learning Rate",
+      "story": {
+        "hook": { "text": "Three numbers control how a model trains: how much data per step, how many passes, how fast to learn.", "visual": "🎛️" },
+        "buildup": { "text": "Batch size = examples per gradient update. Epoch = one full pass through data. Learning rate = step size.", "visual": "📊" },
+        "discovery": { "text": "Small batches add noise that can help escape bad solutions. Large batches are more stable.", "visual": "🌊" },
+        "twist": { "text": "The learning rate is the most critical setting. Too high: divergence. Too low: no progress.", "visual": "📉" },
+        "climax": { "text": "Modern training uses learning rate schedules that start high and decay over time.", "visual": "📅" },
+        "punchline": { "text": "Training is a balancing act of speed, stability, and patience.", "visual": "🎪" }
+      },
+      "quiz": {
+        "question": "What happens if the learning rate is too high?",
+        "options": ["The model overshoots good solutions and diverges", "Training becomes slower but more accurate", "The model immediately converges"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch06-evaluation",
+      "title": "Accuracy Is Not Enough",
+      "story": {
+        "hook": { "text": "A model that predicts 'no cancer' every time is 99% accurate — because only 1% have cancer.", "visual": "🩺" },
+        "buildup": { "text": "When classes are imbalanced, accuracy becomes a misleading metric.", "visual": "📊" },
+        "discovery": { "text": "Precision asks: 'Of those I flagged, how many were correct?' Recall asks: 'Of those that exist, how many did I find?'", "visual": "🔍" },
+        "twist": { "text": "You can't maximize both. Catching all cancers means more false positives.", "visual": "⚖️" },
+        "climax": { "text": "The F1 score balances precision and recall into a single number.", "visual": "📐" },
+        "punchline": { "text": "The right metric depends on the cost of being wrong.", "visual": "💰" }
+      },
+      "quiz": {
+        "question": "Why is accuracy alone misleading for imbalanced datasets?",
+        "options": ["A model can achieve high accuracy by always predicting the majority class", "Accuracy always gives the same result", "Balanced datasets don't exist"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch06-evaluation",
+      "title": "Cross-Validation: Testing Without Waste",
+      "story": {
+        "hook": { "text": "You only have 1,000 examples. Holding out 200 for testing wastes 20% of your precious data.", "visual": "📊" },
+        "buildup": { "text": "Cross-validation splits data into k folds, trains on k-1, and tests on the remaining fold.", "visual": "🔄" },
+        "discovery": { "text": "Rotate through all folds so every example gets to be in the test set exactly once.", "visual": "🎯" },
+        "twist": { "text": "It's slower — you train k models instead of one. But the evaluation is far more reliable.", "visual": "⏱️" },
+        "climax": { "text": "Five-fold cross-validation is the standard for reporting results in machine learning research.", "visual": "📄" },
+        "punchline": { "text": "Use all your data for training AND testing. Just not at the same time.", "visual": "🤹" }
+      },
+      "quiz": {
+        "question": "What is the benefit of cross-validation?",
+        "options": ["It uses all data for both training and testing", "It makes models train faster", "It eliminates the need for test data"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch06-evaluation",
+      "title": "The Confusion Matrix: A Map of Mistakes",
+      "story": {
+        "hook": { "text": "Your model makes mistakes. The confusion matrix tells you exactly which mistakes and how often.", "visual": "🗺️" },
+        "buildup": { "text": "It's a table showing true positives, false positives, true negatives, and false negatives.", "visual": "📊" },
+        "discovery": { "text": "False positives: crying wolf. False negatives: missing the wolf. Both have different costs.", "visual": "🐺" },
+        "twist": { "text": "In medicine, a false negative (missed disease) is far worse than a false positive (extra test).", "visual": "🏥" },
+        "climax": { "text": "The confusion matrix is the foundation for precision, recall, F1, and every evaluation metric.", "visual": "🏗️" },
+        "punchline": { "text": "Know your mistakes by name, and you can fix them.", "visual": "🔧" }
+      },
+      "quiz": {
+        "question": "What is a false negative in a medical screening context?",
+        "options": ["A sick patient incorrectly classified as healthy", "A healthy patient incorrectly classified as sick", "A correct diagnosis"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch06-evaluation",
+      "title": "A/B Testing: The Real-World Scorecard",
+      "story": {
+        "hook": { "text": "Your model beats the baseline in the lab. But does it actually improve the user experience? A/B test it.", "visual": "🧪" },
+        "buildup": { "text": "A/B testing shows the old model to half the users and the new model to the other half.", "visual": "🔀" },
+        "discovery": { "text": "You measure real outcomes — clicks, purchases, satisfaction — not just prediction accuracy.", "visual": "📈" },
+        "twist": { "text": "Sometimes a more accurate model hurts user experience. People don't always want optimal recommendations.", "visual": "😕" },
+        "climax": { "text": "Google runs thousands of A/B tests per year. Every search change is validated this way.", "visual": "🔍" },
+        "punchline": { "text": "The only metric that matters is impact in the real world.", "visual": "🌍" }
+      },
+      "quiz": {
+        "question": "Why do companies A/B test AI models?",
+        "options": ["To measure real-world impact, not just lab accuracy", "Because lab testing is impossible", "To make models train faster"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch03-unsupervised",
+      "title": "Anomaly Detection: Finding the Oddballs",
+      "story": {
+        "hook": { "text": "One transaction among millions looks slightly unusual. The AI flags it. It's fraud worth $50,000.", "visual": "🚨" },
+        "buildup": { "text": "Anomaly detection learns what 'normal' looks like and flags anything that deviates significantly.", "visual": "📊" },
+        "discovery": { "text": "It works without labeled examples of fraud — the model only needs to understand typical patterns.", "visual": "🔍" },
+        "twist": { "text": "Setting the sensitivity threshold is tricky: too sensitive means false alarms, too lax means missed fraud.", "visual": "⚖️" },
+        "climax": { "text": "Banks, factories, and hospitals all use anomaly detection to catch problems before they escalate.", "visual": "🏦" },
+        "punchline": { "text": "Find the needle in the haystack without knowing what the needle looks like.", "visual": "🧲" }
+      },
+      "quiz": {
+        "question": "How does anomaly detection work without labeled fraud examples?",
+        "options": ["It learns normal patterns and flags significant deviations", "It memorizes every known fraud case", "It randomly selects transactions to flag"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch04-neural-nets",
+      "title": "Recurrent Neural Networks: Memory for Sequences",
+      "story": {
+        "hook": { "text": "Regular networks forget everything between inputs. Recurrent networks remember — they have loops.", "visual": "🔁" },
+        "buildup": { "text": "RNNs pass information from one step to the next, maintaining a hidden state like short-term memory.", "visual": "🧠" },
+        "discovery": { "text": "This makes them natural for sequences — text, speech, music, stock prices over time.", "visual": "📈" },
+        "twist": { "text": "Vanilla RNNs suffer from vanishing gradients — they forget long-ago context. LSTMs fixed this.", "visual": "💡" },
+        "climax": { "text": "Transformers eventually replaced RNNs for most tasks, but the concept of memory in networks endures.", "visual": "🔄" },
+        "punchline": { "text": "To understand a sentence, remember its start. Networks learned that.", "visual": "📖" }
+      },
+      "quiz": {
+        "question": "What problem do recurrent neural networks solve?",
+        "options": ["Processing sequential data by maintaining memory between steps", "Classifying individual images without context", "Generating random numbers efficiently"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch05-training",
+      "title": "Transfer Learning: Standing on Giant Shoulders",
+      "story": {
+        "hook": { "text": "Train a model on a million images, then adapt it for medical scans with just 200 examples. That's transfer learning.", "visual": "🔄" },
+        "buildup": { "text": "Training from scratch requires massive datasets. Transfer learning reuses knowledge from pre-trained models.", "visual": "🏗️" },
+        "discovery": { "text": "Early layers learn general features like edges and textures. Later layers specialize for the new task.", "visual": "🎯" },
+        "twist": { "text": "Sometimes transferred knowledge hurts — if the source domain is too different, negative transfer occurs.", "visual": "❌" },
+        "climax": { "text": "Transfer learning made AI practical for fields with limited data — medicine, agriculture, rare languages.", "visual": "🌍" },
+        "punchline": { "text": "Don't start from zero. Start from where someone else finished.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "When can transfer learning be harmful?",
+        "options": ["When the source domain is too different from the target task", "When the model is too small", "Transfer learning is always beneficial"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--science-of-ml--ch06-evaluation",
+      "title": "Cross-Validation: Trust but Verify",
+      "story": {
+        "hook": { "text": "Your model scores 99% accuracy. Impressive — until you realize it memorized the test answers.", "visual": "📝" },
+        "buildup": { "text": "Cross-validation splits data into multiple folds, training and testing on different subsets each time.", "visual": "🔀" },
+        "discovery": { "text": "By averaging performance across all folds, you get a reliable estimate of real-world accuracy.", "visual": "📊" },
+        "twist": { "text": "Even cross-validation can mislead if your data has temporal ordering or group structures that leak.", "visual": "💧" },
+        "climax": { "text": "Proper validation is the difference between a model that works in the lab and one that works in life.", "visual": "🌍" },
+        "punchline": { "text": "Test yourself on the questions you haven't seen. That's the real exam.", "visual": "🎓" }
+      },
+      "quiz": {
+        "question": "Why is cross-validation more reliable than a single train-test split?",
+        "options": ["It averages performance across multiple data subsets", "It uses more training data overall", "It trains the model faster"],
+        "correct": 0
+      },
+      "is_free": false
+    }
+  ]
+}

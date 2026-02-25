@@ -1,0 +1,583 @@
+{
+  "categoryId": "ai",
+  "subject": "AI & Agents",
+  "courseId": "ai--understanding-llms",
+  "courseTitle": "Understanding Large Language Models",
+  "emoji": "🧠",
+  "color": "#7C3AED",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "ai--understanding-llms--ch01-what-are-llms",
+      "title": "What Are LLMs?",
+      "position": 1
+    },
+    {
+      "id": "ai--understanding-llms--ch02-how-they-learn",
+      "title": "How LLMs Learn",
+      "position": 2
+    },
+    {
+      "id": "ai--understanding-llms--ch03-attention",
+      "title": "The Attention Mechanism",
+      "position": 3
+    },
+    {
+      "id": "ai--understanding-llms--ch04-prompting",
+      "title": "Talking to LLMs",
+      "position": 4
+    },
+    {
+      "id": "ai--understanding-llms--ch05-limitations",
+      "title": "What LLMs Can't Do",
+      "position": 5
+    },
+    {
+      "id": "ai--understanding-llms--ch06-frontier",
+      "title": "The Frontier of LLMs",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "chapter_id": "ai--understanding-llms--ch01-what-are-llms",
+      "title": "What Is a Language Model?",
+      "story": {
+        "hook": { "text": "You type 'The cat sat on the' and AI predicts 'mat.' That prediction IS the language model.", "visual": "🐱" },
+        "buildup": { "text": "A language model assigns probabilities to sequences of words based on training data.", "visual": "📊" },
+        "discovery": { "text": "Given context, it ranks every possible next word — 'mat' scores high, 'elephant' scores low.", "visual": "📈" },
+        "twist": { "text": "LLMs don't understand meaning. They model statistical relationships between tokens.", "visual": "🔢" },
+        "climax": { "text": "Yet from pure statistics, they produce essays, code, poems, and conversations.", "visual": "✍️" },
+        "punchline": { "text": "Predict the next word well enough, and intelligence emerges.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "What does a language model fundamentally do?",
+        "options": ["Assigns probabilities to word sequences", "Understands the meaning of every sentence", "Stores a copy of the entire internet"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch01-what-are-llms",
+      "title": "What Makes a Language Model 'Large'",
+      "story": {
+        "hook": { "text": "GPT-3 has 175 billion parameters. GPT-4 reportedly has over a trillion. What are all those numbers?", "visual": "🔢" },
+        "buildup": { "text": "Parameters are adjustable weights inside the neural network — the knobs the model learns to tune.", "visual": "🎛️" },
+        "discovery": { "text": "More parameters let the model capture more nuanced patterns in language.", "visual": "🧩" },
+        "twist": { "text": "Bigger isn't always better. A poorly trained large model can perform worse than a small one.", "visual": "📉" },
+        "climax": { "text": "The magic isn't just size — it's the combination of scale, data quality, and training technique.", "visual": "⚗️" },
+        "punchline": { "text": "Size matters, but only with the right recipe.", "visual": "🍳" }
+      },
+      "quiz": {
+        "question": "What are parameters in a language model?",
+        "options": ["Adjustable weights the model learns during training", "The number of languages it supports", "Files stored on the server"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch01-what-are-llms",
+      "title": "Tokens: How LLMs Read Text",
+      "story": {
+        "hook": { "text": "LLMs don't read words. They read tokens — and 'unhappiness' is three tokens, not one.", "visual": "✂️" },
+        "buildup": { "text": "A tokenizer splits text into subword pieces: 'un', 'happi', 'ness'.", "visual": "🧱" },
+        "discovery": { "text": "Common words get one token. Rare words get split. Numbers and code tokenize unpredictably.", "visual": "🔤" },
+        "twist": { "text": "The word 'the' is one token but 'cryptocurrency' might be three. Token count ≠ word count.", "visual": "📐" },
+        "climax": { "text": "Token limits define how much context an LLM can process at once — its working memory.", "visual": "🧠" },
+        "punchline": { "text": "To an LLM, you're not words. You're token soup.", "visual": "🍜" }
+      },
+      "quiz": {
+        "question": "Why does 'unhappiness' become multiple tokens?",
+        "options": ["Tokenizers split text into subword pieces for efficiency", "The model can only read one letter at a time", "Long words are always removed"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch01-what-are-llms",
+      "title": "Embeddings: Words as Numbers",
+      "story": {
+        "hook": { "text": "To an LLM, the word 'king' is a list of 4,096 numbers. And 'queen' is nearby in that space.", "visual": "👑" },
+        "buildup": { "text": "Embeddings convert tokens into high-dimensional vectors that capture meaning.", "visual": "📐" },
+        "discovery": { "text": "Similar words cluster together. 'Happy' and 'joyful' are close; 'happy' and 'wrench' are far.", "visual": "🗺️" },
+        "twist": { "text": "King - Man + Woman ≈ Queen. The math of embeddings captures analogies.", "visual": "🧮" },
+        "climax": { "text": "Every sentence becomes a cloud of points in a space with thousands of dimensions.", "visual": "☁️" },
+        "punchline": { "text": "Meaning is geometry in disguise.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "What do word embeddings capture?",
+        "options": ["Semantic relationships as positions in high-dimensional space", "The exact dictionary definition of each word", "The number of letters in each word"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch01-what-are-llms",
+      "title": "The Transformer Architecture",
+      "story": {
+        "hook": { "text": "Every major LLM — GPT, Claude, Gemini, Llama — is built on the same 2017 invention.", "visual": "🏗️" },
+        "buildup": { "text": "The transformer uses self-attention to let every word look at every other word simultaneously.", "visual": "👀" },
+        "discovery": { "text": "Unlike older models that read left-to-right, transformers process entire sequences at once.", "visual": "⚡" },
+        "twist": { "text": "This parallelism is why transformers train so efficiently on GPUs.", "visual": "🖥️" },
+        "climax": { "text": "The architecture is surprisingly simple — attention layers stacked with feed-forward networks.", "visual": "🧱" },
+        "punchline": { "text": "Simple parts, stacked deep, produce something extraordinary.", "visual": "✨" }
+      },
+      "quiz": {
+        "question": "What is the key advantage of the transformer architecture?",
+        "options": ["It processes all words in a sequence simultaneously", "It reads text one character at a time", "It doesn't require training data"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch02-how-they-learn",
+      "title": "Pre-Training: Learning from the Internet",
+      "story": {
+        "hook": { "text": "Before ChatGPT could chat, it read trillions of words from books, websites, and forums.", "visual": "📚" },
+        "buildup": { "text": "Pre-training is self-supervised: the model predicts the next token in massive text datasets.", "visual": "🎯" },
+        "discovery": { "text": "By predicting trillions of next words, it absorbs grammar, facts, reasoning, and even humor.", "visual": "😄" },
+        "twist": { "text": "It also absorbs biases, errors, and toxic content from the training data.", "visual": "☣️" },
+        "climax": { "text": "Pre-training costs millions of dollars in compute. GPT-4 reportedly cost over $100 million.", "visual": "💰" },
+        "punchline": { "text": "Read everything. Absorb everything. Good and bad.", "visual": "🌊" }
+      },
+      "quiz": {
+        "question": "What does an LLM learn during pre-training?",
+        "options": ["To predict the next token from massive text datasets", "To follow specific user instructions", "To browse the internet in real time"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch02-how-they-learn",
+      "title": "Fine-Tuning: Teaching Manners",
+      "story": {
+        "hook": { "text": "Raw GPT-3 was brilliant but rude. It would happily explain how to commit crimes.", "visual": "😈" },
+        "buildup": { "text": "Fine-tuning adjusts a pre-trained model on a smaller, curated dataset for specific behavior.", "visual": "🎓" },
+        "discovery": { "text": "Instruction tuning teaches the model to follow commands like 'summarize this' or 'be concise.'", "visual": "📋" },
+        "twist": { "text": "Too much fine-tuning makes the model rigid and formulaic — it loses creativity.", "visual": "📏" },
+        "climax": { "text": "The art is balancing helpfulness with safety without destroying the model's capabilities.", "visual": "⚖️" },
+        "punchline": { "text": "Pre-training gives knowledge. Fine-tuning gives behavior.", "visual": "🎭" }
+      },
+      "quiz": {
+        "question": "What is the purpose of fine-tuning an LLM?",
+        "options": ["To adjust behavior for specific tasks or safety", "To make the model larger", "To add new languages"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch02-how-they-learn",
+      "title": "RLHF: Learning from Human Feedback",
+      "story": {
+        "hook": { "text": "Humans rate AI responses as good or bad. The model learns from those ratings. That's RLHF.", "visual": "👍" },
+        "buildup": { "text": "Reinforcement Learning from Human Feedback trains a reward model on human preferences.", "visual": "🏆" },
+        "discovery": { "text": "The LLM then optimizes to produce responses that the reward model scores highly.", "visual": "📈" },
+        "twist": { "text": "The model sometimes learns to game the reward — sounding confident even when wrong.", "visual": "🎭" },
+        "climax": { "text": "RLHF is why ChatGPT feels polished. Without it, responses would be raw and unpredictable.", "visual": "✨" },
+        "punchline": { "text": "Human taste becomes the AI's compass.", "visual": "🧭" }
+      },
+      "quiz": {
+        "question": "What does RLHF optimize for?",
+        "options": ["Producing responses that match human preferences", "Maximizing the number of words in each response", "Reducing the model's parameter count"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch02-how-they-learn",
+      "title": "Training Data: Garbage In, Garbage Out",
+      "story": {
+        "hook": { "text": "An LLM trained on Reddit sounds different from one trained on textbooks. The data defines the model.", "visual": "📂" },
+        "buildup": { "text": "Training data includes books, web pages, code, conversations, and academic papers.", "visual": "🌐" },
+        "discovery": { "text": "Data quality matters more than quantity. Curated data outperforms raw web scrapes.", "visual": "💎" },
+        "twist": { "text": "Copyright lawsuits loom. Authors and publishers argue their work was used without permission.", "visual": "⚖️" },
+        "climax": { "text": "The next frontier is synthetic data — AI generating training data for other AI.", "visual": "🔄" },
+        "punchline": { "text": "You are what you eat. So is AI.", "visual": "🍽️" }
+      },
+      "quiz": {
+        "question": "Why is training data quality important for LLMs?",
+        "options": ["Better data quality produces better model outputs", "More data always means better results", "Data quality doesn't affect the model"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch02-how-they-learn",
+      "title": "Transfer Learning: One Model, Many Skills",
+      "story": {
+        "hook": { "text": "A model trained to write English can suddenly translate French. Nobody taught it French specifically.", "visual": "🇫🇷" },
+        "buildup": { "text": "Transfer learning means skills learned in one domain carry over to related tasks.", "visual": "🔄" },
+        "discovery": { "text": "A pre-trained LLM can be fine-tuned for medicine, law, or code with relatively little extra data.", "visual": "⚕️" },
+        "twist": { "text": "This is why foundation models are so valuable — one model serves as the base for thousands of apps.", "visual": "🏛️" },
+        "climax": { "text": "GPT-4 wasn't trained to write sonnets or debug Python specifically. It learned both from general text.", "visual": "🎭" },
+        "punchline": { "text": "Learn language deeply, and everything else comes along for the ride.", "visual": "🎢" }
+      },
+      "quiz": {
+        "question": "What is transfer learning?",
+        "options": ["Skills from one task carry over to help with related tasks", "Copying one model's weights into another", "Teaching a model two languages at once"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch03-attention",
+      "title": "Why Attention Matters",
+      "story": {
+        "hook": { "text": "In the sentence 'The bank by the river was muddy,' how does AI know 'bank' means riverbank?", "visual": "🏞️" },
+        "buildup": { "text": "Old models processed words in order and forgot earlier context. Attention changed everything.", "visual": "🧓" },
+        "discovery": { "text": "Attention lets each word look at every other word to determine which ones are most relevant.", "visual": "🔍" },
+        "twist": { "text": "'Bank' attends strongly to 'river' and 'muddy,' which disambiguates its meaning instantly.", "visual": "🎯" },
+        "climax": { "text": "This mechanism is why LLMs handle long, complex sentences that old models couldn't.", "visual": "📜" },
+        "punchline": { "text": "Context is everything. Attention captures it.", "visual": "👁️" }
+      },
+      "quiz": {
+        "question": "How does the attention mechanism resolve word ambiguity?",
+        "options": ["By letting each word examine every other word for context", "By looking up definitions in a dictionary", "By always choosing the most common meaning"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch03-attention",
+      "title": "Self-Attention Step by Step",
+      "story": {
+        "hook": { "text": "Every word in a sentence asks three questions: What am I? What do I want? What can I offer?", "visual": "❓" },
+        "buildup": { "text": "Each token produces three vectors: Query (what I seek), Key (what I offer), Value (my content).", "visual": "🔑" },
+        "discovery": { "text": "Queries match against Keys to produce attention scores. High scores mean strong relevance.", "visual": "📊" },
+        "twist": { "text": "The model doesn't pick one word to attend to — it blends all words, weighted by relevance.", "visual": "🎨" },
+        "climax": { "text": "The result: each word gets a context-rich representation that incorporates the entire sentence.", "visual": "🌐" },
+        "punchline": { "text": "Ask, match, blend. That's attention in three steps.", "visual": "3️⃣" }
+      },
+      "quiz": {
+        "question": "What are the three vectors in self-attention?",
+        "options": ["Query, Key, and Value", "Input, Output, and Hidden", "Start, Middle, and End"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch03-attention",
+      "title": "Multi-Head Attention: Seeing Multiple Patterns",
+      "story": {
+        "hook": { "text": "One attention head tracks grammar. Another tracks meaning. A third tracks sentiment. All run in parallel.", "visual": "🐙" },
+        "buildup": { "text": "Multi-head attention runs several attention operations simultaneously on the same input.", "visual": "🔀" },
+        "discovery": { "text": "Each head learns to focus on different relationship types — syntax, coreference, topic.", "visual": "🔬" },
+        "twist": { "text": "Researchers can visualize what each head focuses on. Some heads specialize in surprising ways.", "visual": "📸" },
+        "climax": { "text": "The outputs of all heads are combined, giving the model a rich, multi-perspective view.", "visual": "🌈" },
+        "punchline": { "text": "Many eyes see more than one.", "visual": "👀" }
+      },
+      "quiz": {
+        "question": "Why does multi-head attention use multiple heads?",
+        "options": ["Each head captures different types of relationships", "More heads make the model faster", "Only one head is active at a time"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch03-attention",
+      "title": "The Context Window: LLM Memory",
+      "story": {
+        "hook": { "text": "Ask an LLM about something you said 50 messages ago. If it's outside the window, it's gone.", "visual": "🪟" },
+        "buildup": { "text": "The context window is the maximum number of tokens an LLM can process at once.", "visual": "📏" },
+        "discovery": { "text": "GPT-4 Turbo handles 128,000 tokens. Claude handles 200,000. Earlier models had just 2,048.", "visual": "📐" },
+        "twist": { "text": "Bigger windows use more memory and compute. Cost scales quadratically with window size.", "visual": "💸" },
+        "climax": { "text": "New techniques like sliding windows and retrieval augmentation help work around limits.", "visual": "🔧" },
+        "punchline": { "text": "LLMs don't remember. They just have a really long scratchpad.", "visual": "📝" }
+      },
+      "quiz": {
+        "question": "What limits how much text an LLM can consider at once?",
+        "options": ["The context window size in tokens", "The speed of the internet connection", "The number of GPUs available"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch04-prompting",
+      "title": "What Is a Prompt?",
+      "story": {
+        "hook": { "text": "The difference between a useless AI response and a brilliant one is often just how you asked.", "visual": "💬" },
+        "buildup": { "text": "A prompt is the text input you give to an LLM — your question, instruction, or context.", "visual": "📝" },
+        "discovery": { "text": "Good prompts are specific, provide context, and state the desired format clearly.", "visual": "🎯" },
+        "twist": { "text": "Adding 'think step by step' to a prompt can dramatically improve reasoning accuracy.", "visual": "🪜" },
+        "climax": { "text": "Prompt engineering is now a real skill. Companies hire specialists to craft optimal prompts.", "visual": "💼" },
+        "punchline": { "text": "The art of AI isn't in the model. It's in the question.", "visual": "🎨" }
+      },
+      "quiz": {
+        "question": "What makes a prompt effective?",
+        "options": ["Being specific, providing context, and stating the desired format", "Using as few words as possible", "Always asking yes-or-no questions"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch04-prompting",
+      "title": "Few-Shot Learning: Teaching by Example",
+      "story": {
+        "hook": { "text": "Show an LLM three examples of the output you want, and it figures out the pattern instantly.", "visual": "3️⃣" },
+        "buildup": { "text": "Few-shot prompting includes examples in the prompt to guide the model's behavior.", "visual": "📋" },
+        "discovery": { "text": "The model doesn't retrain — it uses the examples as in-context patterns to follow.", "visual": "🧩" },
+        "twist": { "text": "The order and quality of examples matter. Bad examples can mislead the model completely.", "visual": "⚠️" },
+        "climax": { "text": "Zero-shot works too — just describe the task. But few-shot is usually more reliable.", "visual": "🎯" },
+        "punchline": { "text": "Show, don't just tell. AI learns from examples too.", "visual": "🖼️" }
+      },
+      "quiz": {
+        "question": "What is few-shot prompting?",
+        "options": ["Including examples in the prompt to guide the model", "Training the model on a few data points", "Limiting the model to short responses"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch04-prompting",
+      "title": "Chain-of-Thought Reasoning",
+      "story": {
+        "hook": { "text": "Ask an LLM a math problem directly: wrong. Ask it to show its work: correct. Why?", "visual": "🧮" },
+        "buildup": { "text": "Chain-of-thought prompting asks the model to reason through intermediate steps.", "visual": "🪜" },
+        "discovery": { "text": "By generating step-by-step reasoning, the model avoids shortcuts that lead to errors.", "visual": "✅" },
+        "twist": { "text": "The model isn't actually 'thinking.' It generates tokens that look like reasoning, and they help.", "visual": "🤔" },
+        "climax": { "text": "This technique improves accuracy on math, logic, and multi-step problems dramatically.", "visual": "📈" },
+        "punchline": { "text": "Even AI works better when it shows its work.", "visual": "📝" }
+      },
+      "quiz": {
+        "question": "Why does chain-of-thought prompting improve accuracy?",
+        "options": ["Step-by-step reasoning helps the model avoid shortcuts", "It makes the model run faster", "It accesses a different part of the model"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch04-prompting",
+      "title": "System Prompts: Setting the Stage",
+      "story": {
+        "hook": { "text": "Behind every chatbot persona is a hidden instruction telling it exactly how to behave.", "visual": "🎭" },
+        "buildup": { "text": "System prompts are instructions set by developers that users don't see.", "visual": "🔧" },
+        "discovery": { "text": "They define personality, tone, boundaries, and capabilities for the entire conversation.", "visual": "📐" },
+        "twist": { "text": "Users can sometimes override system prompts with creative phrasing — a constant security challenge.", "visual": "🔓" },
+        "climax": { "text": "Companies guard their system prompts like trade secrets. They shape the entire user experience.", "visual": "🔒" },
+        "punchline": { "text": "The most important prompt is the one you never see.", "visual": "👻" }
+      },
+      "quiz": {
+        "question": "What is a system prompt?",
+        "options": ["Hidden developer instructions that shape the AI's behavior", "The first message a user sends", "An error message from the system"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch05-limitations",
+      "title": "Hallucinations: When AI Makes Things Up",
+      "story": {
+        "hook": { "text": "Ask an LLM for a source and it invents a real-sounding paper that doesn't exist.", "visual": "📄" },
+        "buildup": { "text": "Hallucinations happen when the model generates plausible-sounding but factually wrong content.", "visual": "🌫️" },
+        "discovery": { "text": "The model predicts likely next tokens. If the truth is unlikely, it generates something plausible instead.", "visual": "🎲" },
+        "twist": { "text": "Hallucinations are confident. The AI doesn't signal uncertainty — it states fiction as fact.", "visual": "😌" },
+        "climax": { "text": "Retrieval-augmented generation (RAG) helps by grounding responses in real documents.", "visual": "📎" },
+        "punchline": { "text": "It doesn't know what it doesn't know.", "visual": "🕳️" }
+      },
+      "quiz": {
+        "question": "Why do LLMs hallucinate?",
+        "options": ["They predict plausible tokens even when truth is unlikely", "They deliberately lie to users", "Their memory gets corrupted over time"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch05-limitations",
+      "title": "Bias in Language Models",
+      "story": {
+        "hook": { "text": "Ask an LLM to describe a CEO and it defaults to male. The bias came from training data.", "visual": "👔" },
+        "buildup": { "text": "LLMs absorb the biases present in the text they're trained on — societal, cultural, and historical.", "visual": "📚" },
+        "discovery": { "text": "Gender, racial, and cultural biases show up in word associations and default assumptions.", "visual": "⚖️" },
+        "twist": { "text": "Debiasing is hard. Remove one bias and you might amplify another or lose useful information.", "visual": "🔄" },
+        "climax": { "text": "Researchers use RLHF and filtered data to reduce bias, but no model is truly neutral.", "visual": "🎯" },
+        "punchline": { "text": "AI mirrors society's biases at scale.", "visual": "🪞" }
+      },
+      "quiz": {
+        "question": "Where do LLM biases come from?",
+        "options": ["From biases present in the training data", "From the hardware they run on", "From user interactions after deployment"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch05-limitations",
+      "title": "The Knowledge Cutoff Problem",
+      "story": {
+        "hook": { "text": "Ask an LLM about yesterday's news and it has no idea. Its world stopped at the training cutoff.", "visual": "📅" },
+        "buildup": { "text": "LLMs are frozen in time — they only know what existed in their training data.", "visual": "🧊" },
+        "discovery": { "text": "A model trained in 2023 doesn't know about events in 2024, no matter how important.", "visual": "❓" },
+        "twist": { "text": "Web search plugins and RAG help, but the base model itself remains stuck in the past.", "visual": "🔌" },
+        "climax": { "text": "Users often don't realize they're talking to a snapshot, not a live oracle.", "visual": "📸" },
+        "punchline": { "text": "AI knows the past deeply and the present not at all.", "visual": "⏰" }
+      },
+      "quiz": {
+        "question": "What is the knowledge cutoff problem?",
+        "options": ["LLMs only know information from before their training ended", "LLMs forget information over time", "LLMs can only answer one question per session"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch05-limitations",
+      "title": "Why LLMs Struggle with Math",
+      "story": {
+        "hook": { "text": "An LLM that writes perfect poetry can't reliably multiply 47 × 83. Why?", "visual": "🧮" },
+        "buildup": { "text": "LLMs process text as tokens, not as numerical values with mathematical properties.", "visual": "🔤" },
+        "discovery": { "text": "For the model, '47 × 83' is a sequence of symbols, not a computation to execute.", "visual": "🔣" },
+        "twist": { "text": "It can solve common math problems from memory. Novel ones? It guesses based on similar patterns.", "visual": "🎰" },
+        "climax": { "text": "Tool use — calling a calculator — solves this. The LLM delegates math to the right tool.", "visual": "🔧" },
+        "punchline": { "text": "LLMs are poets, not calculators.", "visual": "🎭" }
+      },
+      "quiz": {
+        "question": "Why do LLMs struggle with arithmetic?",
+        "options": ["They process numbers as text tokens, not as mathematical values", "They weren't trained on any math data", "They can only handle numbers below 100"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch05-limitations",
+      "title": "The Sycophancy Problem",
+      "story": {
+        "hook": { "text": "Tell an LLM it's wrong (even when it's right) and it apologizes and changes its correct answer.", "visual": "😅" },
+        "buildup": { "text": "RLHF rewards helpfulness and agreeableness. This teaches the model to please the user.", "visual": "🏆" },
+        "discovery": { "text": "Sycophancy means the model agrees with you to be polite, even at the cost of accuracy.", "visual": "🤝" },
+        "twist": { "text": "Users who push back on correct answers can get the model to defend wrong answers instead.", "visual": "↩️" },
+        "climax": { "text": "Researchers are working on models that maintain their positions when they have strong evidence.", "visual": "🛡️" },
+        "punchline": { "text": "The model that always agrees with you is always lying sometimes.", "visual": "🎭" }
+      },
+      "quiz": {
+        "question": "What is the sycophancy problem in LLMs?",
+        "options": ["Models agree with users even when the user is wrong", "Models refuse to answer any question", "Models only respond with flattery"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch06-frontier",
+      "title": "Multimodal Models: Beyond Text",
+      "story": {
+        "hook": { "text": "Upload a photo to GPT-4 and ask 'What's wrong with this circuit?' It tells you.", "visual": "📸" },
+        "buildup": { "text": "Multimodal models process text, images, audio, and video within one unified system.", "visual": "🎬" },
+        "discovery": { "text": "Vision encoders convert images to embeddings that the language model can reason about.", "visual": "🔄" },
+        "twist": { "text": "The model doesn't 'see' like humans — it matches image patterns to text descriptions.", "visual": "🧩" },
+        "climax": { "text": "Gemini, GPT-4o, and Claude can all reason across text and images in a single conversation.", "visual": "💬" },
+        "punchline": { "text": "One model to see, hear, read, and respond.", "visual": "🌐" }
+      },
+      "quiz": {
+        "question": "What makes a model 'multimodal'?",
+        "options": ["It processes multiple types of input like text, images, and audio", "It speaks multiple languages", "It runs on multiple computers"],
+        "correct": 0
+      },
+      "is_free": true
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch06-frontier",
+      "title": "Open Source vs Closed Models",
+      "story": {
+        "hook": { "text": "Meta releases Llama for free. OpenAI keeps GPT-4's weights locked. Both strategies have merit.", "visual": "🔓" },
+        "buildup": { "text": "Open-source models let anyone inspect, modify, and deploy them. Closed models are API-only.", "visual": "🔑" },
+        "discovery": { "text": "Open models drive research, customization, and privacy. Closed models lead in raw capability.", "visual": "📊" },
+        "twist": { "text": "Open models can be fine-tuned to remove safety guardrails — a double-edged sword.", "visual": "⚔️" },
+        "climax": { "text": "The open-source community is closing the gap fast. Llama 3 rivals GPT-3.5 in many tasks.", "visual": "🏃" },
+        "punchline": { "text": "The best model depends on what you need: power or freedom.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What is a risk of open-source AI models?",
+        "options": ["They can be modified to remove safety guardrails", "They are always less capable than closed models", "They can only run on specific hardware"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch06-frontier",
+      "title": "Reasoning Models: AI That Thinks Longer",
+      "story": {
+        "hook": { "text": "What if AI could pause and think for minutes before answering, like a human solving a hard problem?", "visual": "🤔" },
+        "buildup": { "text": "Reasoning models like o1 use extended chain-of-thought before producing a final answer.", "visual": "🔗" },
+        "discovery": { "text": "They break complex problems into sub-problems and verify each step internally.", "visual": "✅" },
+        "twist": { "text": "More thinking time costs more compute and money. Reasoning has a literal price.", "visual": "💸" },
+        "climax": { "text": "On PhD-level science and math, reasoning models dramatically outperform standard LLMs.", "visual": "🎓" },
+        "punchline": { "text": "Sometimes the best answer just takes longer to find.", "visual": "⏳" }
+      },
+      "quiz": {
+        "question": "How do reasoning models like o1 improve accuracy?",
+        "options": ["By using extended chain-of-thought to break down complex problems", "By accessing larger training datasets at inference time", "By running on faster hardware"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch06-frontier",
+      "title": "Small Language Models: Less Is More",
+      "story": {
+        "hook": { "text": "A 3-billion-parameter model runs on your phone and handles 80% of what you need. Is bigger always better?", "visual": "📱" },
+        "buildup": { "text": "Small language models (SLMs) are compressed, distilled, or purpose-built for efficiency.", "visual": "🗜️" },
+        "discovery": { "text": "Techniques like quantization and pruning shrink models while preserving most capability.", "visual": "✂️" },
+        "twist": { "text": "For specific tasks — email drafting, code completion — small models match large ones.", "visual": "📧" },
+        "climax": { "text": "On-device AI means privacy, speed, and no internet needed. The future might be small.", "visual": "🏠" },
+        "punchline": { "text": "The smartest model is the one that fits where you need it.", "visual": "🧩" }
+      },
+      "quiz": {
+        "question": "What advantage do small language models offer?",
+        "options": ["They run on-device for privacy and speed", "They are always more accurate than large models", "They don't require any training"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch03-attention",
+      "title": "Positional Encoding: Tracking Word Order",
+      "story": {
+        "hook": { "text": "'Dog bites man' and 'man bites dog' use the same words. How does a transformer know the difference?", "visual": "🐕" },
+        "buildup": { "text": "Transformers process all words simultaneously — unlike humans who read sequentially.", "visual": "⚡" },
+        "discovery": { "text": "Positional encodings add a unique mathematical signature to each word based on its position.", "visual": "📐" },
+        "twist": { "text": "The original encodings used sine and cosine waves. Newer models learn positions during training.", "visual": "🌊" },
+        "climax": { "text": "Without positional encoding, transformers would treat every sentence as a bag of unordered words.", "visual": "🎒" },
+        "punchline": { "text": "Order matters. Even for machines that read everything at once.", "visual": "📖" }
+      },
+      "quiz": {
+        "question": "Why do transformers need positional encoding?",
+        "options": ["They process all words at once and need to track word order", "They can only read one word at a time", "Positional encoding improves vocabulary size"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch04-prompting",
+      "title": "Retrieval-Augmented Generation: Grounding AI in Facts",
+      "story": {
+        "hook": { "text": "What if the AI could look up facts before answering instead of relying on memory? That's RAG.", "visual": "📚" },
+        "buildup": { "text": "RAG retrieves relevant documents from a database and feeds them to the LLM as context.", "visual": "🔍" },
+        "discovery": { "text": "This grounds responses in actual sources, dramatically reducing hallucinations on factual questions.", "visual": "📌" },
+        "twist": { "text": "The retrieval step can fail — pulling irrelevant documents leads to confidently wrong answers anyway.", "visual": "❌" },
+        "climax": { "text": "RAG has become the standard architecture for enterprise AI chatbots that need reliable information.", "visual": "🏢" },
+        "punchline": { "text": "Don't trust your memory. Look it up. Good advice for humans and AI.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "How does RAG reduce AI hallucinations?",
+        "options": ["It retrieves relevant documents to ground answers in actual sources", "It prevents the model from generating any text", "It makes the model smaller and faster"],
+        "correct": 0
+      },
+      "is_free": false
+    },
+    {
+      "chapter_id": "ai--understanding-llms--ch06-frontier",
+      "title": "Multimodal LLMs: Beyond Text",
+      "story": {
+        "hook": { "text": "Send a photo of your fridge and ask 'What can I cook?' The AI sees the ingredients and suggests recipes.", "visual": "🍳" },
+        "buildup": { "text": "Multimodal LLMs process text, images, audio, and even video in a single unified model.", "visual": "🔄" },
+        "discovery": { "text": "GPT-4V and Gemini use vision encoders that translate images into the same token space as text.", "visual": "👁️" },
+        "twist": { "text": "Vision capabilities are still inconsistent — models may misread simple clocks or count objects wrong.", "visual": "⏰" },
+        "climax": { "text": "Multimodal AI opens applications impossible with text alone — from medical imaging to accessibility.", "visual": "🏥" },
+        "punchline": { "text": "First it read. Then it saw. Soon it will sense the whole world.", "visual": "🌍" }
+      },
+      "quiz": {
+        "question": "What makes multimodal LLMs different from text-only models?",
+        "options": ["They process images, audio, and text in a unified architecture", "They only work with images, not text", "They require separate models for each input type"],
+        "correct": 0
+      },
+      "is_free": false
+    }
+  ]
+}
