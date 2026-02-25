@@ -138,8 +138,8 @@ export default function CategoryCoursesPage() {
           <h1>{title}</h1>
           <p>{guidance}</p>
 
-          <div className="catflow-toolbar catflow-toolbarMinimal" role="region" aria-label="Course toolbar">
-            <div className="catflow-toolbarRow catflow-toolbarRowRight">
+          <div className="catflow-toolbarBare" role="region" aria-label="Course toolbar">
+            <div className="catflow-controlsRow">
               <ProgressVisualsToggle />
             </div>
           </div>

@@ -177,7 +177,7 @@ export default function ChapterTopicsPage() {
           <h1>{chapterTitle}</h1>
           {chapterRow?.description ? <p>{String(chapterRow.description)}</p> : <p>Pick a topic to start.</p>}
 
-          <div className="catflow-toolbar catflow-toolbarCompact" role="region" aria-label="Topic filters">
+          <div className="catflow-toolbarBare" role="region" aria-label="Topic filters">
             <div className="catflow-toolbarStack">
               <div className="catflow-filtersRow" aria-label="Filters">
                 <label className="catflow-filter">

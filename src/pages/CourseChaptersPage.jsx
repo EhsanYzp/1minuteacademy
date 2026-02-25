@@ -187,8 +187,8 @@ export default function CourseChaptersPage() {
             </div>
           )}
 
-          <div className="catflow-toolbar catflow-toolbarMinimal" role="region" aria-label="Chapter toolbar">
-            <div className="catflow-toolbarRow catflow-toolbarRowRight">
+          <div className="catflow-toolbarBare" role="region" aria-label="Chapter toolbar">
+            <div className="catflow-controlsRow">
               <ProgressVisualsToggle />
             </div>
           </div>
