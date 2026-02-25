@@ -22,7 +22,6 @@ export default function CategoryCoursesPage() {
   const [courses, setCourses] = useState([]);
   const [countsByCourseId, setCountsByCourseId] = useState(() => new Map());
   const [completedByCourseId, setCompletedByCourseId] = useState(() => new Map());
-  const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -115,15 +114,7 @@ export default function CategoryCoursesPage() {
     return `Pick a course in ${title} to see its chapters.`;
   }, [description, id, title]);
 
-  const visibleCourses = useMemo(() => {
-    const q = String(query ?? '').trim().toLowerCase();
-    const rows = Array.isArray(courses) ? courses : [];
-    if (!q) return rows;
-    return rows.filter((c) => {
-      const hay = `${c?.title ?? ''} ${c?.description ?? ''}`.toLowerCase();
-      return hay.includes(q);
-    });
-  }, [courses, query]);
+  const visibleCourses = useMemo(() => (Array.isArray(courses) ? courses : []), [courses]);
 
   return (
     <motion.div className="catflow" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
@@ -147,23 +138,8 @@ export default function CategoryCoursesPage() {
           <h1>{title}</h1>
           <p>{guidance}</p>
 
-          <div className="catflow-toolbar" role="region" aria-label="Course search">
-            <div className="catflow-toolbarRow">
-              <label className="catflow-search" style={{ flex: '1 1 260px' }}>
-                <span aria-hidden="true">🔎</span>
-                <input
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search courses"
-                  aria-label="Search courses"
-                />
-                {query && (
-                  <button type="button" onClick={() => setQuery('')} aria-label="Clear search">
-                    ✕
-                  </button>
-                )}
-              </label>
-
+          <div className="catflow-toolbar catflow-toolbarMinimal" role="region" aria-label="Course toolbar">
+            <div className="catflow-toolbarRow catflow-toolbarRowRight">
               <ProgressVisualsToggle />
             </div>
           </div>

@@ -30,7 +30,6 @@ export default function CourseChaptersPage() {
   const [chapters, setChapters] = useState([]);
   const [topics, setTopics] = useState([]);
   const [completedIds, setCompletedIds] = useState(() => new Set());
-  const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -147,15 +146,7 @@ export default function CourseChaptersPage() {
     return { completed, total, pct };
   }, [topics, completedIds]);
 
-  const visibleChapters = useMemo(() => {
-    const q = String(query ?? '').trim().toLowerCase();
-    const rows = Array.isArray(chapters) ? chapters : [];
-    if (!q) return rows;
-    return rows.filter((ch) => {
-      const hay = `${ch?.title ?? ''} ${ch?.description ?? ''}`.toLowerCase();
-      return hay.includes(q);
-    });
-  }, [chapters, query]);
+  const visibleChapters = useMemo(() => (Array.isArray(chapters) ? chapters : []), [chapters]);
 
   const categoryTitle = String(categoryRow?.title ?? category);
 
@@ -196,23 +187,8 @@ export default function CourseChaptersPage() {
             </div>
           )}
 
-          <div className="catflow-toolbar" role="region" aria-label="Chapter search">
-            <div className="catflow-toolbarRow">
-              <label className="catflow-search" style={{ flex: '1 1 260px' }}>
-                <span aria-hidden="true">🔎</span>
-                <input
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search chapters"
-                  aria-label="Search chapters"
-                />
-                {query && (
-                  <button type="button" onClick={() => setQuery('')} aria-label="Clear search">
-                    ✕
-                  </button>
-                )}
-              </label>
-
+          <div className="catflow-toolbar catflow-toolbarMinimal" role="region" aria-label="Chapter toolbar">
+            <div className="catflow-toolbarRow catflow-toolbarRowRight">
               <ProgressVisualsToggle />
             </div>
           </div>

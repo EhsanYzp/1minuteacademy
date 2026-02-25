@@ -122,6 +122,22 @@ export async function listChapters({ courseId } = {}) {
   });
 }
 
+export async function listAllChapters() {
+  if (!isSupabaseConfigured) throw new Error('Supabase not configured');
+
+  const cacheKey = makeCacheKey(['catalog', 'chapters', 'supabase', 'all']);
+  return withCache(cacheKey, { ttlMs: 2 * 60 * 1000 }, async () => {
+    const supabase = requireSupabase();
+    const { data, error } = await supabase
+      .from('chapters')
+      .select('id, course_id, title, position, description, published')
+      .eq('published', true)
+      .order('title', { ascending: true });
+    if (error) throw error;
+    return data ?? [];
+  });
+}
+
 export async function listTopicsForCourse({ courseId } = {}) {
   const id = String(courseId ?? '').trim();
   if (!id) return [];

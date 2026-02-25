@@ -15,12 +15,6 @@ function norm(s) {
   return String(s ?? '').trim();
 }
 
-function includesQuery(row, q) {
-  if (!q) return true;
-  const hay = `${row?.title ?? ''} ${row?.description ?? ''}`.toLowerCase();
-  return hay.includes(String(q).toLowerCase());
-}
-
 export default function ChapterTopicsPage() {
   const { categoryId, courseId, chapterId } = useParams();
   const category = norm(categoryId);
@@ -35,7 +29,6 @@ export default function ChapterTopicsPage() {
   const [courseRow, setCourseRow] = useState(null);
   const [chapterRow, setChapterRow] = useState(null);
   const [topics, setTopics] = useState([]);
-  const [query, setQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all'); // all | completed | new
   const [completedIds, setCompletedIds] = useState(() => new Set());
   const [loading, setLoading] = useState(true);
@@ -129,14 +122,11 @@ export default function ChapterTopicsPage() {
   );
 
   const visibleTopics = useMemo(() => {
-    const q = String(query ?? '').trim();
     let rows = (Array.isArray(topics) ? topics : [])
       .map((t) => ({
         ...t,
         completed: Boolean(t?.id && completedIds?.has?.(t.id)),
       }));
-
-    if (q) rows = rows.filter((t) => includesQuery(t, q));
 
     if (statusFilter === 'completed') rows = rows.filter((t) => t.completed);
     if (statusFilter === 'new') rows = rows.filter((t) => !t.completed);
@@ -150,10 +140,9 @@ export default function ChapterTopicsPage() {
     });
 
     return rows;
-  }, [topics, query, completedIds, statusFilter]);
+  }, [topics, completedIds, statusFilter]);
 
   function resetFilters() {
-    setQuery('');
     setStatusFilter('all');
   }
 
@@ -188,23 +177,8 @@ export default function ChapterTopicsPage() {
           <h1>{chapterTitle}</h1>
           {chapterRow?.description ? <p>{String(chapterRow.description)}</p> : <p>Pick a topic to start.</p>}
 
-          <div className="catflow-toolbar" role="region" aria-label="Topic search">
+          <div className="catflow-toolbar catflow-toolbarCompact" role="region" aria-label="Topic filters">
             <div className="catflow-toolbarStack">
-              <label className="catflow-search">
-                <span aria-hidden="true">🔎</span>
-                <input
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search topics in this chapter"
-                  aria-label="Search topics"
-                />
-                {query && (
-                  <button type="button" onClick={() => setQuery('')} aria-label="Clear search">
-                    ✕
-                  </button>
-                )}
-              </label>
-
               <div className="catflow-filtersRow" aria-label="Filters">
                 <label className="catflow-filter">
                   <span className="catflow-filterLabel">Status</span>

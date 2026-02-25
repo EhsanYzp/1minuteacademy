@@ -700,7 +700,7 @@ export default function TopicsBrowserPage() {
     <motion.div className="topics-browser" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Seo
         title="Topics"
-        description="Browse 1 minute lessons by category, course, and search."
+        description="Browse 1 minute lessons by category and course."
         path="/topics"
         canonicalPath="/topics"
         jsonLd={itemListJsonLd}
@@ -711,7 +711,7 @@ export default function TopicsBrowserPage() {
         <div className="topics-browser-hero">
           <Link className="topics-back" to="/">← Home</Link>
           <h1>Pick your next 1 minute lesson</h1>
-          <p>Search, filter by category/course, and jump right in.</p>
+          <p>Filter by category and course, and jump right in.</p>
         </div>
 
         {error && (
@@ -724,31 +724,6 @@ export default function TopicsBrowserPage() {
         <div className="topics-browser-layout">
           <section className="topics-content">
             <div className="topics-toolbar topics-toolbar--sticky" role="region" aria-label="Topic filters">
-              <div className="toolbar-row">
-                <label className="search">
-                  <span className="search-icon">🔎</span>
-                  <input
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search topics (e.g., quantum, blockchain, agents…)"
-                    aria-label="Search topics"
-                  />
-
-                  {searchUiState !== 'idle' && (
-                    <span className="search-status" aria-live="polite">
-                      <span className={searchUiState === 'loading' ? 'search-spinner' : 'search-spinner subtle'} aria-hidden="true" />
-                      <span className="search-status-text">{searchUiState === 'loading' ? 'Searching' : '…'}</span>
-                    </span>
-                  )}
-
-                  {query && (
-                    <button type="button" className="clear" onClick={() => setQuery('')} aria-label="Clear search">
-                      ✕
-                    </button>
-                  )}
-                </label>
-              </div>
-
               <div className="toolbar-filters" aria-label="Filters">
                 <div className="filter-group">
                   <label className="filter-label" htmlFor="topics-filter-category">Category</label>
