@@ -43,6 +43,17 @@ function pickManyFromPool(pool, count) {
   return items;
 }
 
+function shuffleInPlace(arr) {
+  const a = Array.isArray(arr) ? arr : [];
+  for (let i = a.length - 1; i > 0; i -= 1) {
+    const j = randomInt(0, i);
+    const tmp = a[i];
+    a[i] = a[j];
+    a[j] = tmp;
+  }
+  return a;
+}
+
 function buildSpinSequenceWithFinalIndex({ pool, finalValue, spins = 18, tailPads = 2 }) {
   const safeFinal = String(finalValue ?? '').trim();
   const baseCount = Math.max(12, spins);
@@ -217,9 +228,24 @@ function Home() {
     setSpinOverlay({ mode: 'loading', line: 'Warming up the slot machine…' });
 
     try {
+      const loadRandomPoolPage = async () => {
+        try {
+          const first = await listTopicsPage({ limit: 1, offset: 0 });
+          const total = typeof first?.total === 'number' ? first.total : null;
+          if (typeof total !== 'number' || total <= 0) throw new Error('No total');
+
+          const limit = 120;
+          const maxOffset = Math.max(0, total - limit);
+          const offset = randomInt(0, maxOffset);
+          return await listTopicsPage({ limit, offset });
+        } catch {
+          return await listTopicsPage({ limit: 120, offset: 0 });
+        }
+      };
+
       const [topic, poolPage] = await Promise.all([
         pickRandomEligibleTopic({ tier, includeCompleted, avoidRecent: true }),
-        listTopicsPage({ limit: 80, offset: 0 }).catch(() => null),
+        loadRandomPoolPage().catch(() => null),
       ]);
 
       if (spinRunIdRef.current !== runId) return;
@@ -237,7 +263,7 @@ function Home() {
         return;
       }
 
-      const poolTopics = Array.isArray(poolPage?.items) ? poolPage.items : [];
+      const poolTopics = shuffleInPlace(Array.isArray(poolPage?.items) ? [...poolPage.items] : []);
       const subjects = uniqueNonEmptyStrings(poolTopics.map((t) => toDisplaySubject(t?.subject))).slice(0, 50);
       const subcategories = uniqueNonEmptyStrings(poolTopics.map((t) => t?.subcategory)).slice(0, 50);
       const titles = uniqueNonEmptyStrings(poolTopics.map((t) => t?.title)).slice(0, 80);
