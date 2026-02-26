@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { formatTierLabel, getCurrentTier, setDevTierOverride } from '../services/entitlements';
+import { getUserStats } from '../services/progress';
 import './Header.css';
 
 function getAuthRedirectBaseUrl() {
@@ -40,6 +41,7 @@ function Header() {
   const [verifyBusy, setVerifyBusy] = useState(false);
   const [verifySent, setVerifySent] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [stats, setStats] = useState({ expert_minutes: 0, streak: 0, last_completed_date: null });
   const tier = getCurrentTier(user);
 
   const navRef = useRef(null);
@@ -56,6 +58,27 @@ function Header() {
 
   const isVerified = Boolean(user?.email_confirmed_at || user?.confirmed_at);
   const showVerifyBanner = isSupabaseConfigured && Boolean(user?.email) && !isVerified;
+
+  const showProTopbarStats = tier === 'pro' && Boolean(user) && isSupabaseConfigured;
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      if (!showProTopbarStats) return;
+      try {
+        const s = await getUserStats();
+        if (!cancelled) setStats(s ?? { expert_minutes: 0, streak: 0, last_completed_date: null });
+      } catch {
+        // ignore
+      }
+    }
+
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, [showProTopbarStats, user?.id]);
 
   async function onResendVerification() {
     if (!user?.email || verifyBusy) return;
@@ -168,89 +191,103 @@ function Header() {
         animate={{ y: 0 }}
         transition={{ type: 'spring', stiffness: 100, damping: 20 }}
       >
-      <Link to="/" className="logo" aria-label="1 minute academy" onClick={closeMobileMenu}>
-        <motion.span 
-          className="logo-icon"
-          animate={{ rotate: [0, 10, -10, 0] }}
-          transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-        >
-          ⏱️
-        </motion.span>
-        <span className="logo-text logo-text-long" aria-hidden="true">
-          <span className="logo-number">1</span>
-          {' '}
-          <span className="logo-minute">minute</span>
-          {' '}
-          <span className="logo-academy">academy</span>
-        </span>
-        <span className="logo-text logo-text-short" aria-hidden="true">
-          <span className="logo-number">1</span>
-          <span className="logo-short">MA</span>
-        </span>
-      </Link>
-
-      {import.meta.env.DEV && (
-        <label
-          className="dev-tier"
-          title="Dev-only: switch tiers without Stripe. Stored in localStorage."
-        >
-          <span className="dev-tier-label">Tier</span>
-          <select
-            className="dev-tier-select"
-            value={tier}
-            onChange={(e) => {
-              setDevTierOverride(e.target.value);
-              window.location.reload();
-            }}
-            aria-label="Developer tier override"
-          >
-            <option value="guest">{formatTierLabel('guest')}</option>
-            <option value="free">{formatTierLabel('free')}</option>
-            <option value="pro">{formatTierLabel('pro')}</option>
-          </select>
-        </label>
-      )}
-
-      <button
-        type="button"
-        className="nav-toggle"
-        aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-        aria-expanded={mobileMenuOpen}
-        aria-controls="site-nav"
-        onClick={() => setMobileMenuOpen((v) => !v)}
-        ref={toggleRef}
-      >
-        {mobileMenuOpen ? '✕' : '☰'}
-      </button>
-      
-      <nav
-        id="site-nav"
-        className={mobileMenuOpen ? 'nav nav-open' : 'nav'}
-        ref={navRef}
-        tabIndex={-1}
-        aria-label="Site navigation"
-      >
-        <Link to="/pricing" className="nav-item link" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
-          Pricing
-        </Link>
-        <Link to="/faq" className="nav-item link" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
-          FAQ
-        </Link>
-        {user ? (
-          <>
-            <Link to="/me" className="nav-item link" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
-              Profile
-            </Link>
-            <button className="nav-item button" type="button" onClick={onSignOut} disabled={busy}>
-              {busy ? 'Signing out…' : 'Sign out'}
-            </button>
-          </>
-        ) : (
-          <Link to="/login" className="nav-item points" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
-            Sign in
+        <div className="header-left">
+          <Link to="/" className="logo" aria-label="1 minute academy" onClick={closeMobileMenu}>
+            <motion.span
+              className="logo-icon"
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+            >
+              ⏱️
+            </motion.span>
+            <span className="logo-text logo-text-long" aria-hidden="true">
+              <span className="logo-number">1</span> <span className="logo-minute">minute</span>{' '}
+              <span className="logo-academy">academy</span>
+            </span>
+            <span className="logo-text logo-text-short" aria-hidden="true">
+              <span className="logo-number">1</span>
+              <span className="logo-short">MA</span>
+            </span>
           </Link>
-        )}
-      </nav>
+
+          {import.meta.env.DEV && (
+            <label className="dev-tier" title="Dev-only: switch tiers without Stripe. Stored in localStorage.">
+              <span className="dev-tier-label">Tier</span>
+              <select
+                className="dev-tier-select"
+                value={tier}
+                onChange={(e) => {
+                  setDevTierOverride(e.target.value);
+                  window.location.reload();
+                }}
+                aria-label="Developer tier override"
+              >
+                <option value="guest">{formatTierLabel('guest')}</option>
+                <option value="free">{formatTierLabel('free')}</option>
+                <option value="pro">{formatTierLabel('pro')}</option>
+              </select>
+            </label>
+          )}
+        </div>
+
+        <div className="header-right">
+          {showProTopbarStats && (
+            <div className="header-proStats" aria-label="Your stats">
+              <Link to="/me" className="nav-item streak" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
+                🔥 {Number(stats?.streak ?? 0) || 0}d
+              </Link>
+              <Link to="/me" className="nav-item link header-proMinutes" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
+                ⏱️ {Math.max(0, Math.floor(Number(stats?.expert_minutes ?? 0) || 0))}m
+              </Link>
+            </div>
+          )}
+
+          <button
+            type="button"
+            className="nav-toggle"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="site-nav"
+            onClick={() => setMobileMenuOpen((v) => !v)}
+            ref={toggleRef}
+          >
+            {mobileMenuOpen ? '✕' : '☰'}
+          </button>
+
+          <nav
+            id="site-nav"
+            className={mobileMenuOpen ? 'nav nav-open' : 'nav'}
+            ref={navRef}
+            tabIndex={-1}
+            aria-label="Site navigation"
+          >
+            {tier !== 'pro' && (
+              <>
+                <Link to="/pricing" className="nav-item link" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
+                  Pricing
+                </Link>
+                <Link to="/faq" className="nav-item link" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
+                  FAQ
+                </Link>
+              </>
+            )}
+
+            {user ? (
+              <>
+                <Link to="/me" className="nav-item link" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
+                  Profile
+                </Link>
+                <button className="nav-item button" type="button" onClick={onSignOut} disabled={busy}>
+                  {busy ? 'Signing out…' : 'Sign out'}
+                </button>
+              </>
+            ) : (
+              <Link to="/login" className="nav-item points" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
+                Sign in
+              </Link>
+            )}
+          </nav>
+        </div>
       </motion.header>
 
       {showVerifyBanner && (
