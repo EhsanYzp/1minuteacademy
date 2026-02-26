@@ -33,6 +33,7 @@
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-md);
   padding: var(--space-xl);
+  overflow-x: hidden;
 }
 
 .profile-layout {
@@ -1038,6 +1039,7 @@
   border-radius: var(--radius-lg);
   border: 1px solid rgba(0, 0, 0, 0.06);
   background: rgba(0, 0, 0, 0.015);
+  min-width: 0;
 }
 
 .rating-title-link {
@@ -1082,6 +1084,8 @@
   gap: 10px;
   flex-wrap: wrap;
   justify-content: flex-end;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .rating-saving {
@@ -1178,6 +1182,7 @@
   overflow: hidden;
   cursor: pointer;
   list-style: none;
+  min-width: 0;
 }
 
 .progress-row::-webkit-details-marker {
@@ -1204,11 +1209,18 @@
   gap: var(--space-md);
   position: relative;
   z-index: 1;
+  min-width: 0;
+}
+
+.progress-meta {
+  min-width: 0;
 }
 
 .progress-title-link {
   text-decoration: none;
   color: inherit;
+  display: block;
+  min-width: 0;
 }
 
 .progress-title-link:hover .progress-title {
@@ -1221,11 +1233,17 @@
 
 .progress-title {
   font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .progress-sub {
   color: var(--text-secondary);
   font-size: 0.95rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .progress-right {
@@ -1262,6 +1280,7 @@
   flex-wrap: wrap;
   gap: var(--space-sm);
   margin-bottom: var(--space-sm);
+  min-width: 0;
 }
 
 .action-pill {
@@ -1275,6 +1294,10 @@
   background: rgba(37, 99, 235, 0.12);
   border: 1px solid rgba(37, 99, 235, 0.25);
   color: var(--color-primary);
+  max-width: 100%;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.2;
 }
 
 .action-pill:hover {
@@ -1404,6 +1427,11 @@
   .progress-row {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .progress-title,
+  .progress-sub {
+    white-space: normal;
   }
 
   .progress-right {
