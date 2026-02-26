@@ -230,18 +230,22 @@ function Header() {
           )}
         </div>
 
-        <div className="header-right">
-          {showProTopbarStats && (
+        <div className="header-center">
+          {showProTopbarStats ? (
             <div className="header-proStats" aria-label="Your stats">
-              <Link to="/me" className="nav-item streak" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
-                🔥 {Number(stats?.streak ?? 0) || 0}d
+              <Link to="/me" className="header-statPill" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
+                <span className="header-statValue">🔥 {Number(stats?.streak ?? 0) || 0}d</span>
+                <span className="header-statLabel">Streak</span>
               </Link>
-              <Link to="/me" className="nav-item link header-proMinutes" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
-                ⏱️ {Math.max(0, Math.floor(Number(stats?.expert_minutes ?? 0) || 0))}m
+              <Link to="/me" className="header-statPill" style={{ textDecoration: 'none' }} onClick={closeMobileMenu}>
+                <span className="header-statValue">⏱️ {Math.max(0, Math.floor(Number(stats?.expert_minutes ?? 0) || 0))}m</span>
+                <span className="header-statLabel">Learned</span>
               </Link>
             </div>
-          )}
+          ) : null}
+        </div>
 
+        <div className="header-right">
           <button
             type="button"
             className="nav-toggle"
