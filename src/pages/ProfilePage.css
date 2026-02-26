@@ -33,7 +33,16 @@
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-md);
   padding: var(--space-xl);
-  overflow-x: hidden;
+}
+
+.subject-group,
+.progress-details,
+.progress-row,
+.rating-row,
+.ratings-toolbar,
+.profile-progress-toolbar {
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .profile-layout {
@@ -1050,6 +1059,7 @@
   color: inherit;
   min-width: 0;
   flex: 1;
+  max-width: 100%;
 }
 
 .rating-emoji {
@@ -1058,6 +1068,7 @@
 
 .rating-meta {
   min-width: 0;
+  max-width: 100%;
 }
 
 .rating-title {
@@ -1210,6 +1221,7 @@
   position: relative;
   z-index: 1;
   min-width: 0;
+  max-width: 100%;
 }
 
 .progress-meta {
@@ -1253,6 +1265,7 @@
   justify-content: flex-end;
   position: relative;
   z-index: 1;
+  max-width: 100%;
 }
 
 .pill {
@@ -1412,6 +1425,18 @@
   .rating-row {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .rating-title-link {
+    width: 100%;
+  }
+
+  .rating-title,
+  .rating-sub {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    overflow-wrap: anywhere;
   }
 
   .rating-actions {
