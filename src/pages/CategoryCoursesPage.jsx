@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
 import Breadcrumbs from '../components/Breadcrumbs';
@@ -14,6 +14,20 @@ import './CategoriesFlow.css';
 export default function CategoryCoursesPage() {
   const { categoryId } = useParams();
   const id = String(categoryId ?? '').trim();
+  const idLower = id.toLowerCase();
+  const navigate = useNavigate();
+
+  const CATEGORY_ID_ALIASES = useMemo(
+    () =>
+      new Map([
+        ['home-and-diy', 'home-diy'],
+        ['religion-and-spirituality', 'religion'],
+        ['religion-spirituality', 'religion'],
+      ]),
+    []
+  );
+  const canonicalCategoryId = CATEGORY_ID_ALIASES.get(idLower) ?? id;
+  const isAlias = canonicalCategoryId !== id;
 
   const { user, isSupabaseConfigured } = useAuth();
   const showProgressVisuals = useShowProgressVisuals();
@@ -24,6 +38,11 @@ export default function CategoryCoursesPage() {
   const [completedByCourseId, setCompletedByCourseId] = useState(() => new Map());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!isAlias) return;
+    navigate(`/categories/${encodeURIComponent(canonicalCategoryId)}`, { replace: true });
+  }, [canonicalCategoryId, isAlias, navigate]);
 
   useEffect(() => {
     let cancelled = false;
@@ -46,11 +65,11 @@ export default function CategoryCoursesPage() {
       }
     }
 
-    if (id) load();
+    if (id && !isAlias) load();
     return () => {
       cancelled = true;
     };
-  }, [id]);
+  }, [id, isAlias]);
 
   useEffect(() => {
     let cancelled = false;

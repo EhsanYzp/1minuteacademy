@@ -14,6 +14,10 @@ export async function listCategories() {
   const DUPLICATE_CATEGORY_IDS = new Map([
     // Hide legacy/alias ids when the canonical category exists.
     ['home-and-diy', 'home-diy'],
+
+    // Religion & Spirituality: keep canonical `religion`.
+    ['religion-and-spirituality', 'religion'],
+    ['religion-spirituality', 'religion'],
   ]);
 
   const DUPLICATE_CATEGORY_TITLES = new Map([
@@ -22,7 +26,7 @@ export async function listCategories() {
     ['Art & Design', 'Art'],
   ]);
 
-  const cacheKey = makeCacheKey(['catalog', 'categories', 'supabase']);
+  const cacheKey = makeCacheKey(['catalog', 'categories', 'supabase', 'dedupe-v2']);
   return withCache(cacheKey, { ttlMs: 5 * 60 * 1000 }, async () => {
     const supabase = requireSupabase();
     const { data, error } = await supabase
