@@ -287,6 +287,8 @@ async function main() {
         id: String(data.id),
         subject: String(data.subject ?? ''),
         subcategory: String(data.subcategory ?? ''),
+        course_id: String(data.course_id ?? ''),
+        chapter_id: String(data.chapter_id ?? ''),
         title: String(data.title ?? data.id),
         description: String(data.description ?? ''),
         emoji: String(data.emoji ?? ''),
@@ -422,6 +424,8 @@ async function main() {
       const description = String(t.description ?? '').replace(/\s+/g, ' ').trim();
       const subject = String(t.subject ?? '').replace(/\s+/g, ' ').trim();
       const subcategory = String(t.subcategory ?? '').replace(/\s+/g, ' ').trim();
+      const courseId = String(t.course_id ?? '').replace(/\s+/g, ' ').trim();
+      const chapterId = String(t.chapter_id ?? '').replace(/\s+/g, ' ').trim();
       const urlPath = `/topic/${encodeURIComponent(String(t.id))}`;
       return {
         id: String(t.id),
@@ -429,6 +433,8 @@ async function main() {
         description,
         subject: subject || null,
         subcategory: subcategory || null,
+        course_id: courseId || null,
+        chapter_id: chapterId || null,
         is_free: Boolean(t.is_free),
         url: `${base}${urlPath}`,
         path: urlPath,
@@ -453,7 +459,7 @@ async function main() {
     lines.push(`# Generated: ${generatedAt}`);
     lines.push(`# Site: ${base}`);
     lines.push('# Format: TSV');
-    lines.push('id\ttitle\tdescription\turl\tsubject\tsubcategory\tis_free\tupdatedAt');
+    lines.push('id\ttitle\tdescription\turl\tsubject\tsubcategory\tis_free\tupdatedAt\tcourse_id\tchapter_id');
     for (const t of cleaned) {
       const row = [
         t.id,
@@ -464,6 +470,8 @@ async function main() {
         t.subcategory || '',
         t.is_free ? 'free' : 'pro',
         t.updatedAt,
+        t.course_id || '',
+        t.chapter_id || '',
       ]
         .map((v) => String(v).replace(/\t/g, ' ').replace(/\r?\n/g, ' ').trim())
         .join('\t');

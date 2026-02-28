@@ -190,6 +190,16 @@ export default function CategoriesPage() {
     return m;
   }, [courses]);
 
+  const chapterTitleById = useMemo(() => {
+    const m = new Map();
+    for (const ch of Array.isArray(chapters) ? chapters : []) {
+      const id = String(ch?.id ?? '').trim();
+      const title = String(ch?.title ?? id).trim();
+      if (id) m.set(id, title);
+    }
+    return m;
+  }, [chapters]);
+
   const searchResults = useMemo(() => {
     if (!hasQuery) {
       return { categories: [], courses: [], chapters: [], topics: [] };
@@ -339,6 +349,8 @@ export default function CategoriesPage() {
                   Results for “{String(query ?? '').trim()}”
                 </h2>
 
+                <h2 className="catflow-sectionTitle">Categories</h2>
+
                 <div className="catflow-grid" aria-label="Category results">
                   {limitedResults.categories.map((cat) => {
                     const id = String(cat?.id ?? '').trim();
@@ -362,10 +374,6 @@ export default function CategoriesPage() {
                           <h3 className="catflow-cardTitle catflow-cardTitleTop">{title}</h3>
                         </div>
                         <div className="catflow-metaChips" aria-label="Category metadata">
-                          <span className="catflow-metaChip catflow-metaChip--type">
-                            <span className="catflow-metaChipLabel">Type</span>
-                            <span className="catflow-metaChipValue">Category</span>
-                          </span>
                           <span className="catflow-metaChip">
                             <span className="catflow-metaChipLabel">Courses</span>
                             <span className="catflow-metaChipValue">{courseCount}</span>
@@ -424,10 +432,6 @@ export default function CategoriesPage() {
                           <h3 className="catflow-cardTitle catflow-cardTitleTop">{title}</h3>
                         </div>
                         <div className="catflow-metaChips" aria-label="Course metadata">
-                          <span className="catflow-metaChip catflow-metaChip--type">
-                            <span className="catflow-metaChipLabel">Type</span>
-                            <span className="catflow-metaChipValue">Course</span>
-                          </span>
                           {categoryTitle ? (
                             <span className="catflow-metaChip catflow-metaChip--category">
                               <span className="catflow-metaChipLabel">Category</span>
@@ -474,10 +478,6 @@ export default function CategoriesPage() {
                           <h3 className="catflow-cardTitle catflow-cardTitleTop">{title}</h3>
                         </div>
                         <div className="catflow-metaChips" aria-label="Chapter metadata">
-                          <span className="catflow-metaChip catflow-metaChip--type">
-                            <span className="catflow-metaChipLabel">Type</span>
-                            <span className="catflow-metaChipValue">Chapter</span>
-                          </span>
                           {categoryTitle ? (
                             <span className="catflow-metaChip catflow-metaChip--category">
                               <span className="catflow-metaChipLabel">Category</span>
@@ -514,6 +514,8 @@ export default function CategoriesPage() {
                     const path = String(t?.path ?? `/topic/${encodeURIComponent(id)}`);
                     const subject = String(t?.subject ?? '').trim();
                     const subcategory = String(t?.subcategory ?? '').trim();
+                    const chapterId = String(t?.chapter_id ?? '').trim();
+                    const chapterTitle = chapterId ? (chapterTitleById.get(chapterId) ?? chapterId) : '';
                     const isFree = Boolean(t?.is_free);
                     const tierLabel = isFree ? 'Free' : 'Pro';
 
@@ -523,10 +525,6 @@ export default function CategoriesPage() {
                           <h3 className="catflow-resultTitle">{title}</h3>
 
                           <div className="catflow-metaChips catflow-metaChips--compact" aria-label="Topic metadata">
-                            <span className="catflow-metaChip catflow-metaChip--type">
-                              <span className="catflow-metaChipLabel">Type</span>
-                              <span className="catflow-metaChipValue">Topic</span>
-                            </span>
                             {subject ? (
                               <span className="catflow-metaChip catflow-metaChip--category">
                                 <span className="catflow-metaChipLabel">Category</span>
@@ -537,6 +535,12 @@ export default function CategoriesPage() {
                               <span className="catflow-metaChip catflow-metaChip--course">
                                 <span className="catflow-metaChipLabel">Course</span>
                                 <span className="catflow-metaChipValue">{subcategory}</span>
+                              </span>
+                            ) : null}
+                            {chapterTitle ? (
+                              <span className="catflow-metaChip catflow-metaChip--chapter">
+                                <span className="catflow-metaChipLabel">Chapter</span>
+                                <span className="catflow-metaChipValue">{chapterTitle}</span>
                               </span>
                             ) : null}
                           </div>
