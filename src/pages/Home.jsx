@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useAnimationControls, useReducedMotion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FiArrowRight, FiRefreshCw, FiX } from 'react-icons/fi';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
@@ -116,6 +116,7 @@ function SlotReel({ label, sequence, finalIndex, durationMs, onDone }) {
 
 function Home() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user } = useAuth();
   const tier = getCurrentTier(user);
   const prefersReducedMotion = useReducedMotion();
@@ -126,6 +127,7 @@ function Home() {
   const [spinOverlay, setSpinOverlay] = useState(null);
   const spinDoneCountRef = useRef(0);
   const spinRunIdRef = useRef(0);
+  const didAutoSurpriseRef = useRef(false);
 
   const [homeStats, setHomeStats] = useState({ categories: 0, courses: 0, topics: 0 });
   const categoriesCount = Number(homeStats.categories ?? 0) || 0;
@@ -214,13 +216,25 @@ function Home() {
     if (!id) return;
     pushRecentRandomId(id);
     closeSpinOverlay();
-    navigate(`/topic/${id}`);
+    navigate(`/topic/${id}`,
+      {
+        state: {
+          learningFlow: 'shuffle',
+          shuffle: {
+            includeCompleted: Boolean(includeCompleted),
+          },
+        },
+      }
+    );
   }
 
-  async function startSurpriseSpin() {
+  async function startSurpriseSpin(options = {}) {
     if (busy) return;
     setBusy(true);
     setError(null);
+
+    const includeCompletedForPick =
+      typeof options?.includeCompleted === 'boolean' ? options.includeCompleted : includeCompleted;
 
     const runId = spinRunIdRef.current + 1;
     spinRunIdRef.current = runId;
@@ -244,7 +258,7 @@ function Home() {
       };
 
       const [topic, poolPage] = await Promise.all([
-        pickRandomEligibleTopic({ tier, includeCompleted, avoidRecent: true }),
+        pickRandomEligibleTopic({ tier, includeCompleted: includeCompletedForPick, avoidRecent: true }),
         loadRandomPoolPage().catch(() => null),
       ]);
 
@@ -308,10 +322,27 @@ function Home() {
     }
   }
 
-  async function onSurprise() {
+  async function onSurprise(options = {}) {
     setSpinOverlay((prev) => prev ?? { mode: 'loading', line: 'Warming up the slot machine…' });
-    await startSurpriseSpin();
+    await startSurpriseSpin(options);
   }
+
+  useEffect(() => {
+    if (didAutoSurpriseRef.current) return;
+    const s = location?.state;
+    if (!s || s?.autoSurprise !== true) return;
+
+    didAutoSurpriseRef.current = true;
+    const nextIncludeCompleted = typeof s?.includeCompleted === 'boolean' ? s.includeCompleted : includeCompleted;
+    setIncludeCompleted(nextIncludeCompleted);
+
+    requestAnimationFrame(() => {
+      onSurprise({ includeCompleted: nextIncludeCompleted });
+    });
+
+    // Clear the state so refresh/back doesn't re-trigger.
+    navigate(location.pathname + location.search, { replace: true, state: null });
+  }, [location?.state, location?.pathname, location?.search, navigate, includeCompleted]);
 
   return (
     <motion.div

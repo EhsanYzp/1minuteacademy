@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import Header from '../Header';
 import ToastStack from '../ToastStack';
 import JourneyBlocks from '../../engine/journey/JourneyBlocks';
@@ -28,7 +28,11 @@ export default function CompletionScreen({
 }) {
   const tier = String(journeyCtx?.tier ?? 'guest');
   const location = useLocation();
+  const navigate = useNavigate();
   const { categoryId: routeCategoryId, courseId: routeCourseId, chapterId: routeChapterId } = useParams();
+
+  const isShuffleFlow = String(location?.state?.learningFlow ?? '') === 'shuffle';
+  const shuffleIncludeCompleted = Boolean(location?.state?.shuffle?.includeCompleted);
 
   const from = location?.state?.fromChapter;
   const fromCategoryId = String(from?.categoryId ?? routeCategoryId ?? '').trim();
@@ -53,6 +57,11 @@ export default function CompletionScreen({
   const primaryCtaIdx = ctaItems.findIndex((it) => coerceVariant(it?.variant) === 'primary');
   const primaryCta = primaryCtaIdx >= 0 ? ctaItems[primaryCtaIdx] : ctaItems[0] ?? null;
   const otherCtas = ctaItems.filter((_, idx) => idx !== (primaryCta ? (primaryCtaIdx >= 0 ? primaryCtaIdx : 0) : -1));
+
+  const primaryCtaForRender =
+    isShuffleFlow && primaryCta && coerceVariant(primaryCta?.variant) === 'primary'
+      ? { ...primaryCta, variant: 'secondary' }
+      : primaryCta;
 
   const summaryCtaDisabledForGuest = ctaItems.some((it) => {
     const action = it?.action;
@@ -99,6 +108,8 @@ export default function CompletionScreen({
   const blocksUpToRating = ratingIdx >= 0 ? nonCtaBlocks.slice(0, ratingIdx + 1) : nonCtaBlocks;
   const blocksAfterRating = ratingIdx >= 0 ? nonCtaBlocks.slice(ratingIdx + 1) : [];
 
+  const canShowActionDock = isShuffleFlow || backToChapterTo || primaryCta || otherCtas.length > 0;
+
   return (
     <>
       <Header />
@@ -133,10 +144,27 @@ export default function CompletionScreen({
               ]}
             />
 
-            {(backToChapterTo || primaryCta || otherCtas.length > 0) ? (
+            {canShowActionDock ? (
               <div className="completion-actionDock" aria-label="Next actions">
                 <div className="completion-actionDockMain">
-                  {primaryCta ? renderCtaButton(primaryCta) : null}
+                  {isShuffleFlow ? (
+                    <button
+                      type="button"
+                      className={`${buttonBaseClass} primary`}
+                      onClick={() => {
+                        navigate('/', {
+                          state: {
+                            autoSurprise: true,
+                            includeCompleted: shuffleIncludeCompleted,
+                          },
+                        });
+                      }}
+                    >
+                      Shuffle again
+                    </button>
+                  ) : null}
+
+                  {primaryCtaForRender ? renderCtaButton(primaryCtaForRender) : null}
                   {backToChapterTo ? (
                     <Link
                       className={`${buttonBaseClass} secondary`}
