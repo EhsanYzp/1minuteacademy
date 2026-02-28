@@ -157,6 +157,7 @@ const CATEGORY_TITLES = [
   'AI',
   'Cybersecurity',
   'Languages',
+  'Science',
   'Web3',
 ];
 
