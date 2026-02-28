@@ -156,6 +156,8 @@ const CATEGORY_TITLES = [
   'Data',
   'AI',
   'Cybersecurity',
+  'Languages',
+  'Web3',
 ];
 
 function slugifyCategoryId(title) {
