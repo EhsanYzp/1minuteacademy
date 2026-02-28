@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
 import ProgressVisualsToggle from '../components/ProgressVisualsToggle';
@@ -13,7 +13,7 @@ import {
 } from '../services/catalog';
 import { useAuth } from '../context/AuthContext';
 import { getUserCompletedTopicsByCategory } from '../services/progress';
-import { getCurrentTier } from '../services/entitlements';
+import { getCurrentTier, getTopicGate } from '../services/entitlements';
 import useShowProgressVisuals from '../lib/useShowProgressVisuals';
 import './CategoriesFlow.css';
 
@@ -34,10 +34,42 @@ function matchesAllTokens(haystack, tokens) {
   return true;
 }
 
+/* Highlight exact search tokens inside a text string. */
+function HighlightTokens({ text, tokens }) {
+  if (!tokens || tokens.length === 0 || !text) return text ?? null;
+  const escaped = tokens.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const re = new RegExp(`(${escaped.join('|')})`, 'gi');
+  const parts = String(text).split(re);
+  if (parts.length <= 1) return text;
+  const lower = new Set(tokens.map((t) => t.toLowerCase()));
+  return parts.map((p, i) =>
+    p && lower.has(p.toLowerCase())
+      ? <mark key={i} className="catflow-highlight">{p}</mark>
+      : p,
+  );
+}
+
+/**
+ * Turn a raw chapter slug like "business--behavioral-economics--ch05-markets-and-irrationality"
+ * into a readable label: "Markets and Irrationality".
+ */
+function humanizeChapterId(raw) {
+  const s = String(raw ?? '');
+  // Take the last segment after "--"
+  const last = s.includes('--') ? s.split('--').pop() : s;
+  // Strip leading "chNN-" prefix
+  const stripped = last.replace(/^ch\d+-/, '');
+  // Replace hyphens with spaces & title-case
+  return stripped
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
 export default function CategoriesPage() {
   const { user, isSupabaseConfigured } = useAuth();
   const tier = getCurrentTier(user);
   const isProUser = tier === 'pro';
+  const navigate = useNavigate();
   const showProgressVisuals = useShowProgressVisuals();
   const [categories, setCategories] = useState([]);
   const [courses, setCourses] = useState([]);
@@ -371,7 +403,7 @@ export default function CategoriesPage() {
                         style={borderColor ? { '--card-accent': borderColor } : undefined}
                       >
                         <div className="catflow-cardTop">
-                          <h3 className="catflow-cardTitle catflow-cardTitleTop">{title}</h3>
+                          <h3 className="catflow-cardTitle catflow-cardTitleTop"><HighlightTokens text={title} tokens={queryTokens} /></h3>
                         </div>
                         <div className="catflow-metaChips" aria-label="Category metadata">
                           <span className="catflow-metaChip">
@@ -429,7 +461,7 @@ export default function CategoriesPage() {
                         style={borderColor ? { '--card-accent': borderColor } : undefined}
                       >
                         <div className="catflow-cardTop">
-                          <h3 className="catflow-cardTitle catflow-cardTitleTop">{title}</h3>
+                          <h3 className="catflow-cardTitle catflow-cardTitleTop"><HighlightTokens text={title} tokens={queryTokens} /></h3>
                         </div>
                         <div className="catflow-metaChips" aria-label="Course metadata">
                           {categoryTitle ? (
@@ -439,7 +471,7 @@ export default function CategoriesPage() {
                             </span>
                           ) : null}
                         </div>
-                        {c?.description ? <p className="catflow-cardDesc">{String(c.description)}</p> : null}
+                        {c?.description ? <p className="catflow-cardDesc"><HighlightTokens text={String(c.description)} tokens={queryTokens} /></p> : null}
                       </Link>
                     );
                   })}
@@ -475,7 +507,7 @@ export default function CategoriesPage() {
                         className="catflow-card"
                       >
                         <div className="catflow-cardTop">
-                          <h3 className="catflow-cardTitle catflow-cardTitleTop">{title}</h3>
+                          <h3 className="catflow-cardTitle catflow-cardTitleTop"><HighlightTokens text={title} tokens={queryTokens} /></h3>
                         </div>
                         <div className="catflow-metaChips" aria-label="Chapter metadata">
                           {categoryTitle ? (
@@ -515,14 +547,38 @@ export default function CategoriesPage() {
                     const subject = String(t?.subject ?? '').trim();
                     const subcategory = String(t?.subcategory ?? '').trim();
                     const chapterId = String(t?.chapter_id ?? '').trim();
-                    const chapterTitle = chapterId ? (chapterTitleById.get(chapterId) ?? chapterId) : '';
+                    const chapterTitle = chapterId
+                      ? (chapterTitleById.get(chapterId) ?? humanizeChapterId(chapterId))
+                      : '';
                     const isFree = Boolean(t?.is_free);
                     const tierLabel = isFree ? 'Free' : 'Pro';
+                    const gate = getTopicGate({ tier, topicRow: t });
+                    const startTo = gate?.locked
+                      ? (gate.reason === 'paused' ? '/me' : '/upgrade')
+                      : `/lesson/${encodeURIComponent(id)}`;
 
                     return (
-                      <Link key={id} to={path} className="catflow-result">
+                      <div
+                        key={id}
+                        className="catflow-result catflow-resultClickable"
+                        role="link"
+                        tabIndex={0}
+                        onClick={() => navigate(path)}
+                        onKeyDown={(e) => {
+                          if (e.target !== e.currentTarget) return;
+                          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigate(path); }
+                        }}
+                      >
                         <div className="catflow-resultMain">
-                          <h3 className="catflow-resultTitle">{title}</h3>
+                          <h3 className="catflow-resultTitle">
+                            <HighlightTokens text={title} tokens={queryTokens} />
+                          </h3>
+
+                          {t?.description ? (
+                            <p className="catflow-resultDesc">
+                              <HighlightTokens text={String(t.description)} tokens={queryTokens} />
+                            </p>
+                          ) : null}
 
                           <div className="catflow-metaChips catflow-metaChips--compact" aria-label="Topic metadata">
                             {subject ? (
@@ -546,14 +602,22 @@ export default function CategoriesPage() {
                           </div>
                         </div>
 
-                        {!isProUser && (
-                          <div className="catflow-resultSide" aria-label="Access tier">
+                        <div className="catflow-resultSide" aria-label="Actions">
+                          {!isProUser && (
                             <span className={isFree ? 'catflow-pill' : 'catflow-pill catflow-pill-locked'}>
                               {tierLabel}
                             </span>
-                          </div>
-                        )}
-                      </Link>
+                          )}
+                          <Link
+                            to={startTo}
+                            className={`catflow-button primary catflow-startBtn${gate?.locked ? ' locked' : ''}`}
+                            onClick={(e) => e.stopPropagation()}
+                            aria-label={gate?.locked ? 'Unlock to start' : 'Start lesson'}
+                          >
+                            {gate?.locked ? '🔒' : 'Start ▶'}
+                          </Link>
+                        </div>
+                      </div>
                     );
                   })}
                 </div>
