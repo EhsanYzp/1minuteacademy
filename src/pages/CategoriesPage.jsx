@@ -360,11 +360,20 @@ export default function CategoriesPage() {
                       >
                         <div className="catflow-cardTop">
                           <h3 className="catflow-cardTitle catflow-cardTitleTop">{title}</h3>
-                          <div className="catflow-badge">Category</div>
                         </div>
-                        <div className="catflow-badges" aria-label="Category stats">
-                          <div className="catflow-badge">{courseCount} courses</div>
-                          <div className="catflow-badge">{totalTopics} topics</div>
+                        <div className="catflow-metaChips" aria-label="Category metadata">
+                          <span className="catflow-metaChip catflow-metaChip--type">
+                            <span className="catflow-metaChipLabel">Type</span>
+                            <span className="catflow-metaChipValue">Category</span>
+                          </span>
+                          <span className="catflow-metaChip">
+                            <span className="catflow-metaChipLabel">Courses</span>
+                            <span className="catflow-metaChipValue">{courseCount}</span>
+                          </span>
+                          <span className="catflow-metaChip">
+                            <span className="catflow-metaChipLabel">Topics</span>
+                            <span className="catflow-metaChipValue">{totalTopics}</span>
+                          </span>
                         </div>
 
                         {showProgressVisuals && user && totalTopics > 0 && completedTopics > 0 && (
@@ -413,10 +422,18 @@ export default function CategoriesPage() {
                       >
                         <div className="catflow-cardTop">
                           <h3 className="catflow-cardTitle catflow-cardTitleTop">{title}</h3>
-                          <div className="catflow-badges" aria-label="Course meta">
-                            <div className="catflow-badge">Course</div>
-                            {categoryTitle ? <div className="catflow-badge">{categoryTitle}</div> : null}
-                          </div>
+                        </div>
+                        <div className="catflow-metaChips" aria-label="Course metadata">
+                          <span className="catflow-metaChip catflow-metaChip--type">
+                            <span className="catflow-metaChipLabel">Type</span>
+                            <span className="catflow-metaChipValue">Course</span>
+                          </span>
+                          {categoryTitle ? (
+                            <span className="catflow-metaChip catflow-metaChip--category">
+                              <span className="catflow-metaChipLabel">Category</span>
+                              <span className="catflow-metaChipValue">{categoryTitle}</span>
+                            </span>
+                          ) : null}
                         </div>
                         {c?.description ? <p className="catflow-cardDesc">{String(c.description)}</p> : null}
                       </Link>
@@ -455,12 +472,25 @@ export default function CategoriesPage() {
                       >
                         <div className="catflow-cardTop">
                           <h3 className="catflow-cardTitle catflow-cardTitleTop">{title}</h3>
-                          <div className="catflow-badges" aria-label="Chapter meta">
-                            <div className="catflow-badge">Chapter</div>
-                            {categoryTitle ? <div className="catflow-badge">{categoryTitle}</div> : null}
-                          </div>
                         </div>
-                        <p className="catflow-cardDesc">{courseTitle}</p>
+                        <div className="catflow-metaChips" aria-label="Chapter metadata">
+                          <span className="catflow-metaChip catflow-metaChip--type">
+                            <span className="catflow-metaChipLabel">Type</span>
+                            <span className="catflow-metaChipValue">Chapter</span>
+                          </span>
+                          {categoryTitle ? (
+                            <span className="catflow-metaChip catflow-metaChip--category">
+                              <span className="catflow-metaChipLabel">Category</span>
+                              <span className="catflow-metaChipValue">{categoryTitle}</span>
+                            </span>
+                          ) : null}
+                          {courseTitle ? (
+                            <span className="catflow-metaChip catflow-metaChip--course">
+                              <span className="catflow-metaChipLabel">Course</span>
+                              <span className="catflow-metaChipValue">{courseTitle}</span>
+                            </span>
+                          ) : null}
+                        </div>
                       </Link>
                     );
                   })}
@@ -491,14 +521,25 @@ export default function CategoriesPage() {
                       <Link key={id} to={path} className="catflow-result">
                         <div className="catflow-resultMain">
                           <h3 className="catflow-resultTitle">{title}</h3>
-                          {(subject || subcategory) ? (
-                            <div className="catflow-resultMeta">
-                              {subject ? <><strong>{subject}</strong></> : null}
-                              {subject && subcategory ? ' • ' : null}
-                              {subcategory ? <>Course: <strong>{subcategory}</strong></> : null}
-                            </div>
-                          ) : null}
-                          {t?.description ? <div className="catflow-resultDesc">{String(t.description)}</div> : null}
+
+                          <div className="catflow-metaChips catflow-metaChips--compact" aria-label="Topic metadata">
+                            <span className="catflow-metaChip catflow-metaChip--type">
+                              <span className="catflow-metaChipLabel">Type</span>
+                              <span className="catflow-metaChipValue">Topic</span>
+                            </span>
+                            {subject ? (
+                              <span className="catflow-metaChip catflow-metaChip--category">
+                                <span className="catflow-metaChipLabel">Category</span>
+                                <span className="catflow-metaChipValue">{subject}</span>
+                              </span>
+                            ) : null}
+                            {subcategory ? (
+                              <span className="catflow-metaChip catflow-metaChip--course">
+                                <span className="catflow-metaChipLabel">Course</span>
+                                <span className="catflow-metaChipValue">{subcategory}</span>
+                              </span>
+                            ) : null}
+                          </div>
                         </div>
 
                         {!isProUser && (
