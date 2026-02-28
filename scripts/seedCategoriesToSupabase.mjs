@@ -158,6 +158,7 @@ const CATEGORY_TITLES = [
   'Cybersecurity',
   'Languages',
   'Science',
+  'Climate & Environment',
   'Web3',
 ];
 
