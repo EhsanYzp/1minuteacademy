@@ -1,0 +1,559 @@
+{
+  "categoryId": "mathematics",
+  "subject": "Mathematics",
+  "courseId": "mathematics--logic-and-proof",
+  "courseTitle": "Logic and Proof",
+  "emoji": "🧩",
+  "color": "#0D9488",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "mathematics--logic-and-proof--ch01-foundations-of-logic", "title": "Foundations of Logic", "position": 1 },
+    { "id": "mathematics--logic-and-proof--ch02-deduction-and-induction", "title": "Deduction and Induction", "position": 2 },
+    { "id": "mathematics--logic-and-proof--ch03-logical-fallacies", "title": "Logical Fallacies", "position": 3 },
+    { "id": "mathematics--logic-and-proof--ch04-mathematical-proof", "title": "Mathematical Proof", "position": 4 },
+    { "id": "mathematics--logic-and-proof--ch05-famous-proofs-and-problems", "title": "Famous Proofs and Problems", "position": 5 },
+    { "id": "mathematics--logic-and-proof--ch06-logic-in-the-modern-world", "title": "Logic in the Modern World", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch01-foundations-of-logic",
+      "title": "What Is Logic?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Every argument you've ever made follows invisible rules. Logic is the study of those rules.", "visual": "🧠" },
+        "buildup": { "text": "Logic asks: when does a conclusion truly follow from its premises? Not all reasoning is valid.", "visual": "🔗" },
+        "discovery": { "text": "Aristotle formalized logic in 350 BC with syllogisms: 'All men are mortal; Socrates is a man; therefore Socrates is mortal.'", "visual": "🏛️" },
+        "twist": { "text": "An argument can be logically valid even if its premises are false. Validity is about structure, not truth.", "visual": "⚠️" },
+        "climax": { "text": "Logic underpins mathematics, computer science, law, and every field that requires rigorous reasoning.", "visual": "📐" },
+        "punchline": { "text": "Logic is the grammar of clear thinking.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "Can a logically valid argument have false premises?",
+        "options": ["Yes, validity is about structure not truth", "No, premises must be true", "Only in mathematics"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch01-foundations-of-logic",
+      "title": "Propositions and Truth Values",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "'It is raining' is either true or false. 'Close the door!' is neither. That distinction matters.", "visual": "🌧️" },
+        "buildup": { "text": "A proposition is a statement that has a definite truth value—true or false, never both.", "visual": "✅" },
+        "discovery": { "text": "Questions, commands, and opinions are not propositions because they lack a truth value.", "visual": "❓" },
+        "twist": { "text": "Paradoxical statements like 'This sentence is false' seem to be propositions but have no consistent truth value.", "visual": "🔄" },
+        "climax": { "text": "All of formal logic and mathematics is built on combining and manipulating propositions.", "visual": "🏗️" },
+        "punchline": { "text": "True or false—two values that power all of logic.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "Which of the following is a proposition?",
+        "options": ["'Snow is white'", "'What time is it?'", "'Please sit down'"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch01-foundations-of-logic",
+      "title": "AND, OR, NOT: Logical Connectives",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Combine simple statements with AND, OR, and NOT—and you can express any logical idea.", "visual": "🔗" },
+        "buildup": { "text": "'It's raining AND cold' is true only when both parts are true. One false part makes the whole false.", "visual": "🌧️" },
+        "discovery": { "text": "'It's raining OR cold' is true when at least one part is true. Both false makes the whole false.", "visual": "☁️" },
+        "twist": { "text": "NOT simply flips the truth value. 'NOT raining' is true exactly when 'raining' is false.", "visual": "🔄" },
+        "climax": { "text": "These three connectives are logically complete—they can express any Boolean function whatsoever.", "visual": "💡" },
+        "punchline": { "text": "Three tiny words build every logical statement ever made.", "visual": "🧱" }
+      },
+      "quiz": {
+        "question": "When is 'A AND B' true?",
+        "options": ["Only when both A and B are true", "When either A or B is true", "When A is true and B is false"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch01-foundations-of-logic",
+      "title": "Truth Tables",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "How do you check every possible scenario for a logical statement? Build a truth table.", "visual": "📊" },
+        "buildup": { "text": "List every combination of true and false for the inputs. Compute the output for each row.", "visual": "📋" },
+        "discovery": { "text": "Two variables give 4 rows. Three give 8. Each new variable doubles the table size.", "visual": "🔢" },
+        "twist": { "text": "Ludwig Wittgenstein and Charles Sanders Peirce independently invented truth tables around 1920.", "visual": "📖" },
+        "climax": { "text": "Truth tables are the brute-force method of logic—simple, exhaustive, and always correct.", "visual": "✅" },
+        "punchline": { "text": "List every possibility and the truth reveals itself.", "visual": "🔍" }
+      },
+      "quiz": {
+        "question": "How many rows does a truth table with 3 variables have?",
+        "options": ["8", "6", "3"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch01-foundations-of-logic",
+      "title": "Logical Equivalence",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "'If it rains, then I take an umbrella' means the same as 'No rain, or I take an umbrella.'", "visual": "☂️" },
+        "buildup": { "text": "Two statements are logically equivalent when they have identical truth tables for every input.", "visual": "⚖️" },
+        "discovery": { "text": "De Morgan's Laws show how NOT distributes over AND and OR—swapping one for the other.", "visual": "🔄" },
+        "twist": { "text": "Many arguments fail because people confuse a statement with its converse—a classic equivalence mistake.", "visual": "⚠️" },
+        "climax": { "text": "Logical equivalences simplify complex expressions in both math proofs and computer circuit design.", "visual": "💻" },
+        "punchline": { "text": "Different words, same logic. That's equivalence.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "When are two logical statements equivalent?",
+        "options": ["When they have identical truth values for every input", "When they use the same words", "When they reach the same conclusion once"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch02-deduction-and-induction",
+      "title": "Deductive Reasoning",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "All cats are mammals. Whiskers is a cat. Therefore Whiskers is a mammal. That's deduction.", "visual": "🐱" },
+        "buildup": { "text": "Deduction starts from general rules and reaches specific conclusions that must be true.", "visual": "🔽" },
+        "discovery": { "text": "If the premises are true and the logic is valid, the conclusion is guaranteed—no exceptions.", "visual": "✅" },
+        "twist": { "text": "The strength of deduction is also its weakness: it can never tell you anything not already in the premises.", "visual": "📦" },
+        "climax": { "text": "All of mathematics relies on deduction. Every theorem follows logically from axioms.", "visual": "📐" },
+        "punchline": { "text": "From general rules to guaranteed conclusions. That's deduction.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What makes deductive reasoning different from other types?",
+        "options": ["The conclusion is guaranteed if the premises are true", "It always uses numbers", "It requires experiments"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch02-deduction-and-induction",
+      "title": "Inductive Reasoning",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The sun rose today. It rose yesterday. It rose every day in recorded history. Will it rise tomorrow?", "visual": "🌅" },
+        "buildup": { "text": "Induction reasons from specific observations to general conclusions. It's powerful but never certain.", "visual": "🔼" },
+        "discovery": { "text": "Science runs on induction. We test hypotheses with data, but new evidence can always overturn results.", "visual": "🔬" },
+        "twist": { "text": "Every swan Europeans had ever seen was white—until they discovered black swans in Australia.", "visual": "🦢" },
+        "climax": { "text": "Induction gives probable conclusions, never guaranteed ones. That's its limit and its honesty.", "visual": "📊" },
+        "punchline": { "text": "Induction says 'probably.' Deduction says 'definitely.'", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "Why is inductive reasoning never 100% certain?",
+        "options": ["New evidence can always contradict the conclusion", "It uses faulty premises", "It only applies to math"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch02-deduction-and-induction",
+      "title": "Abductive Reasoning",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The lawn is wet. It probably rained. That 'probably' is abduction—reasoning to the best explanation.", "visual": "💧" },
+        "buildup": { "text": "Abduction starts with an observation and works backward to the most likely cause.", "visual": "🔍" },
+        "discovery": { "text": "Doctors use abduction constantly: symptoms suggest a diagnosis, which is then tested.", "visual": "🏥" },
+        "twist": { "text": "The lawn could be wet from a sprinkler. Abduction picks the best guess, but it can be wrong.", "visual": "💦" },
+        "climax": { "text": "Sherlock Holmes famously uses abduction—not deduction as he claims—to solve mysteries.", "visual": "🔎" },
+        "punchline": { "text": "When you guess the best explanation, you're reasoning abductively.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "What does abductive reasoning do?",
+        "options": ["Infers the best explanation for an observation", "Proves a statement with certainty", "Lists all possible outcomes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch02-deduction-and-induction",
+      "title": "Strong vs. Weak Arguments",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Not all arguments are equal. Some are airtight; others crumble under examination.", "visual": "💪" },
+        "buildup": { "text": "A strong argument makes its conclusion very likely given the premises. A weak one barely supports it.", "visual": "📊" },
+        "discovery": { "text": "Deductive arguments are either valid or invalid—no middle ground. Inductive ones exist on a spectrum.", "visual": "📏" },
+        "twist": { "text": "A valid deductive argument with false premises can lead to any conclusion—garbage in, garbage out.", "visual": "🗑️" },
+        "climax": { "text": "Critical thinking means evaluating both the logic (structure) and the truth (content) of every argument.", "visual": "🧠" },
+        "punchline": { "text": "Good logic with bad facts still leads nowhere.", "visual": "🚫" }
+      },
+      "quiz": {
+        "question": "What makes an inductive argument strong?",
+        "options": ["The premises make the conclusion very likely", "The conclusion is always true", "It uses mathematical symbols"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch02-deduction-and-induction",
+      "title": "Sherlock Holmes and the Logic of Detection",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "'When you eliminate the impossible, whatever remains must be the truth.' Holmes said it. Is he right?", "visual": "🔎" },
+        "buildup": { "text": "Holmes claims to use deduction. But most of his reasoning is actually abduction—guessing the best explanation.", "visual": "🤔" },
+        "discovery": { "text": "True deduction would require knowing all the rules in advance. Detectives rarely have that luxury.", "visual": "📋" },
+        "twist": { "text": "Eliminating the impossible assumes you've listed every possibility—an assumption that often fails in reality.", "visual": "⚠️" },
+        "climax": { "text": "Real forensic science combines deduction, induction, and abduction—not just one method.", "visual": "🔬" },
+        "punchline": { "text": "Even the world's greatest detective misnamed his own method.", "visual": "🕵️" }
+      },
+      "quiz": {
+        "question": "What type of reasoning does Sherlock Holmes actually use most?",
+        "options": ["Abduction (inference to best explanation)", "Pure deduction", "Mathematical induction"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch03-logical-fallacies",
+      "title": "Ad Hominem: Attacking the Person",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "'You're wrong because you're a terrible person.' That's not an argument—it's an attack.", "visual": "👤" },
+        "buildup": { "text": "An ad hominem fallacy dismisses an argument by attacking the character of the person making it.", "visual": "⚔️" },
+        "discovery": { "text": "A claim is true or false regardless of who says it. Evaluating the messenger is not evaluating the message.", "visual": "📩" },
+        "twist": { "text": "Sometimes character matters: a known liar's testimony is less reliable. But the logic still stands separately.", "visual": "⚖️" },
+        "climax": { "text": "Political debates overflow with ad hominem attacks because they're emotionally effective—even though they're logically empty.", "visual": "🏛️" },
+        "punchline": { "text": "Attack the argument, not the person. That's logic.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is an ad hominem fallacy?",
+        "options": ["Attacking the person instead of their argument", "Using too many facts", "Agreeing with everyone"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch03-logical-fallacies",
+      "title": "Straw Man: Distorting the Argument",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "'We should reduce sugar in school lunches.' 'So you want to starve children?' That's a straw man.", "visual": "🌾" },
+        "buildup": { "text": "A straw man fallacy misrepresents an opponent's position to make it easier to attack.", "visual": "🥊" },
+        "discovery": { "text": "The attacker defeats a weaker version of the argument instead of the real one.", "visual": "💨" },
+        "twist": { "text": "Straw men are devastatingly effective in debates because audiences often don't notice the substitution.", "visual": "👀" },
+        "climax": { "text": "Spotting straw men requires restating the opponent's argument charitably before responding.", "visual": "🤝" },
+        "punchline": { "text": "If you must weaken an argument to beat it, you haven't beaten it.", "visual": "💪" }
+      },
+      "quiz": {
+        "question": "What does the straw man fallacy involve?",
+        "options": ["Misrepresenting an argument to make it easier to attack", "Using statistics incorrectly", "Repeating the same point"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch03-logical-fallacies",
+      "title": "False Dilemma: Only Two Options?",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "'You're either with us or against us.' What if you're neither?", "visual": "🚪" },
+        "buildup": { "text": "A false dilemma presents only two choices when more options actually exist.", "visual": "2️⃣" },
+        "discovery": { "text": "Real situations usually offer a spectrum of possibilities, not a binary fork.", "visual": "🌈" },
+        "twist": { "text": "Politicians and advertisers love false dilemmas because they force quick, emotional decisions.", "visual": "⚡" },
+        "climax": { "text": "Whenever someone offers only two options, ask: is there a third? There almost always is.", "visual": "🤔" },
+        "punchline": { "text": "Two choices is often one too few.", "visual": "3️⃣" }
+      },
+      "quiz": {
+        "question": "What is a false dilemma?",
+        "options": ["Presenting only two options when more exist", "Giving too many choices", "Making a decision without information"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch03-logical-fallacies",
+      "title": "Circular Reasoning",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "'This book is true because it says so inside.' That argument goes in a circle.", "visual": "🔄" },
+        "buildup": { "text": "Circular reasoning uses the conclusion as a premise. It assumes what it's trying to prove.", "visual": "🔁" },
+        "discovery": { "text": "It often hides behind complex wording: 'Freedom is important because liberty matters most.'", "visual": "📝" },
+        "twist": { "text": "Circular arguments are technically valid—the conclusion does follow from the premises. But they prove nothing new.", "visual": "⚠️" },
+        "climax": { "text": "Breaking the circle requires introducing independent evidence that doesn't assume the conclusion.", "visual": "🔓" },
+        "punchline": { "text": "If your proof is your claim, you've proven nothing.", "visual": "♻️" }
+      },
+      "quiz": {
+        "question": "What is wrong with circular reasoning?",
+        "options": ["The conclusion is assumed in the premises", "It uses too many steps", "It contradicts itself"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch03-logical-fallacies",
+      "title": "Appeal to Authority",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "'A famous actor says this diet works, so it must be true.' Should fame count as evidence?", "visual": "🌟" },
+        "buildup": { "text": "An appeal to authority treats someone's status as proof of their claims—even outside their expertise.", "visual": "🎓" },
+        "discovery": { "text": "Expert opinion is valuable, but only in the expert's actual field. A physicist isn't a nutrition expert.", "visual": "🔬" },
+        "twist": { "text": "Even genuine experts can be wrong. Science works by evidence and replication, not authority alone.", "visual": "📊" },
+        "climax": { "text": "The strongest arguments stand on evidence, not on who said them.", "visual": "📋" },
+        "punchline": { "text": "Who says it matters less than what the evidence shows.", "visual": "🔍" }
+      },
+      "quiz": {
+        "question": "When is an appeal to authority a fallacy?",
+        "options": ["When the authority has no expertise in the relevant field", "Whenever anyone cites an expert", "Only in mathematics"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch04-mathematical-proof",
+      "title": "What Is a Mathematical Proof?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "In math, 'I checked a million cases' is not proof. You need a logical chain from axioms to conclusion.", "visual": "🔗" },
+        "buildup": { "text": "A proof is a sequence of statements, each following logically from previous ones or from axioms.", "visual": "📋" },
+        "discovery": { "text": "Unlike science, math proofs are absolute. Once proven, a theorem is true forever—no new evidence overturns it.", "visual": "♾️" },
+        "twist": { "text": "But proofs can have errors. Some 'proofs' stood for decades before a mistake was found.", "visual": "⚠️" },
+        "climax": { "text": "The standard of proof in mathematics is the highest in any human discipline.", "visual": "🏔️" },
+        "punchline": { "text": "In math, a proof means forever. Nothing else comes close.", "visual": "💎" }
+      },
+      "quiz": {
+        "question": "Why are mathematical proofs considered absolute?",
+        "options": ["They follow logically from axioms and cannot be overturned by evidence", "They are checked by computers", "They require unanimous agreement"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch04-mathematical-proof",
+      "title": "Direct Proof",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The most straightforward way to prove something: start from what you know and walk to the conclusion.", "visual": "🚶" },
+        "buildup": { "text": "A direct proof assumes the hypothesis is true and uses logical steps to reach the conclusion.", "visual": "➡️" },
+        "discovery": { "text": "Example: prove the sum of two even numbers is even. Even means 2k. So 2k + 2m = 2(k+m), which is even.", "visual": "📐" },
+        "twist": { "text": "Direct proofs feel natural but sometimes a problem resists the head-on approach completely.", "visual": "🧱" },
+        "climax": { "text": "When direct proof works, it's clean, satisfying, and easy to follow.", "visual": "✅" },
+        "punchline": { "text": "Walk forward from hypothesis to conclusion. That's direct proof.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does a direct proof do?",
+        "options": ["Starts from assumptions and logically reaches the conclusion", "Proves the opposite is false", "Tests every possible case"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch04-mathematical-proof",
+      "title": "Proof by Contradiction",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Assume the opposite of what you want to prove. If it leads to nonsense, the original must be true.", "visual": "💥" },
+        "buildup": { "text": "Proof by contradiction shows that denying the conclusion creates a logical impossibility.", "visual": "🚫" },
+        "discovery": { "text": "Euclid proved infinitely many primes this way: assume finitely many, multiply and add 1, find a new prime.", "visual": "🔢" },
+        "twist": { "text": "Some mathematicians reject contradiction proofs—they show something exists without showing what it is.", "visual": "🤔" },
+        "climax": { "text": "Despite the controversy, contradiction is one of the most powerful tools in the proof toolkit.", "visual": "🔧" },
+        "punchline": { "text": "Assume it's false. Watch it break. Conclude it's true.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "How does proof by contradiction work?",
+        "options": ["Assume the negation and derive a logical impossibility", "Test every case individually", "Use a computer to verify"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch04-mathematical-proof",
+      "title": "Proof by Induction",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Prove it for 1. Then prove that if it works for n, it works for n+1. You've proven it for all numbers.", "visual": "🪜" },
+        "buildup": { "text": "Mathematical induction is like dominoes: knock down the first, and prove each one topples the next.", "visual": "🎯" },
+        "discovery": { "text": "The base case starts the chain. The inductive step keeps it going forever.", "visual": "🔗" },
+        "twist": { "text": "Despite its name, mathematical induction is deductive—every step is logically certain.", "visual": "📐" },
+        "climax": { "text": "Induction proves statements about all natural numbers in just two steps: base and inductive.", "visual": "2️⃣" },
+        "punchline": { "text": "Two steps prove an infinite number of truths.", "visual": "♾️" }
+      },
+      "quiz": {
+        "question": "What are the two parts of a proof by induction?",
+        "options": ["Base case and inductive step", "Hypothesis and experiment", "Premise and counterexample"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch04-mathematical-proof",
+      "title": "Proof by Exhaustion",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Sometimes the best strategy is the simplest: check every single case.", "visual": "📋" },
+        "buildup": { "text": "Proof by exhaustion divides a problem into a finite number of cases and verifies each one.", "visual": "✅" },
+        "discovery": { "text": "The four-color theorem was proven by checking 1,936 configurations—each verified by computer.", "visual": "💻" },
+        "twist": { "text": "Many mathematicians dislike exhaustion proofs because they don't explain why something is true—just that it is.", "visual": "🤷" },
+        "climax": { "text": "When the number of cases is small enough, exhaustion is unassailable proof.", "visual": "🛡️" },
+        "punchline": { "text": "Check every case and there's nothing left to doubt.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What is the main limitation of proof by exhaustion?",
+        "options": ["It only works when the number of cases is finite and manageable", "It requires advanced calculus", "It only applies to geometry"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch05-famous-proofs-and-problems",
+      "title": "Euclid's Proof of Infinite Primes",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Are prime numbers finite or infinite? Euclid settled this 2,300 years ago in just a few elegant lines.", "visual": "📜" },
+        "buildup": { "text": "Suppose there are only finitely many primes. Multiply them all together and add 1.", "visual": "✖️" },
+        "discovery": { "text": "This new number isn't divisible by any of the listed primes—so either it's prime itself or has a new prime factor.", "visual": "🔢" },
+        "twist": { "text": "Either way, the original list was incomplete. Contradiction: there must be infinitely many primes.", "visual": "💥" },
+        "climax": { "text": "This proof is so clean it's often the first proof students encounter in a math degree.", "visual": "🎓" },
+        "punchline": { "text": "A few lines of logic proved an infinite truth forever.", "visual": "♾️" }
+      },
+      "quiz": {
+        "question": "What technique did Euclid use to prove there are infinitely many primes?",
+        "options": ["Proof by contradiction", "Proof by induction", "Direct proof"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch05-famous-proofs-and-problems",
+      "title": "The Irrationality of the Square Root of 2",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The ancient Greeks proved that the square root of 2 can never be written as a fraction. It horrified them.", "visual": "📐" },
+        "buildup": { "text": "Assume root 2 equals a/b in lowest terms. Then 2b squared equals a squared.", "visual": "📝" },
+        "discovery": { "text": "That means a squared is even, so a is even. But then b must also be even—contradicting 'lowest terms.'", "visual": "💥" },
+        "twist": { "text": "Legend says the Pythagorean who revealed this was drowned. The brotherhood couldn't accept irrational numbers.", "visual": "🌊" },
+        "climax": { "text": "This tiny proof shattered the Pythagorean belief that all quantities are rational.", "visual": "🏛️" },
+        "punchline": { "text": "A fraction that can't exist proves a number that can't be written as one.", "visual": "✨" }
+      },
+      "quiz": {
+        "question": "Why can't the square root of 2 be a fraction?",
+        "options": ["Assuming it is leads to a contradiction about even numbers", "It's a negative number", "Fractions can only represent whole numbers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch05-famous-proofs-and-problems",
+      "title": "The Bridges of Konigsberg",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Can you cross all seven bridges of Konigsberg exactly once and return home? Euler said no—and proved it.", "visual": "🌉" },
+        "buildup": { "text": "In 1736, Euler abstracted the city into a graph: landmasses as nodes, bridges as edges.", "visual": "🔗" },
+        "discovery": { "text": "He proved a circuit exists only if every node has an even number of edges. Konigsberg's nodes didn't.", "visual": "📐" },
+        "twist": { "text": "This wasn't just a puzzle solution. It was the birth of graph theory—a whole new branch of math.", "visual": "🌳" },
+        "climax": { "text": "Graph theory now underpins social networks, GPS routing, computer chip design, and epidemiology.", "visual": "🌐" },
+        "punchline": { "text": "A walk across seven bridges created an entire field of math.", "visual": "🌉" }
+      },
+      "quiz": {
+        "question": "What new field of mathematics did the Konigsberg bridge problem inspire?",
+        "options": ["Graph theory", "Calculus", "Number theory"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch05-famous-proofs-and-problems",
+      "title": "The Proof of Fermat's Last Theorem",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Fermat claimed no proof fit his margin. 358 years later, Andrew Wiles filled 129 pages with one.", "visual": "📝" },
+        "buildup": { "text": "Wiles worked in secret for seven years, telling almost no one about his quest.", "visual": "🔒" },
+        "discovery": { "text": "He connected Fermat's theorem to elliptic curves and modular forms—a link nobody had thought possible.", "visual": "🔗" },
+        "twist": { "text": "His first proof had a subtle error. It took another year of agonizing work to fix it.", "visual": "😰" },
+        "climax": { "text": "The corrected proof was published in 1995. Wiles received a special Fields Medal and a knighthood.", "visual": "🎖️" },
+        "punchline": { "text": "358 years, 129 pages, and one very patient mathematician.", "visual": "✨" }
+      },
+      "quiz": {
+        "question": "How long did Andrew Wiles work secretly on Fermat's Last Theorem?",
+        "options": ["Seven years", "Two years", "Twenty years"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch05-famous-proofs-and-problems",
+      "title": "The P vs NP Problem",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Some math problems are easy to check but seem impossibly hard to solve. Are they really?", "visual": "🧩" },
+        "buildup": { "text": "P problems can be solved quickly. NP problems can be checked quickly—but solving them might take ages.", "visual": "⏱️" },
+        "discovery": { "text": "The question 'Does P equal NP?' asks whether every easily checked problem is also easily solved.", "visual": "❓" },
+        "twist": { "text": "Most experts believe P does not equal NP, but nobody has proven it either way.", "visual": "🤔" },
+        "climax": { "text": "A proof either way would win a million-dollar prize and reshape computing, cryptography, and AI.", "visual": "💰" },
+        "punchline": { "text": "Easy to check or easy to solve? That question is worth a million dollars.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does the P vs NP problem ask?",
+        "options": ["Whether every easily checked problem is also easily solved", "Whether computers can think", "Whether primes are infinite"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch06-logic-in-the-modern-world",
+      "title": "Boolean Algebra and Circuits",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Every phone, laptop, and smart device runs on a type of algebra invented in 1854.", "visual": "💻" },
+        "buildup": { "text": "George Boole created an algebra of logic using just two values: 0 and 1, with AND, OR, and NOT.", "visual": "🔢" },
+        "discovery": { "text": "In the 1930s, Claude Shannon realized Boolean algebra perfectly describes electrical switch circuits.", "visual": "⚡" },
+        "twist": { "text": "Shannon's insight built the bridge from abstract logic to physical computers—the most consequential link in tech history.", "visual": "🌉" },
+        "climax": { "text": "Every digital device—from calculators to supercomputers—is built from Boolean logic gates.", "visual": "🔧" },
+        "punchline": { "text": "An 1854 algebra of thought became the language of every computer.", "visual": "🖥️" }
+      },
+      "quiz": {
+        "question": "Who showed that Boolean algebra models electrical circuits?",
+        "options": ["Claude Shannon", "George Boole", "Alan Turing"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch06-logic-in-the-modern-world",
+      "title": "Logic Gates: AND, OR, NOT in Hardware",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Inside your computer, billions of tiny switches flip between 0 and 1. Each switch is a logic gate.", "visual": "🔌" },
+        "buildup": { "text": "An AND gate outputs 1 only when both inputs are 1. An OR gate outputs 1 when at least one input is 1.", "visual": "⚙️" },
+        "discovery": { "text": "Combining these simple gates builds adders, multipliers, memory, and entire processors.", "visual": "🏗️" },
+        "twist": { "text": "A single NAND gate (NOT-AND) is universal—any logic function can be built from NAND gates alone.", "visual": "🤯" },
+        "climax": { "text": "Modern processors contain billions of gates. All of computation reduces to simple Boolean operations.", "visual": "💻" },
+        "punchline": { "text": "Billions of yes-or-no switches produce everything your computer does.", "visual": "✨" }
+      },
+      "quiz": {
+        "question": "Why is the NAND gate called 'universal'?",
+        "options": ["Any logic function can be built using only NAND gates", "It's used in every country", "It handles all data types"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch06-logic-in-the-modern-world",
+      "title": "Artificial Intelligence and Logic",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Early AI researchers believed logic alone could create intelligent machines. They were partly right.", "visual": "🤖" },
+        "buildup": { "text": "Expert systems in the 1980s used logical rules: 'IF temperature > 38 AND cough THEN suspect flu.'", "visual": "📋" },
+        "discovery": { "text": "These rule-based systems worked in narrow domains but failed at anything requiring common sense.", "visual": "🧱" },
+        "twist": { "text": "Modern AI shifted to statistics and neural networks. But logic is making a comeback in hybrid systems.", "visual": "🔄" },
+        "climax": { "text": "The most robust AI will likely combine logical reasoning with statistical learning.", "visual": "🔗" },
+        "punchline": { "text": "Logic alone can't think, but thinking without logic can't be trusted.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "Why did purely logic-based AI systems struggle?",
+        "options": ["They couldn't handle common sense and ambiguity", "Logic is too slow for computers", "They required too much electricity"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch06-logic-in-the-modern-world",
+      "title": "Godel's Incompleteness Theorems",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 1931, a 25-year-old proved that mathematics can never fully know itself. The news shook the world.", "visual": "🌍" },
+        "buildup": { "text": "Kurt Godel showed that any consistent system powerful enough to describe arithmetic contains unprovable truths.", "visual": "📐" },
+        "discovery": { "text": "His first theorem: there are true statements that the system can never prove. They're invisible to it.", "visual": "👻" },
+        "twist": { "text": "His second theorem: no such system can prove its own consistency. Math can never fully trust itself.", "visual": "🤯" },
+        "climax": { "text": "Hilbert's dream of a complete, consistent foundation for all math was proven impossible.", "visual": "💔" },
+        "punchline": { "text": "Some truths are real but forever unprovable. Godel proved it.", "visual": "♾️" }
+      },
+      "quiz": {
+        "question": "What did Godel's first incompleteness theorem prove?",
+        "options": ["Some true statements can never be proven within a consistent system", "All math is wrong", "Computers can prove everything"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--logic-and-proof--ch06-logic-in-the-modern-world",
+      "title": "The Limits of Logic",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Logic is the most powerful tool humans have invented for reasoning. But it has boundaries.", "visual": "🗺️" },
+        "buildup": { "text": "Godel showed math has unprovable truths. Turing showed some problems are undecidable.", "visual": "🚫" },
+        "discovery": { "text": "Tarski proved that no formal system can define its own concept of truth—a logical blind spot.", "visual": "🕳️" },
+        "twist": { "text": "These limits aren't failures of logic—they're deep truths about what any formal system can achieve.", "visual": "💎" },
+        "climax": { "text": "Knowing the limits of logic is itself a triumph of logical reasoning. Logic mapped its own borders.", "visual": "🗺️" },
+        "punchline": { "text": "Logic's greatest achievement was discovering its own limits.", "visual": "✨" }
+      },
+      "quiz": {
+        "question": "What did Turing prove about computation?",
+        "options": ["Some problems cannot be solved by any algorithm", "All problems can be solved given enough time", "Computers are smarter than humans"],
+        "correct": 0
+      }
+    }
+  ]
+}

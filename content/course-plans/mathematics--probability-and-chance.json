@@ -1,0 +1,559 @@
+{
+  "categoryId": "mathematics",
+  "subject": "Mathematics",
+  "courseId": "mathematics--probability-and-chance",
+  "courseTitle": "Probability and Chance",
+  "emoji": "🎲",
+  "color": "#7C3AED",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "mathematics--probability-and-chance--ch01-foundations-of-probability", "title": "Foundations of Probability", "position": 1 },
+    { "id": "mathematics--probability-and-chance--ch02-counting-and-combinations", "title": "Counting and Combinations", "position": 2 },
+    { "id": "mathematics--probability-and-chance--ch03-famous-puzzles", "title": "Famous Puzzles", "position": 3 },
+    { "id": "mathematics--probability-and-chance--ch04-probability-in-real-life", "title": "Probability in Real Life", "position": 4 },
+    { "id": "mathematics--probability-and-chance--ch05-randomness", "title": "Randomness", "position": 5 },
+    { "id": "mathematics--probability-and-chance--ch06-bayesian-thinking", "title": "Bayesian Thinking", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch01-foundations-of-probability",
+      "title": "What Is Probability?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Flip a coin. You know it's heads or tails, but you can't predict which. That's probability.", "visual": "🪙" },
+        "buildup": { "text": "Probability measures how likely something is. It ranges from 0 (impossible) to 1 (certain).", "visual": "📊" },
+        "discovery": { "text": "A fair coin has probability 0.5 for heads. A fair die gives each face probability 1/6.", "visual": "🎲" },
+        "twist": { "text": "Probability was born in the 1600s—from gamblers asking mathematicians for an edge.", "visual": "♠️" },
+        "climax": { "text": "Today it drives weather forecasts, medical trials, insurance, and artificial intelligence.", "visual": "🌐" },
+        "punchline": { "text": "Uncertainty has rules, and those rules are called probability.", "visual": "📐" }
+      },
+      "quiz": {
+        "question": "What is the probability of an impossible event?",
+        "options": ["0", "0.5", "1"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch01-foundations-of-probability",
+      "title": "Sample Spaces",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Before calculating odds, you need a list of everything that could possibly happen.", "visual": "📋" },
+        "buildup": { "text": "That list is the sample space. For a coin: {heads, tails}. For a die: {1, 2, 3, 4, 5, 6}.", "visual": "🎲" },
+        "discovery": { "text": "Rolling two dice creates a sample space of 36 outcomes—not 12, because order matters.", "visual": "🔢" },
+        "twist": { "text": "Many probability mistakes come from listing the sample space wrong or missing outcomes.", "visual": "⚠️" },
+        "climax": { "text": "Get the sample space right and the math almost does itself.", "visual": "✅" },
+        "punchline": { "text": "Probability starts by counting what's possible.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "How many outcomes are in the sample space for rolling two dice?",
+        "options": ["36", "12", "6"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch01-foundations-of-probability",
+      "title": "Independent Events",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A coin doesn't remember its last flip. Each toss is completely independent of the one before.", "visual": "🪙" },
+        "buildup": { "text": "Two events are independent when the outcome of one doesn't affect the other.", "visual": "🔗" },
+        "discovery": { "text": "For independent events, multiply probabilities. Two heads in a row: 0.5 times 0.5 = 0.25.", "visual": "✖️" },
+        "twist": { "text": "Gamblers constantly forget this. After five reds in roulette, black isn't 'due.'", "visual": "🎰" },
+        "climax": { "text": "The multiplication rule for independent events is the backbone of probability calculations.", "visual": "🧮" },
+        "punchline": { "text": "Coins have no memory. Neither do dice.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "What is the probability of flipping two heads in a row with a fair coin?",
+        "options": ["0.25", "0.5", "0.75"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch01-foundations-of-probability",
+      "title": "Complementary Events",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Sometimes the easiest way to find a probability is to calculate the opposite and subtract.", "visual": "🔄" },
+        "buildup": { "text": "The complement of an event is everything that doesn't happen. Subtract its probability from 1.", "visual": "➖" },
+        "discovery": { "text": "What's the chance of rolling at least one six in four tries? It's easier to find zero sixes first.", "visual": "🎲" },
+        "twist": { "text": "P(no sixes in 4 rolls) = (5/6)^4 = 0.48. So P(at least one six) = 0.52. Just above half.", "visual": "📊" },
+        "climax": { "text": "The complement trick solves 'at least one' problems that would otherwise require endless cases.", "visual": "💡" },
+        "punchline": { "text": "To find what will happen, first calculate what won't.", "visual": "🔮" }
+      },
+      "quiz": {
+        "question": "If P(rain) = 0.3, what is P(no rain)?",
+        "options": ["0.7", "0.3", "1.3"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch01-foundations-of-probability",
+      "title": "Expected Value",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A lottery ticket costs a dollar and pays a million. Should you buy it?", "visual": "🎫" },
+        "buildup": { "text": "Expected value multiplies each outcome by its probability and adds them up.", "visual": "🧮" },
+        "discovery": { "text": "If the chance of winning is 1 in 10 million, the expected value is 10 cents—less than you paid.", "visual": "📉" },
+        "twist": { "text": "Casinos set every game to have a negative expected value for players. The house always wins.", "visual": "🏠" },
+        "climax": { "text": "Insurance companies use expected value to set premiums. Your loss is their calculated gain.", "visual": "📋" },
+        "punchline": { "text": "Expected value is the math behind every bet you'll ever make.", "visual": "💰" }
+      },
+      "quiz": {
+        "question": "What does expected value measure?",
+        "options": ["The average outcome weighted by probability", "The most likely single outcome", "The maximum possible payoff"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch02-counting-and-combinations",
+      "title": "Permutations",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "How many ways can three runners finish a race? More than you'd guess.", "visual": "🏃" },
+        "buildup": { "text": "First place has 3 options, second has 2, third has 1. That's 3 times 2 times 1 = 6.", "visual": "🔢" },
+        "discovery": { "text": "This is 3 factorial, written 3!. For 10 runners, 10! = 3,628,800 possible orderings.", "visual": "🤯" },
+        "twist": { "text": "Factorials explode fast. 20! is already larger than the number of stars in our galaxy.", "visual": "🌌" },
+        "climax": { "text": "Permutations count arrangements where order matters—passwords, rankings, and seating charts.", "visual": "📋" },
+        "punchline": { "text": "Order matters, and factorials count the possibilities.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "How many ways can 4 people line up in a row?",
+        "options": ["24", "16", "12"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch02-counting-and-combinations",
+      "title": "Combinations",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Picking three toppings on a pizza—does the order matter? Not at all.", "visual": "🍕" },
+        "buildup": { "text": "Combinations count selections where order doesn't matter. AB and BA are the same group.", "visual": "🔗" },
+        "discovery": { "text": "The formula divides permutations by the number of ways to arrange the chosen items.", "visual": "➗" },
+        "twist": { "text": "Choosing 3 from 10 gives 120 combinations—far fewer than the 720 permutations.", "visual": "📊" },
+        "climax": { "text": "Lottery odds, team selections, and card hands are all combination problems.", "visual": "♠️" },
+        "punchline": { "text": "When order doesn't matter, combinations cut the count.", "visual": "✂️" }
+      },
+      "quiz": {
+        "question": "How do combinations differ from permutations?",
+        "options": ["Order doesn't matter in combinations", "Combinations are always larger", "Combinations require replacement"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch02-counting-and-combinations",
+      "title": "Pascal's Triangle in Probability",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Flip a coin five times. How many ways can you get exactly three heads?", "visual": "🪙" },
+        "buildup": { "text": "Pascal's Triangle answers this. Row 5 reads: 1, 5, 10, 10, 5, 1.", "visual": "🔺" },
+        "discovery": { "text": "The entry for 3 heads is 10. There are 10 ways to pick which 3 of the 5 flips land heads.", "visual": "🔢" },
+        "twist": { "text": "Each row gives the coefficients for binomial expansions. Algebra and probability share a triangle.", "visual": "📐" },
+        "climax": { "text": "Pascal's Triangle connects coin flips, combinations, and polynomial formulas in one elegant shape.", "visual": "🔗" },
+        "punchline": { "text": "One triangle answers questions from algebra to gambling.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "In 5 coin flips, how many ways can exactly 3 be heads?",
+        "options": ["10", "5", "15"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch02-counting-and-combinations",
+      "title": "The Binomial Distribution",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Flip a coin 100 times. You'll almost always get between 40 and 60 heads. Why?", "visual": "📊" },
+        "buildup": { "text": "The binomial distribution models the number of successes in a fixed number of independent trials.", "visual": "📈" },
+        "discovery": { "text": "It combines combinations with probability: how many ways times how likely each way is.", "visual": "🧮" },
+        "twist": { "text": "As the number of trials grows, the binomial shape approaches the famous bell curve.", "visual": "🔔" },
+        "climax": { "text": "Drug trials, quality control, and election polls all rely on the binomial distribution.", "visual": "🏥" },
+        "punchline": { "text": "Flip enough coins and a pattern always emerges.", "visual": "✨" }
+      },
+      "quiz": {
+        "question": "What does the binomial distribution model?",
+        "options": ["Number of successes in repeated independent trials", "The average of a data set", "Time between events"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch02-counting-and-combinations",
+      "title": "Counting Shortcuts",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A restaurant offers 3 soups, 5 mains, and 4 desserts. How many meals can you build?", "visual": "🍽️" },
+        "buildup": { "text": "The multiplication principle: 3 times 5 times 4 = 60 possible meals.", "visual": "✖️" },
+        "discovery": { "text": "This principle extends to passwords, license plates, and DNA sequences.", "visual": "🔐" },
+        "twist": { "text": "A 4-digit phone PIN has 10,000 possibilities. An 8-character password has billions.", "visual": "📱" },
+        "climax": { "text": "Every time you choose from menus, the multiplication principle silently counts your options.", "visual": "📋" },
+        "punchline": { "text": "Multiply choices together and the options explode.", "visual": "💥" }
+      },
+      "quiz": {
+        "question": "How many 4-digit PIN codes are possible using digits 0-9?",
+        "options": ["10,000", "1,000", "40"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch03-famous-puzzles",
+      "title": "The Monty Hall Problem",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A game show has three doors: one hides a car, two hide goats. You pick door 1.", "visual": "🚪" },
+        "buildup": { "text": "The host opens door 3, revealing a goat. He asks: do you want to switch to door 2?", "visual": "🐐" },
+        "discovery": { "text": "Switching wins two-thirds of the time. Staying wins only one-third.", "visual": "📊" },
+        "twist": { "text": "Most people refuse to believe it. Even professional mathematicians argued about it publicly.", "visual": "🤯" },
+        "climax": { "text": "The key insight: the host's action gives you information. He always reveals a losing door.", "visual": "💡" },
+        "punchline": { "text": "Always switch. The math is clear, even if intuition screams no.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "In the Monty Hall Problem, what should you do after a goat is revealed?",
+        "options": ["Switch doors", "Stay with your original choice", "It doesn't matter"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch03-famous-puzzles",
+      "title": "The Birthday Problem",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "How many people do you need in a room for two to likely share a birthday?", "visual": "🎂" },
+        "buildup": { "text": "Most people guess around 183—half the year. The real answer is shockingly low.", "visual": "🤔" },
+        "discovery": { "text": "With just 23 people, there's a 50% chance of a shared birthday.", "visual": "📊" },
+        "twist": { "text": "At 50 people, the probability jumps to 97%. At 70, it's virtually certain.", "visual": "📈" },
+        "climax": { "text": "The math works because you're checking pairs—23 people create 253 possible pairs.", "visual": "🔗" },
+        "punchline": { "text": "23 people, 253 pairs, and probability does the rest.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "How many people are needed for a 50% chance of a shared birthday?",
+        "options": ["23", "183", "50"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch03-famous-puzzles",
+      "title": "The Gambler's Fallacy",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 1913, a roulette wheel in Monte Carlo landed on black 26 times in a row.", "visual": "🎰" },
+        "buildup": { "text": "Players piled money on red, convinced it was 'due.' Black kept coming.", "visual": "💸" },
+        "discovery": { "text": "Each spin is independent. Past results don't influence future ones.", "visual": "🔄" },
+        "twist": { "text": "The casino made a fortune that night from people who believed in a pattern that didn't exist.", "visual": "🏦" },
+        "climax": { "text": "The gambler's fallacy costs real money every day in casinos, markets, and sports betting.", "visual": "📉" },
+        "punchline": { "text": "The universe doesn't owe you a correction.", "visual": "🌌" }
+      },
+      "quiz": {
+        "question": "What is the gambler's fallacy?",
+        "options": ["Believing past random results affect future ones", "Thinking all games are rigged", "Assuming you'll always lose"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch03-famous-puzzles",
+      "title": "Bertrand's Box Paradox",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Three boxes: one has two gold coins, one has two silver, one has one of each.", "visual": "📦" },
+        "buildup": { "text": "You pick a box at random and draw one coin. It's gold. What's the chance the other is also gold?", "visual": "🪙" },
+        "discovery": { "text": "Most people say 1/2. The correct answer is 2/3.", "visual": "📊" },
+        "twist": { "text": "Drawing a gold coin is more likely from the two-gold box—two chances versus one.", "visual": "💡" },
+        "climax": { "text": "Like Monty Hall, the key is that your observation changes the probabilities.", "visual": "🔄" },
+        "punchline": { "text": "Evidence updates odds. That's the core of probability.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "If you draw a gold coin from a random box, what's the probability the other coin is gold?",
+        "options": ["2/3", "1/2", "1/3"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch03-famous-puzzles",
+      "title": "The St. Petersburg Paradox",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A game offers infinite expected winnings. Would you pay a million dollars to play?", "visual": "💰" },
+        "buildup": { "text": "Flip a coin until tails appears. If heads appears n times first, you win 2^n dollars.", "visual": "🪙" },
+        "discovery": { "text": "The expected value is infinite: 1 + 1 + 1 + ... forever. Mathematically, this game is priceless.", "visual": "♾️" },
+        "twist": { "text": "Yet nobody would pay more than about $20 to play. Something is wrong with expected value.", "visual": "🤔" },
+        "climax": { "text": "Daniel Bernoulli resolved it in 1738: people value gains by utility, not raw dollars.", "visual": "📈" },
+        "punchline": { "text": "Infinite expected value, but nobody's buying.", "visual": "🚫" }
+      },
+      "quiz": {
+        "question": "What is paradoxical about the St. Petersburg game?",
+        "options": ["It has infinite expected value but nobody would pay much to play", "It always results in a loss", "The odds change with each flip"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch04-probability-in-real-life",
+      "title": "Weather Forecasting",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "When a forecast says 70% chance of rain, what does that actually mean?", "visual": "🌧️" },
+        "buildup": { "text": "It means that in 100 similar weather patterns, about 70 produced rain.", "visual": "📊" },
+        "discovery": { "text": "Forecasters run millions of simulations, tweaking starting conditions slightly each time.", "visual": "💻" },
+        "twist": { "text": "A 50% forecast isn't useless—it tells you uncertainty is genuinely high.", "visual": "🤷" },
+        "climax": { "text": "Modern 5-day forecasts are as accurate as 1-day forecasts were in 1980.", "visual": "📈" },
+        "punchline": { "text": "Probability turns chaos into a useful prediction.", "visual": "🌤️" }
+      },
+      "quiz": {
+        "question": "What does a '70% chance of rain' mean?",
+        "options": ["Similar conditions produce rain about 70 out of 100 times", "It will rain for 70% of the day", "70% of the area will get rain"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch04-probability-in-real-life",
+      "title": "Medical Test Accuracy",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A test is 99% accurate. You test positive. What's the chance you're actually sick?", "visual": "🏥" },
+        "buildup": { "text": "If the disease affects 1 in 10,000 people, most positives are false alarms.", "visual": "📊" },
+        "discovery": { "text": "Out of 10,000 people tested, 1 is truly sick and about 100 get false positives.", "visual": "🔢" },
+        "twist": { "text": "Your chance of being truly sick after a positive test is roughly 1 in 101, not 99%.", "visual": "😮" },
+        "climax": { "text": "This is why doctors order follow-up tests. One positive result isn't enough.", "visual": "🔬" },
+        "punchline": { "text": "A 99% accurate test can still be wrong most of the time.", "visual": "⚠️" }
+      },
+      "quiz": {
+        "question": "Why can a highly accurate test produce mostly false positives?",
+        "options": ["When the disease is rare, false positives outnumber true ones", "The test always fails", "Doctors misread the results"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch04-probability-in-real-life",
+      "title": "Insurance and Risk",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Insurance companies bet that you won't have a disaster. Most of the time, they're right.", "visual": "🏠" },
+        "buildup": { "text": "They calculate the probability of claims and set premiums just above the expected payout.", "visual": "📊" },
+        "discovery": { "text": "With millions of customers, individual randomness averages out—the law of large numbers at work.", "visual": "📈" },
+        "twist": { "text": "Your premium isn't personal luck—it's your risk group's aggregate probability.", "visual": "👥" },
+        "climax": { "text": "Actuaries use probability tables to price car, health, and life insurance with startling accuracy.", "visual": "🧮" },
+        "punchline": { "text": "Insurance turns your uncertainty into their certainty.", "visual": "💰" }
+      },
+      "quiz": {
+        "question": "How do insurance companies manage risk?",
+        "options": ["By pooling many customers so randomness averages out", "By rejecting all high-risk clients", "By investing premiums in the stock market"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch04-probability-in-real-life",
+      "title": "Poker Odds",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Great poker players don't rely on luck. They calculate probabilities in real time.", "visual": "♠️" },
+        "buildup": { "text": "With 5 cards from a 52-card deck, there are 2,598,960 possible hands.", "visual": "🃏" },
+        "discovery": { "text": "A royal flush has only 4 possible combinations—probability roughly 1 in 650,000.", "visual": "👑" },
+        "twist": { "text": "A pair appears in about 42% of hands. Strong hands are rare; weak ones are normal.", "visual": "📊" },
+        "climax": { "text": "Professional players win by folding bad odds and betting when probability favors them.", "visual": "🏆" },
+        "punchline": { "text": "Poker isn't about cards. It's about probabilities.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "Approximately how many 5-card poker hands are possible?",
+        "options": ["About 2.6 million", "About 52,000", "About 1 million"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch04-probability-in-real-life",
+      "title": "Lottery Mathematics",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Millions of people play the lottery every week. Almost none of them understand the math.", "visual": "🎫" },
+        "buildup": { "text": "Picking 6 numbers from 49 gives about 14 million possible combinations.", "visual": "🔢" },
+        "discovery": { "text": "Your odds of winning the jackpot are about 1 in 14 million—worse than being struck by lightning.", "visual": "⚡" },
+        "twist": { "text": "The expected value of a $2 ticket is usually about $0.80. You lose on average with every purchase.", "visual": "📉" },
+        "climax": { "text": "Lotteries are sometimes called a 'tax on people who can't do math.'", "visual": "💸" },
+        "punchline": { "text": "The odds are against you, and they always were.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What are the approximate odds of winning a 6-from-49 lottery jackpot?",
+        "options": ["1 in 14 million", "1 in 1 million", "1 in 100,000"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch05-randomness",
+      "title": "What Does Random Mean?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Shuffle a deck of cards. The order you get has probably never existed before in history.", "visual": "🃏" },
+        "buildup": { "text": "52 factorial possible orderings is a number with 68 digits. The universe hasn't existed long enough.", "visual": "🌌" },
+        "discovery": { "text": "True randomness means no pattern, no prediction, no shortcut—just equal likelihood.", "visual": "🎲" },
+        "twist": { "text": "Humans are terrible at being random. Asked to pick a number 1-10, most people choose 7.", "visual": "7️⃣" },
+        "climax": { "text": "Computers use mathematical formulas to fake randomness. True randomness is surprisingly hard.", "visual": "💻" },
+        "punchline": { "text": "Randomness is simple to define and almost impossible to create.", "visual": "🤯" }
+      },
+      "quiz": {
+        "question": "Why is a shuffled deck of cards almost certainly in a unique order?",
+        "options": ["52 factorial is astronomically large", "Cards have magnetic properties", "Shuffling always creates new patterns"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch05-randomness",
+      "title": "Pseudo-Random Numbers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every random number your computer generates is actually fake. It follows a hidden formula.", "visual": "🤖" },
+        "buildup": { "text": "These are pseudo-random numbers—deterministic sequences that look random but aren't.", "visual": "🔢" },
+        "discovery": { "text": "They start from a seed value and use modular arithmetic to produce the next number.", "visual": "🌱" },
+        "twist": { "text": "If you know the seed, you can predict every 'random' number. That's a security risk.", "visual": "🔓" },
+        "climax": { "text": "Cryptographic systems use physical entropy—mouse movements, electrical noise—to generate true randomness.", "visual": "🔐" },
+        "punchline": { "text": "Your computer's randomness is a very convincing act.", "visual": "🎭" }
+      },
+      "quiz": {
+        "question": "What makes pseudo-random numbers different from truly random ones?",
+        "options": ["They are generated by a deterministic formula", "They are always even", "They repeat after 10 numbers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch05-randomness",
+      "title": "The Monte Carlo Method",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "What if you could solve hard math problems by rolling dice? That's the Monte Carlo method.", "visual": "🎲" },
+        "buildup": { "text": "It uses random sampling to estimate answers that are too complex to calculate exactly.", "visual": "🔬" },
+        "discovery": { "text": "To estimate pi, throw darts at a square containing a circle. The ratio of hits estimates pi.", "visual": "🎯" },
+        "twist": { "text": "Nuclear physicists invented it during the Manhattan Project to model neutron behavior.", "visual": "⚛️" },
+        "climax": { "text": "Today it prices financial derivatives, simulates climate models, and trains AI systems.", "visual": "📈" },
+        "punchline": { "text": "Random guessing, done enough times, converges on the truth.", "visual": "✨" }
+      },
+      "quiz": {
+        "question": "What does the Monte Carlo method use to estimate complex answers?",
+        "options": ["Random sampling", "Exact formulas", "Historical data only"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch05-randomness",
+      "title": "Random Walks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A drunk person staggers from a lamppost, each step in a random direction. Where do they end up?", "visual": "🚶" },
+        "buildup": { "text": "On average, they'll be about the square root of N steps away after N steps.", "visual": "📏" },
+        "discovery": { "text": "This is a random walk. It models stock prices, molecular diffusion, and animal foraging.", "visual": "📈" },
+        "twist": { "text": "In 2D, a random walker always returns to the start eventually. In 3D, they may wander forever.", "visual": "🌐" },
+        "climax": { "text": "Random walks explain why perfume spreads across a room and why stock markets are hard to predict.", "visual": "🧪" },
+        "punchline": { "text": "Random steps explain how things spread and drift.", "visual": "🌀" }
+      },
+      "quiz": {
+        "question": "What does a random walk model?",
+        "options": ["Paths made of random successive steps", "The shortest route between two points", "A pattern that always returns to start"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch05-randomness",
+      "title": "The Law of Large Numbers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Flip a coin 10 times and you might get 7 heads. Flip it a million times and you'll hit almost 50%.", "visual": "🪙" },
+        "buildup": { "text": "The law of large numbers says averages stabilize as samples grow.", "visual": "📊" },
+        "discovery": { "text": "After enough trials, the observed frequency converges to the true probability.", "visual": "📈" },
+        "twist": { "text": "This doesn't mean short runs 'correct' themselves. Each flip is still independent.", "visual": "⚠️" },
+        "climax": { "text": "Casinos, polls, and clinical trials all depend on this law to function.", "visual": "🏥" },
+        "punchline": { "text": "Enough repetitions and randomness becomes predictable.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does the law of large numbers guarantee?",
+        "options": ["Averages converge to the expected value over many trials", "Every sequence eventually evens out", "Small samples are always accurate"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch06-bayesian-thinking",
+      "title": "Bayes' Theorem",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "An 18th-century minister discovered the formula for updating beliefs with evidence.", "visual": "⛪" },
+        "buildup": { "text": "Thomas Bayes asked: if I see an effect, how likely is a particular cause?", "visual": "🤔" },
+        "discovery": { "text": "His theorem flips conditional probability: P(A given B) = P(B given A) times P(A) divided by P(B).", "visual": "🔢" },
+        "twist": { "text": "It was published after his death by a friend. Bayes never saw its impact.", "visual": "📜" },
+        "climax": { "text": "Bayes' Theorem now drives spam filters, medical diagnosis, and self-driving cars.", "visual": "🚗" },
+        "punchline": { "text": "One formula taught the world how to learn from evidence.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "What does Bayes' Theorem help you calculate?",
+        "options": ["The probability of a cause given an observed effect", "The average of a data set", "The variance of a distribution"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch06-bayesian-thinking",
+      "title": "Prior and Posterior Probability",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Before seeing any evidence, you have a guess about how likely something is. That's your prior.", "visual": "🔮" },
+        "buildup": { "text": "After observing data, you update your guess. The new estimate is your posterior.", "visual": "📊" },
+        "discovery": { "text": "Bayes' Theorem is the machine that converts priors into posteriors using evidence.", "visual": "⚙️" },
+        "twist": { "text": "Two people with different priors can reach the same conclusion—given enough evidence.", "visual": "🤝" },
+        "climax": { "text": "This update cycle is how AI chatbots, search engines, and recommendation systems learn.", "visual": "🤖" },
+        "punchline": { "text": "Start with a guess, gather evidence, and update.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "What is a 'prior' in Bayesian thinking?",
+        "options": ["Your initial belief before seeing evidence", "The final answer after all data", "A random starting value"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch06-bayesian-thinking",
+      "title": "The False Positive Puzzle",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A breathalyzer is 95% accurate. It says a driver is drunk. Is the driver actually drunk?", "visual": "🚗" },
+        "buildup": { "text": "If only 1 in 1,000 drivers are actually drunk, most positives will be false alarms.", "visual": "📊" },
+        "discovery": { "text": "Out of 1,000 drivers: 1 true positive, about 50 false positives. The driver is likely sober.", "visual": "🔢" },
+        "twist": { "text": "Courts and juries routinely misunderstand this. They confuse test accuracy with guilt probability.", "visual": "⚖️" },
+        "climax": { "text": "Bayesian reasoning cuts through the confusion by accounting for how rare the condition is.", "visual": "🧠" },
+        "punchline": { "text": "Accuracy means nothing without knowing how rare the event is.", "visual": "🔍" }
+      },
+      "quiz": {
+        "question": "Why do accurate tests still produce many false positives?",
+        "options": ["The tested condition is very rare in the population", "The test is poorly designed", "People lie about symptoms"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch06-bayesian-thinking",
+      "title": "Bayesian vs. Frequentist",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Statisticians have fought for decades over what probability even means.", "visual": "⚔️" },
+        "buildup": { "text": "Frequentists say probability is the long-run frequency of repeated experiments.", "visual": "🔄" },
+        "discovery": { "text": "Bayesians say probability is a degree of belief—it can apply to one-time events.", "visual": "🧠" },
+        "twist": { "text": "A frequentist can't assign probability to 'Did it rain yesterday?' A Bayesian can.", "visual": "🌧️" },
+        "climax": { "text": "In practice, both approaches give similar answers. The debate is philosophical, not computational.", "visual": "🤝" },
+        "punchline": { "text": "Two philosophies, similar math, endless arguments.", "visual": "♾️" }
+      },
+      "quiz": {
+        "question": "How do Bayesians define probability?",
+        "options": ["As a degree of belief", "As the frequency of repeated trials", "As the ratio of favorable outcomes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mathematics--probability-and-chance--ch06-bayesian-thinking",
+      "title": "Updating Beliefs in Everyday Life",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You hear thunder. You grab an umbrella. Without realizing it, you just applied Bayes' Theorem.", "visual": "⛈️" },
+        "buildup": { "text": "Your brain constantly updates beliefs: the chance of rain increased when you heard thunder.", "visual": "🌧️" },
+        "discovery": { "text": "Every time you change your mind because of new evidence, you're doing informal Bayesian reasoning.", "visual": "🔄" },
+        "twist": { "text": "Most people update too slowly. They anchor on first impressions and ignore new data.", "visual": "⚓" },
+        "climax": { "text": "Practicing Bayesian thinking makes you better at decisions, from career moves to medical choices.", "visual": "📊" },
+        "punchline": { "text": "Better thinking starts with better updating.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "What is the core idea behind everyday Bayesian reasoning?",
+        "options": ["Updating your beliefs when you receive new evidence", "Ignoring prior beliefs entirely", "Always trusting your first instinct"],
+        "correct": 0
+      }
+    }
+  ]
+}
