@@ -15,6 +15,9 @@ export async function listCategories() {
     // Hide legacy/alias ids when the canonical category exists.
     ['home-and-diy', 'home-diy'],
 
+    // Astronomy & Space: keep canonical `astronomy-and-space`.
+    ['astronomy-space', 'astronomy-and-space'],
+
     // Religion & Spirituality: keep canonical `religion`.
     ['religion-and-spirituality', 'religion'],
     ['religion-spirituality', 'religion'],
