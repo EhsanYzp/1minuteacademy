@@ -1,0 +1,559 @@
+{
+  "categoryId": "statistics",
+  "subject": "Statistics",
+  "courseId": "statistics--regression-and-prediction",
+  "courseTitle": "Regression and Prediction",
+  "emoji": "📈",
+  "color": "#F59E0B",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "statistics--regression-and-prediction--ch01-the-idea-of-regression", "title": "The Idea of Regression", "position": 1 },
+    { "id": "statistics--regression-and-prediction--ch02-building-models", "title": "Building Models", "position": 2 },
+    { "id": "statistics--regression-and-prediction--ch03-evaluating-predictions", "title": "Evaluating Predictions", "position": 3 },
+    { "id": "statistics--regression-and-prediction--ch04-when-regression-fails", "title": "When Regression Fails", "position": 4 },
+    { "id": "statistics--regression-and-prediction--ch05-beyond-simple-regression", "title": "Beyond Simple Regression", "position": 5 },
+    { "id": "statistics--regression-and-prediction--ch06-prediction-in-the-real-world", "title": "Prediction in the Real World", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch01-the-idea-of-regression",
+      "title": "What Is Regression?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Tall parents tend to have tall kids — but not as tall. Francis Galton called this 'regression to the mean.'", "visual": "📏" },
+        "buildup": { "text": "Regression finds the best line through a scatter of points, predicting one variable from another.", "visual": "📊" },
+        "discovery": { "text": "The line minimizes the total squared distance from every point. Closest possible fit to the data.", "visual": "📐" },
+        "twist": { "text": "Galton's original meaning — things drifting toward average — is different from the modern statistical method.", "visual": "🔄" },
+        "climax": { "text": "Regression is the backbone of prediction. From economics to medicine, it connects cause to outcome.", "visual": "🔬" },
+        "punchline": { "text": "Draw a line through the chaos. That's regression.", "visual": "✏️" }
+      },
+      "quiz": {
+        "question": "What does regression do?",
+        "options": ["It finds the best-fitting line through data to predict one variable from another", "It proves that one variable causes another", "It groups similar data points together"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch01-the-idea-of-regression",
+      "title": "Scatter Plots and Trends",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Plot study hours against exam scores. A cloud of dots emerges — and a trend hides inside.", "visual": "📊" },
+        "buildup": { "text": "Scatter plots show the relationship between two variables. Each dot is one observation.", "visual": "🔵" },
+        "discovery": { "text": "Upward trends mean positive correlation. Downward means negative. No pattern means no relationship.", "visual": "📈" },
+        "twist": { "text": "Patterns can be misleading. A curve, a cluster, or an outlier can hide the true story.", "visual": "🔍" },
+        "climax": { "text": "Always plot your data before fitting a line. Anscombe's quartet proved that numbers alone can deceive.", "visual": "🎯" },
+        "punchline": { "text": "Before you calculate, visualize. The plot tells first.", "visual": "👁️" }
+      },
+      "quiz": {
+        "question": "Why should you create a scatter plot before running regression?",
+        "options": ["It reveals patterns, outliers, and curves that summary statistics can miss", "It automatically fits the regression line", "It removes outliers from the data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch01-the-idea-of-regression",
+      "title": "Correlation: Strength of the Link",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Ice cream sales and drowning deaths are highly correlated. Does ice cream cause drowning?", "visual": "🍦" },
+        "buildup": { "text": "Correlation measures how closely two variables move together. It ranges from -1 to +1.", "visual": "📐" },
+        "discovery": { "text": "+1 means perfectly positive. -1 means perfectly negative. Zero means no linear relationship at all.", "visual": "📊" },
+        "twist": { "text": "Both ice cream and drowning rise in summer. The real cause is heat. Correlation is not causation.", "visual": "☀️" },
+        "climax": { "text": "Correlation quantifies association but never explains it. A hidden third variable often drives both.", "visual": "🔗" },
+        "punchline": { "text": "They move together. That doesn't mean one moves the other.", "visual": "🚫" }
+      },
+      "quiz": {
+        "question": "What does a correlation of -0.8 indicate?",
+        "options": ["A strong negative linear relationship — as one variable rises, the other tends to fall", "A weak relationship", "That one variable causes the other to decrease"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch01-the-idea-of-regression",
+      "title": "The Least Squares Method",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "There are infinite lines you could draw through a scatter plot. Which one is 'best'?", "visual": "📏" },
+        "buildup": { "text": "Least squares picks the line that minimizes the sum of squared vertical distances from points to the line.", "visual": "📐" },
+        "discovery": { "text": "Squaring the distances penalizes big misses more. A line close to most points but far from one is penalized.", "visual": "📊" },
+        "twist": { "text": "One extreme outlier can drag the whole line. Least squares is powerful but sensitive to outliers.", "visual": "⚠️" },
+        "climax": { "text": "Gauss invented least squares in 1809 to predict asteroid orbits. It's still the default method today.", "visual": "🌌" },
+        "punchline": { "text": "Minimize the total error. That's the best line.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What does the least squares method minimize?",
+        "options": ["The sum of squared vertical distances between data points and the fitted line", "The number of points above the line", "The total horizontal distance from each point"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch01-the-idea-of-regression",
+      "title": "Regression to the Mean",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A student scores 98 on one test, then 85 on the next. Did they get worse? Probably not.", "visual": "📝" },
+        "buildup": { "text": "Extreme performance is partly skill and partly luck. The luck part doesn't repeat.", "visual": "🍀" },
+        "discovery": { "text": "Regression to the mean says extreme observations tend to be followed by more moderate ones.", "visual": "📊" },
+        "twist": { "text": "Sports fans call it a 'sophomore slump.' Coaches think practice declined. It's usually just regression.", "visual": "⚽" },
+        "climax": { "text": "Ignoring regression to the mean leads to false explanations. You credit or blame the wrong causes.", "visual": "🤔" },
+        "punchline": { "text": "Extreme luck doesn't repeat. That's not decline — it's math.", "visual": "🔢" }
+      },
+      "quiz": {
+        "question": "What is regression to the mean?",
+        "options": ["Extreme observations tend to be followed by more moderate ones because luck doesn't repeat", "Performance always declines after a peak", "Athletes always get worse in their second year"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch02-building-models",
+      "title": "Slope and Intercept",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "For every extra hour of study, scores rise by 5 points. That '5 points per hour' is the slope.", "visual": "📈" },
+        "buildup": { "text": "The slope tells you how much Y changes for each unit increase in X. It's the rate of change.", "visual": "📐" },
+        "discovery": { "text": "The intercept is the predicted Y when X is zero. It anchors the line on the vertical axis.", "visual": "📊" },
+        "twist": { "text": "The intercept is often meaningless. Zero hours of study predicting 30 points? That's extrapolation, not reality.", "visual": "⚠️" },
+        "climax": { "text": "Together, slope and intercept define the entire prediction line: Y = intercept + slope × X.", "visual": "📝" },
+        "punchline": { "text": "Slope is the story. Intercept is the starting point.", "visual": "🏁" }
+      },
+      "quiz": {
+        "question": "What does the slope in a regression equation represent?",
+        "options": ["How much Y changes for each one-unit increase in X", "The value of Y when X is zero", "The strength of the correlation"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch02-building-models",
+      "title": "Multiple Regression",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Home prices depend on size, location, age, and schools. One predictor isn't enough.", "visual": "🏠" },
+        "buildup": { "text": "Multiple regression uses several predictors at once. Each gets its own slope, holding others constant.", "visual": "📊" },
+        "discovery": { "text": "It isolates each variable's effect. Size matters even after controlling for location and age.", "visual": "🔍" },
+        "twist": { "text": "Adding more predictors always improves fit on training data — even if they're noise. Overfitting lurks.", "visual": "⚠️" },
+        "climax": { "text": "The art of regression is choosing which predictors to include. More isn't always better.", "visual": "🎨" },
+        "punchline": { "text": "Control for everything, but don't include everything.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What does 'holding other variables constant' mean in multiple regression?",
+        "options": ["It isolates the effect of one predictor by statistically controlling for the others", "It removes the other variables from the dataset", "It sets all other predictors to zero"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch02-building-models",
+      "title": "Dummy Variables: Encoding Categories",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "How do you put 'red, blue, green' into a regression equation that only understands numbers?", "visual": "🎨" },
+        "buildup": { "text": "Dummy variables convert categories into 0s and 1s. Red = 1 if red, 0 if not.", "visual": "🔢" },
+        "discovery": { "text": "Three colors need two dummies. The third is the baseline — captured by the intercept.", "visual": "📐" },
+        "twist": { "text": "Including all categories creates perfect collinearity — the model breaks. Always drop one.", "visual": "⚠️" },
+        "climax": { "text": "Gender, country, season, and treatment group all enter regression as dummies. Categories become numbers.", "visual": "📊" },
+        "punchline": { "text": "Turn categories into 0s and 1s. Regression can handle the rest.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "Why must you drop one dummy variable category?",
+        "options": ["Including all categories creates perfect collinearity — the model can't solve the equation", "The dropped category has no effect on the outcome", "It makes the model run faster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch02-building-models",
+      "title": "Interaction Effects",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Exercise reduces stress. Sleep reduces stress. But exercise plus good sleep reduces it way more than either alone.", "visual": "🏃" },
+        "buildup": { "text": "An interaction means the effect of one variable depends on the level of another.", "visual": "🔀" },
+        "discovery": { "text": "You model this by multiplying the two predictors together. The product term captures the combined effect.", "visual": "✖️" },
+        "twist": { "text": "Ignoring interactions makes the model additive — each effect is fixed. Reality is usually more complex.", "visual": "📊" },
+        "climax": { "text": "Drug interactions, marketing synergies, and climate effects all require interaction terms to model correctly.", "visual": "🧪" },
+        "punchline": { "text": "Sometimes 1 + 1 = 3. That's an interaction.", "visual": "🔗" }
+      },
+      "quiz": {
+        "question": "What is an interaction effect in regression?",
+        "options": ["When the effect of one predictor depends on the level of another predictor", "When two predictors are highly correlated", "When the model has more than two predictors"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch02-building-models",
+      "title": "Polynomial Regression",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Sometimes the relationship between X and Y isn't a straight line — it curves.", "visual": "〰️" },
+        "buildup": { "text": "Polynomial regression adds squared, cubed, or higher-power terms: Y = a + bX + cX².", "visual": "📐" },
+        "discovery": { "text": "A quadratic term captures U-shaped patterns. A cubic captures S-curves. The math stays linear in parameters.", "visual": "📊" },
+        "twist": { "text": "Higher-degree polynomials fit training data perfectly but predict terribly. They wiggle through noise.", "visual": "🌊" },
+        "climax": { "text": "The tension between fit and prediction is the central challenge of modeling. Simpler is usually better.", "visual": "⚖️" },
+        "punchline": { "text": "Curves are fine. Too many curves is chaos.", "visual": "📈" }
+      },
+      "quiz": {
+        "question": "What does adding a squared term to regression do?",
+        "options": ["It allows the model to capture curved, U-shaped relationships", "It doubles the accuracy of predictions", "It removes outliers from the data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch03-evaluating-predictions",
+      "title": "R-Squared: How Much Is Explained?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your model predicts house prices. But how much of the variation does it actually explain?", "visual": "🏠" },
+        "buildup": { "text": "R-squared measures the fraction of variance explained by the model. It ranges from 0 to 1.", "visual": "📊" },
+        "discovery": { "text": "An R² of 0.80 means the model explains 80% of the variation. The remaining 20% is unexplained noise.", "visual": "🎯" },
+        "twist": { "text": "Adding any variable — even random noise — increases R². It never goes down, making it misleading.", "visual": "⚠️" },
+        "climax": { "text": "Adjusted R² penalizes for extra variables. It only increases if the new variable actually helps.", "visual": "⚖️" },
+        "punchline": { "text": "R² says how much you explained. Not how well you'll predict.", "visual": "📐" }
+      },
+      "quiz": {
+        "question": "Why is adjusted R² preferred over regular R²?",
+        "options": ["It penalizes for adding useless variables — it only increases if the variable truly helps", "It's always higher than regular R²", "It measures prediction accuracy on new data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch03-evaluating-predictions",
+      "title": "Residuals: What the Model Misses",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your model predicts a house costs $300K. It sells for $340K. That $40K gap is a residual.", "visual": "🏠" },
+        "buildup": { "text": "Residuals are the differences between predicted and actual values. Every data point has one.", "visual": "📏" },
+        "discovery": { "text": "Plot residuals and patterns reveal problems. Random scatter means the model is fine. Curves mean it's not.", "visual": "📊" },
+        "twist": { "text": "Residuals should look like random noise. If you see patterns, the model is missing something important.", "visual": "🔍" },
+        "climax": { "text": "Residual analysis is the key diagnostic tool. It reveals what summary numbers like R² hide.", "visual": "🔬" },
+        "punchline": { "text": "Check the residuals. They tell you what the model missed.", "visual": "👁️" }
+      },
+      "quiz": {
+        "question": "What should residuals look like if the model is correct?",
+        "options": ["Random scatter with no visible patterns", "A clear upward trend", "A perfect bell curve centered on zero"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch03-evaluating-predictions",
+      "title": "Overfitting: Memorizing Noise",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A student memorizes every practice test answer but fails the real exam. That's overfitting.", "visual": "🧠" },
+        "buildup": { "text": "A model that fits training data perfectly may capture noise instead of real patterns.", "visual": "📊" },
+        "discovery": { "text": "Overfit models have amazing in-sample performance but terrible out-of-sample predictions.", "visual": "📉" },
+        "twist": { "text": "More complex models are more prone to overfitting. The best model is often simpler than you think.", "visual": "✂️" },
+        "climax": { "text": "The goal isn't to explain the past perfectly — it's to predict the future reliably.", "visual": "🔮" },
+        "punchline": { "text": "A perfect fit to old data is a terrible fit to new data.", "visual": "⚠️" }
+      },
+      "quiz": {
+        "question": "What is overfitting?",
+        "options": ["A model captures noise in training data and performs poorly on new data", "A model is too simple to capture the real pattern", "A model has too few predictors"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch03-evaluating-predictions",
+      "title": "Cross-Validation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "How do you test a model's skill on data it hasn't seen — without waiting for the future?", "visual": "🔮" },
+        "buildup": { "text": "Cross-validation splits data into folds. Train on some, test on the rest, rotate, and average.", "visual": "🔄" },
+        "discovery": { "text": "Five-fold CV trains five models, each tested on a different 20% of the data. The average is your estimate.", "visual": "📊" },
+        "twist": { "text": "It reveals overfitting that R² hides. A model that looks great on all data may collapse on held-out data.", "visual": "💥" },
+        "climax": { "text": "Cross-validation is the standard way to estimate real-world prediction accuracy before deployment.", "visual": "✅" },
+        "punchline": { "text": "Test on data the model hasn't seen. That's honest evaluation.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What is the purpose of cross-validation?",
+        "options": ["To estimate how well a model will perform on new, unseen data", "To increase the size of the training dataset", "To remove outliers from the data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch03-evaluating-predictions",
+      "title": "The Bias-Variance Trade-Off",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Simple models are biased but stable. Complex models are flexible but noisy. You can't have both.", "visual": "⚖️" },
+        "buildup": { "text": "Bias means the model consistently misses the truth. Variance means predictions jump around with new data.", "visual": "🎯" },
+        "discovery": { "text": "Total error = bias² + variance + noise. You can reduce one, but the other rises.", "visual": "📐" },
+        "twist": { "text": "The best model sits at the sweet spot where total error is minimized — not too simple, not too complex.", "visual": "📊" },
+        "climax": { "text": "The bias-variance trade-off governs all of modeling. It's why simpler models often beat complex ones.", "visual": "🏆" },
+        "punchline": { "text": "Too simple is wrong. Too complex is unstable. Find the middle.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is the bias-variance trade-off?",
+        "options": ["Reducing bias increases variance and vice versa — the best model balances both", "Bias and variance always decrease together", "Complex models always have less error"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch04-when-regression-fails",
+      "title": "Outliers and Influential Points",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "One billionaire moves to a small town. The average income triples. Is the regression line still trustworthy?", "visual": "💰" },
+        "buildup": { "text": "An outlier is far from other points. An influential point is an outlier that drags the regression line.", "visual": "📊" },
+        "discovery": { "text": "Cook's distance measures influence. A high value means removing that point would change the entire model.", "visual": "📐" },
+        "twist": { "text": "Not all outliers are errors. Some are the most informative observations. Don't delete them automatically.", "visual": "🔍" },
+        "climax": { "text": "Robust regression methods resist outliers without removing them. The data speaks, not the analyst's choices.", "visual": "🛡️" },
+        "punchline": { "text": "One point can change the story. Check for it.", "visual": "⚠️" }
+      },
+      "quiz": {
+        "question": "What is an influential point in regression?",
+        "options": ["An outlier that significantly changes the regression line when included or removed", "Any point far from the mean", "The point closest to the regression line"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch04-when-regression-fails",
+      "title": "Multicollinearity",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You include both 'height in inches' and 'height in centimeters' in a model. The results go haywire.", "visual": "📏" },
+        "buildup": { "text": "Multicollinearity means predictors are highly correlated. The model can't tell their effects apart.", "visual": "🔗" },
+        "discovery": { "text": "Coefficients become unstable. Small changes in data cause wild swings in estimated effects.", "visual": "🎢" },
+        "twist": { "text": "Predictions may still be fine. Multicollinearity ruins interpretation but not necessarily forecasting.", "visual": "🤔" },
+        "climax": { "text": "Check the VIF — variance inflation factor. Above 10 means trouble. Drop or combine correlated predictors.", "visual": "📊" },
+        "punchline": { "text": "Redundant predictors confuse the model. Keep it lean.", "visual": "✂️" }
+      },
+      "quiz": {
+        "question": "What problem does multicollinearity cause?",
+        "options": ["It makes individual coefficient estimates unstable and hard to interpret", "It makes all predictions inaccurate", "It reduces the sample size"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch04-when-regression-fails",
+      "title": "Extrapolation: Beyond the Data",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your model predicts that a 200-year-old tree would be 500 meters tall. Something's wrong.", "visual": "🌳" },
+        "buildup": { "text": "Extrapolation means predicting beyond the range of your data. The model has no evidence there.", "visual": "📏" },
+        "discovery": { "text": "Relationships that hold within the data range often break outside it. Linear trends rarely continue forever.", "visual": "📈" },
+        "twist": { "text": "Financial models that extrapolated 2000s housing prices predicted eternal growth. The 2008 crash proved them wrong.", "visual": "📉" },
+        "climax": { "text": "A regression model is only reliable within the range of data it was built on. Beyond that, it guesses.", "visual": "🎯" },
+        "punchline": { "text": "Inside the data: prediction. Outside: imagination.", "visual": "🔮" }
+      },
+      "quiz": {
+        "question": "Why is extrapolation risky?",
+        "options": ["Relationships that hold within the data range often break outside it", "It always produces negative predictions", "It requires larger sample sizes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch04-when-regression-fails",
+      "title": "Simpson's Paradox in Regression",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A drug helps men and women separately, but hurts the combined population. How is that possible?", "visual": "💊" },
+        "buildup": { "text": "Simpson's paradox occurs when a trend reverses after combining groups. The aggregate tells a different story.", "visual": "🔄" },
+        "discovery": { "text": "It happens when a lurking variable is unevenly distributed. More sick women took the drug, dragging down the average.", "visual": "📊" },
+        "twist": { "text": "Without controlling for the lurking variable, the regression coefficient points the wrong direction entirely.", "visual": "⚠️" },
+        "climax": { "text": "The lesson: always consider what's being hidden by aggregation. Pooled data can lie.", "visual": "🔍" },
+        "punchline": { "text": "Combine the groups and the truth can reverse.", "visual": "🪞" }
+      },
+      "quiz": {
+        "question": "What causes Simpson's paradox?",
+        "options": ["A lurking variable is unevenly distributed across groups, reversing the trend when combined", "The sample size is too small", "The regression model has too many predictors"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch04-when-regression-fails",
+      "title": "Heteroscedasticity",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Predicting income from age: for 20-year-olds, predictions are close. For 50-year-olds, they're wildly off.", "visual": "📊" },
+        "buildup": { "text": "When prediction error grows or shrinks with X, the variance isn't constant. That's heteroscedasticity.", "visual": "📐" },
+        "discovery": { "text": "Residual plots reveal it: a funnel or fan shape means the spread of errors changes across the range.", "visual": "📈" },
+        "twist": { "text": "The model's predictions are still unbiased, but confidence intervals and p-values become unreliable.", "visual": "⚠️" },
+        "climax": { "text": "Weighted regression or robust standard errors fix the problem without changing the model itself.", "visual": "🔧" },
+        "punchline": { "text": "Same model, different reliability at different points.", "visual": "📏" }
+      },
+      "quiz": {
+        "question": "What is heteroscedasticity?",
+        "options": ["When the spread of prediction errors changes across the range of the predictor", "When all errors are the same size", "When the regression line is perfectly horizontal"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch05-beyond-simple-regression",
+      "title": "Logistic Regression",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Will the customer buy or not? Pass or fail? Survive or die? The outcome has only two options.", "visual": "🔀" },
+        "buildup": { "text": "Logistic regression predicts probabilities for yes/no outcomes. It outputs a number between 0 and 1.", "visual": "📊" },
+        "discovery": { "text": "It uses a sigmoid curve that squashes any value into the 0-1 range. No impossible predictions like 110% chance.", "visual": "📈" },
+        "twist": { "text": "Despite its name, logistic regression is used for classification, not regression. The name is historical.", "visual": "🏷️" },
+        "climax": { "text": "Credit scoring, medical diagnosis, and spam detection all use logistic regression daily.", "visual": "💳" },
+        "punchline": { "text": "When the answer is yes or no, logistic regression gives the odds.", "visual": "🎲" }
+      },
+      "quiz": {
+        "question": "When is logistic regression used instead of linear regression?",
+        "options": ["When the outcome is binary — yes/no, pass/fail, buy/don't buy", "When the data has more than two predictors", "When the relationship between variables is perfectly linear"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch05-beyond-simple-regression",
+      "title": "Regularization: Lasso and Ridge",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your model has 500 predictors. Most are probably noise. How do you keep only the useful ones?", "visual": "🔍" },
+        "buildup": { "text": "Regularization adds a penalty for large coefficients. It shrinks them toward zero, reducing overfitting.", "visual": "📉" },
+        "discovery": { "text": "Ridge regression shrinks all coefficients evenly. Lasso shrinks some to exactly zero — automatic variable selection.", "visual": "✂️" },
+        "twist": { "text": "The penalty strength is a tuning parameter. Too much regularization kills real signal. Too little allows noise.", "visual": "⚖️" },
+        "climax": { "text": "In high-dimensional data — genomics, text, images — regularization is essential. Without it, models collapse.", "visual": "🧬" },
+        "punchline": { "text": "Penalize complexity. The model keeps what matters.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does lasso regularization do that ridge does not?",
+        "options": ["It can shrink some coefficients to exactly zero, performing automatic variable selection", "It always produces more accurate predictions", "It works without any tuning parameters"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch05-beyond-simple-regression",
+      "title": "Time Series Regression",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Stock prices, weather, and sales all change over time. Standard regression ignores the order of observations.", "visual": "📈" },
+        "buildup": { "text": "Time series regression accounts for trends, seasons, and the fact that each observation depends on its past.", "visual": "🔗" },
+        "discovery": { "text": "Autocorrelation means today's value is linked to yesterday's. Standard regression assumes independence — and breaks.", "visual": "📊" },
+        "twist": { "text": "Two unrelated time series that both trend upward will look correlated. The trend creates a false connection.", "visual": "⚠️" },
+        "climax": { "text": "Proper time series methods remove trends and seasons first, then model what's left.", "visual": "🔧" },
+        "punchline": { "text": "Order matters. Time series regression respects the clock.", "visual": "⏰" }
+      },
+      "quiz": {
+        "question": "Why can't standard regression be used directly on time series data?",
+        "options": ["It assumes independence between observations, but time series data is autocorrelated", "It can't handle numerical data", "It only works with categorical outcomes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch05-beyond-simple-regression",
+      "title": "Quantile Regression",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Standard regression predicts the average. But what if you want to predict the worst case?", "visual": "📊" },
+        "buildup": { "text": "Quantile regression predicts any percentile — the median, the 10th percentile, or the 90th.", "visual": "📐" },
+        "discovery": { "text": "It reveals how the entire distribution of Y changes with X, not just the center.", "visual": "🔍" },
+        "twist": { "text": "Exercise might raise average lifespan by 2 years but cut the risk of early death by 10 years. Different quantiles.", "visual": "🏃" },
+        "climax": { "text": "Finance uses it for risk: what's the worst 5% outcome? That matters more than the average.", "visual": "💰" },
+        "punchline": { "text": "Don't just predict the average. Predict the extremes.", "visual": "📈" }
+      },
+      "quiz": {
+        "question": "What does quantile regression predict that standard regression cannot?",
+        "options": ["Any percentile of the outcome distribution — not just the mean", "The exact future value with certainty", "Whether two variables are causally related"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch05-beyond-simple-regression",
+      "title": "Regression Trees",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Instead of fitting one line to all data, what if you split the data into groups and fit each separately?", "visual": "🌳" },
+        "buildup": { "text": "A regression tree splits data at decision points. Homes above 2,000 sq ft go left; smaller go right.", "visual": "🔀" },
+        "discovery": { "text": "Each split finds the variable and cutoff that best reduces prediction error. Repeat until groups are pure.", "visual": "✂️" },
+        "twist": { "text": "Deep trees overfit badly. They memorize individual data points instead of learning general patterns.", "visual": "⚠️" },
+        "climax": { "text": "Random forests combine hundreds of trees to stabilize predictions. The ensemble beats any single tree.", "visual": "🌲" },
+        "punchline": { "text": "One tree overfits. A forest generalizes.", "visual": "🏔️" }
+      },
+      "quiz": {
+        "question": "Why are random forests used instead of single regression trees?",
+        "options": ["Combining many trees reduces overfitting and produces more stable predictions", "A single tree is always more accurate", "Random forests are simpler to interpret"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch06-prediction-in-the-real-world",
+      "title": "Predicting Elections",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Nate Silver's model gave Obama a 90% chance in 2012. Pundits mocked it. Obama won all predicted states.", "visual": "🗳️" },
+        "buildup": { "text": "Election models combine polls, economic data, and demographics in a regression framework.", "visual": "📊" },
+        "discovery": { "text": "The trick is modeling uncertainty honestly. A 70% chance means the other candidate wins 3 times in 10.", "visual": "🎲" },
+        "twist": { "text": "In 2016, models giving Clinton 99% failed. Those giving her 70% were actually well-calibrated.", "visual": "📈" },
+        "climax": { "text": "Good prediction isn't about being right every time. It's about accurate probabilities over many events.", "visual": "🎯" },
+        "punchline": { "text": "Prediction isn't certainty. It's calibrated uncertainty.", "visual": "📐" }
+      },
+      "quiz": {
+        "question": "What makes a prediction model well-calibrated?",
+        "options": ["Events it gives 70% probability happen about 70% of the time", "It always predicts the winner correctly", "It gives 100% probability to the most likely outcome"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch06-prediction-in-the-real-world",
+      "title": "Weather Forecasting",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A '30% chance of rain' used to be a joke. Now weather forecasts are among the best predictions in science.", "visual": "🌧️" },
+        "buildup": { "text": "Weather models run regression on atmospheric data: pressure, temperature, humidity, wind across millions of points.", "visual": "🌍" },
+        "discovery": { "text": "Modern 5-day forecasts are as accurate as 1-day forecasts were in 1980. The improvement is stunning.", "visual": "📈" },
+        "twist": { "text": "Chaos theory sets a hard limit. Beyond about 10 days, tiny measurement errors make prediction impossible.", "visual": "🦋" },
+        "climax": { "text": "Weather forecasting shows what's possible with good data, good models, and honest uncertainty.", "visual": "☀️" },
+        "punchline": { "text": "We can't predict the weather in a month. But 5 days? Nailed it.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What limits weather prediction beyond about 10 days?",
+        "options": ["Chaos theory — tiny measurement errors compound and make long-range forecasts impossible", "We don't have enough weather stations", "Computer models are too slow"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch06-prediction-in-the-real-world",
+      "title": "Credit Scoring",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A three-digit number determines if you get a mortgage, a credit card, or a loan. How is it calculated?", "visual": "💳" },
+        "buildup": { "text": "Credit scores use logistic regression on payment history, debt levels, account age, and credit mix.", "visual": "📊" },
+        "discovery": { "text": "The model predicts the probability of default in the next two years. Higher score means lower risk.", "visual": "📈" },
+        "twist": { "text": "The exact formula is proprietary. Billions of dollars in lending decisions rest on a model nobody can audit.", "visual": "🔒" },
+        "climax": { "text": "Regression models shape real lives. A 20-point score change can mean thousands in interest rates.", "visual": "💰" },
+        "punchline": { "text": "A regression model decides who gets a loan. For better or worse.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What does a credit score predict?",
+        "options": ["The probability of defaulting on a loan within a specific time period", "Your total lifetime income", "How much money you currently have in savings"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch06-prediction-in-the-real-world",
+      "title": "Predicting Pandemics",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In early 2020, models predicted millions of COVID deaths. Were they wrong, or did they change behavior?", "visual": "🦠" },
+        "buildup": { "text": "Pandemic models use regression on transmission rates, population density, and interventions.", "visual": "📊" },
+        "discovery": { "text": "Models aren't crystal balls — they're 'if/then' machines. If nothing changes, this happens.", "visual": "🔮" },
+        "twist": { "text": "When a dire prediction causes action, the prediction doesn't come true. The model succeeded by being 'wrong.'", "visual": "🎭" },
+        "climax": { "text": "This is the prophet's dilemma: the best predictions are the ones that prevent themselves.", "visual": "🔄" },
+        "punchline": { "text": "The best prediction is one that changes the future.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "What is the 'prophet's dilemma' in prediction models?",
+        "options": ["Successful predictions that cause behavior change appear to have been wrong", "Models can never be accurate", "Pandemics are inherently unpredictable"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--regression-and-prediction--ch06-prediction-in-the-real-world",
+      "title": "The Limits of Prediction",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "We can predict eclipses centuries ahead but can't predict stock prices one day ahead. Why the difference?", "visual": "🌑" },
+        "buildup": { "text": "Some systems are governed by stable laws with few variables. Others are driven by human behavior and chaos.", "visual": "🔀" },
+        "discovery": { "text": "Philip Tetlock studied expert predictions for 20 years. Experts barely beat random chance on political forecasts.", "visual": "📉" },
+        "twist": { "text": "The most confident predictors performed worst. Humility and updating beliefs improved accuracy dramatically.", "visual": "🤔" },
+        "climax": { "text": "Good prediction requires knowing what's predictable and what isn't. That meta-knowledge is the rarest skill.", "visual": "🎯" },
+        "punchline": { "text": "Know what you can predict. Know what you can't.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What did Philip Tetlock's research find about expert predictions?",
+        "options": ["Experts barely beat random chance — and the most confident ones performed worst", "Experts were always more accurate than statistical models", "Political events are perfectly predictable with enough data"],
+        "correct": 0
+      }
+    }
+  ]
+}

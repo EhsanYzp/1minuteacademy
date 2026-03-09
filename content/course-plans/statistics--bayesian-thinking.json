@@ -1,0 +1,1243 @@
+{
+  "categoryId": "statistics",
+  "subject": "Statistics",
+  "courseId": "statistics--bayesian-thinking",
+  "courseTitle": "Bayesian Thinking",
+  "emoji": "🔄",
+  "color": "#EF4444",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "statistics--bayesian-thinking--ch01-thinking-like-a-bayesian",
+      "title": "Thinking Like a Bayesian",
+      "position": 1
+    },
+    {
+      "id": "statistics--bayesian-thinking--ch02-bayes-in-action",
+      "title": "Bayes in Action",
+      "position": 2
+    },
+    {
+      "id": "statistics--bayesian-thinking--ch03-priors-and-their-power",
+      "title": "Priors and Their Power",
+      "position": 3
+    },
+    {
+      "id": "statistics--bayesian-thinking--ch04-bayesian-vs-frequentist",
+      "title": "Bayesian vs. Frequentist",
+      "position": 4
+    },
+    {
+      "id": "statistics--bayesian-thinking--ch05-bayesian-models",
+      "title": "Bayesian Models",
+      "position": 5
+    },
+    {
+      "id": "statistics--bayesian-thinking--ch06-bayesian-thinking-daily-life",
+      "title": "Bayesian Thinking in Daily Life",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch01-thinking-like-a-bayesian",
+      "title": "What Is Bayesian Thinking?",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "You hear hoofbeats. Is it horses or zebras? Your answer depends on whether you're in Kentucky or Kenya.",
+          "visual": "🐴"
+        },
+        "buildup": {
+          "text": "Bayesian thinking starts with what you already know — your prior — then updates it with new evidence.",
+          "visual": "🔄"
+        },
+        "discovery": {
+          "text": "Thomas Bayes discovered the formula in the 1700s. It tells you exactly how much to shift your beliefs.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Most people ignore base rates. A positive test doesn't mean you're sick if the disease is extremely rare.",
+          "visual": "🏥"
+        },
+        "climax": {
+          "text": "Bayesian thinking is a framework for rational belief. It tells you how to think, not what to think.",
+          "visual": "🧠"
+        },
+        "punchline": {
+          "text": "Start with what you know. Update with what you learn.",
+          "visual": "📊"
+        }
+      },
+      "quiz": {
+        "question": "What makes Bayesian thinking different from other approaches?",
+        "options": [
+          "It starts with prior beliefs and systematically updates them with new evidence",
+          "It only uses data and ignores prior knowledge",
+          "It requires exact knowledge of the truth before testing"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch01-thinking-like-a-bayesian",
+      "title": "Bayes' Theorem: The Formula",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "One formula connects prior belief, evidence, and updated belief. It's elegant, powerful, and 250 years old.",
+          "visual": "📜"
+        },
+        "buildup": {
+          "text": "P(H|E) = P(E|H) × P(H) / P(E). Posterior equals likelihood times prior, divided by evidence.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Each part has a name: prior is your starting belief, likelihood is how well the evidence fits, posterior is your update.",
+          "visual": "🎯"
+        },
+        "twist": {
+          "text": "The formula is simple. Applying it to real problems is hard — because estimating priors is genuinely difficult.",
+          "visual": "🤔"
+        },
+        "climax": {
+          "text": "Bayes' theorem isn't just math. It's a recipe for rational thinking in an uncertain world.",
+          "visual": "🧠"
+        },
+        "punchline": {
+          "text": "Prior × Likelihood = Posterior. Update your beliefs with math.",
+          "visual": "🔢"
+        }
+      },
+      "quiz": {
+        "question": "In Bayes' theorem, what does the 'posterior' represent?",
+        "options": [
+          "Your updated belief after incorporating new evidence",
+          "Your initial belief before seeing evidence",
+          "The probability of the evidence occurring"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch01-thinking-like-a-bayesian",
+      "title": "Prior Probability",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Before any test, what do you believe? A coin is probably fair. A random person probably doesn't have a rare disease.",
+          "visual": "🪙"
+        },
+        "buildup": {
+          "text": "The prior is your belief before seeing new evidence. It encodes base rates, experience, and context.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "If 1 in 10,000 people have a disease, your prior for any random person is 0.01%. Evidence must be strong to override.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Ignoring priors leads to absurd conclusions. A 99%-accurate test gives mostly false positives for rare diseases.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "The prior is the most controversial part of Bayesian statistics. Critics say it's subjective. Fans say it's honest.",
+          "visual": "🔥"
+        },
+        "punchline": {
+          "text": "What you believed before the evidence matters.",
+          "visual": "💡"
+        }
+      },
+      "quiz": {
+        "question": "Why is the prior probability important in Bayesian reasoning?",
+        "options": [
+          "It sets the baseline — without it, even accurate tests give misleading results for rare events",
+          "It's only relevant when the data is unreliable",
+          "It replaces the need for collecting data"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch01-thinking-like-a-bayesian",
+      "title": "Likelihood: How Well Does Evidence Fit?",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "You hear a loud bang outside. How likely is that bang if it's fireworks? If it's a car crash? If it's thunder?",
+          "visual": "💥"
+        },
+        "buildup": {
+          "text": "The likelihood measures how probable the evidence is under each hypothesis. Same evidence, different odds.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "A hypothesis that makes the evidence very probable gets boosted. One that makes it unlikely gets penalized.",
+          "visual": "⚖️"
+        },
+        "twist": {
+          "text": "Likelihood is not the probability of the hypothesis. It's the probability of the data given the hypothesis.",
+          "visual": "🔄"
+        },
+        "climax": {
+          "text": "Strong evidence is evidence that's much more likely under one hypothesis than another. That's discriminating power.",
+          "visual": "🔍"
+        },
+        "punchline": {
+          "text": "Good evidence strongly favors one explanation over others.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "What does likelihood measure?",
+        "options": [
+          "How probable the observed evidence is under a given hypothesis",
+          "The probability that the hypothesis is true",
+          "How large the sample size needs to be"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch01-thinking-like-a-bayesian",
+      "title": "The Posterior: Your Updated Belief",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "You thought there was a 10% chance of rain. Dark clouds roll in. Now what's your estimate?",
+          "visual": "🌧️"
+        },
+        "buildup": {
+          "text": "The posterior combines your prior belief with the new evidence. It's your rational updated estimate.",
+          "visual": "🔄"
+        },
+        "discovery": {
+          "text": "With strong evidence, the posterior shifts dramatically. With weak evidence, it barely moves from the prior.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Tomorrow's posterior becomes the next day's prior. Bayesian updating is a continuous, never-ending process.",
+          "visual": "🔁"
+        },
+        "climax": {
+          "text": "Given enough evidence, two people with very different priors will converge to the same posterior.",
+          "visual": "🤝"
+        },
+        "punchline": {
+          "text": "Beliefs should change with evidence. The posterior is how.",
+          "visual": "💡"
+        }
+      },
+      "quiz": {
+        "question": "What happens when two people with different priors see the same strong evidence?",
+        "options": [
+          "Their posteriors converge — strong evidence overwhelms different starting beliefs",
+          "They will always disagree",
+          "The person with the stronger prior is always right"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch02-bayes-in-action",
+      "title": "Medical Testing and Base Rates",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "A test is 99% accurate. You test positive. What's the chance you're actually sick? Most people say 99%. It's wrong.",
+          "visual": "🏥"
+        },
+        "buildup": {
+          "text": "If the disease affects 1 in 1,000, then in 1,000 people: 1 true positive and 10 false positives.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Your chance of being sick is about 9%, not 99%. The rare base rate dominates the accurate test.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Doctors get this wrong too. Studies show many physicians dramatically overestimate the meaning of a positive test.",
+          "visual": "👩‍⚕️"
+        },
+        "climax": {
+          "text": "Bayes' theorem makes this intuitive: rare diseases need extraordinary evidence, not just a good test.",
+          "visual": "🔬"
+        },
+        "punchline": {
+          "text": "A positive test for a rare disease is usually a false alarm.",
+          "visual": "🚨"
+        }
+      },
+      "quiz": {
+        "question": "Why does a 99% accurate test give mostly false positives for rare diseases?",
+        "options": [
+          "The low base rate means false positives vastly outnumber true positives",
+          "The test is actually inaccurate",
+          "Doctors administer the test incorrectly"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch02-bayes-in-action",
+      "title": "Spam Filters and Naive Bayes",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "How does your email know that 'FREE VIAGRA' is spam but 'free meeting Friday' isn't?",
+          "visual": "📧"
+        },
+        "buildup": {
+          "text": "Naive Bayes calculates the probability of spam given each word. Some words strongly signal spam.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "It multiplies probabilities word by word, updating its belief with each new feature. Fast and effective.",
+          "visual": "⚡"
+        },
+        "twist": {
+          "text": "'Naive' means it assumes words are independent — which is false. But the filter works shockingly well anyway.",
+          "visual": "🤯"
+        },
+        "climax": {
+          "text": "Naive Bayes was the foundation of email spam filtering. It turned Bayesian statistics into everyday technology.",
+          "visual": "💻"
+        },
+        "punchline": {
+          "text": "A wrong assumption, brilliantly applied, filters billions of emails.",
+          "visual": "📬"
+        }
+      },
+      "quiz": {
+        "question": "Why is the naive Bayes spam filter called 'naive'?",
+        "options": [
+          "It assumes all words in an email are independent of each other — which is unrealistic but works",
+          "It only detects obvious spam",
+          "It requires no training data"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch02-bayes-in-action",
+      "title": "The Monty Hall Problem",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Three doors: one car, two goats. You pick door 1. The host opens door 3 — a goat. Should you switch?",
+          "visual": "🚪"
+        },
+        "buildup": {
+          "text": "Most people say it doesn't matter. But switching wins 2/3 of the time. It's one of the most famous puzzles.",
+          "visual": "🐐"
+        },
+        "discovery": {
+          "text": "Bayes explains it: the host's action gives you information. It shifts probability from the opened door to the other.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Even Paul Erdős, one of the greatest mathematicians, refused to believe it until shown a computer simulation.",
+          "visual": "💻"
+        },
+        "climax": {
+          "text": "The Monty Hall problem proves that information changes probability — the core of Bayesian thinking.",
+          "visual": "🧠"
+        },
+        "punchline": {
+          "text": "New information changes the odds. Always switch.",
+          "visual": "🔄"
+        }
+      },
+      "quiz": {
+        "question": "In the Monty Hall problem, why should you switch doors?",
+        "options": [
+          "The host's reveal shifts probability — switching gives you a 2/3 chance of winning",
+          "Switching makes no difference — both doors have equal odds",
+          "The host always reveals the car's location"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch02-bayes-in-action",
+      "title": "Finding Lost Objects with Bayes",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "In 2009, Bayesian search found Air France Flight 447's wreckage in the vast Atlantic Ocean after two years.",
+          "visual": "✈️"
+        },
+        "buildup": {
+          "text": "Searchers divided the ocean into grid cells and assigned each a prior probability of containing the wreckage.",
+          "visual": "🗺️"
+        },
+        "discovery": {
+          "text": "Each failed search updated the probabilities. Areas searched and found empty shifted probability to unsearched zones.",
+          "visual": "🔄"
+        },
+        "twist": {
+          "text": "The wreckage was found exactly where the Bayesian model predicted — a spot initially given low probability.",
+          "visual": "📍"
+        },
+        "climax": {
+          "text": "The same method found the Scorpion submarine in 1968 and the San Jose shipwreck in 2015.",
+          "visual": "🚢"
+        },
+        "punchline": {
+          "text": "Bayes finds needles in oceans. Literally.",
+          "visual": "🌊"
+        }
+      },
+      "quiz": {
+        "question": "How did Bayesian search help find Air France Flight 447?",
+        "options": [
+          "Failed searches updated probabilities, eventually pointing to the correct location",
+          "It predicted the crash location immediately",
+          "It used satellite imagery to scan the entire ocean"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch02-bayes-in-action",
+      "title": "The Prosecutor's Fallacy",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "The DNA match probability is 1 in a million. The prosecutor says: 'There's a one-in-a-million chance of innocence.'",
+          "visual": "⚖️"
+        },
+        "buildup": {
+          "text": "The fallacy confuses the probability of evidence given innocence with the probability of guilt given evidence.",
+          "visual": "🔄"
+        },
+        "discovery": {
+          "text": "P(match | innocent) is tiny. But P(innocent | match) depends on how many suspects were screened.",
+          "visual": "👥"
+        },
+        "twist": {
+          "text": "People have been wrongly convicted because juries confused these two probabilities. The fallacy destroys lives.",
+          "visual": "🏛️"
+        },
+        "climax": {
+          "text": "Bayes' theorem is the fix. Prior probability of guilt matters just as much as the DNA evidence.",
+          "visual": "📐"
+        },
+        "punchline": {
+          "text": "P(evidence|innocent) is not P(innocent|evidence). The swap kills.",
+          "visual": "⚠️"
+        }
+      },
+      "quiz": {
+        "question": "What is the prosecutor's fallacy?",
+        "options": [
+          "Confusing the probability of evidence given innocence with the probability of innocence given evidence",
+          "Presenting false DNA evidence",
+          "Using too small a sample in forensic analysis"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch03-priors-and-their-power",
+      "title": "Choosing a Prior",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "You've never seen this coin before. Is it fair? Your answer before flipping is your prior.",
+          "visual": "🪙"
+        },
+        "buildup": {
+          "text": "Priors come from past data, expert knowledge, or mathematical convenience. Each choice shapes the result.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "An informative prior says 'I know something.' A vague prior says 'I know nothing.' Both are valid starting points.",
+          "visual": "🤔"
+        },
+        "twist": {
+          "text": "Priors are subjective by definition. Two Bayesians can start differently and converge as data arrives.",
+          "visual": "🎭"
+        },
+        "climax": {
+          "text": "With enough data, the prior washes out. The evidence speaks louder than the starting belief.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "Every analysis starts somewhere. Bayesians are honest about where.",
+          "visual": "💡"
+        }
+      },
+      "quiz": {
+        "question": "What happens to the influence of the prior as more data is collected?",
+        "options": [
+          "It diminishes — with enough data, the evidence overwhelms the prior",
+          "It becomes stronger and harder to override",
+          "It stays constant regardless of data"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch03-priors-and-their-power",
+      "title": "Uninformative Priors",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "What if you truly know nothing? Can you express complete ignorance mathematically?",
+          "visual": "🤷"
+        },
+        "buildup": {
+          "text": "Uninformative priors try to let the data speak without influence. A flat prior gives equal weight to all values.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Jeffreys' prior is invariant to how you measure things — degrees or radians, the answer stays the same.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "True uninformativeness is impossible. Even a 'flat' prior assumes something — that extreme values are just as likely.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "In practice, weakly informative priors work best. They rule out absurdities without forcing specific beliefs.",
+          "visual": "⚖️"
+        },
+        "punchline": {
+          "text": "You can't know nothing. But you can know very little, formally.",
+          "visual": "🧠"
+        }
+      },
+      "quiz": {
+        "question": "Why are truly uninformative priors problematic?",
+        "options": [
+          "Even 'flat' priors make assumptions — like that extreme values are equally likely",
+          "They require too much computing power",
+          "They always produce the same posterior"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch03-priors-and-their-power",
+      "title": "Conjugate Priors",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "What if choosing the right prior made the math effortless? Conjugate priors do exactly that.",
+          "visual": "✨"
+        },
+        "buildup": {
+          "text": "A conjugate prior produces a posterior in the same mathematical family. Beta in, beta out. Normal in, normal out.",
+          "visual": "🔄"
+        },
+        "discovery": {
+          "text": "This means you can update beliefs with just arithmetic — no complex computation needed.",
+          "visual": "🔢"
+        },
+        "twist": {
+          "text": "Conjugate priors are mathematically convenient, not always realistic. You sacrifice accuracy for simplicity.",
+          "visual": "⚖️"
+        },
+        "climax": {
+          "text": "Before computers, conjugate priors were the only practical option. Now MCMC handles any prior shape.",
+          "visual": "💻"
+        },
+        "punchline": {
+          "text": "The prior that makes the math easy. Elegant but limiting.",
+          "visual": "📐"
+        }
+      },
+      "quiz": {
+        "question": "What is a conjugate prior?",
+        "options": [
+          "A prior that produces a posterior in the same mathematical family, making updates simple",
+          "The most accurate possible prior",
+          "A prior that equals the posterior exactly"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch03-priors-and-their-power",
+      "title": "Prior Sensitivity",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Two scientists analyze the same data with different priors and reach opposite conclusions. Who's right?",
+          "visual": "🔬"
+        },
+        "buildup": {
+          "text": "When data is limited, the prior dominates the posterior. Your starting belief drives the conclusion.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Sensitivity analysis tests multiple priors to see if conclusions change. If they do, the data isn't strong enough.",
+          "visual": "🔍"
+        },
+        "twist": {
+          "text": "Results that depend heavily on the prior are fragile. Results that survive different priors are robust.",
+          "visual": "💪"
+        },
+        "climax": {
+          "text": "Good Bayesian practice always includes sensitivity checks. If the prior matters too much, get more data.",
+          "visual": "📋"
+        },
+        "punchline": {
+          "text": "If the answer changes with the prior, you need more data.",
+          "visual": "📈"
+        }
+      },
+      "quiz": {
+        "question": "What does sensitivity analysis test in Bayesian statistics?",
+        "options": [
+          "Whether the conclusions change when different priors are used",
+          "Whether the data was collected correctly",
+          "Whether the sample size is large enough for a t-test"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch03-priors-and-their-power",
+      "title": "Empirical Bayes",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "What if you used the data itself to set the prior? That's empirical Bayes — part Bayesian, part frequentist.",
+          "visual": "🔀"
+        },
+        "buildup": {
+          "text": "Instead of choosing a prior from theory, you estimate it from the overall data pattern.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Baseball batting averages use this: a player's rate shrinks toward the league average, especially with few at-bats.",
+          "visual": "⚾"
+        },
+        "twist": {
+          "text": "Purists dislike it — using data twice violates Bayesian principles. Pragmatists love it — it works.",
+          "visual": "🤔"
+        },
+        "climax": {
+          "text": "Empirical Bayes is behind insurance pricing, hospital rankings, and teacher evaluations.",
+          "visual": "🏥"
+        },
+        "punchline": {
+          "text": "Let the data suggest the prior. Practical, if philosophically messy.",
+          "visual": "⚖️"
+        }
+      },
+      "quiz": {
+        "question": "How does empirical Bayes set the prior?",
+        "options": [
+          "It estimates the prior from the overall data pattern rather than choosing it in advance",
+          "It uses a uniform prior for every problem",
+          "It ignores the prior entirely"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch04-bayesian-vs-frequentist",
+      "title": "Two Schools of Statistics",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "Frequentists say probability is about long-run frequencies. Bayesians say it's about degrees of belief.",
+          "visual": "🔀"
+        },
+        "buildup": {
+          "text": "Frequentists: 'The coin is fair or it's not. Probability applies only to repeatable events.'",
+          "visual": "🪙"
+        },
+        "discovery": {
+          "text": "Bayesians: 'I'm 70% sure the coin is fair. That belief updates as I see more flips.'",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "In practice, both schools often reach the same conclusions. The philosophical war is louder than the practical gap.",
+          "visual": "🤝"
+        },
+        "climax": {
+          "text": "Modern statistics increasingly uses both. The right tool depends on the problem, not tribal loyalty.",
+          "visual": "🧰"
+        },
+        "punchline": {
+          "text": "Two philosophies, one goal: learn from data.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "What is the core difference between Bayesian and frequentist statistics?",
+        "options": [
+          "Bayesians treat probability as degree of belief; frequentists treat it as long-run frequency",
+          "Bayesians only use priors; frequentists only use data",
+          "Frequentists are always more accurate"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch04-bayesian-vs-frequentist",
+      "title": "What Probability Means",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "What does '30% chance of rain tomorrow' actually mean? You can't rerun tomorrow a thousand times.",
+          "visual": "🌧️"
+        },
+        "buildup": {
+          "text": "Frequentists struggle here: probability requires repeatable events. Tomorrow is a one-time event.",
+          "visual": "🤔"
+        },
+        "discovery": {
+          "text": "Bayesians say 30% is your degree of certainty. It measures your knowledge, not a physical frequency.",
+          "visual": "🧠"
+        },
+        "twist": {
+          "text": "Frequentists counter with calibration: if you say '30%' many times, it should rain 30% of those times.",
+          "visual": "📊"
+        },
+        "climax": {
+          "text": "Both interpretations work in practice. The real question is which leads to better decisions, not which is 'true.'",
+          "visual": "⚖️"
+        },
+        "punchline": {
+          "text": "Probability: long-run fact or personal belief? Both work.",
+          "visual": "💡"
+        }
+      },
+      "quiz": {
+        "question": "How do Bayesians interpret a '30% chance of rain'?",
+        "options": [
+          "As a degree of belief or certainty about a unique event",
+          "As meaning it will rain on 30% of the area",
+          "As meaningless because tomorrow can't be repeated"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch04-bayesian-vs-frequentist",
+      "title": "The Confidence Interval Debate",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A 95% confidence interval does NOT mean 95% probability the true value is inside. Surprised?",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "Frequentist intervals describe a procedure: 95% of intervals from repeated samples would contain the truth.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Bayesian credible intervals say directly: there's a 95% probability the parameter is in this range.",
+          "visual": "🎯"
+        },
+        "twist": {
+          "text": "Bayesians say confidence intervals answer the wrong question. The debate reveals deep philosophical divides.",
+          "visual": "🤯"
+        },
+        "climax": {
+          "text": "With enough data, both intervals give nearly identical numbers. The fight is about meaning, not math.",
+          "visual": "🤝"
+        },
+        "punchline": {
+          "text": "Same numbers, different meanings. One is more intuitive.",
+          "visual": "⚖️"
+        }
+      },
+      "quiz": {
+        "question": "What can a Bayesian credible interval claim that a confidence interval cannot?",
+        "options": [
+          "A direct probability statement that the parameter is in the interval",
+          "That the interval is always narrower",
+          "That no assumptions are needed"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch04-bayesian-vs-frequentist",
+      "title": "Why Bayes Was Ignored for 200 Years",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Bayes' theorem was published in 1763. It didn't become mainstream statistics until the 1990s. Why the wait?",
+          "visual": "⏳"
+        },
+        "buildup": {
+          "text": "The math was intractable. Bayesian calculations require integrals that can't be solved by hand for real problems.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Computers and MCMC — Markov Chain Monte Carlo — changed everything. Suddenly, Bayesian models were computable.",
+          "visual": "💻"
+        },
+        "twist": {
+          "text": "The frequentist school dominated because its methods were computationally cheap. Convenience won for two centuries.",
+          "visual": "📊"
+        },
+        "climax": {
+          "text": "Now that computation is abundant, Bayesian methods are spreading across every field of science.",
+          "visual": "🚀"
+        },
+        "punchline": {
+          "text": "Bayes waited 200 years for computers. Now it's everywhere.",
+          "visual": "🌐"
+        }
+      },
+      "quiz": {
+        "question": "What technological advance enabled the Bayesian revolution?",
+        "options": [
+          "Computers and MCMC algorithms that could solve previously intractable Bayesian calculations",
+          "The invention of the calculator",
+          "Faster printing of statistical tables"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch04-bayesian-vs-frequentist",
+      "title": "When to Use Which Approach",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Should you be Bayesian or frequentist? The real answer: it depends on the problem.",
+          "visual": "🤔"
+        },
+        "buildup": {
+          "text": "Frequentist methods are simpler, faster, and well-suited to large-sample, well-designed experiments.",
+          "visual": "🧪"
+        },
+        "discovery": {
+          "text": "Bayesian methods shine with small samples, complex models, and when prior knowledge is genuinely informative.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Most practicing statisticians use both. The dogmatic war is mainly among textbook authors and online forums.",
+          "visual": "💻"
+        },
+        "climax": {
+          "text": "Choose the tool that answers your question best. Pragmatism beats philosophy in real data analysis.",
+          "visual": "🧰"
+        },
+        "punchline": {
+          "text": "The best statistician uses whatever works.",
+          "visual": "🏆"
+        }
+      },
+      "quiz": {
+        "question": "When do Bayesian methods particularly excel?",
+        "options": [
+          "With small samples, complex models, and informative prior knowledge",
+          "Only when computing power is unlimited",
+          "When you have no prior information at all"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch05-bayesian-models",
+      "title": "MCMC: The Engine of Modern Bayes",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "How do you explore a mountain range in the dark? Walk randomly, but step uphill more often than down.",
+          "visual": "🏔️"
+        },
+        "buildup": {
+          "text": "MCMC — Markov Chain Monte Carlo — explores probability landscapes by taking clever random walks.",
+          "visual": "🚶"
+        },
+        "discovery": {
+          "text": "It generates samples from the posterior distribution without solving impossible integrals.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "MCMC was invented in the 1940s for nuclear physics at Los Alamos. It took decades to reach statistics.",
+          "visual": "⚛️"
+        },
+        "climax": {
+          "text": "Without MCMC, Bayesian statistics would still be a beautiful theory nobody could use. It's the key enabler.",
+          "visual": "🔑"
+        },
+        "punchline": {
+          "text": "Random walks that converge to truth. That's MCMC.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "What does MCMC do in Bayesian statistics?",
+        "options": [
+          "It generates samples from the posterior distribution without solving intractable integrals",
+          "It proves which hypothesis is correct",
+          "It replaces the need for data collection"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch05-bayesian-models",
+      "title": "Bayesian A/B Testing",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Frequentist A/B tests need a fixed sample size decided in advance. Bayesian tests can stop anytime.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "Bayesian A/B testing updates the probability that A is better than B after each new data point.",
+          "visual": "🔄"
+        },
+        "discovery": {
+          "text": "You can peek at results daily without inflating error rates. The posterior is valid at any stopping point.",
+          "visual": "👁️"
+        },
+        "twist": {
+          "text": "This flexibility comes at a cost: you need to specify priors, and results depend on those choices.",
+          "visual": "⚖️"
+        },
+        "climax": {
+          "text": "Tech companies increasingly prefer Bayesian A/B tests for their flexibility and intuitive probability outputs.",
+          "visual": "💻"
+        },
+        "punchline": {
+          "text": "Stop when you're confident. No fixed sample required.",
+          "visual": "✅"
+        }
+      },
+      "quiz": {
+        "question": "What advantage does Bayesian A/B testing have over frequentist approaches?",
+        "options": [
+          "You can check results at any time without inflating false positive rates",
+          "It requires no data at all",
+          "It's always faster regardless of the effect size"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch05-bayesian-models",
+      "title": "Bayesian Networks",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A sprinkler is on. The grass is wet. Did it rain, or did someone turn on the sprinkler?",
+          "visual": "🌧️"
+        },
+        "buildup": {
+          "text": "A Bayesian network maps causal relationships as a diagram. Arrows connect causes to effects.",
+          "visual": "🔗"
+        },
+        "discovery": {
+          "text": "Given observations — wet grass — the network calculates the probability of each possible cause.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "These networks can reason backward from effects to causes, something simple regression can't do.",
+          "visual": "🔄"
+        },
+        "climax": {
+          "text": "Medical diagnosis, fraud detection, and gene regulation analysis all use Bayesian networks.",
+          "visual": "🏥"
+        },
+        "punchline": {
+          "text": "See the effect. Infer the cause. That's a Bayesian network.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "What can Bayesian networks do that simple regression cannot?",
+        "options": [
+          "Reason backward from observed effects to infer likely causes",
+          "Handle larger datasets",
+          "Run without any data"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch05-bayesian-models",
+      "title": "Hierarchical Models",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Ten schools test a new curriculum. Results vary wildly. Should you analyze them separately or together?",
+          "visual": "🏫"
+        },
+        "buildup": {
+          "text": "Hierarchical models do both. Each school has its own effect, but all effects are drawn from a shared distribution.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Small schools borrow strength from the group. Their extreme results get pulled toward the overall average.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "This 'shrinkage' prevents overreacting to noisy small samples while respecting genuine differences.",
+          "visual": "⚖️"
+        },
+        "climax": {
+          "text": "Hierarchical models are uniquely Bayesian. They handle grouped data more honestly than any frequentist method.",
+          "visual": "🏆"
+        },
+        "punchline": {
+          "text": "Share information across groups. That's the hierarchy's power.",
+          "visual": "🔗"
+        }
+      },
+      "quiz": {
+        "question": "What do hierarchical Bayesian models achieve?",
+        "options": [
+          "They balance individual group estimates with the overall pattern, reducing noise in small groups",
+          "They eliminate all variance between groups",
+          "They ignore differences between groups entirely"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch05-bayesian-models",
+      "title": "Bayesian Model Comparison",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Two models explain the data. One is simple, the other complex and perfect-fitting. Which is better?",
+          "visual": "⚖️"
+        },
+        "buildup": {
+          "text": "The Bayes factor compares how well each model predicted the observed data — including their complexity.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Complex models spread their predictions thin. If the data is simple, a simple model wins automatically.",
+          "visual": "🎯"
+        },
+        "twist": {
+          "text": "This is Occam's razor, built into the math. Bayesian inference naturally penalizes unnecessary complexity.",
+          "visual": "✂️"
+        },
+        "climax": {
+          "text": "Unlike p-values, Bayes factors can support the null hypothesis. They can say 'nothing happened' with confidence.",
+          "visual": "📐"
+        },
+        "punchline": {
+          "text": "Simpler wins unless complexity earns its keep.",
+          "visual": "💡"
+        }
+      },
+      "quiz": {
+        "question": "How does Bayesian model comparison handle model complexity?",
+        "options": [
+          "It naturally penalizes complexity — simpler models are preferred unless the data demands otherwise",
+          "It always chooses the most complex model",
+          "Complexity is irrelevant in Bayesian analysis"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch06-bayesian-thinking-daily-life",
+      "title": "Updating Beliefs About People",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "A friend is late once. You think nothing of it. Late five times in a row? Now you update your belief.",
+          "visual": "⏰"
+        },
+        "buildup": {
+          "text": "You naturally apply Bayes in social life. One data point barely moves your opinion. Patterns shift it.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Strong priors resist change. If you've known someone for years, one bad day doesn't redefine them.",
+          "visual": "🤝"
+        },
+        "twist": {
+          "text": "But anchoring too strongly to priors is stubbornness. Refusing to update with overwhelming evidence is irrational.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Good judgment is Bayesian: strong enough priors to resist noise, weak enough to yield to real patterns.",
+          "visual": "⚖️"
+        },
+        "punchline": {
+          "text": "One event is noise. A pattern is evidence. Know the difference.",
+          "visual": "💡"
+        }
+      },
+      "quiz": {
+        "question": "How does Bayesian thinking apply to everyday social judgments?",
+        "options": [
+          "We naturally give more weight to patterns than single events, updating beliefs gradually",
+          "We should judge people solely on first impressions",
+          "All single events deserve equal weight"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch06-bayesian-thinking-daily-life",
+      "title": "Diagnosing Car Problems Like a Bayesian",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Your car won't start. Dead battery? Out of gas? Starter motor? You instinctively rank the likely causes.",
+          "visual": "🚗"
+        },
+        "buildup": {
+          "text": "Most no-starts are dead batteries. That's your prior. You check the dashboard lights for evidence.",
+          "visual": "🔋"
+        },
+        "discovery": {
+          "text": "Lights work? Battery is fine — update away from that hypothesis. No lights? Battery jumps to 90% likely.",
+          "visual": "💡"
+        },
+        "twist": {
+          "text": "A mechanic who ignores priors checks everything equally. A Bayesian mechanic checks the most likely cause first.",
+          "visual": "🔧"
+        },
+        "climax": {
+          "text": "Efficient troubleshooting is Bayesian. Start with the most probable, eliminate it, then check the next.",
+          "visual": "📋"
+        },
+        "punchline": {
+          "text": "Start with the most likely cause. Eliminate and move on.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "How does Bayesian thinking make troubleshooting more efficient?",
+        "options": [
+          "By checking the most probable causes first and updating as evidence comes in",
+          "By checking every possible cause equally",
+          "By assuming the most expensive repair is always needed"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch06-bayesian-thinking-daily-life",
+      "title": "News Consumption as Bayesian Updating",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A headline says: 'Coffee causes cancer!' Should you stop drinking coffee? A Bayesian would say: not yet.",
+          "visual": "☕"
+        },
+        "buildup": {
+          "text": "Your prior: decades of coffee research show mixed results. One study doesn't override thousands.",
+          "visual": "📚"
+        },
+        "discovery": {
+          "text": "Check the likelihood: was the study large, well-designed, and replicated? If not, it barely moves the needle.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Most people update too much on single headlines. Bayesian thinking provides emotional insulation against noise.",
+          "visual": "🛡️"
+        },
+        "climax": {
+          "text": "Consuming news like a Bayesian means updating gradually, not panicking at every new headline.",
+          "visual": "📰"
+        },
+        "punchline": {
+          "text": "One headline isn't enough to change a strong prior.",
+          "visual": "📋"
+        }
+      },
+      "quiz": {
+        "question": "How should a Bayesian thinker respond to a shocking news headline?",
+        "options": [
+          "Consider it as one data point that slightly updates a strong prior — don't overreact",
+          "Immediately change behavior based on the headline",
+          "Ignore all news because it's unreliable"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch06-bayesian-thinking-daily-life",
+      "title": "Superforecasters and Bayesian Habits",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Philip Tetlock found that ordinary people can outpredict experts — if they think like Bayesians.",
+          "visual": "🔮"
+        },
+        "buildup": {
+          "text": "Superforecasters start with base rates, update incrementally, and never make extreme predictions.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "They revise their estimates constantly. Each new piece of evidence nudges the probability by a small amount.",
+          "visual": "🔄"
+        },
+        "twist": {
+          "text": "Experts with deep knowledge but rigid beliefs performed worse than humble updaters with less expertise.",
+          "visual": "📉"
+        },
+        "climax": {
+          "text": "The key traits: humility, granularity, and willingness to change your mind. Pure Bayesian virtues.",
+          "visual": "🎓"
+        },
+        "punchline": {
+          "text": "The best forecasters update constantly and believe nothing absolutely.",
+          "visual": "🏆"
+        }
+      },
+      "quiz": {
+        "question": "What makes superforecasters so accurate?",
+        "options": [
+          "They start with base rates, update incrementally, and constantly revise their predictions",
+          "They have access to secret information",
+          "They refuse to change their initial predictions"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--bayesian-thinking--ch06-bayesian-thinking-daily-life",
+      "title": "The Bayesian Brain",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Your brain doesn't see the world directly. It predicts what it expects, then corrects with sensory input.",
+          "visual": "🧠"
+        },
+        "buildup": {
+          "text": "Neuroscience suggests the brain is a Bayesian prediction machine, constantly updating its model of reality.",
+          "visual": "🔄"
+        },
+        "discovery": {
+          "text": "Optical illusions work because the brain's prior is so strong it overrides the actual sensory evidence.",
+          "visual": "👁️"
+        },
+        "twist": {
+          "text": "Anxiety may be a prior gone wrong — the brain predicting danger when none exists, and resisting evidence of safety.",
+          "visual": "😰"
+        },
+        "climax": {
+          "text": "If the brain is Bayesian, then Bayes' theorem isn't just a formula. It's a description of how we think.",
+          "visual": "💡"
+        },
+        "punchline": {
+          "text": "Your brain was Bayesian before Bayes was born.",
+          "visual": "🤯"
+        }
+      },
+      "quiz": {
+        "question": "What does the 'Bayesian brain' hypothesis propose?",
+        "options": [
+          "The brain constantly predicts what it expects and updates those predictions with sensory input",
+          "The brain uses only raw sensory data with no predictions",
+          "Bayesian math was designed to model brain cells"
+        ],
+        "correct": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,1243 @@
+{
+  "categoryId": "statistics",
+  "subject": "Statistics",
+  "courseId": "statistics--hypothesis-testing",
+  "courseTitle": "Hypothesis Testing",
+  "emoji": "🧪",
+  "color": "#8B5CF6",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "statistics--hypothesis-testing--ch01-the-logic-of-testing",
+      "title": "The Logic of Testing",
+      "position": 1
+    },
+    {
+      "id": "statistics--hypothesis-testing--ch02-types-of-tests",
+      "title": "Types of Tests",
+      "position": 2
+    },
+    {
+      "id": "statistics--hypothesis-testing--ch03-errors-and-power",
+      "title": "Errors and Power",
+      "position": 3
+    },
+    {
+      "id": "statistics--hypothesis-testing--ch04-p-values-under-fire",
+      "title": "P-Values Under Fire",
+      "position": 4
+    },
+    {
+      "id": "statistics--hypothesis-testing--ch05-confidence-intervals",
+      "title": "Confidence Intervals",
+      "position": 5
+    },
+    {
+      "id": "statistics--hypothesis-testing--ch06-testing-in-practice",
+      "title": "Testing in Practice",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch01-the-logic-of-testing",
+      "title": "What Is a Hypothesis Test?",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "A coin lands heads 8 out of 10 times. Is it rigged, or did you just get lucky?",
+          "visual": "🪙"
+        },
+        "buildup": {
+          "text": "A hypothesis test answers this formally. It asks: could the result happen by random chance alone?",
+          "visual": "🤔"
+        },
+        "discovery": {
+          "text": "You start by assuming nothing special is happening — the null hypothesis. Then you check if data contradicts it.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "You never prove the alternative. You only reject or fail to reject the null. Absence of evidence isn't evidence.",
+          "visual": "⚖️"
+        },
+        "climax": {
+          "text": "Every drug trial, psychology study, and A/B test uses this logic. It's the backbone of modern science.",
+          "visual": "🔬"
+        },
+        "punchline": {
+          "text": "Assume nothing, then let the data disagree.",
+          "visual": "💡"
+        }
+      },
+      "quiz": {
+        "question": "What does a hypothesis test do?",
+        "options": [
+          "It checks whether observed data is unlikely under the assumption that nothing special happened",
+          "It proves that a treatment works",
+          "It calculates the exact probability of a theory being true"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch01-the-logic-of-testing",
+      "title": "The Null Hypothesis",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "In court, the defendant is presumed innocent. In statistics, the null hypothesis is the presumed truth.",
+          "visual": "⚖️"
+        },
+        "buildup": {
+          "text": "The null says there's no effect, no difference, no relationship. It's the boring default explanation.",
+          "visual": "😐"
+        },
+        "discovery": {
+          "text": "You design the test to look for evidence against the null. If the data is extreme enough, you reject it.",
+          "visual": "🎯"
+        },
+        "twist": {
+          "text": "Failing to reject the null doesn't mean it's true. It means you didn't find enough evidence against it.",
+          "visual": "🤷"
+        },
+        "climax": {
+          "text": "The null hypothesis is a straw man built to be knocked down — but only by strong enough evidence.",
+          "visual": "🥊"
+        },
+        "punchline": {
+          "text": "Start with 'nothing happened' and see if data disagrees.",
+          "visual": "📋"
+        }
+      },
+      "quiz": {
+        "question": "What does failing to reject the null hypothesis mean?",
+        "options": [
+          "There wasn't enough evidence to disprove it — not that it's true",
+          "The null hypothesis is definitely correct",
+          "The experiment failed and must be repeated"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch01-the-logic-of-testing",
+      "title": "The Alternative Hypothesis",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A drug company believes their pill reduces blood pressure. That's the alternative hypothesis — the claim to test.",
+          "visual": "💊"
+        },
+        "buildup": {
+          "text": "The alternative is what you suspect is true. It's the exciting possibility that something real is going on.",
+          "visual": "✨"
+        },
+        "discovery": {
+          "text": "One-sided alternatives predict a direction: 'the drug lowers pressure.' Two-sided: 'the drug changes pressure.'",
+          "visual": "↕️"
+        },
+        "twist": {
+          "text": "Fisher picked 0.05 arbitrarily. Yet it became a sacred threshold that entire careers hinge on.",
+          "visual": "🔄"
+        },
+        "climax": {
+          "text": "Science advances by elimination, not confirmation. You rule out the boring to reveal the interesting.",
+          "visual": "🔬"
+        },
+        "punchline": {
+          "text": "You don't prove the alternative. You disprove the null.",
+          "visual": "❌"
+        }
+      },
+      "quiz": {
+        "question": "How does a hypothesis test evaluate the alternative hypothesis?",
+        "options": [
+          "Indirectly — by checking if the null hypothesis is unlikely enough to reject",
+          "By directly calculating the probability the alternative is true",
+          "By comparing the alternative to all other possibilities"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch01-the-logic-of-testing",
+      "title": "What Is a P-Value?",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "The p-value is the most used and most misunderstood number in all of science.",
+          "visual": "🔢"
+        },
+        "buildup": {
+          "text": "It answers one question: if the null is true, how likely is data this extreme or more extreme?",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "A p-value of 0.03 means there's a 3% chance of seeing data this extreme if nothing is really happening.",
+          "visual": "📉"
+        },
+        "twist": {
+          "text": "The p-value is NOT the probability the hypothesis is true. That's the most common misinterpretation in science.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Small p-value: the data is surprising under the null. That's it. No more, no less.",
+          "visual": "🎯"
+        },
+        "punchline": {
+          "text": "P-values measure surprise, not truth.",
+          "visual": "😲"
+        }
+      },
+      "quiz": {
+        "question": "What does a p-value of 0.03 actually mean?",
+        "options": [
+          "If the null hypothesis were true, there's a 3% chance of seeing data this extreme",
+          "There's a 3% chance the null hypothesis is true",
+          "The treatment works 97% of the time"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch01-the-logic-of-testing",
+      "title": "Statistical Significance",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "If p < 0.05, we call it 'statistically significant.' But who picked 0.05, and why?",
+          "visual": "✅"
+        },
+        "buildup": {
+          "text": "Ronald Fisher suggested 0.05 in 1925 as a convenient threshold — roughly 1 in 20 odds.",
+          "visual": "📖"
+        },
+        "discovery": {
+          "text": "It stuck. Journals publish studies with p < 0.05 and reject those above. The threshold became a gatekeeper.",
+          "visual": "🚪"
+        },
+        "twist": {
+          "text": "0.05 is arbitrary. A p-value of 0.049 isn't meaningfully different from 0.051, but one is 'significant.'",
+          "visual": "🎭"
+        },
+        "climax": {
+          "text": "The bright line between significant and not is a human invention, not a mathematical necessity.",
+          "visual": "📏"
+        },
+        "punchline": {
+          "text": "0.05 is a convention, not a commandment.",
+          "visual": "📜"
+        }
+      },
+      "quiz": {
+        "question": "Why is the 0.05 threshold controversial?",
+        "options": [
+          "It's arbitrary — a p-value of 0.049 isn't meaningfully different from 0.051",
+          "It's too strict for most experiments",
+          "It was chosen by a computer algorithm"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch02-types-of-tests",
+      "title": "The Z-Test",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "You know the population average and standard deviation. A sample comes in. Is it different?",
+          "visual": "📐"
+        },
+        "buildup": {
+          "text": "The z-test compares a sample mean to a known population mean using the normal distribution.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Convert the difference to a z-score. More than 2 standard deviations away? That's suspicious.",
+          "visual": "🔢"
+        },
+        "twist": {
+          "text": "The z-test requires knowing the population standard deviation — which is almost never available in practice.",
+          "visual": "🤔"
+        },
+        "climax": {
+          "text": "It's the simplest test and the foundation for all others. Most real-world tests are variations on it.",
+          "visual": "🏗️"
+        },
+        "punchline": {
+          "text": "How far from expected? The z-score measures that.",
+          "visual": "📏"
+        }
+      },
+      "quiz": {
+        "question": "When is a z-test appropriate?",
+        "options": [
+          "When the population standard deviation is known and you want to compare a sample mean to it",
+          "When the sample size is very small",
+          "When comparing two unknown populations"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch02-types-of-tests",
+      "title": "The T-Test",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A new teaching method is tried on 25 students. Their scores are higher. Is it real or random noise?",
+          "visual": "📝"
+        },
+        "buildup": {
+          "text": "The t-test handles small samples where the population standard deviation is unknown.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "It uses the sample's own standard deviation and adds extra uncertainty through wider tails.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "William Gosset invented it at Guinness Brewery. His employer banned publishing, so he used the name 'Student.'",
+          "visual": "🍺"
+        },
+        "climax": {
+          "text": "The t-test is the workhorse of science. Most published results comparing two groups rely on it.",
+          "visual": "🔬"
+        },
+        "punchline": {
+          "text": "Small sample? Unknown variance? Use the t-test.",
+          "visual": "🧪"
+        }
+      },
+      "quiz": {
+        "question": "What makes the t-test different from the z-test?",
+        "options": [
+          "It uses the sample's own standard deviation and accounts for extra uncertainty in small samples",
+          "It only works with large samples",
+          "It doesn't require any assumptions about the data"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch02-types-of-tests",
+      "title": "The Chi-Squared Test",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A die is rolled 600 times. Each face should appear 100 times. But some faces show up more. Is it rigged?",
+          "visual": "🎲"
+        },
+        "buildup": {
+          "text": "The chi-squared test compares observed counts to expected counts across categories.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "It sums the squared differences between observed and expected, scaled by the expected count.",
+          "visual": "🔢"
+        },
+        "twist": {
+          "text": "It tests association, not causation. Two variables being linked in the table doesn't mean one causes the other.",
+          "visual": "🔗"
+        },
+        "climax": {
+          "text": "Genetics, marketing, and election analysis all use chi-squared to test if categorical patterns are real.",
+          "visual": "🧬"
+        },
+        "punchline": {
+          "text": "Do the counts match expectations? Chi-squared knows.",
+          "visual": "✅"
+        }
+      },
+      "quiz": {
+        "question": "What type of data does the chi-squared test analyze?",
+        "options": [
+          "Categorical counts — comparing observed frequencies to expected frequencies",
+          "Continuous measurements like height or weight",
+          "Time series data over many years"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch02-types-of-tests",
+      "title": "ANOVA: Comparing Many Groups",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Three diets are tested. Diet A loses 5 kg, B loses 7 kg, C loses 6 kg. Is the difference real?",
+          "visual": "🥗"
+        },
+        "buildup": {
+          "text": "ANOVA — analysis of variance — compares means across three or more groups simultaneously.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "It splits total variation into 'between groups' and 'within groups.' If between dominates, the groups differ.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "ANOVA tells you groups differ but not which ones. You need follow-up tests to find the specific differences.",
+          "visual": "🔍"
+        },
+        "climax": {
+          "text": "Agricultural science invented ANOVA. Today it's used in medicine, psychology, and every field testing multiple options.",
+          "visual": "🌾"
+        },
+        "punchline": {
+          "text": "Comparing three or more? Don't use multiple t-tests. Use ANOVA.",
+          "visual": "🧪"
+        }
+      },
+      "quiz": {
+        "question": "What does ANOVA tell you?",
+        "options": [
+          "Whether there's a significant difference among three or more group means",
+          "Exactly which groups are different from each other",
+          "The correlation between two variables"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch02-types-of-tests",
+      "title": "Non-Parametric Tests",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "What if your data isn't normally distributed? Most tests assume it is. Non-parametric tests don't.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "They work with ranks instead of raw values. Convert data to 1st, 2nd, 3rd and compare the rankings.",
+          "visual": "🏅"
+        },
+        "discovery": {
+          "text": "The Mann-Whitney test replaces the t-test. The Kruskal-Wallis replaces ANOVA. Same logic, fewer assumptions.",
+          "visual": "🔄"
+        },
+        "twist": {
+          "text": "They're safer but less powerful. With less assumed, you need more data to detect the same effect.",
+          "visual": "📉"
+        },
+        "climax": {
+          "text": "When your data is messy, skewed, or ordinal, non-parametric tests are the honest choice.",
+          "visual": "✅"
+        },
+        "punchline": {
+          "text": "Fewer assumptions, wider applicability, less power. A fair trade.",
+          "visual": "⚖️"
+        }
+      },
+      "quiz": {
+        "question": "When should you use non-parametric tests?",
+        "options": [
+          "When your data violates the normality assumption or is ordinal/ranked",
+          "Only when sample sizes are very large",
+          "When you want the most powerful test available"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch03-errors-and-power",
+      "title": "Type I Error: False Positives",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "A fire alarm goes off but there's no fire. You evacuated for nothing. That's a false positive.",
+          "visual": "🚨"
+        },
+        "buildup": {
+          "text": "A Type I error means rejecting the null hypothesis when it's actually true. You see a pattern that isn't real.",
+          "visual": "👻"
+        },
+        "discovery": {
+          "text": "The significance level — usually 0.05 — is the maximum Type I error rate you're willing to accept.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "If you run 20 tests at 0.05, you expect one false positive by chance. Multiple testing multiplies the risk.",
+          "visual": "🎲"
+        },
+        "climax": {
+          "text": "False positives fill journals with results that can't be replicated. They're the engine of bad science.",
+          "visual": "📰"
+        },
+        "punchline": {
+          "text": "Seeing a pattern that isn't there. That's Type I.",
+          "visual": "🔍"
+        }
+      },
+      "quiz": {
+        "question": "What is a Type I error?",
+        "options": [
+          "Rejecting the null hypothesis when it's actually true — a false positive",
+          "Failing to reject the null when it's false — a false negative",
+          "Getting a p-value exactly equal to 0.05"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch03-errors-and-power",
+      "title": "Type II Error: False Negatives",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A cancer screening says you're healthy, but the tumor is there. The test missed it.",
+          "visual": "🏥"
+        },
+        "buildup": {
+          "text": "A Type II error means failing to reject the null when it's actually false. A real effect goes undetected.",
+          "visual": "🙈"
+        },
+        "discovery": {
+          "text": "The probability of a Type II error is called beta. The smaller beta is, the more sensitive your test.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Type I and Type II errors trade off. Making one harder to commit makes the other easier.",
+          "visual": "⚖️"
+        },
+        "climax": {
+          "text": "In medicine, missing a disease is often worse than a false alarm. The stakes determine which error matters more.",
+          "visual": "💊"
+        },
+        "punchline": {
+          "text": "Missing a real effect is the silent error.",
+          "visual": "🤫"
+        }
+      },
+      "quiz": {
+        "question": "What is a Type II error?",
+        "options": [
+          "Failing to reject the null hypothesis when it's actually false — missing a real effect",
+          "Rejecting the null hypothesis incorrectly",
+          "Getting a sample size that's too large"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch03-errors-and-power",
+      "title": "Statistical Power",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Your study finds no effect. Does that mean the drug doesn't work — or that your study was too small to detect it?",
+          "visual": "🔬"
+        },
+        "buildup": {
+          "text": "Statistical power is the probability of detecting a real effect. Low power means you'll probably miss it.",
+          "visual": "💪"
+        },
+        "discovery": {
+          "text": "Power depends on sample size, effect size, and significance level. Bigger samples and bigger effects boost power.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "Many published studies have power below 50%. They're coin flips — even real effects get missed half the time.",
+          "visual": "🪙"
+        },
+        "climax": {
+          "text": "Running an underpowered study is nearly pointless. If power is low, even real effects stay hidden.",
+          "visual": "📋"
+        },
+        "punchline": {
+          "text": "If your study can't detect the effect, why run it?",
+          "visual": "🤔"
+        }
+      },
+      "quiz": {
+        "question": "What determines statistical power?",
+        "options": [
+          "Sample size, effect size, and significance level",
+          "Only the p-value",
+          "The number of hypotheses tested"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch03-errors-and-power",
+      "title": "Effect Size: How Big Is the Difference?",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A drug lowers blood pressure by 0.1 mmHg with p < 0.001. Statistically significant — but medically worthless.",
+          "visual": "💊"
+        },
+        "buildup": {
+          "text": "Effect size measures how large a difference is, independent of sample size. P-values can't do that.",
+          "visual": "📏"
+        },
+        "discovery": {
+          "text": "Cohen's d, odds ratios, and correlation coefficients all measure effect size in different contexts.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "With a large enough sample, any tiny difference becomes significant. Significance without effect size is meaningless.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Journals increasingly require effect sizes alongside p-values. A significant result must also be meaningful.",
+          "visual": "📝"
+        },
+        "punchline": {
+          "text": "Significant isn't the same as important.",
+          "visual": "💡"
+        }
+      },
+      "quiz": {
+        "question": "Why is effect size important alongside statistical significance?",
+        "options": [
+          "A statistically significant result can be trivially small — effect size shows if it's meaningful",
+          "Effect size replaces the need for p-values entirely",
+          "It's only needed in medical studies"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch03-errors-and-power",
+      "title": "The Multiple Comparisons Problem",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Test 20 random jelly bean colors for causing acne. One will test positive at p < 0.05 by pure chance.",
+          "visual": "🫘"
+        },
+        "buildup": {
+          "text": "Each test has a 5% false positive rate. Run 20 tests and the overall false positive rate soars to 64%.",
+          "visual": "📈"
+        },
+        "discovery": {
+          "text": "The Bonferroni correction divides the threshold by the number of tests: 20 tests means p < 0.0025.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Bonferroni is conservative. It cuts false positives but also kills real findings. Better methods exist.",
+          "visual": "✂️"
+        },
+        "climax": {
+          "text": "Genomics tests millions of genes simultaneously. Without correction, every study would find false discoveries.",
+          "visual": "🧬"
+        },
+        "punchline": {
+          "text": "Test enough things and something will look real. Correct for it.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "What is the multiple comparisons problem?",
+        "options": [
+          "Running many tests inflates the chance of false positives — some will be significant by luck",
+          "Having too many participants in a study",
+          "Comparing more than two groups with a t-test"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch04-p-values-under-fire",
+      "title": "The P-Value Misconceptions",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "Most researchers think a p-value is the probability the null is true. It's not. Not even close.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "Common mistakes: 'p = 0.03 means 3% chance the null is true.' Wrong. 'p = 0.03 means the effect is real.' Also wrong.",
+          "visual": "❌"
+        },
+        "discovery": {
+          "text": "P-values only tell you how surprising the data is under the null. They say nothing about truth or importance.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Even textbooks get it wrong. The misunderstanding is so widespread it's practically a collective delusion.",
+          "visual": "🌀"
+        },
+        "climax": {
+          "text": "Understanding what p-values actually mean is one of the most important statistical literacy skills.",
+          "visual": "🎓"
+        },
+        "punchline": {
+          "text": "The most used number in science is the most misunderstood.",
+          "visual": "🤯"
+        }
+      },
+      "quiz": {
+        "question": "Which is a correct interpretation of a p-value of 0.03?",
+        "options": [
+          "If the null is true, there's a 3% chance of data this extreme or more extreme",
+          "There's a 3% chance the null hypothesis is true",
+          "The effect is real with 97% certainty"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch04-p-values-under-fire",
+      "title": "P-Hacking: Fishing for Significance",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Try enough analyses on the same data and something will hit p < 0.05. It's called p-hacking.",
+          "visual": "🎣"
+        },
+        "buildup": {
+          "text": "Researchers test multiple variables, drop outliers, and split groups until a significant result appears.",
+          "visual": "🔍"
+        },
+        "discovery": {
+          "text": "Each decision is defensible alone. Together, they inflate false positives far beyond 5%.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "Most p-hacking isn't fraud — it's unconscious. Researchers genuinely want to find something and nudge the analysis.",
+          "visual": "🧠"
+        },
+        "climax": {
+          "text": "Pre-registration — declaring your analysis plan before seeing data — is the main defense against p-hacking.",
+          "visual": "📋"
+        },
+        "punchline": {
+          "text": "If you fish long enough, you'll always catch something.",
+          "visual": "🐟"
+        }
+      },
+      "quiz": {
+        "question": "What is p-hacking?",
+        "options": [
+          "Trying multiple analyses until a statistically significant result appears",
+          "Deliberately fabricating data",
+          "Using a p-value threshold of 0.10 instead of 0.05"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch04-p-values-under-fire",
+      "title": "HARKing: Hypothesizing After Results",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A study finds that left-handed people earn more. The researcher writes: 'We predicted left-handers earn more.'",
+          "visual": "✍️"
+        },
+        "buildup": {
+          "text": "HARKing means forming your hypothesis after seeing the results, then pretending you predicted it all along.",
+          "visual": "🔮"
+        },
+        "discovery": {
+          "text": "Researchers test many hypotheses, then present the significant one as if it was planned all along.",
+          "visual": "🗺️"
+        },
+        "twist": {
+          "text": "HARKing is invisible to readers. Published papers rarely admit which hypotheses came after the data.",
+          "visual": "🕵️"
+        },
+        "climax": {
+          "text": "Registered reports require hypotheses before data collection. This makes HARKing structurally impossible.",
+          "visual": "📝"
+        },
+        "punchline": {
+          "text": "Predictions made after the fact aren't predictions.",
+          "visual": "⏰"
+        }
+      },
+      "quiz": {
+        "question": "What is HARKing?",
+        "options": [
+          "Hypothesizing after results are known — pretending you predicted what the data showed",
+          "Making predictions before collecting data",
+          "Running too many statistical tests"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch04-p-values-under-fire",
+      "title": "The ASA Statement on P-Values",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "In 2016, the American Statistical Association did something unprecedented: it warned scientists about p-values.",
+          "visual": "📜"
+        },
+        "buildup": {
+          "text": "The ASA released six principles clarifying what p-values can and cannot do. It was a landmark rebuke.",
+          "visual": "🏛️"
+        },
+        "discovery": {
+          "text": "Key points: p-values don't measure effect probability, aren't evidence quality, and 0.05 isn't a bright line.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Despite the statement, most journals still require p < 0.05 for publication. Change is painfully slow.",
+          "visual": "🐌"
+        },
+        "climax": {
+          "text": "The ASA acknowledged what statisticians knew for decades: p-values are overused, abused, and misunderstood.",
+          "visual": "⚠️"
+        },
+        "punchline": {
+          "text": "Even statisticians say we overrely on p-values.",
+          "visual": "🤝"
+        }
+      },
+      "quiz": {
+        "question": "What did the 2016 ASA statement warn about?",
+        "options": [
+          "P-values are widely misunderstood, overused, and shouldn't be treated as a bright-line rule",
+          "P-values should be replaced by Bayesian methods",
+          "The 0.05 threshold should be lowered to 0.01"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch04-p-values-under-fire",
+      "title": "Alternatives to P-Values",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "If p-values are so flawed, what should scientists use instead? The debate is far from settled.",
+          "visual": "🤔"
+        },
+        "buildup": {
+          "text": "Effect sizes show how big the result is. Confidence intervals show the range of plausible values.",
+          "visual": "📏"
+        },
+        "discovery": {
+          "text": "Bayesian methods calculate the actual probability of a hypothesis, given the data — what people think p-values do.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "No single metric is perfect. Effect sizes need context. Bayes requires choosing a prior. Each has trade-offs.",
+          "visual": "⚖️"
+        },
+        "climax": {
+          "text": "The future is likely a toolkit approach: p-values plus effect sizes plus intervals, never one number alone.",
+          "visual": "🧰"
+        },
+        "punchline": {
+          "text": "No single number captures truth. Use many.",
+          "visual": "🔢"
+        }
+      },
+      "quiz": {
+        "question": "What advantage do Bayesian methods have over p-values?",
+        "options": [
+          "They calculate the probability of a hypothesis given the data",
+          "They require no assumptions",
+          "They always give smaller p-values"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch05-confidence-intervals",
+      "title": "What Is a Confidence Interval?",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "The average height is 170 cm, plus or minus 3 cm. That 'plus or minus' is a confidence interval.",
+          "visual": "📏"
+        },
+        "buildup": {
+          "text": "A confidence interval gives a range of plausible values for a parameter, not just a single point estimate.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "A 95% CI means: if you repeated this study 100 times, about 95 intervals would contain the true value.",
+          "visual": "🎯"
+        },
+        "twist": {
+          "text": "It does NOT mean there's a 95% probability the true value is inside this specific interval. Subtle but critical.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Confidence intervals convey both the estimate and its uncertainty. A single number hides the doubt.",
+          "visual": "📐"
+        },
+        "punchline": {
+          "text": "A range honest about uncertainty beats a precise lie.",
+          "visual": "💡"
+        }
+      },
+      "quiz": {
+        "question": "What does a 95% confidence interval actually tell you?",
+        "options": [
+          "If you repeated the study many times, about 95% of intervals would contain the true value",
+          "There's a 95% probability the true value is in this interval",
+          "The result is statistically significant at the 5% level"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch05-confidence-intervals",
+      "title": "Interpreting Interval Width",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "The drug reduces pain by 2 to 8 points. Another study says 4.9 to 5.1 points. Which is more informative?",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "A narrow interval means high precision — the estimate is tightly pinned down. A wide interval means uncertainty.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Width depends on sample size and variability. Bigger samples and less noisy data yield narrower intervals.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "A narrow interval around a useless effect is still useless. Width tells precision, not importance.",
+          "visual": "🔍"
+        },
+        "climax": {
+          "text": "Always check both the location and the width of the interval. Together they tell the full story.",
+          "visual": "🎯"
+        },
+        "punchline": {
+          "text": "Narrow means precise. It doesn't mean important.",
+          "visual": "📏"
+        }
+      },
+      "quiz": {
+        "question": "What does a wide confidence interval indicate?",
+        "options": [
+          "High uncertainty — the true value could be in a large range",
+          "The result is not statistically significant",
+          "The effect is clinically important"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch05-confidence-intervals",
+      "title": "Overlapping Confidence Intervals",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Group A: 50 ± 5. Group B: 55 ± 5. The intervals overlap. Does that mean there's no real difference?",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "Many people assume overlapping CIs mean no significant difference. This is a common mistake.",
+          "visual": "❌"
+        },
+        "discovery": {
+          "text": "CIs can overlap slightly and still show a significant difference. The comparison interval is narrower.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Non-overlapping CIs always mean a significant difference. But overlapping CIs don't guarantee insignificance.",
+          "visual": "🔄"
+        },
+        "climax": {
+          "text": "To properly compare groups, use a confidence interval for the difference — not separate intervals.",
+          "visual": "✅"
+        },
+        "punchline": {
+          "text": "Overlap doesn't mean equal. Do the comparison properly.",
+          "visual": "⚖️"
+        }
+      },
+      "quiz": {
+        "question": "What is true about overlapping confidence intervals?",
+        "options": [
+          "They don't necessarily mean the difference is insignificant — use the interval for the difference",
+          "They always indicate no significant difference",
+          "They mean the two groups are identical"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch05-confidence-intervals",
+      "title": "CIs vs. P-Values",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A p-value says 'significant or not.' A confidence interval says 'how much, and how uncertain.'",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "If a 95% CI for the difference doesn't include zero, it's significant at the 0.05 level. They're linked.",
+          "visual": "🔗"
+        },
+        "discovery": {
+          "text": "But the CI also shows the effect size and precision. It's a richer, more informative summary than p alone.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "You can have a significant p-value with a CI so wide it's practically useless. The p-value hides this.",
+          "visual": "🎭"
+        },
+        "climax": {
+          "text": "Many statisticians argue we should report CIs instead of p-values. They show everything p-values do and more.",
+          "visual": "📝"
+        },
+        "punchline": {
+          "text": "P-values give a verdict. CIs tell the whole story.",
+          "visual": "📖"
+        }
+      },
+      "quiz": {
+        "question": "What advantage do confidence intervals have over p-values?",
+        "options": [
+          "They show both the effect size and precision, not just whether a result is significant",
+          "They're always narrower than p-values",
+          "They don't require statistical assumptions"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch05-confidence-intervals",
+      "title": "Bayesian Credible Intervals",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A 95% credible interval actually means what everyone thinks a 95% confidence interval means.",
+          "visual": "🎯"
+        },
+        "buildup": {
+          "text": "Bayesian credible intervals say: there's a 95% probability the parameter is inside this range.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "This direct probability statement requires a prior — your belief before seeing data. Frequentists avoid priors.",
+          "visual": "🔮"
+        },
+        "twist": {
+          "text": "With enough data, credible and confidence intervals converge. The philosophical difference fades with sample size.",
+          "visual": "📏"
+        },
+        "climax": {
+          "text": "The credible interval is more intuitive but requires more assumptions. Neither approach is universally better.",
+          "visual": "⚖️"
+        },
+        "punchline": {
+          "text": "It means what you always wished confidence intervals meant.",
+          "visual": "💡"
+        }
+      },
+      "quiz": {
+        "question": "How does a Bayesian credible interval differ from a confidence interval?",
+        "options": [
+          "It gives a direct probability that the parameter is in the range — but requires a prior",
+          "It's always wider than a confidence interval",
+          "It doesn't use any data"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch06-testing-in-practice",
+      "title": "A/B Testing in Tech",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "Google once tested 41 shades of blue for a link color. The winning shade earned $200 million extra per year.",
+          "visual": "🔵"
+        },
+        "buildup": {
+          "text": "A/B testing randomly shows users version A or B and measures which performs better.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "It's a randomized controlled trial — the gold standard of causal evidence — applied to web pages.",
+          "visual": "🧪"
+        },
+        "twist": {
+          "text": "Running too many A/B tests simultaneously inflates false positives. Companies run thousands.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Every button, headline, and feature you see online was probably tested. A/B testing shapes the modern internet.",
+          "visual": "🌐"
+        },
+        "punchline": {
+          "text": "The internet you see was chosen by hypothesis tests.",
+          "visual": "💻"
+        }
+      },
+      "quiz": {
+        "question": "What is A/B testing?",
+        "options": [
+          "A randomized experiment comparing two versions to see which performs better",
+          "A survey asking users which design they prefer",
+          "A test that only tech companies can use"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch06-testing-in-practice",
+      "title": "Pre-Registration",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "What if researchers had to declare their hypothesis and analysis plan before collecting any data?",
+          "visual": "📋"
+        },
+        "buildup": {
+          "text": "Pre-registration locks in your plan publicly before the study begins. No post-hoc changes allowed.",
+          "visual": "🔒"
+        },
+        "discovery": {
+          "text": "It prevents p-hacking, HARKing, and selective reporting. You test what you said you'd test.",
+          "visual": "✅"
+        },
+        "twist": {
+          "text": "Critics say it kills exploration. Supporters say exploration is fine — just label it honestly as exploratory.",
+          "visual": "🗺️"
+        },
+        "climax": {
+          "text": "Major journals now offer 'registered reports' — accepting papers before results are known. Method matters, not outcomes.",
+          "visual": "📝"
+        },
+        "punchline": {
+          "text": "Commit to the plan before you see the data.",
+          "visual": "🤝"
+        }
+      },
+      "quiz": {
+        "question": "What is the purpose of pre-registration?",
+        "options": [
+          "To prevent post-hoc changes to hypotheses and analysis plans that inflate false positives",
+          "To make studies more expensive",
+          "To limit the number of researchers who can study a topic"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch06-testing-in-practice",
+      "title": "One-Tailed vs. Two-Tailed Tests",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Do you predict the drug will help, or just that it will have some effect — good or bad?",
+          "visual": "💊"
+        },
+        "buildup": {
+          "text": "A one-tailed test looks for an effect in one direction only. A two-tailed test looks in both directions.",
+          "visual": "↔️"
+        },
+        "discovery": {
+          "text": "One-tailed tests are more powerful in the predicted direction but miss effects in the opposite direction.",
+          "visual": "🎯"
+        },
+        "twist": {
+          "text": "Researchers sometimes switch to one-tailed after seeing results, halving their p-value. This is cheating.",
+          "visual": "🃏"
+        },
+        "climax": {
+          "text": "Most fields default to two-tailed tests. One-tailed requires strong justification before data collection.",
+          "visual": "📏"
+        },
+        "punchline": {
+          "text": "Pick your direction before you see the data. Or test both.",
+          "visual": "⚖️"
+        }
+      },
+      "quiz": {
+        "question": "When is a one-tailed test appropriate?",
+        "options": [
+          "When there's strong prior reason to predict the direction of an effect — decided before data collection",
+          "Whenever you want a smaller p-value",
+          "Only for medical studies"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch06-testing-in-practice",
+      "title": "Practical vs. Statistical Significance",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A study of 10 million finds that coffee drinkers live 0.3 days longer. p < 0.00001. Should you care?",
+          "visual": "☕"
+        },
+        "buildup": {
+          "text": "Statistical significance means the effect is unlikely due to chance. Practical significance means the effect matters.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "With huge samples, trivially small effects become statistically significant. Big data amplifies tiny differences.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "A 0.3-day lifespan gain won't change any health recommendation. But the p-value screams 'significant!'",
+          "visual": "📰"
+        },
+        "climax": {
+          "text": "Always ask two questions: is it real, and does it matter? Statistics answers the first. Judgment answers the second.",
+          "visual": "🧠"
+        },
+        "punchline": {
+          "text": "Real and meaningful are two different things.",
+          "visual": "💡"
+        }
+      },
+      "quiz": {
+        "question": "What's the difference between statistical and practical significance?",
+        "options": [
+          "Statistical significance means the effect is real; practical significance means it's large enough to matter",
+          "They mean the same thing",
+          "Practical significance only applies to business"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--hypothesis-testing--ch06-testing-in-practice",
+      "title": "When Tests Disagree",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "The t-test says significant. The Mann-Whitney says not. The Bayesian analysis is ambiguous. Now what?",
+          "visual": "🤷"
+        },
+        "buildup": {
+          "text": "Different tests make different assumptions. When those assumptions hold differently, results diverge.",
+          "visual": "🔀"
+        },
+        "discovery": {
+          "text": "Check the assumptions of each test: normality, equal variances, sample size. The test whose assumptions hold wins.",
+          "visual": "✅"
+        },
+        "twist": {
+          "text": "Sometimes no test clearly wins. The honest answer is 'the evidence is ambiguous' — but journals rarely publish that.",
+          "visual": "📰"
+        },
+        "climax": {
+          "text": "Disagreeing tests are informative. They reveal that the conclusion depends on assumptions, not just data.",
+          "visual": "🔍"
+        },
+        "punchline": {
+          "text": "When tests disagree, the assumptions are talking.",
+          "visual": "🗣️"
+        }
+      },
+      "quiz": {
+        "question": "What should you do when different statistical tests give different results?",
+        "options": [
+          "Check which test's assumptions best match your data — the answer depends on the assumptions",
+          "Always trust the test with the lowest p-value",
+          "Run more tests until they agree"
+        ],
+        "correct": 0
+      }
+    }
+  ]
+}

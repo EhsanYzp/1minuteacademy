@@ -1,0 +1,1243 @@
+{
+  "categoryId": "statistics",
+  "subject": "Statistics",
+  "courseId": "statistics--time-series-and-forecasting",
+  "courseTitle": "Time Series and Forecasting",
+  "emoji": "📅",
+  "color": "#0EA5E9",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "statistics--time-series-and-forecasting--ch01-patterns-in-time",
+      "title": "Patterns in Time",
+      "position": 1
+    },
+    {
+      "id": "statistics--time-series-and-forecasting--ch02-decomposition",
+      "title": "Decomposing Time Series",
+      "position": 2
+    },
+    {
+      "id": "statistics--time-series-and-forecasting--ch03-forecasting-methods",
+      "title": "Forecasting Methods",
+      "position": 3
+    },
+    {
+      "id": "statistics--time-series-and-forecasting--ch04-accuracy-and-error",
+      "title": "Measuring Forecast Accuracy",
+      "position": 4
+    },
+    {
+      "id": "statistics--time-series-and-forecasting--ch05-famous-forecasts",
+      "title": "Famous Forecasts and Failures",
+      "position": 5
+    },
+    {
+      "id": "statistics--time-series-and-forecasting--ch06-modern-forecasting",
+      "title": "Modern Forecasting",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch01-patterns-in-time",
+      "title": "What Is a Time Series?",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "Every stock price, temperature reading, and heartbeat is a time series — data ordered by when it happened.",
+          "visual": "📈"
+        },
+        "buildup": {
+          "text": "A time series records values at regular intervals: daily temperatures, monthly sales, yearly GDP.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "The order matters. Shuffling time series data destroys its meaning. Past predicts future only if sequence is preserved.",
+          "visual": "🔢"
+        },
+        "twist": {
+          "text": "Most statistical methods assume data points are independent. Time series violates this — today depends on yesterday.",
+          "visual": "🔗"
+        },
+        "climax": {
+          "text": "Time series analysis requires special methods that respect the sequential structure of the data.",
+          "visual": "📐"
+        },
+        "punchline": {
+          "text": "Data in time. Order is everything. Sequence carries the signal.",
+          "visual": "⏰"
+        }
+      },
+      "quiz": {
+        "question": "Why do time series require special statistical methods?",
+        "options": [
+          "Data points are not independent — each value depends on previous values",
+          "Time series always have more data points",
+          "Standard statistics already handle time series correctly"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch01-patterns-in-time",
+      "title": "Trends: The Long-Term Direction",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Global temperatures rose 1.1°C over 140 years. That's the trend — the slow, persistent direction beneath the noise.",
+          "visual": "🌡️"
+        },
+        "buildup": {
+          "text": "A trend is the long-term increase or decrease in a time series, stripped of short-term fluctuations.",
+          "visual": "📈"
+        },
+        "discovery": {
+          "text": "Moving averages smooth out noise to reveal the trend. A 12-month moving average removes seasonal swings.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Trends can be linear, exponential, or polynomial. Choosing the wrong shape leads to wildly different forecasts.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Detecting a genuine trend versus a random drift is one of the hardest problems in time series analysis.",
+          "visual": "🔍"
+        },
+        "punchline": {
+          "text": "Zoom out far enough and the direction emerges. The trend is the story.",
+          "visual": "📐"
+        }
+      },
+      "quiz": {
+        "question": "How do moving averages help reveal trends?",
+        "options": [
+          "They smooth out short-term fluctuations, making the long-term direction visible",
+          "They amplify noise so patterns are easier to see",
+          "They only work for financial data"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch01-patterns-in-time",
+      "title": "Seasonality: Repeating Patterns",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Ice cream sales peak every July. Flu cases spike every January. The calendar drives repeating data patterns.",
+          "visual": "🍦"
+        },
+        "buildup": {
+          "text": "Seasonality is a regular, predictable pattern that repeats at fixed intervals — weekly, monthly, or yearly.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Seasonal adjustment removes these predictable swings so you can see the underlying trend more clearly.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "Not all repeating patterns are seasonal. A business cycle of 5-7 years is cyclical, not seasonal — its period varies.",
+          "visual": "🔄"
+        },
+        "climax": {
+          "text": "Governments seasonally adjust economic data before release. The unemployment rate you see is already corrected.",
+          "visual": "📰"
+        },
+        "punchline": {
+          "text": "Strip the seasons and the true signal appears. Every winter spike is expected.",
+          "visual": "❄️"
+        }
+      },
+      "quiz": {
+        "question": "What is the difference between seasonal and cyclical patterns?",
+        "options": [
+          "Seasonal patterns repeat at fixed intervals; cyclical patterns have variable, unpredictable periods",
+          "They are the same thing",
+          "Cyclical patterns only occur in economic data"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch01-patterns-in-time",
+      "title": "Autocorrelation: The Memory of Data",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "If today is hot, tomorrow is probably hot too. Temperature has memory — and so does most time series data.",
+          "visual": "🌡️"
+        },
+        "buildup": {
+          "text": "Autocorrelation measures how much a value at one time point correlates with values at earlier time points.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "A value of 0.9 at lag 1 means today predicts tomorrow. The ACF plots this correlation at every lag.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "High autocorrelation means standard statistical tests give misleading results. Confidence intervals shrink falsely.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "The ACF plot is the first tool in any time series analysis. It reveals the data's memory structure at a glance.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "Data remembers its past. The ACF shows how far back the memory reaches.",
+          "visual": "🧠"
+        }
+      },
+      "quiz": {
+        "question": "What does the autocorrelation function (ACF) reveal about a time series?",
+        "options": [
+          "How strongly current values correlate with past values at different time lags",
+          "The exact future value of the series",
+          "Whether the data is normally distributed"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch01-patterns-in-time",
+      "title": "Stationarity: The Steady State",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A time series is stationary if its statistical properties don't change over time. Most real data isn't stationary.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "Stationarity means constant mean, constant variance, and consistent autocorrelation structure over time.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Most forecasting methods require stationarity. Differencing — subtracting consecutive values — often achieves it.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "A random walk looks like it has trends, but it's actually stationary in its differences. Appearance deceives.",
+          "visual": "🎲"
+        },
+        "climax": {
+          "text": "The Augmented Dickey-Fuller test checks whether a series is stationary. It's the gatekeeper of time series analysis.",
+          "visual": "🔬"
+        },
+        "punchline": {
+          "text": "Make it stationary first. Then the methods work. Differencing is the usual fix.",
+          "visual": "🔧"
+        }
+      },
+      "quiz": {
+        "question": "Why is stationarity important in time series analysis?",
+        "options": [
+          "Most forecasting methods require it — statistical properties must be constant over time",
+          "Stationary data is always easier to visualize",
+          "Only stationary data can be collected"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch02-decomposition",
+      "title": "Additive vs. Multiplicative Decomposition",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "Retail sales swing by $10M each December in 2010 and $50M in 2023. The swing grew. That's multiplicative.",
+          "visual": "🛒"
+        },
+        "buildup": {
+          "text": "Additive decomposition: Data = Trend + Season + Residual. The seasonal effect is a fixed amount.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Multiplicative: Data = Trend × Season × Residual. The seasonal effect is proportional to the trend level.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Choosing wrong distorts everything. A log transform converts multiplicative into additive — a common trick.",
+          "visual": "💡"
+        },
+        "climax": {
+          "text": "Most economic and business data is multiplicative — bigger values have bigger swings. Nature prefers ratios.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "Fixed swings are additive. Proportional swings are multiplicative.",
+          "visual": "🔍"
+        }
+      },
+      "quiz": {
+        "question": "When should you use multiplicative rather than additive decomposition?",
+        "options": [
+          "When seasonal swings grow proportionally with the trend level",
+          "When the data has no trend",
+          "When there is no seasonal pattern"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch02-decomposition",
+      "title": "Moving Averages",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Stock traders use the 50-day moving average like a compass. When the price crosses it, they buy or sell.",
+          "visual": "📈"
+        },
+        "buildup": {
+          "text": "A moving average replaces each data point with the average of its neighbors, smoothing out short-term noise.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "The window size controls the smoothness. A 3-point average is lightly smoothed. A 30-point average is heavily smoothed.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Moving averages lag behind the data. They react slowly to sudden changes — the smoothing is also a delay.",
+          "visual": "⏳"
+        },
+        "climax": {
+          "text": "Centered moving averages are used for decomposition. Trailing averages are used for real-time signals.",
+          "visual": "🔀"
+        },
+        "punchline": {
+          "text": "Average the neighbors. The noise fades. The signal emerges. But it arrives late.",
+          "visual": "🔍"
+        }
+      },
+      "quiz": {
+        "question": "What is the main trade-off when using moving averages?",
+        "options": [
+          "Smoothing removes noise but introduces a lag — the signal is delayed",
+          "Larger windows make the data noisier",
+          "Moving averages only work on financial data"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch02-decomposition",
+      "title": "STL Decomposition",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Classical decomposition breaks if the seasonal pattern changes. Modern methods handle evolving seasons.",
+          "visual": "🌦️"
+        },
+        "buildup": {
+          "text": "STL — Seasonal and Trend decomposition using Loess — uses local regression to extract flexible components.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Unlike classical methods, STL allows the seasonal component to change gradually over time.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Christmas shopping season has grown longer over decades. STL captures this shift; classical decomposition can't.",
+          "visual": "🎄"
+        },
+        "climax": {
+          "text": "STL is robust to outliers and handles missing data gracefully. It's become the default decomposition method.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "Seasons change. Your decomposition method should too. STL adapts.",
+          "visual": "🔄"
+        }
+      },
+      "quiz": {
+        "question": "What advantage does STL decomposition have over classical methods?",
+        "options": [
+          "It allows the seasonal component to change gradually over time",
+          "It requires less data",
+          "It only decomposes trends, not seasonality"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch02-decomposition",
+      "title": "Residual Analysis",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "After removing trend and seasonality, what's left should be random noise. Patterns mean a missed signal.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "Residuals are the leftover after subtracting the modeled components. They should be random and uncorrelated.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Patterns in residuals signal a missed component — perhaps a cycle, a structural break, or a nonlinear relationship.",
+          "visual": "🔍"
+        },
+        "twist": {
+          "text": "The Ljung-Box test checks if residual autocorrelations are zero. Failure means the model is incomplete.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Good residual analysis is the quality control of forecasting. Every model should pass this check.",
+          "visual": "✅"
+        },
+        "punchline": {
+          "text": "If the residuals have patterns, the model has gaps. Noise should be noisy.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "What does it mean if residuals from a time series model show patterns?",
+        "options": [
+          "The model missed a systematic component — it's incomplete and should be improved",
+          "The model is perfect and the patterns are coincidence",
+          "Residuals always have patterns regardless of model quality"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch02-decomposition",
+      "title": "Structural Breaks",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "In March 2020, every economic time series snapped. COVID changed the rules overnight.",
+          "visual": "📉"
+        },
+        "buildup": {
+          "text": "A structural break is a sudden change in the underlying process generating the data.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "After a break, the old trend, seasonality, or variance no longer applies. Models trained on old data fail.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Detecting breaks after the fact is easy. Detecting them in real time — as they happen — is extremely hard.",
+          "visual": "⏰"
+        },
+        "climax": {
+          "text": "The Chow test and CUSUM charts help detect structural breaks, but they need enough post-break data to be sure.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "When the rules change, old models break. Detect the shift or be blindsided.",
+          "visual": "⚡"
+        }
+      },
+      "quiz": {
+        "question": "Why are structural breaks problematic for forecasting?",
+        "options": [
+          "They change the underlying process — models trained on old data no longer apply",
+          "They only affect economic data",
+          "They always happen gradually enough to detect"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch03-forecasting-methods",
+      "title": "Exponential Smoothing",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "Give more weight to recent data and less to old data. That's exponential smoothing — and it's surprisingly powerful.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "The forecast is a weighted average of past observations. Weights decrease exponentially as data gets older.",
+          "visual": "📈"
+        },
+        "discovery": {
+          "text": "A smoothing parameter α controls how fast old data is forgotten. High α reacts quickly. Low α is stable.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Simple exponential smoothing has no trend or seasonality. Holt's method adds trend. Holt-Winters adds both.",
+          "visual": "🔀"
+        },
+        "climax": {
+          "text": "Despite its simplicity, exponential smoothing often beats complex methods in forecasting competitions.",
+          "visual": "🏆"
+        },
+        "punchline": {
+          "text": "Forget the distant past gradually. Recent data matters most. Simple wins often.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "What does the smoothing parameter α control in exponential smoothing?",
+        "options": [
+          "How quickly old observations are forgotten — high α reacts fast, low α is stable",
+          "The number of data points used",
+          "Whether the model includes seasonality"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch03-forecasting-methods",
+      "title": "ARIMA Models",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "ARIMA sounds intimidating. It's just three ideas combined: memory, differencing, and error correction.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "AR: past values predict the future. I: differencing makes data stationary. MA: past errors adjust the forecast.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "ARIMA(p,d,q) — p is memory depth, d is differencing order, q is error adjustment depth. Three numbers, one model.",
+          "visual": "🔢"
+        },
+        "twist": {
+          "text": "Choosing p, d, and q is an art. Auto-ARIMA searches automatically, but understanding the ACF/PACF plots helps.",
+          "visual": "📈"
+        },
+        "climax": {
+          "text": "Box and Jenkins popularized ARIMA in the 1970s. It dominated forecasting for decades and remains a benchmark.",
+          "visual": "🏆"
+        },
+        "punchline": {
+          "text": "Three letters, three numbers. ARIMA captures the patterns time leaves behind.",
+          "visual": "⏰"
+        }
+      },
+      "quiz": {
+        "question": "What do the three components of ARIMA(p,d,q) represent?",
+        "options": [
+          "p = autoregressive memory depth, d = differencing order, q = moving average error depth",
+          "p = prediction, d = data size, q = quality",
+          "p = parameters, d = dimensions, q = quartiles"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch03-forecasting-methods",
+      "title": "Seasonal ARIMA (SARIMA)",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "ARIMA handles trends but not seasons. SARIMA adds seasonal terms — because January always matters for January forecasts.",
+          "visual": "📅"
+        },
+        "buildup": {
+          "text": "SARIMA adds a second set of parameters (P,D,Q) that operate at the seasonal frequency — typically 12 for monthly data.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Seasonal differencing subtracts the value from the same month last year. This removes the repeating pattern.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "SARIMA models can have up to 7 parameters to tune. Overfitting is a real risk with complex seasonal models.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "For monthly and quarterly data with clear seasonality, SARIMA remains one of the most effective tools available.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "Add seasonal terms to ARIMA and the calendar comes alive in the model.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "How does SARIMA differ from standard ARIMA?",
+        "options": [
+          "It adds a second set of parameters that model repeating seasonal patterns at fixed intervals",
+          "It only works for annual data",
+          "It removes the autoregressive component"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch03-forecasting-methods",
+      "title": "Prophet: Forecasting at Scale",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Facebook needed to forecast millions of time series automatically. They built Prophet to do it with minimal tuning.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "Prophet decomposes time series into trend, seasonality, and holiday effects using an additive regression model.",
+          "visual": "📈"
+        },
+        "discovery": {
+          "text": "It handles missing data, trend changepoints, and irregular holidays gracefully — all common in business data.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Prophet is not always the most accurate. In forecasting competitions, simpler methods sometimes win. But it scales.",
+          "visual": "⚖️"
+        },
+        "climax": {
+          "text": "For non-experts who need reasonable forecasts fast, Prophet democratized time series forecasting.",
+          "visual": "🌐"
+        },
+        "punchline": {
+          "text": "Good enough, fast, and automatic. Prophet made forecasting accessible.",
+          "visual": "🚀"
+        }
+      },
+      "quiz": {
+        "question": "What problem was Facebook's Prophet designed to solve?",
+        "options": [
+          "Automatically forecasting millions of time series with minimal manual tuning",
+          "Replacing all other forecasting methods",
+          "Predicting social media trends only"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch03-forecasting-methods",
+      "title": "Naive Methods: The Baselines That Win",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "The best forecast for tomorrow's stock price? Today's price. The naive method is shockingly hard to beat.",
+          "visual": "📈"
+        },
+        "buildup": {
+          "text": "Naive forecasts use simple rules: repeat the last value, repeat last year's value, or use the historical average.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "The seasonal naive method predicts this January using last January. For seasonal data, it's often very accurate.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Models that can't beat the naive method are wasting effort. Always compare against these baselines.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "In the M3 forecasting competition, naive methods outperformed many sophisticated algorithms. Simplicity is underrated.",
+          "visual": "🏆"
+        },
+        "punchline": {
+          "text": "If you can't beat the naive forecast, your model isn't learning. Start simple.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "Why should every forecasting model be compared to naive methods?",
+        "options": [
+          "If a complex model can't beat the naive baseline, it's not adding value",
+          "Naive methods are always the most accurate",
+          "Complex models never work in practice"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch04-accuracy-and-error",
+      "title": "Mean Absolute Error and RMSE",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "Your forecast was off by 5, then 10, then -3. How wrong were you on average? MAE says 6. RMSE says 6.5.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "MAE averages the absolute errors. RMSE squares them first, then takes the root. Both measure forecast accuracy.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "RMSE penalizes large errors more heavily. If big misses are costly, RMSE is the better measure.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "Both depend on the scale of the data. A $10 error means different things for $100 vs. $10,000 forecasts.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Percentage errors (MAPE) solve the scale problem but break when values near zero. No single metric is perfect.",
+          "visual": "🔍"
+        },
+        "punchline": {
+          "text": "Every metric has a blind spot. Match it to your cost of being wrong.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "When is RMSE preferred over MAE?",
+        "options": [
+          "When large forecast errors are much more costly than small ones",
+          "When all errors are equally important",
+          "When the data has no outliers"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch04-accuracy-and-error",
+      "title": "Prediction Intervals",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "The forecast says 100. But will it be 95 or 105? Or 50 or 150? The point forecast hides the uncertainty.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "Prediction intervals give a range: 'We're 95% confident the value will fall between 80 and 120.'",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Intervals widen as you forecast further ahead. Tomorrow is more predictable than next year. Uncertainty grows.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "Many prediction intervals are too narrow. They assume the model is correct — and models are always wrong to some degree.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Honest prediction intervals communicate what you don't know. They're more useful than precise-looking point forecasts.",
+          "visual": "🔍"
+        },
+        "punchline": {
+          "text": "A forecast without uncertainty is a guess. Show the range.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "Why do prediction intervals widen for longer forecast horizons?",
+        "options": [
+          "Uncertainty accumulates over time — predicting further ahead means more potential for error",
+          "Prediction intervals are always the same width",
+          "Data quality decreases over time"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch04-accuracy-and-error",
+      "title": "Overfitting in Forecasting",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A model fits past data perfectly — every twist and turn. Then it forecasts terribly. It memorized noise.",
+          "visual": "📉"
+        },
+        "buildup": {
+          "text": "Overfitting occurs when a model is too complex for the data. It captures random variation as if it were a pattern.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Train on old data, test on recent data. Good on both means generalizing. Good on old only means overfitting.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Adding more parameters always improves the fit to training data. But it can destroy forecast accuracy.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "AIC and BIC penalize complexity. They balance fit against the number of parameters to prevent overfitting.",
+          "visual": "⚖️"
+        },
+        "punchline": {
+          "text": "A perfect fit to the past is a warning. Simplicity forecasts better.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "How do AIC and BIC help prevent overfitting?",
+        "options": [
+          "They penalize model complexity — balancing good fit against using too many parameters",
+          "They remove outliers from the data",
+          "They automatically select the simplest possible model"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch04-accuracy-and-error",
+      "title": "Backtesting and Cross-Validation",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Does your model actually forecast well? Train it on 2010-2019, forecast 2020, and check. That's backtesting.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "Time series cross-validation slides the training window forward, forecasting each period from all prior data.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Unlike regular cross-validation, time series must respect the order. You can never train on future data.",
+          "visual": "⏰"
+        },
+        "twist": {
+          "text": "A model that backtests well on stable periods may fail during crises. The past doesn't always represent the future.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Rolling-origin evaluation gives the most honest assessment of real-world forecast accuracy.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "Test on the past before predicting the future. But the future may differ.",
+          "visual": "🔮"
+        }
+      },
+      "quiz": {
+        "question": "Why must time series cross-validation respect chronological order?",
+        "options": [
+          "Training on future data would give unrealistically optimistic accuracy estimates",
+          "It doesn't matter — any data order works",
+          "Only the most recent data is relevant"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch04-accuracy-and-error",
+      "title": "The M Competitions",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Since 1982, the M Competitions have tested forecasting methods head-to-head on thousands of real time series.",
+          "visual": "🏆"
+        },
+        "buildup": {
+          "text": "Spyros Makridakis organized the competitions to settle debates about which methods actually work best.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Simple methods often match or beat complex ones. Combining forecasts from multiple methods usually wins.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "M4 in 2018 showed hybrid methods combining statistical and ML approaches outperformed either alone.",
+          "visual": "🔀"
+        },
+        "climax": {
+          "text": "M5 in 2020 used Walmart sales data. The winners combined gradient boosting with traditional time series models.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "Competition settles arguments. Ensembles win and simplicity holds its own.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "What has the M Competitions consistently shown about forecasting methods?",
+        "options": [
+          "Combining forecasts from multiple methods typically outperforms any single method",
+          "Complex methods always beat simple ones",
+          "Only neural networks produce accurate forecasts"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch05-famous-forecasts",
+      "title": "Weather Forecasting: From Art to Science",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "In 1950, the first computer weather forecast took 24 hours to compute a 24-hour prediction. It was barely useful.",
+          "visual": "🌤️"
+        },
+        "buildup": {
+          "text": "Modern weather models divide the atmosphere into a 3D grid and solve physics equations at each point.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Today's 5-day forecast is as accurate as the 1-day forecast was 40 years ago. Steady, measurable progress.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "Chaos theory limits prediction. Beyond 10 days, small initial errors amplify into total uncertainty.",
+          "visual": "🌪️"
+        },
+        "climax": {
+          "text": "Ensemble forecasting runs many models with slightly different starting conditions to quantify that uncertainty.",
+          "visual": "📐"
+        },
+        "punchline": {
+          "text": "Forecasting improved dramatically but chaos caps how far ahead we'll ever see.",
+          "visual": "🔮"
+        }
+      },
+      "quiz": {
+        "question": "Why is weather forecasting fundamentally limited beyond about 10 days?",
+        "options": [
+          "Chaos theory — tiny errors in initial conditions amplify into complete uncertainty",
+          "Weather satellites stop working after 10 days",
+          "The atmosphere doesn't have patterns beyond 10 days"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch05-famous-forecasts",
+      "title": "Economic Forecasting Failures",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "In 2007, the Federal Reserve forecast continued economic growth. The worst recession since 1929 hit months later.",
+          "visual": "📉"
+        },
+        "buildup": {
+          "text": "Economic forecasters have missed almost every recession. The track record for turning-point prediction is poor.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Economies are driven by human behavior, policy, and shocks. Models capture averages, not surprises.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Forecasters are accurate during stable times — which is when you least need a forecast.",
+          "visual": "🤔"
+        },
+        "climax": {
+          "text": "The 2008 crisis showed that aggregate models missed systemic risk hiding in interconnected financial networks.",
+          "visual": "🌐"
+        },
+        "punchline": {
+          "text": "Forecasts work best when you don't need them. Surprises matter most.",
+          "visual": "⚡"
+        }
+      },
+      "quiz": {
+        "question": "Why do economic forecasters consistently fail to predict recessions?",
+        "options": [
+          "Economies are driven by surprises and human behavior that models can't capture during stable periods",
+          "They use outdated data",
+          "Recessions are caused by weather events"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch05-famous-forecasts",
+      "title": "Pandemic Forecasting: Exponential Surprises",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "In January 2020, COVID-19 had 800 confirmed cases. By April, it was 3 million. Humans can't intuit exponential growth.",
+          "visual": "📈"
+        },
+        "buildup": {
+          "text": "Epidemic models use the reproduction number R₀ to forecast spread. R₀ > 1 means exponential growth.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Early COVID models varied wildly because small differences in R₀ produce enormous differences in outcomes.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Models that assumed constant behavior failed. People changed behavior, policies shifted — the system adapted.",
+          "visual": "🔄"
+        },
+        "climax": {
+          "text": "Pandemic forecasting showed both the power and limits of models. The uncertainty was the most honest signal.",
+          "visual": "⚠️"
+        },
+        "punchline": {
+          "text": "Exponential growth breaks intuition. The models were imperfect but essential.",
+          "visual": "🦠"
+        }
+      },
+      "quiz": {
+        "question": "Why did early COVID-19 models produce wildly different forecasts?",
+        "options": [
+          "Small differences in the reproduction number R₀ create enormous differences in exponential outcomes",
+          "All models used the same assumptions",
+          "COVID-19 didn't spread exponentially"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch05-famous-forecasts",
+      "title": "Election Forecasting",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "FiveThirtyEight gave Trump a 29% chance in 2016. He won. Was the forecast wrong? No — 29% happens.",
+          "visual": "🗳️"
+        },
+        "buildup": {
+          "text": "Election forecasts aggregate polls, adjust for biases, and simulate thousands of possible outcomes.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "A forecast is a probability distribution, not a prediction. 70% for Clinton meant 30% for Trump.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "People interpret 70% as certainty. Communicating probabilistic forecasts to the public remains a huge challenge.",
+          "visual": "🤔"
+        },
+        "climax": {
+          "text": "Correlated errors across states matter most. If polls are biased in Ohio, they're likely biased in Pennsylvania too.",
+          "visual": "🗺️"
+        },
+        "punchline": {
+          "text": "29% is not zero. People confuse unlikely with impossible.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "Why wasn't the 2016 FiveThirtyEight forecast 'wrong' even though Trump won?",
+        "options": [
+          "It gave Trump a 29% chance — unlikely events with that probability occur about 3 in 10 times",
+          "It actually predicted Trump would win",
+          "The forecast was for a different election"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch05-famous-forecasts",
+      "title": "Moore's Law: The Self-Fulfilling Forecast",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "In 1965, Gordon Moore predicted transistor counts would double every two years. It held for over 50 years.",
+          "visual": "💻"
+        },
+        "buildup": {
+          "text": "Moore's Law isn't a physical law — it's an observation about the pace of engineering progress.",
+          "visual": "📈"
+        },
+        "discovery": {
+          "text": "The semiconductor industry used Moore's Law as a roadmap, setting targets to match the prediction.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "A forecast that guides investment becomes self-fulfilling. The prediction created its own success.",
+          "visual": "🔄"
+        },
+        "climax": {
+          "text": "Moore's Law is slowing as transistors approach atomic limits. The self-fulfilling loop is finally hitting physics.",
+          "visual": "⚛️"
+        },
+        "punchline": {
+          "text": "The best forecast in history worked because everyone believed it.",
+          "visual": "🌟"
+        }
+      },
+      "quiz": {
+        "question": "Why did Moore's Law hold for over 50 years?",
+        "options": [
+          "The industry used it as a roadmap, setting targets that became self-fulfilling",
+          "It's a fundamental law of physics",
+          "Transistors naturally double at that rate without human effort"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch06-modern-forecasting",
+      "title": "Machine Learning for Time Series",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "Neural networks can find patterns in data that no human would spot. Can they forecast better than ARIMA?",
+          "visual": "🤖"
+        },
+        "buildup": {
+          "text": "LSTMs and Transformers process sequences naturally. They learn complex nonlinear patterns from raw data.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "On some datasets, ML methods dramatically outperform traditional approaches — especially with multiple related series.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "ML models need much more data and compute. For a single short series, ARIMA often wins. ML shines at scale.",
+          "visual": "⚖️"
+        },
+        "climax": {
+          "text": "The best modern systems combine ML flexibility with statistical interpretability. Hybrid approaches lead the field.",
+          "visual": "🔀"
+        },
+        "punchline": {
+          "text": "ML doesn't replace statistics for time series. It extends it.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "When do machine learning methods outperform traditional time series approaches?",
+        "options": [
+          "With large datasets and many related series where complex nonlinear patterns exist",
+          "Always, regardless of data size",
+          "Only for financial time series"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch06-modern-forecasting",
+      "title": "Ensemble Forecasting",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Ask 100 people to guess the weight of an ox. The average beats almost every individual guess.",
+          "visual": "🐂"
+        },
+        "buildup": {
+          "text": "Ensemble forecasting combines predictions from multiple models. The combination usually wins.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Errors in different models tend to cancel out. One model overshoots where another undershoots.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Simple averaging often beats sophisticated weighting schemes. The optimal weights are hard to estimate reliably.",
+          "visual": "⚖️"
+        },
+        "climax": {
+          "text": "Weather centers run dozens of models and average them. M Competition winners almost always use ensembles.",
+          "visual": "🏆"
+        },
+        "punchline": {
+          "text": "Combine forecasts. The wisdom of models exceeds any individual.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "Why do ensemble forecasts outperform individual models?",
+        "options": [
+          "Errors from different models tend to cancel out — one model's overestimate offsets another's underestimate",
+          "They always use the best model",
+          "Ensembles don't actually perform better"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch06-modern-forecasting",
+      "title": "Anomaly Detection in Time Series",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A server's response time spikes from 50ms to 500ms at 3 AM. An anomaly detector sends an alert before users notice.",
+          "visual": "🚨"
+        },
+        "buildup": {
+          "text": "Anomaly detection identifies data points that deviate significantly from expected patterns.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "The model learns normal behavior and flags anything that falls far outside expected bounds.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "The hard part isn't detecting anomalies — it's reducing false alarms. Too many alerts and people ignore them all.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Anomaly detection monitors servers, fraud transactions, industrial sensors, and vital signs — all in real time.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "Learn what's normal. Everything else is a signal. Speed is life.",
+          "visual": "⚡"
+        }
+      },
+      "quiz": {
+        "question": "What is the main practical challenge in time series anomaly detection?",
+        "options": [
+          "Reducing false alarms — too many alerts cause people to ignore all warnings",
+          "Detecting anomalies is impossible in real time",
+          "Anomalies never occur in real-world data"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch06-modern-forecasting",
+      "title": "Causal Impact Analysis",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A company launches an ad campaign and sales rise 15%. Was it the ad, or would sales have risen anyway?",
+          "visual": "📺"
+        },
+        "buildup": {
+          "text": "Google's CausalImpact builds a forecast of what would have happened without the intervention — the counterfactual.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "The gap between the actual data and the counterfactual forecast estimates the causal effect of the intervention.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "The method needs control time series — similar metrics unaffected by the intervention — to build the counterfactual.",
+          "visual": "📈"
+        },
+        "climax": {
+          "text": "Causal impact analysis turns time series data into causal evidence without randomized experiments.",
+          "visual": "🔬"
+        },
+        "punchline": {
+          "text": "What would have happened without the change? The counterfactual answers it.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "How does causal impact analysis estimate the effect of an intervention?",
+        "options": [
+          "It compares actual data to a counterfactual forecast of what would have happened without the intervention",
+          "It runs a randomized experiment",
+          "It only looks at data before the intervention"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "statistics--time-series-and-forecasting--ch06-modern-forecasting",
+      "title": "The Limits of Prediction",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Philip Tetlock tracked 28,000 expert predictions over 20 years. The average expert barely beat random guessing.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "Long-range political and economic predictions are extraordinarily difficult. The world is too complex and nonlinear.",
+          "visual": "🌍"
+        },
+        "discovery": {
+          "text": "Superforecasters — the best predictors — combine humility, constant updating, and probabilistic thinking.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Confident predictions get media attention. Calibrated, uncertain ones are ignored.",
+          "visual": "📰"
+        },
+        "climax": {
+          "text": "Knowing the limits of prediction is itself valuable knowledge. Honest uncertainty beats false confidence.",
+          "visual": "💡"
+        },
+        "punchline": {
+          "text": "The future is partly unknowable. The best forecasters know what they don't know.",
+          "visual": "🔮"
+        }
+      },
+      "quiz": {
+        "question": "What did Philip Tetlock's research reveal about expert predictions?",
+        "options": [
+          "The average expert barely beat random guessing — but 'superforecasters' with humility performed much better",
+          "Experts predict perfectly",
+          "Long-range predictions are easy for trained professionals"
+        ],
+        "correct": 0
+      }
+    }
+  ]
+}
