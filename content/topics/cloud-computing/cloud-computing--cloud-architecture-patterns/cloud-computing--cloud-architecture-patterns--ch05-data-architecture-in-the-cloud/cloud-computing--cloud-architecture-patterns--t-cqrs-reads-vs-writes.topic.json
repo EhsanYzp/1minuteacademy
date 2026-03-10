@@ -1,0 +1,49 @@
+{
+  "id": "cloud-computing--cloud-architecture-patterns--t-cqrs-reads-vs-writes",
+  "version": 1,
+  "subject": "Cloud Computing",
+  "subcategory": "Cloud Architecture Patterns",
+  "course_id": "cloud-computing--cloud-architecture-patterns",
+  "chapter_id": "cloud-computing--cloud-architecture-patterns--ch05-data-architecture-in-the-cloud",
+  "title": "CQRS: Reads vs. Writes",
+  "emoji": "🏗️",
+  "color": "#14B8A6",
+  "description": "A micro-lesson that makes CQRS: Reads vs. Writes usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your app reads data 100x more than it writes. Why use the same model for both? CQRS says: don't.",
+      "visual": "📊"
+    },
+    "buildup": {
+      "text": "Command Query Responsibility Segregation uses separate models for reading and writing data.",
+      "visual": "✂️"
+    },
+    "discovery": {
+      "text": "The write side handles commands and business logic. The read side serves optimized, denormalized views.",
+      "visual": "📖"
+    },
+    "twist": {
+      "text": "CQRS adds complexity. Eventually consistent reads mean the read side might be briefly out of date after a write.",
+      "visual": "⏰"
+    },
+    "climax": {
+      "text": "For high-read, low-write systems, CQRS delivers massive performance gains. For simple apps, it's overkill.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "Separate reads from writes. Each can be optimized independently.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "What is the core idea behind CQRS?",
+    "options": [
+      "Using separate optimized models for reading and writing data",
+      "Running all database queries in a single thread",
+      "Storing data only in memory, never on disk"
+    ],
+    "correct": 0
+  }
+}

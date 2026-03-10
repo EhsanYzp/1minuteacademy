@@ -1,0 +1,49 @@
+{
+  "id": "cloud-computing--cloud-architecture-patterns--t-the-circuit-breaker-pattern",
+  "version": 1,
+  "subject": "Cloud Computing",
+  "subcategory": "Cloud Architecture Patterns",
+  "course_id": "cloud-computing--cloud-architecture-patterns",
+  "chapter_id": "cloud-computing--cloud-architecture-patterns--ch04-resilience-patterns",
+  "title": "The Circuit Breaker Pattern",
+  "emoji": "🏗️",
+  "color": "#14B8A6",
+  "description": "A fast breakdown of The Circuit Breaker Pattern for builders.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Service A calls Service B. Service B is down. A keeps trying, queuing up thousands of failed requests.",
+      "visual": "🔄"
+    },
+    "buildup": {
+      "text": "A circuit breaker detects repeated failures and stops calling the broken service. It 'opens the circuit.'",
+      "visual": "🔌"
+    },
+    "discovery": {
+      "text": "After a cooldown period, the breaker tries again. If the service recovers, traffic flows normally once more.",
+      "visual": "🔄"
+    },
+    "twist": {
+      "text": "Without a circuit breaker, one failed service cascades into total system failure. Everything goes down together.",
+      "visual": "🌊"
+    },
+    "climax": {
+      "text": "Circuit breakers protect your system by failing fast instead of hanging. Quick failure is better than slow death.",
+      "visual": "⚡"
+    },
+    "punchline": {
+      "text": "Stop calling dead services. Fail fast. Recover faster.",
+      "visual": "🏃"
+    }
+  },
+  "quiz": {
+    "question": "What does a circuit breaker do when it detects repeated failures?",
+    "options": [
+      "It stops calling the failing service and returns an immediate error instead",
+      "It reboots the failing service automatically",
+      "It sends all traffic to the database instead"
+    ],
+    "correct": 0
+  }
+}

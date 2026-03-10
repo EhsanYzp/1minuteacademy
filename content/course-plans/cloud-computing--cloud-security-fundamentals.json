@@ -1,0 +1,1243 @@
+{
+  "categoryId": "cloud-computing",
+  "subject": "Cloud Computing",
+  "courseId": "cloud-computing--cloud-security-fundamentals",
+  "courseTitle": "Cloud Security Fundamentals",
+  "emoji": "🔒",
+  "color": "#10B981",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "cloud-computing--cloud-security-fundamentals--ch01-security-foundations",
+      "title": "Security Foundations",
+      "position": 1
+    },
+    {
+      "id": "cloud-computing--cloud-security-fundamentals--ch02-identity-and-access",
+      "title": "Identity and Access",
+      "position": 2
+    },
+    {
+      "id": "cloud-computing--cloud-security-fundamentals--ch03-data-protection",
+      "title": "Data Protection",
+      "position": 3
+    },
+    {
+      "id": "cloud-computing--cloud-security-fundamentals--ch04-network-security",
+      "title": "Network Security",
+      "position": 4
+    },
+    {
+      "id": "cloud-computing--cloud-security-fundamentals--ch05-threats-and-attacks",
+      "title": "Threats and Attacks",
+      "position": 5
+    },
+    {
+      "id": "cloud-computing--cloud-security-fundamentals--ch06-compliance-and-governance",
+      "title": "Compliance and Governance",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch01-security-foundations",
+      "title": "The Shared Responsibility Model",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "A company's database is exposed to the internet. Whose fault? The cloud provider's or the customer's?",
+          "visual": "🤔"
+        },
+        "buildup": {
+          "text": "Cloud security is split: the provider secures the infrastructure, the customer secures what runs on it.",
+          "visual": "✂️"
+        },
+        "discovery": {
+          "text": "AWS calls it 'security of the cloud vs. security in the cloud.' The line varies by service model.",
+          "visual": "📏"
+        },
+        "twist": {
+          "text": "Over 90% of cloud security failures are the customer's fault. Misconfiguration is the top cause.",
+          "visual": "😬"
+        },
+        "climax": {
+          "text": "Understanding where your responsibility starts is the single most important cloud security concept.",
+          "visual": "🎯"
+        },
+        "punchline": {
+          "text": "The provider secures the cloud. You secure what's in it.",
+          "visual": "🔒"
+        }
+      },
+      "quiz": {
+        "question": "What causes over 90% of cloud security failures?",
+        "options": [
+          "Customer misconfiguration, not cloud provider vulnerabilities",
+          "Cloud providers using outdated encryption methods",
+          "Physical break-ins at data centers"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch01-security-foundations",
+      "title": "Defense in Depth",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A castle has walls, a moat, guards, and locked doors. Cloud security uses the same layered approach.",
+          "visual": "🏰"
+        },
+        "buildup": {
+          "text": "Defense in depth means multiple security layers: network, identity, application, data, and monitoring.",
+          "visual": "📚"
+        },
+        "discovery": {
+          "text": "If one layer fails, the next catches the threat. No single control is expected to stop everything.",
+          "visual": "🛡️"
+        },
+        "twist": {
+          "text": "Many teams focus only on the perimeter. Once an attacker gets inside, there's nothing else stopping them.",
+          "visual": "💥"
+        },
+        "climax": {
+          "text": "Defense in depth assumes every layer will eventually be breached. The goal is to slow and detect, not just prevent.",
+          "visual": "⏱️"
+        },
+        "punchline": {
+          "text": "One lock can be picked. Five layers take much longer to break.",
+          "visual": "🔐"
+        }
+      },
+      "quiz": {
+        "question": "What is the core principle of defense in depth?",
+        "options": [
+          "Multiple overlapping security layers so no single failure is catastrophic",
+          "One extremely strong firewall that blocks all threats",
+          "Keeping all data offline and disconnected from the internet"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch01-security-foundations",
+      "title": "The Principle of Least Privilege",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A junior developer has admin access to the production database. What could go wrong? Everything.",
+          "visual": "😰"
+        },
+        "buildup": {
+          "text": "Least privilege means giving users and services only the minimum permissions they need to do their job.",
+          "visual": "🔑"
+        },
+        "discovery": {
+          "text": "If an account is compromised, least privilege limits the blast radius. The attacker can only reach a small area.",
+          "visual": "📏"
+        },
+        "twist": {
+          "text": "In practice, most teams give too many permissions because restricting access slows down development.",
+          "visual": "🏃"
+        },
+        "climax": {
+          "text": "The balance between security and productivity is the eternal struggle. Least privilege leans toward safety.",
+          "visual": "⚖️"
+        },
+        "punchline": {
+          "text": "Give the minimum access needed. No more, no less.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "Why is the principle of least privilege often violated in practice?",
+        "options": [
+          "Restricting access slows development, so teams grant broad permissions",
+          "Cloud providers don't support fine-grained permission controls",
+          "Least privilege only applies to physical access, not digital systems"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch01-security-foundations",
+      "title": "Zero Trust Security",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Traditional security trusted everyone inside the network. Zero trust says: trust nobody, verify everything.",
+          "visual": "🚫"
+        },
+        "buildup": {
+          "text": "Zero trust verifies every request — even from inside the network. Location alone doesn't grant access.",
+          "visual": "🔍"
+        },
+        "discovery": {
+          "text": "Google pioneered zero trust with BeyondCorp after being hacked by Chinese state actors in 2009.",
+          "visual": "🔐"
+        },
+        "twist": {
+          "text": "Zero trust is a philosophy, not a product. Despite what vendors claim, you can't buy it in a box.",
+          "visual": "📦"
+        },
+        "climax": {
+          "text": "Implementing zero trust takes years. But it's the only model that makes sense in a cloud-first world.",
+          "visual": "☁️"
+        },
+        "punchline": {
+          "text": "Trust nothing. Verify everything. That's zero trust.",
+          "visual": "✅"
+        }
+      },
+      "quiz": {
+        "question": "What event prompted Google to develop the zero trust model?",
+        "options": [
+          "A sophisticated hack by Chinese state-sponsored actors in 2009",
+          "A data center fire that destroyed customer data",
+          "A competing cloud provider stealing Google's source code"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch01-security-foundations",
+      "title": "Security Automation in the Cloud",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A human can review 50 security alerts per day. Cloud generates 50,000. Only automation can keep up.",
+          "visual": "🤖"
+        },
+        "buildup": {
+          "text": "Cloud security tools scan configurations, detect anomalies, and enforce policies automatically.",
+          "visual": "⚙️"
+        },
+        "discovery": {
+          "text": "Infrastructure as code lets you define security rules in templates that apply to every new resource.",
+          "visual": "📝"
+        },
+        "twist": {
+          "text": "Automation helps — but automated systems can also enforce bad rules at scale if poorly configured.",
+          "visual": "💥"
+        },
+        "climax": {
+          "text": "The best security teams automate the routine and focus human attention on novel, complex threats.",
+          "visual": "🧠"
+        },
+        "punchline": {
+          "text": "Automate the basics. Save human brains for the hard stuff.",
+          "visual": "💡"
+        }
+      },
+      "quiz": {
+        "question": "Why is security automation essential in cloud environments?",
+        "options": [
+          "The volume of security events far exceeds what humans can manually review",
+          "Cloud providers require all customers to use automated security tools",
+          "Manual security reviews are illegal in cloud computing"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch02-identity-and-access",
+      "title": "IAM: The Gatekeeper",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "Every cloud action — launching a server, reading a file, deleting a database — goes through IAM first.",
+          "visual": "🚪"
+        },
+        "buildup": {
+          "text": "Identity and Access Management controls who can do what. Users, roles, and policies define permissions.",
+          "visual": "📋"
+        },
+        "discovery": {
+          "text": "An IAM policy is a JSON document that says: this identity can perform these actions on these resources.",
+          "visual": "📝"
+        },
+        "twist": {
+          "text": "IAM policies are powerful but complex. A single misconfigured policy can expose an entire cloud account.",
+          "visual": "😱"
+        },
+        "climax": {
+          "text": "IAM is arguably the most important cloud service. Get it wrong and nothing else matters.",
+          "visual": "🎯"
+        },
+        "punchline": {
+          "text": "IAM is the front door to your cloud. Lock it properly.",
+          "visual": "🔐"
+        }
+      },
+      "quiz": {
+        "question": "What role does IAM play in cloud security?",
+        "options": [
+          "It controls who can perform what actions on which cloud resources",
+          "It encrypts all data stored in the cloud automatically",
+          "It monitors network traffic for suspicious activity"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch02-identity-and-access",
+      "title": "Multi-Factor Authentication",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A hacker steals your password. Without MFA, they walk right into your cloud account. With it, they're stuck.",
+          "visual": "🛑"
+        },
+        "buildup": {
+          "text": "MFA requires two or more factors: something you know (password), something you have (phone), or something you are.",
+          "visual": "📱"
+        },
+        "discovery": {
+          "text": "Cloud providers offer MFA through apps, hardware keys, and SMS. Hardware keys are the most secure option.",
+          "visual": "🔑"
+        },
+        "twist": {
+          "text": "Despite being critical, many cloud root accounts still lack MFA. It's the simplest fix most teams skip.",
+          "visual": "🤦"
+        },
+        "climax": {
+          "text": "AWS reported that enabling MFA on root accounts blocks 99% of account compromise attempts.",
+          "visual": "📊"
+        },
+        "punchline": {
+          "text": "MFA takes 30 seconds to enable. It stops 99% of attacks.",
+          "visual": "🛡️"
+        }
+      },
+      "quiz": {
+        "question": "Why is MFA especially important for cloud root accounts?",
+        "options": [
+          "Root accounts have unlimited access and are prime targets for attackers",
+          "MFA is only available for root accounts, not regular users",
+          "Cloud providers charge less if MFA is enabled on root"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch02-identity-and-access",
+      "title": "Service Accounts and Machine Identity",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Humans aren't the only ones with cloud access. Applications, scripts, and services need identities too.",
+          "visual": "🤖"
+        },
+        "buildup": {
+          "text": "Service accounts are non-human identities that let applications authenticate to cloud resources.",
+          "visual": "🔑"
+        },
+        "discovery": {
+          "text": "Access keys and tokens grant service accounts permission. They're like passwords, but for machines.",
+          "visual": "🎫"
+        },
+        "twist": {
+          "text": "Leaked service account keys are the number one cause of cloud breaches. They end up in code repos constantly.",
+          "visual": "😱"
+        },
+        "climax": {
+          "text": "Best practice: use temporary credentials that expire automatically. Never hardcode secrets in source code.",
+          "visual": "⏱️"
+        },
+        "punchline": {
+          "text": "Machine identities need security too. They're often the weakest link.",
+          "visual": "🔗"
+        }
+      },
+      "quiz": {
+        "question": "What is the top cause of cloud security breaches related to service accounts?",
+        "options": [
+          "Access keys accidentally leaked in code repositories",
+          "Service accounts that expire too quickly",
+          "Cloud providers sharing service account keys publicly"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch02-identity-and-access",
+      "title": "Role-Based Access Control",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Giving every employee individual permissions doesn't scale. Fifty people, fifty unique access lists — chaos.",
+          "visual": "🌀"
+        },
+        "buildup": {
+          "text": "RBAC assigns permissions to roles, not individuals. You become 'Developer' or 'Admin,' and inherit that role's access.",
+          "visual": "🎭"
+        },
+        "discovery": {
+          "text": "When someone changes teams, you swap their role — not rewrite every permission from scratch.",
+          "visual": "🔄"
+        },
+        "twist": {
+          "text": "Role explosion is real. Companies end up with hundreds of roles that nobody fully understands anymore.",
+          "visual": "📈"
+        },
+        "climax": {
+          "text": "Good RBAC is simple and auditable. Bad RBAC is a tangled mess that gives false confidence.",
+          "visual": "🕸️"
+        },
+        "punchline": {
+          "text": "Roles simplify access. Too many roles recreate the mess.",
+          "visual": "♻️"
+        }
+      },
+      "quiz": {
+        "question": "What is 'role explosion' in RBAC?",
+        "options": [
+          "Creating so many roles that the access model becomes unmanageable",
+          "A role that gives users access to every resource in the cloud",
+          "Automatically deleting all roles after a security incident"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch02-identity-and-access",
+      "title": "Single Sign-On for Cloud",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Your company uses 100 SaaS tools. Without SSO, that's 100 separate passwords per employee.",
+          "visual": "🔑"
+        },
+        "buildup": {
+          "text": "Single Sign-On lets users log in once and access many applications. One identity, many services.",
+          "visual": "🚪"
+        },
+        "discovery": {
+          "text": "Providers like Okta and Azure AD federate identity across cloud apps using protocols like SAML and OIDC.",
+          "visual": "🔗"
+        },
+        "twist": {
+          "text": "SSO is a single point of failure. If the identity provider goes down, nobody can log into anything.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "SSO reduces password fatigue and improves security. But it demands that the identity provider is rock-solid.",
+          "visual": "🪨"
+        },
+        "punchline": {
+          "text": "One login for everything. Protect that one login with your life.",
+          "visual": "🛡️"
+        }
+      },
+      "quiz": {
+        "question": "What is a risk of relying on Single Sign-On?",
+        "options": [
+          "If the identity provider goes down, access to all connected services is lost",
+          "SSO requires users to remember more passwords than before",
+          "Only one user can be logged in at a time across the company"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch03-data-protection",
+      "title": "Encryption at Rest",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "A hard drive is stolen from a data center. If the data is encrypted at rest, the thief gets nothing useful.",
+          "visual": "💿"
+        },
+        "buildup": {
+          "text": "Encryption at rest scrambles stored data using a key. Without the key, the data is meaningless noise.",
+          "visual": "🔐"
+        },
+        "discovery": {
+          "text": "Most cloud providers encrypt all data at rest by default now. S3, Azure Blob, and GCS all do it.",
+          "visual": "☁️"
+        },
+        "twist": {
+          "text": "Default encryption uses provider-managed keys. You trust the provider not to misuse or lose them.",
+          "visual": "🤔"
+        },
+        "climax": {
+          "text": "For maximum control, use customer-managed keys. You own the key — the provider can't read your data.",
+          "visual": "🔑"
+        },
+        "punchline": {
+          "text": "Encrypted data at rest is useless to a thief. Keep the key safe.",
+          "visual": "🔒"
+        }
+      },
+      "quiz": {
+        "question": "What is the advantage of using customer-managed encryption keys?",
+        "options": [
+          "You control the key, so even the cloud provider cannot read your data",
+          "Customer-managed keys are always free of charge",
+          "They encrypt data faster than provider-managed keys"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch03-data-protection",
+      "title": "Encryption in Transit",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Data traveling across the internet can be intercepted. Without encryption, anyone on the path can read it.",
+          "visual": "👀"
+        },
+        "buildup": {
+          "text": "TLS (Transport Layer Security) encrypts data in transit. It's the padlock icon in your browser.",
+          "visual": "🔒"
+        },
+        "discovery": {
+          "text": "Cloud providers enforce TLS for API calls. Your data is encrypted between your device and the cloud.",
+          "visual": "📡"
+        },
+        "twist": {
+          "text": "TLS protects data between points — but at each endpoint, data is decrypted. Insiders can still see it.",
+          "visual": "🔓"
+        },
+        "climax": {
+          "text": "End-to-end encryption solves this: data stays encrypted from sender to receiver. Nobody in between can read it.",
+          "visual": "🛡️"
+        },
+        "punchline": {
+          "text": "In transit means in danger. TLS is the shield.",
+          "visual": "🛡️"
+        }
+      },
+      "quiz": {
+        "question": "What does TLS protect against?",
+        "options": [
+          "Interception of data as it travels across networks",
+          "Physical theft of hard drives from data centers",
+          "Users choosing weak passwords for their accounts"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch03-data-protection",
+      "title": "Secrets Management",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "API keys, database passwords, tokens — your application is full of secrets. Where do you store them safely?",
+          "visual": "🤫"
+        },
+        "buildup": {
+          "text": "Never hardcode secrets in source code. A single leaked repo exposes every credential your app uses.",
+          "visual": "😱"
+        },
+        "discovery": {
+          "text": "Secret managers like AWS Secrets Manager, Azure Key Vault, and HashiCorp Vault store and rotate secrets.",
+          "visual": "🗄️"
+        },
+        "twist": {
+          "text": "GitHub scans billions of commits daily and finds thousands of exposed secrets. Most are still active.",
+          "visual": "🔍"
+        },
+        "climax": {
+          "text": "Automated secret scanning and rotation are table stakes for cloud security. Manual management doesn't scale.",
+          "visual": "🤖"
+        },
+        "punchline": {
+          "text": "Secrets in code are public. Use a vault. Always.",
+          "visual": "🔐"
+        }
+      },
+      "quiz": {
+        "question": "Why should secrets never be hardcoded in source code?",
+        "options": [
+          "A leaked repository exposes all credentials the application uses",
+          "Hardcoded secrets make applications run slower",
+          "Source code can only store strings shorter than 20 characters"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch03-data-protection",
+      "title": "Data Loss Prevention",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "An employee emails a spreadsheet with 10,000 customer credit card numbers. DLP could have stopped it.",
+          "visual": "📧"
+        },
+        "buildup": {
+          "text": "Data Loss Prevention tools scan data in motion, at rest, and in use to detect sensitive information.",
+          "visual": "🔬"
+        },
+        "discovery": {
+          "text": "DLP can identify credit card numbers, social security numbers, and health data — then block or alert.",
+          "visual": "🚨"
+        },
+        "twist": {
+          "text": "DLP generates mountains of false positives. Tuning it to be useful without being annoying is an art.",
+          "visual": "🎨"
+        },
+        "climax": {
+          "text": "In the cloud, DLP extends to storage buckets, databases, and SaaS apps. The surface area is enormous.",
+          "visual": "🌐"
+        },
+        "punchline": {
+          "text": "DLP watches for data leaving where it shouldn't. It's a safety net.",
+          "visual": "🥅"
+        }
+      },
+      "quiz": {
+        "question": "What is the main challenge of implementing DLP?",
+        "options": [
+          "Tuning it to minimize false positives while still catching real threats",
+          "DLP tools can only scan email, not cloud storage",
+          "DLP makes all data access completely impossible"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch03-data-protection",
+      "title": "Backup and Recovery Security",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Ransomware encrypts your data and demands payment. If your backups are also encrypted, you're stuck.",
+          "visual": "💀"
+        },
+        "buildup": {
+          "text": "Backups must be isolated from production. If an attacker reaches your backup, it's not a backup.",
+          "visual": "🏝️"
+        },
+        "discovery": {
+          "text": "Immutable backups can't be modified or deleted, even by administrators. They survive ransomware attacks.",
+          "visual": "🔒"
+        },
+        "twist": {
+          "text": "Many companies discover their backup strategy is broken only during a real disaster. Testing is everything.",
+          "visual": "😰"
+        },
+        "climax": {
+          "text": "Cloud makes backups easier than ever. But easier doesn't mean automatic — you still must design and test them.",
+          "visual": "🧪"
+        },
+        "punchline": {
+          "text": "Backups you never test aren't backups. They're hopes.",
+          "visual": "🙏"
+        }
+      },
+      "quiz": {
+        "question": "What are immutable backups?",
+        "options": [
+          "Backups that cannot be modified or deleted, even by administrators",
+          "Backups stored in a different country than the original data",
+          "Backups that automatically update when the source data changes"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch04-network-security",
+      "title": "Firewalls in the Cloud",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "In the physical world, a firewall is a wall that stops fire. In the cloud, it stops unauthorized traffic.",
+          "visual": "🧱"
+        },
+        "buildup": {
+          "text": "Cloud firewalls — security groups and network ACLs — control which traffic can enter or leave your resources.",
+          "visual": "🚦"
+        },
+        "discovery": {
+          "text": "Rules are defined by IP address, port, and protocol. Allow web traffic on port 443, block everything else.",
+          "visual": "📋"
+        },
+        "twist": {
+          "text": "The default rule matters most. AWS security groups deny all inbound by default — Azure NSGs may not.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Cloud firewalls are your first line of defense. But they only work if rules are reviewed regularly.",
+          "visual": "🔍"
+        },
+        "punchline": {
+          "text": "A firewall is only as good as its rules. Review them often.",
+          "visual": "📝"
+        }
+      },
+      "quiz": {
+        "question": "What do cloud security groups control?",
+        "options": [
+          "Which network traffic is allowed to reach or leave cloud resources",
+          "Which users can log into the cloud management console",
+          "How much bandwidth each cloud resource can use"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch04-network-security",
+      "title": "VPN and Private Connectivity",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Your office needs a secure link to your cloud. Sending data over the public internet isn't safe enough.",
+          "visual": "🌐"
+        },
+        "buildup": {
+          "text": "A VPN creates an encrypted tunnel between your network and the cloud, hiding traffic from eavesdroppers.",
+          "visual": "🔒"
+        },
+        "discovery": {
+          "text": "For higher performance, AWS Direct Connect and Azure ExpressRoute provide dedicated physical links.",
+          "visual": "🔌"
+        },
+        "twist": {
+          "text": "Dedicated links cost thousands per month. Most small companies use VPN instead and accept the trade-off.",
+          "visual": "💸"
+        },
+        "climax": {
+          "text": "Private connectivity removes the public internet from the equation. It's slower to set up but much more secure.",
+          "visual": "🛡️"
+        },
+        "punchline": {
+          "text": "VPN is the tunnel. Direct connect is the private highway.",
+          "visual": "🛣️"
+        }
+      },
+      "quiz": {
+        "question": "What is the main advantage of AWS Direct Connect over a VPN?",
+        "options": [
+          "It provides a dedicated physical connection that bypasses the public internet",
+          "It's free for all AWS customers",
+          "It doesn't require any network configuration"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch04-network-security",
+      "title": "DDoS Protection",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Millions of fake requests flood your server. It drowns under the load. That's a DDoS attack.",
+          "visual": "🌊"
+        },
+        "buildup": {
+          "text": "Distributed Denial of Service attacks overwhelm targets with traffic from thousands of compromised machines.",
+          "visual": "🤖"
+        },
+        "discovery": {
+          "text": "Cloud providers offer built-in DDoS protection. AWS Shield, Azure DDoS Protection, and Cloud Armor absorb attacks.",
+          "visual": "🛡️"
+        },
+        "twist": {
+          "text": "The cloud's massive scale is actually an advantage here. It can absorb traffic volumes no single server could.",
+          "visual": "💪"
+        },
+        "climax": {
+          "text": "DDoS attacks are getting larger every year. The biggest recorded attack exceeded 71 million requests per second.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "DDoS attacks flood. Cloud scale absorbs. Size is defense.",
+          "visual": "🏔️"
+        }
+      },
+      "quiz": {
+        "question": "Why is the cloud well-suited to defend against DDoS attacks?",
+        "options": [
+          "Its massive scale can absorb traffic volumes no single server could handle",
+          "Cloud servers are immune to receiving network traffic",
+          "DDoS attacks only target on-premises servers, not cloud"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch04-network-security",
+      "title": "Web Application Firewalls",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A hacker sends a malicious SQL query through your login form. A regular firewall won't catch it.",
+          "visual": "💉"
+        },
+        "buildup": {
+          "text": "A WAF inspects HTTP requests and blocks common attack patterns: SQL injection, XSS, and more.",
+          "visual": "🔍"
+        },
+        "discovery": {
+          "text": "Cloud WAFs like AWS WAF and Cloudflare operate at the edge, blocking attacks before they reach your server.",
+          "visual": "🛡️"
+        },
+        "twist": {
+          "text": "WAFs use rule sets that must be updated constantly. New attacks emerge faster than rules can be written.",
+          "visual": "🏃"
+        },
+        "climax": {
+          "text": "A WAF is a critical layer but not a substitute for secure code. It catches known attacks, not clever new ones.",
+          "visual": "⚠️"
+        },
+        "punchline": {
+          "text": "WAFs stop known attacks. Secure coding stops the rest.",
+          "visual": "💻"
+        }
+      },
+      "quiz": {
+        "question": "What does a Web Application Firewall protect against?",
+        "options": [
+          "Common web attacks like SQL injection and cross-site scripting",
+          "Physical theft of servers from data centers",
+          "Users choosing weak passwords for their accounts"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch04-network-security",
+      "title": "Private Endpoints and Service Mesh",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Your app talks to a cloud database. By default, that traffic might cross the public internet. That's a risk.",
+          "visual": "🌐"
+        },
+        "buildup": {
+          "text": "Private endpoints keep traffic between your services inside the cloud provider's private network.",
+          "visual": "🔒"
+        },
+        "discovery": {
+          "text": "AWS PrivateLink and Azure Private Endpoints create secure, private connections to cloud services.",
+          "visual": "🔌"
+        },
+        "twist": {
+          "text": "A service mesh adds another layer: it encrypts and controls all traffic between your own microservices.",
+          "visual": "🕸️"
+        },
+        "climax": {
+          "text": "Private endpoints and service mesh together mean no sensitive traffic ever touches the public internet.",
+          "visual": "✅"
+        },
+        "punchline": {
+          "text": "Keep internal traffic internal. The public internet is not your friend.",
+          "visual": "🏠"
+        }
+      },
+      "quiz": {
+        "question": "What do private endpoints do?",
+        "options": [
+          "Keep traffic between services inside the cloud's private network",
+          "Make cloud services accessible from the public internet",
+          "Encrypt user passwords stored in databases"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch05-threats-and-attacks",
+      "title": "Misconfiguration: The Top Threat",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "Capital One lost 100 million customer records in 2019. The cause? A misconfigured firewall rule.",
+          "visual": "💥"
+        },
+        "buildup": {
+          "text": "Misconfiguration is the number one cloud security threat. Open storage buckets, weak IAM, exposed ports.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Cloud Security Posture Management tools scan for misconfigurations automatically and flag risks.",
+          "visual": "🤖"
+        },
+        "twist": {
+          "text": "Teams fix misconfigurations, then someone deploys a new resource and reintroduces the same mistake.",
+          "visual": "🔄"
+        },
+        "climax": {
+          "text": "Prevention beats detection. Enforce security policies in code so misconfigurations can't be deployed.",
+          "visual": "📝"
+        },
+        "punchline": {
+          "text": "The biggest cloud threat isn't hackers. It's misconfiguration.",
+          "visual": "⚙️"
+        }
+      },
+      "quiz": {
+        "question": "What caused the Capital One data breach in 2019?",
+        "options": [
+          "A misconfigured firewall rule that exposed customer data",
+          "A physical break-in at an AWS data center",
+          "An employee intentionally leaking data to competitors"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch05-threats-and-attacks",
+      "title": "Exposed Storage Buckets",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Researchers found 2,000 publicly accessible S3 buckets containing military data, medical records, and passwords.",
+          "visual": "😱"
+        },
+        "buildup": {
+          "text": "Storage buckets default to private. But one wrong ACL change can make contents visible to anyone on the internet.",
+          "visual": "🌐"
+        },
+        "discovery": {
+          "text": "AWS now blocks public access by default and shows warnings. But legacy buckets remain a massive risk.",
+          "visual": "⚠️"
+        },
+        "twist": {
+          "text": "Attackers have automated tools that scan the entire internet for open buckets. They find new ones hourly.",
+          "visual": "🔍"
+        },
+        "climax": {
+          "text": "Every open bucket is a ticking time bomb. Automated scanning and strict access policies are essential.",
+          "visual": "💣"
+        },
+        "punchline": {
+          "text": "One wrong setting. Millions of records exposed. Check your buckets.",
+          "visual": "🪣"
+        }
+      },
+      "quiz": {
+        "question": "How do attackers typically find exposed cloud storage buckets?",
+        "options": [
+          "Automated tools continuously scan the internet for publicly accessible buckets",
+          "They physically break into data centers and check bucket settings",
+          "Cloud providers publish a list of all buckets on their websites"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch05-threats-and-attacks",
+      "title": "Cloud Ransomware",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Ransomware hit a company's cloud. Attackers encrypted everything and demanded $10 million in Bitcoin.",
+          "visual": "💀"
+        },
+        "buildup": {
+          "text": "Cloud ransomware works by gaining access to admin credentials, then encrypting or deleting data and backups.",
+          "visual": "🔑"
+        },
+        "discovery": {
+          "text": "Attackers target cloud admin accounts because one compromise gives access to everything.",
+          "visual": "👑"
+        },
+        "twist": {
+          "text": "Some ransomware groups skip encryption entirely. They just steal data and threaten to publish it.",
+          "visual": "📢"
+        },
+        "climax": {
+          "text": "Preventing cloud ransomware requires MFA, least privilege, immutable backups, and constant monitoring.",
+          "visual": "🛡️"
+        },
+        "punchline": {
+          "text": "Ransomware loves cloud admin accounts. Protect them above all.",
+          "visual": "🔐"
+        }
+      },
+      "quiz": {
+        "question": "Why are cloud admin accounts prime targets for ransomware?",
+        "options": [
+          "One compromised admin account gives access to all cloud resources",
+          "Admin accounts always have the weakest passwords",
+          "Cloud admin accounts cannot have MFA enabled"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch05-threats-and-attacks",
+      "title": "Supply Chain Attacks on Cloud",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "SolarWinds was trusted by 18,000 organizations. Attackers poisoned its software update — and got inside all of them.",
+          "visual": "🕷️"
+        },
+        "buildup": {
+          "text": "Supply chain attacks compromise a trusted vendor, then use that trust to reach their real targets.",
+          "visual": "🔗"
+        },
+        "discovery": {
+          "text": "Cloud environments are built on layers of third-party software: libraries, containers, and managed services.",
+          "visual": "📚"
+        },
+        "twist": {
+          "text": "You might trust your code. But do you trust every open-source dependency your code relies on?",
+          "visual": "🤔"
+        },
+        "climax": {
+          "text": "Supply chain security requires scanning dependencies, verifying signatures, and limiting trust boundaries.",
+          "visual": "🔬"
+        },
+        "punchline": {
+          "text": "You're only as secure as your weakest dependency.",
+          "visual": "🧩"
+        }
+      },
+      "quiz": {
+        "question": "What made the SolarWinds attack so devastating?",
+        "options": [
+          "Attackers compromised a trusted software update that 18,000 organizations installed",
+          "SolarWinds accidentally deleted all customer data",
+          "A data center fire destroyed SolarWinds' backup systems"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch05-threats-and-attacks",
+      "title": "Insider Threats in Cloud Environments",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A disgruntled employee with admin access deletes the production database before quitting. It happens.",
+          "visual": "😤"
+        },
+        "buildup": {
+          "text": "Insider threats come from employees, contractors, or partners with legitimate access who misuse it.",
+          "visual": "🔑"
+        },
+        "discovery": {
+          "text": "Cloud makes this harder to detect. Actions look legitimate because the identity is authorized.",
+          "visual": "🎭"
+        },
+        "twist": {
+          "text": "Most insider incidents are unintentional — accidental deletions or misconfigurations, not sabotage.",
+          "visual": "🤷"
+        },
+        "climax": {
+          "text": "User behavior analytics, audit logs, and separation of duties are the best defenses against insider threats.",
+          "visual": "📊"
+        },
+        "punchline": {
+          "text": "The biggest threat might already have a login. Watch the logs.",
+          "visual": "👁️"
+        }
+      },
+      "quiz": {
+        "question": "Why are insider threats difficult to detect in the cloud?",
+        "options": [
+          "The actions appear legitimate because the user is authorized to perform them",
+          "Cloud providers do not log any user actions",
+          "Insiders always use encrypted connections that cannot be monitored"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch06-compliance-and-governance",
+      "title": "Cloud Compliance Frameworks",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "Your company wants to sell to banks. First, you need SOC 2 certification. Welcome to cloud compliance.",
+          "visual": "📋"
+        },
+        "buildup": {
+          "text": "Compliance frameworks — SOC 2, ISO 27001, HIPAA — define security standards your cloud setup must meet.",
+          "visual": "📝"
+        },
+        "discovery": {
+          "text": "Cloud providers are pre-certified for many frameworks. But that only covers their part of shared responsibility.",
+          "visual": "✂️"
+        },
+        "twist": {
+          "text": "Being compliant doesn't mean being secure. Compliance is a minimum bar, not a guarantee against breaches.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Smart companies use compliance as a starting point, then build security beyond what the framework requires.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "Compliance opens doors. Real security keeps them safe.",
+          "visual": "🚪"
+        }
+      },
+      "quiz": {
+        "question": "Why doesn't compliance guarantee security?",
+        "options": [
+          "Compliance is a minimum standard, not a comprehensive defense against all threats",
+          "Compliance frameworks are never updated for new threats",
+          "Cloud providers handle all compliance so customers don't need to worry"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch06-compliance-and-governance",
+      "title": "GDPR and Cloud Data",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A European user's data is stored on a U.S. server. Under GDPR, that might be illegal.",
+          "visual": "🇪🇺"
+        },
+        "buildup": {
+          "text": "GDPR requires companies to protect EU personal data and limits where it can be stored and processed.",
+          "visual": "📋"
+        },
+        "discovery": {
+          "text": "Cloud providers offer EU-only regions. Data residency controls ensure data never leaves European borders.",
+          "visual": "🗺️"
+        },
+        "twist": {
+          "text": "GDPR fines are massive: up to 4% of global revenue. Meta was fined $1.3 billion for data transfer violations.",
+          "visual": "💸"
+        },
+        "climax": {
+          "text": "Cloud and GDPR coexist, but it requires careful architecture: region selection, encryption, and consent management.",
+          "visual": "⚖️"
+        },
+        "punchline": {
+          "text": "GDPR doesn't ban the cloud. It demands you use it responsibly.",
+          "visual": "✅"
+        }
+      },
+      "quiz": {
+        "question": "How do cloud providers help customers comply with GDPR?",
+        "options": [
+          "By offering EU-only regions with data residency controls",
+          "By automatically deleting all EU user data after 30 days",
+          "By making all data publicly accessible for transparency"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch06-compliance-and-governance",
+      "title": "Cloud Audit Logging",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Someone deleted your production database at 2 AM. Without audit logs, you'll never know who or how.",
+          "visual": "🕵️"
+        },
+        "buildup": {
+          "text": "Audit logs record every action: who did what, when, and from where. AWS CloudTrail, Azure Monitor, GCP Audit Logs.",
+          "visual": "📜"
+        },
+        "discovery": {
+          "text": "Logs are essential for forensics, compliance reporting, and detecting suspicious behavior patterns.",
+          "visual": "🔍"
+        },
+        "twist": {
+          "text": "Storing logs costs money. Many companies delete them too soon and lose critical evidence when breaches occur.",
+          "visual": "🗑️"
+        },
+        "climax": {
+          "text": "Best practice: store audit logs in a separate, tamper-proof account. Attackers can't cover tracks they can't reach.",
+          "visual": "🔒"
+        },
+        "punchline": {
+          "text": "Logs tell the story of what happened. Keep them safe and long.",
+          "visual": "📖"
+        }
+      },
+      "quiz": {
+        "question": "Why should audit logs be stored in a separate account?",
+        "options": [
+          "So attackers who compromise the main account cannot delete or tamper with logs",
+          "Audit logs are too large to store alongside application data",
+          "Cloud providers charge extra for logs in the same account"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch06-compliance-and-governance",
+      "title": "Security Incident Response",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Your monitoring alerts fire at 3 AM: unusual data export from a production database. What do you do first?",
+          "visual": "🚨"
+        },
+        "buildup": {
+          "text": "An incident response plan defines who does what when a breach happens: contain, investigate, communicate.",
+          "visual": "📋"
+        },
+        "discovery": {
+          "text": "Cloud adds unique challenges: you can't physically seize a server. Evidence exists as logs and snapshots.",
+          "visual": "📸"
+        },
+        "twist": {
+          "text": "Most teams freeze during incidents. Without practice, the plan stays on paper while damage spreads.",
+          "visual": "😰"
+        },
+        "climax": {
+          "text": "Regular tabletop exercises — simulated incidents — prepare teams so the real thing isn't their first rodeo.",
+          "visual": "🎯"
+        },
+        "punchline": {
+          "text": "A plan you've never practiced is just a document. Practice it.",
+          "visual": "🏋️"
+        }
+      },
+      "quiz": {
+        "question": "Why are tabletop exercises important for incident response?",
+        "options": [
+          "They prepare teams through simulated incidents so real events aren't their first experience",
+          "They replace the need for monitoring and alerting systems",
+          "They are legally required before deploying any cloud service"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "cloud-computing--cloud-security-fundamentals--ch06-compliance-and-governance",
+      "title": "Governance at Scale",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A large company has 500 cloud accounts, 10,000 resources, and 2,000 users. Who ensures the rules are followed?",
+          "visual": "🏢"
+        },
+        "buildup": {
+          "text": "Cloud governance means policies, guardrails, and automation that enforce security across all accounts.",
+          "visual": "🛤️"
+        },
+        "discovery": {
+          "text": "Tools like AWS Organizations, Azure Policy, and GCP Organization Policies set rules that apply everywhere.",
+          "visual": "📋"
+        },
+        "twist": {
+          "text": "Governance too strict kills innovation. Governance too loose creates security chaos. The balance is delicate.",
+          "visual": "⚖️"
+        },
+        "climax": {
+          "text": "The best cloud governance is invisible: developers move fast while guardrails quietly prevent disasters.",
+          "visual": "🛡️"
+        },
+        "punchline": {
+          "text": "Good governance is invisible. You only notice it when it's missing.",
+          "visual": "👻"
+        }
+      },
+      "quiz": {
+        "question": "What is the goal of cloud governance?",
+        "options": [
+          "Enforcing security policies across all accounts while still enabling innovation",
+          "Giving every user unrestricted access to all cloud resources",
+          "Eliminating the need for any human oversight in the cloud"
+        ],
+        "correct": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "id": "cloud-computing--cloud-architecture-patterns--t-retry-with-exponential-backoff",
+  "version": 1,
+  "subject": "Cloud Computing",
+  "subcategory": "Cloud Architecture Patterns",
+  "course_id": "cloud-computing--cloud-architecture-patterns",
+  "chapter_id": "cloud-computing--cloud-architecture-patterns--ch04-resilience-patterns",
+  "title": "Retry with Exponential Backoff",
+  "emoji": "🏗️",
+  "color": "#14B8A6",
+  "description": "A 60-second lesson on Retry with Exponential Backoff.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A request fails. You retry immediately. It fails again. You retry faster. Now you're DDoS-ing your own system.",
+      "visual": "💥"
+    },
+    "buildup": {
+      "text": "Exponential backoff spaces retries further apart: 1 second, 2 seconds, 4 seconds, 8 seconds, and so on.",
+      "visual": "⏱️"
+    },
+    "discovery": {
+      "text": "Adding random jitter prevents all clients from retrying at the exact same moment — a thundering herd.",
+      "visual": "🐘"
+    },
+    "twist": {
+      "text": "Without backoff, a temporary glitch becomes a permanent outage. Retries pile up faster than the server can recover.",
+      "visual": "📈"
+    },
+    "climax": {
+      "text": "Every cloud SDK uses exponential backoff by default. It's the simplest resilience pattern and one of the most important.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Retry gently. Give the system time to breathe and recover.",
+      "visual": "🌬️"
+    }
+  },
+  "quiz": {
+    "question": "Why is random jitter added to exponential backoff?",
+    "options": [
+      "To prevent all clients from retrying at the same time and overwhelming the server",
+      "To make requests arrive in alphabetical order",
+      "To encrypt retry attempts for security"
+    ],
+    "correct": 0
+  }
+}

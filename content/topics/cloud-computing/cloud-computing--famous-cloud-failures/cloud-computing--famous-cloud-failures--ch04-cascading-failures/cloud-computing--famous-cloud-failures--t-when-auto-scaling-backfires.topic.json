@@ -1,0 +1,49 @@
+{
+  "id": "cloud-computing--famous-cloud-failures--t-when-auto-scaling-backfires",
+  "version": 1,
+  "subject": "Cloud Computing",
+  "subcategory": "Famous Cloud Failures",
+  "course_id": "cloud-computing--famous-cloud-failures",
+  "chapter_id": "cloud-computing--famous-cloud-failures--ch04-cascading-failures",
+  "title": "When Auto-Scaling Backfires",
+  "emoji": "💥",
+  "color": "#EF4444",
+  "description": "A quick win: understand When Auto-Scaling Backfires.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Traffic spikes, auto-scaling launches 500 new servers, and the database collapses under the sudden connection flood.",
+      "visual": "💥"
+    },
+    "buildup": {
+      "text": "Auto-scaling adds capacity — but downstream services like databases and caches have their own limits.",
+      "visual": "📈"
+    },
+    "discovery": {
+      "text": "The new servers all connect to the database simultaneously. Connection pools overflow. The database gives up.",
+      "visual": "🌊"
+    },
+    "twist": {
+      "text": "The scaling that was supposed to save the system actually caused its failure. More capacity made things worse.",
+      "visual": "🔄"
+    },
+    "climax": {
+      "text": "Auto-scaling requires understanding every bottleneck in the chain. Scaling one layer while starving another fails.",
+      "visual": "🔗"
+    },
+    "punchline": {
+      "text": "Scaling solved one problem and created a bigger one.",
+      "visual": "📊"
+    }
+  },
+  "quiz": {
+    "question": "How can auto-scaling cause a cascading failure?",
+    "options": [
+      "New instances overwhelm downstream services like databases that can't scale as fast",
+      "Auto-scaling always launches servers in the wrong region",
+      "Cloud providers throttle accounts that scale too quickly"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "cloud-computing--famous-cloud-failures--t-the-thundering-herd-problem",
+  "version": 1,
+  "subject": "Cloud Computing",
+  "subcategory": "Famous Cloud Failures",
+  "course_id": "cloud-computing--famous-cloud-failures",
+  "chapter_id": "cloud-computing--famous-cloud-failures--ch04-cascading-failures",
+  "title": "The Thundering Herd Problem",
+  "emoji": "💥",
+  "color": "#EF4444",
+  "description": "A 1-minute de-risking session on The Thundering Herd Problem.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A cache server restarts. All 10,000 clients notice it's empty and hit the database simultaneously. The database crashes.",
+      "visual": "🐘"
+    },
+    "buildup": {
+      "text": "A thundering herd occurs when many processes react to the same event at the same time, overwhelming a shared resource.",
+      "visual": "🌊"
+    },
+    "discovery": {
+      "text": "The fix: stagger requests with jitter, use cache warming, and implement request coalescing — one fetch for many waiters.",
+      "visual": "⚙️"
+    },
+    "twist": {
+      "text": "Thundering herds often happen during recovery from another failure. The system breaks twice: outage, then stampede.",
+      "visual": "💥"
+    },
+    "climax": {
+      "text": "Designing for recovery is as important as designing for normal operation. How your system wakes up matters.",
+      "visual": "🌅"
+    },
+    "punchline": {
+      "text": "The recovery was worse than the outage. Plan for the stampede.",
+      "visual": "🏃"
+    }
+  },
+  "quiz": {
+    "question": "What causes a thundering herd problem?",
+    "options": [
+      "Many clients reacting to the same event simultaneously and overwhelming a shared resource",
+      "A single user making too many requests per second",
+      "Cloud providers limiting the number of active connections"
+    ],
+    "correct": 0
+  }
+}
