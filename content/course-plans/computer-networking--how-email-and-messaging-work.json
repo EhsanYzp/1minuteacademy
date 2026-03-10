@@ -1,0 +1,583 @@
+{
+  "categoryId": "computer-networking",
+  "subject": "Computer Networking",
+  "courseId": "computer-networking--how-email-and-messaging-work",
+  "courseTitle": "How Email and Messaging Work",
+  "emoji": "📧",
+  "color": "#059669",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "computer-networking--how-email-and-messaging-work--ch01-email-basics",
+      "title": "Email Basics",
+      "position": 1
+    },
+    {
+      "id": "computer-networking--how-email-and-messaging-work--ch02-email-protocols",
+      "title": "Email Protocols",
+      "position": 2
+    },
+    {
+      "id": "computer-networking--how-email-and-messaging-work--ch03-email-security",
+      "title": "Email Security",
+      "position": 3
+    },
+    {
+      "id": "computer-networking--how-email-and-messaging-work--ch04-messaging-platforms",
+      "title": "Messaging Platforms",
+      "position": 4
+    },
+    {
+      "id": "computer-networking--how-email-and-messaging-work--ch05-spam-and-filtering",
+      "title": "Spam and Filtering",
+      "position": 5
+    },
+    {
+      "id": "computer-networking--how-email-and-messaging-work--ch06-modern-challenges",
+      "title": "Modern Challenges",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch01-email-basics",
+      "title": "How an Email Travels",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You click Send. Your message bounces across servers and lands in a distant inbox within seconds.", "visual": "📨" },
+        "buildup": { "text": "Your mail client hands the message to an outgoing SMTP server. That server looks up the recipient's domain.", "visual": "🔍" },
+        "discovery": { "text": "DNS MX records point to the recipient's mail server. Your server opens a connection and delivers.", "visual": "📬" },
+        "twist": { "text": "The email may hop through relay servers, spam filters, and security gateways before arriving.", "visual": "🔀" },
+        "climax": { "text": "The destination server stores it until the recipient opens their client and downloads or syncs.", "visual": "📥" },
+        "punchline": { "text": "Email hops server to server. Simple concept, complex path.", "visual": "🗺️" }
+      },
+      "quiz": {
+        "question": "What DNS record tells a sending server where to deliver email?",
+        "options": ["MX record", "A record", "CNAME record"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch01-email-basics",
+      "title": "Email Addresses Decoded",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "user@example.com looks simple. But every part has a precise technical meaning.", "visual": "📧" },
+        "buildup": { "text": "The local part (before @) identifies the mailbox. The domain part identifies the mail server.", "visual": "📋" },
+        "discovery": { "text": "The domain maps to an MX record. The local part is matched by the receiving server to a mailbox.", "visual": "🗂️" },
+        "twist": { "text": "Plus addressing lets you add tags: user+shopping@example.com still reaches user. Great for filtering.", "visual": "🏷️" },
+        "climax": { "text": "Internationalized addresses now support non-Latin scripts. Email in Arabic or Chinese is valid.", "visual": "🌐" },
+        "punchline": { "text": "The @ splits who from where. That's all email needs.", "visual": "✂️" }
+      },
+      "quiz": {
+        "question": "What does the domain part of an email address identify?",
+        "options": ["The mail server that handles delivery", "The sender's real name", "The folder to store the email in"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch01-email-basics",
+      "title": "Inside Email Headers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every email has hidden metadata. Headers record the full journey, from origin to your inbox.", "visual": "🔍" },
+        "buildup": { "text": "Headers include From, To, Subject, Date, and a unique Message-ID assigned by the sender's server.", "visual": "📋" },
+        "discovery": { "text": "Received headers are added at each hop. The bottom one is the origin, the top is the final server.", "visual": "📚" },
+        "twist": { "text": "Spammers forge From headers easily. Authentication headers like SPF and DKIM reveal the truth.", "visual": "🎭" },
+        "climax": { "text": "Reply chains use In-Reply-To and References headers to thread messages. Your client reads these.", "visual": "🧵" },
+        "punchline": { "text": "Headers are email's audit trail. Every hop leaves a stamp.", "visual": "📮" }
+      },
+      "quiz": {
+        "question": "What do 'Received' headers in an email show?",
+        "options": ["Each server the email passed through on its journey", "The number of times the email was opened", "The attachments included in the email"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch01-email-basics",
+      "title": "MIME and Attachments",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Email was designed for plain text. MIME is the hack that lets you send images, PDFs, and HTML.", "visual": "📎" },
+        "buildup": { "text": "MIME — Multipurpose Internet Mail Extensions — wraps non-text content with type labels and encoding.", "visual": "🏷️" },
+        "discovery": { "text": "Base64 encoding converts binary files to ASCII text. The receiver decodes it back to the original file.", "visual": "🔄" },
+        "twist": { "text": "A single email can have multiple MIME parts: plain text, HTML version, and attachments side by side.", "visual": "📦" },
+        "climax": { "text": "Content-Type headers tell the client what each part is: text/plain, image/png, application/pdf.", "visual": "📋" },
+        "punchline": { "text": "MIME makes email multimedia. Text protocol, rich content.", "visual": "🎨" }
+      },
+      "quiz": {
+        "question": "What encoding does MIME use to send binary files as text?",
+        "options": ["Base64", "UTF-8", "Hexadecimal"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch01-email-basics",
+      "title": "CC, BCC, and Reply-All",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "CC, BCC, Reply-All — simple buttons that cause massive confusion and even data leaks.", "visual": "⚠️" },
+        "buildup": { "text": "CC sends a copy to additional recipients. Everyone can see who's on CC. It's a visible courtesy copy.", "visual": "👥" },
+        "discovery": { "text": "BCC hides recipients from each other. Servers strip BCC addresses before delivery. Invisible copies.", "visual": "👻" },
+        "twist": { "text": "Reply-All responds to every address. One careless click can send personal opinions to the whole company.", "visual": "💥" },
+        "climax": { "text": "In 2003, a Reply-All storm at a large firm generated 15 million emails in hours. Servers crashed.", "visual": "🌪️" },
+        "punchline": { "text": "BCC hides, CC shows, Reply-All broadcasts. Choose carefully.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does BCC do that CC does not?",
+        "options": ["Hides the recipient's address from all other recipients", "Sends the email at a higher priority", "Encrypts the message content"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch02-email-protocols",
+      "title": "SMTP — Sending Mail",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "SMTP is the protocol that delivers email. It has been pushing messages since 1982.", "visual": "📤" },
+        "buildup": { "text": "Your client connects to the SMTP server on port 587. It authenticates, then sends the message.", "visual": "🔌" },
+        "discovery": { "text": "SMTP uses simple text commands: HELO, MAIL FROM, RCPT TO, DATA. It's readable by humans.", "visual": "📝" },
+        "twist": { "text": "SMTP only sends mail. It has no concept of folders, read status, or inbox management.", "visual": "📭" },
+        "climax": { "text": "STARTTLS upgrades the plain connection to encrypted. Without it, your email flies in the clear.", "visual": "🔐" },
+        "punchline": { "text": "SMTP delivers mail. That's all it does, and it does it well.", "visual": "📬" }
+      },
+      "quiz": {
+        "question": "What port does SMTP typically use for email submission?",
+        "options": ["587", "80", "443"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch02-email-protocols",
+      "title": "IMAP — Syncing Mail",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Open email on your phone, then on your laptop. Same inbox, same read flags. IMAP does that.", "visual": "🔄" },
+        "buildup": { "text": "IMAP keeps all email on the server. Your client syncs a view — folders, flags, and messages.", "visual": "📂" },
+        "discovery": { "text": "Mark a message as read on one device. IMAP syncs that flag to every other device automatically.", "visual": "✅" },
+        "twist": { "text": "IMAP uses server storage for everything. Delete old mail or buy more storage when it fills up.", "visual": "💾" },
+        "climax": { "text": "IDLE command lets the server push new mail instantly. No polling delay — real-time notifications.", "visual": "🔔" },
+        "punchline": { "text": "IMAP syncs your inbox everywhere. One source of truth.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Where does IMAP store your emails?",
+        "options": ["On the server, synced to all devices", "Only on the first device that downloads them", "In a local file on each device independently"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch02-email-protocols",
+      "title": "POP3 — Downloading Mail",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Before IMAP, there was POP3. Download your mail, delete it from the server. Simple and offline.", "visual": "📥" },
+        "buildup": { "text": "POP3 connects to the server, downloads all new messages, and optionally deletes the server copies.", "visual": "🗑️" },
+        "discovery": { "text": "Once downloaded, emails live only on your device. No sync, no multi-device access by default.", "visual": "💻" },
+        "twist": { "text": "POP3 is still useful: low-bandwidth areas, archival setups, or privacy-focused users who want local-only storage.", "visual": "🏔️" },
+        "climax": { "text": "Some clients keep copies on the server with 'leave on server.' A workaround, but not true sync.", "visual": "🔧" },
+        "punchline": { "text": "POP3 downloads and deletes. Simple, but not synced.", "visual": "📦" }
+      },
+      "quiz": {
+        "question": "What happens by default after POP3 downloads email?",
+        "options": ["The server copy is deleted", "The email is marked as read on all devices", "A backup is sent to a second server"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch02-email-protocols",
+      "title": "Exchange and ActiveSync",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Corporate email runs on Microsoft Exchange. It syncs mail, calendars, and contacts together.", "visual": "🏢" },
+        "buildup": { "text": "Exchange ActiveSync pushes new email to phones in real time. No polling needed. Instant delivery.", "visual": "📱" },
+        "discovery": { "text": "IT admins can remote-wipe a lost phone's email, enforce PIN policies, and block jailbroken devices.", "visual": "🔒" },
+        "twist": { "text": "Exchange Online is now part of Microsoft 365. The server runs in Azure, not your basement.", "visual": "☁️" },
+        "climax": { "text": "EWS and Graph API let apps interact with Exchange programmatically — book rooms, send mail, read calendars.", "visual": "🔌" },
+        "punchline": { "text": "Exchange owns corporate email. Mail, calendar, contacts — unified.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "What can IT admins do via Exchange ActiveSync on a lost phone?",
+        "options": ["Remotely wipe the device's email data", "Increase the phone's storage capacity", "Upgrade the phone's operating system"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch02-email-protocols",
+      "title": "JMAP — The Modern Protocol",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "IMAP is from 1986. JMAP is its modern replacement — JSON-based, efficient, and developer-friendly.", "visual": "🆕" },
+        "buildup": { "text": "JMAP uses HTTP and JSON. No custom binary protocol. Web developers feel right at home.", "visual": "🌐" },
+        "discovery": { "text": "JMAP syncs only changes. Instead of re-downloading folders, it sends a tiny delta. Way less bandwidth.", "visual": "📉" },
+        "twist": { "text": "JMAP handles mail, calendars, and contacts in one protocol. IMAP needed separate standards for each.", "visual": "📦" },
+        "climax": { "text": "Fastmail built JMAP and contributed it as an IETF standard. Adoption is growing but still early.", "visual": "🏗️" },
+        "punchline": { "text": "JMAP modernizes email sync. JSON over HTTP, finally.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "What data format does JMAP use?",
+        "options": ["JSON over HTTP", "XML over TCP", "Binary over TLS"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch03-email-security",
+      "title": "SPF — Sender Verification",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Anyone can write any From address in an email. SPF is the first check that catches the liars.", "visual": "🕵️" },
+        "buildup": { "text": "SPF — Sender Policy Framework — is a DNS record listing IPs allowed to send for a domain.", "visual": "📋" },
+        "discovery": { "text": "The receiving server checks: did this email come from an IP listed in the sender's SPF record?", "visual": "✅" },
+        "twist": { "text": "SPF breaks when email is forwarded. The forwarding server's IP isn't in the original domain's SPF record.", "visual": "💔" },
+        "climax": { "text": "SPF alone isn't enough. It checks the envelope sender, not the From header the user sees.", "visual": "📨" },
+        "punchline": { "text": "SPF asks: is this server allowed to send for this domain?", "visual": "🔍" }
+      },
+      "quiz": {
+        "question": "Where is a domain's SPF record published?",
+        "options": ["In DNS as a TXT record", "In the email's subject line", "In the SMTP server's config file"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch03-email-security",
+      "title": "DKIM — Digital Signatures",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "SPF checks the server. DKIM checks the message itself. It signs the email so tampering is detectable.", "visual": "✍️" },
+        "buildup": { "text": "The sending server signs key headers and the body with a private key. A DKIM-Signature header is added.", "visual": "🔏" },
+        "discovery": { "text": "The receiver fetches the public key from DNS and verifies the signature. If it matches, nothing was altered.", "visual": "🔑" },
+        "twist": { "text": "DKIM survives forwarding. The signature stays intact because it's tied to content, not the sending IP.", "visual": "📬" },
+        "climax": { "text": "Gmail, Outlook, and Yahoo all require DKIM. Without it, your emails may land in the spam folder.", "visual": "📁" },
+        "punchline": { "text": "DKIM proves the email is authentic and unmodified. Digital trust.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Where does the receiving server find the DKIM public key?",
+        "options": ["In the sender's DNS records", "Inside the email's attachment", "From the sender's SMTP server directly"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch03-email-security",
+      "title": "DMARC — Policy Enforcement",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "SPF and DKIM detect fakes. DMARC tells the receiver what to do about them: nothing, quarantine, or reject.", "visual": "📜" },
+        "buildup": { "text": "DMARC — Domain-based Message Authentication — links SPF and DKIM results to the visible From address.", "visual": "🔗" },
+        "discovery": { "text": "A DMARC DNS record sets policy: p=none (monitor), p=quarantine (spam folder), or p=reject (block).", "visual": "🚦" },
+        "twist": { "text": "DMARC sends reports back to domain owners showing who is sending email using their domain — legit or not.", "visual": "📊" },
+        "climax": { "text": "Google and Yahoo now require DMARC for bulk senders. No DMARC, no inbox.", "visual": "📭" },
+        "punchline": { "text": "DMARC enforces the rules SPF and DKIM set. Action, not just detection.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What does a DMARC policy of p=reject do?",
+        "options": ["Tells the receiver to block emails that fail authentication", "Sends a warning to the sender", "Logs the email but delivers it normally"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch03-email-security",
+      "title": "TLS for Email",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Emails sent without encryption are readable by any server in the path. TLS fixes that.", "visual": "🔓" },
+        "buildup": { "text": "STARTTLS upgrades an SMTP connection to encrypted. The mail flies in a TLS tunnel between servers.", "visual": "🔐" },
+        "discovery": { "text": "MTA-STS forces TLS. Without it, a server can downgrade to plaintext and you'd never know.", "visual": "📜" },
+        "twist": { "text": "TLS encrypts the link, not the message. Each server decrypts, reads, then re-encrypts for the next hop.", "visual": "🔄" },
+        "climax": { "text": "Google's transparency report shows 90%+ of Gmail traffic now uses TLS in transit. Huge progress.", "visual": "📈" },
+        "punchline": { "text": "TLS protects email in transit. Not perfect, but essential.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What does STARTTLS do for an SMTP connection?",
+        "options": ["Upgrades it from plaintext to encrypted TLS", "Compresses the email to reduce size", "Adds a digital signature to the message"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch03-email-security",
+      "title": "PGP and End-to-End Encryption",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "TLS encrypts the pipe. PGP encrypts the message itself. Only the intended recipient can decrypt it.", "visual": "🔒" },
+        "buildup": { "text": "PGP uses a key pair. You encrypt with the recipient's public key. They decrypt with their private key.", "visual": "🔑" },
+        "discovery": { "text": "No server in the middle can read it. Not Gmail, not your ISP, not the government. True end-to-end.", "visual": "🛡️" },
+        "twist": { "text": "PGP is notoriously hard to use. Key management, trust models, and UX have limited adoption for decades.", "visual": "😤" },
+        "climax": { "text": "ProtonMail and Tutanota bake encryption into the UI. Users get PGP-level security without the complexity.", "visual": "📱" },
+        "punchline": { "text": "PGP means only you and the recipient can read it. True privacy.", "visual": "🕶️" }
+      },
+      "quiz": {
+        "question": "What makes PGP different from TLS for email?",
+        "options": ["PGP encrypts the message itself, not just the connection", "PGP is faster than TLS", "PGP only works with Gmail"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch04-messaging-platforms",
+      "title": "How WhatsApp Works",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Two billion users send 100 billion messages daily on WhatsApp. How does it work under the hood?", "visual": "💬" },
+        "buildup": { "text": "WhatsApp uses the Signal protocol. Every message is end-to-end encrypted with unique keys per session.", "visual": "🔐" },
+        "discovery": { "text": "Messages are stored on the server only until delivered. Once received, the server copy is deleted.", "visual": "🗑️" },
+        "twist": { "text": "Group chats use sender keys. One encryption operation reaches all members. Efficient but less secure than 1:1.", "visual": "👥" },
+        "climax": { "text": "WhatsApp Web mirrors your phone's session. The phone must stay connected to relay messages.", "visual": "💻" },
+        "punchline": { "text": "WhatsApp encrypts everything by default. Billions trust it daily.", "visual": "🌍" }
+      },
+      "quiz": {
+        "question": "What encryption protocol does WhatsApp use?",
+        "options": ["The Signal protocol", "PGP", "AES-256 with shared keys"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch04-messaging-platforms",
+      "title": "Slack and Team Messaging",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Slack replaced email for millions of teams. Channels, threads, and integrations keep work flowing.", "visual": "💼" },
+        "buildup": { "text": "Slack uses WebSocket connections for real-time delivery. Messages appear instantly across all clients.", "visual": "⚡" },
+        "discovery": { "text": "Channels are topic-based rooms. Threads keep replies organized. Search indexes every message ever sent.", "visual": "🔍" },
+        "twist": { "text": "Slack messages are not end-to-end encrypted. The company can access all content. IT admins can export it.", "visual": "👁️" },
+        "climax": { "text": "Bots and integrations connect Slack to GitHub, Jira, and hundreds of tools via its API.", "visual": "🤖" },
+        "punchline": { "text": "Slack organizes team chat into channels. Fast, searchable, open.", "visual": "📢" }
+      },
+      "quiz": {
+        "question": "What technology gives Slack real-time message delivery?",
+        "options": ["WebSocket connections", "Email-based polling", "SMS gateways"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch04-messaging-platforms",
+      "title": "SMS, iMessage, and RCS",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "SMS is 30 years old and still works everywhere. But iMessage and RCS are replacing it piece by piece.", "visual": "📱" },
+        "buildup": { "text": "SMS travels over the cellular control channel. 160-character limit, no encryption, no read receipts.", "visual": "📟" },
+        "discovery": { "text": "iMessage uses Apple's servers with end-to-end encryption. Blue bubbles mean secure. Green means SMS fallback.", "visual": "🔵" },
+        "twist": { "text": "RCS is the carrier-backed SMS upgrade. Rich media, typing indicators, and read receipts — but no E2E encryption.", "visual": "💬" },
+        "climax": { "text": "Google pushed RCS hard. Apple finally added RCS support in iOS 18 — green bubbles get upgrades at last.", "visual": "🍏" },
+        "punchline": { "text": "SMS still works everywhere. RCS and iMessage make it richer.", "visual": "📶" }
+      },
+      "quiz": {
+        "question": "What security feature does iMessage have that standard SMS lacks?",
+        "options": ["End-to-end encryption", "Carrier-grade firewalls", "Message size limits"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch04-messaging-platforms",
+      "title": "Signal and Privacy-First Design",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Signal collects almost nothing about you. It's the gold standard for private messaging.", "visual": "🔒" },
+        "buildup": { "text": "Signal Protocol uses double-ratchet encryption. Keys rotate with every message for forward secrecy.", "visual": "🔑" },
+        "discovery": { "text": "Signal stores only your phone number and last connection date. No message content, no contacts, no metadata.", "visual": "📋" },
+        "twist": { "text": "When subpoenaed, Signal can only hand over two data points: the phone number and last connection timestamp.", "visual": "⚖️" },
+        "climax": { "text": "Sealed sender hides who sent a message even from Signal's servers. Metadata protection taken to the extreme.", "visual": "📮" },
+        "punchline": { "text": "Signal proves privacy and usability can coexist. No compromise.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What does Signal's double-ratchet encryption provide?",
+        "options": ["Forward secrecy by rotating keys with every message", "Faster message delivery than other apps", "Automatic translation of messages"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch04-messaging-platforms",
+      "title": "Matrix and Decentralized Chat",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "What if no single company controlled your chat? Matrix is a decentralized, open messaging protocol.", "visual": "🌐" },
+        "buildup": { "text": "Anyone can run a Matrix server. Servers federate — users on different servers chat seamlessly.", "visual": "🔀" },
+        "discovery": { "text": "Matrix bridges connect to Slack, Discord, IRC, and Telegram. One client for all your chat networks.", "visual": "🌉" },
+        "twist": { "text": "End-to-end encryption is built in via Megolm. Group chats and DMs are both encrypted by default.", "visual": "🔐" },
+        "climax": { "text": "France and Germany use Matrix for government messaging. Element is the flagship Matrix client.", "visual": "🏛️" },
+        "punchline": { "text": "Matrix decentralizes chat. No single company owns the network.", "visual": "🕸️" }
+      },
+      "quiz": {
+        "question": "What does federation mean in the context of Matrix?",
+        "options": ["Users on different servers can communicate seamlessly", "All data is stored on one central server", "Only approved servers can join the network"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch05-spam-and-filtering",
+      "title": "How Spam Filters Work",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Over 45% of all email is spam. Your inbox stays clean because filters catch it before you see it.", "visual": "🛡️" },
+        "buildup": { "text": "Filters score each email. High score means spam. Rules check headers, content, links, and sender reputation.", "visual": "📊" },
+        "discovery": { "text": "Bayesian filters learn from examples. Mark spam and ham, and the filter adapts to your specific patterns.", "visual": "🧠" },
+        "twist": { "text": "Spammers evolve constantly. Image-based spam, zero-width characters, and homoglyph attacks bypass text filters.", "visual": "🎭" },
+        "climax": { "text": "Gmail uses deep learning models trained on billions of emails. They block 99.9% of spam and phishing.", "visual": "🤖" },
+        "punchline": { "text": "Spam filters score, learn, and adapt. Your inbox depends on them.", "visual": "📬" }
+      },
+      "quiz": {
+        "question": "What does a Bayesian spam filter learn from?",
+        "options": ["Examples of spam and legitimate emails you mark", "The sender's IP address only", "The time of day the email was sent"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch05-spam-and-filtering",
+      "title": "Blocklists and Reputation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Send spam from your server and it lands on a blocklist. Now every email you send gets rejected.", "visual": "🚫" },
+        "buildup": { "text": "DNS-based blocklists (DNSBLs) track IPs known to send spam. Receivers query them in real time.", "visual": "📋" },
+        "discovery": { "text": "Spamhaus, Barracuda, and SpamCop maintain major lists. One listing can block your mail worldwide.", "visual": "🌍" },
+        "twist": { "text": "Shared hosting means shared IPs. One spammy neighbor can get your innocent server blocklisted too.", "visual": "😤" },
+        "climax": { "text": "Reputation is rebuilt slowly: clean sending, low bounce rates, and proper authentication. Days to weeks.", "visual": "📈" },
+        "punchline": { "text": "IP reputation is email currency. Lose it and delivery stops.", "visual": "💰" }
+      },
+      "quiz": {
+        "question": "What is a DNSBL?",
+        "options": ["A DNS-based list of IPs known to send spam", "A protocol for encrypting email", "A tool for compressing email attachments"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch05-spam-and-filtering",
+      "title": "Phishing Detection",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The email looks exactly like your bank. The link goes to a fake site. Phishing detection catches it.", "visual": "🎣" },
+        "buildup": { "text": "Filters check URLs against known phishing databases. They also analyze visual similarity to real sites.", "visual": "🔍" },
+        "discovery": { "text": "Machine learning models examine tone, urgency, and sender patterns. 'Your account will be locked' is a red flag.", "visual": "🚩" },
+        "twist": { "text": "Spear phishing targets individuals with personal details. Generic filters miss these. Context is needed.", "visual": "🎯" },
+        "climax": { "text": "Modern filters sandbox links — opening them in a virtual browser to check for credential harvesting pages.", "visual": "🏖️" },
+        "punchline": { "text": "Phishing detection layers rules, ML, and sandboxing. Defense in depth.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What does link sandboxing do in phishing detection?",
+        "options": ["Opens links in a virtual browser to check for threats", "Blocks all links in every email", "Replaces links with plain text"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch05-spam-and-filtering",
+      "title": "Greylisting Explained",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your server rejects the first delivery attempt. Legit servers retry. Spammers don't. That's greylisting.", "visual": "⏳" },
+        "buildup": { "text": "On the first attempt, the server returns a 'try again later' code. It remembers the sender/recipient/IP combo.", "visual": "📝" },
+        "discovery": { "text": "Real mail servers retry after a few minutes. Spam bots move on to the next victim and never come back.", "visual": "🤖" },
+        "twist": { "text": "Greylisting delays first-time emails by minutes. Users notice. Many admins disable it to avoid complaints.", "visual": "😠" },
+        "climax": { "text": "After the first retry succeeds, the pair is whitelisted. Future emails from that sender arrive instantly.", "visual": "✅" },
+        "punchline": { "text": "Greylisting rejects once, then allows forever. Simple and effective.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why does greylisting work against spam bots?",
+        "options": ["Spam bots rarely retry after a temporary rejection", "It encrypts the email so bots can't read it", "It blocks all IPs from unknown countries"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch05-spam-and-filtering",
+      "title": "Email Deliverability",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You sent a newsletter to 10,000 subscribers. Only 7,000 received it. The rest vanished. Deliverability failed.", "visual": "📉" },
+        "buildup": { "text": "Deliverability is the art of reaching the inbox. SPF, DKIM, and DMARC are the minimum requirements.", "visual": "📋" },
+        "discovery": { "text": "List hygiene matters: remove bounces and inactive subscribers. High bounce rates destroy your reputation.", "visual": "🧹" },
+        "twist": { "text": "Even legit emails land in spam. Trigger words, image-heavy layouts, and too many links lower your score.", "visual": "📭" },
+        "climax": { "text": "Warm up new IPs slowly: 100 emails on day one, doubling gradually. Sudden spikes trigger spam flags.", "visual": "🌡️" },
+        "punchline": { "text": "Deliverability is earned, not guaranteed. Every detail matters.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why should you warm up a new sending IP address?",
+        "options": ["Sudden volume spikes trigger spam flags at receiving servers", "New IPs are slower and need time to reach full speed", "Email protocols require a handshake period for new IPs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch06-modern-challenges",
+      "title": "Tracking Pixels and Privacy",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Did they open your email? A tiny invisible image tells the sender exactly when and where you read it.", "visual": "👁️" },
+        "buildup": { "text": "A tracking pixel is a 1×1 transparent image hosted on the sender's server. Loading it logs the open event.", "visual": "📊" },
+        "discovery": { "text": "The log captures your IP, device type, OS, and exact time. All from opening one email.", "visual": "📋" },
+        "twist": { "text": "Apple Mail Privacy Protection now pre-fetches all images. The sender sees an open even if you never read it.", "visual": "🍏" },
+        "climax": { "text": "Hey.com blocks all trackers by default and shows which emails tried to spy on you. A privacy revolt.", "visual": "🛡️" },
+        "punchline": { "text": "Tracking pixels spy silently. Privacy tools are fighting back.", "visual": "⚔️" }
+      },
+      "quiz": {
+        "question": "How does Apple Mail Privacy Protection defeat tracking pixels?",
+        "options": ["It pre-fetches all images so real open data is hidden", "It blocks all emails containing images", "It converts images to text descriptions"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch06-modern-challenges",
+      "title": "Email vs Messaging: When to Use What",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Email for everything? Slack for everything? Each tool has a sweet spot. Using the wrong one costs time.", "visual": "⚖️" },
+        "buildup": { "text": "Email is async and formal. It works across organizations. No shared platform needed — just an address.", "visual": "📧" },
+        "discovery": { "text": "Messaging is real-time and informal. Great for quick questions and team decisions. Bad for deep documentation.", "visual": "💬" },
+        "twist": { "text": "Messaging creates FOMO and interruptions. Studies show workers check Slack 50+ times per day on average.", "visual": "📵" },
+        "climax": { "text": "Best practice: use email for external and archival. Use messaging for internal and time-sensitive topics.", "visual": "🎯" },
+        "punchline": { "text": "Email for the record. Messaging for the moment. Pick wisely.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "When is email generally better than instant messaging?",
+        "options": ["For cross-organization communication and archival records", "For quick team decisions that need immediate answers", "For sharing memes and casual conversation"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch06-modern-challenges",
+      "title": "Interoperability Challenges",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Email works everywhere. But WhatsApp can't message Telegram. Messaging is a walled-garden world.", "visual": "🧱" },
+        "buildup": { "text": "Each platform uses its own protocol and servers. There is no shared standard like SMTP for messaging.", "visual": "🔒" },
+        "discovery": { "text": "The EU's Digital Markets Act requires large platforms to open up. iMessage and WhatsApp must allow interop.", "visual": "🇪🇺" },
+        "twist": { "text": "Interop breaks encryption guarantees. Bridging two E2E systems is an unsolved cryptographic challenge.", "visual": "🔐" },
+        "climax": { "text": "Matrix bridges offer a workaround: one client, many networks. But it's a bolt-on, not native interop.", "visual": "🌉" },
+        "punchline": { "text": "Messaging silos persist. Regulation may force open doors.", "visual": "🚪" }
+      },
+      "quiz": {
+        "question": "What does the EU's Digital Markets Act require for messaging?",
+        "options": ["Large platforms must allow interoperability with others", "All platforms must use the same encryption", "Messaging apps must delete data after 30 days"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch06-modern-challenges",
+      "title": "AI and the Future of Email",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "AI now drafts replies, sorts your inbox, and even attends meetings for you. Email is transforming.", "visual": "🤖" },
+        "buildup": { "text": "Gmail's Smart Reply suggests three short responses. Smart Compose finishes your sentences as you type.", "visual": "✍️" },
+        "discovery": { "text": "AI prioritizes your inbox. Important emails surface first. Low-priority ones stay hidden until you're free.", "visual": "📊" },
+        "twist": { "text": "AI-generated phishing is harder to detect. Perfect grammar and personal details fool both humans and filters.", "visual": "🎭" },
+        "climax": { "text": "Microsoft Copilot summarizes long email threads and drafts context-aware replies. The inbox becomes an assistant.", "visual": "🧠" },
+        "punchline": { "text": "AI is reshaping email. Smarter inbox, smarter threats, new balance.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What is a risk of AI in the email space?",
+        "options": ["AI-generated phishing is harder to detect", "AI makes email too fast for servers to handle", "AI eliminates the need for email entirely"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--how-email-and-messaging-work--ch06-modern-challenges",
+      "title": "Self-Hosted vs Cloud Email",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Run your own email server or pay Google? The choice seems simple, but the trade-offs are deep.", "visual": "🏠" },
+        "buildup": { "text": "Self-hosting gives full control: your data, your rules, your privacy. No third party reads your mail.", "visual": "🔒" },
+        "discovery": { "text": "But maintaining deliverability alone is a full-time job. One misconfigured SPF record and you're blocklisted.", "visual": "😤" },
+        "twist": { "text": "Cloud providers handle spam filtering, uptime, and security patches. You trade control for convenience.", "visual": "☁️" },
+        "climax": { "text": "Some run hybrid setups: cloud for delivery infrastructure, self-hosted for storage and encryption.", "visual": "🔀" },
+        "punchline": { "text": "Self-host for control. Cloud for convenience. Hybrid for both.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What is the biggest challenge of self-hosting email?",
+        "options": ["Maintaining deliverability and avoiding blocklists", "The cost of electricity for the server", "Finding an email client that supports self-hosted servers"],
+        "correct": 0
+      }
+    }
+  ]
+}

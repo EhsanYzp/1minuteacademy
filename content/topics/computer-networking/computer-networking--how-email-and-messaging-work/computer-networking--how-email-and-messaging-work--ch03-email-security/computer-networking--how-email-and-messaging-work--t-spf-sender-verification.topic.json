@@ -1,0 +1,49 @@
+{
+  "id": "computer-networking--how-email-and-messaging-work--t-spf-sender-verification",
+  "version": 1,
+  "subject": "Computer Networking",
+  "subcategory": "How Email and Messaging Work",
+  "course_id": "computer-networking--how-email-and-messaging-work",
+  "chapter_id": "computer-networking--how-email-and-messaging-work--ch03-email-security",
+  "title": "SPF — Sender Verification",
+  "emoji": "📧",
+  "color": "#059669",
+  "description": "A short lesson to help you apply SPF — Sender Verification.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Anyone can write any From address in an email. SPF is the first check that catches the liars.",
+      "visual": "🕵️"
+    },
+    "buildup": {
+      "text": "SPF — Sender Policy Framework — is a DNS record listing IPs allowed to send for a domain.",
+      "visual": "📋"
+    },
+    "discovery": {
+      "text": "The receiving server checks: did this email come from an IP listed in the sender's SPF record?",
+      "visual": "✅"
+    },
+    "twist": {
+      "text": "SPF breaks when email is forwarded. The forwarding server's IP isn't in the original domain's SPF record.",
+      "visual": "💔"
+    },
+    "climax": {
+      "text": "SPF alone isn't enough. It checks the envelope sender, not the From header the user sees.",
+      "visual": "📨"
+    },
+    "punchline": {
+      "text": "SPF asks: is this server allowed to send for this domain?",
+      "visual": "🔍"
+    }
+  },
+  "quiz": {
+    "question": "Where is a domain's SPF record published?",
+    "options": [
+      "In DNS as a TXT record",
+      "In the email's subject line",
+      "In the SMTP server's config file"
+    ],
+    "correct": 0
+  }
+}

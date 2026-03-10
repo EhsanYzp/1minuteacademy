@@ -1,0 +1,583 @@
+{
+  "categoryId": "computer-networking",
+  "subject": "Computer Networking",
+  "courseId": "computer-networking--famous-network-outages",
+  "courseTitle": "Famous Network Outages",
+  "emoji": "💥",
+  "color": "#E11D48",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "computer-networking--famous-network-outages--ch01-routing-disasters",
+      "title": "Routing Disasters",
+      "position": 1
+    },
+    {
+      "id": "computer-networking--famous-network-outages--ch02-cloud-failures",
+      "title": "Cloud Failures",
+      "position": 2
+    },
+    {
+      "id": "computer-networking--famous-network-outages--ch03-dns-and-web",
+      "title": "DNS and Web Outages",
+      "position": 3
+    },
+    {
+      "id": "computer-networking--famous-network-outages--ch04-security-breaches",
+      "title": "Security-Caused Outages",
+      "position": 4
+    },
+    {
+      "id": "computer-networking--famous-network-outages--ch05-physical-failures",
+      "title": "Physical Failures",
+      "position": 5
+    },
+    {
+      "id": "computer-networking--famous-network-outages--ch06-lessons-learned",
+      "title": "Lessons Learned",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch01-routing-disasters",
+      "title": "Facebook's BGP Meltdown (2021)",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "On October 4, 2021, Facebook, Instagram, and WhatsApp vanished. Three billion users lost access for six hours.", "visual": "📵" },
+        "buildup": { "text": "A routine maintenance command withdrew all of Facebook's BGP route announcements from the internet.", "visual": "🔧" },
+        "discovery": { "text": "Without BGP routes, no DNS server could find Facebook. The domain stopped existing on the internet.", "visual": "🕳️" },
+        "twist": { "text": "Engineers couldn't fix it remotely — their tools used Facebook's own network. They drove to data centers.", "visual": "🏃" },
+        "climax": { "text": "The outage cost $100 million in revenue and wiped $40 billion from the stock price in a single day.", "visual": "📉" },
+        "punchline": { "text": "One config change erased Facebook from the internet for six hours.", "visual": "💀" }
+      },
+      "quiz": {
+        "question": "What caused Facebook's 2021 outage?",
+        "options": ["An accidental withdrawal of all BGP route announcements", "A massive DDoS attack from hackers", "A power failure at their main data center"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch01-routing-disasters",
+      "title": "YouTube Hijacked by Pakistan (2008)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2008, Pakistan tried to block YouTube at home. Instead, they accidentally blocked it for the whole world.", "visual": "🌍" },
+        "buildup": { "text": "Pakistan Telecom announced a fake BGP route for YouTube's IPs. The route spread globally in minutes.", "visual": "📡" },
+        "discovery": { "text": "Routers worldwide sent YouTube traffic to Pakistan instead of Google. The small ISP collapsed under load.", "visual": "💥" },
+        "twist": { "text": "BGP operates on trust. Any network can claim any IP range, and neighbors believe it without checking.", "visual": "🤝" },
+        "climax": { "text": "The fix took two hours and sped up efforts to add RPKI route validation to BGP for security.", "visual": "🛡️" },
+        "punchline": { "text": "One country's censorship accidentally censored YouTube worldwide.", "visual": "🌐" }
+      },
+      "quiz": {
+        "question": "How did Pakistan accidentally take YouTube offline globally?",
+        "options": ["By announcing a false BGP route for YouTube's IP addresses", "By cutting an undersea cable to Google", "By launching a DDoS attack on YouTube's servers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch01-routing-disasters",
+      "title": "Google's 27-Minute Outage (2020)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "For 27 minutes on December 14, 2020, Gmail, YouTube, and every Google service went completely dark.", "visual": "⚫" },
+        "buildup": { "text": "Google's authentication system hit a storage quota limit. It couldn't verify any user's identity.", "visual": "🔐" },
+        "discovery": { "text": "Without auth, every service requiring login rejected all users at once. Global lockout in seconds.", "visual": "🚫" },
+        "twist": { "text": "The quota was a safety mechanism meant to prevent runaway storage — it caused the outage it was designed to prevent.", "visual": "🔄" },
+        "climax": { "text": "Engineers freed storage manually. Services recovered, but millions were disrupted during a workday.", "visual": "💼" },
+        "punchline": { "text": "A full disk took down the world's largest cloud company.", "visual": "💾" }
+      },
+      "quiz": {
+        "question": "What triggered Google's December 2020 outage?",
+        "options": ["Their authentication system hit a storage quota limit", "A software bug in Chrome browser", "An earthquake damaged their primary data center"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch01-routing-disasters",
+      "title": "Level 3's Routing Leak (2019)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2019, a small ISP leaked millions of BGP routes through a major carrier. Global traffic was misrouted.", "visual": "🌊" },
+        "buildup": { "text": "A Pennsylvania ISP advertised routes from one provider to another. A classic BGP route leak.", "visual": "📡" },
+        "discovery": { "text": "Level 3, a Tier 1 carrier, accepted and spread the leak. Cloudflare and Amazon traffic went haywire.", "visual": "🔀" },
+        "twist": { "text": "Neither the ISP nor the carrier had route filters. Two missing safeguards combined into a global incident.", "visual": "🧱" },
+        "climax": { "text": "It lasted hours and proved BGP security depends on every participant — and many don't do their part.", "visual": "⚠️" },
+        "punchline": { "text": "A tiny ISP broke the internet. Two missing filters were enough.", "visual": "🔗" }
+      },
+      "quiz": {
+        "question": "What is a BGP route leak?",
+        "options": ["When a network advertises routes it shouldn't to the wrong peers", "When a router runs out of memory", "When a cable is physically damaged"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch01-routing-disasters",
+      "title": "The Morris Worm (1988)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 1988, a grad student released a program that accidentally crippled 10% of the entire internet.", "visual": "🐛" },
+        "buildup": { "text": "Robert Morris built a worm to measure the internet's size. It exploited Unix flaws to spread between machines.", "visual": "💻" },
+        "discovery": { "text": "A bug made it reinfect the same machines repeatedly. Each copy ate resources until systems crashed.", "visual": "📈" },
+        "twist": { "text": "About 6,000 machines — 10% of the internet — were hit. Damage was estimated at $10 million.", "visual": "💰" },
+        "climax": { "text": "The incident created CERT, the first computer emergency response team, at Carnegie Mellon University.", "visual": "🏛️" },
+        "punchline": { "text": "One student's experiment launched the field of internet security.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "What unintended behavior made the Morris Worm so destructive?",
+        "options": ["It reinfected the same machines repeatedly, crashing them", "It deleted all files on infected computers", "It sent spam email to every contact"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch02-cloud-failures",
+      "title": "AWS S3 Outage (2017)",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "On February 28, 2017, a huge chunk of the internet went down. The cause: a typo by one AWS engineer.", "visual": "⌨️" },
+        "buildup": { "text": "An engineer debugging S3 ran a command that removed far more servers than intended in US-East-1.", "visual": "🔧" },
+        "discovery": { "text": "S3 stores data for millions of sites. When it failed, Slack, Trello, Quora, and many others went down.", "visual": "💥" },
+        "twist": { "text": "AWS's own status dashboard couldn't report the outage — it depended on S3. They used Twitter instead.", "visual": "🐦" },
+        "climax": { "text": "Four hours down, $150 million in customer losses. AWS added safeguards to prevent a repeat.", "visual": "🛡️" },
+        "punchline": { "text": "A typo took down a third of the internet. Dependencies are deadly.", "visual": "🕸️" }
+      },
+      "quiz": {
+        "question": "What caused the 2017 AWS S3 outage?",
+        "options": ["An engineer accidentally removed too many servers with a mistyped command", "A natural disaster destroyed the data center", "A DDoS attack overwhelmed S3's capacity"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch02-cloud-failures",
+      "title": "Azure's Leap Year Bug (2012)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On February 29, 2012, Microsoft Azure went down for hours. The cause: a leap year date bug.", "visual": "📅" },
+        "buildup": { "text": "Azure's cert system created one-year certificates. On Feb 29, it computed a date that didn't exist.", "visual": "🔐" },
+        "discovery": { "text": "The invalid date broke certificate creation. Without valid certs, VMs couldn't start or communicate.", "visual": "🚫" },
+        "twist": { "text": "Leap year bugs are a classic problem. This one hit a production cloud serving thousands of businesses.", "visual": "🏢" },
+        "climax": { "text": "Microsoft fixed it in hours and added leap year testing. A simple test could have prevented it.", "visual": "✅" },
+        "punchline": { "text": "February 29 broke Azure. Edge cases matter, even in the cloud.", "visual": "📆" }
+      },
+      "quiz": {
+        "question": "What did Azure's leap year bug affect?",
+        "options": ["Certificate generation, preventing VMs from starting", "User passwords, locking everyone out", "Billing, charging customers incorrectly"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch02-cloud-failures",
+      "title": "Google Cloud's Network Outage (2019)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On June 2, 2019, Google Cloud lost connectivity for four hours. YouTube, Gmail, and Snapchat all went down.", "visual": "📵" },
+        "buildup": { "text": "A network config change meant for a few servers was accidentally applied to a much larger region.", "visual": "🔧" },
+        "discovery": { "text": "The misconfig caused massive packet loss. Services on Google's network degraded or failed entirely.", "visual": "📉" },
+        "twist": { "text": "Many third-party services also run on Google Cloud. One outage cascaded across the whole internet.", "visual": "🌊" },
+        "climax": { "text": "Google published a detailed post-mortem and added guardrails against wide-scope config changes.", "visual": "📋" },
+        "punchline": { "text": "A config meant for a few servers hit a whole region. Scope matters.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why did Google Cloud's 2019 outage affect non-Google services?",
+        "options": ["Many third-party services run on Google Cloud infrastructure", "Google's DNS servers serve the entire internet", "The outage physically damaged other companies' cables"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch02-cloud-failures",
+      "title": "Fastly's Edge Crash (2021)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On June 8, 2021, Reddit, the New York Times, and Twitch all went offline at the same time.", "visual": "🚫" },
+        "buildup": { "text": "Fastly, a major CDN, had a global outage. One customer config change triggered a hidden software bug.", "visual": "🐛" },
+        "discovery": { "text": "The bug crashed 85% of Fastly's network. Websites served by Fastly showed 503 errors worldwide.", "visual": "💀" },
+        "twist": { "text": "Fastly fixed it in 49 minutes. But those minutes revealed how much of the web depends on a single CDN.", "visual": "⏱️" },
+        "climax": { "text": "The incident reignited debate about internet centralization. Too few companies carry too much traffic.", "visual": "⚖️" },
+        "punchline": { "text": "One CDN bug downed half the internet's top sites.", "visual": "🕸️" }
+      },
+      "quiz": {
+        "question": "What caused the Fastly outage in 2021?",
+        "options": ["A customer config change triggered a latent software bug", "A massive power failure at Fastly's data centers", "A coordinated hacking attack"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch02-cloud-failures",
+      "title": "Cloudflare's Regex Catastrophe (2019)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On July 2, 2019, Cloudflare's CPUs spiked to 100% worldwide. Millions of websites returned errors.", "visual": "🔥" },
+        "buildup": { "text": "A developer deployed a firewall rule with a regular expression that had catastrophic backtracking behavior.", "visual": "📝" },
+        "discovery": { "text": "The regex consumed all CPU on every edge server globally. No capacity remained to serve web traffic.", "visual": "💀" },
+        "twist": { "text": "The regex looked harmless in testing. Certain inputs caused exponential processing — a known regex pitfall.", "visual": "📈" },
+        "climax": { "text": "Cloudflare rolled back in 27 minutes and published a transparent post-mortem. They added regex time limits.", "visual": "⏱️" },
+        "punchline": { "text": "One regular expression melted a global CDN. Tiny code, huge impact.", "visual": "🧨" }
+      },
+      "quiz": {
+        "question": "What programming issue caused Cloudflare's 2019 outage?",
+        "options": ["A regex with catastrophic backtracking that consumed all CPU", "A memory leak that filled all available RAM", "A database query that locked all tables"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch03-dns-and-web",
+      "title": "Dyn DNS Attack (2016)",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "On October 21, 2016, Twitter, Netflix, Reddit, and Spotify all went down. The internet's phone book was attacked.", "visual": "📖" },
+        "buildup": { "text": "The Mirai botnet launched a massive DDoS against Dyn, a major DNS provider used by thousands of sites.", "visual": "🤖" },
+        "discovery": { "text": "Mirai had hijacked hundreds of thousands of IoT devices — cameras, DVRs, routers — all with default passwords.", "visual": "📷" },
+        "twist": { "text": "When Dyn couldn't respond, browsers couldn't find those sites — even though the servers themselves were fine.", "visual": "🔍" },
+        "climax": { "text": "The attack came in three waves over a full day. One of the largest DDoS events ever recorded.", "visual": "🌊" },
+        "punchline": { "text": "Unsecured cameras took down Twitter. IoT security matters.", "visual": "📷" }
+      },
+      "quiz": {
+        "question": "What devices did the Mirai botnet use to attack Dyn?",
+        "options": ["IoT devices like cameras and routers with default passwords", "Personal laptops infected with email viruses", "Government supercomputers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch03-dns-and-web",
+      "title": "CrowdStrike's Global IT Crash (2024)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On July 19, 2024, 8.5 million Windows PCs blue-screened at once. Airports, banks, and hospitals froze.", "visual": "🟦" },
+        "buildup": { "text": "CrowdStrike pushed a faulty sensor update to its Falcon software, which runs at the kernel level on Windows.", "visual": "🔧" },
+        "discovery": { "text": "The update crashed machines on boot. They entered a reboot loop with no automatic recovery possible.", "visual": "🔄" },
+        "twist": { "text": "Every machine needed a manual fix — boot into safe mode and delete one file. At enterprise scale, a nightmare.", "visual": "😱" },
+        "climax": { "text": "Airlines grounded flights. Emergency services were disrupted. Global damage exceeded $10 billion.", "visual": "✈️" },
+        "punchline": { "text": "One bad update bricked millions of computers in minutes.", "visual": "💥" }
+      },
+      "quiz": {
+        "question": "Why was the CrowdStrike outage so hard to fix?",
+        "options": ["Each affected machine required a manual boot-and-delete fix", "The update encrypted all data on affected machines", "CrowdStrike's servers went offline simultaneously"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch03-dns-and-web",
+      "title": "GitHub's Database Failover (2018)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On October 21, 2018, GitHub was degraded for over 24 hours. Developers worldwide lost access to code.", "visual": "💻" },
+        "buildup": { "text": "A 43-second network cut triggered a database failover that created two active primaries writing at once.", "visual": "🔀" },
+        "discovery": { "text": "Both databases accepted writes independently. Merging them without data loss was extremely complex.", "visual": "🧩" },
+        "twist": { "text": "GitHub chose data integrity over speed, spending hours to reconcile rather than risk losing any commits.", "visual": "⏳" },
+        "climax": { "text": "Their transparent post-mortem earned industry respect. Exact timelines and decisions were shared openly.", "visual": "📋" },
+        "punchline": { "text": "43 seconds of network loss caused 24 hours of recovery.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "What caused GitHub's 2018 extended outage?",
+        "options": ["A brief network cut triggered a database split-brain with two primaries", "A hacker deleted all code repositories", "A fire destroyed GitHub's primary data center"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch03-dns-and-web",
+      "title": "Slack's Boot Loop (2021)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On January 4, 2021 — the first workday of the year — Slack crashed as everyone logged back in.", "visual": "📆" },
+        "buildup": { "text": "Millions of remote workers returned from holiday break and opened Slack at once. The traffic spike was massive.", "visual": "📈" },
+        "discovery": { "text": "Slack's infrastructure couldn't handle the surge. Auto-scaling tried to help but hit internal limits.", "visual": "🏗️" },
+        "twist": { "text": "The outage lasted hours. For fully remote companies, losing Slack meant losing all internal communication.", "visual": "😶" },
+        "climax": { "text": "The incident exposed a single point of failure in remote work: the one chat tool everyone depends on.", "visual": "💬" },
+        "punchline": { "text": "Everyone came back to work at once. Slack wasn't ready.", "visual": "🎆" }
+      },
+      "quiz": {
+        "question": "What caused Slack's January 2021 outage?",
+        "options": ["A massive traffic spike when millions returned from holiday", "A ransomware attack on Slack's servers", "An expired SSL certificate"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch03-dns-and-web",
+      "title": "Akamai's Edge DNS Failure (2021)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On July 22, 2021, banks, airlines, and game platforms all went down. Akamai's DNS service had failed.", "visual": "🏦" },
+        "buildup": { "text": "Akamai's Edge DNS hit a software bug triggered by a specific DNS record configuration.", "visual": "🐛" },
+        "discovery": { "text": "DNS servers crashed and restarted in a loop. Each restart made the problem worse under load.", "visual": "🔄" },
+        "twist": { "text": "Akamai fixed it in an hour. But that hour cost clients millions in lost transactions and trust.", "visual": "💰" },
+        "climax": { "text": "Three major CDN/DNS outages in 2021 — Fastly, Akamai, Facebook — exposed systemic concentration risk.", "visual": "📊" },
+        "punchline": { "text": "When your DNS provider fails, you vanish from the internet.", "visual": "👻" }
+      },
+      "quiz": {
+        "question": "What lesson do repeated DNS provider outages teach?",
+        "options": ["Too many sites depend on too few DNS providers", "DNS technology is fundamentally flawed", "DNS should be replaced by a new protocol"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch04-security-breaches",
+      "title": "WannaCry Ransomware (2017)",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "In May 2017, a worm infected 200,000 computers across 150 countries in one day. Hospitals turned away patients.", "visual": "🏥" },
+        "buildup": { "text": "WannaCry used EternalBlue, an NSA exploit leaked by hackers. It targeted unpatched Windows systems.", "visual": "🪟" },
+        "discovery": { "text": "It spread automatically across networks. No click needed — just an open port was enough to get infected.", "visual": "🐛" },
+        "twist": { "text": "A researcher accidentally stopped it by registering a domain in the code — a kill switch nobody expected.", "visual": "🔘" },
+        "climax": { "text": "The UK's NHS was hit hard. Surgeries were cancelled. Global damage exceeded $4 billion.", "visual": "💰" },
+        "punchline": { "text": "A leaked spy tool became the world's most destructive worm.", "visual": "⚠️" }
+      },
+      "quiz": {
+        "question": "How was WannaCry accidentally stopped?",
+        "options": ["A researcher registered a domain that acted as a kill switch", "Antivirus software detected it within minutes", "Microsoft released an emergency patch before it spread"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch04-security-breaches",
+      "title": "NotPetya: The Costliest Cyberattack",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "NotPetya looked like ransomware. But it had no decryption. Its only purpose was destruction.", "visual": "💀" },
+        "buildup": { "text": "It spread via a Ukrainian accounting software update. Within hours it escaped Ukraine and hit global firms.", "visual": "🌍" },
+        "discovery": { "text": "Maersk, FedEx, Merck, and Mondelez were devastated. Maersk lost nearly all of its IT systems.", "visual": "🚢" },
+        "twist": { "text": "Maersk rebuilt 45,000 PCs and 4,000 servers in ten days. A heroic recovery effort under extreme pressure.", "visual": "🏗️" },
+        "climax": { "text": "Total global damage exceeded $10 billion. It remains the costliest cyberattack in history.", "visual": "💰" },
+        "punchline": { "text": "NotPetya wasn't ransomware. It was a weapon disguised as one.", "visual": "🎭" }
+      },
+      "quiz": {
+        "question": "How did NotPetya initially spread?",
+        "options": ["Through a compromised Ukrainian accounting software update", "Via phishing emails to individual employees", "Through infected USB drives distributed at a conference"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch04-security-breaches",
+      "title": "SolarWinds Supply Chain Attack (2020)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Hackers hid inside a trusted software update. 18,000 orgs installed it, including U.S. government agencies.", "visual": "🕵️" },
+        "buildup": { "text": "SolarWinds Orion, a monitoring tool, was compromised. Attackers injected a backdoor into its build system.", "visual": "🔧" },
+        "discovery": { "text": "Every org that updated Orion installed the backdoor. Attackers had access for months before discovery.", "visual": "📅" },
+        "twist": { "text": "FireEye found it only because the hackers stole FireEye's own tools. A security firm hacked by its own find.", "visual": "🔥" },
+        "climax": { "text": "The breach hit the Pentagon, Treasury, and Homeland Security. Attributed to Russian intelligence.", "visual": "🏛️" },
+        "punchline": { "text": "The most trusted update became the most dangerous backdoor.", "visual": "🚪" }
+      },
+      "quiz": {
+        "question": "What made the SolarWinds attack so effective?",
+        "options": ["The backdoor was hidden inside a legitimate, trusted software update", "It exploited a zero-day in all web browsers", "It used brute force to crack passwords at scale"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch04-security-breaches",
+      "title": "Colonial Pipeline Attack (2021)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In May 2021, the largest U.S. fuel pipeline shut down. Gas stations ran dry. Panic buying followed.", "visual": "⛽" },
+        "buildup": { "text": "DarkSide ransomware encrypted Colonial Pipeline's business systems. The company halted operations as a precaution.", "visual": "🔐" },
+        "discovery": { "text": "The pipeline carries 45% of East Coast fuel. The shutdown caused shortages across multiple states.", "visual": "🗺️" },
+        "twist": { "text": "Colonial paid $4.4 million in Bitcoin. The FBI later recovered most by tracing the Bitcoin wallet.", "visual": "💰" },
+        "climax": { "text": "The attack proved cyberattacks on IT can paralyze physical infrastructure. Digital and physical are inseparable.", "visual": "🏭" },
+        "punchline": { "text": "Ransomware shut down fuel for 50 million people.", "visual": "📧" }
+      },
+      "quiz": {
+        "question": "What physical impact did the Colonial Pipeline attack cause?",
+        "options": ["Fuel shortages across the U.S. East Coast", "A nationwide power blackout", "Contamination of the water supply"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch04-security-breaches",
+      "title": "The Log4Shell Vulnerability (2021)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In December 2021, a flaw in a tiny Java library put half the internet at risk. Exploiting it was trivial.", "visual": "☕" },
+        "buildup": { "text": "Log4j, used in millions of Java apps, let attackers run code remotely just by sending a crafted text string.", "visual": "📝" },
+        "discovery": { "text": "A crafted message in a chat, form, or even a user-agent header triggered remote code execution on the server.", "visual": "💻" },
+        "twist": { "text": "The library was maintained by a few unpaid volunteers. Critical internet infrastructure depended on free labor.", "visual": "😰" },
+        "climax": { "text": "Patches came fast, but finding every Log4j instance across millions of systems took months of global effort.", "visual": "🔍" },
+        "punchline": { "text": "A free library nobody noticed became everybody's emergency.", "visual": "🚨" }
+      },
+      "quiz": {
+        "question": "What made Log4Shell especially dangerous?",
+        "options": ["It was trivially easy to exploit by sending a simple text string", "It only affected outdated Windows computers", "It required physical access to the server"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch05-physical-failures",
+      "title": "Tonga's Cable Cut (2022)",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "On January 15, 2022, a volcanic eruption severed Tonga's only internet cable. The nation went dark.", "visual": "🌋" },
+        "buildup": { "text": "Tonga depends on a single undersea fiber cable. When the eruption damaged it, no backup path existed.", "visual": "🔗" },
+        "discovery": { "text": "Satellites provided minimal bandwidth — enough for emergency messages, not normal internet use.", "visual": "🛰️" },
+        "twist": { "text": "Repair took five weeks. A specialized ship sailed from Papua New Guinea to reach the break point.", "visual": "🚢" },
+        "climax": { "text": "The outage exposed island nations' fragility. Redundancy is a luxury not all countries can afford.", "visual": "💰" },
+        "punchline": { "text": "One cable, one volcano, five weeks of silence.", "visual": "🤫" }
+      },
+      "quiz": {
+        "question": "How long did it take to restore Tonga's internet after the cable was cut?",
+        "options": ["About five weeks", "Two days", "Six months"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch05-physical-failures",
+      "title": "The 2011 Japan Earthquake and Cables",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The 2011 Tōhoku earthquake and tsunami damaged multiple undersea cables connecting Japan to the world.", "visual": "🌊" },
+        "buildup": { "text": "Japan is a major internet hub for Asia-Pacific. Multiple cables landing on its coast were severed.", "visual": "🔗" },
+        "discovery": { "text": "Traffic rerouted through surviving cables automatically. Redundancy prevented a total outage.", "visual": "🔄" },
+        "twist": { "text": "Some routes added thousands of extra miles. Latency spiked and bandwidth dropped for weeks.", "visual": "📈" },
+        "climax": { "text": "Repairs took months. Cable ships worked in harsh conditions to splice fiber on the ocean floor.", "visual": "🚢" },
+        "punchline": { "text": "Redundant cables saved Japan's internet. Single-cable nations weren't so lucky.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why didn't Japan lose internet entirely despite cable damage?",
+        "options": ["Redundant cables allowed traffic to reroute automatically", "Satellite internet replaced all cable capacity", "The cables were repaired within hours"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch05-physical-failures",
+      "title": "A Farmer and a Backhoe",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A farmer digs a trench. His backhoe slices through a fiber cable. Thousands lose internet instantly.", "visual": "🚜" },
+        "buildup": { "text": "Buried fiber carries enormous traffic. Cables are mapped, but not everyone checks before digging.", "visual": "🗺️" },
+        "discovery": { "text": "'Backhoe fade' is a real industry term. Construction equipment cuts cables hundreds of times a year.", "visual": "📊" },
+        "twist": { "text": "A single cut in 2009 disconnected parts of Silicon Valley for hours. Major tech companies lost connectivity.", "visual": "💻" },
+        "climax": { "text": "Call-before-you-dig programs help, but many rural areas still have only a single fiber strand.", "visual": "📞" },
+        "punchline": { "text": "The internet's biggest enemy might be a shovel.", "visual": "⛏️" }
+      },
+      "quiz": {
+        "question": "What is 'backhoe fade' in networking?",
+        "options": ["An accidental fiber cable cut caused by digging equipment", "A gradual weakening of wireless signals over distance", "A type of network congestion during peak hours"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch05-physical-failures",
+      "title": "Power Grid Failures and the Internet",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "When the grid fails, data centers switch to diesel generators. But generators have limits.", "visual": "⚡" },
+        "buildup": { "text": "The 2003 Northeast blackout cut power to 55 million people. Data centers ran on generators for two days.", "visual": "🔋" },
+        "discovery": { "text": "Most centers guarantee 48-72 hours of fuel. Extended outages need deliveries that may not arrive.", "visual": "🛢️" },
+        "twist": { "text": "Even with generators, cooling draws massive power. Servers overheat if cooling fails, forcing shutdown.", "visual": "🌡️" },
+        "climax": { "text": "Cloud providers build in multiple regions to survive regional power failures. Geography is the real safeguard.", "visual": "🌍" },
+        "punchline": { "text": "The internet needs electricity. No power, no packets.", "visual": "🔌" }
+      },
+      "quiz": {
+        "question": "What limits data centers during extended power outages?",
+        "options": ["Generator fuel supply and cooling system capacity", "Internet bandwidth from their ISPs", "The number of users trying to connect"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch05-physical-failures",
+      "title": "Egypt's Anchor Drag (2013)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2013, Egyptian authorities arrested divers cutting a cable. But most cable damage comes from anchors.", "visual": "⚓" },
+        "buildup": { "text": "Ships dragging anchors in shallow water near cable landing points are the top cause of undersea cable damage.", "visual": "🚢" },
+        "discovery": { "text": "Mediterranean and Red Sea cables carry traffic between Europe, the Middle East, and Asia. Heavily concentrated.", "visual": "🗺️" },
+        "twist": { "text": "In 2008, multiple cuts near Egypt knocked out 70% of India's internet. Millions of users were affected.", "visual": "🇮🇳" },
+        "climax": { "text": "Cable protection zones restrict anchoring. But enforcement is hard, and fishing boats often ignore them.", "visual": "🎣" },
+        "punchline": { "text": "A dragged anchor can disconnect entire countries.", "visual": "🌊" }
+      },
+      "quiz": {
+        "question": "What is the leading cause of undersea cable damage?",
+        "options": ["Ships dragging anchors in shallow water near cables", "Shark bites on deep-sea cable segments", "Earthquakes on the ocean floor"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch06-lessons-learned",
+      "title": "Why Redundancy Matters",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Every major outage shares one trait: a single point of failure that nobody planned around.", "visual": "📍" },
+        "buildup": { "text": "Redundancy means backups at every layer: multiple cables, data centers, DNS providers, and power feeds.", "visual": "🔄" },
+        "discovery": { "text": "N+1 adds one extra of everything. N+2 adds two. The more critical the system, the more spares it needs.", "visual": "📊" },
+        "twist": { "text": "Redundancy costs money. Many skip it until an outage proves downtime costs far more.", "visual": "💰" },
+        "climax": { "text": "Netflix built Chaos Monkey — it randomly kills production servers to ensure redundancy actually works.", "visual": "🐵" },
+        "punchline": { "text": "If you haven't tested your backup, you don't have one.", "visual": "🧪" }
+      },
+      "quiz": {
+        "question": "What does Netflix's Chaos Monkey do?",
+        "options": ["Randomly kills production servers to test redundancy", "Monitors server temperatures for overheating", "Blocks DDoS attacks automatically"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch06-lessons-learned",
+      "title": "The Post-Mortem Culture",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "After an outage, the best teams don't blame anyone. They write a blameless post-mortem and share it publicly.", "visual": "📝" },
+        "buildup": { "text": "A post-mortem documents what happened, why, the impact, and what changes will prevent a recurrence.", "visual": "📋" },
+        "discovery": { "text": "Blameless means focusing on systems, not people. The question: 'what allowed this?' not 'who messed up?'", "visual": "🔍" },
+        "twist": { "text": "Companies that publish post-mortems gain trust. Silence after an outage makes customers assume the worst.", "visual": "🤫" },
+        "climax": { "text": "Google, Cloudflare, and GitHub set the standard for transparency. Their post-mortems are studied industrywide.", "visual": "📚" },
+        "punchline": { "text": "Every outage is a lesson. Post-mortems ensure it's learned.", "visual": "🎓" }
+      },
+      "quiz": {
+        "question": "What is a blameless post-mortem?",
+        "options": ["An analysis focused on systemic issues rather than blaming individuals", "A report that hides who was responsible for the outage", "A post written before the outage happens"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch06-lessons-learned",
+      "title": "Centralization vs. Resilience",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Three CDN providers serve most of the web. If one fails, millions of sites go down. Good design?", "visual": "⚖️" },
+        "buildup": { "text": "Centralization brings efficiency: shared infra, expert ops, low cost. But it creates concentration risk.", "visual": "🏢" },
+        "discovery": { "text": "The original internet was decentralized — no single point of failure. Economic forces reversed that.", "visual": "🔄" },
+        "twist": { "text": "Multi-CDN strategies exist but are complex and costly. Most companies pick one provider for simplicity.", "visual": "💸" },
+        "climax": { "text": "The 2021 outages at Fastly, Akamai, and Facebook sparked real action on multi-provider redundancy.", "visual": "🛡️" },
+        "punchline": { "text": "Convenience drives centralization. Outages drive decentralization.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "What risk does internet centralization create?",
+        "options": ["A single provider failure can take down millions of sites", "Websites become slower for all users", "Data becomes impossible to encrypt"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch06-lessons-learned",
+      "title": "Canary Deployments",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Test a change on 1% of servers before rolling it to all. That's a canary deployment.", "visual": "🐤" },
+        "buildup": { "text": "Named after canaries in coal mines, canary deploys expose a small group to a change first and monitor results.", "visual": "📊" },
+        "discovery": { "text": "If the canary group shows errors, rollout stops automatically. Blast radius stays tiny, not global.", "visual": "🛑" },
+        "twist": { "text": "Many major outages could have been prevented by canary deploys. The change would have failed small, not big.", "visual": "📉" },
+        "climax": { "text": "Facebook now uses staged rollouts after their 2021 BGP meltdown. CrowdStrike committed to canaries after 2024.", "visual": "🐌" },
+        "punchline": { "text": "Deploy to a few first. If they survive, deploy to all.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What is the purpose of a canary deployment?",
+        "options": ["To test changes on a small group before a full rollout", "To deploy updates as fast as possible", "To roll back all changes automatically"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--famous-network-outages--ch06-lessons-learned",
+      "title": "Monitoring and Alerting",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A server fails at 3 AM and no one is watching. How long until someone notices? Monitoring closes that gap.", "visual": "👁️" },
+        "buildup": { "text": "Tools track metrics: latency, error rates, CPU, memory. Dashboards show the system's health at a glance.", "visual": "📊" },
+        "discovery": { "text": "Alert rules notify on-call engineers when thresholds are crossed. PagerDuty wakes people up when it matters.", "visual": "📱" },
+        "twist": { "text": "Too many alerts cause fatigue. Engineers start ignoring them. The real emergency gets buried in noise.", "visual": "😴" },
+        "climax": { "text": "Good monitoring answers: is it broken, where, and why? The third question is always the hardest.", "visual": "🔍" },
+        "punchline": { "text": "You can't fix what you can't see. Monitor what matters.", "visual": "🔭" }
+      },
+      "quiz": {
+        "question": "What is alert fatigue?",
+        "options": ["When too many alerts cause engineers to ignore them", "When monitoring tools crash from overuse", "When alerts are sent too slowly to be useful"],
+        "correct": 0
+      }
+    }
+  ]
+}

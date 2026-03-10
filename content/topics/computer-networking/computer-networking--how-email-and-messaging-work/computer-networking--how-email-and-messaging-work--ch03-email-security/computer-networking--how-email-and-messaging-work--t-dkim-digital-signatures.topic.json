@@ -1,0 +1,49 @@
+{
+  "id": "computer-networking--how-email-and-messaging-work--t-dkim-digital-signatures",
+  "version": 1,
+  "subject": "Computer Networking",
+  "subcategory": "How Email and Messaging Work",
+  "course_id": "computer-networking--how-email-and-messaging-work",
+  "chapter_id": "computer-networking--how-email-and-messaging-work--ch03-email-security",
+  "title": "DKIM — Digital Signatures",
+  "emoji": "📧",
+  "color": "#059669",
+  "description": "Learn DKIM — Digital Signatures in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "SPF checks the server. DKIM checks the message itself. It signs the email so tampering is detectable.",
+      "visual": "✍️"
+    },
+    "buildup": {
+      "text": "The sending server signs key headers and the body with a private key. A DKIM-Signature header is added.",
+      "visual": "🔏"
+    },
+    "discovery": {
+      "text": "The receiver fetches the public key from DNS and verifies the signature. If it matches, nothing was altered.",
+      "visual": "🔑"
+    },
+    "twist": {
+      "text": "DKIM survives forwarding. The signature stays intact because it's tied to content, not the sending IP.",
+      "visual": "📬"
+    },
+    "climax": {
+      "text": "Gmail, Outlook, and Yahoo all require DKIM. Without it, your emails may land in the spam folder.",
+      "visual": "📁"
+    },
+    "punchline": {
+      "text": "DKIM proves the email is authentic and unmodified. Digital trust.",
+      "visual": "🛡️"
+    }
+  },
+  "quiz": {
+    "question": "Where does the receiving server find the DKIM public key?",
+    "options": [
+      "In the sender's DNS records",
+      "Inside the email's attachment",
+      "From the sender's SMTP server directly"
+    ],
+    "correct": 0
+  }
+}

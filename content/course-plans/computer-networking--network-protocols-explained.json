@@ -1,0 +1,583 @@
+{
+  "categoryId": "computer-networking",
+  "subject": "Computer Networking",
+  "courseId": "computer-networking--network-protocols-explained",
+  "courseTitle": "Network Protocols Explained",
+  "emoji": "📡",
+  "color": "#6366F1",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "computer-networking--network-protocols-explained--ch01-foundation-protocols",
+      "title": "Foundation Protocols",
+      "position": 1
+    },
+    {
+      "id": "computer-networking--network-protocols-explained--ch02-web-protocols",
+      "title": "Web Protocols",
+      "position": 2
+    },
+    {
+      "id": "computer-networking--network-protocols-explained--ch03-email-and-file-protocols",
+      "title": "Email and File Protocols",
+      "position": 3
+    },
+    {
+      "id": "computer-networking--network-protocols-explained--ch04-security-protocols",
+      "title": "Security Protocols",
+      "position": 4
+    },
+    {
+      "id": "computer-networking--network-protocols-explained--ch05-real-time-protocols",
+      "title": "Real-Time Protocols",
+      "position": 5
+    },
+    {
+      "id": "computer-networking--network-protocols-explained--ch06-modern-protocols",
+      "title": "Modern Protocols",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch01-foundation-protocols",
+      "title": "IP: The Internet's Addressing System",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Every packet on the internet carries two addresses: where it's from and where it's going. That's IP.", "visual": "📮" },
+        "buildup": { "text": "IP stands for Internet Protocol. It handles addressing and routing — nothing more.", "visual": "🗺️" },
+        "discovery": { "text": "IP doesn't guarantee delivery or order. It just labels each packet and sends it toward the destination.", "visual": "📦" },
+        "twist": { "text": "Higher protocols like TCP add reliability on top. IP stays simple on purpose — complexity belongs elsewhere.", "visual": "🧱" },
+        "climax": { "text": "Every device, phone, server, and smart fridge needs an IP address to participate on the internet.", "visual": "📱" },
+        "punchline": { "text": "IP puts an address on every packet. That's its only job.", "visual": "🏷️" }
+      },
+      "quiz": {
+        "question": "What does IP handle?",
+        "options": ["Addressing and routing packets", "Guaranteeing data delivery", "Encrypting network traffic"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch01-foundation-protocols",
+      "title": "TCP: Reliable Transport",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You download a file and expect every byte to arrive perfectly. TCP makes that promise.", "visual": "🤝" },
+        "buildup": { "text": "TCP numbers each segment, tracks acknowledgments, and retransmits anything that goes missing.", "visual": "🔢" },
+        "discovery": { "text": "It also controls flow — slowing down when the receiver is overwhelmed and speeding up when it's clear.", "visual": "🚦" },
+        "twist": { "text": "All that bookkeeping adds latency. TCP prioritizes correctness over speed, every single time.", "visual": "📋" },
+        "climax": { "text": "Websites, email, file downloads — almost everything that must be correct uses TCP.", "visual": "🌐" },
+        "punchline": { "text": "TCP delivers every byte, in order, no matter what.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What does TCP prioritize?",
+        "options": ["Reliable, ordered delivery of data", "Maximum speed with no overhead", "Encryption of all transmitted data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch01-foundation-protocols",
+      "title": "UDP: Lightweight and Fast",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Sometimes you don't need every packet to arrive. You just need the ones that do to arrive fast.", "visual": "⚡" },
+        "buildup": { "text": "UDP strips away handshakes and retransmissions. It sends datagrams and moves on immediately.", "visual": "📤" },
+        "discovery": { "text": "The header is tiny — just 8 bytes. Less overhead means less delay. Perfect for real-time applications.", "visual": "🏎️" },
+        "twist": { "text": "Lost a UDP packet? Gone forever. The protocol won't ask for it back. That's by design.", "visual": "💨" },
+        "climax": { "text": "Voice calls, video streams, and DNS lookups all choose UDP when speed beats perfection.", "visual": "🎙️" },
+        "punchline": { "text": "UDP is fire-and-forget. Fast, simple, no promises.", "visual": "🔥" }
+      },
+      "quiz": {
+        "question": "What makes UDP faster than TCP?",
+        "options": ["It skips handshakes and retransmissions", "It uses stronger encryption", "It compresses data before sending"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch01-foundation-protocols",
+      "title": "ICMP: Ping and Diagnostics",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You type 'ping google.com' and get a reply time. The protocol making that possible is ICMP.", "visual": "🏓" },
+        "buildup": { "text": "ICMP carries error messages and operational info. It doesn't transport user data — it reports problems.", "visual": "📣" },
+        "discovery": { "text": "Ping sends an ICMP echo request. If the host is alive, it sends an echo reply. Simple and effective.", "visual": "📡" },
+        "twist": { "text": "Traceroute also uses ICMP. It maps every router hop between you and a destination by timing responses.", "visual": "🗺️" },
+        "climax": { "text": "Many firewalls block ICMP. That's why some hosts don't respond to ping even when they're online.", "visual": "🧱" },
+        "punchline": { "text": "ICMP is the internet's error messenger.", "visual": "📨" }
+      },
+      "quiz": {
+        "question": "What tool uses ICMP echo requests to test connectivity?",
+        "options": ["Ping", "FTP", "HTTP"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch01-foundation-protocols",
+      "title": "ARP: Finding Hardware Addresses",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your computer knows the IP address of a neighbor device. But the network card needs a physical address to deliver.", "visual": "🔍" },
+        "buildup": { "text": "ARP — Address Resolution Protocol — maps IP addresses to MAC addresses on a local network.", "visual": "🗂️" },
+        "discovery": { "text": "It broadcasts a question: 'Who has 192.168.1.5?' The owner replies with its MAC address.", "visual": "📢" },
+        "twist": { "text": "ARP has no security. An attacker can reply with a fake MAC address and intercept your traffic.", "visual": "🕵️" },
+        "climax": { "text": "ARP spoofing is one of the oldest network attacks. Modern switches use protections to prevent it.", "visual": "🛡️" },
+        "punchline": { "text": "ARP translates logical addresses to physical ones. Simple but essential.", "visual": "🔗" }
+      },
+      "quiz": {
+        "question": "What does ARP resolve?",
+        "options": ["IP addresses to MAC addresses", "Domain names to IP addresses", "Port numbers to application names"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch02-web-protocols",
+      "title": "HTTP: The Language of the Web",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Every web page you've ever loaded was delivered by HTTP — the protocol browsers and servers share.", "visual": "🌐" },
+        "buildup": { "text": "HTTP uses verbs: GET retrieves, POST submits, PUT replaces, DELETE removes. Clear and predictable.", "visual": "📝" },
+        "discovery": { "text": "Responses carry status codes: 200 means OK, 301 means moved, 404 means not found, 500 means server error.", "visual": "🔢" },
+        "twist": { "text": "HTTP/1.1 opened one connection per request. HTTP/2 multiplexes many requests over a single connection.", "visual": "🔀" },
+        "climax": { "text": "Despite being designed for documents, HTTP now carries APIs, video, games, and real-time data.", "visual": "📊" },
+        "punchline": { "text": "HTTP started simple. It became the web's universal language.", "visual": "💬" }
+      },
+      "quiz": {
+        "question": "What does an HTTP GET request do?",
+        "options": ["Retrieves data from a server", "Sends form data to a server", "Deletes a resource on a server"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch02-web-protocols",
+      "title": "HTTPS and TLS",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "HTTP sends everything in plain text. Passwords, card numbers, messages — anyone could read them.", "visual": "👀" },
+        "buildup": { "text": "TLS wraps HTTP in encryption. The combination is called HTTPS — the 'S' stands for Secure.", "visual": "🔒" },
+        "discovery": { "text": "TLS starts with a handshake: the server proves its identity with a certificate signed by a trusted authority.", "visual": "📜" },
+        "twist": { "text": "After the handshake, both sides derive a shared secret key. All data flows through that encrypted channel.", "visual": "🔐" },
+        "climax": { "text": "Modern browsers mark plain HTTP sites as 'Not Secure.' HTTPS is now the baseline, not the exception.", "visual": "⚠️" },
+        "punchline": { "text": "TLS makes HTTP private. That's why the padlock matters.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How does a server prove its identity in TLS?",
+        "options": ["By presenting a certificate signed by a trusted authority", "By sending its source code to the client", "By sharing its private encryption key"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch02-web-protocols",
+      "title": "DNS: Names to Numbers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Humans remember names. Computers need numbers. DNS bridges the gap every time you visit a site.", "visual": "📖" },
+        "buildup": { "text": "DNS is hierarchical: root servers at the top, then TLD servers (.com, .org), then authoritative name servers.", "visual": "🌲" },
+        "discovery": { "text": "A full lookup walks down the tree: root → .com → example.com → IP address. Each step narrows the search.", "visual": "🔍" },
+        "twist": { "text": "Results are cached aggressively. Your device, router, and ISP all remember recent answers to save time.", "visual": "⏱️" },
+        "climax": { "text": "DNS was designed without encryption. DNS-over-HTTPS and DNS-over-TLS now protect your queries from snooping.", "visual": "🛡️" },
+        "punchline": { "text": "DNS translates names to IPs so you never have to.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "What does DNS resolve?",
+        "options": ["Domain names to IP addresses", "MAC addresses to port numbers", "Email addresses to server locations"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch02-web-protocols",
+      "title": "WebSocket: Persistent Connections",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Chat apps update instantly. Stock tickers stream live. HTTP's request-response pattern can't do that alone.", "visual": "💬" },
+        "buildup": { "text": "WebSocket starts as an HTTP request, then upgrades to a full-duplex, persistent connection.", "visual": "🔄" },
+        "discovery": { "text": "Once open, either side can send messages at any time. No polling, no waiting, just real-time data flow.", "visual": "⚡" },
+        "twist": { "text": "WebSocket connections stay open for minutes or hours. That's great for users but costly for servers at scale.", "visual": "📈" },
+        "climax": { "text": "Slack, Discord, live sports — any app with instant updates likely uses WebSockets or something similar.", "visual": "🏆" },
+        "punchline": { "text": "WebSocket keeps the line open so data flows freely.", "visual": "📞" }
+      },
+      "quiz": {
+        "question": "How does WebSocket differ from standard HTTP?",
+        "options": ["It maintains a persistent two-way connection", "It uses a completely different port than HTTP", "It encrypts data without needing TLS"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch02-web-protocols",
+      "title": "HTTP/2 and Multiplexing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Web pages need dozens of files: HTML, CSS, JS, images. HTTP/1.1 loaded them mostly one at a time.", "visual": "🐌" },
+        "buildup": { "text": "HTTP/2 introduced multiplexing — many requests and responses travel over a single TCP connection.", "visual": "🔀" },
+        "discovery": { "text": "Streams are interleaved. While waiting for a big image, smaller CSS files slip through the same connection.", "visual": "🏊" },
+        "twist": { "text": "HTTP/2 also compresses headers and allows server push — sending resources before the browser asks.", "visual": "📦" },
+        "climax": { "text": "Most major websites run on HTTP/2 today. Users don't see it, but pages load noticeably faster.", "visual": "🚀" },
+        "punchline": { "text": "HTTP/2 sends more through less. One connection, many streams.", "visual": "🌊" }
+      },
+      "quiz": {
+        "question": "What is multiplexing in HTTP/2?",
+        "options": ["Sending multiple requests over a single connection simultaneously", "Splitting a file into packets for faster delivery", "Encrypting HTTP traffic with TLS"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch03-email-and-file-protocols",
+      "title": "SMTP: Sending Email",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You hit Send on an email. Within seconds it reaches someone across the world. SMTP carries it there.", "visual": "📧" },
+        "buildup": { "text": "SMTP — Simple Mail Transfer Protocol — defines how email servers relay messages from sender to recipient.", "visual": "📬" },
+        "discovery": { "text": "Your mail client hands the message to your outgoing server. That server finds the recipient's server via DNS.", "visual": "🔍" },
+        "twist": { "text": "SMTP only sends mail. It can't retrieve it. For reading, you need POP3 or IMAP — totally separate protocols.", "visual": "📥" },
+        "climax": { "text": "SMTP was created in 1982 with no authentication. Spam became rampant until extensions like SPF and DKIM arrived.", "visual": "🛡️" },
+        "punchline": { "text": "SMTP pushes email from server to server. That's all it does.", "visual": "📤" }
+      },
+      "quiz": {
+        "question": "What is SMTP's primary function?",
+        "options": ["Sending and relaying email between servers", "Downloading email to your device", "Encrypting email content end-to-end"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch03-email-and-file-protocols",
+      "title": "IMAP vs. POP3: Retrieving Email",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You read an email on your phone. Open your laptop — it's there too. IMAP keeps everything in sync.", "visual": "🔄" },
+        "buildup": { "text": "IMAP stores mail on the server. Every device sees the same inbox, folders, and read status.", "visual": "☁️" },
+        "discovery": { "text": "POP3 downloads mail to one device and often deletes it from the server. Simple but not multi-device friendly.", "visual": "📥" },
+        "twist": { "text": "POP3 was fine when people had one computer. Today, with phones and tablets, IMAP is the clear winner.", "visual": "📱" },
+        "climax": { "text": "Most modern email services default to IMAP. POP3 still exists but is rarely the recommended choice.", "visual": "📊" },
+        "punchline": { "text": "IMAP syncs. POP3 downloads. The difference matters.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "Why is IMAP preferred over POP3 for modern email?",
+        "options": ["It keeps mail on the server so all devices stay in sync", "It downloads mail faster than POP3", "It encrypts email automatically"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch03-email-and-file-protocols",
+      "title": "FTP: Classic File Transfer",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Before cloud storage, transferring files between computers meant using FTP — one of the oldest protocols.", "visual": "📁" },
+        "buildup": { "text": "FTP uses two connections: one for commands and one for data. You authenticate, browse folders, and upload or download.", "visual": "🔗" },
+        "discovery": { "text": "FTP's dual-connection design made it efficient for large transfers in the 1970s. It predates the web.", "visual": "🕰️" },
+        "twist": { "text": "Original FTP sends passwords in plain text. SFTP and FTPS added encryption, but many old servers never upgraded.", "visual": "⚠️" },
+        "climax": { "text": "Today, most file sharing uses HTTP, cloud drives, or SSH-based tools. FTP is fading but still in use.", "visual": "🌅" },
+        "punchline": { "text": "FTP moved files before the web existed. It earned its retirement.", "visual": "🏖️" }
+      },
+      "quiz": {
+        "question": "What security issue does plain FTP have?",
+        "options": ["It sends passwords in plain text", "It only works on local networks", "It cannot transfer files larger than 1 GB"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch03-email-and-file-protocols",
+      "title": "SSH: Secure Remote Access",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A developer in Paris manages a server in Tokyo. They type commands as if sitting right next to it. That's SSH.", "visual": "🖥️" },
+        "buildup": { "text": "SSH encrypts the entire session — login, commands, output. Nobody in between can see what you're doing.", "visual": "🔐" },
+        "discovery": { "text": "It replaced Telnet, which sent everything in plain text. SSH made remote administration safe.", "visual": "🛡️" },
+        "twist": { "text": "SSH isn't just for terminals. It tunnels other protocols, transfers files via SCP, and powers Git over SSH.", "visual": "🚇" },
+        "climax": { "text": "Key-based authentication lets you log in without typing a password — more secure and more convenient.", "visual": "🔑" },
+        "punchline": { "text": "SSH is your encrypted window into a remote machine.", "visual": "🪟" }
+      },
+      "quiz": {
+        "question": "What did SSH replace?",
+        "options": ["Telnet, which sent data in plain text", "HTTP, which was too slow for remote access", "FTP, which couldn't handle commands"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch03-email-and-file-protocols",
+      "title": "DHCP: Automatic Network Setup",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You plug in a cable or join Wi-Fi. Instantly your device gets an IP address. You didn't configure anything.", "visual": "✨" },
+        "buildup": { "text": "DHCP — Dynamic Host Configuration Protocol — assigns IP addresses, gateways, and DNS servers automatically.", "visual": "📋" },
+        "discovery": { "text": "Your device broadcasts 'I need an address.' The DHCP server replies with a lease: an IP for a set time.", "visual": "📡" },
+        "twist": { "text": "Leases expire. If your device disappears, the address returns to the pool. No manual cleanup needed.", "visual": "♻️" },
+        "climax": { "text": "Without DHCP, every device would need manual configuration. Large networks would be unmanageable.", "visual": "😵" },
+        "punchline": { "text": "DHCP makes joining a network effortless. It just works.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does DHCP provide to a device joining a network?",
+        "options": ["An IP address, gateway, and DNS configuration automatically", "A website's content from a CDN", "An encrypted tunnel to a remote server"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch04-security-protocols",
+      "title": "TLS in Depth",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "TLS protects billions of connections every day. What actually happens during that invisible handshake?", "visual": "🤝" },
+        "buildup": { "text": "The client says hello and lists the encryption methods it supports. The server picks one and sends its certificate.", "visual": "📜" },
+        "discovery": { "text": "They agree on a shared secret using Diffie-Hellman or similar. From then on, all data is symmetrically encrypted.", "visual": "🔐" },
+        "twist": { "text": "TLS 1.3 reduced the handshake to one round trip. Faster setup without compromising security.", "visual": "⚡" },
+        "climax": { "text": "If anyone tampers with a TLS message, the integrity check fails and the connection drops immediately.", "visual": "🛑" },
+        "punchline": { "text": "TLS is trust, speed, and secrecy in one handshake.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "What improvement did TLS 1.3 bring?",
+        "options": ["Reduced the handshake to one round trip", "Eliminated the need for certificates", "Made encryption optional for performance"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch04-security-protocols",
+      "title": "IPsec: Securing the Network Layer",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "TLS secures individual connections. IPsec secures all traffic between two points at the network layer.", "visual": "🛡️" },
+        "buildup": { "text": "IPsec encrypts and authenticates every IP packet. It works transparently — apps don't need to change.", "visual": "📦" },
+        "discovery": { "text": "It has two modes: transport encrypts the payload, tunnel wraps the entire packet inside a new encrypted one.", "visual": "🎁" },
+        "twist": { "text": "Most VPNs use IPsec tunnel mode. Your device wraps all traffic and sends it through an encrypted tunnel.", "visual": "🚇" },
+        "climax": { "text": "IPsec is complex to configure but powerful. It protects site-to-site links between offices worldwide.", "visual": "🌍" },
+        "punchline": { "text": "IPsec encrypts everything at the IP level. Total network protection.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "At which layer does IPsec operate?",
+        "options": ["The network (IP) layer", "The application layer", "The physical layer"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch04-security-protocols",
+      "title": "WPA3: Securing Wi-Fi",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Open Wi-Fi networks are dangerous — anyone can sniff your traffic. WPA3 fixes what older standards couldn't.", "visual": "📶" },
+        "buildup": { "text": "WPA3 uses Simultaneous Authentication of Equals, making it resistant to offline password-guessing attacks.", "visual": "🔐" },
+        "discovery": { "text": "Even on public networks, WPA3 encrypts each user's session individually. No more shared-key snooping.", "visual": "🛡️" },
+        "twist": { "text": "WPA2 was considered secure for years until the KRACK attack exposed a critical handshake flaw in 2017.", "visual": "💥" },
+        "climax": { "text": "WPA3 adoption is growing but slow. Most devices and routers still default to WPA2 for compatibility.", "visual": "🐢" },
+        "punchline": { "text": "WPA3 makes Wi-Fi safer, one upgrade at a time.", "visual": "📶" }
+      },
+      "quiz": {
+        "question": "What attack exposed a critical flaw in WPA2?",
+        "options": ["KRACK", "Heartbleed", "Spectre"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch04-security-protocols",
+      "title": "OAuth: Delegated Authorization",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An app asks to access your Google photos. You click Allow without giving it your Google password. That's OAuth.", "visual": "🔑" },
+        "buildup": { "text": "OAuth lets you grant limited access to your data on one service to another service, without sharing credentials.", "visual": "🎫" },
+        "discovery": { "text": "The flow issues a token with specific scopes: 'read photos' but not 'delete account.' Fine-grained control.", "visual": "📋" },
+        "twist": { "text": "OAuth handles authorization, not authentication. OpenID Connect adds identity on top — proving who you are.", "visual": "🪪" },
+        "climax": { "text": "Every 'Sign in with Google' or 'Login with GitHub' button uses OAuth or OpenID Connect behind the scenes.", "visual": "🌐" },
+        "punchline": { "text": "OAuth shares access, not passwords. Trust with limits.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "What does OAuth handle?",
+        "options": ["Authorization — granting limited access without sharing passwords", "Encryption of network traffic", "Routing packets between networks"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch04-security-protocols",
+      "title": "DNSSEC: Trusting DNS Answers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You ask DNS for a bank's IP. What if someone poisons the answer and sends you to a fake site?", "visual": "☠️" },
+        "buildup": { "text": "DNSSEC adds digital signatures to DNS records. Your resolver can verify that the answer is authentic.", "visual": "✍️" },
+        "discovery": { "text": "Signatures chain from the root zone down. Each level vouches for the next, building a chain of trust.", "visual": "🔗" },
+        "twist": { "text": "DNSSEC doesn't encrypt queries — it only proves answers are genuine. Privacy needs DNS-over-HTTPS separately.", "visual": "👁️" },
+        "climax": { "text": "Adoption is slow because it adds complexity and can break misconfigured domains. But it prevents cache poisoning.", "visual": "🧱" },
+        "punchline": { "text": "DNSSEC proves the answer came from the right source.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What does DNSSEC protect against?",
+        "options": ["Forged DNS answers and cache poisoning", "Eavesdropping on DNS queries", "DDoS attacks on DNS servers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch05-real-time-protocols",
+      "title": "RTP: Streaming Media",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A video call needs audio and video packets in the right order at the right time. RTP handles that delivery.", "visual": "🎥" },
+        "buildup": { "text": "RTP — Real-time Transport Protocol — adds timestamps and sequence numbers to media packets.", "visual": "🕐" },
+        "discovery": { "text": "The receiver uses timestamps to play audio and video at the correct speed, even if packets arrive unevenly.", "visual": "🎵" },
+        "twist": { "text": "RTP rides on UDP, not TCP. Retransmitting a late audio packet would cause worse delay than skipping it.", "visual": "⏭️" },
+        "climax": { "text": "Zoom, Teams, FaceTime — every major video platform relies on RTP to keep your calls smooth.", "visual": "📞" },
+        "punchline": { "text": "RTP keeps media in sync. Timing is everything.", "visual": "⏱️" }
+      },
+      "quiz": {
+        "question": "What does RTP add to media packets?",
+        "options": ["Timestamps and sequence numbers", "Encryption keys and certificates", "IP addresses and port numbers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch05-real-time-protocols",
+      "title": "SIP: Setting Up Calls",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Before a voice call begins, both sides must agree on codecs, ports, and addresses. SIP negotiates all of that.", "visual": "📞" },
+        "buildup": { "text": "SIP — Session Initiation Protocol — handles call setup, modification, and teardown. It doesn't carry the audio.", "visual": "🤝" },
+        "discovery": { "text": "SIP is text-based, like HTTP. An INVITE message starts a call. BYE ends it. Simple request-response pattern.", "visual": "📝" },
+        "twist": { "text": "SIP struggles with NAT. Special servers called STUN and TURN help punch through firewalls for direct connections.", "visual": "🧱" },
+        "climax": { "text": "Most VoIP phone systems use SIP. It replaced the old telephone signaling systems with internet-native protocols.", "visual": "🌐" },
+        "punchline": { "text": "SIP is the matchmaker. RTP is the conversation.", "visual": "💬" }
+      },
+      "quiz": {
+        "question": "What does SIP do in a VoIP call?",
+        "options": ["Sets up, modifies, and tears down the call session", "Carries the actual audio data", "Encrypts the voice stream end-to-end"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch05-real-time-protocols",
+      "title": "WebRTC: Browser-to-Browser",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You open a link and video chat starts — no app install, no plugin. WebRTC makes that happen in the browser.", "visual": "🌐" },
+        "buildup": { "text": "WebRTC provides real-time audio, video, and data channels directly between browsers using JavaScript APIs.", "visual": "💻" },
+        "discovery": { "text": "It negotiates the best path: direct peer-to-peer when possible, through a relay server when firewalls block.", "visual": "🔀" },
+        "twist": { "text": "Despite being peer-to-peer, WebRTC still needs a signaling server to help peers find each other initially.", "visual": "📡" },
+        "climax": { "text": "Google Meet, Discord calls, and many telehealth apps all use WebRTC for real-time communication.", "visual": "🏥" },
+        "punchline": { "text": "WebRTC turns every browser into a video phone.", "visual": "📱" }
+      },
+      "quiz": {
+        "question": "What does WebRTC enable?",
+        "options": ["Real-time audio and video directly in the browser", "Faster HTTP downloads for large files", "Server-side rendering of web pages"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch05-real-time-protocols",
+      "title": "NTP: Keeping Clocks in Sync",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your phone, laptop, and server all show the exact same time. They aren't guessing — they're using NTP.", "visual": "🕐" },
+        "buildup": { "text": "NTP — Network Time Protocol — synchronizes clocks across the internet to within a few milliseconds.", "visual": "⏰" },
+        "discovery": { "text": "It works by exchanging timestamps with reference servers. Math accounts for network delay in each direction.", "visual": "📐" },
+        "twist": { "text": "Accurate time is critical for security. TLS certificates, log analysis, and two-factor auth all depend on it.", "visual": "🔐" },
+        "climax": { "text": "Stratum 0 clocks use atomic oscillators or GPS. NTP cascades that accuracy down through layers of servers.", "visual": "📡" },
+        "punchline": { "text": "NTP keeps the digital world on the same clock.", "visual": "🌍" }
+      },
+      "quiz": {
+        "question": "Why is accurate time critical for network security?",
+        "options": ["Certificates, logs, and authentication depend on synchronized clocks", "Faster clocks encrypt data more quickly", "NTP directly encrypts network traffic"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch05-real-time-protocols",
+      "title": "MQTT: Messaging for IoT",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A tiny sensor on a farm sends temperature readings every minute. It has almost no bandwidth. MQTT is perfect.", "visual": "🌾" },
+        "buildup": { "text": "MQTT is a lightweight publish-subscribe messaging protocol designed for constrained devices and unreliable networks.", "visual": "📡" },
+        "discovery": { "text": "Devices publish to topics. Subscribers get messages from topics they follow. Efficient and fully decoupled.", "visual": "📬" },
+        "twist": { "text": "MQTT's overhead is as small as 2 bytes per message. Compare that to HTTP's hundreds of header bytes.", "visual": "🪶" },
+        "climax": { "text": "Smart homes, factory sensors, fleet tracking — billions of IoT devices rely on MQTT for lightweight communication.", "visual": "🏭" },
+        "punchline": { "text": "MQTT sends tiny messages from tiny devices. Big impact.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "Why is MQTT ideal for IoT devices?",
+        "options": ["Its minimal overhead works on constrained devices and networks", "It provides the fastest file transfers available", "It replaces TCP for all internet traffic"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch06-modern-protocols",
+      "title": "QUIC: UDP Meets Reliability",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "TCP is reliable but slow to start. UDP is fast but unreliable. Google asked: can we have both? QUIC was born.", "visual": "🚀" },
+        "buildup": { "text": "QUIC runs on UDP but builds in reliability, flow control, and encryption — essentially TCP plus TLS combined.", "visual": "🔀" },
+        "discovery": { "text": "Connections start in a single round trip. No separate TCP handshake, then TLS handshake. Just one step.", "visual": "⚡" },
+        "twist": { "text": "QUIC fixes head-of-line blocking. If one stream stalls, others keep flowing. TCP can't do that.", "visual": "🏊" },
+        "climax": { "text": "HTTP/3 is built on QUIC. Chrome and major CDNs already use it for faster, more resilient web browsing.", "visual": "🌐" },
+        "punchline": { "text": "QUIC is the next evolution of internet transport.", "visual": "🧬" }
+      },
+      "quiz": {
+        "question": "What problem does QUIC solve that TCP cannot?",
+        "options": ["Head-of-line blocking across multiple streams", "Assigning IP addresses to devices", "Resolving domain names"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch06-modern-protocols",
+      "title": "HTTP/3: The Future of the Web",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "HTTP/1 was simple. HTTP/2 added multiplexing. HTTP/3 throws away TCP entirely and starts fresh with QUIC.", "visual": "🆕" },
+        "buildup": { "text": "HTTP/3 keeps the same semantics — GET, POST, headers, status codes — but the transport layer is completely new.", "visual": "🔧" },
+        "discovery": { "text": "Because QUIC handles encryption natively, HTTP/3 connections set up faster than HTTP/2 over TLS.", "visual": "⚡" },
+        "twist": { "text": "HTTP/3 handles network switches gracefully. Move from Wi-Fi to cellular? The connection survives seamlessly.", "visual": "📱" },
+        "climax": { "text": "Google, Cloudflare, and Facebook already serve traffic over HTTP/3. Adoption is accelerating rapidly.", "visual": "📈" },
+        "punchline": { "text": "HTTP/3 is HTTP rebuilt on a faster foundation.", "visual": "🏗️" }
+      },
+      "quiz": {
+        "question": "What transport protocol does HTTP/3 use instead of TCP?",
+        "options": ["QUIC", "UDP directly without modifications", "A new version of TCP called TCP/2"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch06-modern-protocols",
+      "title": "gRPC: High-Performance APIs",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "REST APIs send JSON text. That's human-readable but wasteful for machines talking to machines at high speed.", "visual": "🤖" },
+        "buildup": { "text": "gRPC uses Protocol Buffers — a compact binary format — and HTTP/2 for multiplexed, bidirectional streaming.", "visual": "⚡" },
+        "discovery": { "text": "You define your API in a .proto file. gRPC generates client and server code in dozens of languages automatically.", "visual": "📄" },
+        "twist": { "text": "gRPC supports streaming: server-stream, client-stream, and bidirectional. REST can't match that natively.", "visual": "🔄" },
+        "climax": { "text": "Microservices at Google, Netflix, and many cloud platforms use gRPC for fast internal communication.", "visual": "🏢" },
+        "punchline": { "text": "gRPC is built for speed between services, not humans.", "visual": "🏎️" }
+      },
+      "quiz": {
+        "question": "What serialization format does gRPC use instead of JSON?",
+        "options": ["Protocol Buffers", "XML", "CSV"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch06-modern-protocols",
+      "title": "GraphQL: Query What You Need",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A REST API returns 50 fields. You only need 3. GraphQL lets you ask for exactly what you want.", "visual": "🎯" },
+        "buildup": { "text": "GraphQL defines a schema. Clients write queries specifying the exact shape of data they need returned.", "visual": "📋" },
+        "discovery": { "text": "One endpoint serves all queries. No more juggling dozens of REST URLs for different data combinations.", "visual": "🔗" },
+        "twist": { "text": "GraphQL shifts complexity to the server. Poorly written queries can accidentally request massive data joins.", "visual": "💥" },
+        "climax": { "text": "Facebook created GraphQL in 2012. GitHub, Shopify, and Yelp all offer public GraphQL APIs today.", "visual": "🌐" },
+        "punchline": { "text": "GraphQL asks only for what it needs. No more, no less.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What advantage does GraphQL have over REST?",
+        "options": ["Clients request only the exact data fields they need", "It uses binary encoding for faster transfers", "It works without an internet connection"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "computer-networking--network-protocols-explained--ch06-modern-protocols",
+      "title": "DNS-over-HTTPS: Private Lookups",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every DNS query you make reveals which sites you visit. Your ISP, your Wi-Fi host — anyone can see.", "visual": "👁️" },
+        "buildup": { "text": "Traditional DNS sends queries in plain text over UDP. It was designed for speed, not privacy.", "visual": "📤" },
+        "discovery": { "text": "DNS-over-HTTPS wraps DNS queries inside encrypted HTTPS requests. They look like normal web traffic.", "visual": "🔒" },
+        "twist": { "text": "Critics say it centralizes DNS with a few big providers like Cloudflare and Google, bypassing local controls.", "visual": "⚖️" },
+        "climax": { "text": "Firefox and Chrome now support DoH natively. Users can enable it in browser settings with a few clicks.", "visual": "🌐" },
+        "punchline": { "text": "DoH hides what you look up, not just what you read.", "visual": "🕵️" }
+      },
+      "quiz": {
+        "question": "What does DNS-over-HTTPS protect?",
+        "options": ["The privacy of DNS queries by encrypting them", "The speed of DNS by using faster servers", "The integrity of DNS by adding digital signatures"],
+        "correct": 0
+      }
+    }
+  ]
+}
