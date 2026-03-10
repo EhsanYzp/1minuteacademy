@@ -87,6 +87,13 @@ export default async function handler(req, res) {
 
     return json(res, 200, { url: session.url });
   } catch (e) {
+    const code = e?.code || e?.raw?.code || null;
+    if (code === 'resource_missing') {
+      return json(res, 400, {
+        error: 'Stripe customer not found. If you recently switched Stripe from test to live, upgrade again to create a live customer.',
+      });
+    }
+
     console.error('stripe:create-portal-session error', e);
     return json(res, 500, { error: 'Server error' });
   }

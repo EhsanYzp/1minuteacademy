@@ -129,9 +129,15 @@ export async function handler(event) {
   const signature = event.headers?.['stripe-signature'] || event.headers?.['Stripe-Signature'];
   if (!signature) return { statusCode: 400, headers: corsHeaders, body: 'Missing stripe-signature' };
 
+  // Netlify can base64-encode request bodies depending on configuration.
+  // Stripe signature verification must use the exact raw payload.
+  const rawPayload = event?.isBase64Encoded
+    ? Buffer.from(String(event.body || ''), 'base64')
+    : (event.body || '');
+
   let stripeEvent;
   try {
-    stripeEvent = stripe.webhooks.constructEvent(event.body, signature, webhookSecret);
+    stripeEvent = stripe.webhooks.constructEvent(rawPayload, signature, webhookSecret);
   } catch (err) {
     console.error('netlify:stripe-webhook signature verification failed', err);
     return { statusCode: 400, headers: corsHeaders, body: 'Webhook Error: Invalid signature' };

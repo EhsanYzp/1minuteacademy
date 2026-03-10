@@ -110,6 +110,22 @@ export default async function handler(req, res) {
 
     return json(res, 200, await shape(sub));
   } catch (e) {
+    const code = e?.code || e?.raw?.code || null;
+    if (code === 'resource_missing') {
+      return json(res, 200, {
+        subscription_id: null,
+        active: false,
+        status: null,
+        current_period_end: null,
+        cancel_at_period_end: null,
+        cancel_at: null,
+        canceled_at: null,
+        ended_at: null,
+        created: null,
+        plan_interval: planInterval,
+      });
+    }
+
     console.error('stripe:subscription-status error', e);
     return json(res, 500, { error: 'Server error' });
   }
