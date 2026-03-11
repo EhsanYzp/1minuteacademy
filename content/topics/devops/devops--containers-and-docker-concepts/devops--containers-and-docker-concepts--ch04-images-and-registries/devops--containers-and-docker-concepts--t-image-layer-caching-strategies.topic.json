@@ -1,0 +1,49 @@
+{
+  "id": "devops--containers-and-docker-concepts--t-image-layer-caching-strategies",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Containers and Docker Concepts",
+  "course_id": "devops--containers-and-docker-concepts",
+  "chapter_id": "devops--containers-and-docker-concepts--ch04-images-and-registries",
+  "title": "Image Layer Caching Strategies",
+  "emoji": "🐳",
+  "color": "#0891B2",
+  "description": "A quick, practical guide to Image Layer Caching Strategies.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your Docker build takes 8 minutes. Change one line of code and it rebuilds everything. Something is wrong.",
+      "visual": "⏳"
+    },
+    "buildup": {
+      "text": "Docker caches layers top to bottom. When one layer changes, every layer below it must rebuild too.",
+      "visual": "🧱"
+    },
+    "discovery": {
+      "text": "The fix: put dependencies first, code second. Dependencies rarely change, so their layer stays cached.",
+      "visual": "📦"
+    },
+    "twist": {
+      "text": "COPY package.json first, then RUN npm install, then COPY the rest. Code changes don't bust the npm cache.",
+      "visual": "💡"
+    },
+    "climax": {
+      "text": "With smart ordering, a rebuild takes 10 seconds instead of 8 minutes. Same result, much faster feedback.",
+      "visual": "⚡"
+    },
+    "punchline": {
+      "text": "Order Dockerfile layers by change frequency. Rarely changed goes first.",
+      "visual": "📊"
+    }
+  },
+  "quiz": {
+    "question": "Why should dependency installation come before copying source code in a Dockerfile?",
+    "options": [
+      "So code changes don't invalidate the cached dependency layer",
+      "Because npm requires this exact order to function",
+      "To make the final image smaller"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "devops--infrastructure-as-code--t-environment-isolation-patterns",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Infrastructure as Code",
+  "course_id": "devops--infrastructure-as-code",
+  "chapter_id": "devops--infrastructure-as-code--ch05-patterns-and-practices",
+  "title": "Environment Isolation Patterns",
+  "emoji": "🏗️",
+  "color": "#7C3AED",
+  "description": "A short lesson to help you apply Environment Isolation Patterns.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "One Terraform state manages dev and prod. A typo in a variable destroys the production database. Bad pattern.",
+      "visual": "💀"
+    },
+    "buildup": {
+      "text": "Blast radius is the damage caused by a mistake. Smaller blast radius means smaller potential disasters.",
+      "visual": "💥"
+    },
+    "discovery": {
+      "text": "Separate state per environment. Dev has its own state. Prod has its own. A dev mistake can't touch production.",
+      "visual": "🔐"
+    },
+    "twist": {
+      "text": "Some teams go further: separate state per component. Network state is isolated from app state. Minimal blast radius.",
+      "visual": "🧱"
+    },
+    "climax": {
+      "text": "Terragrunt helps manage many states with shared configs. It reduces duplication while keeping isolation.",
+      "visual": "🔧"
+    },
+    "punchline": {
+      "text": "Isolate state to limit blast radius. Never mix prod and dev state.",
+      "visual": "🛡️"
+    }
+  },
+  "quiz": {
+    "question": "Why should production and development have separate Terraform state files?",
+    "options": [
+      "To prevent a development mistake from affecting production",
+      "To make Terraform run faster",
+      "Because Terraform requires separate files for each environment"
+    ],
+    "correct": 0
+  }
+}

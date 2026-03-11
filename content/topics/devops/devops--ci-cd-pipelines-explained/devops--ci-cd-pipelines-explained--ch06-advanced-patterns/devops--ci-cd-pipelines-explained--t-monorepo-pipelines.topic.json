@@ -1,0 +1,49 @@
+{
+  "id": "devops--ci-cd-pipelines-explained--t-monorepo-pipelines",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "CI/CD Pipelines Explained",
+  "course_id": "devops--ci-cd-pipelines-explained",
+  "chapter_id": "devops--ci-cd-pipelines-explained--ch06-advanced-patterns",
+  "title": "Monorepo Pipelines",
+  "emoji": "🔁",
+  "color": "#2563EB",
+  "description": "A 60-second lesson on Monorepo Pipelines.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Google stores billions of lines of code in one repository. One commit can touch frontend, backend, and infra.",
+      "visual": "📁"
+    },
+    "buildup": {
+      "text": "In a monorepo, running the full pipeline on every commit wastes time. Most changes only affect one service.",
+      "visual": "⏳"
+    },
+    "discovery": {
+      "text": "Affected-file detection solves this. The pipeline checks which files changed and only builds those services.",
+      "visual": "🎯"
+    },
+    "twist": {
+      "text": "Dependency graphs add intelligence. If a shared library changes, rebuild every service that imports it.",
+      "visual": "🕸️"
+    },
+    "climax": {
+      "text": "Nx, Turborepo, and Bazel are monorepo build tools. They cache, parallelize, and only rebuild what's needed.",
+      "visual": "🔧"
+    },
+    "punchline": {
+      "text": "Monorepo pipelines build smart: only what changed, plus dependents.",
+      "visual": "🧠"
+    }
+  },
+  "quiz": {
+    "question": "How do monorepo pipelines avoid rebuilding everything on each commit?",
+    "options": [
+      "By detecting which files changed and building only affected services",
+      "By splitting the repo into separate repositories",
+      "By running builds only once a day"
+    ],
+    "correct": 0
+  }
+}

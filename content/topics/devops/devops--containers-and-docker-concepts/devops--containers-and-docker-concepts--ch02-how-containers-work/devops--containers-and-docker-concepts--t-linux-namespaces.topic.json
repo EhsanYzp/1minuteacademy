@@ -1,0 +1,49 @@
+{
+  "id": "devops--containers-and-docker-concepts--t-linux-namespaces",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Containers and Docker Concepts",
+  "course_id": "devops--containers-and-docker-concepts",
+  "chapter_id": "devops--containers-and-docker-concepts--ch02-how-containers-work",
+  "title": "Linux Namespaces",
+  "emoji": "🐳",
+  "color": "#0891B2",
+  "description": "A quick, practical guide to Linux Namespaces.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "How does a container think it's alone on the machine when it's sharing the same kernel with dozens of others?",
+      "visual": "🤔"
+    },
+    "buildup": {
+      "text": "Linux namespaces create isolated views. Each container gets its own process tree, network stack, and filesystem.",
+      "visual": "🔲"
+    },
+    "discovery": {
+      "text": "PID namespace: container sees only its own processes. Process 1 inside is just process 54321 on the host.",
+      "visual": "🔢"
+    },
+    "twist": {
+      "text": "Network namespace: each container gets its own IP address and ports. No conflicts with other containers.",
+      "visual": "🌐"
+    },
+    "climax": {
+      "text": "Mount namespace isolates the filesystem. The container sees only its own files, not the host's.",
+      "visual": "📂"
+    },
+    "punchline": {
+      "text": "Namespaces give each container its own private view of the system.",
+      "visual": "🔒"
+    }
+  },
+  "quiz": {
+    "question": "What do Linux namespaces provide to containers?",
+    "options": [
+      "Isolated views of processes, networks, and filesystems",
+      "Faster CPU performance",
+      "Automatic security patching"
+    ],
+    "correct": 0
+  }
+}

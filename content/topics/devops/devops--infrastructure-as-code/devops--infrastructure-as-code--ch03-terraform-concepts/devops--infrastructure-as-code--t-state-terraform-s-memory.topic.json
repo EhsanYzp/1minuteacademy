@@ -1,0 +1,49 @@
+{
+  "id": "devops--infrastructure-as-code--t-state-terraform-s-memory",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Infrastructure as Code",
+  "course_id": "devops--infrastructure-as-code",
+  "chapter_id": "devops--infrastructure-as-code--ch03-terraform-concepts",
+  "title": "State: Terraform's Memory",
+  "emoji": "🏗️",
+  "color": "#7C3AED",
+  "description": "A micro-lesson that makes State: Terraform's Memory usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Terraform created 50 resources. How does it know what exists when you run it again? The state file remembers.",
+      "visual": "🧠"
+    },
+    "buildup": {
+      "text": "The state file maps your code to real resources. Resource X in code equals resource abc-123 in AWS.",
+      "visual": "🗺️"
+    },
+    "discovery": {
+      "text": "On each run, Terraform compares code to state. Changed? Update. Removed from code? Destroy. New? Create.",
+      "visual": "🔄"
+    },
+    "twist": {
+      "text": "Lose the state file and Terraform forgets everything. It'll try to recreate resources that already exist.",
+      "visual": "😱"
+    },
+    "climax": {
+      "text": "Never store state locally for teams. Use remote backends: S3, GCS, or Terraform Cloud. Locked, versioned, shared.",
+      "visual": "🔐"
+    },
+    "punchline": {
+      "text": "State is Terraform's memory. Store it remotely, lock it, back it up.",
+      "visual": "💾"
+    }
+  },
+  "quiz": {
+    "question": "What happens if the Terraform state file is lost?",
+    "options": [
+      "Terraform loses track of existing resources and may try to recreate them",
+      "All managed resources are automatically deleted",
+      "Terraform regenerates the state from cloud APIs"
+    ],
+    "correct": 0
+  }
+}

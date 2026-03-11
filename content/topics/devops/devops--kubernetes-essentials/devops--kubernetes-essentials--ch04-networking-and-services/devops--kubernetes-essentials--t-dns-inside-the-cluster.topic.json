@@ -1,0 +1,49 @@
+{
+  "id": "devops--kubernetes-essentials--t-dns-inside-the-cluster",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Kubernetes Essentials",
+  "course_id": "devops--kubernetes-essentials",
+  "chapter_id": "devops--kubernetes-essentials--ch04-networking-and-services",
+  "title": "DNS Inside the Cluster",
+  "emoji": "☸️",
+  "color": "#326CE5",
+  "description": "A tiny lesson with a big payoff: DNS Inside the Cluster.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your frontend pod needs to call the backend service. It doesn't know the IP. It just calls 'backend' by name.",
+      "visual": "📡"
+    },
+    "buildup": {
+      "text": "Kubernetes runs a DNS server (CoreDNS) inside the cluster. Every Service gets a DNS entry automatically.",
+      "visual": "🌐"
+    },
+    "discovery": {
+      "text": "The format is service-name.namespace.svc.cluster.local. Within the same namespace, just the service name works.",
+      "visual": "🏷️"
+    },
+    "twist": {
+      "text": "Headless services (clusterIP: None) return individual pod IPs instead of a single service IP. Useful for StatefulSets.",
+      "visual": "🔍"
+    },
+    "climax": {
+      "text": "DNS makes services discoverable without hardcoding IPs. Add a new service and every pod can find it immediately.",
+      "visual": "🧲"
+    },
+    "punchline": {
+      "text": "CoreDNS maps service names to IPs. Service discovery, built in.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "How does a pod find another service within the same Kubernetes namespace?",
+    "options": [
+      "By calling the service name — CoreDNS resolves it automatically",
+      "By reading a shared config file mounted on every pod",
+      "By scanning all pod IP addresses on the network"
+    ],
+    "correct": 0
+  }
+}

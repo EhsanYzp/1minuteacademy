@@ -1,0 +1,49 @@
+{
+  "id": "devops--infrastructure-as-code--t-remote-state-backends",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Infrastructure as Code",
+  "course_id": "devops--infrastructure-as-code",
+  "chapter_id": "devops--infrastructure-as-code--ch05-patterns-and-practices",
+  "title": "Remote State Backends",
+  "emoji": "🏗️",
+  "color": "#7C3AED",
+  "description": "A 60-second lesson on Remote State Backends.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A developer ran terraform apply from their laptop. Another did the same. Two local state files. Conflict.",
+      "visual": "💥"
+    },
+    "buildup": {
+      "text": "Local state files don't support teamwork. Two people applying simultaneously can corrupt infrastructure.",
+      "visual": "⚠️"
+    },
+    "discovery": {
+      "text": "Remote backends store state in a shared location: S3, GCS, or Terraform Cloud. One state, accessible to everyone.",
+      "visual": "☁️"
+    },
+    "twist": {
+      "text": "State locking prevents concurrent applies. While one person is applying, others must wait. No more conflicts.",
+      "visual": "🔒"
+    },
+    "climax": {
+      "text": "Versioned state files in S3 act as backups. Accidentally corrupted state? Roll back to a previous version.",
+      "visual": "⏪"
+    },
+    "punchline": {
+      "text": "Remote backends enable teamwork. Lock, share, and version your state.",
+      "visual": "🤝"
+    }
+  },
+  "quiz": {
+    "question": "What does state locking prevent in Terraform?",
+    "options": [
+      "Two people from applying changes simultaneously and causing conflicts",
+      "Unauthorized users from reading the state file",
+      "Terraform from running on weekends"
+    ],
+    "correct": 0
+  }
+}

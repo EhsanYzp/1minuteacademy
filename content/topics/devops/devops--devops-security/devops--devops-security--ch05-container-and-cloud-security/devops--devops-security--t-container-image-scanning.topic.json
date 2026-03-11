@@ -1,0 +1,49 @@
+{
+  "id": "devops--devops-security--t-container-image-scanning",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "DevOps Security (DevSecOps)",
+  "course_id": "devops--devops-security",
+  "chapter_id": "devops--devops-security--ch05-container-and-cloud-security",
+  "title": "Container Image Scanning",
+  "emoji": "🔐",
+  "color": "#059669",
+  "description": "A quick win: understand Container Image Scanning.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The image used ubuntu:latest. It had 247 known CVEs. Nobody scanned it before deploying to prod.",
+      "visual": "🐳"
+    },
+    "buildup": {
+      "text": "Container images bundle OS libs, runtimes, and app code. Any layer can contain known vulnerabilities.",
+      "visual": "📦"
+    },
+    "discovery": {
+      "text": "Trivy, Grype, and Snyk compare image contents against vulnerability databases and report findings.",
+      "visual": "🔍"
+    },
+    "twist": {
+      "text": "Use minimal base images. Alpine or distroless images have fewer packages and smaller attack surfaces.",
+      "visual": "📉"
+    },
+    "climax": {
+      "text": "Scan in CI/CD and block images with critical CVEs. Scan registries for newly disclosed flaws too.",
+      "visual": "🚫"
+    },
+    "punchline": {
+      "text": "Scan every image before deploy. Smaller bases mean fewer flaws.",
+      "visual": "🛡️"
+    }
+  },
+  "quiz": {
+    "question": "Why are minimal base images like Alpine recommended for containers?",
+    "options": [
+      "They contain fewer packages, reducing the attack surface",
+      "They run applications faster",
+      "They don't need any configuration"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "devops--kubernetes-essentials--t-cluster-upgrades",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Kubernetes Essentials",
+  "course_id": "devops--kubernetes-essentials",
+  "chapter_id": "devops--kubernetes-essentials--ch06-operating-kubernetes",
+  "title": "Cluster Upgrades",
+  "emoji": "☸️",
+  "color": "#326CE5",
+  "description": "A short lesson to help you apply Cluster Upgrades.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Kubernetes releases a new version every four months. Each version is supported for 14 months. Upgrades are mandatory.",
+      "visual": "📅"
+    },
+    "buildup": {
+      "text": "Upgrades are sequential. You must go from 1.28 to 1.29, then 1.29 to 1.30. Skipping versions is not allowed.",
+      "visual": "🪜"
+    },
+    "discovery": {
+      "text": "Control plane upgrades first. Then worker nodes. The API server must always be at least as new as the kubelets.",
+      "visual": "➡️"
+    },
+    "twist": {
+      "text": "Deprecated APIs break manifests. A YAML that worked on 1.28 may be rejected on 1.30. Audit before upgrading.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Managed K8s services simplify upgrades with one-click control plane updates. Node upgrades still need rolling restarts.",
+      "visual": "☁️"
+    },
+    "punchline": {
+      "text": "Upgrade regularly. Skipping versions creates bigger, riskier jumps.",
+      "visual": "🏃"
+    }
+  },
+  "quiz": {
+    "question": "Why must Kubernetes upgrades be done sequentially?",
+    "options": [
+      "API compatibility requires stepping through each version",
+      "The cluster reboots faster with sequential upgrades",
+      "Kubernetes licensing requires it"
+    ],
+    "correct": 0
+  }
+}

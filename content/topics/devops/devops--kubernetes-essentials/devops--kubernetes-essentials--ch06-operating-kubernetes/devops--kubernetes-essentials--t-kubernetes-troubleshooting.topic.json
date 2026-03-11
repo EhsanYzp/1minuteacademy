@@ -1,0 +1,49 @@
+{
+  "id": "devops--kubernetes-essentials--t-kubernetes-troubleshooting",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Kubernetes Essentials",
+  "course_id": "devops--kubernetes-essentials",
+  "chapter_id": "devops--kubernetes-essentials--ch06-operating-kubernetes",
+  "title": "Kubernetes Troubleshooting",
+  "emoji": "☸️",
+  "color": "#326CE5",
+  "description": "One-minute skill: Kubernetes Troubleshooting.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your pod is stuck in CrashLoopBackOff. The container starts, crashes, restarts, crashes again. What's wrong?",
+      "visual": "🔴"
+    },
+    "buildup": {
+      "text": "kubectl describe pod shows events: image pull failures, readiness probe failures, OOM kills. Start there.",
+      "visual": "🔍"
+    },
+    "discovery": {
+      "text": "kubectl logs shows app output. If the container crashes too fast, use --previous to see logs from the last run.",
+      "visual": "📜"
+    },
+    "twist": {
+      "text": "kubectl exec lets you get a shell inside a running container. Inspect the filesystem, test network connectivity live.",
+      "visual": "💻"
+    },
+    "climax": {
+      "text": "Most K8s problems are config errors: wrong image tag, missing secret, bad port. Describe and logs reveal 90%.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "Describe, logs, exec. Three commands solve most K8s problems.",
+      "visual": "🔧"
+    }
+  },
+  "quiz": {
+    "question": "What should you check first when a pod is in CrashLoopBackOff?",
+    "options": [
+      "Events from kubectl describe and logs from kubectl logs",
+      "The cluster-wide network configuration",
+      "The etcd database backup status"
+    ],
+    "correct": 0
+  }
+}

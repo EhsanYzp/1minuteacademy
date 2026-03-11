@@ -1,0 +1,49 @@
+{
+  "id": "devops--famous-devops-disasters-and-lessons--t-cloudflare-s-regex-outage-2019",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Famous DevOps Disasters and Lessons",
+  "course_id": "devops--famous-devops-disasters-and-lessons",
+  "chapter_id": "devops--famous-devops-disasters-and-lessons--ch01-deployment-gone-wrong",
+  "title": "Cloudflare's Regex Outage (2019)",
+  "emoji": "💥",
+  "color": "#EF4444",
+  "description": "A quick, practical guide to Cloudflare's Regex Outage (2019).",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "July 2, 2019. Cloudflare went down globally. CPU usage hit 100%. The cause: one bad regex.",
+      "visual": "📝"
+    },
+    "buildup": {
+      "text": "A WAF rule update contained a regex with catastrophic backtracking. It consumed all CPU.",
+      "visual": "🔥"
+    },
+    "discovery": {
+      "text": "The regex was deployed globally at once with no canary phase. Every edge server was hit.",
+      "visual": "🌍"
+    },
+    "twist": {
+      "text": "They couldn't push a fix because the deployment system used the same network that was down.",
+      "visual": "🔄"
+    },
+    "climax": {
+      "text": "Engineers walked to the data center and applied the fix manually. Downtime: 27 minutes.",
+      "visual": "🏃"
+    },
+    "punchline": {
+      "text": "Test regex carefully. One bad pattern can take down a CDN.",
+      "visual": "⚠️"
+    }
+  },
+  "quiz": {
+    "question": "What caused Cloudflare's 2019 global outage?",
+    "options": [
+      "A regular expression with catastrophic backtracking",
+      "A distributed denial-of-service attack",
+      "A power failure at their main data center"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "devops--infrastructure-as-code--t-least-privilege-for-iac-pipelines",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Infrastructure as Code",
+  "course_id": "devops--infrastructure-as-code",
+  "chapter_id": "devops--infrastructure-as-code--ch06-testing-and-security",
+  "title": "Least Privilege for IaC Pipelines",
+  "emoji": "🏗️",
+  "color": "#7C3AED",
+  "description": "One-minute skill: Least Privilege for IaC Pipelines.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The CI pipeline had admin access to the AWS account. A compromised pipeline could delete everything.",
+      "visual": "💀"
+    },
+    "buildup": {
+      "text": "IaC pipelines need cloud credentials to create resources. But admin access is far more than they need.",
+      "visual": "🔑"
+    },
+    "discovery": {
+      "text": "Least privilege means only the permissions needed. Pipeline creates S3 buckets? Give it S3 access only.",
+      "visual": "🎯"
+    },
+    "twist": {
+      "text": "Use short-lived credentials. OIDC federation lets CI tools get temporary tokens — no permanent keys to leak.",
+      "visual": "⏱️"
+    },
+    "climax": {
+      "text": "Separate credentials per environment. The dev pipeline can't touch production. Different roles, different blast radii.",
+      "visual": "🔐"
+    },
+    "punchline": {
+      "text": "Give pipelines only what they need. Temporary keys, minimal scope.",
+      "visual": "🛡️"
+    }
+  },
+  "quiz": {
+    "question": "Why should IaC pipelines use OIDC federation for credentials?",
+    "options": [
+      "It provides short-lived tokens with no permanent keys to leak",
+      "It makes the pipeline run faster",
+      "It's the only authentication method cloud providers support"
+    ],
+    "correct": 0
+  }
+}

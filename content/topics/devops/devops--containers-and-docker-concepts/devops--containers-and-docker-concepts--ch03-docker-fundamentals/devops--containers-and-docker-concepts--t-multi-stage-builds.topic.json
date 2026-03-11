@@ -1,0 +1,49 @@
+{
+  "id": "devops--containers-and-docker-concepts--t-multi-stage-builds",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Containers and Docker Concepts",
+  "course_id": "devops--containers-and-docker-concepts",
+  "chapter_id": "devops--containers-and-docker-concepts--ch03-docker-fundamentals",
+  "title": "Multi-Stage Builds",
+  "emoji": "🐳",
+  "color": "#0891B2",
+  "description": "A tiny lesson with a big payoff: Multi-Stage Builds.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your build tools add 800 MB to the image. But the running app only needs 50 MB. That's waste.",
+      "visual": "🗑️"
+    },
+    "buildup": {
+      "text": "Compilers, test frameworks, and build dependencies are needed to build, not to run. Ship only what runs.",
+      "visual": "🏗️"
+    },
+    "discovery": {
+      "text": "Multi-stage builds use multiple FROM statements. Stage one builds. Stage two copies only the final artifact.",
+      "visual": "📋"
+    },
+    "twist": {
+      "text": "The final image contains only the runtime and your binary. Build tools stay behind in the discarded stage.",
+      "visual": "✂️"
+    },
+    "climax": {
+      "text": "An 800 MB build image becomes a 50 MB production image. Smaller images mean faster pulls and less attack surface.",
+      "visual": "📉"
+    },
+    "punchline": {
+      "text": "Build in one stage, ship from another. Tiny production images.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "What is the main benefit of multi-stage Docker builds?",
+    "options": [
+      "The final image only contains runtime files, making it much smaller",
+      "The build process runs twice as fast",
+      "Multiple applications can share one image"
+    ],
+    "correct": 0
+  }
+}

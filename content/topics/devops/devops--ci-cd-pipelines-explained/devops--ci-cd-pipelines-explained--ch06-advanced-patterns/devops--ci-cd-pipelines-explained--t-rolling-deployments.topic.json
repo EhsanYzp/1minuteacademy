@@ -1,0 +1,49 @@
+{
+  "id": "devops--ci-cd-pipelines-explained--t-rolling-deployments",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "CI/CD Pipelines Explained",
+  "course_id": "devops--ci-cd-pipelines-explained",
+  "chapter_id": "devops--ci-cd-pipelines-explained--ch06-advanced-patterns",
+  "title": "Rolling Deployments",
+  "emoji": "🔁",
+  "color": "#2563EB",
+  "description": "A tiny lesson with a big payoff: Rolling Deployments.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You have ten servers running v1. You want v2 on all of them. Shutting down all ten means downtime.",
+      "visual": "🖥️"
+    },
+    "buildup": {
+      "text": "A rolling deployment updates servers one at a time. While one updates, the other nine keep serving traffic.",
+      "visual": "🔄"
+    },
+    "discovery": {
+      "text": "Health checks verify each server before moving to the next. If a server fails, the rollout pauses.",
+      "visual": "🩺"
+    },
+    "twist": {
+      "text": "During the rollout, some users hit v1 and some hit v2. Your app must handle both versions running simultaneously.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Rolling deployments are the default in Kubernetes. Pods update one by one with built-in health checking.",
+      "visual": "☸️"
+    },
+    "punchline": {
+      "text": "Update one server at a time. Zero downtime, gradual rollout.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "What challenge does a rolling deployment create?",
+    "options": [
+      "Two versions run simultaneously and the app must handle both",
+      "All servers must be shut down at the same time",
+      "The deployment takes exactly twice as long"
+    ],
+    "correct": 0
+  }
+}

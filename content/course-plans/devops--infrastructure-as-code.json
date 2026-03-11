@@ -1,0 +1,583 @@
+{
+  "categoryId": "devops",
+  "subject": "DevOps",
+  "courseId": "devops--infrastructure-as-code",
+  "courseTitle": "Infrastructure as Code",
+  "emoji": "🏗️",
+  "color": "#7C3AED",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "devops--infrastructure-as-code--ch01-why-iac",
+      "title": "Why IaC",
+      "position": 1
+    },
+    {
+      "id": "devops--infrastructure-as-code--ch02-declarative-vs-imperative",
+      "title": "Declarative vs Imperative",
+      "position": 2
+    },
+    {
+      "id": "devops--infrastructure-as-code--ch03-terraform-concepts",
+      "title": "Terraform Concepts",
+      "position": 3
+    },
+    {
+      "id": "devops--infrastructure-as-code--ch04-other-iac-tools",
+      "title": "Other IaC Tools",
+      "position": 4
+    },
+    {
+      "id": "devops--infrastructure-as-code--ch05-patterns-and-practices",
+      "title": "Patterns and Practices",
+      "position": 5
+    },
+    {
+      "id": "devops--infrastructure-as-code--ch06-testing-and-security",
+      "title": "Testing and Security",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch01-why-iac",
+      "title": "Snowflake Servers",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "One server ran perfectly for years. Nobody knew how it was configured. Then it died. Rebuilding took two weeks.", "visual": "❄️" },
+        "buildup": { "text": "Snowflake servers are hand-crafted, unique, and undocumented. Each one is a mystery of manual tweaks.", "visual": "🔧" },
+        "discovery": { "text": "When snowflakes die, knowledge dies with them. Nobody remembers every package installed or config file edited.", "visual": "🧠" },
+        "twist": { "text": "IaC replaces snowflakes with cattle. Every server is defined in code. Destroy one, rebuild it identically in minutes.", "visual": "🐄" },
+        "climax": { "text": "The code is the documentation. Read the Terraform file and you know exactly what exists and why.", "visual": "📖" },
+        "punchline": { "text": "Snowflakes are fragile. Code-defined infrastructure is reproducible.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "Why are 'snowflake servers' problematic?",
+        "options": ["They're manually configured and impossible to reproduce reliably", "They generate too much heat in data centers", "They're too expensive to purchase"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch01-why-iac",
+      "title": "Version-Controlled Infrastructure",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Someone changed a firewall rule in production. The site went down. Nobody knew who changed it or why.", "visual": "🔥" },
+        "buildup": { "text": "GUI changes leave no trail. You can't review, approve, or rollback a mouse click.", "visual": "🖱️" },
+        "discovery": { "text": "IaC files live in Git. Every change has an author, a timestamp, a commit message, and a pull request.", "visual": "📜" },
+        "twist": { "text": "Need to roll back? Revert the commit and apply. Infrastructure returns to its previous state. Time travel.", "visual": "⏪" },
+        "climax": { "text": "Git blame shows who changed what and when. Audit trails become automatic, not an afterthought.", "visual": "🔍" },
+        "punchline": { "text": "Git tracks every infra change. Review, approve, rollback — just like code.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What advantage does IaC in Git provide over GUI-based changes?",
+        "options": ["Full audit trail with authorship, review, and rollback capability", "Faster server boot times", "Lower cloud provider costs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch01-why-iac",
+      "title": "Repeatability and Consistency",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Dev has 2 subnets. Staging has 3. Production has 4. Nobody remembers why they're different. They shouldn't be.", "visual": "🤷" },
+        "buildup": { "text": "Manual setup leads to drift. Each environment evolves independently, accumulating unique differences over time.", "visual": "📉" },
+        "discovery": { "text": "IaC uses the same code for every environment. Variables customize the size, but the structure stays identical.", "visual": "📐" },
+        "twist": { "text": "Consistency eliminates 'works in staging but fails in production' surprises. Same code, same result, guaranteed.", "visual": "🎯" },
+        "climax": { "text": "Spinning up a new environment takes minutes, not weeks. Run the code and get an exact replica every time.", "visual": "⚡" },
+        "punchline": { "text": "Same code, same infrastructure. Repeatability kills configuration drift.", "visual": "🔁" }
+      },
+      "quiz": {
+        "question": "How does IaC prevent configuration drift between environments?",
+        "options": ["The same code defines every environment with variable customization", "It locks environments from any changes after creation", "It automatically deletes drifted resources"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch01-why-iac",
+      "title": "Self-Service Infrastructure",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A developer needed a new database. They filed a ticket. Three weeks later, ops created it. Three weeks for a database.", "visual": "📝" },
+        "buildup": { "text": "Ticket-driven infrastructure creates bottlenecks. Ops becomes a gatekeeper. Dev waits. Everyone suffers.", "visual": "😤" },
+        "discovery": { "text": "IaC modules are reusable templates. A developer picks a module, sets parameters, and runs it. Self-service.", "visual": "🛒" },
+        "twist": { "text": "Guardrails baked into modules enforce standards. Developers get freedom. Platform teams keep control. Both win.", "visual": "🛡️" },
+        "climax": { "text": "Internal developer platforms wrap IaC in a UI or CLI. Create a database in five minutes, compliant by default.", "visual": "🏗️" },
+        "punchline": { "text": "IaC modules enable self-service. No tickets, no waiting, no drift.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "How do IaC modules enable self-service infrastructure?",
+        "options": ["Developers use pre-built templates with guardrails instead of filing tickets", "Modules automatically detect what infrastructure is needed", "They eliminate the need for any platform team oversight"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch01-why-iac",
+      "title": "Cost Visibility Through Code",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The cloud bill jumped 40% in one month. Nobody could explain why. Resources were scattered across regions and accounts.", "visual": "💸" },
+        "buildup": { "text": "When infrastructure is created via GUI clicks, tracking what exists and what it costs is nearly impossible.", "visual": "🔍" },
+        "discovery": { "text": "IaC files list every resource explicitly. Grep the code and you know exactly what's provisioned and where.", "visual": "📋" },
+        "twist": { "text": "Tools like Infracost analyze IaC changes and estimate the cost impact before you apply. Cost review in the pull request.", "visual": "💰" },
+        "climax": { "text": "Tagging policies in IaC enforce cost labels on every resource. Finance can trace every dollar to a team and project.", "visual": "🏷️" },
+        "punchline": { "text": "IaC makes infrastructure visible. Visible means controllable.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "How does Infracost help with IaC workflows?",
+        "options": ["It estimates cost impact of changes before they're applied", "It automatically deletes expensive resources", "It negotiates lower prices with cloud providers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch02-declarative-vs-imperative",
+      "title": "Declarative: Describe the Goal",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You say: 'I want a VPC with two subnets and a load balancer.' The tool figures out how to create them.", "visual": "🗣️" },
+        "buildup": { "text": "Declarative IaC describes the desired end state. The tool compares it to reality and makes the minimum changes.", "visual": "🔍" },
+        "discovery": { "text": "If a subnet already exists, the tool skips it. If it's missing, the tool creates it. Idempotent by design.", "visual": "✅" },
+        "twist": { "text": "Run the same code twice and nothing changes the second time. The desired state already matches reality.", "visual": "🔁" },
+        "climax": { "text": "Terraform, CloudFormation, and Pulumi are declarative. They plan changes, show a diff, and apply only what's needed.", "visual": "📊" },
+        "punchline": { "text": "Declare what you want. The tool computes the delta and applies it.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does idempotent mean in the context of IaC?",
+        "options": ["Running the same code multiple times produces the same result", "The code runs faster each time it's executed", "Changes are applied in random order"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch02-declarative-vs-imperative",
+      "title": "Imperative: Script the Steps",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You write a script: 'Create VPC. Create subnet A. Create subnet B. Attach load balancer.' Step by step.", "visual": "📝" },
+        "buildup": { "text": "Imperative IaC tells the tool exactly what to do. Bash scripts, Ansible playbooks, and AWS CLI commands are imperative.", "visual": "⌨️" },
+        "discovery": { "text": "The script doesn't know what already exists. Run it twice and it might try to create duplicate resources.", "visual": "⚠️" },
+        "twist": { "text": "You need to add checks: 'If VPC exists, skip. If not, create.' The complexity grows fast with every resource.", "visual": "🧩" },
+        "climax": { "text": "Imperative works for one-off tasks and bootstrapping. For ongoing management, declarative is almost always better.", "visual": "⚖️" },
+        "punchline": { "text": "Imperative says how. Declarative says what. Declarative scales better.", "visual": "📈" }
+      },
+      "quiz": {
+        "question": "What is a key disadvantage of imperative IaC scripts?",
+        "options": ["They don't track current state and may create duplicate resources", "They cannot create cloud resources", "They require a graphical user interface"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch02-declarative-vs-imperative",
+      "title": "Desired State Reconciliation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Someone manually changed a security group in the console. Your code still says port 443 only. Who's right?", "visual": "🤔" },
+        "buildup": { "text": "Drift happens when reality diverges from code. Manual changes, automated scripts, or console clicks cause it.", "visual": "📉" },
+        "discovery": { "text": "Declarative tools detect drift. Run a plan and it shows: 'Port 8080 was added manually. I'll remove it to match code.'", "visual": "🔍" },
+        "twist": { "text": "The code is the source of truth. If it's not in the code, it shouldn't exist. Drift detection enforces discipline.", "visual": "📏" },
+        "climax": { "text": "Automated drift detection runs on a schedule. If someone changes production manually, the team gets alerted instantly.", "visual": "🚨" },
+        "punchline": { "text": "Code defines truth. Drift is detected and corrected. Reality matches code.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What is infrastructure drift?",
+        "options": ["When actual infrastructure diverges from what's defined in code", "When servers physically move between data centers", "When cloud costs increase gradually over time"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch02-declarative-vs-imperative",
+      "title": "Mutable vs Immutable Infrastructure",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You SSH in, install a patch, and restart. It works. But now that server differs from every other one.", "visual": "🔧" },
+        "buildup": { "text": "Mutable infrastructure is updated in place. Each patch, config change, and hotfix adds unique history.", "visual": "📜" },
+        "discovery": { "text": "Immutable infrastructure is never changed. Need an update? Build a new image, deploy new servers, destroy old ones.", "visual": "♻️" },
+        "twist": { "text": "Immutable makes rollback trivial. The previous image still exists. Switch back to it and you're done.", "visual": "⏪" },
+        "climax": { "text": "Containers are inherently immutable. Rebuild the image, redeploy. This philosophy extends to VMs with tools like Packer.", "visual": "🐳" },
+        "punchline": { "text": "Don't patch servers. Replace them. Immutable infrastructure is safer.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What defines immutable infrastructure?",
+        "options": ["Servers are never modified — they're replaced with new ones", "Servers cannot be deleted once created", "Infrastructure code is locked after the first deploy"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch02-declarative-vs-imperative",
+      "title": "Configuration Management vs Provisioning",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Terraform creates a VM. Ansible configures what runs inside it. They solve different halves of the problem.", "visual": "🧩" },
+        "buildup": { "text": "Provisioning creates resources: VMs, networks, databases, DNS entries. Terraform and CloudFormation do this.", "visual": "🏗️" },
+        "discovery": { "text": "Configuration management installs software and sets up the OS: packages, users, files. Ansible and Chef do this.", "visual": "📦" },
+        "twist": { "text": "With containers, configuration management is less needed. The Dockerfile handles OS setup. Terraform handles infra.", "visual": "🐳" },
+        "climax": { "text": "Many teams use Terraform for provisioning and skip Ansible entirely. Containers shifted configuration into the build.", "visual": "🔄" },
+        "punchline": { "text": "Provisioning builds the house. Configuration furnishes it. Containers do both.", "visual": "🏠" }
+      },
+      "quiz": {
+        "question": "What is the difference between provisioning and configuration management?",
+        "options": ["Provisioning creates resources; configuration management sets up software inside them", "They are the same thing with different names", "Configuration management creates cloud accounts"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch03-terraform-concepts",
+      "title": "Providers: The Bridge to Clouds",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Terraform works with AWS, Azure, GCP, Cloudflare, GitHub, and hundreds more. How? Providers.", "visual": "🌉" },
+        "buildup": { "text": "A provider is a plugin that translates Terraform code into API calls for a specific platform.", "visual": "🔌" },
+        "discovery": { "text": "The AWS provider knows how to create EC2 instances. The GitHub provider knows how to create repositories.", "visual": "📋" },
+        "twist": { "text": "You can use multiple providers in one project. Create an AWS server and a Cloudflare DNS record in the same plan.", "visual": "🔗" },
+        "climax": { "text": "The Terraform Registry hosts thousands of providers. Community-built providers cover niche services too.", "visual": "🛒" },
+        "punchline": { "text": "Providers connect Terraform to any platform. One language, many clouds.", "visual": "🌐" }
+      },
+      "quiz": {
+        "question": "What does a Terraform provider do?",
+        "options": ["It translates Terraform code into API calls for a specific platform", "It provides free cloud hosting", "It monitors infrastructure performance"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch03-terraform-concepts",
+      "title": "State: Terraform's Memory",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Terraform created 50 resources. How does it know what exists when you run it again? The state file remembers.", "visual": "🧠" },
+        "buildup": { "text": "The state file maps your code to real resources. Resource X in code equals resource abc-123 in AWS.", "visual": "🗺️" },
+        "discovery": { "text": "On each run, Terraform compares code to state. Changed? Update. Removed from code? Destroy. New? Create.", "visual": "🔄" },
+        "twist": { "text": "Lose the state file and Terraform forgets everything. It'll try to recreate resources that already exist.", "visual": "😱" },
+        "climax": { "text": "Never store state locally for teams. Use remote backends: S3, GCS, or Terraform Cloud. Locked, versioned, shared.", "visual": "🔐" },
+        "punchline": { "text": "State is Terraform's memory. Store it remotely, lock it, back it up.", "visual": "💾" }
+      },
+      "quiz": {
+        "question": "What happens if the Terraform state file is lost?",
+        "options": ["Terraform loses track of existing resources and may try to recreate them", "All managed resources are automatically deleted", "Terraform regenerates the state from cloud APIs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch03-terraform-concepts",
+      "title": "Plan and Apply",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Terraform never surprises you. Before changing anything, it shows exactly what will happen. Then you decide.", "visual": "🔮" },
+        "buildup": { "text": "terraform plan compares your code to the state and shows a diff: resources to create, change, or destroy.", "visual": "📊" },
+        "discovery": { "text": "Green plus signs for creates. Yellow tildes for changes. Red minus signs for destroys. Visual and clear.", "visual": "🚦" },
+        "twist": { "text": "In CI/CD, the plan runs on pull request. The team reviews infra changes just like code changes. Same workflow.", "visual": "🔍" },
+        "climax": { "text": "terraform apply executes the plan. It creates, updates, and deletes resources in the right dependency order.", "visual": "⚡" },
+        "punchline": { "text": "Plan shows the future. Apply makes it real. Always review the plan first.", "visual": "👀" }
+      },
+      "quiz": {
+        "question": "What does terraform plan do?",
+        "options": ["Shows a preview of what changes will be made without applying them", "Immediately creates all resources defined in code", "Deletes all existing infrastructure"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch03-terraform-concepts",
+      "title": "Modules: Reusable Building Blocks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every team writes the same VPC setup from scratch. Three teams, three slightly different versions. Bugs everywhere.", "visual": "🐛" },
+        "buildup": { "text": "A Terraform module packages resources into a reusable unit. Call the module, pass variables, get infrastructure.", "visual": "📦" },
+        "discovery": { "text": "The platform team writes the VPC module once. Every team uses it. One source of truth, consistent results.", "visual": "✅" },
+        "twist": { "text": "Modules compose. A network module calls a subnet module which calls a security group module. Like building blocks.", "visual": "🧱" },
+        "climax": { "text": "The Terraform Registry has thousands of public modules. Need a Kubernetes cluster? There's a verified module for it.", "visual": "🛒" },
+        "punchline": { "text": "Modules are reusable IaC blocks. Write once, use everywhere.", "visual": "🔁" }
+      },
+      "quiz": {
+        "question": "What problem do Terraform modules solve?",
+        "options": ["They prevent teams from duplicating infrastructure code", "They make Terraform run faster", "They store Terraform state files"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch03-terraform-concepts",
+      "title": "Terraform Workspaces",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You have one set of Terraform code. You need to manage dev, staging, and production from it. Workspaces help.", "visual": "📂" },
+        "buildup": { "text": "A workspace is a separate state file for the same code. Switch workspace, switch environment. Same code, new state.", "visual": "🔀" },
+        "discovery": { "text": "terraform workspace new staging creates a fresh state. Resources in staging don't interfere with production.", "visual": "🏗️" },
+        "twist": { "text": "Some teams prefer separate directories over workspaces. Directories are more explicit but require duplicated code.", "visual": "🤔" },
+        "climax": { "text": "Terraform Cloud takes workspaces further: remote execution, role-based access, and policy enforcement per workspace.", "visual": "☁️" },
+        "punchline": { "text": "Workspaces isolate state per environment. Same code, separate realities.", "visual": "🌐" }
+      },
+      "quiz": {
+        "question": "What does a Terraform workspace provide?",
+        "options": ["A separate state file for the same code, isolating environments", "A graphical editor for Terraform files", "A way to run multiple Terraform versions simultaneously"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch04-other-iac-tools",
+      "title": "AWS CloudFormation",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "AWS built its own IaC tool before Terraform existed. CloudFormation is native, deeply integrated, and AWS-only.", "visual": "☁️" },
+        "buildup": { "text": "Templates are JSON or YAML files that define AWS resources. Stacks group resources into manageable units.", "visual": "📄" },
+        "discovery": { "text": "CloudFormation knows about AWS resources before Terraform does. New AWS features get CloudFormation support on day one.", "visual": "🆕" },
+        "twist": { "text": "The lock-in is total. CloudFormation only works with AWS. Multi-cloud teams must use a different tool entirely.", "visual": "🔒" },
+        "climax": { "text": "AWS CDK generates CloudFormation from TypeScript, Python, or Java. Real code instead of YAML. Same engine.", "visual": "💻" },
+        "punchline": { "text": "CloudFormation is AWS-native IaC. Powerful but locked to one cloud.", "visual": "🏢" }
+      },
+      "quiz": {
+        "question": "What is the main limitation of AWS CloudFormation?",
+        "options": ["It only works with AWS resources", "It cannot define networking resources", "It requires a paid subscription beyond AWS costs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch04-other-iac-tools",
+      "title": "Pulumi: Real Code for Infra",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Terraform uses HCL, a custom language. Pulumi says: 'Just use TypeScript, Python, or Go. Languages you know.'", "visual": "💻" },
+        "buildup": { "text": "With Pulumi, infrastructure is real code. Use loops, functions, classes, and conditionals — no workarounds.", "visual": "🔧" },
+        "discovery": { "text": "Your IDE gives autocomplete, type checking, and refactoring for infrastructure code. Regular programming power.", "visual": "🎨" },
+        "twist": { "text": "Pulumi manages state like Terraform. It plans, previews, and applies. The concepts are similar; the language differs.", "visual": "🔄" },
+        "climax": { "text": "Pulumi attracts developers who dislike learning HCL. Terraform attracts ops teams who prefer domain-specific simplicity.", "visual": "⚖️" },
+        "punchline": { "text": "Pulumi uses real programming languages for IaC. Same power, familiar syntax.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What differentiates Pulumi from Terraform?",
+        "options": ["Pulumi uses general-purpose programming languages instead of HCL", "Pulumi is free while Terraform is paid", "Pulumi only supports Azure"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch04-other-iac-tools",
+      "title": "Ansible: Configuration at Scale",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You need to install Nginx on 500 servers. SSH into each one? Ansible handles all 500 with one command.", "visual": "🖥️" },
+        "buildup": { "text": "Ansible playbooks describe tasks in YAML. Copy files, install packages, restart services — step by step.", "visual": "📋" },
+        "discovery": { "text": "Ansible is agentless. It connects via SSH, runs tasks, and disconnects. No software to install on managed servers.", "visual": "🔑" },
+        "twist": { "text": "Ansible is imperative at heart but modules are idempotent. 'Ensure Nginx is installed' won't reinstall it.", "visual": "✅" },
+        "climax": { "text": "Terraform provisions the server. Ansible configures it. Many teams use both together for the complete lifecycle.", "visual": "🤝" },
+        "punchline": { "text": "Ansible configures servers at scale. Agentless, SSH-based, YAML-defined.", "visual": "📡" }
+      },
+      "quiz": {
+        "question": "Why is Ansible called agentless?",
+        "options": ["It doesn't require software installed on managed servers — it uses SSH", "It runs without any human operator", "It doesn't need a network connection"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch04-other-iac-tools",
+      "title": "Crossplane: IaC on Kubernetes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "What if Kubernetes could manage cloud resources? Define an AWS database as a K8s object. Crossplane makes it real.", "visual": "☸️" },
+        "buildup": { "text": "Crossplane extends Kubernetes with custom resource definitions for cloud infrastructure: databases, buckets, networks.", "visual": "🌐" },
+        "discovery": { "text": "Apply a YAML manifest and Kubernetes creates the cloud resource. Delete the manifest and the resource gets cleaned up.", "visual": "🔄" },
+        "twist": { "text": "Teams already using Kubernetes don't need to learn Terraform. One control plane manages both apps and infrastructure.", "visual": "🎛️" },
+        "climax": { "text": "Crossplane competes with Terraform in the Kubernetes-native world. The debate: purpose-built tool vs unified platform.", "visual": "⚖️" },
+        "punchline": { "text": "Crossplane brings IaC into Kubernetes. One API for apps and cloud resources.", "visual": "🧩" }
+      },
+      "quiz": {
+        "question": "What does Crossplane allow you to manage through Kubernetes?",
+        "options": ["Cloud infrastructure resources like databases and networks", "Only Kubernetes pods and services", "Physical hardware in data centers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch04-other-iac-tools",
+      "title": "OpenTofu: The Open-Source Fork",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2023, HashiCorp changed Terraform's license from open source to BSL. The community forked it as OpenTofu.", "visual": "🍴" },
+        "buildup": { "text": "OpenTofu is a drop-in replacement for Terraform. Same language, same providers, same workflow. Just a different license.", "visual": "📋" },
+        "discovery": { "text": "The Linux Foundation hosts OpenTofu. It's backed by Gruntwork, Spacelift, and other infrastructure companies.", "visual": "🏛️" },
+        "twist": { "text": "The fork split the community. Some companies switched immediately. Others stayed with Terraform for enterprise support.", "visual": "🔀" },
+        "climax": { "text": "OpenTofu is adding features like state encryption that Terraform lacks. The fork is evolving independently.", "visual": "🔐" },
+        "punchline": { "text": "OpenTofu: Terraform's open-source twin. Same language, different governance.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "Why was OpenTofu created?",
+        "options": ["HashiCorp changed Terraform's license from open source to BSL", "Terraform was too slow for large projects", "The community wanted to use Python instead of HCL"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch05-patterns-and-practices",
+      "title": "Remote State Backends",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A developer ran terraform apply from their laptop. Another did the same. Two local state files. Conflict.", "visual": "💥" },
+        "buildup": { "text": "Local state files don't support teamwork. Two people applying simultaneously can corrupt infrastructure.", "visual": "⚠️" },
+        "discovery": { "text": "Remote backends store state in a shared location: S3, GCS, or Terraform Cloud. One state, accessible to everyone.", "visual": "☁️" },
+        "twist": { "text": "State locking prevents concurrent applies. While one person is applying, others must wait. No more conflicts.", "visual": "🔒" },
+        "climax": { "text": "Versioned state files in S3 act as backups. Accidentally corrupted state? Roll back to a previous version.", "visual": "⏪" },
+        "punchline": { "text": "Remote backends enable teamwork. Lock, share, and version your state.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "What does state locking prevent in Terraform?",
+        "options": ["Two people from applying changes simultaneously and causing conflicts", "Unauthorized users from reading the state file", "Terraform from running on weekends"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch05-patterns-and-practices",
+      "title": "Environment Isolation Patterns",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "One Terraform state manages dev and prod. A typo in a variable destroys the production database. Bad pattern.", "visual": "💀" },
+        "buildup": { "text": "Blast radius is the damage caused by a mistake. Smaller blast radius means smaller potential disasters.", "visual": "💥" },
+        "discovery": { "text": "Separate state per environment. Dev has its own state. Prod has its own. A dev mistake can't touch production.", "visual": "🔐" },
+        "twist": { "text": "Some teams go further: separate state per component. Network state is isolated from app state. Minimal blast radius.", "visual": "🧱" },
+        "climax": { "text": "Terragrunt helps manage many states with shared configs. It reduces duplication while keeping isolation.", "visual": "🔧" },
+        "punchline": { "text": "Isolate state to limit blast radius. Never mix prod and dev state.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why should production and development have separate Terraform state files?",
+        "options": ["To prevent a development mistake from affecting production", "To make Terraform run faster", "Because Terraform requires separate files for each environment"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch05-patterns-and-practices",
+      "title": "GitOps for Infrastructure",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A developer runs terraform apply from their laptop. It works. But nobody else saw the change or approved it.", "visual": "😬" },
+        "buildup": { "text": "GitOps means all changes go through Git. No local applies. Pull request, review, approve, merge, auto-apply.", "visual": "📜" },
+        "discovery": { "text": "CI/CD runs terraform plan on pull requests. The plan output appears as a comment. Reviewers see exactly what changes.", "visual": "🔍" },
+        "twist": { "text": "On merge, CI/CD runs terraform apply automatically. The merge commit is the audit trail. No manual intervention.", "visual": "🤖" },
+        "climax": { "text": "Atlantis and Spacelift are tools built specifically for GitOps-driven Terraform. They enforce the workflow.", "visual": "🔧" },
+        "punchline": { "text": "GitOps for IaC: review, approve, merge, auto-apply. No manual applies.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What does a GitOps workflow for IaC enforce?",
+        "options": ["All changes go through pull requests with review before auto-apply", "All infrastructure is managed from the command line only", "Changes are applied immediately without review"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch05-patterns-and-practices",
+      "title": "Tagging Standards",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Who owns this EC2 instance? What project is it for? Is it dev or prod? Without tags, nobody knows.", "visual": "🤷" },
+        "buildup": { "text": "Tags are metadata labels on cloud resources: team, environment, project, cost center, owner.", "visual": "🏷️" },
+        "discovery": { "text": "IaC enforces tagging. Every resource in the code includes mandatory tags. No tags, no deploy.", "visual": "🚫" },
+        "twist": { "text": "Tags power cost reports, security audits, and cleanup. 'env=dev' lets you auto-delete dev resources nightly.", "visual": "🗑️" },
+        "climax": { "text": "Tag policies in AWS Organizations enforce standards across accounts. Non-compliant resources get flagged.", "visual": "🚨" },
+        "punchline": { "text": "Tags classify resources. IaC enforces them. Cost and security depend on it.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "Why are consistent tagging standards important in cloud infrastructure?",
+        "options": ["They enable cost tracking, security audits, and automated cleanup", "They make resources run faster", "They are required by the operating system"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch05-patterns-and-practices",
+      "title": "Dependency Management in IaC",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You can't create a subnet before the VPC exists. You can't attach a policy before the role exists. Order matters.", "visual": "🔢" },
+        "buildup": { "text": "Terraform builds a dependency graph automatically. It reads references between resources and determines the order.", "visual": "🕸️" },
+        "discovery": { "text": "Explicit depends_on forces an order when Terraform can't detect the dependency. Rare but sometimes essential.", "visual": "🔗" },
+        "twist": { "text": "Circular dependencies break the graph. Resource A depends on B, and B depends on A. Terraform refuses to plan.", "visual": "🔄" },
+        "climax": { "text": "Parallelism speeds things up. Independent resources are created simultaneously. Only dependent ones wait in sequence.", "visual": "⚡" },
+        "punchline": { "text": "Terraform graphs dependencies. Parallel when safe, sequential when needed.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "How does Terraform determine the order to create resources?",
+        "options": ["It builds a dependency graph from references between resources", "It creates resources alphabetically by name", "It creates all resources simultaneously regardless of dependencies"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch06-testing-and-security",
+      "title": "Testing Infrastructure Code",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your app code has unit tests. Your infrastructure code has... nothing? IaC deserves tests too.", "visual": "🧪" },
+        "buildup": { "text": "Static tests check syntax and best practices without deploying. terraform validate and tflint catch basics.", "visual": "📝" },
+        "discovery": { "text": "Integration tests deploy real infrastructure, run checks, then destroy it. Terratest automates this in Go.", "visual": "🔄" },
+        "twist": { "text": "Policy tests check compliance: 'No public S3 buckets. No unencrypted instances.' OPA and Sentinel enforce them.", "visual": "🛡️" },
+        "climax": { "text": "The test pyramid applies to IaC too. Many static tests, some integration tests, few full environment tests.", "visual": "🔺" },
+        "punchline": { "text": "Test IaC like app code. Static first, integration next, policies always.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What do policy tests check in IaC?",
+        "options": ["Compliance rules like no public buckets and mandatory encryption", "Whether the code compiles without errors", "How fast resources can be created"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch06-testing-and-security",
+      "title": "Policy as Code",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The security team said: 'No public databases.' An engineer created one anyway. Nobody checked until the audit.", "visual": "😬" },
+        "buildup": { "text": "Written policies in documents get ignored. If the policy isn't enforced automatically, it's just a suggestion.", "visual": "📄" },
+        "discovery": { "text": "Policy as code writes security and compliance rules in a machine-readable language. OPA's Rego is the most popular.", "visual": "📝" },
+        "twist": { "text": "Policies run in the CI pipeline. If a change violates a rule, the pipeline fails. The engineer sees exactly why.", "visual": "🚫" },
+        "climax": { "text": "HashiCorp Sentinel and AWS Config Rules are alternatives. All enforce rules automatically, not through willpower.", "visual": "🤖" },
+        "punchline": { "text": "Write policies in code. Enforce them in the pipeline. Compliance automated.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why is policy-as-code better than written policy documents?",
+        "options": ["Policies are enforced automatically in the pipeline", "Documents are harder to read", "Code policies are optional and less strict"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch06-testing-and-security",
+      "title": "Secrets in IaC",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A database password was hardcoded in a Terraform file. The file was committed to Git. Everyone could read it.", "visual": "🔑" },
+        "buildup": { "text": "IaC files go in version control. Secrets in those files become permanent. Even deleting the line leaves git history.", "visual": "📜" },
+        "discovery": { "text": "Use a secrets manager: Vault, AWS Secrets Manager, or Azure Key Vault. Reference secrets by name, not value.", "visual": "🔐" },
+        "twist": { "text": "Terraform state also contains secrets in plain text. Encrypt state at rest and restrict access to the state backend.", "visual": "⚠️" },
+        "climax": { "text": "SOPS encrypts specific values in YAML files. Commit encrypted secrets safely. Only authorized users can decrypt.", "visual": "🛡️" },
+        "punchline": { "text": "Never commit plaintext secrets. Reference them from a vault. Encrypt state.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "Why is the Terraform state file a security concern?",
+        "options": ["It may contain secrets in plain text", "It is publicly accessible by default", "It deletes resources when read"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch06-testing-and-security",
+      "title": "Least Privilege for IaC Pipelines",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The CI pipeline had admin access to the AWS account. A compromised pipeline could delete everything.", "visual": "💀" },
+        "buildup": { "text": "IaC pipelines need cloud credentials to create resources. But admin access is far more than they need.", "visual": "🔑" },
+        "discovery": { "text": "Least privilege means only the permissions needed. Pipeline creates S3 buckets? Give it S3 access only.", "visual": "🎯" },
+        "twist": { "text": "Use short-lived credentials. OIDC federation lets CI tools get temporary tokens — no permanent keys to leak.", "visual": "⏱️" },
+        "climax": { "text": "Separate credentials per environment. The dev pipeline can't touch production. Different roles, different blast radii.", "visual": "🔐" },
+        "punchline": { "text": "Give pipelines only what they need. Temporary keys, minimal scope.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why should IaC pipelines use OIDC federation for credentials?",
+        "options": ["It provides short-lived tokens with no permanent keys to leak", "It makes the pipeline run faster", "It's the only authentication method cloud providers support"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--infrastructure-as-code--ch06-testing-and-security",
+      "title": "Disaster Recovery with IaC",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An entire AWS region went down. Companies with IaC rebuilt their infrastructure in another region within hours.", "visual": "🌍" },
+        "buildup": { "text": "IaC makes disaster recovery practical. Your infrastructure is defined in code. Run it anywhere, get the same result.", "visual": "📄" },
+        "discovery": { "text": "Multi-region IaC uses variables for region. Change one variable, apply, and your infra exists in a new region.", "visual": "🔀" },
+        "twist": { "text": "Data is the hard part. IaC can rebuild compute and networking fast. But database replication must be set up in advance.", "visual": "💾" },
+        "climax": { "text": "Regular DR drills prove the code works. Run the IaC in a test region quarterly. Fix issues before a real disaster.", "visual": "🏋️" },
+        "punchline": { "text": "IaC enables fast DR. Rebuild infra in hours, not weeks. Practice regularly.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "What is the hardest part of disaster recovery even with IaC?",
+        "options": ["Replicating data across regions must be set up in advance", "Rewriting all the IaC code for a new region", "Finding enough servers in the new region"],
+        "correct": 0
+      }
+    }
+  ]
+}

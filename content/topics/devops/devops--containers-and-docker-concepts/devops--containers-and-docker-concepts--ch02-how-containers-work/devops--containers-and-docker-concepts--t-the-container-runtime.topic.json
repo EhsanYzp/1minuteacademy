@@ -1,0 +1,49 @@
+{
+  "id": "devops--containers-and-docker-concepts--t-the-container-runtime",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Containers and Docker Concepts",
+  "course_id": "devops--containers-and-docker-concepts",
+  "chapter_id": "devops--containers-and-docker-concepts--ch02-how-containers-work",
+  "title": "The Container Runtime",
+  "emoji": "🐳",
+  "color": "#0891B2",
+  "description": "One-minute skill: The Container Runtime.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Who actually creates the namespaces, sets up cgroups, and starts the process? The container runtime.",
+      "visual": "⚙️"
+    },
+    "buildup": {
+      "text": "There are two levels. A high-level runtime like containerd manages images and lifecycle. It orchestrates.",
+      "visual": "🎭"
+    },
+    "discovery": {
+      "text": "A low-level runtime like runc does the actual work: create namespaces, mount filesystem, exec the process.",
+      "visual": "🔧"
+    },
+    "twist": {
+      "text": "Docker is not a runtime. It's a user-facing tool that talks to containerd, which talks to runc. Three layers.",
+      "visual": "🪆"
+    },
+    "climax": {
+      "text": "Kubernetes talks to containerd directly, skipping Docker entirely. The runtime sandwich lost its top slice.",
+      "visual": "🥪"
+    },
+    "punchline": {
+      "text": "containerd manages, runc creates. Two runtimes, one container.",
+      "visual": "🤝"
+    }
+  },
+  "quiz": {
+    "question": "What is the role of runc in the container stack?",
+    "options": [
+      "It creates namespaces, mounts filesystems, and starts the container process",
+      "It provides the graphical user interface for Docker",
+      "It stores container images in registries"
+    ],
+    "correct": 0
+  }
+}

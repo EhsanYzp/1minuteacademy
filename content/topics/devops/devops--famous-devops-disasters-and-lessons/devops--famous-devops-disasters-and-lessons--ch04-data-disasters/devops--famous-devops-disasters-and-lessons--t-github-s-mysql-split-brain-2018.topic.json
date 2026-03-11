@@ -1,0 +1,49 @@
+{
+  "id": "devops--famous-devops-disasters-and-lessons--t-github-s-mysql-split-brain-2018",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Famous DevOps Disasters and Lessons",
+  "course_id": "devops--famous-devops-disasters-and-lessons",
+  "chapter_id": "devops--famous-devops-disasters-and-lessons--ch04-data-disasters",
+  "title": "GitHub's MySQL Split-Brain (2018)",
+  "emoji": "💥",
+  "color": "#EF4444",
+  "description": "A 1-minute de-risking session on GitHub's MySQL Split-Brain (2018).",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "October 2018. GitHub was degraded for 24 hours. A routine network change triggered MySQL chaos.",
+      "visual": "🐙"
+    },
+    "buildup": {
+      "text": "A brief network partition caused the orchestrator to promote a replica to primary.",
+      "visual": "🔀"
+    },
+    "discovery": {
+      "text": "Two databases thought they were primary. Writes went to both. Data diverged.",
+      "visual": "🔱"
+    },
+    "twist": {
+      "text": "GitHub chose data integrity over speed. They stayed degraded while reconciling all data.",
+      "visual": "⚖️"
+    },
+    "climax": {
+      "text": "24 hours of degradation but zero data lost. The postmortem was praised for transparency.",
+      "visual": "📝"
+    },
+    "punchline": {
+      "text": "Automated failover can split-brain. Test for partitions.",
+      "visual": "🧪"
+    }
+  },
+  "quiz": {
+    "question": "How did GitHub handle the split-brain situation?",
+    "options": [
+      "They prioritized data integrity over quick recovery",
+      "They rolled back all changes from both databases",
+      "They shut down GitHub permanently"
+    ],
+    "correct": 0
+  }
+}

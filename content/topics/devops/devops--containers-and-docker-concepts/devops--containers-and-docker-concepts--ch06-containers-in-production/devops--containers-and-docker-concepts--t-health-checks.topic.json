@@ -1,0 +1,49 @@
+{
+  "id": "devops--containers-and-docker-concepts--t-health-checks",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Containers and Docker Concepts",
+  "course_id": "devops--containers-and-docker-concepts",
+  "chapter_id": "devops--containers-and-docker-concepts--ch06-containers-in-production",
+  "title": "Health Checks",
+  "emoji": "🐳",
+  "color": "#0891B2",
+  "description": "One-minute skill: Health Checks.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The container is running. The process is alive. But the app inside is stuck in a deadlock. It looks healthy but isn't.",
+      "visual": "🧟"
+    },
+    "buildup": {
+      "text": "A running process doesn't mean a working app. Health checks verify that the app can actually serve requests.",
+      "visual": "🩺"
+    },
+    "discovery": {
+      "text": "Docker HEALTHCHECK hits an endpoint periodically. If it fails three times, the container is marked unhealthy.",
+      "visual": "❌"
+    },
+    "twist": {
+      "text": "Kubernetes has three types: liveness (restart if stuck), readiness (stop traffic if not ready), startup (wait to start).",
+      "visual": "🔄"
+    },
+    "climax": {
+      "text": "Without health checks, orchestrators can't heal or route traffic correctly. They're not optional in production.",
+      "visual": "⚠️"
+    },
+    "punchline": {
+      "text": "Health checks prove the app works, not just that it runs.",
+      "visual": "💚"
+    }
+  },
+  "quiz": {
+    "question": "What is the difference between liveness and readiness probes in Kubernetes?",
+    "options": [
+      "Liveness restarts stuck containers; readiness stops sending them traffic",
+      "They are two names for the same check",
+      "Readiness restarts containers; liveness checks CPU usage"
+    ],
+    "correct": 0
+  }
+}

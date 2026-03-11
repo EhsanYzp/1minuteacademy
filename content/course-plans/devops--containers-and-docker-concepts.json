@@ -1,0 +1,583 @@
+{
+  "categoryId": "devops",
+  "subject": "DevOps",
+  "courseId": "devops--containers-and-docker-concepts",
+  "courseTitle": "Containers and Docker Concepts",
+  "emoji": "🐳",
+  "color": "#0891B2",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "devops--containers-and-docker-concepts--ch01-what-are-containers",
+      "title": "What Are Containers",
+      "position": 1
+    },
+    {
+      "id": "devops--containers-and-docker-concepts--ch02-how-containers-work",
+      "title": "How Containers Work",
+      "position": 2
+    },
+    {
+      "id": "devops--containers-and-docker-concepts--ch03-docker-fundamentals",
+      "title": "Docker Fundamentals",
+      "position": 3
+    },
+    {
+      "id": "devops--containers-and-docker-concepts--ch04-images-and-registries",
+      "title": "Images and Registries",
+      "position": 4
+    },
+    {
+      "id": "devops--containers-and-docker-concepts--ch05-container-networking-and-storage",
+      "title": "Container Networking and Storage",
+      "position": 5
+    },
+    {
+      "id": "devops--containers-and-docker-concepts--ch06-containers-in-production",
+      "title": "Containers in Production",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch01-what-are-containers",
+      "title": "The Shipping Container Analogy",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Before shipping containers, dockworkers loaded goods by hand. Every ship was a unique puzzle of shapes.", "visual": "🚢" },
+        "buildup": { "text": "Malcolm McLean invented the standard shipping container in 1956. One size fits every ship, truck, and crane.", "visual": "📦" },
+        "discovery": { "text": "Software containers do the same thing. They package an app with everything it needs into one standard unit.", "visual": "🐳" },
+        "twist": { "text": "The container doesn't care what's inside. Java, Python, Go — any app fits. The runtime doesn't change.", "visual": "🔄" },
+        "climax": { "text": "Just like shipping containers revolutionized trade, software containers revolutionized deployment.", "visual": "🌍" },
+        "punchline": { "text": "One standard box. Any app inside. Runs anywhere. That's a container.", "visual": "📦" }
+      },
+      "quiz": {
+        "question": "What problem do software containers solve, similar to shipping containers?",
+        "options": ["They standardize packaging so apps run the same way everywhere", "They make applications run faster", "They replace the need for programming languages"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch01-what-are-containers",
+      "title": "Containers vs Virtual Machines",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Virtual machines solved isolation years before containers. Why did the world switch? Weight.", "visual": "⚖️" },
+        "buildup": { "text": "A VM runs a full operating system. Each VM needs its own kernel, its own memory, its own boot time.", "visual": "🖥️" },
+        "discovery": { "text": "A container shares the host kernel. It only carries the app and its dependencies. No extra OS overhead.", "visual": "🪶" },
+        "twist": { "text": "A server might run 3 VMs but 30 containers. Containers are lighter, faster to start, and cheaper to run.", "visual": "🚀" },
+        "climax": { "text": "VMs aren't dead. They're better for strong isolation. Containers win for density, speed, and developer workflow.", "visual": "🤝" },
+        "punchline": { "text": "VMs carry an entire OS. Containers carry just the app. Lighter wins.", "visual": "🏋️" }
+      },
+      "quiz": {
+        "question": "Why can a server run more containers than virtual machines?",
+        "options": ["Containers share the host kernel and skip the full OS overhead", "Containers use more powerful CPUs", "Virtual machines are limited to one per server"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch01-what-are-containers",
+      "title": "The Works on My Machine Problem",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The dev says: 'It works on my machine.' Ops says: 'Well, your machine isn't production.' Classic standoff.", "visual": "😤" },
+        "buildup": { "text": "Different OS versions, different library versions, different environment variables. Tiny differences cause big bugs.", "visual": "🐛" },
+        "discovery": { "text": "Containers freeze the environment. The same image runs identically on a laptop, in CI, and in production.", "visual": "❄️" },
+        "twist": { "text": "The Dockerfile is the recipe. It lists every dependency, every config, every file. Nothing is left to chance.", "visual": "📝" },
+        "climax": { "text": "Environment parity kills a whole class of bugs. If it runs in the container, it runs everywhere.", "visual": "✅" },
+        "punchline": { "text": "Same container, same behavior. Everywhere. No more excuses.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "How do containers solve the 'works on my machine' problem?",
+        "options": ["They package the exact same environment for dev, CI, and production", "They automatically fix bugs when moving between machines", "They install the same OS on every developer's laptop"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch01-what-are-containers",
+      "title": "A Brief History of Docker",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Linux had container tech since 2008. But nobody used it because it was brutally complex. Then Docker arrived.", "visual": "🐳" },
+        "buildup": { "text": "Solomon Hykes demo'd Docker at PyCon 2013. Five minutes. One command. A running isolated app. The crowd gasped.", "visual": "😮" },
+        "discovery": { "text": "Docker made containers accessible. A simple CLI, a Dockerfile, and a registry to share images globally.", "visual": "🌐" },
+        "twist": { "text": "Docker didn't invent containers. It invented the developer experience around them. UX beat raw technology.", "visual": "🎨" },
+        "climax": { "text": "By 2015, every major cloud supported Docker. It went from a demo to an industry standard in two years.", "visual": "📈" },
+        "punchline": { "text": "Docker made containers easy. Ease of use changed the industry.", "visual": "🏆" }
+      },
+      "quiz": {
+        "question": "What was Docker's key innovation over existing Linux container technology?",
+        "options": ["A simple developer experience with CLI, Dockerfile, and registries", "A faster Linux kernel", "A new programming language for containers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch01-what-are-containers",
+      "title": "The Container Ecosystem Today",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Docker started the revolution, but today the container ecosystem is much bigger than one company.", "visual": "🌍" },
+        "buildup": { "text": "The Open Container Initiative (OCI) standardized image and runtime specs. Any tool can build OCI images.", "visual": "📐" },
+        "discovery": { "text": "Podman runs containers without a daemon. Buildah builds images without Docker. The ecosystem is modular.", "visual": "🧩" },
+        "twist": { "text": "Kubernetes doesn't even use Docker's runtime anymore. It uses containerd directly. Docker the runtime was replaced.", "visual": "🔄" },
+        "climax": { "text": "Docker Desktop remains popular for developers. But production moved to lighter, more focused tools.", "visual": "🖥️" },
+        "punchline": { "text": "Docker started it all. Open standards carry it forward.", "visual": "🏗️" }
+      },
+      "quiz": {
+        "question": "What does the Open Container Initiative (OCI) provide?",
+        "options": ["Standardized specs for container images and runtimes", "Free hosting for all Docker containers", "A replacement for Kubernetes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch02-how-containers-work",
+      "title": "Linux Namespaces",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "How does a container think it's alone on the machine when it's sharing the same kernel with dozens of others?", "visual": "🤔" },
+        "buildup": { "text": "Linux namespaces create isolated views. Each container gets its own process tree, network stack, and filesystem.", "visual": "🔲" },
+        "discovery": { "text": "PID namespace: container sees only its own processes. Process 1 inside is just process 54321 on the host.", "visual": "🔢" },
+        "twist": { "text": "Network namespace: each container gets its own IP address and ports. No conflicts with other containers.", "visual": "🌐" },
+        "climax": { "text": "Mount namespace isolates the filesystem. The container sees only its own files, not the host's.", "visual": "📂" },
+        "punchline": { "text": "Namespaces give each container its own private view of the system.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "What do Linux namespaces provide to containers?",
+        "options": ["Isolated views of processes, networks, and filesystems", "Faster CPU performance", "Automatic security patching"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch02-how-containers-work",
+      "title": "Control Groups (cgroups)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A runaway container eating all the CPU would starve every other container on the same host. Cgroups prevent this.", "visual": "🍽️" },
+        "buildup": { "text": "Namespaces isolate what a container can see. Cgroups limit what a container can use: CPU, memory, disk I/O.", "visual": "📊" },
+        "discovery": { "text": "Set a memory limit of 512 MB. If the container exceeds it, the kernel kills it. No negotiation.", "visual": "💀" },
+        "twist": { "text": "CPU limits work differently. The container gets throttled, not killed. It slows down instead of crashing.", "visual": "🐌" },
+        "climax": { "text": "Cgroups make multi-tenant hosting safe. Cloud providers use them to guarantee resources for each customer.", "visual": "☁️" },
+        "punchline": { "text": "Cgroups enforce resource limits. No single container hogs the machine.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What happens when a container exceeds its cgroup memory limit?",
+        "options": ["The kernel kills the container process", "The container automatically requests more memory", "The host machine reboots"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch02-how-containers-work",
+      "title": "Union Filesystems",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A Docker image might be 500 MB. Running 10 containers from it doesn't use 5 GB. How? Union filesystems.", "visual": "🧅" },
+        "buildup": { "text": "A union filesystem stacks layers on top of each other. Lower layers are read-only. Only the top is writable.", "visual": "📚" },
+        "discovery": { "text": "All 10 containers share the same read-only base layers. Each gets its own thin writable layer on top.", "visual": "📝" },
+        "twist": { "text": "This is copy-on-write. A file is only copied to the writable layer when a container modifies it.", "visual": "✏️" },
+        "climax": { "text": "Layers also speed up builds. Change one line of code, and only that layer rebuilds. The rest is cached.", "visual": "⚡" },
+        "punchline": { "text": "Shared layers save space. Copy-on-write saves time. Layers win twice.", "visual": "🏆" }
+      },
+      "quiz": {
+        "question": "Why doesn't running 10 containers from the same image use 10x the disk space?",
+        "options": ["All containers share the same read-only base layers", "Containers automatically compress their files", "Only one container runs at a time"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch02-how-containers-work",
+      "title": "Container Isolation Limits",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Containers are not as isolated as VMs. They share a kernel. A kernel exploit can escape the container.", "visual": "⚠️" },
+        "buildup": { "text": "In a VM, the guest has its own kernel. In a container, a kernel bug affects every container on the host.", "visual": "🐛" },
+        "discovery": { "text": "Seccomp profiles limit which system calls a container can make. Block dangerous ones by default.", "visual": "🛡️" },
+        "twist": { "text": "AppArmor and SELinux add another layer. They restrict file access and network behavior per container.", "visual": "🔐" },
+        "climax": { "text": "Rootless containers run without root privileges. Even if an attacker escapes, they land as an unprivileged user.", "visual": "👤" },
+        "punchline": { "text": "Containers aren't perfect isolation. Layers of defense compensate.", "visual": "🧱" }
+      },
+      "quiz": {
+        "question": "Why are containers less isolated than virtual machines?",
+        "options": ["Containers share the host kernel, so a kernel exploit can affect all of them", "Containers cannot use firewalls", "Virtual machines are always encrypted"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch02-how-containers-work",
+      "title": "The Container Runtime",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Who actually creates the namespaces, sets up cgroups, and starts the process? The container runtime.", "visual": "⚙️" },
+        "buildup": { "text": "There are two levels. A high-level runtime like containerd manages images and lifecycle. It orchestrates.", "visual": "🎭" },
+        "discovery": { "text": "A low-level runtime like runc does the actual work: create namespaces, mount filesystem, exec the process.", "visual": "🔧" },
+        "twist": { "text": "Docker is not a runtime. It's a user-facing tool that talks to containerd, which talks to runc. Three layers.", "visual": "🪆" },
+        "climax": { "text": "Kubernetes talks to containerd directly, skipping Docker entirely. The runtime sandwich lost its top slice.", "visual": "🥪" },
+        "punchline": { "text": "containerd manages, runc creates. Two runtimes, one container.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "What is the role of runc in the container stack?",
+        "options": ["It creates namespaces, mounts filesystems, and starts the container process", "It provides the graphical user interface for Docker", "It stores container images in registries"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch03-docker-fundamentals",
+      "title": "The Dockerfile",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A Dockerfile is a recipe. It tells Docker exactly how to build an image, step by step, layer by layer.", "visual": "📝" },
+        "buildup": { "text": "FROM picks the base image. RUN executes commands. COPY adds your files. Each instruction creates one layer.", "visual": "🧱" },
+        "discovery": { "text": "The order matters. Put things that change rarely (OS packages) early and things that change often (code) late.", "visual": "📊" },
+        "twist": { "text": "Why? Docker caches layers. If a layer hasn't changed, it's reused. Bad ordering busts the cache on every build.", "visual": "💨" },
+        "climax": { "text": "A well-written Dockerfile builds in seconds. A poorly written one rebuilds everything from scratch each time.", "visual": "⏱️" },
+        "punchline": { "text": "Dockerfiles define images. Layer order determines build speed.", "visual": "🏎️" }
+      },
+      "quiz": {
+        "question": "Why should rarely changing instructions come early in a Dockerfile?",
+        "options": ["So Docker can cache those layers and skip rebuilding them", "Because Docker reads files from top to bottom only once", "To make the final image file smaller"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch03-docker-fundamentals",
+      "title": "Images vs Containers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "People say 'Docker container' and 'Docker image' interchangeably. They shouldn't. They're different things.", "visual": "🤷" },
+        "buildup": { "text": "An image is a blueprint. It's a frozen snapshot of an app and its environment. It never changes once built.", "visual": "📸" },
+        "discovery": { "text": "A container is a running instance of an image. Start the same image ten times, get ten separate containers.", "visual": "🏃" },
+        "twist": { "text": "Think of it like a class and an object. The image is the class definition. The container is a live object in memory.", "visual": "🎓" },
+        "climax": { "text": "Containers are ephemeral. Stop one, start a new one from the same image. The image is the source of truth.", "visual": "♻️" },
+        "punchline": { "text": "Image: the frozen blueprint. Container: the live instance. Know the difference.", "visual": "📐" }
+      },
+      "quiz": {
+        "question": "What is the relationship between a Docker image and a container?",
+        "options": ["An image is the blueprint; a container is a running instance of it", "They are the same thing with different names", "A container is built first and then becomes an image"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch03-docker-fundamentals",
+      "title": "Multi-Stage Builds",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your build tools add 800 MB to the image. But the running app only needs 50 MB. That's waste.", "visual": "🗑️" },
+        "buildup": { "text": "Compilers, test frameworks, and build dependencies are needed to build, not to run. Ship only what runs.", "visual": "🏗️" },
+        "discovery": { "text": "Multi-stage builds use multiple FROM statements. Stage one builds. Stage two copies only the final artifact.", "visual": "📋" },
+        "twist": { "text": "The final image contains only the runtime and your binary. Build tools stay behind in the discarded stage.", "visual": "✂️" },
+        "climax": { "text": "An 800 MB build image becomes a 50 MB production image. Smaller images mean faster pulls and less attack surface.", "visual": "📉" },
+        "punchline": { "text": "Build in one stage, ship from another. Tiny production images.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is the main benefit of multi-stage Docker builds?",
+        "options": ["The final image only contains runtime files, making it much smaller", "The build process runs twice as fast", "Multiple applications can share one image"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch03-docker-fundamentals",
+      "title": "Docker Compose",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your app needs a web server, a database, and a cache. Running three separate Docker commands gets old fast.", "visual": "😩" },
+        "buildup": { "text": "Docker Compose defines multi-container apps in one YAML file. Services, networks, and volumes — all declared.", "visual": "📄" },
+        "discovery": { "text": "One command — docker compose up — starts everything. The database waits for health checks before the app connects.", "visual": "▶️" },
+        "twist": { "text": "Compose is for development and testing, not production. Kubernetes handles production orchestration at scale.", "visual": "⚠️" },
+        "climax": { "text": "Developers love Compose. Clone a repo, run one command, and the entire app stack runs locally. Instant setup.", "visual": "🧲" },
+        "punchline": { "text": "One YAML, one command, entire stack running. Compose simplifies local dev.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is Docker Compose primarily designed for?",
+        "options": ["Defining and running multi-container apps in development", "Deploying containers to production at scale", "Building Docker images faster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch03-docker-fundamentals",
+      "title": "Environment Variables in Containers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The same image runs in dev, staging, and production. But the database URL is different in each. How?", "visual": "🤔" },
+        "buildup": { "text": "Environment variables inject configuration at runtime. The image stays the same; only the variables change.", "visual": "🔧" },
+        "discovery": { "text": "The twelve-factor app methodology says: store config in environment variables, never in code or files.", "visual": "📖" },
+        "twist": { "text": "Secrets like passwords are also environment variables — but they come from a vault, not a plain text .env file.", "visual": "🔐" },
+        "climax": { "text": "One image, three environments, three sets of variables. Build once, configure at deploy time.", "visual": "🔄" },
+        "punchline": { "text": "Environment variables configure containers. Same image, different configs.", "visual": "📦" }
+      },
+      "quiz": {
+        "question": "According to twelve-factor methodology, where should app configuration be stored?",
+        "options": ["In environment variables, not in code or config files", "Hardcoded in the application source code", "In a shared Google Doc"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch04-images-and-registries",
+      "title": "What Is a Container Registry",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You built an image on your laptop. How does it get to the server in production? A registry moves it.", "visual": "🚚" },
+        "buildup": { "text": "A container registry is like a library for images. Push images in, pull images out. Organized by name and tag.", "visual": "📚" },
+        "discovery": { "text": "Docker Hub is the biggest public registry. Millions of images: nginx, postgres, node — ready to pull and run.", "visual": "🌐" },
+        "twist": { "text": "Companies use private registries for proprietary code. AWS ECR, Google GCR, and GitHub Packages are popular.", "visual": "🔒" },
+        "climax": { "text": "The pipeline pushes an image to the registry. The deploy step pulls that exact image. No rebuilds, no drift.", "visual": "🎯" },
+        "punchline": { "text": "Registries store and distribute images. Push once, pull anywhere.", "visual": "📦" }
+      },
+      "quiz": {
+        "question": "What is the purpose of a container registry?",
+        "options": ["To store and distribute container images", "To compile source code into binaries", "To monitor running containers in production"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch04-images-and-registries",
+      "title": "Image Tags and Digests",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You pulled 'myapp:latest' yesterday and today. The image changed both times. Tags are mutable and dangerous.", "visual": "⚠️" },
+        "buildup": { "text": "Tags are human-readable labels: v1.2.3, latest, stable. But anyone can overwrite a tag with a new image.", "visual": "🏷️" },
+        "discovery": { "text": "Digests are immutable. A digest is a SHA256 hash of the image content. Same content, same digest, forever.", "visual": "🔒" },
+        "twist": { "text": "In production, pin to digests, not tags. You know exactly what you're running. No surprise changes.", "visual": "📌" },
+        "climax": { "text": "Use semantic version tags for convenience. Use digests for production safety. Both serve different purposes.", "visual": "🤝" },
+        "punchline": { "text": "Tags are friendly names. Digests are guarantees. Pin production to digests.", "visual": "🔐" }
+      },
+      "quiz": {
+        "question": "Why should production deployments use image digests instead of tags?",
+        "options": ["Digests are immutable and guarantee the exact image content", "Digests make images download faster", "Tags are not supported in production environments"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch04-images-and-registries",
+      "title": "Base Image Selection",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your Dockerfile starts with FROM ubuntu:22.04. That base image is 77 MB. Do you really need all of that?", "visual": "🤔" },
+        "buildup": { "text": "Base images include the OS libraries your app needs. Bigger bases mean more dependencies and more vulnerabilities.", "visual": "🐛" },
+        "discovery": { "text": "Alpine Linux is just 5 MB. Distroless images go further — no shell, no package manager, only your app.", "visual": "🪶" },
+        "twist": { "text": "Smaller images have a smaller attack surface. Fewer packages mean fewer CVEs to patch.", "visual": "🛡️" },
+        "climax": { "text": "Google's distroless images are popular for production. No shell means an attacker can't get an interactive session.", "visual": "🚫" },
+        "punchline": { "text": "Choose the smallest base that works. Less is more secure.", "visual": "🔐" }
+      },
+      "quiz": {
+        "question": "Why are smaller base images more secure?",
+        "options": ["Fewer packages mean fewer potential vulnerabilities", "Smaller images are encrypted by default", "They run on newer hardware"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch04-images-and-registries",
+      "title": "Image Scanning",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You pulled a popular image from Docker Hub. It had three critical CVEs. You deployed it without knowing.", "visual": "😱" },
+        "buildup": { "text": "Images contain OS packages and libraries. Each one might have known vulnerabilities tracked in public databases.", "visual": "📋" },
+        "discovery": { "text": "Image scanners check every package against CVE databases. They report severity: low, medium, high, critical.", "visual": "🔍" },
+        "twist": { "text": "Scanning should happen in the CI pipeline, not after deployment. Block vulnerable images from ever reaching production.", "visual": "🚧" },
+        "climax": { "text": "Trivy, Grype, and Snyk Container scan images in seconds. Integrate them as pipeline quality gates.", "visual": "🛡️" },
+        "punchline": { "text": "Scan every image before it deploys. Known vulnerabilities are preventable.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "When should container image scanning happen in the workflow?",
+        "options": ["In the CI pipeline before the image reaches production", "Only after the image has been running for a week", "Once a year during security audits"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch04-images-and-registries",
+      "title": "Image Layer Caching Strategies",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your Docker build takes 8 minutes. Change one line of code and it rebuilds everything. Something is wrong.", "visual": "⏳" },
+        "buildup": { "text": "Docker caches layers top to bottom. When one layer changes, every layer below it must rebuild too.", "visual": "🧱" },
+        "discovery": { "text": "The fix: put dependencies first, code second. Dependencies rarely change, so their layer stays cached.", "visual": "📦" },
+        "twist": { "text": "COPY package.json first, then RUN npm install, then COPY the rest. Code changes don't bust the npm cache.", "visual": "💡" },
+        "climax": { "text": "With smart ordering, a rebuild takes 10 seconds instead of 8 minutes. Same result, much faster feedback.", "visual": "⚡" },
+        "punchline": { "text": "Order Dockerfile layers by change frequency. Rarely changed goes first.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "Why should dependency installation come before copying source code in a Dockerfile?",
+        "options": ["So code changes don't invalidate the cached dependency layer", "Because npm requires this exact order to function", "To make the final image smaller"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch05-container-networking-and-storage",
+      "title": "Container Networking Basics",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Two containers on the same host need to talk to each other. But each has its own network namespace. How?", "visual": "🔗" },
+        "buildup": { "text": "Docker creates a virtual bridge network. Containers connect to it like devices on a private LAN.", "visual": "🌉" },
+        "discovery": { "text": "Containers on the same bridge can reach each other by container name. Docker runs a built-in DNS server.", "visual": "📡" },
+        "twist": { "text": "Host networking removes isolation entirely. The container shares the host's network stack for maximum speed.", "visual": "🏎️" },
+        "climax": { "text": "Overlay networks span multiple hosts. Containers on different machines communicate as if they were local.", "visual": "🌐" },
+        "punchline": { "text": "Bridge for isolation, host for speed, overlay for multi-host. Choose wisely.", "visual": "🔀" }
+      },
+      "quiz": {
+        "question": "How do containers on the same Docker bridge network find each other?",
+        "options": ["By container name using Docker's built-in DNS", "By broadcasting their IP address to all other containers", "By reading a shared configuration file"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch05-container-networking-and-storage",
+      "title": "Port Mapping",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your web app inside the container listens on port 3000. But the outside world can't reach container ports directly.", "visual": "🚪" },
+        "buildup": { "text": "Port mapping links a host port to a container port. Host port 8080 routes to container port 3000.", "visual": "🔀" },
+        "discovery": { "text": "Users hit the host IP on port 8080. Docker forwards the traffic into the container on port 3000. Seamless.", "visual": "➡️" },
+        "twist": { "text": "Multiple containers can all use port 3000 internally. Each maps to a different host port. No conflicts.", "visual": "🔢" },
+        "climax": { "text": "In production, a load balancer handles external traffic. Port mapping matters mainly for local development.", "visual": "⚖️" },
+        "punchline": { "text": "Map host ports to container ports. External meets internal.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why can multiple containers use the same internal port without conflicts?",
+        "options": ["Each maps to a different host port", "Containers share the same port automatically", "Only one container actually uses the port"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch05-container-networking-and-storage",
+      "title": "Volumes and Persistent Data",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You stopped a database container. All the data vanished. Containers are ephemeral — but data shouldn't be.", "visual": "💨" },
+        "buildup": { "text": "The writable layer of a container is tied to its lifecycle. Stop the container, lose the writes.", "visual": "⏹️" },
+        "discovery": { "text": "Docker volumes store data outside the container's filesystem. Data persists even if the container is destroyed.", "visual": "💾" },
+        "twist": { "text": "Volumes live on the host filesystem. A new container can mount the same volume and access the old data.", "visual": "🔄" },
+        "climax": { "text": "For databases, volumes are essential. For stateless web apps, volumes are optional. Know when you need them.", "visual": "🧠" },
+        "punchline": { "text": "Containers die. Volumes survive. Store important data in volumes.", "visual": "📦" }
+      },
+      "quiz": {
+        "question": "What happens to data in a Docker volume when the container is deleted?",
+        "options": ["The volume and its data persist independently", "The data is deleted with the container", "The data is automatically backed up to the cloud"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch05-container-networking-and-storage",
+      "title": "Bind Mounts vs Volumes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Docker has two ways to share files with containers: volumes and bind mounts. They solve different problems.", "visual": "🔀" },
+        "buildup": { "text": "A bind mount maps a host directory into the container. Change a file on the host, the container sees it.", "visual": "📂" },
+        "discovery": { "text": "Developers love bind mounts. Edit code on your laptop, the container picks it up with hot reload. Fast feedback.", "visual": "⚡" },
+        "twist": { "text": "Volumes are managed by Docker. They're portable, backed up easily, and work the same on Linux, Mac, and Windows.", "visual": "📦" },
+        "climax": { "text": "Use bind mounts for development (live code editing). Use volumes for production (database storage).", "visual": "🎯" },
+        "punchline": { "text": "Bind mounts for dev, volumes for prod. Right tool, right job.", "visual": "🔧" }
+      },
+      "quiz": {
+        "question": "When are bind mounts most useful?",
+        "options": ["During development for live code editing with hot reload", "For storing database data in production", "For sharing secrets between containers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch05-container-networking-and-storage",
+      "title": "Container Logging",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your containerized app wrote logs to a file inside the container. The container restarted. Logs gone forever.", "visual": "🗑️" },
+        "buildup": { "text": "Containers should write logs to stdout and stderr, not to files. Docker captures these streams automatically.", "visual": "📤" },
+        "discovery": { "text": "Docker log drivers forward captured logs to external systems: Elasticsearch, Fluentd, CloudWatch.", "visual": "📊" },
+        "twist": { "text": "Centralized logging lets you search logs from all containers in one place. No SSH-ing into individual servers.", "visual": "🔍" },
+        "climax": { "text": "The EFK stack (Elasticsearch, Fluentd, Kibana) is a popular choice. Collect, index, and visualize all your logs.", "visual": "📈" },
+        "punchline": { "text": "Log to stdout. Let the platform handle collection and storage.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why should containerized apps log to stdout instead of files?",
+        "options": ["Docker captures stdout automatically and can forward logs externally", "Writing to files is slower than stdout", "Stdout logs are automatically encrypted"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch06-containers-in-production",
+      "title": "Container Orchestration Overview",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Running one container is easy. Running 500 across 50 servers — restarting failed ones, scaling busy ones — is not.", "visual": "🌊" },
+        "buildup": { "text": "Orchestrators manage container lifecycle at scale: scheduling, scaling, healing, networking, and updates.", "visual": "🎼" },
+        "discovery": { "text": "Kubernetes won the orchestration war. Docker Swarm and Mesos existed, but Kubernetes absorbed the market.", "visual": "☸️" },
+        "twist": { "text": "You don't always need an orchestrator. A single container on a small server works fine for simple apps.", "visual": "🤷" },
+        "climax": { "text": "Managed Kubernetes (EKS, GKE, AKS) handles the hard parts. You define the desired state; the platform executes.", "visual": "☁️" },
+        "punchline": { "text": "One container: Docker is enough. Hundreds of containers: orchestrate.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does a container orchestrator handle?",
+        "options": ["Scheduling, scaling, healing, and networking containers at scale", "Writing application code automatically", "Designing user interfaces for web apps"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch06-containers-in-production",
+      "title": "Health Checks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The container is running. The process is alive. But the app inside is stuck in a deadlock. It looks healthy but isn't.", "visual": "🧟" },
+        "buildup": { "text": "A running process doesn't mean a working app. Health checks verify that the app can actually serve requests.", "visual": "🩺" },
+        "discovery": { "text": "Docker HEALTHCHECK hits an endpoint periodically. If it fails three times, the container is marked unhealthy.", "visual": "❌" },
+        "twist": { "text": "Kubernetes has three types: liveness (restart if stuck), readiness (stop traffic if not ready), startup (wait to start).", "visual": "🔄" },
+        "climax": { "text": "Without health checks, orchestrators can't heal or route traffic correctly. They're not optional in production.", "visual": "⚠️" },
+        "punchline": { "text": "Health checks prove the app works, not just that it runs.", "visual": "💚" }
+      },
+      "quiz": {
+        "question": "What is the difference between liveness and readiness probes in Kubernetes?",
+        "options": ["Liveness restarts stuck containers; readiness stops sending them traffic", "They are two names for the same check", "Readiness restarts containers; liveness checks CPU usage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch06-containers-in-production",
+      "title": "Container Security Best Practices",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A container running as root is a breach waiting to happen. If the container is compromised, root access is instant.", "visual": "🚨" },
+        "buildup": { "text": "Never run containers as root. Create a non-root user in the Dockerfile and switch to it.", "visual": "👤" },
+        "discovery": { "text": "Use read-only filesystems. If the container can't write to disk, many attacks become impossible.", "visual": "🔒" },
+        "twist": { "text": "Drop all Linux capabilities and add back only what's needed. Principle of least privilege, applied to containers.", "visual": "🎯" },
+        "climax": { "text": "Sign your images. Verify signatures before deploying. Only trusted, scanned images should run in production.", "visual": "✍️" },
+        "punchline": { "text": "Non-root, read-only, minimal capabilities. Secure containers by default.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why should containers not run as root?",
+        "options": ["If compromised, an attacker gains root access immediately", "Root containers use more memory", "Docker doesn't support root containers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch06-containers-in-production",
+      "title": "Serverless Containers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Kubernetes is powerful but complex. What if you could run containers without managing any servers at all?", "visual": "☁️" },
+        "buildup": { "text": "Serverless containers run your image on demand. No clusters, no nodes, no scaling rules to configure.", "visual": "🪄" },
+        "discovery": { "text": "AWS Fargate, Google Cloud Run, and Azure Container Apps are serverless. Give them an image, set the memory, done.", "visual": "✅" },
+        "twist": { "text": "You pay only while the container handles a request. No traffic? Zero cost. Spiky traffic? Auto-scales instantly.", "visual": "📈" },
+        "climax": { "text": "The trade-off is cold starts. A container that hasn't run recently takes a moment to spin up on first request.", "visual": "🥶" },
+        "punchline": { "text": "Serverless containers: your image, their servers, your bill shrinks.", "visual": "💰" }
+      },
+      "quiz": {
+        "question": "What is the main trade-off of serverless containers?",
+        "options": ["Cold starts cause a brief delay when the container hasn't run recently", "They cannot run Docker images", "They cost more than traditional servers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--containers-and-docker-concepts--ch06-containers-in-production",
+      "title": "WebAssembly: The Next Container?",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Solomon Hykes, Docker's creator, said: 'If Wasm existed in 2008, we wouldn't have needed Docker.' Bold claim.", "visual": "💬" },
+        "buildup": { "text": "WebAssembly (Wasm) runs code in a sandboxed virtual machine. It starts in milliseconds and uses minimal memory.", "visual": "⚡" },
+        "discovery": { "text": "Wasm binaries are tiny compared to container images. A 2 MB Wasm module replaces a 200 MB container.", "visual": "📦" },
+        "twist": { "text": "Wasm isn't replacing containers today. It lacks mature networking, storage, and ecosystem tooling. It's still early.", "visual": "🌱" },
+        "climax": { "text": "Docker now supports running Wasm alongside containers. They see it as a complement, not a replacement — yet.", "visual": "🤝" },
+        "punchline": { "text": "Wasm is lighter and faster. Containers are mature and proven. Watch this space.", "visual": "👀" }
+      },
+      "quiz": {
+        "question": "Why did Docker's creator say Wasm could have replaced Docker?",
+        "options": ["Wasm provides sandboxed, portable execution with a tiny footprint", "Wasm was invented before Docker", "Wasm can only run in web browsers"],
+        "correct": 0
+      }
+    }
+  ]
+}

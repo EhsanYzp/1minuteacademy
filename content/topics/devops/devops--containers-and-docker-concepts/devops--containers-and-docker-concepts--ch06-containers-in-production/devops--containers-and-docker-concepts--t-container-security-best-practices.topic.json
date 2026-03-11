@@ -1,0 +1,49 @@
+{
+  "id": "devops--containers-and-docker-concepts--t-container-security-best-practices",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Containers and Docker Concepts",
+  "course_id": "devops--containers-and-docker-concepts",
+  "chapter_id": "devops--containers-and-docker-concepts--ch06-containers-in-production",
+  "title": "Container Security Best Practices",
+  "emoji": "🐳",
+  "color": "#0891B2",
+  "description": "A quick win: understand Container Security Best Practices.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A container running as root is a breach waiting to happen. If the container is compromised, root access is instant.",
+      "visual": "🚨"
+    },
+    "buildup": {
+      "text": "Never run containers as root. Create a non-root user in the Dockerfile and switch to it.",
+      "visual": "👤"
+    },
+    "discovery": {
+      "text": "Use read-only filesystems. If the container can't write to disk, many attacks become impossible.",
+      "visual": "🔒"
+    },
+    "twist": {
+      "text": "Drop all Linux capabilities and add back only what's needed. Principle of least privilege, applied to containers.",
+      "visual": "🎯"
+    },
+    "climax": {
+      "text": "Sign your images. Verify signatures before deploying. Only trusted, scanned images should run in production.",
+      "visual": "✍️"
+    },
+    "punchline": {
+      "text": "Non-root, read-only, minimal capabilities. Secure containers by default.",
+      "visual": "🛡️"
+    }
+  },
+  "quiz": {
+    "question": "Why should containers not run as root?",
+    "options": [
+      "If compromised, an attacker gains root access immediately",
+      "Root containers use more memory",
+      "Docker doesn't support root containers"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,583 @@
+{
+  "categoryId": "devops",
+  "subject": "DevOps",
+  "courseId": "devops--famous-devops-disasters-and-lessons",
+  "courseTitle": "Famous DevOps Disasters and Lessons",
+  "emoji": "💥",
+  "color": "#EF4444",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "devops--famous-devops-disasters-and-lessons--ch01-deployment-gone-wrong",
+      "title": "Deployment Gone Wrong",
+      "position": 1
+    },
+    {
+      "id": "devops--famous-devops-disasters-and-lessons--ch02-cloud-outages",
+      "title": "Cloud Outages",
+      "position": 2
+    },
+    {
+      "id": "devops--famous-devops-disasters-and-lessons--ch03-security-breaches",
+      "title": "Security Breaches",
+      "position": 3
+    },
+    {
+      "id": "devops--famous-devops-disasters-and-lessons--ch04-data-disasters",
+      "title": "Data Disasters",
+      "position": 4
+    },
+    {
+      "id": "devops--famous-devops-disasters-and-lessons--ch05-cascading-failures",
+      "title": "Cascading Failures",
+      "position": 5
+    },
+    {
+      "id": "devops--famous-devops-disasters-and-lessons--ch06-lessons-that-changed-the-industry",
+      "title": "Lessons That Changed the Industry",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch01-deployment-gone-wrong",
+      "title": "Knight Capital's $440 Million Bug",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "August 1, 2012. Knight Capital deployed new trading code. In 45 minutes they lost $440 million.", "visual": "💸" },
+        "buildup": { "text": "Old debug code was left on one of eight servers. It bought high and sold low automatically.", "visual": "🖥️" },
+        "discovery": { "text": "The deployment had no verification step. Nobody checked that all eight servers matched.", "visual": "❌" },
+        "twist": { "text": "A kill switch existed but nobody knew about it. By the time they pulled the plug, damage was done.", "visual": "🔌" },
+        "climax": { "text": "Knight Capital was rescued by investors but lost its independence. One deploy killed a firm.", "visual": "🏦" },
+        "punchline": { "text": "Verify every deploy. A missing check cost $440 million.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What caused Knight Capital's $440 million loss?",
+        "options": ["Old debug code left on one server during deployment", "A hacker who infiltrated their trading system", "A natural disaster that destroyed their data center"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch01-deployment-gone-wrong",
+      "title": "Facebook's Six-Hour Outage (2021)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "October 4, 2021. Facebook, Instagram, and WhatsApp vanished. All of them. For six hours.", "visual": "📵" },
+        "buildup": { "text": "A routine BGP config change withdrew Facebook's routes. The internet forgot how to find them.", "visual": "🌐" },
+        "discovery": { "text": "Their DNS servers became unreachable. No DNS meant no login to internal tools to fix it.", "visual": "🔒" },
+        "twist": { "text": "Engineers couldn't badge into data centers either. The badge system depended on the network.", "visual": "🚪" },
+        "climax": { "text": "They had to physically access routers to restore BGP. Six hours of global silence followed.", "visual": "🔧" },
+        "punchline": { "text": "Don't depend on yourself to fix yourself. Keep out-of-band access.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why couldn't Facebook engineers quickly fix the 2021 outage?",
+        "options": ["Internal tools depended on the same network that was down", "The code was too complex to understand", "They lacked skilled engineers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch01-deployment-gone-wrong",
+      "title": "Cloudflare's Regex Outage (2019)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "July 2, 2019. Cloudflare went down globally. CPU usage hit 100%. The cause: one bad regex.", "visual": "📝" },
+        "buildup": { "text": "A WAF rule update contained a regex with catastrophic backtracking. It consumed all CPU.", "visual": "🔥" },
+        "discovery": { "text": "The regex was deployed globally at once with no canary phase. Every edge server was hit.", "visual": "🌍" },
+        "twist": { "text": "They couldn't push a fix because the deployment system used the same network that was down.", "visual": "🔄" },
+        "climax": { "text": "Engineers walked to the data center and applied the fix manually. Downtime: 27 minutes.", "visual": "🏃" },
+        "punchline": { "text": "Test regex carefully. One bad pattern can take down a CDN.", "visual": "⚠️" }
+      },
+      "quiz": {
+        "question": "What caused Cloudflare's 2019 global outage?",
+        "options": ["A regular expression with catastrophic backtracking", "A distributed denial-of-service attack", "A power failure at their main data center"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch01-deployment-gone-wrong",
+      "title": "CrowdStrike's Global Blue Screen (2024)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "July 19, 2024. 8.5 million Windows PCs crashed at once. Airlines, banks, hospitals — all down.", "visual": "🖥️" },
+        "buildup": { "text": "CrowdStrike pushed a faulty sensor config update. It caused a kernel-level crash on boot.", "visual": "💀" },
+        "discovery": { "text": "The update skipped staged rollout. Every Windows machine with the agent got it at once.", "visual": "🌊" },
+        "twist": { "text": "Machines couldn't boot. The fix required manual intervention on each individual computer.", "visual": "🔧" },
+        "climax": { "text": "Airlines grounded flights. Hospitals canceled surgeries. The estimated cost: over $10 billion.", "visual": "✈️" },
+        "punchline": { "text": "Canary your updates. Especially kernel-level ones.", "visual": "🐤" }
+      },
+      "quiz": {
+        "question": "Why was the CrowdStrike incident so devastating?",
+        "options": ["The update was pushed to all machines at once without staged rollout", "It was a sophisticated cyberattack", "The software was outdated and unpatched"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch01-deployment-gone-wrong",
+      "title": "Roblox's Three-Day Outage (2021)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "October 2021. Roblox went down for 73 hours. Millions of kids couldn't play for three days.", "visual": "🎮" },
+        "buildup": { "text": "A minor config change to their service mesh caused a cascade of failures across Consul.", "visual": "🕸️" },
+        "discovery": { "text": "Consul's KV store became overwhelmed. Service discovery broke. Nothing could find anything.", "visual": "🔍" },
+        "twist": { "text": "The root cause was subtle: a hash table contention bug amplified by the config change.", "visual": "🐛" },
+        "climax": { "text": "It took three days because the bug was deep in the platform layer. Hard to find, hard to fix.", "visual": "⏱️" },
+        "punchline": { "text": "Platform bugs cascade the hardest. Invest in platform testing.", "visual": "🏗️" }
+      },
+      "quiz": {
+        "question": "What made the Roblox outage so long?",
+        "options": ["The bug was deep in the platform layer and hard to diagnose", "They lost all their source code", "Their engineers were on vacation"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch02-cloud-outages",
+      "title": "AWS us-east-1 S3 Outage (2017)",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "February 28, 2017. A typo in an AWS command took down S3. Half the internet broke.", "visual": "💥" },
+        "buildup": { "text": "An engineer ran a debug command to remove a few S3 servers. A typo removed far too many.", "visual": "⌨️" },
+        "discovery": { "text": "S3 in us-east-1 went down. Thousands of websites, apps, and IoT devices failed instantly.", "visual": "🌐" },
+        "twist": { "text": "Even the AWS status dashboard was hosted on S3. It showed green while the world burned.", "visual": "🟢" },
+        "climax": { "text": "AWS added safeguards: slower removal rates and minimum capacity thresholds. One typo changed policy.", "visual": "🛡️" },
+        "punchline": { "text": "Guard against fat-finger errors. Rate-limit destructive ops.", "visual": "⚠️" }
+      },
+      "quiz": {
+        "question": "What caused the 2017 AWS S3 outage?",
+        "options": ["A typo in a command removed too many servers", "A cyberattack on Amazon's infrastructure", "A natural disaster at the data center"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch02-cloud-outages",
+      "title": "Google Cloud's 2019 Networking Outage",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "June 2, 2019. Google Cloud, YouTube, and Gmail went down. A config change cascaded globally.", "visual": "🌍" },
+        "buildup": { "text": "A network config change meant for one region was applied to multiple regions by mistake.", "visual": "🔧" },
+        "discovery": { "text": "Traffic was routed to too few servers. Those servers overloaded and dropped requests.", "visual": "📉" },
+        "twist": { "text": "The misconfiguration spread because the safety system that should have blocked it had a bug.", "visual": "🐛" },
+        "climax": { "text": "YouTube, Snapchat, and Discord all went down. Google's outage rippled across the internet.", "visual": "🌊" },
+        "punchline": { "text": "Safety systems need testing too. Guard the guards.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why did the Google Cloud 2019 outage spread so widely?",
+        "options": ["The safety system that should have prevented spread had a bug", "Google had only one data center", "A physical cable was cut"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch02-cloud-outages",
+      "title": "Fastly's Global CDN Outage (2021)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "June 8, 2021. Reddit, Twitch, and the UK government site went down. Fastly's CDN had failed.", "visual": "🌐" },
+        "buildup": { "text": "A customer toggled a config setting that triggered a latent software bug in Fastly's network.", "visual": "🪲" },
+        "discovery": { "text": "The bug had existed for weeks. The specific config combination that triggered it was rare.", "visual": "🎰" },
+        "twist": { "text": "85% of Fastly's network returned errors. A single customer action broke a global CDN.", "visual": "💥" },
+        "climax": { "text": "Fastly fixed it in 49 minutes. They later deployed a fix for the underlying latent bug.", "visual": "🔧" },
+        "punchline": { "text": "Latent bugs wait for triggers. Test rare config combinations.", "visual": "🧪" }
+      },
+      "quiz": {
+        "question": "What triggered the Fastly CDN outage in 2021?",
+        "options": ["A customer config change that hit a latent software bug", "A massive DDoS attack", "A data center fire"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch02-cloud-outages",
+      "title": "Netflix Christmas Eve Outage (2012)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "December 24, 2012. Families sat down to stream. Netflix was down. An AWS ELB issue was the cause.", "visual": "🎄" },
+        "buildup": { "text": "Netflix depended on a single AWS region. When us-east-1 degraded, there was no fallback.", "visual": "📍" },
+        "discovery": { "text": "The single-region dependency was the single point of failure. No multi-region failover existed.", "visual": "🎯" },
+        "twist": { "text": "After this, Netflix invested heavily in active-active multi-region architecture.", "visual": "🌐" },
+        "climax": { "text": "They built Chaos Kong to simulate losing an entire region. Resilience became a core value.", "visual": "🦍" },
+        "punchline": { "text": "One region is one point of failure. Go multi-region.", "visual": "🗺️" }
+      },
+      "quiz": {
+        "question": "What key change did Netflix make after the 2012 outage?",
+        "options": ["They built active-active multi-region architecture", "They switched away from AWS entirely", "They stopped streaming on holidays"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch02-cloud-outages",
+      "title": "British Airways IT Meltdown (2017)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "May 2017. A power cut at BA's data center stranded 75,000 passengers for three days.", "visual": "✈️" },
+        "buildup": { "text": "A contractor disconnected power. The uncontrolled restart surged and damaged servers.", "visual": "⚡" },
+        "discovery": { "text": "Check-in, baggage, and flights all ran from one data center. One failure grounded everything.", "visual": "🏢" },
+        "twist": { "text": "BA had a DR site but had never tested it at full load. It couldn't handle the demand.", "visual": "📉" },
+        "climax": { "text": "The outage cost BA over $100 million and triggered a massive regulatory fine.", "visual": "💰" },
+        "punchline": { "text": "Test your DR at full scale. Untested DR is a wish, not a plan.", "visual": "🧪" }
+      },
+      "quiz": {
+        "question": "Why did BA's disaster recovery site fail to help?",
+        "options": ["It had never been tested under full production load", "It was in the same building as the primary site", "The DR site's software was outdated"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch03-security-breaches",
+      "title": "Capital One Cloud Breach (2019)",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A former AWS employee exploited a misconfigured firewall. 100 million records were stolen.", "visual": "🔓" },
+        "buildup": { "text": "Capital One's WAF was misconfigured, allowing SSRF attacks against their cloud metadata.", "visual": "🕳️" },
+        "discovery": { "text": "The attacker accessed IAM credentials via the metadata service and read S3 buckets.", "visual": "📂" },
+        "twist": { "text": "The data had been in the cloud for years. The misconfiguration went undetected.", "visual": "⏳" },
+        "climax": { "text": "AWS made IMDSv2 the default after this. Token-based metadata access is now standard.", "visual": "🛡️" },
+        "punchline": { "text": "Lock down cloud IAM. The shared responsibility model is real.", "visual": "🔐" }
+      },
+      "quiz": {
+        "question": "How did the attacker access Capital One's data?",
+        "options": ["Through a misconfigured firewall allowing SSRF to cloud metadata", "By guessing an employee's password", "By physically breaking into a data center"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch03-security-breaches",
+      "title": "The npm Event-Stream Attack (2018)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A popular npm package got a new maintainer. That maintainer injected crypto-stealing malware.", "visual": "📦" },
+        "buildup": { "text": "The original author was tired and handed off ownership. No vetting of the new maintainer.", "visual": "🤝" },
+        "discovery": { "text": "Malware hid inside a dependency of a dependency. It targeted one specific Bitcoin wallet app.", "visual": "🪆" },
+        "twist": { "text": "It took weeks for the community to find the attack. Obfuscated code buried layers deep.", "visual": "🔍" },
+        "climax": { "text": "The attack exposed fragility in open-source trust. Millions of packages depend on volunteers.", "visual": "🏗️" },
+        "punchline": { "text": "Audit dependency changes. Open-source trust is fragile.", "visual": "🔎" }
+      },
+      "quiz": {
+        "question": "How was malware introduced into the event-stream package?",
+        "options": ["A new maintainer added a malicious dependency", "An automated bot modified the source code", "npm's servers were hacked"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch03-security-breaches",
+      "title": "SolarWinds Supply Chain Attack (2020)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Russian hackers compromised SolarWinds' build pipeline. 18,000 organizations installed the trojan.", "visual": "🐴" },
+        "buildup": { "text": "Attackers injected malware into the Orion software build process. Official updates carried it.", "visual": "📦" },
+        "discovery": { "text": "The malware was signed by SolarWinds' own certificates. It looked perfectly legitimate.", "visual": "✅" },
+        "twist": { "text": "US government agencies and Fortune 500 companies were all compromised via trusted updates.", "visual": "🏛️" },
+        "climax": { "text": "The attack went undetected for nine months. It redefined supply chain security thinking.", "visual": "📅" },
+        "punchline": { "text": "Secure your build pipeline. Signed doesn't mean safe.", "visual": "🔏" }
+      },
+      "quiz": {
+        "question": "What made the SolarWinds attack so effective?",
+        "options": ["Malware was injected into the official build pipeline and signed", "Hackers guessed all the passwords", "They exploited an unpatched zero-day in Windows"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch03-security-breaches",
+      "title": "MongoDB Ransomware Wave (2017)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2017, attackers wiped 28,000 MongoDB databases and demanded Bitcoin ransoms.", "visual": "💀" },
+        "buildup": { "text": "MongoDB's default install had no auth and bound to all interfaces. Databases were wide open.", "visual": "🚪" },
+        "discovery": { "text": "Attackers scanned for open ports, connected, exported data, deleted it, and left a ransom note.", "visual": "📝" },
+        "twist": { "text": "Most victims who paid the ransom never got data back. Attackers often just deleted it.", "visual": "🗑️" },
+        "climax": { "text": "MongoDB changed defaults to localhost-only binding. But thousands of open instances remain.", "visual": "🔧" },
+        "punchline": { "text": "Secure defaults matter. Authentication is not optional.", "visual": "🔐" }
+      },
+      "quiz": {
+        "question": "Why were so many MongoDB databases vulnerable?",
+        "options": ["Default installation had no authentication and was publicly accessible", "MongoDB had a known zero-day exploit", "Users forgot to update their software"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch03-security-breaches",
+      "title": "Log4Shell Vulnerability (2021)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "December 2021. A zero-day in Log4j affected millions of Java apps worldwide. Severity: 10 out of 10.", "visual": "🔥" },
+        "buildup": { "text": "Log4j is a logging library used everywhere. The bug allowed remote code execution via a log message.", "visual": "📋" },
+        "discovery": { "text": "Attackers could send a crafted string in a header. If it was logged, the server was compromised.", "visual": "💉" },
+        "twist": { "text": "Many teams didn't even know they used Log4j. It was buried deep in their dependency trees.", "visual": "🌳" },
+        "climax": { "text": "The scramble to patch took weeks. SBOM adoption surged as teams realized they needed visibility.", "visual": "📊" },
+        "punchline": { "text": "Know your dependencies. An SBOM isn't optional anymore.", "visual": "📦" }
+      },
+      "quiz": {
+        "question": "Why was the Log4Shell vulnerability so dangerous?",
+        "options": ["Log4j was used in millions of applications, many unknowingly", "It only affected a single company", "It required physical access to exploit"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch04-data-disasters",
+      "title": "GitLab's Database Deletion (2017)",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "January 2017. A tired GitLab engineer ran rm -rf on production. 300 GB of data vanished.", "visual": "💀" },
+        "buildup": { "text": "They were fixing replication late at night. They typed the wrong directory path.", "visual": "🌙" },
+        "discovery": { "text": "Five backup systems existed. None worked. All were misconfigured or empty.", "visual": "📂" },
+        "twist": { "text": "They recovered from a 6-hour-old staging snapshot — the only working copy anywhere.", "visual": "💾" },
+        "climax": { "text": "Six hours of user data were lost permanently. GitLab shared the full story publicly.", "visual": "📢" },
+        "punchline": { "text": "Test your backups. Untested backups are not backups.", "visual": "🧪" }
+      },
+      "quiz": {
+        "question": "What critical lesson came from GitLab's database deletion?",
+        "options": ["Backups must be tested regularly to ensure they work", "Engineers should never work on databases", "Cloud providers handle all backup needs automatically"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch04-data-disasters",
+      "title": "MySpace Loses 12 Years of Music",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2019, MySpace admitted 50 million songs from 2003-2015 were lost in a server migration.", "visual": "🎵" },
+        "buildup": { "text": "During the migration, audio files were corrupted or deleted. No one noticed right away.", "visual": "📦" },
+        "discovery": { "text": "Users found their music missing. MySpace blamed a migration issue. The data was gone forever.", "visual": "🔇" },
+        "twist": { "text": "Early recordings of now-famous artists and rare demos were lost. Irreplaceable cultural data.", "visual": "🎤" },
+        "climax": { "text": "No verified backup existed. Twelve years of music history vanished in one botched migration.", "visual": "📼" },
+        "punchline": { "text": "Verify backups before you migrate. Test the restore path.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What happened to MySpace's music during the server migration?",
+        "options": ["50 million songs were lost because backups were not verified", "The music was moved to a new platform successfully", "Users chose to delete their own music"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch04-data-disasters",
+      "title": "Toy Story 2 Nearly Deleted",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Someone ran rm -rf on Toy Story 2 at Pixar. 90% of the movie vanished from the servers.", "visual": "🤠" },
+        "buildup": { "text": "Characters started disappearing. Woody's hat, then his boots, then entire scenes.", "visual": "👒" },
+        "discovery": { "text": "They pulled the plug on servers to stop it. Then they checked backups. Backups were broken.", "visual": "💔" },
+        "twist": { "text": "A director on maternity leave had a full copy on her home computer. The only surviving copy.", "visual": "🏠" },
+        "climax": { "text": "They drove her machine to the studio wrapped in blankets. The movie was saved from one laptop.", "visual": "🚗" },
+        "punchline": { "text": "Verify backups actively. Luck saved Toy Story 2.", "visual": "🍀" }
+      },
+      "quiz": {
+        "question": "How was Toy Story 2 ultimately saved?",
+        "options": ["An employee had a copy on their home computer", "Pixar's cloud backup was restored", "They rebuilt the movie from scratch in two weeks"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch04-data-disasters",
+      "title": "GitHub's MySQL Split-Brain (2018)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "October 2018. GitHub was degraded for 24 hours. A routine network change triggered MySQL chaos.", "visual": "🐙" },
+        "buildup": { "text": "A brief network partition caused the orchestrator to promote a replica to primary.", "visual": "🔀" },
+        "discovery": { "text": "Two databases thought they were primary. Writes went to both. Data diverged.", "visual": "🔱" },
+        "twist": { "text": "GitHub chose data integrity over speed. They stayed degraded while reconciling all data.", "visual": "⚖️" },
+        "climax": { "text": "24 hours of degradation but zero data lost. The postmortem was praised for transparency.", "visual": "📝" },
+        "punchline": { "text": "Automated failover can split-brain. Test for partitions.", "visual": "🧪" }
+      },
+      "quiz": {
+        "question": "How did GitHub handle the split-brain situation?",
+        "options": ["They prioritized data integrity over quick recovery", "They rolled back all changes from both databases", "They shut down GitHub permanently"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch04-data-disasters",
+      "title": "Slack's Database Migration Incident (2024)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "February 2024. Slack went degraded for hours. A database migration caused cascading locks.", "visual": "💬" },
+        "buildup": { "text": "Schema changes on large tables locked rows. Millions of queries queued behind the locks.", "visual": "🔒" },
+        "discovery": { "text": "The migration worked fine in staging. Staging lacked production-level traffic to reveal the issue.", "visual": "🧪" },
+        "twist": { "text": "Dependent services timed out. Their callers timed out. A tree of failures grew from one table.", "visual": "🌳" },
+        "climax": { "text": "Slack rolled back the migration and restored service. They added load-testing to future plans.", "visual": "🔄" },
+        "punchline": { "text": "Test migrations under real load. Staging lies about scale.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "Why did Slack's database migration fail in production?",
+        "options": ["Staging didn't have production-level traffic to expose locking issues", "The schema change had a syntax error", "Slack forgot to back up their database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch05-cascading-failures",
+      "title": "Amazon DynamoDB Cascade (2015)",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "September 2015. DynamoDB slowed in us-east-1. Services retried. The retries made it worse.", "visual": "🔄" },
+        "buildup": { "text": "A metadata partition overloaded. Tables became briefly unavailable. Clients started retrying.", "visual": "📊" },
+        "discovery": { "text": "Retries created more load. More load caused more failures. A feedback loop amplified the problem.", "visual": "🌀" },
+        "twist": { "text": "Services without timeouts waited forever, consuming all threads. They died silently.", "visual": "⏳" },
+        "climax": { "text": "AWS redesigned the metadata system. Customers learned: add timeouts and circuit breakers.", "visual": "🛡️" },
+        "punchline": { "text": "Retries without backoff amplify failures. Add jitter.", "visual": "📉" }
+      },
+      "quiz": {
+        "question": "What amplified the DynamoDB outage into a cascade?",
+        "options": ["Aggressive client retries created a feedback loop", "A physical hardware failure destroyed the servers", "An attacker overwhelmed the service with traffic"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch05-cascading-failures",
+      "title": "Twitter's Fail Whale Era",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "2007-2009. Twitter's Fail Whale was shown so often it became a pop culture icon.", "visual": "🐳" },
+        "buildup": { "text": "Twitter was built on Ruby on Rails for a small user base. Then it went viral.", "visual": "📱" },
+        "discovery": { "text": "Every tweet fanned out to all followers. Popular accounts caused massive write amplification.", "visual": "📢" },
+        "twist": { "text": "Twitter rebuilt everything. Ruby became Scala. Monolith became microservices. Years of work.", "visual": "🔨" },
+        "climax": { "text": "They built Manhattan, Finagle, and custom caching. The Fail Whale finally disappeared.", "visual": "👋" },
+        "punchline": { "text": "Architecture must evolve with scale. Plan for growth.", "visual": "📈" }
+      },
+      "quiz": {
+        "question": "What fundamental problem caused Twitter's Fail Whale?",
+        "options": ["The original architecture couldn't handle the viral growth in users", "Twitter's servers were physically too small", "The domain name expired repeatedly"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch05-cascading-failures",
+      "title": "Heroku's 2022 Security Incident",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "April 2022. Heroku discovered stolen OAuth tokens. They revoked all GitHub integrations.", "visual": "🔑" },
+        "buildup": { "text": "Attackers accessed a Heroku database containing OAuth tokens for GitHub integrations.", "visual": "🗄️" },
+        "discovery": { "text": "The tokens let attackers access private repos of Heroku customers. Scope of compromise was unclear.", "visual": "🔓" },
+        "twist": { "text": "Heroku's incident communication was criticized. Updates were vague and slow for weeks.", "visual": "📉" },
+        "climax": { "text": "Customers lost trust. Many migrated away. Transparent communication could have limited the damage.", "visual": "🚪" },
+        "punchline": { "text": "Communicate clearly during incidents. Silence erodes trust.", "visual": "📢" }
+      },
+      "quiz": {
+        "question": "What worsened the impact of Heroku's 2022 security incident?",
+        "options": ["Vague and slow communication during the incident", "The attack affected all cloud providers", "Heroku's source code was deleted"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch05-cascading-failures",
+      "title": "Cloudflare DNS Routing Leak (2022)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "June 2022. A BGP misconfiguration routed Cloudflare traffic through the wrong networks.", "visual": "🌐" },
+        "buildup": { "text": "A change in 19 data centers triggered a broader BGP issue. Traffic was misrouted globally.", "visual": "🔀" },
+        "discovery": { "text": "Cloudflare sites went offline or slowed. Users saw 500 errors across many popular websites.", "visual": "⚠️" },
+        "twist": { "text": "The fix was deployed in 87 minutes. But the incident showed how fragile internet routing is.", "visual": "🕸️" },
+        "climax": { "text": "Cloudflare improved their change procedures and added BGP prefix validation checks.", "visual": "✅" },
+        "punchline": { "text": "BGP is fragile. One wrong route can break the internet.", "visual": "🗺️" }
+      },
+      "quiz": {
+        "question": "What fundamental internet protocol was involved in Cloudflare's 2022 issue?",
+        "options": ["BGP, the protocol that routes traffic between networks", "HTTP, the protocol for web requests", "DNS, the domain name resolution protocol"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch05-cascading-failures",
+      "title": "OVHcloud Strasbourg Fire (2021)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "March 2021. A fire destroyed OVHcloud's SBG2 data center. 3.6 million websites went down.", "visual": "🔥" },
+        "buildup": { "text": "The fire started in a UPS battery room and spread fast. The entire building was destroyed.", "visual": "🏚️" },
+        "discovery": { "text": "Many customers had backups stored in the same facility. When it burned, backups burned too.", "visual": "💾" },
+        "twist": { "text": "Some customers lost data permanently. Their only copies were in the destroyed data center.", "visual": "😱" },
+        "climax": { "text": "The incident proved that geographic redundancy isn't optional. Off-site backups are essential.", "visual": "🌍" },
+        "punchline": { "text": "Store backups off-site. Same building is not redundancy.", "visual": "🏢" }
+      },
+      "quiz": {
+        "question": "Why did some OVHcloud customers lose data permanently?",
+        "options": ["Their backups were stored in the same data center that burned", "OVHcloud didn't offer any backup services", "The fire was caused by a cyberattack"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch06-lessons-that-changed-the-industry",
+      "title": "The Power of Postmortems",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Google, Etsy, and Netflix publish incident reports. Transparency helps the entire industry.", "visual": "📢" },
+        "buildup": { "text": "Public postmortems let everyone learn from one company's mistake. Patterns don't repeat.", "visual": "📖" },
+        "discovery": { "text": "Great postmortems include timeline, root cause, impact, and specific action items.", "visual": "📋" },
+        "twist": { "text": "Companies that hide incidents repeat them. Those that share improve faster.", "visual": "🔄" },
+        "climax": { "text": "Blameless culture is key. If people fear punishment, they hide failures. Learning stops.", "visual": "🤝" },
+        "punchline": { "text": "Share failures openly. The industry learns together.", "visual": "🌱" }
+      },
+      "quiz": {
+        "question": "Why do companies like Google and Netflix share postmortems publicly?",
+        "options": ["To help the entire industry learn from incidents", "They are legally required to", "To embarrass their competitors"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch06-lessons-that-changed-the-industry",
+      "title": "Defense in Depth",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every disaster in this course had one thing in common: one layer failed and nothing caught it.", "visual": "🧅" },
+        "buildup": { "text": "Defense in depth uses multiple safety layers. If one fails, the next catches the problem.", "visual": "🏰" },
+        "discovery": { "text": "Code review, CI tests, canary deploys, and monitoring form layers of protection.", "visual": "🛡️" },
+        "twist": { "text": "No single layer is perfect. Each catches different problems. The combination is the strength.", "visual": "🔗" },
+        "climax": { "text": "Knight Capital lacked deploy checks. GitLab lacked backup tests. Each missed one layer.", "visual": "📋" },
+        "punchline": { "text": "Layer your defenses. Assume each will eventually fail.", "visual": "🧱" }
+      },
+      "quiz": {
+        "question": "What is the core principle of defense in depth?",
+        "options": ["Using multiple independent safety layers that catch different problems", "Having one perfect security system", "Hiring more security engineers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch06-lessons-that-changed-the-industry",
+      "title": "The Human Factor",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The GitLab engineer was tired. The Knight team rushed. Humans are part of every system.", "visual": "😴" },
+        "buildup": { "text": "Fatigue, time pressure, and unclear interfaces increase human error rates.", "visual": "⏰" },
+        "discovery": { "text": "Instead of blaming humans, design systems that tolerate mistakes. Add confirmations and undo.", "visual": "↩️" },
+        "twist": { "text": "Dangerous commands should need the most confirmation. 'Delete production' needs more than Enter.", "visual": "⚠️" },
+        "climax": { "text": "Netflix requires peer review for production changes. Good systems protect against lone mistakes.", "visual": "👥" },
+        "punchline": { "text": "Design for human error. Make the system forgiving.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "How should systems handle human error?",
+        "options": ["Design systems that tolerate mistakes with confirmations and undo", "Fire engineers who make mistakes", "Remove all human access to production"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch06-lessons-that-changed-the-industry",
+      "title": "Test Your Assumptions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "GitLab assumed backups worked. BA assumed DR would failover. Assumptions kill reliability.", "visual": "🤔" },
+        "buildup": { "text": "We assume backups run, failover works, and rollback is fast. But do we verify?", "visual": "❓" },
+        "discovery": { "text": "Restore from backup regularly. Fail over to DR periodically. Test rollback before you need it.", "visual": "🔄" },
+        "twist": { "text": "Game days and chaos engineering exist to test assumptions. Break things before they break you.", "visual": "💣" },
+        "climax": { "text": "Write down your critical assumptions. Then test each one. Schedule it. Track the results.", "visual": "📋" },
+        "punchline": { "text": "An untested assumption is a risk in disguise.", "visual": "🎭" }
+      },
+      "quiz": {
+        "question": "What is the best way to validate operational assumptions?",
+        "options": ["Test them regularly through drills and chaos engineering", "Trust that they work based on the initial setup", "Wait until a real incident reveals the truth"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--famous-devops-disasters-and-lessons--ch06-lessons-that-changed-the-industry",
+      "title": "Building a Culture of Reliability",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Netflix and Google don't avoid all failures. They recover faster because reliability is cultural.", "visual": "🏛️" },
+        "buildup": { "text": "Technology alone can't prevent disasters. Culture determines how teams respond and learn.", "visual": "👥" },
+        "discovery": { "text": "Blameless postmortems, error budgets, and chaos engineering are cultural practices.", "visual": "🧠" },
+        "twist": { "text": "The most reliable companies celebrate near-misses. A caught failure is a learning moment.", "visual": "🎉" },
+        "climax": { "text": "Reliability is a team sport. Every engineer, every deploy, every review adds a layer of safety.", "visual": "🏆" },
+        "punchline": { "text": "Build the culture. Reliability follows the people.", "visual": "🌱" }
+      },
+      "quiz": {
+        "question": "What is the foundation of reliable systems?",
+        "options": ["A culture that learns from failures and celebrates near-misses", "The most expensive infrastructure available", "Hiring only the most experienced engineers"],
+        "correct": 0
+      }
+    }
+  ]
+}

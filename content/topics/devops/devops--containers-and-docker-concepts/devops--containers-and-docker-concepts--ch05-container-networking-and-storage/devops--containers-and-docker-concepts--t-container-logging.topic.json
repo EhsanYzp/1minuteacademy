@@ -1,0 +1,49 @@
+{
+  "id": "devops--containers-and-docker-concepts--t-container-logging",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Containers and Docker Concepts",
+  "course_id": "devops--containers-and-docker-concepts",
+  "chapter_id": "devops--containers-and-docker-concepts--ch05-container-networking-and-storage",
+  "title": "Container Logging",
+  "emoji": "🐳",
+  "color": "#0891B2",
+  "description": "A short lesson to help you apply Container Logging.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your containerized app wrote logs to a file inside the container. The container restarted. Logs gone forever.",
+      "visual": "🗑️"
+    },
+    "buildup": {
+      "text": "Containers should write logs to stdout and stderr, not to files. Docker captures these streams automatically.",
+      "visual": "📤"
+    },
+    "discovery": {
+      "text": "Docker log drivers forward captured logs to external systems: Elasticsearch, Fluentd, CloudWatch.",
+      "visual": "📊"
+    },
+    "twist": {
+      "text": "Centralized logging lets you search logs from all containers in one place. No SSH-ing into individual servers.",
+      "visual": "🔍"
+    },
+    "climax": {
+      "text": "The EFK stack (Elasticsearch, Fluentd, Kibana) is a popular choice. Collect, index, and visualize all your logs.",
+      "visual": "📈"
+    },
+    "punchline": {
+      "text": "Log to stdout. Let the platform handle collection and storage.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "Why should containerized apps log to stdout instead of files?",
+    "options": [
+      "Docker captures stdout automatically and can forward logs externally",
+      "Writing to files is slower than stdout",
+      "Stdout logs are automatically encrypted"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "devops--kubernetes-essentials--t-configmaps",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Kubernetes Essentials",
+  "course_id": "devops--kubernetes-essentials",
+  "chapter_id": "devops--kubernetes-essentials--ch05-configuration-and-storage",
+  "title": "ConfigMaps",
+  "emoji": "☸️",
+  "color": "#326CE5",
+  "description": "Learn ConfigMaps in one minute.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your app needs a config file with 20 settings. Baking it into the Docker image means rebuilding for every change.",
+      "visual": "🔧"
+    },
+    "buildup": {
+      "text": "ConfigMaps store configuration data as key-value pairs in Kubernetes. Separate from the image, managed by the cluster.",
+      "visual": "📋"
+    },
+    "discovery": {
+      "text": "Mount a ConfigMap as a file or inject its values as environment variables. The pod reads them at startup.",
+      "visual": "📂"
+    },
+    "twist": {
+      "text": "Update the ConfigMap and pods can pick up changes without restarting — if the app watches the mounted file.",
+      "visual": "🔄"
+    },
+    "climax": {
+      "text": "ConfigMaps are not for secrets. They're stored in plain text in etcd. Use Secrets for sensitive data.",
+      "visual": "⚠️"
+    },
+    "punchline": {
+      "text": "ConfigMaps decouple config from code. Update settings without rebuilding.",
+      "visual": "📦"
+    }
+  },
+  "quiz": {
+    "question": "Why should you not store passwords in ConfigMaps?",
+    "options": [
+      "ConfigMaps are stored in plain text and are not secure",
+      "ConfigMaps cannot hold string values",
+      "Passwords are too long for ConfigMap entries"
+    ],
+    "correct": 0
+  }
+}

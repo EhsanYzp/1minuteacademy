@@ -1,0 +1,49 @@
+{
+  "id": "devops--containers-and-docker-concepts--t-container-networking-basics",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Containers and Docker Concepts",
+  "course_id": "devops--containers-and-docker-concepts",
+  "chapter_id": "devops--containers-and-docker-concepts--ch05-container-networking-and-storage",
+  "title": "Container Networking Basics",
+  "emoji": "🐳",
+  "color": "#0891B2",
+  "description": "A tiny lesson with a big payoff: Container Networking Basics.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Two containers on the same host need to talk to each other. But each has its own network namespace. How?",
+      "visual": "🔗"
+    },
+    "buildup": {
+      "text": "Docker creates a virtual bridge network. Containers connect to it like devices on a private LAN.",
+      "visual": "🌉"
+    },
+    "discovery": {
+      "text": "Containers on the same bridge can reach each other by container name. Docker runs a built-in DNS server.",
+      "visual": "📡"
+    },
+    "twist": {
+      "text": "Host networking removes isolation entirely. The container shares the host's network stack for maximum speed.",
+      "visual": "🏎️"
+    },
+    "climax": {
+      "text": "Overlay networks span multiple hosts. Containers on different machines communicate as if they were local.",
+      "visual": "🌐"
+    },
+    "punchline": {
+      "text": "Bridge for isolation, host for speed, overlay for multi-host. Choose wisely.",
+      "visual": "🔀"
+    }
+  },
+  "quiz": {
+    "question": "How do containers on the same Docker bridge network find each other?",
+    "options": [
+      "By container name using Docker's built-in DNS",
+      "By broadcasting their IP address to all other containers",
+      "By reading a shared configuration file"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "devops--containers-and-docker-concepts--t-union-filesystems",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Containers and Docker Concepts",
+  "course_id": "devops--containers-and-docker-concepts",
+  "chapter_id": "devops--containers-and-docker-concepts--ch02-how-containers-work",
+  "title": "Union Filesystems",
+  "emoji": "🐳",
+  "color": "#0891B2",
+  "description": "A tiny lesson with a big payoff: Union Filesystems.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A Docker image might be 500 MB. Running 10 containers from it doesn't use 5 GB. How? Union filesystems.",
+      "visual": "🧅"
+    },
+    "buildup": {
+      "text": "A union filesystem stacks layers on top of each other. Lower layers are read-only. Only the top is writable.",
+      "visual": "📚"
+    },
+    "discovery": {
+      "text": "All 10 containers share the same read-only base layers. Each gets its own thin writable layer on top.",
+      "visual": "📝"
+    },
+    "twist": {
+      "text": "This is copy-on-write. A file is only copied to the writable layer when a container modifies it.",
+      "visual": "✏️"
+    },
+    "climax": {
+      "text": "Layers also speed up builds. Change one line of code, and only that layer rebuilds. The rest is cached.",
+      "visual": "⚡"
+    },
+    "punchline": {
+      "text": "Shared layers save space. Copy-on-write saves time. Layers win twice.",
+      "visual": "🏆"
+    }
+  },
+  "quiz": {
+    "question": "Why doesn't running 10 containers from the same image use 10x the disk space?",
+    "options": [
+      "All containers share the same read-only base layers",
+      "Containers automatically compress their files",
+      "Only one container runs at a time"
+    ],
+    "correct": 0
+  }
+}

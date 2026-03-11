@@ -1,0 +1,583 @@
+{
+  "categoryId": "devops",
+  "subject": "DevOps",
+  "courseId": "devops--ci-cd-pipelines-explained",
+  "courseTitle": "CI/CD Pipelines Explained",
+  "emoji": "🔁",
+  "color": "#2563EB",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "devops--ci-cd-pipelines-explained--ch01-what-is-a-pipeline",
+      "title": "What Is a Pipeline",
+      "position": 1
+    },
+    {
+      "id": "devops--ci-cd-pipelines-explained--ch02-continuous-integration",
+      "title": "Continuous Integration",
+      "position": 2
+    },
+    {
+      "id": "devops--ci-cd-pipelines-explained--ch03-continuous-delivery",
+      "title": "Continuous Delivery",
+      "position": 3
+    },
+    {
+      "id": "devops--ci-cd-pipelines-explained--ch04-pipeline-anatomy",
+      "title": "Pipeline Anatomy",
+      "position": 4
+    },
+    {
+      "id": "devops--ci-cd-pipelines-explained--ch05-popular-tools",
+      "title": "Popular CI/CD Tools",
+      "position": 5
+    },
+    {
+      "id": "devops--ci-cd-pipelines-explained--ch06-advanced-patterns",
+      "title": "Advanced Patterns",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch01-what-is-a-pipeline",
+      "title": "From Code to Production",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You write a line of code. How does it travel from your laptop to a live website serving millions?", "visual": "💻" },
+        "buildup": { "text": "Manually: zip the code, upload it, SSH in, restart the server. Error-prone and terrifying every time.", "visual": "😰" },
+        "discovery": { "text": "A CI/CD pipeline automates that journey. Code goes in one end, tested software comes out the other.", "visual": "🏭" },
+        "twist": { "text": "Pipelines don't just ship code. They enforce quality gates. Nothing reaches users without passing every check.", "visual": "🛡️" },
+        "climax": { "text": "The best pipelines are invisible. Developers push code and forget. The pipeline handles everything else.", "visual": "🪄" },
+        "punchline": { "text": "A pipeline carries code from commit to customer safely.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "What does a CI/CD pipeline automate?",
+        "options": ["The journey of code from commit to production", "The process of writing code", "The hiring of new developers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch01-what-is-a-pipeline",
+      "title": "Why Pipelines Matter",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A team shipped a broken build on Friday afternoon. The fix took all weekend. Morale cratered.", "visual": "😫" },
+        "buildup": { "text": "Without a pipeline, quality depends on memory. Did someone run the tests? Did someone check the config?", "visual": "🤔" },
+        "discovery": { "text": "Pipelines enforce consistency. Every commit gets the same build, test, and scan — no human shortcuts.", "visual": "✅" },
+        "twist": { "text": "Speed follows consistency. Teams with pipelines deploy 200x more often than those without.", "visual": "📊" },
+        "climax": { "text": "Pipelines also create audit trails. Regulators can see exactly what was tested and when.", "visual": "📋" },
+        "punchline": { "text": "Pipelines enforce quality and enable speed. Both at once.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "How do pipelines improve deployment consistency?",
+        "options": ["Every commit gets the same automated build and test process", "They remind developers to test manually", "They slow down releases to ensure quality"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch01-what-is-a-pipeline",
+      "title": "The Assembly Line Metaphor",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Henry Ford's assembly line revolutionized manufacturing. CI/CD pipelines do the same for software.", "visual": "🏭" },
+        "buildup": { "text": "On a factory line, each station does one job: weld, paint, inspect. The car moves forward automatically.", "visual": "🚗" },
+        "discovery": { "text": "In a pipeline, each stage does one job: compile, test, scan, deploy. Code moves forward automatically.", "visual": "➡️" },
+        "twist": { "text": "If any station fails, the line stops. Same with pipelines — a failed test halts the deploy instantly.", "visual": "🛑" },
+        "climax": { "text": "The metaphor breaks in one way: software pipelines run in minutes, not hours. Digital beats physical.", "visual": "⚡" },
+        "punchline": { "text": "Software assembly lines: each stage adds quality, not parts.", "visual": "🏗️" }
+      },
+      "quiz": {
+        "question": "What happens in a CI/CD pipeline when a test stage fails?",
+        "options": ["The pipeline stops and blocks the deployment", "The code deploys anyway with a warning", "The test stage is skipped"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch01-what-is-a-pipeline",
+      "title": "Pipeline Triggers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Something has to start the pipeline. A trigger is the event that says: 'Go. Build this now.'", "visual": "🎬" },
+        "buildup": { "text": "The most common trigger is a Git push. Push code, pipeline starts. Simple and automatic.", "visual": "📤" },
+        "discovery": { "text": "Other triggers exist: pull request opened, schedule (nightly builds), or manual button press for releases.", "visual": "🕐" },
+        "twist": { "text": "Smart triggers save time. Only rebuild the frontend if frontend files changed. Path filters are powerful.", "visual": "🎯" },
+        "climax": { "text": "Webhook triggers connect external systems. A new Docker image pushed? Trigger the deploy pipeline.", "visual": "🔗" },
+        "punchline": { "text": "Push, schedule, or webhook. The trigger starts the journey.", "visual": "▶️" }
+      },
+      "quiz": {
+        "question": "What is the most common trigger for a CI/CD pipeline?",
+        "options": ["A Git push to the repository", "A manual email to the operations team", "A weekly calendar reminder"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch01-what-is-a-pipeline",
+      "title": "Pipeline as Code",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Old CI servers stored pipeline configs in a web GUI. Click, click, save. Then the server died.", "visual": "💀" },
+        "buildup": { "text": "GUI configs aren't version-controlled. You can't review, diff, or roll back a clicked checkbox.", "visual": "😬" },
+        "discovery": { "text": "Pipeline as code stores the pipeline definition in a YAML or code file inside the repo itself.", "visual": "📄" },
+        "twist": { "text": "Now pipelines get the same treatment as app code: pull requests, reviews, and full audit history.", "visual": "🔍" },
+        "climax": { "text": "GitHub Actions, GitLab CI, and Jenkins all use YAML files checked into the repo. Pipeline as code won.", "visual": "🏆" },
+        "punchline": { "text": "Define pipelines in code. Version them like everything else.", "visual": "💾" }
+      },
+      "quiz": {
+        "question": "Why is pipeline-as-code preferred over GUI configuration?",
+        "options": ["It can be version-controlled, reviewed, and rolled back", "YAML files run faster than GUI settings", "GUI configurations cost more money"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch02-continuous-integration",
+      "title": "Merge Early, Merge Often",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Two developers worked on the same file for two weeks. The merge conflict took three days to untangle.", "visual": "🧶" },
+        "buildup": { "text": "Long branches drift apart. The longer they live, the harder it is to bring them back together.", "visual": "🌿" },
+        "discovery": { "text": "CI says: merge to main at least once a day. Small merges create small conflicts — or none at all.", "visual": "✅" },
+        "twist": { "text": "Frequent merging also reveals integration bugs early. Two features that work alone may clash together.", "visual": "💥" },
+        "climax": { "text": "Trunk-based development takes it further: everyone commits directly to main with short-lived branches.", "visual": "🌳" },
+        "punchline": { "text": "Merge daily. Small conflicts beat big merge nightmares.", "visual": "😌" }
+      },
+      "quiz": {
+        "question": "Why does CI recommend merging to main at least once a day?",
+        "options": ["To keep merge conflicts small and catch integration issues early", "To reduce the number of Git branches visible in the UI", "To make the commit history look cleaner"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch02-continuous-integration",
+      "title": "The Build Step",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Code sits in a repo as text files. The build step transforms it into something a machine can run.", "visual": "🔨" },
+        "buildup": { "text": "Compiling, bundling, transpiling, linking — the build produces an artifact: a JAR, binary, or container image.", "visual": "📦" },
+        "discovery": { "text": "Builds must be deterministic. Same input, same output, every time. No 'it works on my machine' excuses.", "visual": "🎯" },
+        "twist": { "text": "Build caching speeds things up. Only rebuild what changed. A cached build takes seconds, not minutes.", "visual": "⚡" },
+        "climax": { "text": "If the build fails, the pipeline stops. A failing build is the first signal that something is wrong.", "visual": "🚨" },
+        "punchline": { "text": "Build once, produce an artifact. Same input, same output.", "visual": "🏗️" }
+      },
+      "quiz": {
+        "question": "What is a build artifact?",
+        "options": ["The runnable output of the build step like a binary or container image", "The source code stored in Git", "The pipeline YAML configuration file"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch02-continuous-integration",
+      "title": "Automated Testing in CI",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A developer said: 'I tested it locally, it works.' It didn't work in production. Local tests lie.", "visual": "🤥" },
+        "buildup": { "text": "CI runs tests in a clean environment, from scratch. No leftover state, no lucky local configs.", "visual": "🧹" },
+        "discovery": { "text": "Unit tests run first — fast and focused. Then integration tests check that components talk correctly.", "visual": "🧪" },
+        "twist": { "text": "The test pyramid matters. Many unit tests, fewer integration tests, even fewer end-to-end tests. Fast feedback.", "visual": "🔺" },
+        "climax": { "text": "A green test suite gives confidence to ship. A red test blocks the merge. Tests are the pipeline's immune system.", "visual": "🛡️" },
+        "punchline": { "text": "Automated tests in CI catch what humans miss. Every time.", "visual": "🔍" }
+      },
+      "quiz": {
+        "question": "What does the test pyramid recommend?",
+        "options": ["Many unit tests, fewer integration tests, even fewer E2E tests", "Equal numbers of all test types", "Only end-to-end tests for full coverage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch02-continuous-integration",
+      "title": "Code Quality Gates",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Tests pass, but the code is unreadable. No comments, inconsistent formatting, duplicated logic everywhere.", "visual": "🍝" },
+        "buildup": { "text": "Quality gates go beyond tests. Linters check style. Static analyzers find bugs without running the code.", "visual": "🔎" },
+        "discovery": { "text": "Code coverage tools measure how much code is tested. A low number is a warning sign, not a target.", "visual": "📊" },
+        "twist": { "text": "SonarQube, ESLint, and Checkstyle are popular gates. They block merges until the code meets standards.", "visual": "🚧" },
+        "climax": { "text": "Quality gates make code reviews faster. Machines catch the obvious issues. Humans review the logic.", "visual": "🤝" },
+        "punchline": { "text": "Machines check style. Humans check thinking. Better together.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "What do quality gates in a pipeline check beyond tests?",
+        "options": ["Code style, static analysis, and coverage metrics", "Only whether the code compiles successfully", "The developer's typing speed"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch02-continuous-integration",
+      "title": "Fixing the Build Immediately",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The CI build turned red. The team kept committing on top of it. Three hours later, nobody knew what broke.", "visual": "🔴" },
+        "buildup": { "text": "A broken build is a team-wide emergency. Every commit on top of a red build adds confusion.", "visual": "🌪️" },
+        "discovery": { "text": "The rule is simple: if you broke the build, you fix it immediately. Everything else waits.", "visual": "⏸️" },
+        "twist": { "text": "Some teams auto-revert commits that break the build. No human decision needed — the machine enforces the rule.", "visual": "⏪" },
+        "climax": { "text": "A green build is the team's heartbeat. Keeping it green is a shared responsibility, not one person's job.", "visual": "💚" },
+        "punchline": { "text": "Red builds are alarms. Fix them first. Everything else waits.", "visual": "🚨" }
+      },
+      "quiz": {
+        "question": "What should a team do when the CI build breaks?",
+        "options": ["Fix it immediately before any other work continues", "Continue working and fix it at the end of the week", "Delete the branch and start over"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch03-continuous-delivery",
+      "title": "Always Release-Ready",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "The CEO asks: 'Can we release today?' With continuous delivery, the answer is always yes.", "visual": "✅" },
+        "buildup": { "text": "Continuous delivery means the main branch is always in a deployable state. Any commit can go to production.", "visual": "🚀" },
+        "discovery": { "text": "This requires discipline: automated tests, clean builds, and no half-finished features in main.", "visual": "🧹" },
+        "twist": { "text": "Being release-ready doesn't mean you release everything. A human still picks the moment to push the button.", "visual": "🔘" },
+        "climax": { "text": "The power is in the choice. Deploy when the business needs it, not when engineering finally gets it working.", "visual": "⚡" },
+        "punchline": { "text": "Always ready to ship. Release when you choose, not when you can.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does continuous delivery guarantee?",
+        "options": ["The main branch is always in a deployable state", "Every commit is automatically deployed to production", "Releases happen exactly once per week"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch03-continuous-delivery",
+      "title": "Staging Environments",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The code worked in dev but broke in production. The environments were totally different. Classic mistake.", "visual": "😩" },
+        "buildup": { "text": "A staging environment mirrors production as closely as possible: same OS, same configs, same data shape.", "visual": "🪞" },
+        "discovery": { "text": "The pipeline deploys to staging first. Automated smoke tests verify everything works before production.", "visual": "🧪" },
+        "twist": { "text": "Staging isn't perfect. Some bugs only appear under real traffic. That's why canary releases exist.", "visual": "🐦" },
+        "climax": { "text": "Treat staging like production. If you treat it as a dumping ground, it won't catch real issues.", "visual": "🏗️" },
+        "punchline": { "text": "Staging catches production problems early. Mirror everything.", "visual": "🔍" }
+      },
+      "quiz": {
+        "question": "Why should staging mirror production closely?",
+        "options": ["To catch environment-specific bugs before they reach users", "To save money on production servers", "To run development experiments safely"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch03-continuous-delivery",
+      "title": "Feature Flags",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A half-finished feature is in main. You can't release because users would see broken UI. Feature flags fix this.", "visual": "🚩" },
+        "buildup": { "text": "A feature flag wraps new code in an if-statement. Flag off means the old behavior. Flag on means the new one.", "visual": "🔀" },
+        "discovery": { "text": "Deploy the code with the flag off. Users see nothing different. Turn it on for 5% of users first. Test safely.", "visual": "🧪" },
+        "twist": { "text": "Flags decouple deployment from release. Ship code anytime. Reveal features when the business is ready.", "visual": "🎁" },
+        "climax": { "text": "LaunchDarkly and Unleash manage flags at scale. Kill switches for features become instant rollback tools.", "visual": "🔧" },
+        "punchline": { "text": "Deploy dark, release bright. Feature flags decouple the two.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "What do feature flags decouple?",
+        "options": ["Deployment of code from release of features to users", "Frontend code from backend code", "Testing from development"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch03-continuous-delivery",
+      "title": "Blue-Green Deployments",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You have two identical environments: Blue (live) and Green (idle). Deployment just flips the switch.", "visual": "🔵" },
+        "buildup": { "text": "Deploy the new version to Green while Blue keeps serving traffic. Test Green thoroughly.", "visual": "🟢" },
+        "discovery": { "text": "When Green is verified, switch the load balancer. Traffic flows to Green. Blue becomes the new idle standby.", "visual": "🔀" },
+        "twist": { "text": "If Green has a problem, flip back to Blue in seconds. Instant rollback with zero downtime.", "visual": "⏪" },
+        "climax": { "text": "The cost is double infrastructure. But for critical systems, the safety of instant rollback is worth it.", "visual": "💰" },
+        "punchline": { "text": "Two environments, one switch. Deploy without fear.", "visual": "🎚️" }
+      },
+      "quiz": {
+        "question": "How does rollback work in a blue-green deployment?",
+        "options": ["Switch traffic back to the previous environment instantly", "Redeploy the old code from scratch", "Restore from a database backup"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch03-continuous-delivery",
+      "title": "Canary Releases",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Coal miners brought canaries underground. If the bird stopped singing, the air was toxic. Get out now.", "visual": "🐤" },
+        "buildup": { "text": "A canary release sends new code to a small group of users first — say 2%. They are the canary.", "visual": "👥" },
+        "discovery": { "text": "Monitor the canary group closely. If error rates spike, roll back before the other 98% ever see the bug.", "visual": "📊" },
+        "twist": { "text": "If the canary sings — metrics look good — gradually increase to 10%, 50%, then 100% of traffic.", "visual": "📈" },
+        "climax": { "text": "Canary releases combine real user traffic with controlled risk. No staging environment can replicate that.", "visual": "🔬" },
+        "punchline": { "text": "Test with real users, tiny risk. Canary finds danger first.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What percentage of users typically receives a canary release first?",
+        "options": ["A very small group, such as 2%", "Exactly 50%", "100% of users simultaneously"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch04-pipeline-anatomy",
+      "title": "Stages, Jobs, and Steps",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A pipeline has three layers of organization: stages, jobs, and steps. Each nests inside the next.", "visual": "🪆" },
+        "buildup": { "text": "A stage is a phase: build, test, deploy. Stages run in order. The test stage waits for build to finish.", "visual": "➡️" },
+        "discovery": { "text": "A job is a unit of work inside a stage. Multiple jobs in one stage can run in parallel on separate machines.", "visual": "🔀" },
+        "twist": { "text": "A step is a single command inside a job: run a script, install a package, upload an artifact.", "visual": "📝" },
+        "climax": { "text": "Stages for sequence, jobs for parallelism, steps for actions. Understanding this hierarchy is key to fast pipelines.", "visual": "🏎️" },
+        "punchline": { "text": "Stages, jobs, steps. Sequence, parallelism, action.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "How can multiple jobs within a single stage speed up a pipeline?",
+        "options": ["They can run in parallel on separate machines", "They skip the testing phase", "They reduce the number of steps needed"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch04-pipeline-anatomy",
+      "title": "Artifacts and Registries",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The build stage produced a binary. Where does it go? You can't just leave it on the build server.", "visual": "📦" },
+        "buildup": { "text": "An artifact registry stores build outputs: container images, JAR files, npm packages, binaries.", "visual": "🏪" },
+        "discovery": { "text": "The deploy stage pulls the exact artifact the build stage produced. Same bits, no rebuild, no drift.", "visual": "🔒" },
+        "twist": { "text": "Registries also enable rollback. Old versions stay stored. Rolling back means deploying an older artifact.", "visual": "⏪" },
+        "climax": { "text": "Docker Hub, GitHub Packages, and Artifactory are popular registries. Every serious pipeline uses one.", "visual": "🗄️" },
+        "punchline": { "text": "Build once, store the artifact, deploy it anywhere. No rebuilds.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why should pipelines deploy stored artifacts instead of rebuilding?",
+        "options": ["To guarantee the exact same bits are deployed every time", "To save disk space on the build server", "Because source code is deleted after building"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch04-pipeline-anatomy",
+      "title": "Secrets Management in Pipelines",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A developer committed an AWS key to Git. A bot found it in 12 seconds and started mining crypto.", "visual": "🔑" },
+        "buildup": { "text": "Pipelines need secrets — API keys, passwords, tokens — but they must never live in the code or YAML.", "visual": "🙅" },
+        "discovery": { "text": "Secrets go in a vault. The pipeline pulls them at runtime. They appear as environment variables, never in logs.", "visual": "🔐" },
+        "twist": { "text": "Good CI tools mask secrets in output. Even if a script prints them, the log shows asterisks.", "visual": "****" },
+        "climax": { "text": "HashiCorp Vault, AWS Secrets Manager, and GitHub Secrets are standard tools. Rotate keys regularly.", "visual": "🔄" },
+        "punchline": { "text": "Never commit secrets. Inject them at runtime from a vault.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "How should CI/CD pipelines handle secrets like API keys?",
+        "options": ["Inject them at runtime from a secrets vault", "Commit them in a private Git repository", "Hardcode them in the pipeline YAML file"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch04-pipeline-anatomy",
+      "title": "Caching for Speed",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The pipeline downloads 800 MB of dependencies every single run. That's five minutes of pure waste.", "visual": "⏳" },
+        "buildup": { "text": "Dependency files rarely change between commits. Downloading them fresh each time is pointless.", "visual": "🔁" },
+        "discovery": { "text": "Pipeline caching stores dependencies between runs. If the lockfile hasn't changed, skip the download.", "visual": "💾" },
+        "twist": { "text": "Cache keys are hash-based. Change the lockfile, and the cache invalidates automatically. Fresh deps when needed.", "visual": "🔑" },
+        "climax": { "text": "Docker layer caching is even more powerful. Unchanged layers are reused, only modified layers rebuild.", "visual": "🧱" },
+        "punchline": { "text": "Cache dependencies and layers. Spend pipeline time on real work.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "When does a pipeline cache typically invalidate?",
+        "options": ["When the lockfile or cache key changes", "After exactly 24 hours", "Every time the pipeline runs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch04-pipeline-anatomy",
+      "title": "Pipeline Notifications",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The build failed 20 minutes ago. Nobody noticed because the notification went to an email nobody reads.", "visual": "📧" },
+        "buildup": { "text": "Pipeline notifications must go where the team actually looks: Slack, Teams, or the pull request itself.", "visual": "💬" },
+        "discovery": { "text": "Status checks on pull requests are the most effective. A red X blocks the merge button visually.", "visual": "❌" },
+        "twist": { "text": "Too many notifications cause alert fatigue. Notify on failure and recovery, not on every green build.", "visual": "🔕" },
+        "climax": { "text": "The best teams treat a failed pipeline notification like a fire alarm — someone responds within minutes.", "visual": "🚒" },
+        "punchline": { "text": "Notify where people look. Failed builds demand fast response.", "visual": "🚨" }
+      },
+      "quiz": {
+        "question": "Where are pipeline notifications most effective?",
+        "options": ["In Slack/Teams channels and on pull request status checks", "In weekly email summaries", "On a physical dashboard in the CEO's office"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch05-popular-tools",
+      "title": "GitHub Actions",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "GitHub Actions turned every GitHub repo into a CI/CD platform. No external tool needed. It just works.", "visual": "🐙" },
+        "buildup": { "text": "Workflows live in YAML files inside your repo. Push code, and GitHub runs the workflow automatically.", "visual": "📄" },
+        "discovery": { "text": "The marketplace has thousands of reusable actions: deploy to AWS, post to Slack, run security scans.", "visual": "🛒" },
+        "twist": { "text": "Matrix builds test across many versions at once. Test Node 18, 20, and 22 in parallel with one config.", "visual": "🔢" },
+        "climax": { "text": "Free for public repos. For private repos, the free tier includes 2000 minutes per month. Plenty for small teams.", "visual": "💰" },
+        "punchline": { "text": "GitHub Actions: CI/CD built into where your code already lives.", "visual": "🏠" }
+      },
+      "quiz": {
+        "question": "Where are GitHub Actions workflow files stored?",
+        "options": ["In YAML files inside the repository itself", "In a separate GitHub CI service", "In a cloud dashboard outside of Git"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch05-popular-tools",
+      "title": "GitLab CI/CD",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "GitLab ships CI/CD as a core feature, not an add-on. One platform for code, pipelines, and deployments.", "visual": "🦊" },
+        "buildup": { "text": "A single .gitlab-ci.yml file defines the entire pipeline. GitLab runners execute the jobs on your infrastructure.", "visual": "📄" },
+        "discovery": { "text": "GitLab's built-in container registry, security scanning, and environments make it a full DevOps platform.", "visual": "🔧" },
+        "twist": { "text": "Auto DevOps can detect your language and generate a pipeline automatically. Zero-config CI for standard stacks.", "visual": "🤖" },
+        "climax": { "text": "Self-hosted or SaaS — your choice. Many enterprises pick GitLab for its single-platform approach.", "visual": "🏢" },
+        "punchline": { "text": "GitLab: code, CI, CD, and security in one platform.", "visual": "📦" }
+      },
+      "quiz": {
+        "question": "What does GitLab's Auto DevOps feature do?",
+        "options": ["Detects the language and generates a pipeline automatically", "Automatically fixes bugs in your code", "Deploys code without any testing"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch05-popular-tools",
+      "title": "Jenkins: The Pioneer",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Jenkins was the first popular CI server. Born in 2011 as a fork of Hudson, it dominated for a decade.", "visual": "🏛️" },
+        "buildup": { "text": "Jenkins is open source, self-hosted, and endlessly extensible. Over 1800 plugins cover every use case.", "visual": "🔌" },
+        "discovery": { "text": "Jenkinsfile brought pipeline-as-code to Jenkins. Groovy scripts define stages, steps, and conditions.", "visual": "📜" },
+        "twist": { "text": "Jenkins' age shows. Managing plugins, updates, and security is a full-time job. Newer tools are simpler.", "visual": "🧓" },
+        "climax": { "text": "Still, Jenkins runs millions of pipelines worldwide. Legacy systems rely on it heavily. It's far from dead.", "visual": "💪" },
+        "punchline": { "text": "Jenkins pioneered CI/CD. Complex but powerful and still alive.", "visual": "⚙️" }
+      },
+      "quiz": {
+        "question": "What is a common challenge with maintaining Jenkins?",
+        "options": ["Managing plugins, updates, and security patches is complex", "It cannot run on Linux servers", "It only supports Java projects"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch05-popular-tools",
+      "title": "CircleCI and Travis CI",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Before GitHub Actions, CircleCI and Travis CI were the darlings of open source CI/CD.", "visual": "⭕" },
+        "buildup": { "text": "Travis CI pioneered free CI for open source. A .travis.yml file and a GitHub repo was all you needed.", "visual": "📄" },
+        "discovery": { "text": "CircleCI offered faster builds with better caching, parallelism, and a polished developer experience.", "visual": "🏎️" },
+        "twist": { "text": "GitHub Actions disrupted both. Free, integrated, and backed by Microsoft's resources. The market shifted overnight.", "visual": "🌊" },
+        "climax": { "text": "CircleCI adapted and still thrives in enterprise. Travis CI struggled and was acquired. The market is brutal.", "visual": "📉" },
+        "punchline": { "text": "Pioneers don't always win. The CI/CD tool market moves fast.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "What disrupted Travis CI and CircleCI's dominance?",
+        "options": ["GitHub Actions, which was free and natively integrated", "A new programming language that didn't need CI", "Cloud providers banning third-party CI tools"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch05-popular-tools",
+      "title": "Cloud-Native CI/CD",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "AWS, Azure, and Google each built their own CI/CD services. The cloud wants to own your entire pipeline.", "visual": "☁️" },
+        "buildup": { "text": "AWS CodePipeline, Azure DevOps, and Google Cloud Build integrate tightly with their respective clouds.", "visual": "🔗" },
+        "discovery": { "text": "The advantage: zero networking setup. Your pipeline runs inside the same cloud as your infrastructure.", "visual": "🏠" },
+        "twist": { "text": "The downside: vendor lock-in. Switching clouds means rewriting your entire pipeline from scratch.", "visual": "🔒" },
+        "climax": { "text": "Multi-cloud teams often choose vendor-neutral tools like GitHub Actions or GitLab to avoid lock-in.", "visual": "🌐" },
+        "punchline": { "text": "Cloud CI/CD is easy to start, hard to leave. Choose wisely.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What is the main risk of using a cloud provider's native CI/CD service?",
+        "options": ["Vendor lock-in that makes switching clouds expensive", "Slower build speeds compared to self-hosted tools", "Limited support for popular programming languages"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch06-advanced-patterns",
+      "title": "Monorepo Pipelines",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Google stores billions of lines of code in one repository. One commit can touch frontend, backend, and infra.", "visual": "📁" },
+        "buildup": { "text": "In a monorepo, running the full pipeline on every commit wastes time. Most changes only affect one service.", "visual": "⏳" },
+        "discovery": { "text": "Affected-file detection solves this. The pipeline checks which files changed and only builds those services.", "visual": "🎯" },
+        "twist": { "text": "Dependency graphs add intelligence. If a shared library changes, rebuild every service that imports it.", "visual": "🕸️" },
+        "climax": { "text": "Nx, Turborepo, and Bazel are monorepo build tools. They cache, parallelize, and only rebuild what's needed.", "visual": "🔧" },
+        "punchline": { "text": "Monorepo pipelines build smart: only what changed, plus dependents.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "How do monorepo pipelines avoid rebuilding everything on each commit?",
+        "options": ["By detecting which files changed and building only affected services", "By splitting the repo into separate repositories", "By running builds only once a day"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch06-advanced-patterns",
+      "title": "Pipeline Security Scanning",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A library you depend on has a known vulnerability. Your code is fine — but the dependency is a backdoor.", "visual": "🚪" },
+        "buildup": { "text": "Supply chain attacks target dependencies, not your code. Log4Shell affected millions through one library.", "visual": "🌊" },
+        "discovery": { "text": "SAST scans your code for bugs. SCA scans your dependencies for known vulnerabilities. Both run in the pipeline.", "visual": "🔍" },
+        "twist": { "text": "DAST tests the running app from outside, like an attacker would. It finds issues that static analysis can't.", "visual": "🕵️" },
+        "climax": { "text": "Snyk, Trivy, and Dependabot integrate into pipelines. They block merges when critical vulnerabilities are found.", "visual": "🛡️" },
+        "punchline": { "text": "Scan code and dependencies in every build. Shift security left.", "visual": "⬅️" }
+      },
+      "quiz": {
+        "question": "What does SCA (Software Composition Analysis) scan for?",
+        "options": ["Known vulnerabilities in third-party dependencies", "Typos in source code comments", "Performance bottlenecks in the application"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch06-advanced-patterns",
+      "title": "Rolling Deployments",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You have ten servers running v1. You want v2 on all of them. Shutting down all ten means downtime.", "visual": "🖥️" },
+        "buildup": { "text": "A rolling deployment updates servers one at a time. While one updates, the other nine keep serving traffic.", "visual": "🔄" },
+        "discovery": { "text": "Health checks verify each server before moving to the next. If a server fails, the rollout pauses.", "visual": "🩺" },
+        "twist": { "text": "During the rollout, some users hit v1 and some hit v2. Your app must handle both versions running simultaneously.", "visual": "⚠️" },
+        "climax": { "text": "Rolling deployments are the default in Kubernetes. Pods update one by one with built-in health checking.", "visual": "☸️" },
+        "punchline": { "text": "Update one server at a time. Zero downtime, gradual rollout.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What challenge does a rolling deployment create?",
+        "options": ["Two versions run simultaneously and the app must handle both", "All servers must be shut down at the same time", "The deployment takes exactly twice as long"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch06-advanced-patterns",
+      "title": "Pipeline Observability",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The pipeline takes 45 minutes. Nobody knows which step is the bottleneck. They just wait and complain.", "visual": "😤" },
+        "buildup": { "text": "Pipeline observability means treating your CI/CD like a production system — with metrics and dashboards.", "visual": "📊" },
+        "discovery": { "text": "Track stage durations, failure rates, queue wait times, and flaky test percentages. Data reveals the truth.", "visual": "📈" },
+        "twist": { "text": "A flaky test that fails 5% of the time wastes more team time than a slow but reliable test suite.", "visual": "🎲" },
+        "climax": { "text": "Datadog CI Visibility and Buildkite Analytics show exactly where pipeline time goes. Optimize what you measure.", "visual": "🔬" },
+        "punchline": { "text": "Measure your pipeline like a product. Optimize what's slow.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "Why is tracking flaky test rates important for pipeline health?",
+        "options": ["Flaky tests waste more team time than consistently slow tests", "Flaky tests always indicate a critical production bug", "Flaky tests cost more money to run than stable tests"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--ci-cd-pipelines-explained--ch06-advanced-patterns",
+      "title": "Self-Service Pipelines",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every new team waited two weeks for the platform team to set up their pipeline. Self-service fixed that.", "visual": "⏳" },
+        "buildup": { "text": "Self-service pipelines let teams create and configure their own CI/CD from templates. No tickets needed.", "visual": "🎫" },
+        "discovery": { "text": "Golden templates enforce best practices. Teams pick a template and customize only what they need.", "visual": "📋" },
+        "twist": { "text": "Freedom with guardrails. Teams own their pipeline but inherit security scans and approval gates.", "visual": "🛤️" },
+        "climax": { "text": "Backstage and similar portals provide a catalog of templates. One click to scaffold a full pipeline.", "visual": "🖱️" },
+        "punchline": { "text": "Let teams own their pipelines. Templates keep standards.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "What is the main benefit of self-service pipelines?",
+        "options": ["Teams can create pipelines quickly without waiting for a platform team", "Pipelines run faster when teams manage them", "Self-service pipelines eliminate the need for any security scanning"],
+        "correct": 0
+      }
+    }
+  ]
+}

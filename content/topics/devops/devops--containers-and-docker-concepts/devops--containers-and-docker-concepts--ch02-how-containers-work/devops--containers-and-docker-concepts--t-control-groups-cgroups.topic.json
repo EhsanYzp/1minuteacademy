@@ -1,0 +1,49 @@
+{
+  "id": "devops--containers-and-docker-concepts--t-control-groups-cgroups",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Containers and Docker Concepts",
+  "course_id": "devops--containers-and-docker-concepts",
+  "chapter_id": "devops--containers-and-docker-concepts--ch02-how-containers-work",
+  "title": "Control Groups (cgroups)",
+  "emoji": "🐳",
+  "color": "#0891B2",
+  "description": "A tiny lesson with a big payoff: Control Groups (cgroups).",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A runaway container eating all the CPU would starve every other container on the same host. Cgroups prevent this.",
+      "visual": "🍽️"
+    },
+    "buildup": {
+      "text": "Namespaces isolate what a container can see. Cgroups limit what a container can use: CPU, memory, disk I/O.",
+      "visual": "📊"
+    },
+    "discovery": {
+      "text": "Set a memory limit of 512 MB. If the container exceeds it, the kernel kills it. No negotiation.",
+      "visual": "💀"
+    },
+    "twist": {
+      "text": "CPU limits work differently. The container gets throttled, not killed. It slows down instead of crashing.",
+      "visual": "🐌"
+    },
+    "climax": {
+      "text": "Cgroups make multi-tenant hosting safe. Cloud providers use them to guarantee resources for each customer.",
+      "visual": "☁️"
+    },
+    "punchline": {
+      "text": "Cgroups enforce resource limits. No single container hogs the machine.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "What happens when a container exceeds its cgroup memory limit?",
+    "options": [
+      "The kernel kills the container process",
+      "The container automatically requests more memory",
+      "The host machine reboots"
+    ],
+    "correct": 0
+  }
+}

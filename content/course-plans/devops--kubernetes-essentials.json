@@ -1,0 +1,583 @@
+{
+  "categoryId": "devops",
+  "subject": "DevOps",
+  "courseId": "devops--kubernetes-essentials",
+  "courseTitle": "Kubernetes Essentials",
+  "emoji": "☸️",
+  "color": "#326CE5",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "devops--kubernetes-essentials--ch01-why-kubernetes",
+      "title": "Why Kubernetes",
+      "position": 1
+    },
+    {
+      "id": "devops--kubernetes-essentials--ch02-architecture",
+      "title": "Architecture",
+      "position": 2
+    },
+    {
+      "id": "devops--kubernetes-essentials--ch03-core-objects",
+      "title": "Core Objects",
+      "position": 3
+    },
+    {
+      "id": "devops--kubernetes-essentials--ch04-networking-and-services",
+      "title": "Networking and Services",
+      "position": 4
+    },
+    {
+      "id": "devops--kubernetes-essentials--ch05-configuration-and-storage",
+      "title": "Configuration and Storage",
+      "position": 5
+    },
+    {
+      "id": "devops--kubernetes-essentials--ch06-operating-kubernetes",
+      "title": "Operating Kubernetes",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch01-why-kubernetes",
+      "title": "The Container Management Problem",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You containerized your app. Now you have 200 containers across 30 servers. Who restarts a crashed one at 3 AM?", "visual": "😴" },
+        "buildup": { "text": "Manually managing containers doesn't scale. Tracking capacity, routing traffic, healing failures — chaos.", "visual": "🌪️" },
+        "discovery": { "text": "Kubernetes is an orchestrator. You tell it what you want. It figures out how to make it happen and keeps it that way.", "visual": "☸️" },
+        "twist": { "text": "The name comes from Greek for 'helmsman.' K8s steers your containers through the chaos of distributed systems.", "visual": "⛵" },
+        "climax": { "text": "Google ran containers for 15 years before open-sourcing Kubernetes in 2014. It encoded decades of production wisdom.", "visual": "🧠" },
+        "punchline": { "text": "K8s manages containers so you don't have to. Declare the goal, it delivers.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does Kubernetes automate?",
+        "options": ["Container scheduling, scaling, healing, and networking", "Writing application code", "Designing database schemas"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch01-why-kubernetes",
+      "title": "Declarative vs Imperative",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Tell Kubernetes what to do step by step, or describe what you want and let it figure it out.", "visual": "📋" },
+        "buildup": { "text": "Imperative: 'Create 3 pods, then create a service, then set up a load balancer.' You manage every step.", "visual": "📝" },
+        "discovery": { "text": "Declarative: 'I want 3 replicas behind a load balancer.' Kubernetes compares desired state to current state and acts.", "visual": "🔄" },
+        "twist": { "text": "If a pod dies, the declarative model detects the drift and creates a new one. No human intervention needed.", "visual": "🤖" },
+        "climax": { "text": "Declarative configs live in YAML files in Git. The desired state is version-controlled and reviewable.", "visual": "📂" },
+        "punchline": { "text": "Describe what you want, not how to get it. K8s reconciles the rest.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is the declarative approach in Kubernetes?",
+        "options": ["Describing the desired state and letting K8s reconcile it", "Issuing step-by-step commands manually", "Writing imperative scripts that run in order"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch01-why-kubernetes",
+      "title": "The Kubernetes Ecosystem",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Kubernetes alone doesn't do everything. An ecosystem of tools fills the gaps: service mesh, GitOps, observability.", "visual": "🌐" },
+        "buildup": { "text": "Helm manages K8s package installs. Prometheus monitors metrics. Istio handles service-to-service communication.", "visual": "🔧" },
+        "discovery": { "text": "The CNCF (Cloud Native Computing Foundation) hosts over 100 projects that extend Kubernetes capabilities.", "visual": "🏛️" },
+        "twist": { "text": "This ecosystem is both a strength and a weakness. Powerful but overwhelming. Choosing the right tools takes experience.", "visual": "🤯" },
+        "climax": { "text": "The CNCF landscape map has over 1000 projects. Nobody uses all of them. Pick what solves your specific problems.", "visual": "🗺️" },
+        "punchline": { "text": "K8s is the foundation. The ecosystem builds everything on top.", "visual": "🏗️" }
+      },
+      "quiz": {
+        "question": "What organization hosts the Kubernetes ecosystem of projects?",
+        "options": ["The Cloud Native Computing Foundation (CNCF)", "The Linux Foundation alone", "Google Cloud Platform"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch01-why-kubernetes",
+      "title": "Managed Kubernetes Services",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Running a Kubernetes control plane yourself is painful. Upgrades, patches, high availability — it's a full-time job.", "visual": "😰" },
+        "buildup": { "text": "Every major cloud offers managed Kubernetes: AWS EKS, Google GKE, Azure AKS. They run the control plane for you.", "visual": "☁️" },
+        "discovery": { "text": "You focus on deploying apps. The cloud provider handles etcd backups, API server uptime, and K8s version upgrades.", "visual": "🎯" },
+        "twist": { "text": "GKE Autopilot goes further: it manages the worker nodes too. You only define workloads. Google manages everything else.", "visual": "🤖" },
+        "climax": { "text": "Most companies use managed K8s. Self-hosted is for teams with special compliance or customization needs.", "visual": "🏢" },
+        "punchline": { "text": "Let the cloud run K8s infrastructure. You run your apps.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "What does a managed Kubernetes service handle for you?",
+        "options": ["The control plane, upgrades, and high availability", "Writing your application code", "Designing the network architecture"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch01-why-kubernetes",
+      "title": "When Not to Use Kubernetes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A startup with one app and two developers adopted Kubernetes. They spent more time on K8s than on their product.", "visual": "💸" },
+        "buildup": { "text": "Kubernetes adds complexity: YAML configs, networking rules, RBAC policies, upgrade cycles, debugging layers.", "visual": "🧩" },
+        "discovery": { "text": "For simple apps, a single server or a serverless function is enough. Not every project needs an orchestrator.", "visual": "🤷" },
+        "twist": { "text": "The question isn't 'Can we use K8s?' It's 'Does the operational complexity pay for itself at our scale?'", "visual": "⚖️" },
+        "climax": { "text": "Kubernetes shines when you have many services, many teams, and need automated scaling. Below that, it's overhead.", "visual": "📊" },
+        "punchline": { "text": "K8s solves real problems at scale. At small scale, it creates them.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "When is Kubernetes likely overkill?",
+        "options": ["For a small team with a single simple application", "For a company running hundreds of microservices", "For organizations that need automated scaling"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch02-architecture",
+      "title": "Control Plane and Worker Nodes",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A Kubernetes cluster has two types of machines: control plane nodes that decide, and worker nodes that execute.", "visual": "🧠" },
+        "buildup": { "text": "The control plane is the brain. It stores desired state, schedules pods, and monitors the entire cluster.", "visual": "🎛️" },
+        "discovery": { "text": "Worker nodes do the heavy lifting. They run your containers, handle network traffic, and report status back.", "visual": "💪" },
+        "twist": { "text": "If a worker dies, the control plane reschedules its pods onto healthy nodes. Self-healing, automatic, no pages at 3 AM.", "visual": "🔄" },
+        "climax": { "text": "Production clusters run multiple control plane nodes for high availability. If one fails, another takes over instantly.", "visual": "🏗️" },
+        "punchline": { "text": "Control plane decides. Workers execute. Together, they're a cluster.", "visual": "☸️" }
+      },
+      "quiz": {
+        "question": "What is the role of the control plane in Kubernetes?",
+        "options": ["It stores desired state, schedules pods, and monitors the cluster", "It runs application containers", "It serves web traffic directly to users"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch02-architecture",
+      "title": "The API Server",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every interaction with Kubernetes goes through one component: the API server. It's the front door to the cluster.", "visual": "🚪" },
+        "buildup": { "text": "kubectl commands, dashboards, CI/CD tools — they all talk to the API server over HTTPS. It's REST all the way.", "visual": "🌐" },
+        "discovery": { "text": "The API server validates requests, authenticates users, and stores results in etcd. The single truth gateway.", "visual": "🔐" },
+        "twist": { "text": "Admission controllers intercept requests before they're stored. They can modify or reject objects based on policy.", "visual": "🛡️" },
+        "climax": { "text": "Everything is an API object. Pods, services, secrets — all created, read, updated, and deleted through the same API.", "visual": "📦" },
+        "punchline": { "text": "One API for everything. The API server is the cluster's gateway.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "What role does the API server play in Kubernetes?",
+        "options": ["It's the single entry point for all cluster operations", "It runs application containers on worker nodes", "It stores data in a relational database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch02-architecture",
+      "title": "etcd: The Cluster Brain",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Where does K8s store every pod, service, and secret? In etcd, a distributed key-value store.", "visual": "🗄️" },
+        "buildup": { "text": "etcd stores the entire cluster state. If etcd is lost and unrecoverable, the cluster is effectively destroyed.", "visual": "💀" },
+        "discovery": { "text": "etcd uses the Raft consensus algorithm. Data is replicated across multiple nodes so no single failure causes data loss.", "visual": "🔄" },
+        "twist": { "text": "etcd is the only stateful component in the control plane. Everything else can be restarted from scratch.", "visual": "⭐" },
+        "climax": { "text": "Backup etcd regularly. In a disaster, restoring etcd restores the entire cluster state. It's your ultimate safety net.", "visual": "🛡️" },
+        "punchline": { "text": "etcd holds all cluster state. Back it up. Protect it fiercely.", "visual": "🔐" }
+      },
+      "quiz": {
+        "question": "Why is etcd the most critical component to back up in Kubernetes?",
+        "options": ["It stores the entire cluster state and all configurations", "It runs the application containers", "It handles network routing between pods"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch02-architecture",
+      "title": "The Scheduler",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A new pod needs to run. Which node should it go on? The scheduler decides, and it's smarter than you think.", "visual": "🤔" },
+        "buildup": { "text": "The scheduler looks at available CPU, memory, disk, and existing pod placements across all nodes.", "visual": "📊" },
+        "discovery": { "text": "It filters out nodes that don't meet requirements, then scores the remaining ones to find the best fit.", "visual": "🏆" },
+        "twist": { "text": "Node affinity rules let you influence placement: 'Put this pod on a GPU node' or 'Keep these pods on the same rack.'", "visual": "🧲" },
+        "climax": { "text": "Taints and tolerations do the opposite: 'Only special pods may run on this node.' Everyone else is repelled.", "visual": "🚫" },
+        "punchline": { "text": "The scheduler places pods optimally. You set rules, it does the math.", "visual": "🧮" }
+      },
+      "quiz": {
+        "question": "How does the Kubernetes scheduler decide where to place a pod?",
+        "options": ["It filters and scores nodes based on resources and rules", "It always picks the first available node", "It randomly assigns pods to any node"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch02-architecture",
+      "title": "The Kubelet",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The control plane says: 'Run this pod on Node 7.' Who on Node 7 actually does the work? The kubelet.", "visual": "🤖" },
+        "buildup": { "text": "The kubelet is an agent running on every worker node. It watches for pod assignments from the API server.", "visual": "👀" },
+        "discovery": { "text": "When assigned a pod, the kubelet tells the container runtime to pull the image and start the container.", "visual": "▶️" },
+        "twist": { "text": "The kubelet also runs health checks. If a container fails its liveness probe, the kubelet restarts it locally.", "visual": "🔄" },
+        "climax": { "text": "It reports node status back to the control plane: CPU usage, memory, disk pressure, and pod states.", "visual": "📡" },
+        "punchline": { "text": "The kubelet is the worker's agent. It starts, monitors, and reports on pods.", "visual": "📋" }
+      },
+      "quiz": {
+        "question": "What does the kubelet do when a container fails its liveness probe?",
+        "options": ["It restarts the container automatically", "It sends an email to the development team", "It shuts down the entire worker node"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch03-core-objects",
+      "title": "Pods: The Smallest Unit",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Kubernetes doesn't run containers directly. It runs pods. A pod wraps one or more containers into a single unit.", "visual": "🫛" },
+        "buildup": { "text": "Most pods run one container. But sometimes a sidecar container handles logging or proxying alongside the main app.", "visual": "🏍️" },
+        "discovery": { "text": "Containers in a pod share the same network and storage. They communicate over localhost, not over the network.", "visual": "🤝" },
+        "twist": { "text": "Pods are ephemeral. They're born, they run, they die. Never expect a pod to live forever. Design for replacement.", "visual": "♻️" },
+        "climax": { "text": "You rarely create pods directly. Controllers like Deployments manage pod lifecycle, scaling, and updates for you.", "visual": "🎮" },
+        "punchline": { "text": "Pods wrap containers. Deployments manage pods. Think in layers.", "visual": "🧱" }
+      },
+      "quiz": {
+        "question": "Why do containers in the same pod share localhost?",
+        "options": ["They share the same network namespace", "Kubernetes copies network packets between them", "They run on different nodes but are linked"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch03-core-objects",
+      "title": "Deployments",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You want 3 replicas of your app, rolling updates, and automatic rollback on failure. A Deployment does all three.", "visual": "🚀" },
+        "buildup": { "text": "A Deployment creates a ReplicaSet, which ensures the right number of pod replicas are always running.", "visual": "🔢" },
+        "discovery": { "text": "Update the image version in the Deployment spec. K8s rolls out new pods one by one, replacing old ones gradually.", "visual": "🔄" },
+        "twist": { "text": "If the new version crashes, Kubernetes detects it and halts the rollout. One command rolls everything back.", "visual": "⏪" },
+        "climax": { "text": "Deployment history tracks every change. You can roll back to any previous revision, not just the last one.", "visual": "📜" },
+        "punchline": { "text": "Deployments manage replicas, updates, and rollbacks. The workhorse of K8s.", "visual": "🐴" }
+      },
+      "quiz": {
+        "question": "What happens if a new version crashes during a Deployment rollout?",
+        "options": ["Kubernetes halts the rollout and allows easy rollback", "All pods are deleted immediately", "The cluster shuts down to prevent damage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch03-core-objects",
+      "title": "StatefulSets",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Deployments treat pods as interchangeable. But databases need stable identities. Pod-0 must always be Pod-0.", "visual": "🆔" },
+        "buildup": { "text": "StatefulSets give each pod a sticky identity: a stable hostname, ordered startup, and persistent storage per pod.", "visual": "📌" },
+        "discovery": { "text": "Pod names are predictable: mydb-0, mydb-1, mydb-2. They're created in order and deleted in reverse order.", "visual": "🔢" },
+        "twist": { "text": "Each pod gets its own PersistentVolumeClaim. Delete and recreate the pod, and it reattaches to the same volume.", "visual": "💾" },
+        "climax": { "text": "Databases, message queues, and distributed caches use StatefulSets. Anything that needs stable identity and storage.", "visual": "🗄️" },
+        "punchline": { "text": "StatefulSets: stable names, ordered lifecycle, persistent storage per pod.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "When should you use a StatefulSet instead of a Deployment?",
+        "options": ["When pods need stable identities and persistent storage", "When running stateless web servers", "When you need the fastest possible startup time"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch03-core-objects",
+      "title": "DaemonSets",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You need a log collector on every node. Not some nodes. Every single node. That's what a DaemonSet does.", "visual": "📡" },
+        "buildup": { "text": "A DaemonSet ensures one pod runs on each node. Add a new node, and the DaemonSet places a pod there automatically.", "visual": "🤖" },
+        "discovery": { "text": "Log agents, monitoring exporters, and network plugins are classic DaemonSet workloads. One per node, always.", "visual": "📊" },
+        "twist": { "text": "You can scope DaemonSets to specific nodes using labels. Only GPU nodes get the GPU monitoring daemon, for example.", "visual": "🏷️" },
+        "climax": { "text": "DaemonSets update pods one node at a time by default. Rolling updates keep the cluster stable during upgrades.", "visual": "🔄" },
+        "punchline": { "text": "DaemonSets: one pod per node, everywhere, always running.", "visual": "🌍" }
+      },
+      "quiz": {
+        "question": "What does a DaemonSet guarantee?",
+        "options": ["Exactly one pod runs on each selected node in the cluster", "All pods run on a single node for performance", "Pods are created only when traffic increases"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch03-core-objects",
+      "title": "Jobs and CronJobs",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Not every workload runs forever. Some tasks run once and finish: data migration, report generation, batch processing.", "visual": "📋" },
+        "buildup": { "text": "A Job creates a pod that runs to completion. If the pod fails, the Job retries it up to a configurable limit.", "visual": "🔁" },
+        "discovery": { "text": "Parallel Jobs run multiple pods simultaneously. Process 1000 items by splitting them across 10 pods.", "visual": "⚡" },
+        "twist": { "text": "CronJobs schedule Jobs on a repeating pattern. 'Run this backup every night at 2 AM' — Kubernetes handles it.", "visual": "🕐" },
+        "climax": { "text": "Jobs and CronJobs use the same pod spec as Deployments. The difference is lifecycle: run-to-completion, not run-forever.", "visual": "🎯" },
+        "punchline": { "text": "Jobs run tasks to completion. CronJobs repeat them on a schedule.", "visual": "⏰" }
+      },
+      "quiz": {
+        "question": "What is the difference between a Job and a CronJob in Kubernetes?",
+        "options": ["A CronJob runs a Job on a repeating schedule", "A Job runs continuously while a CronJob runs once", "CronJobs are faster than Jobs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch04-networking-and-services",
+      "title": "Services: Stable Endpoints",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Pods get IP addresses, but those IPs change every time a pod restarts. How does anyone find your app reliably?", "visual": "🤔" },
+        "buildup": { "text": "A Service gives a stable IP and DNS name to a group of pods. The pods behind it can come and go freely.", "visual": "🏷️" },
+        "discovery": { "text": "The Service uses label selectors to find its pods. Any pod matching the labels receives traffic automatically.", "visual": "🔍" },
+        "twist": { "text": "ClusterIP (internal only), NodePort (external via node), and LoadBalancer (cloud LB) are the three main types.", "visual": "🔀" },
+        "climax": { "text": "kube-proxy programs iptables or IPVS rules on every node. Traffic to the Service IP gets forwarded to healthy pods.", "visual": "🔧" },
+        "punchline": { "text": "Services give pods a stable address. Pods change; the Service doesn't.", "visual": "📌" }
+      },
+      "quiz": {
+        "question": "Why do Kubernetes Services exist?",
+        "options": ["To provide stable IP addresses since pod IPs change on restart", "To make containers run faster", "To store application configuration"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch04-networking-and-services",
+      "title": "Ingress: HTTP Routing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your cluster has five services. api.example.com hits one, app.example.com hits another. Ingress routes them.", "visual": "🚦" },
+        "buildup": { "text": "An Ingress object defines HTTP routing rules: hostname, path, and which Service to forward to.", "visual": "📋" },
+        "discovery": { "text": "An Ingress controller (like nginx or Traefik) reads the rules and configures a reverse proxy automatically.", "visual": "🔧" },
+        "twist": { "text": "Ingress also handles TLS termination. Upload a certificate, and HTTPS works without changing your app code.", "visual": "🔒" },
+        "climax": { "text": "Kubernetes Gateway API is the successor to Ingress — more expressive, more powerful, and role-oriented.", "visual": "🚀" },
+        "punchline": { "text": "Ingress routes HTTP traffic into the cluster by host and path.", "visual": "🌐" }
+      },
+      "quiz": {
+        "question": "What does an Ingress controller do in Kubernetes?",
+        "options": ["It reads Ingress rules and configures a reverse proxy for HTTP routing", "It schedules pods onto worker nodes", "It stores secrets for TLS certificates"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch04-networking-and-services",
+      "title": "DNS Inside the Cluster",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your frontend pod needs to call the backend service. It doesn't know the IP. It just calls 'backend' by name.", "visual": "📡" },
+        "buildup": { "text": "Kubernetes runs a DNS server (CoreDNS) inside the cluster. Every Service gets a DNS entry automatically.", "visual": "🌐" },
+        "discovery": { "text": "The format is service-name.namespace.svc.cluster.local. Within the same namespace, just the service name works.", "visual": "🏷️" },
+        "twist": { "text": "Headless services (clusterIP: None) return individual pod IPs instead of a single service IP. Useful for StatefulSets.", "visual": "🔍" },
+        "climax": { "text": "DNS makes services discoverable without hardcoding IPs. Add a new service and every pod can find it immediately.", "visual": "🧲" },
+        "punchline": { "text": "CoreDNS maps service names to IPs. Service discovery, built in.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "How does a pod find another service within the same Kubernetes namespace?",
+        "options": ["By calling the service name — CoreDNS resolves it automatically", "By reading a shared config file mounted on every pod", "By scanning all pod IP addresses on the network"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch04-networking-and-services",
+      "title": "Network Policies",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "By default, every pod can talk to every other pod in the cluster. That's convenient — and terrifying.", "visual": "😱" },
+        "buildup": { "text": "If an attacker compromises one pod, they can reach the database pod, the auth service, and everything else.", "visual": "🕷️" },
+        "discovery": { "text": "Network Policies are firewall rules for pods. Allow only the traffic you expect and deny everything else.", "visual": "🛡️" },
+        "twist": { "text": "Network Policies use label selectors. 'Frontend pods may talk to backend pods on port 8080. Nothing else.'", "visual": "🏷️" },
+        "climax": { "text": "Not all network plugins enforce policies. Calico, Cilium, and Weave do. The default kubenet does not.", "visual": "⚠️" },
+        "punchline": { "text": "Default K8s is wide open. Network Policies add the firewall.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "What is the default network behavior between pods in Kubernetes?",
+        "options": ["Every pod can communicate with every other pod", "Pods are completely isolated by default", "Only pods in the same namespace can communicate"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch04-networking-and-services",
+      "title": "Service Mesh Concepts",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your microservices need encryption, retry logic, circuit breaking, and tracing. Add that to every service? No way.", "visual": "🙅" },
+        "buildup": { "text": "A service mesh injects a sidecar proxy next to every pod. The proxy handles networking; your app handles logic.", "visual": "🏍️" },
+        "discovery": { "text": "Istio and Linkerd are the leading meshes. They encrypt all pod-to-pod traffic with mutual TLS automatically.", "visual": "🔐" },
+        "twist": { "text": "The mesh also gives you observability for free: request rates, error rates, and latency between every service pair.", "visual": "📊" },
+        "climax": { "text": "Service meshes add complexity and resource overhead. Use them when you have many services that need uniform policies.", "visual": "⚖️" },
+        "punchline": { "text": "A mesh handles networking so your code doesn't have to.", "visual": "🕸️" }
+      },
+      "quiz": {
+        "question": "How does a service mesh add features without changing application code?",
+        "options": ["It injects a sidecar proxy alongside each pod", "It modifies the application source code automatically", "It requires a special programming framework"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch05-configuration-and-storage",
+      "title": "ConfigMaps",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your app needs a config file with 20 settings. Baking it into the Docker image means rebuilding for every change.", "visual": "🔧" },
+        "buildup": { "text": "ConfigMaps store configuration data as key-value pairs in Kubernetes. Separate from the image, managed by the cluster.", "visual": "📋" },
+        "discovery": { "text": "Mount a ConfigMap as a file or inject its values as environment variables. The pod reads them at startup.", "visual": "📂" },
+        "twist": { "text": "Update the ConfigMap and pods can pick up changes without restarting — if the app watches the mounted file.", "visual": "🔄" },
+        "climax": { "text": "ConfigMaps are not for secrets. They're stored in plain text in etcd. Use Secrets for sensitive data.", "visual": "⚠️" },
+        "punchline": { "text": "ConfigMaps decouple config from code. Update settings without rebuilding.", "visual": "📦" }
+      },
+      "quiz": {
+        "question": "Why should you not store passwords in ConfigMaps?",
+        "options": ["ConfigMaps are stored in plain text and are not secure", "ConfigMaps cannot hold string values", "Passwords are too long for ConfigMap entries"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch05-configuration-and-storage",
+      "title": "Secrets",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Database passwords, API keys, TLS certificates — your pods need them, but they must stay protected.", "visual": "🔑" },
+        "buildup": { "text": "Kubernetes Secrets store sensitive data. They're base64-encoded in etcd by default — which is not encryption.", "visual": "⚠️" },
+        "discovery": { "text": "Enable encryption at rest in etcd. Then Secrets are actually encrypted, not just encoded. Big difference.", "visual": "🔐" },
+        "twist": { "text": "External secret managers like Vault, AWS Secrets Manager, or Sealed Secrets are even better. K8s syncs from them.", "visual": "🏦" },
+        "climax": { "text": "Secrets are injected as mounted files or environment variables. Pods read them at runtime without knowing the source.", "visual": "📂" },
+        "punchline": { "text": "Secrets hold sensitive data. Encrypt at rest and consider a vault.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why is base64-encoding of Kubernetes Secrets not sufficient security?",
+        "options": ["Base64 is encoding, not encryption — anyone can decode it", "Base64 makes the secret too large to store", "Kubernetes doesn't support base64"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch05-configuration-and-storage",
+      "title": "Persistent Volumes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Pods are ephemeral. When they die, local data dies too. Databases on Kubernetes need storage that survives pod restarts.", "visual": "💾" },
+        "buildup": { "text": "A PersistentVolume (PV) is a piece of storage provisioned in the cluster. Think of it as a virtual disk.", "visual": "💿" },
+        "discovery": { "text": "A PersistentVolumeClaim (PVC) is a request for storage. The pod asks for 10 GB, and Kubernetes finds a matching PV.", "visual": "📝" },
+        "twist": { "text": "Dynamic provisioning creates PVs on demand. No admin pre-creates disks. The StorageClass does it automatically.", "visual": "🤖" },
+        "climax": { "text": "Reclaim policy controls what happens when PVC is deleted. Retain keeps data. Delete wipes it. Choose wisely.", "visual": "⚠️" },
+        "punchline": { "text": "PVs and PVCs give pods durable storage that outlives the pod itself.", "visual": "🏗️" }
+      },
+      "quiz": {
+        "question": "What does dynamic provisioning in Kubernetes do?",
+        "options": ["Creates storage volumes automatically when a PVC is requested", "Predicts how much storage an app will need", "Deletes unused volumes every night"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch05-configuration-and-storage",
+      "title": "Namespaces",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your cluster runs dev, staging, and production workloads. How do you keep them from stepping on each other?", "visual": "🏗️" },
+        "buildup": { "text": "Namespaces partition a cluster into virtual sub-clusters. Each namespace has its own set of resources.", "visual": "📂" },
+        "discovery": { "text": "Resources in different namespaces can have the same name. 'frontend' in dev and 'frontend' in prod coexist peacefully.", "visual": "✌️" },
+        "twist": { "text": "Resource quotas per namespace prevent one team from consuming all the cluster's CPU and memory.", "visual": "📊" },
+        "climax": { "text": "RBAC rules scope access by namespace. Dev team sees dev namespace only. Ops sees everything. Least privilege enforced.", "visual": "🔐" },
+        "punchline": { "text": "Namespaces: virtual boundaries inside one physical cluster.", "visual": "🧱" }
+      },
+      "quiz": {
+        "question": "How do namespaces help with resource management?",
+        "options": ["Resource quotas per namespace limit CPU and memory usage", "Namespaces automatically scale pods up and down", "They merge resources from different clusters"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch05-configuration-and-storage",
+      "title": "Resource Requests and Limits",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A pod with no memory limit consumed 16 GB and crashed the entire node. Every other pod on that node went down too.", "visual": "💥" },
+        "buildup": { "text": "Resource requests tell the scheduler how much a pod needs. Limits cap what a pod can actually use.", "visual": "📊" },
+        "discovery": { "text": "Requests guarantee minimum resources. The scheduler places the pod on a node with at least that much available.", "visual": "✅" },
+        "twist": { "text": "Limits enforce maximum usage. Exceed the memory limit and the pod is killed. Exceed the CPU limit and it's throttled.", "visual": "🚨" },
+        "climax": { "text": "Requests too high waste resources. Too low causes evictions. Right-sizing takes observation and tuning.", "visual": "🔍" },
+        "punchline": { "text": "Requests reserve resources. Limits protect the node. Set both correctly.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What happens when a pod exceeds its Kubernetes memory limit?",
+        "options": ["The pod is killed by the kernel (OOM killed)", "The pod is automatically migrated to a bigger node", "Nothing — limits are just suggestions"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch06-operating-kubernetes",
+      "title": "Horizontal Pod Autoscaler",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Traffic doubles at 9 AM and drops at midnight. Running peak capacity all day wastes money. Autoscaling adapts.", "visual": "📈" },
+        "buildup": { "text": "The Horizontal Pod Autoscaler (HPA) watches a metric — usually CPU — and adjusts the replica count automatically.", "visual": "🔢" },
+        "discovery": { "text": "Set a target: 'Keep average CPU at 70%.' If it goes above, HPA adds pods. Below, it removes them.", "visual": "🎚️" },
+        "twist": { "text": "Custom metrics work too. Scale on requests per second, queue depth, or any Prometheus metric. Not just CPU.", "visual": "📊" },
+        "climax": { "text": "HPA + Cluster Autoscaler is the full picture. HPA scales pods. Cluster Autoscaler scales the nodes underneath.", "visual": "🏗️" },
+        "punchline": { "text": "HPA scales pods to match demand. Pay for what you use.", "visual": "💰" }
+      },
+      "quiz": {
+        "question": "What does the Horizontal Pod Autoscaler adjust?",
+        "options": ["The number of pod replicas based on observed metrics", "The amount of CPU and memory per pod", "The number of nodes in the cluster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch06-operating-kubernetes",
+      "title": "RBAC: Who Can Do What",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An intern ran kubectl delete namespace production. Everything vanished. Nobody had restricted their access.", "visual": "😱" },
+        "buildup": { "text": "RBAC (Role-Based Access Control) defines who can do what inside the cluster. Permissions are explicit, not implicit.", "visual": "🔐" },
+        "discovery": { "text": "A Role lists allowed actions (get, create, delete) on resource types (pods, services) within a namespace.", "visual": "📋" },
+        "twist": { "text": "RoleBindings attach a Role to a user or service account. No binding? No access. Even admins must be bound.", "visual": "🔗" },
+        "climax": { "text": "ClusterRoles and ClusterRoleBindings work across all namespaces. Use them sparingly — cluster-wide power is dangerous.", "visual": "⚡" },
+        "punchline": { "text": "RBAC: explicit permissions, minimum privilege. Nobody gets more than needed.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What does a RoleBinding do in Kubernetes RBAC?",
+        "options": ["It attaches a Role's permissions to a specific user or service account", "It creates a new namespace", "It encrypts network traffic between pods"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch06-operating-kubernetes",
+      "title": "Helm: The Package Manager",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Installing Prometheus on K8s requires 15 YAML files. Maintaining them manually is painful. Helm bundles them together.", "visual": "📦" },
+        "buildup": { "text": "Helm charts are packages of pre-configured Kubernetes resources. Install a complex app with a single command.", "visual": "🎁" },
+        "discovery": { "text": "Charts are templates. Pass in your values (replica count, image tag, domain) and Helm renders the final YAML.", "visual": "📝" },
+        "twist": { "text": "Helm tracks releases with versioning. Upgrade, roll back, or uninstall an entire stack in one command.", "visual": "🔄" },
+        "climax": { "text": "Artifact Hub hosts thousands of community charts. Need Redis, PostgreSQL, or Grafana? One Helm install command.", "visual": "🛒" },
+        "punchline": { "text": "Helm: one command installs, upgrades, or rolls back a complex app.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does a Helm chart contain?",
+        "options": ["Pre-configured Kubernetes resource templates with customizable values", "Docker images and container runtimes", "Source code for building applications"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch06-operating-kubernetes",
+      "title": "Cluster Upgrades",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Kubernetes releases a new version every four months. Each version is supported for 14 months. Upgrades are mandatory.", "visual": "📅" },
+        "buildup": { "text": "Upgrades are sequential. You must go from 1.28 to 1.29, then 1.29 to 1.30. Skipping versions is not allowed.", "visual": "🪜" },
+        "discovery": { "text": "Control plane upgrades first. Then worker nodes. The API server must always be at least as new as the kubelets.", "visual": "➡️" },
+        "twist": { "text": "Deprecated APIs break manifests. A YAML that worked on 1.28 may be rejected on 1.30. Audit before upgrading.", "visual": "⚠️" },
+        "climax": { "text": "Managed K8s services simplify upgrades with one-click control plane updates. Node upgrades still need rolling restarts.", "visual": "☁️" },
+        "punchline": { "text": "Upgrade regularly. Skipping versions creates bigger, riskier jumps.", "visual": "🏃" }
+      },
+      "quiz": {
+        "question": "Why must Kubernetes upgrades be done sequentially?",
+        "options": ["API compatibility requires stepping through each version", "The cluster reboots faster with sequential upgrades", "Kubernetes licensing requires it"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--kubernetes-essentials--ch06-operating-kubernetes",
+      "title": "Kubernetes Troubleshooting",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your pod is stuck in CrashLoopBackOff. The container starts, crashes, restarts, crashes again. What's wrong?", "visual": "🔴" },
+        "buildup": { "text": "kubectl describe pod shows events: image pull failures, readiness probe failures, OOM kills. Start there.", "visual": "🔍" },
+        "discovery": { "text": "kubectl logs shows app output. If the container crashes too fast, use --previous to see logs from the last run.", "visual": "📜" },
+        "twist": { "text": "kubectl exec lets you get a shell inside a running container. Inspect the filesystem, test network connectivity live.", "visual": "💻" },
+        "climax": { "text": "Most K8s problems are config errors: wrong image tag, missing secret, bad port. Describe and logs reveal 90%.", "visual": "📊" },
+        "punchline": { "text": "Describe, logs, exec. Three commands solve most K8s problems.", "visual": "🔧" }
+      },
+      "quiz": {
+        "question": "What should you check first when a pod is in CrashLoopBackOff?",
+        "options": ["Events from kubectl describe and logs from kubectl logs", "The cluster-wide network configuration", "The etcd database backup status"],
+        "correct": 0
+      }
+    }
+  ]
+}

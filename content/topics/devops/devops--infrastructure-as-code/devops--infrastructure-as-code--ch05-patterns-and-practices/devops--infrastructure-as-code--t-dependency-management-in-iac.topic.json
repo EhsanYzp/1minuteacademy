@@ -1,0 +1,49 @@
+{
+  "id": "devops--infrastructure-as-code--t-dependency-management-in-iac",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Infrastructure as Code",
+  "course_id": "devops--infrastructure-as-code",
+  "chapter_id": "devops--infrastructure-as-code--ch05-patterns-and-practices",
+  "title": "Dependency Management in IaC",
+  "emoji": "🏗️",
+  "color": "#7C3AED",
+  "description": "Learn Dependency Management in IaC in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You can't create a subnet before the VPC exists. You can't attach a policy before the role exists. Order matters.",
+      "visual": "🔢"
+    },
+    "buildup": {
+      "text": "Terraform builds a dependency graph automatically. It reads references between resources and determines the order.",
+      "visual": "🕸️"
+    },
+    "discovery": {
+      "text": "Explicit depends_on forces an order when Terraform can't detect the dependency. Rare but sometimes essential.",
+      "visual": "🔗"
+    },
+    "twist": {
+      "text": "Circular dependencies break the graph. Resource A depends on B, and B depends on A. Terraform refuses to plan.",
+      "visual": "🔄"
+    },
+    "climax": {
+      "text": "Parallelism speeds things up. Independent resources are created simultaneously. Only dependent ones wait in sequence.",
+      "visual": "⚡"
+    },
+    "punchline": {
+      "text": "Terraform graphs dependencies. Parallel when safe, sequential when needed.",
+      "visual": "📊"
+    }
+  },
+  "quiz": {
+    "question": "How does Terraform determine the order to create resources?",
+    "options": [
+      "It builds a dependency graph from references between resources",
+      "It creates resources alphabetically by name",
+      "It creates all resources simultaneously regardless of dependencies"
+    ],
+    "correct": 0
+  }
+}

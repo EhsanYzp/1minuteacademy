@@ -1,0 +1,49 @@
+{
+  "id": "devops--famous-devops-disasters-and-lessons--t-slack-s-database-migration-incident-2024",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Famous DevOps Disasters and Lessons",
+  "course_id": "devops--famous-devops-disasters-and-lessons",
+  "chapter_id": "devops--famous-devops-disasters-and-lessons--ch04-data-disasters",
+  "title": "Slack's Database Migration Incident (2024)",
+  "emoji": "💥",
+  "color": "#EF4444",
+  "description": "A quick win: understand Slack's Database Migration Incident (2024).",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "February 2024. Slack went degraded for hours. A database migration caused cascading locks.",
+      "visual": "💬"
+    },
+    "buildup": {
+      "text": "Schema changes on large tables locked rows. Millions of queries queued behind the locks.",
+      "visual": "🔒"
+    },
+    "discovery": {
+      "text": "The migration worked fine in staging. Staging lacked production-level traffic to reveal the issue.",
+      "visual": "🧪"
+    },
+    "twist": {
+      "text": "Dependent services timed out. Their callers timed out. A tree of failures grew from one table.",
+      "visual": "🌳"
+    },
+    "climax": {
+      "text": "Slack rolled back the migration and restored service. They added load-testing to future plans.",
+      "visual": "🔄"
+    },
+    "punchline": {
+      "text": "Test migrations under real load. Staging lies about scale.",
+      "visual": "📊"
+    }
+  },
+  "quiz": {
+    "question": "Why did Slack's database migration fail in production?",
+    "options": [
+      "Staging didn't have production-level traffic to expose locking issues",
+      "The schema change had a syntax error",
+      "Slack forgot to back up their database"
+    ],
+    "correct": 0
+  }
+}

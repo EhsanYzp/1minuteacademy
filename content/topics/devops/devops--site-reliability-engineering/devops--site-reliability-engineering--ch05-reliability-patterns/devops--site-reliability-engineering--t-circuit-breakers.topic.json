@@ -1,0 +1,49 @@
+{
+  "id": "devops--site-reliability-engineering--t-circuit-breakers",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Site Reliability Engineering",
+  "course_id": "devops--site-reliability-engineering",
+  "chapter_id": "devops--site-reliability-engineering--ch05-reliability-patterns",
+  "title": "Circuit Breakers",
+  "emoji": "🏗️",
+  "color": "#8B5CF6",
+  "description": "Learn Circuit Breakers in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Service A calls B. B is down. A retries a thousand times per second, drowning both.",
+      "visual": "🌊"
+    },
+    "buildup": {
+      "text": "Without protection, one failing service drags down its callers in a cascading crash.",
+      "visual": "🎭"
+    },
+    "discovery": {
+      "text": "A circuit breaker stops calls to a broken service. Closed, open, and half-open states.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "When open, return a fallback: cached data or a graceful error. Degraded beats dead.",
+      "visual": "🔄"
+    },
+    "climax": {
+      "text": "Netflix's Hystrix popularized the pattern. Today Istio and Resilience4j provide it.",
+      "visual": "🛠️"
+    },
+    "punchline": {
+      "text": "Stop calling the broken thing. Fail fast, recover smart.",
+      "visual": "🔌"
+    }
+  },
+  "quiz": {
+    "question": "What does a circuit breaker do when it detects a failing service?",
+    "options": [
+      "It stops sending requests and returns a fallback response",
+      "It retries faster to overcome the failure",
+      "It shuts down the calling service"
+    ],
+    "correct": 0
+  }
+}

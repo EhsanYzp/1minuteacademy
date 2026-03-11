@@ -1,0 +1,49 @@
+{
+  "id": "devops--kubernetes-essentials--t-persistent-volumes",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Kubernetes Essentials",
+  "course_id": "devops--kubernetes-essentials",
+  "chapter_id": "devops--kubernetes-essentials--ch05-configuration-and-storage",
+  "title": "Persistent Volumes",
+  "emoji": "☸️",
+  "color": "#326CE5",
+  "description": "One-minute skill: Persistent Volumes.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Pods are ephemeral. When they die, local data dies too. Databases on Kubernetes need storage that survives pod restarts.",
+      "visual": "💾"
+    },
+    "buildup": {
+      "text": "A PersistentVolume (PV) is a piece of storage provisioned in the cluster. Think of it as a virtual disk.",
+      "visual": "💿"
+    },
+    "discovery": {
+      "text": "A PersistentVolumeClaim (PVC) is a request for storage. The pod asks for 10 GB, and Kubernetes finds a matching PV.",
+      "visual": "📝"
+    },
+    "twist": {
+      "text": "Dynamic provisioning creates PVs on demand. No admin pre-creates disks. The StorageClass does it automatically.",
+      "visual": "🤖"
+    },
+    "climax": {
+      "text": "Reclaim policy controls what happens when PVC is deleted. Retain keeps data. Delete wipes it. Choose wisely.",
+      "visual": "⚠️"
+    },
+    "punchline": {
+      "text": "PVs and PVCs give pods durable storage that outlives the pod itself.",
+      "visual": "🏗️"
+    }
+  },
+  "quiz": {
+    "question": "What does dynamic provisioning in Kubernetes do?",
+    "options": [
+      "Creates storage volumes automatically when a PVC is requested",
+      "Predicts how much storage an app will need",
+      "Deletes unused volumes every night"
+    ],
+    "correct": 0
+  }
+}

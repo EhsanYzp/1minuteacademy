@@ -1,0 +1,49 @@
+{
+  "id": "devops--containers-and-docker-concepts--t-container-isolation-limits",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Containers and Docker Concepts",
+  "course_id": "devops--containers-and-docker-concepts",
+  "chapter_id": "devops--containers-and-docker-concepts--ch02-how-containers-work",
+  "title": "Container Isolation Limits",
+  "emoji": "🐳",
+  "color": "#0891B2",
+  "description": "A micro-lesson that makes Container Isolation Limits usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Containers are not as isolated as VMs. They share a kernel. A kernel exploit can escape the container.",
+      "visual": "⚠️"
+    },
+    "buildup": {
+      "text": "In a VM, the guest has its own kernel. In a container, a kernel bug affects every container on the host.",
+      "visual": "🐛"
+    },
+    "discovery": {
+      "text": "Seccomp profiles limit which system calls a container can make. Block dangerous ones by default.",
+      "visual": "🛡️"
+    },
+    "twist": {
+      "text": "AppArmor and SELinux add another layer. They restrict file access and network behavior per container.",
+      "visual": "🔐"
+    },
+    "climax": {
+      "text": "Rootless containers run without root privileges. Even if an attacker escapes, they land as an unprivileged user.",
+      "visual": "👤"
+    },
+    "punchline": {
+      "text": "Containers aren't perfect isolation. Layers of defense compensate.",
+      "visual": "🧱"
+    }
+  },
+  "quiz": {
+    "question": "Why are containers less isolated than virtual machines?",
+    "options": [
+      "Containers share the host kernel, so a kernel exploit can affect all of them",
+      "Containers cannot use firewalls",
+      "Virtual machines are always encrypted"
+    ],
+    "correct": 0
+  }
+}

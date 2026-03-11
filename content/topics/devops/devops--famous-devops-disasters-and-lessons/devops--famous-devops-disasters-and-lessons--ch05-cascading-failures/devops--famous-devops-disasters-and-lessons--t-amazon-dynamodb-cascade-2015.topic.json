@@ -1,0 +1,49 @@
+{
+  "id": "devops--famous-devops-disasters-and-lessons--t-amazon-dynamodb-cascade-2015",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Famous DevOps Disasters and Lessons",
+  "course_id": "devops--famous-devops-disasters-and-lessons",
+  "chapter_id": "devops--famous-devops-disasters-and-lessons--ch05-cascading-failures",
+  "title": "Amazon DynamoDB Cascade (2015)",
+  "emoji": "💥",
+  "color": "#EF4444",
+  "description": "A fast breakdown of Amazon DynamoDB Cascade (2015) for builders.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "September 2015. DynamoDB slowed in us-east-1. Services retried. The retries made it worse.",
+      "visual": "🔄"
+    },
+    "buildup": {
+      "text": "A metadata partition overloaded. Tables became briefly unavailable. Clients started retrying.",
+      "visual": "📊"
+    },
+    "discovery": {
+      "text": "Retries created more load. More load caused more failures. A feedback loop amplified the problem.",
+      "visual": "🌀"
+    },
+    "twist": {
+      "text": "Services without timeouts waited forever, consuming all threads. They died silently.",
+      "visual": "⏳"
+    },
+    "climax": {
+      "text": "AWS redesigned the metadata system. Customers learned: add timeouts and circuit breakers.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Retries without backoff amplify failures. Add jitter.",
+      "visual": "📉"
+    }
+  },
+  "quiz": {
+    "question": "What amplified the DynamoDB outage into a cascade?",
+    "options": [
+      "Aggressive client retries created a feedback loop",
+      "A physical hardware failure destroyed the servers",
+      "An attacker overwhelmed the service with traffic"
+    ],
+    "correct": 0
+  }
+}

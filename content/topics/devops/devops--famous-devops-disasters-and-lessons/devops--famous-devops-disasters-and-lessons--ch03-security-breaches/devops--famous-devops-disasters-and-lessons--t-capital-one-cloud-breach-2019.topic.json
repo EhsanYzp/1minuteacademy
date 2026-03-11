@@ -1,0 +1,49 @@
+{
+  "id": "devops--famous-devops-disasters-and-lessons--t-capital-one-cloud-breach-2019",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Famous DevOps Disasters and Lessons",
+  "course_id": "devops--famous-devops-disasters-and-lessons",
+  "chapter_id": "devops--famous-devops-disasters-and-lessons--ch03-security-breaches",
+  "title": "Capital One Cloud Breach (2019)",
+  "emoji": "💥",
+  "color": "#EF4444",
+  "description": "A micro-lesson that makes Capital One Cloud Breach (2019) usable.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A former AWS employee exploited a misconfigured firewall. 100 million records were stolen.",
+      "visual": "🔓"
+    },
+    "buildup": {
+      "text": "Capital One's WAF was misconfigured, allowing SSRF attacks against their cloud metadata.",
+      "visual": "🕳️"
+    },
+    "discovery": {
+      "text": "The attacker accessed IAM credentials via the metadata service and read S3 buckets.",
+      "visual": "📂"
+    },
+    "twist": {
+      "text": "The data had been in the cloud for years. The misconfiguration went undetected.",
+      "visual": "⏳"
+    },
+    "climax": {
+      "text": "AWS made IMDSv2 the default after this. Token-based metadata access is now standard.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Lock down cloud IAM. The shared responsibility model is real.",
+      "visual": "🔐"
+    }
+  },
+  "quiz": {
+    "question": "How did the attacker access Capital One's data?",
+    "options": [
+      "Through a misconfigured firewall allowing SSRF to cloud metadata",
+      "By guessing an employee's password",
+      "By physically breaking into a data center"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,583 @@
+{
+  "categoryId": "devops",
+  "subject": "DevOps",
+  "courseId": "devops--site-reliability-engineering",
+  "courseTitle": "Site Reliability Engineering",
+  "emoji": "🏗️",
+  "color": "#8B5CF6",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "devops--site-reliability-engineering--ch01-what-is-sre",
+      "title": "What Is SRE",
+      "position": 1
+    },
+    {
+      "id": "devops--site-reliability-engineering--ch02-slos-and-error-budgets",
+      "title": "SLOs and Error Budgets",
+      "position": 2
+    },
+    {
+      "id": "devops--site-reliability-engineering--ch03-eliminating-toil",
+      "title": "Eliminating Toil",
+      "position": 3
+    },
+    {
+      "id": "devops--site-reliability-engineering--ch04-incident-management",
+      "title": "Incident Management",
+      "position": 4
+    },
+    {
+      "id": "devops--site-reliability-engineering--ch05-reliability-patterns",
+      "title": "Reliability Patterns",
+      "position": 5
+    },
+    {
+      "id": "devops--site-reliability-engineering--ch06-sre-culture-and-practices",
+      "title": "SRE Culture and Practices",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch01-what-is-sre",
+      "title": "The Origin of SRE at Google",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Google needed a new way to run systems. Ben Treynor was hired to build an ops team using code.", "visual": "🌟" },
+        "buildup": { "text": "Manual ops couldn't keep pace with Google's explosive growth. Servers multiplied by thousands.", "visual": "📈" },
+        "discovery": { "text": "Treynor applied software engineering to operations. Automate the repetitive. Measure everything.", "visual": "💻" },
+        "twist": { "text": "SRE isn't ops renamed. It's a discipline with its own practices, metrics, and principles.", "visual": "📋" },
+        "climax": { "text": "Google published the SRE book in 2016. It became the industry bible for reliability.", "visual": "📖" },
+        "punchline": { "text": "SRE: engineering applied to operations problems.", "visual": "🔧" }
+      },
+      "quiz": {
+        "question": "What approach did SRE bring to operations?",
+        "options": ["Software engineering principles applied to operations", "Hiring more operations staff", "Outsourcing all server management"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch01-what-is-sre",
+      "title": "SRE vs DevOps",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "DevOps is a philosophy. SRE is an implementation. Google calls SRE a class implementing DevOps.", "visual": "🔀" },
+        "buildup": { "text": "DevOps says break silos and automate. It's a cultural movement, not a prescriptive framework.", "visual": "🌊" },
+        "discovery": { "text": "SRE prescribes how: define SLOs, use error budgets, cap toil at 50%, run blameless postmortems.", "visual": "📐" },
+        "twist": { "text": "Small teams can adopt SRE practices without a formal SRE title. The principles scale down.", "visual": "📏" },
+        "climax": { "text": "DevOps and SRE share values: automation, measurement, collaboration. They complement each other.", "visual": "🤝" },
+        "punchline": { "text": "DevOps is the why. SRE is one way to do it.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "How does SRE relate to DevOps?",
+        "options": ["SRE is a prescriptive implementation of DevOps principles", "SRE replaces DevOps entirely", "They are completely unrelated disciplines"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch01-what-is-sre",
+      "title": "The SRE Role and Skills",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An SRE must pass the same coding bar as a software engineer. Then add systems knowledge on top.", "visual": "💪" },
+        "buildup": { "text": "SREs need software engineering, networking, OS internals, and distributed systems knowledge.", "visual": "📚" },
+        "discovery": { "text": "Google requires SREs to spend at least 50% of time on engineering, not manual operations.", "visual": "⚖️" },
+        "twist": { "text": "SREs aren't firefighters. They design systems that prevent fires in the first place.", "visual": "🛡️" },
+        "climax": { "text": "The best SREs understand the full stack, from app code to kernel behavior.", "visual": "🏗️" },
+        "punchline": { "text": "Code skills plus systems thinking. That's an SRE.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "What distinguishes an SRE from a traditional operations role?",
+        "options": ["SREs must have software engineering skills and spend time coding", "SREs only handle server hardware", "SREs work exclusively on networking"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch01-what-is-sre",
+      "title": "Embracing Risk",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Chasing 100% uptime is pointless. Users can't tell 99.99% from 99.999%, but the cost is huge.", "visual": "💰" },
+        "buildup": { "text": "Each extra nine of availability costs ten times more in engineering effort.", "visual": "📊" },
+        "discovery": { "text": "SRE says: figure out how much reliability users need. Invest exactly that much.", "visual": "🎯" },
+        "twist": { "text": "A phone drops 1% of connections. Your extra 0.001% of uptime is invisible behind it.", "visual": "📱" },
+        "climax": { "text": "Embracing risk means accepting some failures. The error budget defines how much.", "visual": "📉" },
+        "punchline": { "text": "Don't chase perfection. Chase the right level.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "Why does SRE embrace risk rather than targeting 100% uptime?",
+        "options": ["Each extra nine of reliability costs disproportionately more", "Because failures don't matter to users", "To save on hiring costs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch01-what-is-sre",
+      "title": "The SRE Engagement Model",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Not every service gets an SRE team. Google's SREs choose which services to support.", "visual": "🎟️" },
+        "buildup": { "text": "Services must prove readiness: monitoring, docs, SLOs. Only then does an SRE team engage.", "visual": "📝" },
+        "discovery": { "text": "SRE teams can hand back a service that becomes too unreliable. Dev teams must fix it.", "visual": "🔄" },
+        "twist": { "text": "Consulting SREs advise teams without taking on-call duty. Support without full engagement.", "visual": "💬" },
+        "climax": { "text": "The model creates healthy incentives. Dev teams earn SRE support by building well.", "visual": "🏆" },
+        "punchline": { "text": "SRE support is earned. Reliability is the entry ticket.", "visual": "🎫" }
+      },
+      "quiz": {
+        "question": "What must a service demonstrate to earn SRE team support?",
+        "options": ["Readiness through monitoring, documentation, and SLOs", "High revenue generation", "A large development team"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch02-slos-and-error-budgets",
+      "title": "Choosing the Right SLIs",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "The team tracked CPU usage as their top metric. Users were unhappy anyway. Wrong measurement.", "visual": "📉" },
+        "buildup": { "text": "Service level indicators measure what users experience, not what servers report.", "visual": "👤" },
+        "discovery": { "text": "For web apps: latency and availability. For pipelines: freshness and correctness.", "visual": "📊" },
+        "twist": { "text": "Measure at the boundary closest to users. Load balancer metrics beat server metrics.", "visual": "🔍" },
+        "climax": { "text": "Good SLIs are precise: 'Proportion of requests returning 2xx within 300 ms.'", "visual": "🎯" },
+        "punchline": { "text": "Measure what users feel. That's the right SLI.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What should SLIs measure?",
+        "options": ["What users actually experience", "Internal server CPU utilization", "Total number of deployed servers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch02-slos-and-error-budgets",
+      "title": "Setting SLO Targets",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The team set 99.999% availability. They burned through the budget in a week.", "visual": "🔥" },
+        "buildup": { "text": "SLO targets should be ambitious but achievable. Start with current performance.", "visual": "📏" },
+        "discovery": { "text": "Use six months of data. If you've been 99.95% available, 99.9% is a solid start.", "visual": "📈" },
+        "twist": { "text": "Too-tight SLOs paralyze teams. Too-loose SLOs allow sloppy work. Balance matters.", "visual": "⚖️" },
+        "climax": { "text": "Review SLOs quarterly. Tighten as the system improves. Relax if they're unrealistic.", "visual": "🔄" },
+        "punchline": { "text": "Start realistic. Tighten gradually. SLOs evolve.", "visual": "📐" }
+      },
+      "quiz": {
+        "question": "How should SLO targets be initially set?",
+        "options": ["Based on current performance data, then tightened over time", "Always at 99.999% for every service", "As loose as possible to avoid alerts"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch02-slos-and-error-budgets",
+      "title": "Error Budget Policies",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The error budget ran out. Devs wanted to ship. SREs said no. Who wins? The policy decides.", "visual": "⚖️" },
+        "buildup": { "text": "An error budget policy defines responses when the budget is healthy, low, or exhausted.", "visual": "📜" },
+        "discovery": { "text": "Budget healthy: ship freely. Budget low: slow down. Budget gone: freeze and fix reliability.", "visual": "🚦" },
+        "twist": { "text": "The policy removes politics. It's not SRE vs dev. It's math. A number and a rule.", "visual": "🔢" },
+        "climax": { "text": "Write the policy before a crisis. Teams agree in calm and follow rules under pressure.", "visual": "📋" },
+        "punchline": { "text": "Agree on rules before the budget runs dry.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "What happens when an error budget is exhausted?",
+        "options": ["Feature releases freeze until reliability improves", "Nothing changes, teams keep shipping", "The SRE team is disbanded"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch02-slos-and-error-budgets",
+      "title": "Burn Rate Alerting",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The error budget has 30 days of runway. A bad deploy burns a day's worth every hour.", "visual": "🔥" },
+        "buildup": { "text": "Burn rate measures how fast the budget is consumed. 1x is on track. 10x is a crisis.", "visual": "📊" },
+        "discovery": { "text": "Multi-window alerting checks two time windows. A fast burn in both the last hour and six hours pages.", "visual": "🪟" },
+        "twist": { "text": "Brief spikes that recover don't fire alerts. Only sustained burns that threaten the SLO do.", "visual": "📉" },
+        "climax": { "text": "Google replaced hundreds of threshold alerts with a few SLO-based burn rate alerts.", "visual": "🔔" },
+        "punchline": { "text": "Alert on budget burn rate, not raw thresholds.", "visual": "📟" }
+      },
+      "quiz": {
+        "question": "What does burn rate measure in SRE?",
+        "options": ["How fast the error budget is being consumed", "How many servers are running hot", "The rate of new code deployments"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch02-slos-and-error-budgets",
+      "title": "SLO-Based Decision Making",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Should we migrate databases this weekend? Check the error budget. Plenty of room? Go.", "visual": "🤔" },
+        "buildup": { "text": "SLOs turn 'should we risk it' into a data-driven decision. The budget speaks.", "visual": "📊" },
+        "discovery": { "text": "If the SLO is at risk, reliability work trumps features. It's objective, not political.", "visual": "🎯" },
+        "twist": { "text": "Over-serving the SLO means over-investing. Ship riskier features when budget is flush.", "visual": "🚀" },
+        "climax": { "text": "PMs, SREs, and devs use SLOs as a shared language. '30% budget left' is clear to all.", "visual": "🗣️" },
+        "punchline": { "text": "Let the error budget decide. Data over debate.", "visual": "📈" }
+      },
+      "quiz": {
+        "question": "How do SLOs help prioritize work?",
+        "options": ["They provide objective data to decide between features and reliability work", "They eliminate the need for project managers", "They automatically deploy fixes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch03-eliminating-toil",
+      "title": "What Is Toil",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Every Monday the SRE restarts a flaky service. Every Thursday they clear logs. Pure toil.", "visual": "😩" },
+        "buildup": { "text": "Toil is manual, repetitive work that scales linearly with service size.", "visual": "📈" },
+        "discovery": { "text": "Not all manual work is toil. Planning and design are valuable. Toil produces no enduring value.", "visual": "🔍" },
+        "twist": { "text": "Google's rule: no more than 50% of SRE time on toil. The rest goes to engineering.", "visual": "⚖️" },
+        "climax": { "text": "Left unchecked, toil grows. Each new service adds more. Automation is the only escape.", "visual": "🏃" },
+        "punchline": { "text": "Toil is the enemy of engineering. Automate it away.", "visual": "🤖" }
+      },
+      "quiz": {
+        "question": "What defines toil in the SRE context?",
+        "options": ["Manual, repetitive work that produces no lasting value", "All work performed by operations teams", "Writing automation scripts"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch03-eliminating-toil",
+      "title": "Measuring and Tracking Toil",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The team felt overwhelmed but couldn't prove it. Without data, no case for automation.", "visual": "📊" },
+        "buildup": { "text": "Categorize work: on-call responses, manual deploys, ticket handling, data fixes.", "visual": "🗂️" },
+        "discovery": { "text": "Log time spent on each category weekly. Patterns emerge. The biggest toil sources appear.", "visual": "📝" },
+        "twist": { "text": "Some toil hides as 'normal work.' Question every repeated task. Could a script do this?", "visual": "🔎" },
+        "climax": { "text": "Show leadership the numbers: '60% manual. Automation could cut it to 20%.' Data wins.", "visual": "📈" },
+        "punchline": { "text": "Measure toil to justify killing it. Data wins.", "visual": "📉" }
+      },
+      "quiz": {
+        "question": "Why is it important to measure toil?",
+        "options": ["To justify automation investment with concrete data", "To punish slow team members", "To increase the operations budget"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch03-eliminating-toil",
+      "title": "Automation Strategies",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "One afternoon of coding automated a 4-hour weekly task. That's 200 hours saved per year.", "visual": "⚡" },
+        "buildup": { "text": "Start with high-frequency, low-complexity toil. Quick wins build momentum.", "visual": "🎯" },
+        "discovery": { "text": "Automation has levels: assist, partial, and full. Progress through them step by step.", "visual": "🪜" },
+        "twist": { "text": "Not everything deserves automation. A yearly 10-minute task isn't worth a week of coding.", "visual": "🤷" },
+        "climax": { "text": "Self-healing systems detect problems, apply fixes, and log actions. Zero human touch.", "visual": "🤖" },
+        "punchline": { "text": "Automate the right things. Start small, grow bold.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "What is the best starting point for automation?",
+        "options": ["High-frequency, low-complexity tasks for quick wins", "The most complex system in the infrastructure", "Tasks that happen only once a year"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch03-eliminating-toil",
+      "title": "Self-Service Platforms",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Devs filed a ticket for every new database. SREs built them by hand. A portal ended the wait.", "visual": "🎫" },
+        "buildup": { "text": "Self-service lets developers provision resources and deploy without ops tickets.", "visual": "🛒" },
+        "discovery": { "text": "Internal developer platforms combine self-service with guardrails and policies.", "visual": "🏗️" },
+        "twist": { "text": "Self-service doesn't mean no rules. Templates and quotas keep things safe.", "visual": "🛡️" },
+        "climax": { "text": "Backstage, Humanitec, and Kratix are popular platforms enabling self-service at scale.", "visual": "🌐" },
+        "punchline": { "text": "Empower devs with self-service. Encode rules in the platform.", "visual": "🔓" }
+      },
+      "quiz": {
+        "question": "What is the benefit of self-service platforms for SRE teams?",
+        "options": ["They eliminate manual provisioning tickets and bottlenecks", "They remove all security controls", "They replace the need for developers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch03-eliminating-toil",
+      "title": "Capacity Planning",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Black Friday traffic hit 3x projections. Servers maxed out. The team had planned for only 2x.", "visual": "💥" },
+        "buildup": { "text": "Capacity planning forecasts future compute, storage, and bandwidth needs.", "visual": "🔮" },
+        "discovery": { "text": "Combine historical trends, business forecasts, and load test results for accuracy.", "visual": "📊" },
+        "twist": { "text": "Over-provisioning wastes money. Under-provisioning causes outages. The balance is the art.", "visual": "⚖️" },
+        "climax": { "text": "Load testing validates plans. Simulate projected traffic and find bottlenecks early.", "visual": "🧪" },
+        "punchline": { "text": "Plan for future traffic, not today's. Test before peak.", "visual": "📅" }
+      },
+      "quiz": {
+        "question": "What is the goal of capacity planning?",
+        "options": ["To forecast and provision resources for future demand", "To minimize the number of servers at all costs", "To delay infrastructure upgrades as long as possible"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch04-incident-management",
+      "title": "Anatomy of an Incident",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "2:14 AM. The pager fires. Error rates spike 40x. The on-call has five minutes to respond.", "visual": "🚨" },
+        "buildup": { "text": "An incident is an unplanned disruption needing urgent response. Severity sets the pace.", "visual": "⚠️" },
+        "discovery": { "text": "Phases: detection, triage, mitigation, resolution. Each has a clear goal and owner.", "visual": "📋" },
+        "twist": { "text": "Mitigate first, investigate later. A revert can restore service in minutes.", "visual": "⏪" },
+        "climax": { "text": "Every minute of a major incident costs money and trust. Speed matters enormously.", "visual": "⏱️" },
+        "punchline": { "text": "Detect fast. Mitigate fast. Investigate after recovery.", "visual": "🏥" }
+      },
+      "quiz": {
+        "question": "What should be the first priority during an incident?",
+        "options": ["Mitigate impact and restore service quickly", "Find the root cause before taking action", "Write a detailed postmortem document"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch04-incident-management",
+      "title": "Incident Command System",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Twelve engineers debugged at once. Nobody led. Everyone pulled in different directions.", "visual": "🌀" },
+        "buildup": { "text": "Without structure, incident response is chaos. People duplicate work or miss tasks.", "visual": "😵" },
+        "discovery": { "text": "The Incident Commander delegates and tracks progress. They don't debug themselves.", "visual": "🎖️" },
+        "twist": { "text": "Roles separate concerns: one leads, another debugs, another communicates updates.", "visual": "👥" },
+        "climax": { "text": "ICS comes from firefighting. FEMA uses the same structure. It scales to any size.", "visual": "🚒" },
+        "punchline": { "text": "Clear roles prevent chaos. One commander, focused teams.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is the Incident Commander's primary responsibility?",
+        "options": ["Coordinating the response and delegating tasks", "Personally debugging the root cause", "Communicating with external customers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch04-incident-management",
+      "title": "Blameless Postmortems",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The engineer who caused the outage was fired. Next time, nobody reported issues. Fear won.", "visual": "😨" },
+        "buildup": { "text": "Blame creates hiding. If people fear punishment, bugs go underground. Mistakes repeat.", "visual": "🙈" },
+        "discovery": { "text": "Blameless postmortems assume people made the best decisions with available information.", "visual": "🤝" },
+        "twist": { "text": "Blameless isn't accountable-less. The system is accountable, not the individual.", "visual": "⚖️" },
+        "climax": { "text": "Etsy, Google, and Netflix practice blameless postmortems and share them publicly.", "visual": "📢" },
+        "punchline": { "text": "Blame the system, not the person. Learning beats fear.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "What is the core principle of blameless postmortems?",
+        "options": ["Focus on systemic causes rather than blaming individuals", "Never hold anyone accountable", "Only blame senior engineers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch04-incident-management",
+      "title": "Writing Effective Postmortems",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The postmortem said 'be more careful.' Three months later, the same outage happened again.", "visual": "🔁" },
+        "buildup": { "text": "A good postmortem covers timeline, impact, root cause, and action items with owners.", "visual": "📝" },
+        "discovery": { "text": "Ask 'why' five times. Each answer digs deeper toward the systemic root cause.", "visual": "🔍" },
+        "twist": { "text": "Actions must be specific: 'Add config validation to CI by March 15, owned by Alice.'", "visual": "✅" },
+        "climax": { "text": "Share postmortems widely. Other teams learn from your incidents without suffering them.", "visual": "📤" },
+        "punchline": { "text": "Dig deep. Assign actions. Share the lessons widely.", "visual": "📖" }
+      },
+      "quiz": {
+        "question": "What makes a postmortem action item effective?",
+        "options": ["It is specific, has an owner, and a deadline", "It says 'be more careful next time'", "It assigns blame to the person responsible"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch04-incident-management",
+      "title": "Game Days and Disaster Drills",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The DR plan said 'fail over to the backup region.' Nobody tested it. It didn't work.", "visual": "💀" },
+        "buildup": { "text": "Game days simulate real incidents in a controlled setting. Find gaps before they matter.", "visual": "🎮" },
+        "discovery": { "text": "Start small: kill one service. Then a node. Then simulate a region failure.", "visual": "💣" },
+        "twist": { "text": "Game days test people and processes, not just systems. Does the runbook actually work?", "visual": "📋" },
+        "climax": { "text": "Netflix runs Chaos Monkey continuously. Random production failures keep teams sharp.", "visual": "🐒" },
+        "punchline": { "text": "Practice failure before it finds you. Drills build confidence.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is the purpose of game days?",
+        "options": ["To test incident response in a controlled environment", "To give the team a day off", "To deploy new features faster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch05-reliability-patterns",
+      "title": "Redundancy and Failover",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "One database handled everything. It died at 3 AM. The entire platform went dark.", "visual": "💀" },
+        "buildup": { "text": "A single point of failure means one component can take down the whole system.", "visual": "🎯" },
+        "discovery": { "text": "Active-passive: a backup waits. Active-active: both serve traffic. Speed vs complexity.", "visual": "🔀" },
+        "twist": { "text": "Redundancy isn't free. Running two of everything doubles the cost. Choose wisely.", "visual": "💰" },
+        "climax": { "text": "Test failover regularly. Untested failover is theoretical. Assume it won't work.", "visual": "🧪" },
+        "punchline": { "text": "No single points of failure. Test the backup path.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What is the difference between active-passive and active-active redundancy?",
+        "options": ["Active-passive has a standby backup; active-active has both handling traffic", "They are the same concept with different names", "Active-passive is always more expensive"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch05-reliability-patterns",
+      "title": "Circuit Breakers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Service A calls B. B is down. A retries a thousand times per second, drowning both.", "visual": "🌊" },
+        "buildup": { "text": "Without protection, one failing service drags down its callers in a cascading crash.", "visual": "🎭" },
+        "discovery": { "text": "A circuit breaker stops calls to a broken service. Closed, open, and half-open states.", "visual": "⚡" },
+        "twist": { "text": "When open, return a fallback: cached data or a graceful error. Degraded beats dead.", "visual": "🔄" },
+        "climax": { "text": "Netflix's Hystrix popularized the pattern. Today Istio and Resilience4j provide it.", "visual": "🛠️" },
+        "punchline": { "text": "Stop calling the broken thing. Fail fast, recover smart.", "visual": "🔌" }
+      },
+      "quiz": {
+        "question": "What does a circuit breaker do when it detects a failing service?",
+        "options": ["It stops sending requests and returns a fallback response", "It retries faster to overcome the failure", "It shuts down the calling service"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch05-reliability-patterns",
+      "title": "Graceful Degradation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The recommendation engine crashed. The site showed 'most popular' instead. Nobody noticed.", "visual": "🎭" },
+        "buildup": { "text": "Graceful degradation keeps core features running when secondary components fail.", "visual": "🏗️" },
+        "discovery": { "text": "Rank features by criticality. Checkout must work. Recommendations can wait.", "visual": "📊" },
+        "twist": { "text": "Design fallbacks before you need them. During an outage, it's too late to improvise.", "visual": "🗺️" },
+        "climax": { "text": "Feature flags enable instant degradation. Flip a flag to disable the broken feature.", "visual": "🎚️" },
+        "punchline": { "text": "Serve less rather than nothing. Slow beats broken.", "visual": "🐢" }
+      },
+      "quiz": {
+        "question": "What is graceful degradation?",
+        "options": ["Keeping core features running while disabling non-critical ones during failure", "Shutting down the entire system during any failure", "Ignoring all errors and hoping they resolve"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch05-reliability-patterns",
+      "title": "Load Shedding and Rate Limiting",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A viral tweet sent 100x normal traffic. Without limits, servers crashed for everyone.", "visual": "🐦" },
+        "buildup": { "text": "Load shedding drops excess requests so the system can serve the majority of users.", "visual": "🛡️" },
+        "discovery": { "text": "Rate limiting caps requests per client. Excess calls get a 429 Too Many Requests reply.", "visual": "🚧" },
+        "twist": { "text": "Priority shedding is smarter. Drop background tasks first. Keep user requests flowing.", "visual": "🎯" },
+        "climax": { "text": "Token bucket and leaky bucket smooth bursty traffic into steady, manageable flows.", "visual": "🪣" },
+        "punchline": { "text": "When traffic surges, shed load. Protect the many from the surge.", "visual": "🌊" }
+      },
+      "quiz": {
+        "question": "What is the purpose of load shedding?",
+        "options": ["To drop excess traffic and protect the system for remaining users", "To increase server capacity automatically", "To redirect all traffic to a backup data center"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch05-reliability-patterns",
+      "title": "Chaos Engineering Principles",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You think the system survives a database crash. Have you actually killed it to prove it?", "visual": "💣" },
+        "buildup": { "text": "Chaos engineering runs controlled experiments by injecting failures into production.", "visual": "🧪" },
+        "discovery": { "text": "Form a hypothesis. Run the experiment. Observe. Conclude. It's the scientific method.", "visual": "🔬" },
+        "twist": { "text": "Start small: kill one pod. Grow to a node. Then a zone. Expand as confidence grows.", "visual": "📈" },
+        "climax": { "text": "Chaos engineering finds weaknesses that unit tests can't. Real traffic, real dependencies.", "visual": "🎯" },
+        "punchline": { "text": "Break things on purpose. Surprise failures are worse.", "visual": "💥" }
+      },
+      "quiz": {
+        "question": "What is the core idea behind chaos engineering?",
+        "options": ["Deliberately inject failures to discover system weaknesses", "Randomly delete production data", "Avoid testing in production at all costs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch06-sre-culture-and-practices",
+      "title": "The 50% Rule",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "The SRE team spent 80% of time restarting servers. No time to automate. Toil grew worse.", "visual": "😰" },
+        "buildup": { "text": "When all time goes to firefighting, none is left to build fire suppression systems.", "visual": "🔥" },
+        "discovery": { "text": "Google's rule: max 50% toil, minimum 50% engineering that reduces future toil.", "visual": "📐" },
+        "twist": { "text": "If toil exceeds 50%, escalate. Add headcount or hand the service back to the dev team.", "visual": "🚨" },
+        "climax": { "text": "Engineering reduces toil. Less toil frees engineering time. A virtuous cycle starts.", "visual": "🔄" },
+        "punchline": { "text": "Half ops, half engineering. The 50% rule protects SREs.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What does Google's 50% rule require of SRE teams?",
+        "options": ["At most 50% of time on operational toil, at least 50% on engineering", "50% of the team handles ops, 50% writes features", "SREs work only 50% of normal hours"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch06-sre-culture-and-practices",
+      "title": "Production Readiness Reviews",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A new service launched with no monitoring and no runbooks. The first outage was chaos.", "visual": "🌪️" },
+        "buildup": { "text": "A production readiness review checks if a service is ready for SRE support.", "visual": "📋" },
+        "discovery": { "text": "The checklist covers monitoring, alerting, SLOs, documentation, and architecture.", "visual": "✅" },
+        "twist": { "text": "PRRs aren't gatekeeping. SREs and devs close gaps together before launch, not after.", "visual": "🤝" },
+        "climax": { "text": "Each postmortem may add a new check. The checklist encodes the team's collective wisdom.", "visual": "📖" },
+        "punchline": { "text": "Review before launch. Prevent the first-week outage.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What is the purpose of a Production Readiness Review?",
+        "options": ["To verify a service meets reliability standards before SRE engagement", "To delay product launches as long as possible", "To evaluate developer performance"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch06-sre-culture-and-practices",
+      "title": "On-Call Best Practices",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The on-call got 15 pages in one night. Most were noise. By morning, real alerts were ignored.", "visual": "📟" },
+        "buildup": { "text": "Sustainable on-call means manageable load: at most two events per 12-hour shift.", "visual": "⏰" },
+        "discovery": { "text": "Follow-the-sun rotates on-call across time zones. Nobody takes night shifts.", "visual": "🌍" },
+        "twist": { "text": "After each shift, review every page. Were they actionable? Fix the noisy ones.", "visual": "🔇" },
+        "climax": { "text": "Every page should be worth waking up for. If it isn't, delete or tune the alert.", "visual": "🔔" },
+        "punchline": { "text": "Protect on-call engineers. Every alert must be worth it.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What is a key principle of sustainable on-call?",
+        "options": ["Every alert should be actionable and worth responding to", "On-call engineers should handle as many pages as possible", "Night shifts build character and should be encouraged"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch06-sre-culture-and-practices",
+      "title": "SRE and Developer Collaboration",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Devs ship fast. SREs want stability. The tension can be toxic or become productive balance.", "visual": "⚔️" },
+        "buildup": { "text": "SRE and dev teams need shared goals. Error budgets provide exactly that.", "visual": "🎯" },
+        "discovery": { "text": "Embed SREs in sprints. They review designs for reliability and suggest monitoring early.", "visual": "👥" },
+        "twist": { "text": "Dev teams should share on-call. Feeling production pain improves code quality naturally.", "visual": "💡" },
+        "climax": { "text": "Shared ownership removes the blame game. Both teams win when the service is reliable.", "visual": "🏆" },
+        "punchline": { "text": "Partners, not opponents. Shared goals build collaboration.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "How can SRE and development teams collaborate effectively?",
+        "options": ["By sharing goals through error budgets and embedding SREs in sprints", "By keeping the teams completely separate", "By having developers handle all on-call duties alone"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--site-reliability-engineering--ch06-sre-culture-and-practices",
+      "title": "SRE Beyond Google",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "SRE started at Google, but LinkedIn, Dropbox, and thousands more adopted it successfully.", "visual": "🌐" },
+        "buildup": { "text": "You don't need Google's scale. A five-person team can use SLOs and error budgets.", "visual": "👥" },
+        "discovery": { "text": "Start with one practice: define SLOs for your top service. See how it changes decisions.", "visual": "🎯" },
+        "twist": { "text": "Small companies adapt SRE, not copy it. One person can combine SRE with other roles.", "visual": "🧩" },
+        "climax": { "text": "The SRE Workbook gives practical guidance for teams of any size. Real templates inside.", "visual": "📖" },
+        "punchline": { "text": "SRE scales down. Start with one practice. Grow from there.", "visual": "🌱" }
+      },
+      "quiz": {
+        "question": "Can small teams adopt SRE practices?",
+        "options": ["Yes, by starting with one practice like SLOs and adapting to their size", "No, SRE only works at Google's scale", "Only if they hire a dedicated SRE team of 50+"],
+        "correct": 0
+      }
+    }
+  ]
+}

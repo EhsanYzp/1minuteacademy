@@ -1,0 +1,49 @@
+{
+  "id": "devops--cloud-computing-for-devops--t-blue-green-and-canary-deployments",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Cloud Computing for DevOps",
+  "course_id": "devops--cloud-computing-for-devops",
+  "chapter_id": "devops--cloud-computing-for-devops--ch05-cloud-native-patterns",
+  "title": "Blue-Green and Canary Deployments",
+  "emoji": "☁️",
+  "color": "#F59E0B",
+  "description": "A micro-lesson that makes Blue-Green and Canary Deployments usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A bad deploy took down the site for an hour. Blue-green would have made rollback instant.",
+      "visual": "🔄"
+    },
+    "buildup": {
+      "text": "Blue-green runs two environments. Blue has the current version. Green gets the new one. Swap traffic.",
+      "visual": "🟦"
+    },
+    "discovery": {
+      "text": "If green breaks, switch back to blue. Zero-downtime rollback since blue is still running.",
+      "visual": "⏪"
+    },
+    "twist": {
+      "text": "Canary is more gradual. Route 5% to the new version, watch metrics, then ramp to 100%.",
+      "visual": "🐤"
+    },
+    "climax": {
+      "text": "Cloud load balancers make both patterns simple. Weighted routing shifts traffic with one config.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "Blue-green for instant rollback. Canary for gradual safety.",
+      "visual": "🚀"
+    }
+  },
+  "quiz": {
+    "question": "How does a canary deployment reduce risk?",
+    "options": [
+      "By routing only a small percentage of traffic to the new version first",
+      "By deploying only to servers in one geographic region",
+      "By running automated tests instead of deploying"
+    ],
+    "correct": 0
+  }
+}

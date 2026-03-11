@@ -1,0 +1,49 @@
+{
+  "id": "devops--containers-and-docker-concepts--t-base-image-selection",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Containers and Docker Concepts",
+  "course_id": "devops--containers-and-docker-concepts",
+  "chapter_id": "devops--containers-and-docker-concepts--ch04-images-and-registries",
+  "title": "Base Image Selection",
+  "emoji": "🐳",
+  "color": "#0891B2",
+  "description": "One-minute skill: Base Image Selection.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your Dockerfile starts with FROM ubuntu:22.04. That base image is 77 MB. Do you really need all of that?",
+      "visual": "🤔"
+    },
+    "buildup": {
+      "text": "Base images include the OS libraries your app needs. Bigger bases mean more dependencies and more vulnerabilities.",
+      "visual": "🐛"
+    },
+    "discovery": {
+      "text": "Alpine Linux is just 5 MB. Distroless images go further — no shell, no package manager, only your app.",
+      "visual": "🪶"
+    },
+    "twist": {
+      "text": "Smaller images have a smaller attack surface. Fewer packages mean fewer CVEs to patch.",
+      "visual": "🛡️"
+    },
+    "climax": {
+      "text": "Google's distroless images are popular for production. No shell means an attacker can't get an interactive session.",
+      "visual": "🚫"
+    },
+    "punchline": {
+      "text": "Choose the smallest base that works. Less is more secure.",
+      "visual": "🔐"
+    }
+  },
+  "quiz": {
+    "question": "Why are smaller base images more secure?",
+    "options": [
+      "Fewer packages mean fewer potential vulnerabilities",
+      "Smaller images are encrypted by default",
+      "They run on newer hardware"
+    ],
+    "correct": 0
+  }
+}

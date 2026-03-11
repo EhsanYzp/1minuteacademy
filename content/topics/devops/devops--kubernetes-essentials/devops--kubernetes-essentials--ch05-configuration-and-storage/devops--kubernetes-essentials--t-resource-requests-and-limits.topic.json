@@ -1,0 +1,49 @@
+{
+  "id": "devops--kubernetes-essentials--t-resource-requests-and-limits",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Kubernetes Essentials",
+  "course_id": "devops--kubernetes-essentials",
+  "chapter_id": "devops--kubernetes-essentials--ch05-configuration-and-storage",
+  "title": "Resource Requests and Limits",
+  "emoji": "☸️",
+  "color": "#326CE5",
+  "description": "A quick, practical guide to Resource Requests and Limits.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A pod with no memory limit consumed 16 GB and crashed the entire node. Every other pod on that node went down too.",
+      "visual": "💥"
+    },
+    "buildup": {
+      "text": "Resource requests tell the scheduler how much a pod needs. Limits cap what a pod can actually use.",
+      "visual": "📊"
+    },
+    "discovery": {
+      "text": "Requests guarantee minimum resources. The scheduler places the pod on a node with at least that much available.",
+      "visual": "✅"
+    },
+    "twist": {
+      "text": "Limits enforce maximum usage. Exceed the memory limit and the pod is killed. Exceed the CPU limit and it's throttled.",
+      "visual": "🚨"
+    },
+    "climax": {
+      "text": "Requests too high waste resources. Too low causes evictions. Right-sizing takes observation and tuning.",
+      "visual": "🔍"
+    },
+    "punchline": {
+      "text": "Requests reserve resources. Limits protect the node. Set both correctly.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "What happens when a pod exceeds its Kubernetes memory limit?",
+    "options": [
+      "The pod is killed by the kernel (OOM killed)",
+      "The pod is automatically migrated to a bigger node",
+      "Nothing — limits are just suggestions"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "devops--kubernetes-essentials--t-network-policies",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Kubernetes Essentials",
+  "course_id": "devops--kubernetes-essentials",
+  "chapter_id": "devops--kubernetes-essentials--ch04-networking-and-services",
+  "title": "Network Policies",
+  "emoji": "☸️",
+  "color": "#326CE5",
+  "description": "One-minute skill: Network Policies.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "By default, every pod can talk to every other pod in the cluster. That's convenient — and terrifying.",
+      "visual": "😱"
+    },
+    "buildup": {
+      "text": "If an attacker compromises one pod, they can reach the database pod, the auth service, and everything else.",
+      "visual": "🕷️"
+    },
+    "discovery": {
+      "text": "Network Policies are firewall rules for pods. Allow only the traffic you expect and deny everything else.",
+      "visual": "🛡️"
+    },
+    "twist": {
+      "text": "Network Policies use label selectors. 'Frontend pods may talk to backend pods on port 8080. Nothing else.'",
+      "visual": "🏷️"
+    },
+    "climax": {
+      "text": "Not all network plugins enforce policies. Calico, Cilium, and Weave do. The default kubenet does not.",
+      "visual": "⚠️"
+    },
+    "punchline": {
+      "text": "Default K8s is wide open. Network Policies add the firewall.",
+      "visual": "🔒"
+    }
+  },
+  "quiz": {
+    "question": "What is the default network behavior between pods in Kubernetes?",
+    "options": [
+      "Every pod can communicate with every other pod",
+      "Pods are completely isolated by default",
+      "Only pods in the same namespace can communicate"
+    ],
+    "correct": 0
+  }
+}

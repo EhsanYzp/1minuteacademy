@@ -1,0 +1,49 @@
+{
+  "id": "devops--ci-cd-pipelines-explained--t-caching-for-speed",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "CI/CD Pipelines Explained",
+  "course_id": "devops--ci-cd-pipelines-explained",
+  "chapter_id": "devops--ci-cd-pipelines-explained--ch04-pipeline-anatomy",
+  "title": "Caching for Speed",
+  "emoji": "🔁",
+  "color": "#2563EB",
+  "description": "A micro-lesson that makes Caching for Speed usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The pipeline downloads 800 MB of dependencies every single run. That's five minutes of pure waste.",
+      "visual": "⏳"
+    },
+    "buildup": {
+      "text": "Dependency files rarely change between commits. Downloading them fresh each time is pointless.",
+      "visual": "🔁"
+    },
+    "discovery": {
+      "text": "Pipeline caching stores dependencies between runs. If the lockfile hasn't changed, skip the download.",
+      "visual": "💾"
+    },
+    "twist": {
+      "text": "Cache keys are hash-based. Change the lockfile, and the cache invalidates automatically. Fresh deps when needed.",
+      "visual": "🔑"
+    },
+    "climax": {
+      "text": "Docker layer caching is even more powerful. Unchanged layers are reused, only modified layers rebuild.",
+      "visual": "🧱"
+    },
+    "punchline": {
+      "text": "Cache dependencies and layers. Spend pipeline time on real work.",
+      "visual": "⚡"
+    }
+  },
+  "quiz": {
+    "question": "When does a pipeline cache typically invalidate?",
+    "options": [
+      "When the lockfile or cache key changes",
+      "After exactly 24 hours",
+      "Every time the pipeline runs"
+    ],
+    "correct": 0
+  }
+}

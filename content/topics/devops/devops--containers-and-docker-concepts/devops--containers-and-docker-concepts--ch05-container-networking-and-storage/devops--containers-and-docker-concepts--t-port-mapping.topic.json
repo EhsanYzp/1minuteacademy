@@ -1,0 +1,49 @@
+{
+  "id": "devops--containers-and-docker-concepts--t-port-mapping",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Containers and Docker Concepts",
+  "course_id": "devops--containers-and-docker-concepts",
+  "chapter_id": "devops--containers-and-docker-concepts--ch05-container-networking-and-storage",
+  "title": "Port Mapping",
+  "emoji": "🐳",
+  "color": "#0891B2",
+  "description": "A quick win: understand Port Mapping.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your web app inside the container listens on port 3000. But the outside world can't reach container ports directly.",
+      "visual": "🚪"
+    },
+    "buildup": {
+      "text": "Port mapping links a host port to a container port. Host port 8080 routes to container port 3000.",
+      "visual": "🔀"
+    },
+    "discovery": {
+      "text": "Users hit the host IP on port 8080. Docker forwards the traffic into the container on port 3000. Seamless.",
+      "visual": "➡️"
+    },
+    "twist": {
+      "text": "Multiple containers can all use port 3000 internally. Each maps to a different host port. No conflicts.",
+      "visual": "🔢"
+    },
+    "climax": {
+      "text": "In production, a load balancer handles external traffic. Port mapping matters mainly for local development.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "Map host ports to container ports. External meets internal.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "Why can multiple containers use the same internal port without conflicts?",
+    "options": [
+      "Each maps to a different host port",
+      "Containers share the same port automatically",
+      "Only one container actually uses the port"
+    ],
+    "correct": 0
+  }
+}

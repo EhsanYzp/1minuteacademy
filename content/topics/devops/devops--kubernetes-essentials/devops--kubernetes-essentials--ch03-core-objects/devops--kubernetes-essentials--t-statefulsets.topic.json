@@ -1,0 +1,49 @@
+{
+  "id": "devops--kubernetes-essentials--t-statefulsets",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Kubernetes Essentials",
+  "course_id": "devops--kubernetes-essentials",
+  "chapter_id": "devops--kubernetes-essentials--ch03-core-objects",
+  "title": "StatefulSets",
+  "emoji": "☸️",
+  "color": "#326CE5",
+  "description": "Learn StatefulSets in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Deployments treat pods as interchangeable. But databases need stable identities. Pod-0 must always be Pod-0.",
+      "visual": "🆔"
+    },
+    "buildup": {
+      "text": "StatefulSets give each pod a sticky identity: a stable hostname, ordered startup, and persistent storage per pod.",
+      "visual": "📌"
+    },
+    "discovery": {
+      "text": "Pod names are predictable: mydb-0, mydb-1, mydb-2. They're created in order and deleted in reverse order.",
+      "visual": "🔢"
+    },
+    "twist": {
+      "text": "Each pod gets its own PersistentVolumeClaim. Delete and recreate the pod, and it reattaches to the same volume.",
+      "visual": "💾"
+    },
+    "climax": {
+      "text": "Databases, message queues, and distributed caches use StatefulSets. Anything that needs stable identity and storage.",
+      "visual": "🗄️"
+    },
+    "punchline": {
+      "text": "StatefulSets: stable names, ordered lifecycle, persistent storage per pod.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "When should you use a StatefulSet instead of a Deployment?",
+    "options": [
+      "When pods need stable identities and persistent storage",
+      "When running stateless web servers",
+      "When you need the fastest possible startup time"
+    ],
+    "correct": 0
+  }
+}

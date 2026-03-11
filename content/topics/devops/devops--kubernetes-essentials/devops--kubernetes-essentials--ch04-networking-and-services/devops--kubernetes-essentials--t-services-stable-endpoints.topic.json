@@ -1,0 +1,49 @@
+{
+  "id": "devops--kubernetes-essentials--t-services-stable-endpoints",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Kubernetes Essentials",
+  "course_id": "devops--kubernetes-essentials",
+  "chapter_id": "devops--kubernetes-essentials--ch04-networking-and-services",
+  "title": "Services: Stable Endpoints",
+  "emoji": "☸️",
+  "color": "#326CE5",
+  "description": "A fast breakdown of Services: Stable Endpoints for builders.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Pods get IP addresses, but those IPs change every time a pod restarts. How does anyone find your app reliably?",
+      "visual": "🤔"
+    },
+    "buildup": {
+      "text": "A Service gives a stable IP and DNS name to a group of pods. The pods behind it can come and go freely.",
+      "visual": "🏷️"
+    },
+    "discovery": {
+      "text": "The Service uses label selectors to find its pods. Any pod matching the labels receives traffic automatically.",
+      "visual": "🔍"
+    },
+    "twist": {
+      "text": "ClusterIP (internal only), NodePort (external via node), and LoadBalancer (cloud LB) are the three main types.",
+      "visual": "🔀"
+    },
+    "climax": {
+      "text": "kube-proxy programs iptables or IPVS rules on every node. Traffic to the Service IP gets forwarded to healthy pods.",
+      "visual": "🔧"
+    },
+    "punchline": {
+      "text": "Services give pods a stable address. Pods change; the Service doesn't.",
+      "visual": "📌"
+    }
+  },
+  "quiz": {
+    "question": "Why do Kubernetes Services exist?",
+    "options": [
+      "To provide stable IP addresses since pod IPs change on restart",
+      "To make containers run faster",
+      "To store application configuration"
+    ],
+    "correct": 0
+  }
+}

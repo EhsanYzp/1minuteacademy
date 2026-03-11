@@ -1,0 +1,49 @@
+{
+  "id": "devops--kubernetes-essentials--t-etcd-the-cluster-brain",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Kubernetes Essentials",
+  "course_id": "devops--kubernetes-essentials",
+  "chapter_id": "devops--kubernetes-essentials--ch02-architecture",
+  "title": "etcd: The Cluster Brain",
+  "emoji": "☸️",
+  "color": "#326CE5",
+  "description": "A 1-minute de-risking session on etcd: The Cluster Brain.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Where does K8s store every pod, service, and secret? In etcd, a distributed key-value store.",
+      "visual": "🗄️"
+    },
+    "buildup": {
+      "text": "etcd stores the entire cluster state. If etcd is lost and unrecoverable, the cluster is effectively destroyed.",
+      "visual": "💀"
+    },
+    "discovery": {
+      "text": "etcd uses the Raft consensus algorithm. Data is replicated across multiple nodes so no single failure causes data loss.",
+      "visual": "🔄"
+    },
+    "twist": {
+      "text": "etcd is the only stateful component in the control plane. Everything else can be restarted from scratch.",
+      "visual": "⭐"
+    },
+    "climax": {
+      "text": "Backup etcd regularly. In a disaster, restoring etcd restores the entire cluster state. It's your ultimate safety net.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "etcd holds all cluster state. Back it up. Protect it fiercely.",
+      "visual": "🔐"
+    }
+  },
+  "quiz": {
+    "question": "Why is etcd the most critical component to back up in Kubernetes?",
+    "options": [
+      "It stores the entire cluster state and all configurations",
+      "It runs the application containers",
+      "It handles network routing between pods"
+    ],
+    "correct": 0
+  }
+}

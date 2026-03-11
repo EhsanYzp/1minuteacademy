@@ -1,0 +1,583 @@
+{
+  "categoryId": "devops",
+  "subject": "DevOps",
+  "courseId": "devops--devops-security",
+  "courseTitle": "DevOps Security (DevSecOps)",
+  "emoji": "🔐",
+  "color": "#059669",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "devops--devops-security--ch01-why-devsecops",
+      "title": "Why DevSecOps",
+      "position": 1
+    },
+    {
+      "id": "devops--devops-security--ch02-shift-left-security",
+      "title": "Shift-Left Security",
+      "position": 2
+    },
+    {
+      "id": "devops--devops-security--ch03-supply-chain-security",
+      "title": "Supply Chain Security",
+      "position": 3
+    },
+    {
+      "id": "devops--devops-security--ch04-secrets-management",
+      "title": "Secrets Management",
+      "position": 4
+    },
+    {
+      "id": "devops--devops-security--ch05-container-and-cloud-security",
+      "title": "Container and Cloud Security",
+      "position": 5
+    },
+    {
+      "id": "devops--devops-security--ch06-compliance-and-governance",
+      "title": "Compliance and Governance",
+      "position": 6
+    }
+  ],
+  "topics": [
+    {
+      "chapter_id": "devops--devops-security--ch01-why-devsecops",
+      "title": "Security as a Shared Responsibility",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Security found a critical bug six months after launch. Millions of users were already at risk.", "visual": "🚨" },
+        "buildup": { "text": "Traditionally, security was a gate at the end. Code passed through audits right before release.", "visual": "🚧" },
+        "discovery": { "text": "DevSecOps weaves security into every stage. Dev, ops, and security share responsibility from day one.", "visual": "🤝" },
+        "twist": { "text": "It's not about adding tools. It's about culture. Everyone thinks about security in every decision.", "visual": "🧠" },
+        "climax": { "text": "Teams that adopt DevSecOps find flaws 10x faster and fix them before they reach production.", "visual": "⚡" },
+        "punchline": { "text": "Security is everyone's job. Shift it left, share it wide.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What is the core idea of DevSecOps?",
+        "options": ["Integrating security into every stage of development and operations", "Hiring more security engineers", "Running security scans only before releases"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch01-why-devsecops",
+      "title": "The Cost of Late Security Fixes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Fixing a bug in design costs $1. In testing, $100. In production, $10,000. Timing is everything.", "visual": "💸" },
+        "buildup": { "text": "The later you find a flaw, the costlier the fix. Deployed code is harder to change safely.", "visual": "📈" },
+        "discovery": { "text": "Equifax's 2017 breach exploited a known flaw. A patch existed for months. Nobody applied it in time.", "visual": "😱" },
+        "twist": { "text": "Automated scans in CI/CD catch most issues before deploy. Prevention beats remediation every time.", "visual": "🔍" },
+        "climax": { "text": "IBM found that orgs detecting breaches within 200 days save $1.2 million over slower responders.", "visual": "💰" },
+        "punchline": { "text": "Fix early, fix cheap. Every day a flaw lives, the cost grows.", "visual": "⏰" }
+      },
+      "quiz": {
+        "question": "Why is it more expensive to fix security issues later in the lifecycle?",
+        "options": ["Deployed code is harder to change and the blast radius is larger", "Security tools cost more in production", "Developers charge more for hotfixes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch01-why-devsecops",
+      "title": "Threat Modeling Basics",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "What could go wrong? Who would attack? How? Asking before coding is threat modeling.", "visual": "🗺️" },
+        "buildup": { "text": "Threat modeling maps data flows, trust boundaries, and attack surfaces. It shows where you're exposed.", "visual": "📐" },
+        "discovery": { "text": "STRIDE categorizes threats: Spoofing, Tampering, Repudiation, Info leak, DoS, Privilege escalation.", "visual": "📋" },
+        "twist": { "text": "You don't need a formal method. A quick session asking 'what could an attacker do here?' helps a lot.", "visual": "🤔" },
+        "climax": { "text": "Threat models evolve. New features change the attack surface. Review the model with major changes.", "visual": "🔄" },
+        "punchline": { "text": "Think like an attacker before you build. Model threats early.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "What does the STRIDE framework help with?",
+        "options": ["Categorizing different types of security threats", "Measuring application performance", "Managing deployment schedules"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch01-why-devsecops",
+      "title": "Security Champions Program",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "One security team can't review all code for 500 developers. The math fails. You need multipliers.", "visual": "🔢" },
+        "buildup": { "text": "A champions program embeds security-minded devs in each team. They're the local security experts.", "visual": "🦸" },
+        "discovery": { "text": "Champions get extra training and bridge their team to the security team. They review PRs for security.", "visual": "🌉" },
+        "twist": { "text": "Champions don't replace the security team. They amplify it. Common questions get answered faster.", "visual": "📢" },
+        "climax": { "text": "Microsoft's champions program scaled security practices across thousands of engineers effectively.", "visual": "🏢" },
+        "punchline": { "text": "Embed security in every team. Champions scale the culture.", "visual": "🌟" }
+      },
+      "quiz": {
+        "question": "What role does a security champion play within a development team?",
+        "options": ["They act as a local security expert and bridge to the security team", "They replace the central security team entirely", "They only write security documentation"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch01-why-devsecops",
+      "title": "The OWASP Top Ten",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "What are the most common web app flaws? OWASP lists the top ten. They barely change over decades.", "visual": "🔟" },
+        "buildup": { "text": "Injection, broken auth, data exposure — these classic flaws appear in millions of applications.", "visual": "💉" },
+        "discovery": { "text": "The 2021 list added insecure design and software integrity failures. OWASP updates every few years.", "visual": "📋" },
+        "twist": { "text": "Knowing the list isn't enough. Devs must understand each flaw and how to prevent it in their code.", "visual": "💻" },
+        "climax": { "text": "Many compliance frameworks reference the OWASP Top Ten. Fix these and you satisfy regulations too.", "visual": "✅" },
+        "punchline": { "text": "Start with the OWASP Top Ten. Fix common flaws first.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is the purpose of the OWASP Top Ten?",
+        "options": ["Listing the most critical web application security risks", "Ranking the top ten programming languages", "Measuring website loading performance"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch02-shift-left-security",
+      "title": "Static Application Security Testing (SAST)",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "The scanner found a SQL injection on line 42. The dev fixed it before the code left their laptop.", "visual": "💻" },
+        "buildup": { "text": "SAST scans source code for flaws without running the app. It catches issues at the earliest moment.", "visual": "🔍" },
+        "discovery": { "text": "SonarQube, Semgrep, and Checkmarx analyze code patterns and flag insecure constructs automatically.", "visual": "🤖" },
+        "twist": { "text": "SAST has false positives. Not every flag is exploitable. Developers must triage results carefully.", "visual": "⚠️" },
+        "climax": { "text": "Add SAST to CI/CD. Every PR gets scanned. Security issues block merge, just like failing tests.", "visual": "🚫" },
+        "punchline": { "text": "Scan code before it runs. SAST catches flaws at the source.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "When does SAST analyze code for vulnerabilities?",
+        "options": ["Before the application runs, by scanning source code", "Only after the application is deployed to production", "During runtime by monitoring network traffic"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch02-shift-left-security",
+      "title": "Dynamic Application Security Testing (DAST)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The tool sent 10,000 malicious requests to staging. It found three real vulnerabilities in minutes.", "visual": "🎯" },
+        "buildup": { "text": "DAST attacks a running app from outside, sending bad inputs and analyzing the responses it gets back.", "visual": "💥" },
+        "discovery": { "text": "DAST finds runtime issues SAST can't: misconfigs, auth problems, and server-side injection flaws.", "visual": "🔓" },
+        "twist": { "text": "DAST is slower since it needs a running app. It suits staging environments, not every single commit.", "visual": "🐌" },
+        "climax": { "text": "OWASP ZAP and Burp Suite are popular DAST tools. Both can be automated in CI/CD for nightly scans.", "visual": "🌙" },
+        "punchline": { "text": "SAST scans code. DAST attacks the app. Use both together.", "visual": "🔐" }
+      },
+      "quiz": {
+        "question": "How does DAST differ from SAST?",
+        "options": ["DAST tests a running application from outside; SAST scans source code", "DAST is faster than SAST", "SAST requires a running application"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch02-shift-left-security",
+      "title": "Software Composition Analysis (SCA)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Log4Shell hit thousands of companies. Most didn't know they used Log4j. SCA would have told them.", "visual": "🪵" },
+        "buildup": { "text": "Modern apps are 80% third-party code. Every package and library is a potential vulnerability source.", "visual": "📦" },
+        "discovery": { "text": "SCA tools scan dependencies and match them against known vulnerability databases like the NVD.", "visual": "🗄️" },
+        "twist": { "text": "SCA also checks licenses. A GPL library in commercial code may violate terms. SCA catches that too.", "visual": "📜" },
+        "climax": { "text": "Snyk, Dependabot, and Mend scan dependencies nonstop. When a new CVE drops, they alert you fast.", "visual": "🚨" },
+        "punchline": { "text": "Know your dependencies. SCA finds hidden flaws in others' code.", "visual": "🔍" }
+      },
+      "quiz": {
+        "question": "What does Software Composition Analysis (SCA) scan?",
+        "options": ["Third-party dependencies for known vulnerabilities and license issues", "Application source code for coding style violations", "Network traffic for suspicious patterns"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch02-shift-left-security",
+      "title": "Security in Code Reviews",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The PR looked fine — until the reviewer spotted a hardcoded API key on line 87. Disaster averted.", "visual": "🔑" },
+        "buildup": { "text": "Code reviews already check logic and style. Adding a security lens catches issues that tools miss.", "visual": "👁️" },
+        "discovery": { "text": "Check input validation, auth logic, error handling, and data exposure during every code review.", "visual": "📋" },
+        "twist": { "text": "Security checklists help. A short list of common flaws for your stack makes reviews more consistent.", "visual": "✅" },
+        "climax": { "text": "Pair reviews with scans. Tools catch pattern flaws. Humans catch logic flaws. Both are needed.", "visual": "🤝" },
+        "punchline": { "text": "Every code review is a security review. Add a security lens.", "visual": "🔐" }
+      },
+      "quiz": {
+        "question": "Why are human code reviews important for security even with automated scanners?",
+        "options": ["Humans catch logic-based security flaws that pattern scanners miss", "Automated scanners never find any real vulnerabilities", "Code reviews are cheaper than buying scanning tools"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch02-shift-left-security",
+      "title": "Pre-Commit Hooks for Security",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A dev committed an AWS key to GitHub. Within minutes, bots found it and spun up crypto miners.", "visual": "⛏️" },
+        "buildup": { "text": "Pre-commit hooks run checks before code is committed. They catch problems on the dev's machine first.", "visual": "🔒" },
+        "discovery": { "text": "Gitleaks and detect-secrets scan for API keys, passwords, and tokens. They block the commit if found.", "visual": "🚫" },
+        "twist": { "text": "Pre-commit is the first net. CI/CD is the second. The security team is the third. Defense in depth.", "visual": "🛡️" },
+        "climax": { "text": "Paired with .gitignore and secret managers, pre-commit hooks make secret leaks nearly impossible.", "visual": "🏰" },
+        "punchline": { "text": "Stop secrets at the keyboard. Pre-commit hooks are the first shield.", "visual": "⌨️" }
+      },
+      "quiz": {
+        "question": "What do pre-commit hooks like gitleaks prevent?",
+        "options": ["Accidentally committing secrets like API keys to the repository", "All types of bugs in the application code", "Merge conflicts between branches"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch03-supply-chain-security",
+      "title": "What Is the Software Supply Chain",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "In 2020, attackers slipped malware into SolarWinds' build. 18,000 customers installed poisoned updates.", "visual": "☠️" },
+        "buildup": { "text": "The software supply chain spans source code, dependencies, CI/CD, and the final deployed artifact.", "visual": "🔗" },
+        "discovery": { "text": "An attacker can hit any link: a rogue NPM package, a hijacked GitHub Action, or a tampered image.", "visual": "🎯" },
+        "twist": { "text": "You trust your code. But do you trust every transitive dependency? Attackers exploit that blind spot.", "visual": "🤔" },
+        "climax": { "text": "A 2021 US executive order mandated SBOMs for government vendors. Supply chain security is now law.", "visual": "📜" },
+        "punchline": { "text": "Your software is only as secure as its weakest link. Verify all.", "visual": "🔍" }
+      },
+      "quiz": {
+        "question": "What was notable about the SolarWinds attack?",
+        "options": ["Attackers compromised the build pipeline and distributed malware through legitimate updates", "It was a traditional DDoS attack on servers", "It only affected open-source software"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch03-supply-chain-security",
+      "title": "Dependency Pinning and Lock Files",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A package updated overnight with malware. Every morning build pulled the infected code silently.", "visual": "🦠" },
+        "buildup": { "text": "Unpinned deps use version ranges. A compromised release gets pulled in without anyone noticing.", "visual": "📦" },
+        "discovery": { "text": "Lock files pin exact versions and hashes. Your build uses the exact same code you tested last time.", "visual": "📌" },
+        "twist": { "text": "Even with lock files, audit updates. Dependabot PRs should be reviewed, not auto-merged blindly.", "visual": "👁️" },
+        "climax": { "text": "npm audit, pip-audit, and bundle-audit check pinned versions against known CVEs. Pin then scan.", "visual": "🔍" },
+        "punchline": { "text": "Pin versions, lock deps, review updates. Predictable builds are safer.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "Why are lock files important for supply chain security?",
+        "options": ["They pin exact dependency versions and hashes to prevent surprise updates", "They encrypt all dependency code", "They prevent developers from adding new dependencies"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch03-supply-chain-security",
+      "title": "SBOM: Software Bill of Materials",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Log4Shell hit. The CEO asked if they were affected. Nobody could answer — no one tracked dependencies.", "visual": "😰" },
+        "buildup": { "text": "An SBOM lists every component: name, version, supplier, license, and relationships. A full inventory.", "visual": "📋" },
+        "discovery": { "text": "SPDX and CycloneDX are standard SBOM formats. They're machine-readable so you can query them fast.", "visual": "🤖" },
+        "twist": { "text": "SBOMs help your customers too. Sharing yours builds transparency and trust across the supply chain.", "visual": "🤝" },
+        "climax": { "text": "Generate SBOMs in CI/CD. Every release gets a fresh, accurate bill of materials as an artifact.", "visual": "🏭" },
+        "punchline": { "text": "Know what's in your software. An SBOM is the ingredient label.", "visual": "🏷️" }
+      },
+      "quiz": {
+        "question": "What does an SBOM contain?",
+        "options": ["A complete list of all software components, versions, and their relationships", "The source code of all dependencies", "Performance benchmarks for each library"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch03-supply-chain-security",
+      "title": "Signed Commits and Artifacts",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Someone pushed code under a colleague's name. Git allows that. Without signing, you can't verify who.", "visual": "🎭" },
+        "buildup": { "text": "Signing uses crypto keys to prove authorship. A signed commit guarantees it came from the key owner.", "visual": "🔑" },
+        "discovery": { "text": "GPG and SSH signing work with Git. GitHub and GitLab show a Verified badge on signed commits.", "visual": "✅" },
+        "twist": { "text": "Artifact signing goes further. Sign Docker images and binaries so recipients can verify no tampering.", "visual": "📦" },
+        "climax": { "text": "Sigstore and Cosign make signing easy and keyless. Sign with your identity, verify via public logs.", "visual": "📜" },
+        "punchline": { "text": "Sign code and artifacts. Prove authenticity from commit to deploy.", "visual": "🔐" }
+      },
+      "quiz": {
+        "question": "Why should developers sign their Git commits?",
+        "options": ["To cryptographically prove who authored the code", "To make commits run faster", "To prevent merge conflicts"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch03-supply-chain-security",
+      "title": "Securing CI/CD Pipelines",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Attackers compromised a CI server and injected a backdoor. Infected binaries shipped for three weeks.", "visual": "🏭" },
+        "buildup": { "text": "CI/CD has broad access: source code, secrets, cloud creds, deploy targets. It's a high-value target.", "visual": "🎯" },
+        "discovery": { "text": "Harden CI/CD: ephemeral agents, limited secret access, pinned action versions, and audited configs.", "visual": "🔧" },
+        "twist": { "text": "Third-party actions are supply chain risks. Pin GitHub Actions to commit SHAs, not mutable tags.", "visual": "📌" },
+        "climax": { "text": "SLSA defines build security levels. Level 3 requires isolated, hermetic, and auditable builds.", "visual": "🏆" },
+        "punchline": { "text": "Your pipeline is a target. Harden it like production.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why should third-party CI/CD actions be pinned to commit SHAs?",
+        "options": ["To prevent a compromised tag from silently changing the action code", "To make the pipeline run faster", "SHAs are easier to read than version tags"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch04-secrets-management",
+      "title": "Why Secrets Must Not Live in Code",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A researcher scanned GitHub and found 100,000 repos with exposed AWS keys. Some were still active.", "visual": "🔑" },
+        "buildup": { "text": "API keys, passwords, tokens — hardcoding them means anyone with repo access can steal them instantly.", "visual": "💀" },
+        "discovery": { "text": "Delete the secret from code? Git history keeps it forever. The old commit is still reachable.", "visual": "🕵️" },
+        "twist": { "text": "Env vars are better but imperfect. They can leak via logs, error pages, or process listings.", "visual": "⚠️" },
+        "climax": { "text": "Secret managers like Vault or AWS Secrets Manager store secrets encrypted and deliver them at runtime.", "visual": "🏦" },
+        "punchline": { "text": "Never commit secrets. Use a secret manager. Rotate often.", "visual": "🔐" }
+      },
+      "quiz": {
+        "question": "Why is deleting a secret from code not enough to protect it?",
+        "options": ["Git history retains the commit with the secret forever", "Deleting code requires admin permissions", "The secret is automatically backed up to the cloud"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch04-secrets-management",
+      "title": "HashiCorp Vault",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every microservice needs DB credentials. Managing them across 50 services by hand? Vault automates it.", "visual": "🏦" },
+        "buildup": { "text": "Vault stores secrets encrypted, controls access with policies, and logs every access for auditing.", "visual": "📝" },
+        "discovery": { "text": "Dynamic secrets are Vault's superpower. It creates fresh credentials per request and auto-revokes them.", "visual": "⏳" },
+        "twist": { "text": "If a dynamic credential leaks, blast radius is small. It serves one service and expires on its own.", "visual": "🎯" },
+        "climax": { "text": "Vault plugs into Kubernetes, AWS IAM, and CI/CD tools. Secrets flow securely with no human touch.", "visual": "🔗" },
+        "punchline": { "text": "Vault: encrypt, control, audit, rotate. Secrets done right.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What are dynamic secrets in HashiCorp Vault?",
+        "options": ["Credentials created on demand that expire automatically after a set time", "Secrets that change their encryption key every hour", "Passwords that are randomly displayed on a dashboard"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch04-secrets-management",
+      "title": "Secret Rotation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The API key hadn't been rotated in three years. When it leaked, the attacker had years of access.", "visual": "😱" },
+        "buildup": { "text": "Rotation replaces secrets on a schedule. Old ones stop working. Leaked old secrets become useless.", "visual": "🔄" },
+        "discovery": { "text": "Automated rotation is essential. Manual rotation gets skipped. Automate it in Vault or your cloud.", "visual": "🤖" },
+        "twist": { "text": "Zero-downtime rotation overlaps validity. The old key works briefly while services grab the new one.", "visual": "🔀" },
+        "climax": { "text": "AWS Secrets Manager rotates RDS credentials on a schedule. No human touch, no forgotten rotations.", "visual": "📅" },
+        "punchline": { "text": "Rotate secrets often and automatically. Short-lived keys limit damage.", "visual": "⏱️" }
+      },
+      "quiz": {
+        "question": "Why is automated secret rotation important?",
+        "options": ["Manual rotation is error-prone and often skipped, leaving old secrets active", "It makes applications run faster", "Rotated secrets use less storage space"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch04-secrets-management",
+      "title": "Zero Trust and Least Privilege",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The intern's account had admin access to prod. Nobody noticed until the accidental DELETE query.", "visual": "💣" },
+        "buildup": { "text": "Least privilege grants each identity only the minimum permissions needed. No more, no less.", "visual": "📏" },
+        "discovery": { "text": "Zero trust: never trust, always verify. Even internal services must prove identity on every request.", "visual": "🔒" },
+        "twist": { "text": "Old networks trusted everything inside the firewall. Zero trust says the perimeter is irrelevant.", "visual": "🏰" },
+        "climax": { "text": "Service meshes enforce zero trust with mutual TLS. Every service proves identity to every other one.", "visual": "🔗" },
+        "punchline": { "text": "Trust nothing. Verify everything. Give minimum access needed.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What does 'zero trust' mean in security?",
+        "options": ["Never trust any identity by default; always verify authentication and authorization", "Don't trust any employees with access", "Only trust services running in the cloud"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch04-secrets-management",
+      "title": "Environment Isolation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A dev used prod credentials for testing. A bug deleted real customer data. Isolation prevents this.", "visual": "🗑️" },
+        "buildup": { "text": "Dev, staging, and prod need separate credentials, databases, and access. Never share them.", "visual": "🏗️" },
+        "discovery": { "text": "Each environment gets its own secrets in the manager. Developers can't even view production secrets.", "visual": "👁️" },
+        "twist": { "text": "Network isolation adds another layer. Prod runs in its own VPC. Dev machines can't reach it directly.", "visual": "🔒" },
+        "climax": { "text": "Terraform workspaces and K8s namespaces make isolation repeatable. Spin up separate envs easily.", "visual": "🔧" },
+        "punchline": { "text": "Separate environments fully. What you can't reach, you can't break.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why should development and production use separate credentials?",
+        "options": ["To prevent developer mistakes from affecting real customer data", "Because production credentials expire faster", "Developers don't need any credentials"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch05-container-and-cloud-security",
+      "title": "Container Image Scanning",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "The image used ubuntu:latest. It had 247 known CVEs. Nobody scanned it before deploying to prod.", "visual": "🐳" },
+        "buildup": { "text": "Container images bundle OS libs, runtimes, and app code. Any layer can contain known vulnerabilities.", "visual": "📦" },
+        "discovery": { "text": "Trivy, Grype, and Snyk compare image contents against vulnerability databases and report findings.", "visual": "🔍" },
+        "twist": { "text": "Use minimal base images. Alpine or distroless images have fewer packages and smaller attack surfaces.", "visual": "📉" },
+        "climax": { "text": "Scan in CI/CD and block images with critical CVEs. Scan registries for newly disclosed flaws too.", "visual": "🚫" },
+        "punchline": { "text": "Scan every image before deploy. Smaller bases mean fewer flaws.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why are minimal base images like Alpine recommended for containers?",
+        "options": ["They contain fewer packages, reducing the attack surface", "They run applications faster", "They don't need any configuration"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch05-container-and-cloud-security",
+      "title": "Runtime Container Security",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A root container was compromised. The attacker escaped to the host and reached all other containers.", "visual": "💀" },
+        "buildup": { "text": "Containers share the host kernel. A container escape grants access to everything on that machine.", "visual": "🏃" },
+        "discovery": { "text": "Never run as root. Use read-only filesystems. Drop unneeded Linux capabilities. Limit resources.", "visual": "🔒" },
+        "twist": { "text": "Seccomp and AppArmor restrict system calls a container can make. Even if breached, it can't do much.", "visual": "🔐" },
+        "climax": { "text": "Falco detects suspicious runtime behavior: unexpected shells, network connections, and file access.", "visual": "🦅" },
+        "punchline": { "text": "Don't just scan images. Watch what containers do at runtime.", "visual": "👁️" }
+      },
+      "quiz": {
+        "question": "Why should containers not run as the root user?",
+        "options": ["A compromised root container can escape and access the host system", "Root containers use more memory", "Root is slower than non-root users"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch05-container-and-cloud-security",
+      "title": "Kubernetes Security Basics",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A misconfigured K8s dashboard gave anonymous internet access. Attackers deployed crypto miners.", "visual": "⛏️" },
+        "buildup": { "text": "K8s has many security surfaces: API server, etcd, kubelet, pod specs, network policies, and RBAC.", "visual": "🔧" },
+        "discovery": { "text": "RBAC controls who can do what. Limit service accounts. Network policies restrict pod-to-pod traffic.", "visual": "🚧" },
+        "twist": { "text": "Pod Security Standards block root, host networking, and privilege escalation. Apply them cluster-wide.", "visual": "📋" },
+        "climax": { "text": "kube-bench and Polaris audit clusters against CIS benchmarks and best practices automatically.", "visual": "✅" },
+        "punchline": { "text": "Lock down K8s layer by layer. RBAC, network, pod security.", "visual": "🏰" }
+      },
+      "quiz": {
+        "question": "What do Kubernetes network policies control?",
+        "options": ["Which pods can communicate with each other over the network", "How much CPU each pod can use", "The programming language used inside pods"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch05-container-and-cloud-security",
+      "title": "Cloud IAM Best Practices",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An S3 bucket said Allow star. It held 100 million records. One bad IAM policy exposed everything.", "visual": "🌍" },
+        "buildup": { "text": "Cloud IAM controls who accesses what. A single misconfigured policy can expose your whole stack.", "visual": "🔑" },
+        "discovery": { "text": "Least privilege: grant only what's needed. Use specific resource ARNs, not wildcards like star.", "visual": "🎯" },
+        "twist": { "text": "Use IAM roles, not long-lived keys. Roles provide temporary credentials that expire on their own.", "visual": "⏳" },
+        "climax": { "text": "IAM Access Analyzer, GCP Policy Analyzer, and Azure Advisor find overly permissive policies for you.", "visual": "🔍" },
+        "punchline": { "text": "IAM is your cloud's front door. Lock it tight, audit it often.", "visual": "🚪" }
+      },
+      "quiz": {
+        "question": "Why are IAM roles preferred over long-lived access keys?",
+        "options": ["Roles provide temporary credentials that expire automatically", "Roles are free while access keys cost money", "Access keys provide more security than roles"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch05-container-and-cloud-security",
+      "title": "Infrastructure Security Scanning",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Terraform opened port 22 to the world. Checkov caught it in the PR, before it reached production.", "visual": "🚨" },
+        "buildup": { "text": "Infrastructure as Code can have misconfigs just like app code. Security scanning must cover IaC too.", "visual": "📝" },
+        "discovery": { "text": "Checkov, tfsec, and Snyk IaC scan Terraform, CloudFormation, and K8s manifests for security issues.", "visual": "🔧" },
+        "twist": { "text": "IaC scanning finds problems before resources exist. Fix a file, not a live misconfiguration.", "visual": "💰" },
+        "climax": { "text": "CSPM tools continuously scan live infrastructure and catch drift from secure configurations.", "visual": "📡" },
+        "punchline": { "text": "Scan IaC before deploy. Scan live infra continuously. Cover both.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What do IaC scanning tools like Checkov and tfsec check?",
+        "options": ["Infrastructure code for security misconfigurations before deployment", "Application performance after deployment", "Database query optimization"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch06-compliance-and-governance",
+      "title": "Compliance Frameworks Overview",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "GDPR, SOC 2, HIPAA, PCI DSS — acronyms that keep CISOs up at night. Compliance isn't optional.", "visual": "📜" },
+        "buildup": { "text": "Frameworks define security controls you must implement. They vary by industry, region, and data type.", "visual": "🌍" },
+        "discovery": { "text": "SOC 2 covers service orgs. HIPAA guards health data. PCI DSS secures payments. GDPR covers EU data.", "visual": "📋" },
+        "twist": { "text": "Compliance isn't security. You can pass and still be vulnerable. But non-compliance means fines.", "visual": "⚖️" },
+        "climax": { "text": "Automate compliance checks. Map controls to requirements. Continuous compliance beats annual audits.", "visual": "🤖" },
+        "punchline": { "text": "Know your requirements. Automate them. Stay audit-ready.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "Why doesn't compliance automatically mean you're secure?",
+        "options": ["You can meet all compliance requirements and still have unaddressed vulnerabilities", "Compliance frameworks are always outdated", "Security tools don't work with compliance frameworks"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch06-compliance-and-governance",
+      "title": "Policy as Code",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The policy said no public S3 buckets. It was a PDF nobody read. A dev made one public anyway.", "visual": "📄" },
+        "buildup": { "text": "Written policies get ignored. Policy as code enforces rules automatically. Violations are blocked.", "visual": "🚫" },
+        "discovery": { "text": "Open Policy Agent evaluates Rego rules against K8s manifests, Terraform plans, and API requests.", "visual": "🤖" },
+        "twist": { "text": "Policy as code is versioned and testable. Review, approve, and rollback policies like app code.", "visual": "🔄" },
+        "climax": { "text": "Kyverno writes policies in YAML for Kubernetes. It validates and mutates resources to enforce rules.", "visual": "🔧" },
+        "punchline": { "text": "Encode policies in code. Machines enforce rules better than docs.", "visual": "⚙️" }
+      },
+      "quiz": {
+        "question": "What is the advantage of policy as code over written policy documents?",
+        "options": ["Policies are enforced automatically and violations are blocked, not just documented", "Written documents are harder to create", "Policy as code is only useful for small teams"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch06-compliance-and-governance",
+      "title": "Audit Logging",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Who deleted the database? When? From where? Without audit logs, those questions have no answers.", "visual": "❓" },
+        "buildup": { "text": "Audit logs record who did what, when, and where. Essential for investigations and compliance.", "visual": "📝" },
+        "discovery": { "text": "CloudTrail, GCP Audit Logs, and Azure Activity Logs capture every API call. Every action recorded.", "visual": "☁️" },
+        "twist": { "text": "Logs must be tamper-proof. Use write-once storage. If attackers edit logs, the trail is worthless.", "visual": "🔐" },
+        "climax": { "text": "Centralize logs from all services. Correlate events across systems. One timeline reveals the story.", "visual": "📊" },
+        "punchline": { "text": "Log everything, protect the logs, centralize them. Logs tell the story.", "visual": "📖" }
+      },
+      "quiz": {
+        "question": "Why must audit logs be stored in tamper-proof storage?",
+        "options": ["So attackers can't delete or modify evidence of their actions", "Because tamper-proof storage is cheaper", "Audit logs take up too much regular storage space"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch06-compliance-and-governance",
+      "title": "Incident Response Plans",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The breach hit Friday night. Nobody knew who to call or what to do. Chaos doubled the damage.", "visual": "🔥" },
+        "buildup": { "text": "An incident response plan defines roles, channels, and steps before trouble arrives.", "visual": "📋" },
+        "discovery": { "text": "Key phases: detect, contain, eradicate, recover, learn. Each has specific actions and owners.", "visual": "🪜" },
+        "twist": { "text": "Plans must be practiced. Tabletop exercises simulate breaches and reveal gaps before real ones hit.", "visual": "🎭" },
+        "climax": { "text": "Blameless postmortems capture lessons. They improve the plan and prevent the same mistake twice.", "visual": "📝" },
+        "punchline": { "text": "Plan before the incident. Practice the plan. Improve after.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "Why should incident response plans be practiced through tabletop exercises?",
+        "options": ["Practice reveals gaps and ensures the team knows their roles before a real incident", "Tabletop exercises are required by all compliance frameworks", "Practicing makes incidents less likely to occur"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "devops--devops-security--ch06-compliance-and-governance",
+      "title": "DevSecOps Maturity Model",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You can't reach full DevSecOps overnight. It's a journey with clear stages of maturity.", "visual": "🗺️" },
+        "buildup": { "text": "Level 1: ad-hoc security, manual reviews. Level 2: basic CI/CD scanning, some secret management.", "visual": "🪜" },
+        "discovery": { "text": "Level 3: automated gates, policy as code, SBOMs, and regular threat modeling. Security per sprint.", "visual": "📊" },
+        "twist": { "text": "Level 4: security is invisible. Built into every tool and process. Devs barely notice the guardrails.", "visual": "🛤️" },
+        "climax": { "text": "Measure progress: scan coverage, remediation time, secrets in vault, audit pass rate.", "visual": "📈" },
+        "punchline": { "text": "Start where you are. Improve one level at a time. It's a journey.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "What characterizes the highest level of DevSecOps maturity?",
+        "options": ["Security is built into every tool and process so seamlessly that developers barely notice it", "The team has the most expensive security tools", "Security is handled entirely by an external vendor"],
+        "correct": 0
+      }
+    }
+  ]
+}

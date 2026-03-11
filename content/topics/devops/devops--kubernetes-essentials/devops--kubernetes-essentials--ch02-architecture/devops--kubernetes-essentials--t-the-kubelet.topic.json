@@ -1,0 +1,49 @@
+{
+  "id": "devops--kubernetes-essentials--t-the-kubelet",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Kubernetes Essentials",
+  "course_id": "devops--kubernetes-essentials",
+  "chapter_id": "devops--kubernetes-essentials--ch02-architecture",
+  "title": "The Kubelet",
+  "emoji": "☸️",
+  "color": "#326CE5",
+  "description": "A short lesson to help you apply The Kubelet.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The control plane says: 'Run this pod on Node 7.' Who on Node 7 actually does the work? The kubelet.",
+      "visual": "🤖"
+    },
+    "buildup": {
+      "text": "The kubelet is an agent running on every worker node. It watches for pod assignments from the API server.",
+      "visual": "👀"
+    },
+    "discovery": {
+      "text": "When assigned a pod, the kubelet tells the container runtime to pull the image and start the container.",
+      "visual": "▶️"
+    },
+    "twist": {
+      "text": "The kubelet also runs health checks. If a container fails its liveness probe, the kubelet restarts it locally.",
+      "visual": "🔄"
+    },
+    "climax": {
+      "text": "It reports node status back to the control plane: CPU usage, memory, disk pressure, and pod states.",
+      "visual": "📡"
+    },
+    "punchline": {
+      "text": "The kubelet is the worker's agent. It starts, monitors, and reports on pods.",
+      "visual": "📋"
+    }
+  },
+  "quiz": {
+    "question": "What does the kubelet do when a container fails its liveness probe?",
+    "options": [
+      "It restarts the container automatically",
+      "It sends an email to the development team",
+      "It shuts down the entire worker node"
+    ],
+    "correct": 0
+  }
+}

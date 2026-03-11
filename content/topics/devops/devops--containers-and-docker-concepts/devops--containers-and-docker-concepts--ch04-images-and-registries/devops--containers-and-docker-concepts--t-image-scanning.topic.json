@@ -1,0 +1,49 @@
+{
+  "id": "devops--containers-and-docker-concepts--t-image-scanning",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Containers and Docker Concepts",
+  "course_id": "devops--containers-and-docker-concepts",
+  "chapter_id": "devops--containers-and-docker-concepts--ch04-images-and-registries",
+  "title": "Image Scanning",
+  "emoji": "🐳",
+  "color": "#0891B2",
+  "description": "A short lesson to help you apply Image Scanning.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You pulled a popular image from Docker Hub. It had three critical CVEs. You deployed it without knowing.",
+      "visual": "😱"
+    },
+    "buildup": {
+      "text": "Images contain OS packages and libraries. Each one might have known vulnerabilities tracked in public databases.",
+      "visual": "📋"
+    },
+    "discovery": {
+      "text": "Image scanners check every package against CVE databases. They report severity: low, medium, high, critical.",
+      "visual": "🔍"
+    },
+    "twist": {
+      "text": "Scanning should happen in the CI pipeline, not after deployment. Block vulnerable images from ever reaching production.",
+      "visual": "🚧"
+    },
+    "climax": {
+      "text": "Trivy, Grype, and Snyk Container scan images in seconds. Integrate them as pipeline quality gates.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Scan every image before it deploys. Known vulnerabilities are preventable.",
+      "visual": "✅"
+    }
+  },
+  "quiz": {
+    "question": "When should container image scanning happen in the workflow?",
+    "options": [
+      "In the CI pipeline before the image reaches production",
+      "Only after the image has been running for a week",
+      "Once a year during security audits"
+    ],
+    "correct": 0
+  }
+}

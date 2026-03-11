@@ -1,0 +1,49 @@
+{
+  "id": "devops--containers-and-docker-concepts--t-the-dockerfile",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "Containers and Docker Concepts",
+  "course_id": "devops--containers-and-docker-concepts",
+  "chapter_id": "devops--containers-and-docker-concepts--ch03-docker-fundamentals",
+  "title": "The Dockerfile",
+  "emoji": "🐳",
+  "color": "#0891B2",
+  "description": "A fast breakdown of The Dockerfile for builders.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A Dockerfile is a recipe. It tells Docker exactly how to build an image, step by step, layer by layer.",
+      "visual": "📝"
+    },
+    "buildup": {
+      "text": "FROM picks the base image. RUN executes commands. COPY adds your files. Each instruction creates one layer.",
+      "visual": "🧱"
+    },
+    "discovery": {
+      "text": "The order matters. Put things that change rarely (OS packages) early and things that change often (code) late.",
+      "visual": "📊"
+    },
+    "twist": {
+      "text": "Why? Docker caches layers. If a layer hasn't changed, it's reused. Bad ordering busts the cache on every build.",
+      "visual": "💨"
+    },
+    "climax": {
+      "text": "A well-written Dockerfile builds in seconds. A poorly written one rebuilds everything from scratch each time.",
+      "visual": "⏱️"
+    },
+    "punchline": {
+      "text": "Dockerfiles define images. Layer order determines build speed.",
+      "visual": "🏎️"
+    }
+  },
+  "quiz": {
+    "question": "Why should rarely changing instructions come early in a Dockerfile?",
+    "options": [
+      "So Docker can cache those layers and skip rebuilding them",
+      "Because Docker reads files from top to bottom only once",
+      "To make the final image file smaller"
+    ],
+    "correct": 0
+  }
+}

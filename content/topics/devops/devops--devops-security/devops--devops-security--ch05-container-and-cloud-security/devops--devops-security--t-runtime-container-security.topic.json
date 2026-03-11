@@ -1,0 +1,49 @@
+{
+  "id": "devops--devops-security--t-runtime-container-security",
+  "version": 1,
+  "subject": "DevOps",
+  "subcategory": "DevOps Security (DevSecOps)",
+  "course_id": "devops--devops-security",
+  "chapter_id": "devops--devops-security--ch05-container-and-cloud-security",
+  "title": "Runtime Container Security",
+  "emoji": "🔐",
+  "color": "#059669",
+  "description": "Learn Runtime Container Security in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A root container was compromised. The attacker escaped to the host and reached all other containers.",
+      "visual": "💀"
+    },
+    "buildup": {
+      "text": "Containers share the host kernel. A container escape grants access to everything on that machine.",
+      "visual": "🏃"
+    },
+    "discovery": {
+      "text": "Never run as root. Use read-only filesystems. Drop unneeded Linux capabilities. Limit resources.",
+      "visual": "🔒"
+    },
+    "twist": {
+      "text": "Seccomp and AppArmor restrict system calls a container can make. Even if breached, it can't do much.",
+      "visual": "🔐"
+    },
+    "climax": {
+      "text": "Falco detects suspicious runtime behavior: unexpected shells, network connections, and file access.",
+      "visual": "🦅"
+    },
+    "punchline": {
+      "text": "Don't just scan images. Watch what containers do at runtime.",
+      "visual": "👁️"
+    }
+  },
+  "quiz": {
+    "question": "Why should containers not run as the root user?",
+    "options": [
+      "A compromised root container can escape and access the host system",
+      "Root containers use more memory",
+      "Root is slower than non-root users"
+    ],
+    "correct": 0
+  }
+}
