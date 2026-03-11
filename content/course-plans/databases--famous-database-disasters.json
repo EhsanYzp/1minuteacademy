@@ -1,0 +1,559 @@
+{
+  "categoryId": "databases",
+  "subject": "Databases",
+  "courseId": "databases--famous-database-disasters",
+  "courseTitle": "Famous Database Disasters",
+  "emoji": "🔥",
+  "color": "#F97316",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "databases--famous-database-disasters--ch01-data-loss-incidents", "title": "Data Loss Incidents", "position": 1 },
+    { "id": "databases--famous-database-disasters--ch02-outages-and-downtime", "title": "Outages and Downtime", "position": 2 },
+    { "id": "databases--famous-database-disasters--ch03-migration-gone-wrong", "title": "Migrations Gone Wrong", "position": 3 },
+    { "id": "databases--famous-database-disasters--ch04-security-breaches", "title": "Security Breaches", "position": 4 },
+    { "id": "databases--famous-database-disasters--ch05-scaling-failures", "title": "Scaling Failures", "position": 5 },
+    { "id": "databases--famous-database-disasters--ch06-lessons-learned", "title": "Lessons Learned", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "databases--famous-database-disasters--ch01-data-loss-incidents",
+      "title": "GitLab Deletes Production Database",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "January 2017. A GitLab engineer runs rm -rf on the wrong database directory. The production database vanishes.", "visual": "💀" },
+        "buildup": { "text": "They try five backup methods. None work: one empty, another misconfigured, a third corrupted.", "visual": "😱" },
+        "discovery": { "text": "Only one method works: a six-hour-old staging snapshot. They lose six hours of data: issues, merge requests, comments.", "visual": "📦" },
+        "twist": { "text": "GitLab live-streamed the recovery on YouTube. Radical transparency turned a disaster into a teaching moment.", "visual": "📺" },
+        "climax": { "text": "Lesson: test your backups. Having five backup methods means nothing if none of them actually work.", "visual": "🧪" },
+        "punchline": { "text": "Backups you don't test are not backups. They're hopes.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why did five backup methods fail during the GitLab incident?",
+        "options": ["They were never tested — one was empty, another misconfigured, and a third corrupted", "The backups were encrypted and no one had the key", "All five methods worked but were too slow to use"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch01-data-loss-incidents",
+      "title": "MySpace Loses 12 Years of Music",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2019, MySpace announced it lost all music uploaded between 2003 and 2015. Twelve years of content. 50 million songs.", "visual": "🎵" },
+        "buildup": { "text": "The cause: a failed server migration. Data was corrupted during the transfer and no complete backup existed.", "visual": "💥" },
+        "discovery": { "text": "For independent artists, MySpace was their only distribution platform. Their entire discography disappeared.", "visual": "😢" },
+        "twist": { "text": "The Internet Archive had partially crawled MySpace but couldn't recover most audio files. Some music was gone forever.", "visual": "🌐" },
+        "climax": { "text": "Lesson: data you don't own can vanish. If a platform holds your only copy, you have zero copies.", "visual": "📋" },
+        "punchline": { "text": "Platform data is not your data. Keep your own backups of irreplaceable content.", "visual": "💾" }
+      },
+      "quiz": {
+        "question": "What caused MySpace to lose 50 million songs?",
+        "options": ["A failed server migration corrupted data and no complete backup existed", "A hacker deliberately deleted all music files", "MySpace intentionally removed old content to save storage costs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch01-data-loss-incidents",
+      "title": "Ma.gnolia Social Bookmarking Dies",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "February 2009. Ma.gnolia, a popular social bookmarking site, loses its entire database. Permanently.", "visual": "📎" },
+        "buildup": { "text": "A database corruption spread to the backups. The backup process had been dutifully copying corrupted data for weeks.", "visual": "🔄" },
+        "discovery": { "text": "When they tried to restore, every backup contained the same corruption. There was no clean copy anywhere.", "visual": "💔" },
+        "twist": { "text": "The service shut down permanently. Millions of bookmarks from thousands of users were gone forever.", "visual": "🪦" },
+        "climax": { "text": "Lesson: backups of corrupted data are worthless. Verify backup integrity, not just backup existence.", "visual": "🧪" },
+        "punchline": { "text": "Verify backup integrity. Copying corruption copies nothing useful.", "visual": "⚠️" }
+      },
+      "quiz": {
+        "question": "Why couldn't Ma.gnolia recover from its backups?",
+        "options": ["The corruption had spread to all backups because the backup process copied corrupted data for weeks", "The backup files were stored in a different country", "The backups were password-protected and the password was lost"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch01-data-loss-incidents",
+      "title": "Toy Story 2 Nearly Deleted",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "1998. Someone runs rm -rf / on Pixar's servers. Toy Story 2 starts vanishing: characters, animations, everything.", "visual": "🤠" },
+        "buildup": { "text": "They had backups. But the backup system had silently failed weeks earlier. The tapes were empty.", "visual": "📼" },
+        "discovery": { "text": "A technical director had a full copy on her home machine. She'd been working from home after having a baby.", "visual": "🏠" },
+        "twist": { "text": "They drove to her house, wrapped the computer in blankets, and escorted it back to Pixar like a VIP.", "visual": "🚗" },
+        "climax": { "text": "The home copy saved the movie. Without it, two years of work would have been lost completely.", "visual": "🎬" },
+        "punchline": { "text": "Backup systems can fail silently. Verify they're actually working.", "visual": "🔍" }
+      },
+      "quiz": {
+        "question": "How was Toy Story 2 ultimately saved from deletion?",
+        "options": ["A technical director had an accidental full copy on her home computer", "Pixar's backup tapes were restored successfully", "The deleted files were recovered from the server's recycle bin"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch01-data-loss-incidents",
+      "title": "OVHcloud Data Center Fire",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "March 2021. A fire destroys OVHcloud's SBG2 data center in Strasbourg. Thousands of servers burn, data included.", "visual": "🔥" },
+        "buildup": { "text": "3.6 million websites went offline. Some customers had backups stored in the same data center. Those burned too.", "visual": "💨" },
+        "discovery": { "text": "Customers who used OVH's backup service in the same building lost both production data and backups simultaneously.", "visual": "😱" },
+        "twist": { "text": "Some customers assumed 'cloud backup' meant geographically separate. It didn't. The fine print matters.", "visual": "📋" },
+        "climax": { "text": "Lesson: backups must be geographically separated. Same-building backups don't survive building-level disasters.", "visual": "🌍" },
+        "punchline": { "text": "Off-site backups: different building, different region. Read the fine print.", "visual": "📍" }
+      },
+      "quiz": {
+        "question": "Why did some OVHcloud customers lose both their data and backups?",
+        "options": ["Their backups were stored in the same data center that caught fire", "OVHcloud didn't offer any backup services", "The backups were encrypted and the keys were lost"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch02-outages-and-downtime",
+      "title": "Amazon DynamoDB Outage 2015",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "September 2015. DynamoDB in US-East-1 goes down. Services depending on it cascade into failure across AWS.", "visual": "☁️" },
+        "buildup": { "text": "The root cause: metadata for a storage partition got corrupted. The system couldn't route requests to the right nodes.", "visual": "🔀" },
+        "discovery": { "text": "Recovery took hours. Every service built on DynamoDB without fallbacks went down with it.", "visual": "📉" },
+        "twist": { "text": "Some teams had multi-region failover. Their services stayed up. Single-region teams learned a painful lesson.", "visual": "🌐" },
+        "climax": { "text": "Lesson: managed services are not invincible. Plan for their failure. Have circuit breakers and fallback paths.", "visual": "🔧" },
+        "punchline": { "text": "Even managed databases fail. Design for the failure of every dependency.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What lesson did the 2015 DynamoDB outage teach?",
+        "options": ["Even managed cloud services can fail, so applications need circuit breakers and fallback paths", "DynamoDB should never be used in production", "AWS regions never experience outages"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch02-outages-and-downtime",
+      "title": "GitHub MySQL Incident 2018",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "October 2018. A network issue causes GitHub's MySQL primary to lose connection with replicas for 43 seconds.", "visual": "🔌" },
+        "buildup": { "text": "Orchestrator promotes a replica to primary. But the old primary had 43 seconds of unreplicated writes.", "visual": "⏱️" },
+        "discovery": { "text": "Both the old and new primaries had unique data. Merging them without data loss took 24 hours of careful work.", "visual": "🔧" },
+        "twist": { "text": "GitHub chose data integrity over speed. They kept the site in degraded mode until every row was reconciled.", "visual": "⚖️" },
+        "climax": { "text": "Lesson: automatic failover can cause split-brain. Reconciliation plans must exist before incidents happen.", "visual": "📋" },
+        "punchline": { "text": "Failover creates divergent data. Plan the reconciliation before you need it.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "What problem did GitHub face after automatic failover?",
+        "options": ["The old and new primaries had different data that needed careful reconciliation", "All data was lost on both servers", "The failover completed instantly with no issues"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch02-outages-and-downtime",
+      "title": "Facebook Six-Hour Outage 2021",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "October 2021. Facebook, Instagram, and WhatsApp go dark for six hours. 3.5 billion users affected.", "visual": "📵" },
+        "buildup": { "text": "A BGP configuration change disconnected Facebook's data centers from the internet. DNS stopped resolving.", "visual": "🌐" },
+        "discovery": { "text": "Engineers couldn't reach internal tools. Even badge access to data centers failed — it depended on the network.", "visual": "🚪" },
+        "twist": { "text": "When servers came back, the thundering herd of reconnecting users nearly crashed the databases again.", "visual": "🌊" },
+        "climax": { "text": "Lesson: recovery can be harder than the initial failure. Plan for the traffic surge when systems come back online.", "visual": "📈" },
+        "punchline": { "text": "Plan for recovery, not just failure. The reconnection surge is its own disaster.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "What secondary problem did Facebook face during recovery?",
+        "options": ["The thundering herd of reconnecting users nearly overwhelmed the databases again", "All user accounts had been permanently deleted", "The recovery was completed in under five minutes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch02-outages-and-downtime",
+      "title": "Cloudflare DNS Outage 2020",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "July 2020. A Cloudflare router misconfiguration takes down DNS for 27 minutes. Half the internet feels it.", "visual": "🌐" },
+        "buildup": { "text": "Databases behind Cloudflare-proxied domains became unreachable. API servers returned errors globally.", "visual": "💥" },
+        "discovery": { "text": "A single bad route announcement cascaded. One router's config affected traffic to millions of domains.", "visual": "🔄" },
+        "twist": { "text": "27 minutes doesn't sound long. But for payment processors and health services, even seconds of downtime matter.", "visual": "💰" },
+        "climax": { "text": "Lesson: infrastructure dependencies are invisible until they break. Map your full dependency chain.", "visual": "🗺️" },
+        "punchline": { "text": "Database uptime depends on every layer below: DNS, network, cloud. Map them.", "visual": "🧱" }
+      },
+      "quiz": {
+        "question": "What lesson does the Cloudflare outage teach about database availability?",
+        "options": ["Database uptime depends on infrastructure layers like DNS and networking that are often invisible", "DNS has no impact on database availability", "27-minute outages never affect critical services"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch02-outages-and-downtime",
+      "title": "Reddit's Leap Second Bug",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "June 2012. A leap second is added to UTC. Linux servers spin at 100% CPU. Cassandra clusters at Reddit and others crash.", "visual": "⏰" },
+        "buildup": { "text": "The Linux kernel's handling of the leap second caused a CPU scheduling bug. Database threads consumed all available CPU.", "visual": "🔥" },
+        "discovery": { "text": "Cassandra, MySQL, and many Java applications were affected. The fix was simple: restart, or set the clock manually.", "visual": "🔧" },
+        "twist": { "text": "Google solved this permanently with 'leap smear': spreading the extra second over 24 hours so the jump never happens.", "visual": "🧠" },
+        "climax": { "text": "Lesson: databases depend on the operating system and hardware. Bugs in lower layers can crash healthy databases.", "visual": "🧱" },
+        "punchline": { "text": "Time is tricky. A one-second clock change crashed databases worldwide.", "visual": "⏱️" }
+      },
+      "quiz": {
+        "question": "How did Google prevent leap second problems?",
+        "options": ["They spread the extra second over 24 hours (leap smear) so the clock never jumps", "They deleted the leap second from all their servers", "Google's databases don't use system clocks"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch03-migration-gone-wrong",
+      "title": "Knight Capital's $440 Million Bug",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "August 2012. Knight Capital deploys new trading code. A config flag activates old test code on production servers.", "visual": "💸" },
+        "buildup": { "text": "The old code buys and sells millions of shares in 45 minutes. The firm loses $440 million before anyone stops it.", "visual": "📉" },
+        "discovery": { "text": "The deploy was manual. One of eight servers didn't get the new code. It still had test logic that traded erratically.", "visual": "🖥️" },
+        "twist": { "text": "Knight Capital went bankrupt within days. A single failed deployment destroyed a 17-year-old company.", "visual": "💀" },
+        "climax": { "text": "Lesson: deploy consistently to all servers. Automate deploys. Never rely on humans to copy files to eight machines.", "visual": "🤖" },
+        "punchline": { "text": "Inconsistent deploys kill. Automate everything. One missed server cost $440M.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What caused Knight Capital's $440 million loss?",
+        "options": ["One of eight servers missed the deployment and ran old test code that traded erratically", "A database corruption lost all trading records", "A hacker manipulated their trading algorithms"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch03-migration-gone-wrong",
+      "title": "British Airways IT Meltdown 2017",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "May 2017. A power supply is accidentally switched off in British Airways' data center. The UPS fails on restart.", "visual": "🔌" },
+        "buildup": { "text": "The power surge when systems came back online corrupted databases and scrambled server configurations.", "visual": "💥" },
+        "discovery": { "text": "75,000 passengers were stranded. All flights from Heathrow and Gatwick were cancelled for two days.", "visual": "✈️" },
+        "twist": { "text": "BA had no effective disaster recovery. Their backup data center was in the same area, hit by the same power issue.", "visual": "📍" },
+        "climax": { "text": "The cost: £80 million in compensation plus untold reputation damage. All from one power switch.", "visual": "💰" },
+        "punchline": { "text": "DR sites must be truly independent. Same-area backups fail together.", "visual": "🌍" }
+      },
+      "quiz": {
+        "question": "Why did British Airways' disaster recovery fail?",
+        "options": ["The backup data center was in the same area and was affected by the same power issue", "They had no backup data center at all", "The disaster recovery plan worked perfectly"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch03-migration-gone-wrong",
+      "title": "TSB Bank Migration Disaster",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "April 2018. TSB migrates 5.4 million customers from one banking platform to another. It goes catastrophically wrong.", "visual": "🏦" },
+        "buildup": { "text": "Customers see other people's accounts. Payments fail. Mobile and online banking break. 1.9 billion records to migrate.", "visual": "💥" },
+        "discovery": { "text": "The migration was rushed. Testing was inadequate. The new platform wasn't ready for production load.", "visual": "🏗️" },
+        "twist": { "text": "Outage lasted weeks, not hours. TSB lost 80,000 customers and the CEO resigned. The FCA fined them £48.65 million.", "visual": "📉" },
+        "climax": { "text": "Lesson: migrations this large need months of parallel running. Don't switch until the new system proves itself.", "visual": "🧪" },
+        "punchline": { "text": "Big-bang migrations are high risk. Run systems in parallel. Migrate gradually.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What was the main cause of the TSB migration disaster?",
+        "options": ["The migration was rushed with inadequate testing, and the new platform wasn't ready for production load", "A natural disaster destroyed the new data center", "Customers refused to use the new system"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch03-migration-gone-wrong",
+      "title": "Healthcare.gov Launch Failure",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "October 2013. Healthcare.gov launches. Only 6 people manage to sign up on day one. The database collapses under load.", "visual": "🏥" },
+        "buildup": { "text": "The system was designed for 50,000 concurrent users. 250,000 arrived. The database couldn't handle the queries.", "visual": "📈" },
+        "discovery": { "text": "No connection pooling, no caching, no load testing at scale. Every page load hit the database directly.", "visual": "💥" },
+        "twist": { "text": "A crisis team took two months to fix it: added caching, rewrote queries, and implemented proper connection management.", "visual": "🔧" },
+        "climax": { "text": "Lesson: load test at realistic scale before launch. Don't discover database limits on launch day.", "visual": "🧪" },
+        "punchline": { "text": "Load test before launch. Your first real traffic spike shouldn't be a surprise.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "Why did Healthcare.gov's database fail on launch day?",
+        "options": ["It lacked connection pooling, caching, and load testing, and traffic exceeded expectations by 5x", "The database software had a critical security flaw", "A hacker deliberately overloaded the servers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch03-migration-gone-wrong",
+      "title": "Spotify's Silent Data Corruption",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Spotify discovered that some users' playlists had silently lost songs. No error, no alert. Songs just vanished.", "visual": "🎧" },
+        "buildup": { "text": "The cause: a race condition during a storage migration. Concurrent writes during the move occasionally dropped data.", "visual": "🔀" },
+        "discovery": { "text": "The bug was subtle. It only triggered under specific timing conditions. Standard tests never hit the race window.", "visual": "🐛" },
+        "twist": { "text": "By the time they found it, the corrupted state had been replicated to all replicas. Clean data was gone.", "visual": "💔" },
+        "climax": { "text": "Lesson: migrations must be idempotent and verifiable. Checksum data before and after. Detect silent corruption.", "visual": "🔍" },
+        "punchline": { "text": "Silent corruption is the worst kind. Verify integrity at every migration step.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "Why was Spotify's data corruption particularly dangerous?",
+        "options": ["It was silent — no errors or alerts — and had already replicated to all copies before detection", "It affected all Spotify users simultaneously", "The corruption was immediately detected and fixed"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch04-security-breaches",
+      "title": "Equifax Breach 2017",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "147 million Americans' SSNs, birth dates, and addresses exposed. The cause: an unpatched Apache Struts vulnerability.", "visual": "🔓" },
+        "buildup": { "text": "The patch was available for two months before the breach. Equifax failed to apply it to a public-facing application.", "visual": "⏰" },
+        "discovery": { "text": "Attackers accessed the database through the web app for 76 days before detection. No alerting caught the exfiltration.", "visual": "🕵️" },
+        "twist": { "text": "Equifax's SSL certificate for monitoring had expired. They literally couldn't see encrypted exfiltration traffic.", "visual": "😱" },
+        "climax": { "text": "Cost: $700 million settlement, CEO resignation, lasting reputation damage. All from one unpatched server.", "visual": "💰" },
+        "punchline": { "text": "Patch known vulnerabilities. Monitor for exfiltration. One server cost $700M.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What allowed attackers to access Equifax's data for 76 days undetected?",
+        "options": ["Their SSL monitoring certificate had expired, so they couldn't see the encrypted data exfiltration", "Equifax had no database at all", "The attackers used an advanced zero-day exploit"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch04-security-breaches",
+      "title": "MongoDB Ransomware Wave",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "2017. Attackers scan the internet, find thousands of MongoDB instances with no authentication, and delete the data.", "visual": "🔍" },
+        "buildup": { "text": "MongoDB shipped with authentication disabled by default. Developers deployed it to the cloud without changing settings.", "visual": "🔓" },
+        "discovery": { "text": "Attackers replaced data with a ransom note: 'Pay 0.2 BTC to get your data back.' Over 28,000 databases were hit.", "visual": "💀" },
+        "twist": { "text": "Most attackers didn't actually keep the data. Paying the ransom got nothing back. The data was just deleted.", "visual": "🗑️" },
+        "climax": { "text": "MongoDB later changed defaults to require authentication. But thousands of old deployments remain vulnerable.", "visual": "🔧" },
+        "punchline": { "text": "Never deploy a database with default settings. Always enable authentication.", "visual": "🔐" }
+      },
+      "quiz": {
+        "question": "Why were thousands of MongoDB instances vulnerable to the 2017 ransomware attacks?",
+        "options": ["MongoDB's default settings had authentication disabled, and developers never changed them", "MongoDB had an unpatched security vulnerability", "The ransomware exploited a zero-day in the MongoDB protocol"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch04-security-breaches",
+      "title": "Capital One Breach 2019",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A former AWS employee exploits a misconfigured WAF to access Capital One's S3 buckets. 100 million records exposed.", "visual": "☁️" },
+        "buildup": { "text": "The attacker used server-side request forgery (SSRF) to access AWS metadata and obtain IAM credentials.", "visual": "🔑" },
+        "discovery": { "text": "With the credentials, they accessed S3 buckets containing credit card applications, SSNs, and bank accounts.", "visual": "💳" },
+        "twist": { "text": "Data was encrypted at rest. But stolen credentials could decrypt it. Encryption without access control fails.", "visual": "⚠️" },
+        "climax": { "text": "Lesson: encryption alone isn't enough. Combine it with strict IAM policies, network isolation, and monitoring.", "visual": "🧅" },
+        "punchline": { "text": "Encryption without access control is a locked door with the key taped to it.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why didn't encryption at rest protect Capital One's data?",
+        "options": ["The stolen credentials also had permission to decrypt the data, bypassing the encryption", "Capital One didn't actually encrypt their data", "The attacker broke the encryption algorithm"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch04-security-breaches",
+      "title": "Uber's Hidden Breach 2016",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Hackers access Uber's GitHub repo, find AWS credentials in code, and download 57 million user and driver records.", "visual": "🔐" },
+        "buildup": { "text": "The credentials were hardcoded in a private GitHub repository. The attackers found them by browsing the code.", "visual": "📝" },
+        "discovery": { "text": "Uber paid the hackers $100,000 through their bug bounty program and asked them to delete the data. Then hid the breach.", "visual": "🤫" },
+        "twist": { "text": "Uber hid the breach for over a year. When discovered, the CSO was fired and Uber faced massive legal penalties.", "visual": "⚖️" },
+        "climax": { "text": "Lesson: never hardcode credentials. Never hide breaches. Transparency is legally required and ethically essential.", "visual": "📋" },
+        "punchline": { "text": "Credentials in code and hidden breaches. Two inexcusable mistakes compounded.", "visual": "🚫" }
+      },
+      "quiz": {
+        "question": "How did hackers initially access Uber's data?",
+        "options": ["They found AWS credentials hardcoded in Uber's GitHub repository", "They used SQL injection on Uber's website", "A disgruntled employee gave them direct database access"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch04-security-breaches",
+      "title": "Heartland Payment Breach 2008",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "130 million credit card numbers stolen from Heartland Payment Systems. The largest payment breach at the time.", "visual": "💳" },
+        "buildup": { "text": "Attackers used SQL injection to plant malware on Heartland's payment network. It captured card data in transit.", "visual": "💉" },
+        "discovery": { "text": "The malware ran for months, capturing card numbers as they flowed through Heartland's systems. Undetected.", "visual": "🕵️" },
+        "twist": { "text": "Heartland was PCI DSS compliant at the time of the breach. Compliance doesn't equal security.", "visual": "📋" },
+        "climax": { "text": "Lesson: compliance is the minimum. Real security requires continuous monitoring and testing beyond checklists.", "visual": "🔍" },
+        "punchline": { "text": "Compliance isn't security. Heartland was certified compliant and still breached.", "visual": "⚠️" }
+      },
+      "quiz": {
+        "question": "What does the Heartland breach teach about compliance?",
+        "options": ["Being compliant with security standards doesn't guarantee actual security against determined attackers", "PCI DSS compliance prevents all possible breaches", "Heartland was not compliant at the time of the breach"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch05-scaling-failures",
+      "title": "Twitter's Fail Whale Era",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "2007-2010. Twitter shows a 'Fail Whale' error page constantly. The MySQL database can't handle the traffic.", "visual": "🐋" },
+        "buildup": { "text": "Every tweet was a write. Every timeline load joined followers and tweets. MySQL wasn't designed for this.", "visual": "📈" },
+        "discovery": { "text": "Twitter migrated to a distributed architecture: Manhattan for timelines, FlockDB for the social graph.", "visual": "🏗️" },
+        "twist": { "text": "They didn't abandon MySQL entirely. They still use it — but for appropriate workloads, not everything.", "visual": "🐬" },
+        "climax": { "text": "Lesson: no single database handles every workload. Polyglot persistence uses the right database for each job.", "visual": "🧩" },
+        "punchline": { "text": "One database doesn't fit all workloads. Use the right tool for each problem.", "visual": "🔧" }
+      },
+      "quiz": {
+        "question": "How did Twitter solve its database scaling problems?",
+        "options": ["They adopted polyglot persistence, using different specialized databases for different workloads", "They bought a bigger MySQL server", "They stopped allowing new users to sign up"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch05-scaling-failures",
+      "title": "Friendster's Slow Decline",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Friendster launched before Facebook. Page loads took 20+ seconds. Users left for faster competitors.", "visual": "🐢" },
+        "buildup": { "text": "The social graph was stored in a relational database. Finding friends-of-friends required deep recursive joins.", "visual": "🔄" },
+        "discovery": { "text": "Every profile page required queries that traversed multiple relationship levels. The database couldn't keep up.", "visual": "💥" },
+        "twist": { "text": "Friendster had 115 million users at its peak. Technical debt, not lack of users, killed the platform.", "visual": "📉" },
+        "climax": { "text": "Lesson: database architecture must match the access pattern. Social graphs need graph databases, not relational joins.", "visual": "📊" },
+        "punchline": { "text": "Wrong database for the workload. Friendster had users but couldn't serve them.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "Why was a relational database a poor choice for Friendster's social graph?",
+        "options": ["Traversing friend relationships required deep recursive joins that were too slow at scale", "Relational databases cannot store user profiles", "Friendster didn't have enough data to benefit from a database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch05-scaling-failures",
+      "title": "Digg's Cassandra Migration",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "2010. Digg rewrites its entire backend on Cassandra to handle scale. The rewrite takes 18 months and kills the company.", "visual": "📰" },
+        "buildup": { "text": "Digg's MySQL database was slow, so they bet everything on a full Cassandra migration. All features, all at once.", "visual": "🎰" },
+        "discovery": { "text": "During the rewrite, competitors shipped features. Users left. The new version launched buggy and slower.", "visual": "🐛" },
+        "twist": { "text": "The problem wasn't Cassandra. It was the big-bang rewrite approach. A gradual migration would have been safer.", "visual": "🔀" },
+        "climax": { "text": "Lesson: never rewrite everything at once. Strangle the old system gradually. Migrate piece by piece.", "visual": "🧩" },
+        "punchline": { "text": "Big-bang rewrites are company killers. Migrate incrementally.", "visual": "📏" }
+      },
+      "quiz": {
+        "question": "What killed Digg's Cassandra migration?",
+        "options": ["The big-bang rewrite approach took 18 months, during which competitors shipped features and users left", "Cassandra was too slow for their workload", "They ran out of server hardware"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch05-scaling-failures",
+      "title": "Instagram's Single Server",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "When Instagram launched in 2010, it ran entirely on one PostgreSQL server. 25,000 signups on day one.", "visual": "📸" },
+        "buildup": { "text": "They didn't pre-optimize. They used Postgres, Django, and simple queries. No sharding, no distributed system.", "visual": "📝" },
+        "discovery": { "text": "As they grew, they added read replicas, then partitioned by user ID. They scaled incrementally, not preemptively.", "visual": "📈" },
+        "twist": { "text": "Instagram hit 1 billion users on a simple Postgres setup. They scaled what was needed, when needed.", "visual": "🎯" },
+        "climax": { "text": "Lesson: start simple. Postgres handles far more than most people think. Scale when you hit the limits, not before.", "visual": "🐘" },
+        "punchline": { "text": "One Postgres server to start. Simplicity scales further than you think.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "What database scaling strategy made Instagram successful?",
+        "options": ["They started simple with one PostgreSQL server and scaled incrementally as they hit actual limits", "They used a distributed database from day one", "They avoided using any database at all"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch05-scaling-failures",
+      "title": "Pinterest Connection Storm",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Pinterest's MySQL had thousands of open connections. Each web server opened its own connection. Memory exhausted.", "visual": "🔌" },
+        "buildup": { "text": "Without pooling, every process held a persistent connection. 200 servers × 10 connections = 2,000 per database.", "visual": "📊" },
+        "discovery": { "text": "They added PgBouncer-style connection pooling. A pool of 50 connections served 2,000 application processes.", "visual": "🔧" },
+        "twist": { "text": "The database spent more time managing connections than executing queries. Connection overhead was the bottleneck.", "visual": "⚡" },
+        "climax": { "text": "Lesson: connection pooling is essential at scale. Don't let each application instance manage its own connection.", "visual": "📏" },
+        "punchline": { "text": "Connection pooling: fewer connections, better performance. Essential at scale.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "How did connection pooling solve Pinterest's database performance problem?",
+        "options": ["A small pool of shared connections served thousands of application processes, reducing overhead", "It increased the number of connections to the database", "Connection pooling eliminated the need for a database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch06-lessons-learned",
+      "title": "Test Your Backups",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "GitLab, Ma.gnolia, Pixar — all had backups. None worked when needed. The pattern is clear and terrifying.", "visual": "🧪" },
+        "buildup": { "text": "A backup that hasn't been restored is an unverified assumption. It might work. It might not.", "visual": "🤞" },
+        "discovery": { "text": "Schedule automated restore tests: weekly, restore to a test server, verify data integrity, report any failures.", "visual": "📅" },
+        "twist": { "text": "Test full restores, not just backup creation. A backup file that exists but can't restore is worthless.", "visual": "📋" },
+        "climax": { "text": "Include restore time in your disaster recovery plan. A 48-hour restore for a 4-hour RTO doesn't work.", "visual": "⏱️" },
+        "punchline": { "text": "Restore your backups regularly. A backup is only real once restored.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "Why should you regularly test restoring from backups, not just creating them?",
+        "options": ["A backup file that exists but can't be restored is worthless when disaster strikes", "Backup creation is always more error-prone than restoration", "Testing restores makes backups run faster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch06-lessons-learned",
+      "title": "Automate Everything",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Knight Capital's manual deploy missed one server. GitLab ran a command on the wrong directory. Humans err.", "visual": "🤖" },
+        "buildup": { "text": "Manual processes are error-prone at 2 AM, under pressure, or at scale. Automation is consistent every time.", "visual": "🔄" },
+        "discovery": { "text": "Automate deploys, backups, failover, patching, and monitoring. If a human has to remember a step, automate it.", "visual": "📝" },
+        "twist": { "text": "Automation needs testing too. Automated scripts with bugs can cause disasters faster than manual ones.", "visual": "⚠️" },
+        "climax": { "text": "Infrastructure as Code: define your database setup in code. Review it, test it, version it like application code.", "visual": "📋" },
+        "punchline": { "text": "Automate repetitive tasks. Test the automation. Remove humans from routines.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why is automation important for database operations?",
+        "options": ["Manual processes are error-prone, especially under pressure, while automation is consistent", "Automated systems never have bugs", "Automation eliminates the need for monitoring"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch06-lessons-learned",
+      "title": "Migrate Gradually",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "TSB, Digg, Healthcare.gov — big-bang launches that failed spectacularly. The pattern: too much change at once.", "visual": "💥" },
+        "buildup": { "text": "Gradual migration: run old and new systems in parallel. Shift traffic incrementally. Verify at each step.", "visual": "🔄" },
+        "discovery": { "text": "Strangler fig pattern: wrap the old system, route traffic to the new one, grow until the old system is gone.", "visual": "🌿" },
+        "twist": { "text": "Parallel running doubles costs temporarily. But the alternative — a failed migration — costs far more.", "visual": "💰" },
+        "climax": { "text": "Feature flags control the migration. Roll out to 1%, then 10%, then 50%. Roll back instantly if problems appear.", "visual": "🎛️" },
+        "punchline": { "text": "Migrate incrementally. Parallel run. Feature flag. Roll back if needed.", "visual": "📏" }
+      },
+      "quiz": {
+        "question": "What is the strangler fig pattern for database migration?",
+        "options": ["Gradually replacing the old system by routing increasing traffic to the new one while both run in parallel", "Immediately shutting down the old system and switching to the new one", "Removing features one at a time from the old database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch06-lessons-learned",
+      "title": "Monitor and Alert",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Equifax's breach went undetected for 76 days. Spotify's corruption spread silently. Detection delays multiply damage.", "visual": "🔍" },
+        "buildup": { "text": "Monitor query latency, error rates, connection counts, replication lag, and disk usage. Know what normal looks like.", "visual": "📊" },
+        "discovery": { "text": "Alert on deviations: latency spike, replication lag > 10 seconds, disk at 80%. Catch problems before users do.", "visual": "🚨" },
+        "twist": { "text": "Monitoring dashboards that no one watches are useless. Pipe alerts to Slack, PagerDuty, or on-call phones.", "visual": "📱" },
+        "climax": { "text": "Post-incident reviews always say 'we should have caught this sooner.' Monitoring makes 'sooner' possible.", "visual": "📋" },
+        "punchline": { "text": "You can't fix what you can't see. Monitor everything. Alert on anomalies.", "visual": "👁️" }
+      },
+      "quiz": {
+        "question": "Why is establishing a baseline of normal behavior important for monitoring?",
+        "options": ["It allows you to detect anomalies — deviations from normal that might indicate problems or attacks", "Baselines make databases run faster", "Normal behavior never changes once established"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--famous-database-disasters--ch06-lessons-learned",
+      "title": "Build a Blameless Culture",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An engineer drops a production table. Do you fire them? Or ask why the system allowed it?", "visual": "🤔" },
+        "buildup": { "text": "Blameless post-mortems focus on the system, not the person. Why was it possible? What guardrails were missing?", "visual": "🔍" },
+        "discovery": { "text": "GitLab's live-streamed recovery built trust. They showed the problem, the process, and the fix. No finger-pointing.", "visual": "📺" },
+        "twist": { "text": "Blame culture makes people hide mistakes. Hidden mistakes become bigger incidents. Openness enables faster recovery.", "visual": "💡" },
+        "climax": { "text": "Write post-mortems that anyone can read. Share them across teams. The best learning comes from real failures.", "visual": "📝" },
+        "punchline": { "text": "Blame the system, not the person. Fix the process. Share the learning.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "Why is a blameless culture important for preventing future database incidents?",
+        "options": ["It encourages people to report mistakes early instead of hiding them, enabling faster fixes", "It eliminates all human errors permanently", "Blameless culture means no one is responsible for anything"],
+        "correct": 0
+      }
+    }
+  ]
+}

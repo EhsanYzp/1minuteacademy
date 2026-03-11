@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-zero-downtime-migrations",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch05-schema-evolution",
+  "title": "Zero-Downtime Migrations",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "One-minute skill: Zero-Downtime Migrations.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "ALTER TABLE on a billion-row table locks it for minutes. Users see errors. Zero-downtime migrations avoid that.",
+      "visual": "⏱️"
+    },
+    "buildup": {
+      "text": "The trick: add the new column as nullable, backfill data in batches, then add the constraint.",
+      "visual": "🧱"
+    },
+    "discovery": {
+      "text": "Rename a column? Add the new one, dual-write, migrate reads, drop the old one. Four steps, no downtime.",
+      "visual": "🔄"
+    },
+    "twist": {
+      "text": "Some databases support non-blocking DDL (Postgres mostly does). Others lock the table during ALTER.",
+      "visual": "🔒"
+    },
+    "climax": {
+      "text": "Tools like gh-ost and pt-online-schema-change do live migrations for MySQL without locking.",
+      "visual": "🛠️"
+    },
+    "punchline": {
+      "text": "Migrate in steps. Never lock a live table for minutes.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "Why should you add new columns as nullable first during a live migration?",
+    "options": [
+      "It avoids locking the table and lets you backfill data in safe batches",
+      "Nullable columns use less disk space",
+      "The database requires all new columns to be nullable"
+    ],
+    "correct": 0
+  }
+}

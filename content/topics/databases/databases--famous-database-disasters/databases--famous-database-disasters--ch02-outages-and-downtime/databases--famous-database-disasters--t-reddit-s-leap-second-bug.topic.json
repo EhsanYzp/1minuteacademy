@@ -1,0 +1,49 @@
+{
+  "id": "databases--famous-database-disasters--t-reddit-s-leap-second-bug",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Famous Database Disasters",
+  "course_id": "databases--famous-database-disasters",
+  "chapter_id": "databases--famous-database-disasters--ch02-outages-and-downtime",
+  "title": "Reddit's Leap Second Bug",
+  "emoji": "🔥",
+  "color": "#F97316",
+  "description": "A 60-second lesson on Reddit's Leap Second Bug.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "June 2012. A leap second is added to UTC. Linux servers spin at 100% CPU. Cassandra clusters at Reddit and others crash.",
+      "visual": "⏰"
+    },
+    "buildup": {
+      "text": "The Linux kernel's handling of the leap second caused a CPU scheduling bug. Database threads consumed all available CPU.",
+      "visual": "🔥"
+    },
+    "discovery": {
+      "text": "Cassandra, MySQL, and many Java applications were affected. The fix was simple: restart, or set the clock manually.",
+      "visual": "🔧"
+    },
+    "twist": {
+      "text": "Google solved this permanently with 'leap smear': spreading the extra second over 24 hours so the jump never happens.",
+      "visual": "🧠"
+    },
+    "climax": {
+      "text": "Lesson: databases depend on the operating system and hardware. Bugs in lower layers can crash healthy databases.",
+      "visual": "🧱"
+    },
+    "punchline": {
+      "text": "Time is tricky. A one-second clock change crashed databases worldwide.",
+      "visual": "⏱️"
+    }
+  },
+  "quiz": {
+    "question": "How did Google prevent leap second problems?",
+    "options": [
+      "They spread the extra second over 24 hours (leap smear) so the clock never jumps",
+      "They deleted the leap second from all their servers",
+      "Google's databases don't use system clocks"
+    ],
+    "correct": 0
+  }
+}

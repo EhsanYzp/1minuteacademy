@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-materialized-views",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch06-advanced-patterns",
+  "title": "Materialized Views",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A quick win: understand Materialized Views.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A dashboard query joins five tables and aggregates millions of rows. It takes 30 seconds every time.",
+      "visual": "⏳"
+    },
+    "buildup": {
+      "text": "A materialized view stores the query result as a physical table. Reads are instant — it's pre-computed.",
+      "visual": "⚡"
+    },
+    "discovery": {
+      "text": "REFRESH MATERIALIZED VIEW recalculates it. Run it on a schedule or after significant data changes.",
+      "visual": "🔄"
+    },
+    "twist": {
+      "text": "Between refreshes, the view shows stale data. The trade-off: speed vs freshness.",
+      "visual": "⏰"
+    },
+    "climax": {
+      "text": "CONCURRENTLY option in Postgres refreshes without locking reads. Users see old data during refresh, not errors.",
+      "visual": "🔓"
+    },
+    "punchline": {
+      "text": "Materialized views: pre-computed query results. Fast reads, periodic refresh.",
+      "visual": "🧮"
+    }
+  },
+  "quiz": {
+    "question": "What is the trade-off of using materialized views?",
+    "options": [
+      "Reads are very fast but the data can be stale between refreshes",
+      "They use zero additional storage",
+      "Materialized views slow down all write operations"
+    ],
+    "correct": 0
+  }
+}

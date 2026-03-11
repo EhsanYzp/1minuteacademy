@@ -1,0 +1,49 @@
+{
+  "id": "databases--what-is-a-database--t-storage-engines",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "What Is a Database",
+  "course_id": "databases--what-is-a-database",
+  "chapter_id": "databases--what-is-a-database--ch04-how-databases-work",
+  "title": "Storage Engines",
+  "emoji": "🗄️",
+  "color": "#6366F1",
+  "description": "A quick win: understand Storage Engines.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "When you INSERT a row, where does it actually go? The storage engine decides how data hits disk.",
+      "visual": "💿"
+    },
+    "buildup": {
+      "text": "InnoDB (MySQL's default) stores rows in a B-tree ordered by primary key. Reads and writes are balanced.",
+      "visual": "🌳"
+    },
+    "discovery": {
+      "text": "LSM-trees (used by RocksDB, Cassandra) batch writes in memory then flush sorted files. Writes are very fast.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "B-trees favor reads. LSM-trees favor writes. Pick the engine that fits your workload.",
+      "visual": "⚖️"
+    },
+    "climax": {
+      "text": "PostgreSQL uses a heap with indexes. SQLite is a single-file engine. Each design has trade-offs.",
+      "visual": "🧩"
+    },
+    "punchline": {
+      "text": "The storage engine shapes performance. Know yours.",
+      "visual": "🔧"
+    }
+  },
+  "quiz": {
+    "question": "What is the main difference between B-tree and LSM-tree storage?",
+    "options": [
+      "B-trees favor reads; LSM-trees favor writes",
+      "B-trees only work on Linux",
+      "LSM-trees can only store text data"
+    ],
+    "correct": 0
+  }
+}

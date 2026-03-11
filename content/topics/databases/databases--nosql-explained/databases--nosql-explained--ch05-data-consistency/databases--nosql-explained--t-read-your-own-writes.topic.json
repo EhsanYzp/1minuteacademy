@@ -1,0 +1,49 @@
+{
+  "id": "databases--nosql-explained--t-read-your-own-writes",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "NoSQL Explained",
+  "course_id": "databases--nosql-explained",
+  "chapter_id": "databases--nosql-explained--ch05-data-consistency",
+  "title": "Read Your Own Writes",
+  "emoji": "🔮",
+  "color": "#F59E0B",
+  "description": "A tiny lesson with a big payoff: Read Your Own Writes.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You update your bio and refresh the page. It still shows the old text. You just didn't read your own write.",
+      "visual": "😤"
+    },
+    "buildup": {
+      "text": "In eventually consistent systems, your write may go to one replica while your read hits another.",
+      "visual": "🔀"
+    },
+    "discovery": {
+      "text": "Session consistency fixes this: route reads to the same replica that accepted the write, at least for that user.",
+      "visual": "📌"
+    },
+    "twist": {
+      "text": "Sticky sessions solve it but reduce load balancing flexibility. It's another trade-off.",
+      "visual": "⚖️"
+    },
+    "climax": {
+      "text": "Many apps use strong consistency for the current user and eventual consistency for everyone else.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Users expect to see their own updates instantly. Design for it.",
+      "visual": "👁️"
+    }
+  },
+  "quiz": {
+    "question": "How does session consistency ensure users see their own writes?",
+    "options": [
+      "It routes reads to the same replica that accepted the user's most recent write",
+      "It caches all writes on the client side",
+      "It blocks all other users until the write propagates"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-lookup-tables",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch02-relational-patterns",
+  "title": "Lookup Tables",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "Learn Lookup Tables in one minute.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "An order has a status: pending, shipped, delivered, cancelled. Store it as text? Or reference a lookup table?",
+      "visual": "📋"
+    },
+    "buildup": {
+      "text": "A lookup table (order_statuses) holds valid values. The order table references it via a foreign key.",
+      "visual": "🔗"
+    },
+    "discovery": {
+      "text": "Lookup tables enforce valid values at the database level. No typos like 'Shiped' or 'pendng' can sneak in.",
+      "visual": "🛡️"
+    },
+    "twist": {
+      "text": "For simple cases, ENUM or CHECK works. Lookup tables shine when statuses need metadata like labels or sort order.",
+      "visual": "📊"
+    },
+    "climax": {
+      "text": "Adding a new status? Insert a row in the lookup table. No schema migration, no code deploy.",
+      "visual": "🚀"
+    },
+    "punchline": {
+      "text": "Lookup tables: enforced valid values with easy extensibility. No typos.",
+      "visual": "✅"
+    }
+  },
+  "quiz": {
+    "question": "When is a lookup table better than an ENUM type?",
+    "options": [
+      "When statuses need metadata like labels, descriptions, or sort order, and when values change often",
+      "When you have fewer than three possible values",
+      "ENUMs are always better than lookup tables"
+    ],
+    "correct": 0
+  }
+}

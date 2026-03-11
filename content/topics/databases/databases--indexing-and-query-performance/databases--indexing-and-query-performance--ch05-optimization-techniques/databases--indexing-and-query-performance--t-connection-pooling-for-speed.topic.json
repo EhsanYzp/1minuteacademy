@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-connection-pooling-for-speed",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch05-optimization-techniques",
+  "title": "Connection Pooling for Speed",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A quick, practical guide to Connection Pooling for Speed.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Opening a new Postgres connection takes 100–200 ms. A pooled connection is ready in under 1 ms.",
+      "visual": "⏱️"
+    },
+    "buildup": {
+      "text": "A connection pool keeps connections open and shares them. No setup cost for each request.",
+      "visual": "🏊"
+    },
+    "discovery": {
+      "text": "PgBouncer in transaction mode assigns a connection per transaction and recycles it instantly.",
+      "visual": "♻️"
+    },
+    "twist": {
+      "text": "Too many connections overwhelm Postgres. 100 active connections might be the safe max. Pool to stay under it.",
+      "visual": "📊"
+    },
+    "climax": {
+      "text": "Serverless apps (Lambda, Vercel) need pooling desperately. Each invocation would open a new connection otherwise.",
+      "visual": "☁️"
+    },
+    "punchline": {
+      "text": "Pool connections. Reuse is faster and safer than reopening.",
+      "visual": "🔄"
+    }
+  },
+  "quiz": {
+    "question": "Why is connection pooling critical for serverless applications?",
+    "options": [
+      "Each invocation opens a new connection, and without pooling they'd quickly exhaust the database limit",
+      "Serverless functions can't connect to databases without a pool",
+      "Pooling encrypts the connection automatically"
+    ],
+    "correct": 0
+  }
+}

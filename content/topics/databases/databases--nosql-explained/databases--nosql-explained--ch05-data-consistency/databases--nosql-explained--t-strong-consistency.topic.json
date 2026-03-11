@@ -1,0 +1,49 @@
+{
+  "id": "databases--nosql-explained--t-strong-consistency",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "NoSQL Explained",
+  "course_id": "databases--nosql-explained",
+  "chapter_id": "databases--nosql-explained--ch05-data-consistency",
+  "title": "Strong Consistency",
+  "emoji": "🔮",
+  "color": "#F59E0B",
+  "description": "A fast breakdown of Strong Consistency for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A bank transfer must show the updated balance immediately. Not in a second. Now. That's strong consistency.",
+      "visual": "🏦"
+    },
+    "buildup": {
+      "text": "Strong consistency means every read returns the most recent write. No stale data, ever.",
+      "visual": "✅"
+    },
+    "discovery": {
+      "text": "To achieve this, the write must wait until a majority of replicas confirm it. That adds latency.",
+      "visual": "⏱️"
+    },
+    "twist": {
+      "text": "DynamoDB offers strongly consistent reads, but they cost twice as much and are slower.",
+      "visual": "💰"
+    },
+    "climax": {
+      "text": "Most systems mix both: strong consistency for critical paths, eventual for everything else.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "Strong consistency costs more but guarantees accuracy. Use it where it matters.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "Why does strong consistency add latency?",
+    "options": [
+      "Writes must wait for a majority of replicas to confirm before acknowledging",
+      "The database pauses all reads during writes",
+      "Strong consistency requires restarting the database after each write"
+    ],
+    "correct": 0
+  }
+}

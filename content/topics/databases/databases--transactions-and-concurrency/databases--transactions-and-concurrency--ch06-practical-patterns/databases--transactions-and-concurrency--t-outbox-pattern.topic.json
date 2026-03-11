@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-outbox-pattern",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch06-practical-patterns",
+  "title": "Outbox Pattern",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A short lesson to help you apply Outbox Pattern.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Save an order and send an email. The order saves but the email fails. Or the email sends but the order doesn't save.",
+      "visual": "📧"
+    },
+    "buildup": {
+      "text": "You can't put a database write and an external call in the same transaction. They're different systems.",
+      "visual": "🔀"
+    },
+    "discovery": {
+      "text": "The outbox pattern: save the order AND an outbox message in the same transaction. A worker processes the outbox later.",
+      "visual": "📤"
+    },
+    "twist": {
+      "text": "The worker reads the outbox, sends the email, and marks the message as processed. If it fails, it retries.",
+      "visual": "🔄"
+    },
+    "climax": {
+      "text": "The outbox guarantees at-least-once delivery. Combined with idempotency, you get exactly-once effect.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Outbox: write the intent to the database. Process it asynchronously.",
+      "visual": "📬"
+    }
+  },
+  "quiz": {
+    "question": "Why can't you combine a database write and an external API call in one transaction?",
+    "options": [
+      "They're separate systems — the database can't roll back an email or API call",
+      "Databases don't support any external communication",
+      "API calls are always faster than database writes"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-missing-indexes",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch01-why-queries-are-slow",
+  "title": "Missing Indexes",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A quick, practical guide to Missing Indexes.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A WHERE clause on email scans 5 million rows. Add an index on email: same query, 3 milliseconds.",
+      "visual": "⚡"
+    },
+    "buildup": {
+      "text": "Indexes are the single biggest lever for query performance. Missing indexes are the most common cause of slow queries.",
+      "visual": "🔧"
+    },
+    "discovery": {
+      "text": "pg_stat_user_tables shows sequential scans per table. High seq_scan counts mean missing indexes.",
+      "visual": "📊"
+    },
+    "twist": {
+      "text": "Developers add columns to WHERE clauses without adding indexes. The slow query appears weeks later under load.",
+      "visual": "⏰"
+    },
+    "climax": {
+      "text": "Review every WHERE, JOIN ON, and ORDER BY column. If it's selective, it likely needs an index.",
+      "visual": "✅"
+    },
+    "punchline": {
+      "text": "Missing indexes: the most common and fixable performance problem.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "How can you detect missing indexes in PostgreSQL?",
+    "options": [
+      "Check pg_stat_user_tables for tables with high sequential scan counts",
+      "Missing indexes cause the database to crash",
+      "The database automatically adds all needed indexes"
+    ],
+    "correct": 0
+  }
+}

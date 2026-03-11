@@ -1,0 +1,559 @@
+{
+  "categoryId": "databases",
+  "subject": "Databases",
+  "courseId": "databases--transactions-and-concurrency",
+  "courseTitle": "Transactions and Concurrency",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "databases--transactions-and-concurrency--ch01-what-are-transactions", "title": "What Are Transactions", "position": 1 },
+    { "id": "databases--transactions-and-concurrency--ch02-acid-properties", "title": "ACID Properties", "position": 2 },
+    { "id": "databases--transactions-and-concurrency--ch03-isolation-levels", "title": "Isolation Levels", "position": 3 },
+    { "id": "databases--transactions-and-concurrency--ch04-locking-mechanisms", "title": "Locking Mechanisms", "position": 4 },
+    { "id": "databases--transactions-and-concurrency--ch05-concurrency-problems", "title": "Concurrency Problems", "position": 5 },
+    { "id": "databases--transactions-and-concurrency--ch06-practical-patterns", "title": "Practical Patterns", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch01-what-are-transactions",
+      "title": "Why Transactions Exist",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Transfer $100 from Alice to Bob. Subtract from Alice, add to Bob. If step two fails, Alice lost $100.", "visual": "💸" },
+        "buildup": { "text": "Without transactions, partial failures corrupt data. Half-done operations leave the database inconsistent.", "visual": "💥" },
+        "discovery": { "text": "A transaction groups multiple operations into one unit. All succeed together or all fail together.", "visual": "📦" },
+        "twist": { "text": "Transactions aren't just for banks. Every app with multi-step writes needs them: e-commerce, messaging, signups.", "visual": "🌐" },
+        "climax": { "text": "The database guarantees atomicity. You don't have to write cleanup code for every failure scenario.", "visual": "🛡️" },
+        "punchline": { "text": "Transactions: all or nothing. No partial writes, no corrupt data.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why are transactions important for multi-step database operations?",
+        "options": ["They ensure all steps succeed together or all fail together, preventing partial writes", "They make queries run faster", "Transactions are only needed for financial applications"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch01-what-are-transactions",
+      "title": "BEGIN, COMMIT, ROLLBACK",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "BEGIN; UPDATE accounts SET balance=balance-100 WHERE id=1; UPDATE accounts SET balance=balance+100 WHERE id=2; COMMIT;", "visual": "📝" },
+        "buildup": { "text": "BEGIN starts a transaction. All statements after it are tentative until COMMIT makes them permanent.", "visual": "🔄" },
+        "discovery": { "text": "ROLLBACK undoes everything since BEGIN. It's the escape hatch when something goes wrong.", "visual": "↩️" },
+        "twist": { "text": "In autocommit mode (the default for most clients), every single statement is its own transaction.", "visual": "⚡" },
+        "climax": { "text": "Explicit transactions let you group statements. Autocommit is fine for one-liners but dangerous for multi-step work.", "visual": "📏" },
+        "punchline": { "text": "BEGIN groups work. COMMIT saves it. ROLLBACK undoes it.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "What does autocommit mode mean?",
+        "options": ["Each individual SQL statement is automatically wrapped in its own transaction", "The database never commits any changes", "All changes are committed only when the connection closes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch01-what-are-transactions",
+      "title": "Transaction Boundaries",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A developer opened a transaction, ran a query, and forgot to commit. The connection held locks for 8 hours.", "visual": "😱" },
+        "buildup": { "text": "Transaction boundaries matter: open late, close early. Hold the transaction only for essential operations.", "visual": "⏱️" },
+        "discovery": { "text": "Don't put HTTP calls or file operations inside a transaction. External calls can hang, keeping locks open.", "visual": "🚫" },
+        "twist": { "text": "ORMs can hide transaction boundaries. A request handler might silently keep a transaction open for the entire request.", "visual": "👻" },
+        "climax": { "text": "Set statement_timeout and idle_in_transaction_session_timeout in Postgres to kill runaway transactions.", "visual": "⏰" },
+        "punchline": { "text": "Open late, close early. Never hold locks waiting on external calls.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why should you avoid making HTTP calls inside a database transaction?",
+        "options": ["External calls can hang, keeping database locks held for an unpredictable amount of time", "HTTP calls automatically roll back transactions", "Databases block all network traffic during transactions"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch01-what-are-transactions",
+      "title": "Savepoints",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A transaction has five steps. Step four fails. ROLLBACK undoes all five. But you only wanted to undo step four.", "visual": "🔙" },
+        "buildup": { "text": "SAVEPOINT mid_point creates a checkpoint inside a transaction. You can roll back to it, not the beginning.", "visual": "🏁" },
+        "discovery": { "text": "ROLLBACK TO SAVEPOINT mid_point undoes only the work after that savepoint. Earlier steps survive.", "visual": "✅" },
+        "twist": { "text": "Nested try/catch in app code maps naturally to savepoints. Catch an error, roll back the sub-operation, continue.", "visual": "🧩" },
+        "climax": { "text": "Some ORMs use savepoints automatically for nested transaction blocks. Check your framework's behavior.", "visual": "🔧" },
+        "punchline": { "text": "Savepoints: partial rollbacks inside a transaction. Granular control.", "visual": "🎛️" }
+      },
+      "quiz": {
+        "question": "What does ROLLBACK TO SAVEPOINT do?",
+        "options": ["Undoes all work after the savepoint while keeping earlier work in the transaction intact", "Rolls back the entire transaction to the very beginning", "Deletes the savepoint and commits all changes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch01-what-are-transactions",
+      "title": "Implicit vs Explicit Transactions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "SQL Server wraps every statement in an implicit transaction by default. Postgres uses explicit BEGIN/COMMIT.", "visual": "🔀" },
+        "buildup": { "text": "Implicit transactions start automatically. Explicit transactions require you to write BEGIN.", "visual": "📝" },
+        "discovery": { "text": "In explicit mode, forgetting BEGIN means each statement auto-commits. No grouping, no rollback.", "visual": "⚠️" },
+        "twist": { "text": "Connection poolers like PgBouncer in transaction mode reset state between transactions. Session-level settings vanish.", "visual": "🔄" },
+        "climax": { "text": "Know your database's default. Test transaction behavior before production, not after an incident.", "visual": "🧪" },
+        "punchline": { "text": "Know implicit vs explicit. The default behavior varies by database.", "visual": "📏" }
+      },
+      "quiz": {
+        "question": "What happens in explicit transaction mode if you forget to write BEGIN?",
+        "options": ["Each statement auto-commits individually, with no ability to roll back as a group", "The database queues statements until you write BEGIN", "All statements are silently rolled back"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch02-acid-properties",
+      "title": "Atomicity",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Transfer money: debit one account, credit another. Atomicity means both happen or neither happens.", "visual": "⚛️" },
+        "buildup": { "text": "Atomic means indivisible. The transaction is one unit of work. No observer sees it half-done.", "visual": "🔒" },
+        "discovery": { "text": "If the server crashes mid-transaction, the write-ahead log replays and undoes uncommitted changes on recovery.", "visual": "📝" },
+        "twist": { "text": "Atomicity doesn't mean instant. The transaction takes time, but the effects appear atomically at commit.", "visual": "⏱️" },
+        "climax": { "text": "Without atomicity, every failure requires manual cleanup. With it, the database handles recovery for you.", "visual": "🛡️" },
+        "punchline": { "text": "Atomicity: all or nothing. The database cleans up failures.", "visual": "🧹" }
+      },
+      "quiz": {
+        "question": "How does a database achieve atomicity after a crash?",
+        "options": ["It replays the write-ahead log and undoes any uncommitted transactions", "It restores from the most recent backup", "The operating system prevents crashes from affecting the database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch02-acid-properties",
+      "title": "Consistency",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A foreign key says every order must have a valid customer. Consistency means this rule holds after every transaction.", "visual": "✅" },
+        "buildup": { "text": "Consistency guarantees the database moves from one valid state to another. Constraints are never violated.", "visual": "📏" },
+        "discovery": { "text": "CHECK constraints, NOT NULL, UNIQUE, and foreign keys all define what 'valid state' means.", "visual": "🛡️" },
+        "twist": { "text": "Within a transaction, the database may temporarily violate constraints. It checks them at COMMIT time.", "visual": "⏳" },
+        "climax": { "text": "Deferred constraints (Postgres) wait until COMMIT to validate. Useful for circular foreign keys.", "visual": "🔄" },
+        "punchline": { "text": "Consistency: every committed transaction leaves the database in a valid state.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "When are deferred constraints checked?",
+        "options": ["At COMMIT time, not when the individual statement executes", "Before the transaction begins", "Only when the database is restarted"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch02-acid-properties",
+      "title": "Isolation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Two transactions run at the same time. Isolation determines how much they can see of each other's changes.", "visual": "🔇" },
+        "buildup": { "text": "Full isolation means each transaction behaves as if it's the only one running. No interference.", "visual": "🏝️" },
+        "discovery": { "text": "In reality, full isolation is expensive. Databases offer levels: from read uncommitted to serializable.", "visual": "📊" },
+        "twist": { "text": "Higher isolation prevents more anomalies but reduces concurrency. It's a performance trade-off.", "visual": "⚖️" },
+        "climax": { "text": "Most applications use Read Committed or Repeatable Read. Serializable is reserved for critical operations.", "visual": "🎯" },
+        "punchline": { "text": "Isolation controls visibility. Higher isolation, less concurrency.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "Why don't most applications use the highest isolation level?",
+        "options": ["It reduces concurrency and slows down the system by preventing parallel execution", "The highest level doesn't actually prevent any anomalies", "Most databases don't support isolation levels"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch02-acid-properties",
+      "title": "Durability",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You got 'COMMIT successful.' The server crashes one second later. Is the data safe? Durability says yes.", "visual": "💾" },
+        "buildup": { "text": "Durability guarantees committed data survives crashes, power failures, and hardware issues.", "visual": "🛡️" },
+        "discovery": { "text": "The write-ahead log (WAL) is flushed to disk before COMMIT returns. The data is on stable storage.", "visual": "📝" },
+        "twist": { "text": "fsync forces data from OS buffers to disk. Without it, a power loss could still lose committed data.", "visual": "⚡" },
+        "climax": { "text": "Some databases offer relaxed durability for speed: synchronous_commit = off in Postgres skips fsync at COMMIT.", "visual": "🏎️" },
+        "punchline": { "text": "Durability: committed means saved. Even after a crash.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "What role does fsync play in database durability?",
+        "options": ["It forces data from operating system buffers to physical disk, ensuring it survives power loss", "It synchronizes data between two database servers", "It compresses data before writing to disk"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch02-acid-properties",
+      "title": "ACID vs BASE",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "ACID guarantees strict correctness. BASE (Basically Available, Soft state, Eventually consistent) trades it for scale.", "visual": "⚖️" },
+        "buildup": { "text": "ACID databases (Postgres, MySQL) prioritize correctness. Every read reflects the latest committed write.", "visual": "✅" },
+        "discovery": { "text": "BASE systems (Cassandra, DynamoDB) prioritize availability and partition tolerance. Data converges eventually.", "visual": "🔄" },
+        "twist": { "text": "The choice isn't binary. DynamoDB offers both eventual and strong consistency per query. Mix and match.", "visual": "🎛️" },
+        "climax": { "text": "Use ACID for money, inventory, and auth. Use BASE for feeds, analytics, and caches.", "visual": "🗺️" },
+        "punchline": { "text": "ACID for correctness. BASE for scale. Many apps need both.", "visual": "🧩" }
+      },
+      "quiz": {
+        "question": "What does the 'E' in BASE stand for?",
+        "options": ["Eventually consistent — data across replicas converges over time", "Encrypted — all data is stored securely", "Efficient — queries always run in constant time"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch03-isolation-levels",
+      "title": "Read Uncommitted",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Transaction A writes a value but hasn't committed. Transaction B reads it. If A rolls back, B used phantom data.", "visual": "👻" },
+        "buildup": { "text": "Read Uncommitted allows dirty reads: seeing data from uncommitted transactions.", "visual": "🗑️" },
+        "discovery": { "text": "It's the lowest isolation level. Maximum concurrency, minimum safety.", "visual": "📉" },
+        "twist": { "text": "Postgres doesn't actually implement Read Uncommitted. It silently upgrades to Read Committed.", "visual": "🐘" },
+        "climax": { "text": "Almost no production application uses Read Uncommitted. The risk of dirty reads is too high.", "visual": "🚫" },
+        "punchline": { "text": "Read Uncommitted: fast but dangerous. Rarely used in practice.", "visual": "⚠️" }
+      },
+      "quiz": {
+        "question": "What is a dirty read?",
+        "options": ["Reading data from a transaction that hasn't been committed yet and might roll back", "Reading data from a corrupted table", "Reading data that has been deleted"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch03-isolation-levels",
+      "title": "Read Committed",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Transaction B only sees data that A has committed. No dirty reads. This is Read Committed.", "visual": "✅" },
+        "buildup": { "text": "Each statement in B sees the latest committed state at that moment. Two SELECTs may see different data.", "visual": "🔄" },
+        "discovery": { "text": "This is the default in Postgres and Oracle. It's good enough for most applications.", "visual": "📊" },
+        "twist": { "text": "Non-repeatable reads are possible: read a value, another transaction changes it, read again — different result.", "visual": "🔀" },
+        "climax": { "text": "For CRUD apps, Read Committed works. For financial calculations, you may need stronger isolation.", "visual": "🏦" },
+        "punchline": { "text": "Read Committed: no dirty reads, but values can change between reads.", "visual": "📏" }
+      },
+      "quiz": {
+        "question": "What anomaly is possible under Read Committed isolation?",
+        "options": ["Non-repeatable reads — reading the same row twice yields different values", "Dirty reads — seeing uncommitted data", "No anomalies are possible under Read Committed"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch03-isolation-levels",
+      "title": "Repeatable Read",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Read a row. Another transaction updates it and commits. Read the same row again. Same value. Repeatable Read.", "visual": "🔒" },
+        "buildup": { "text": "Repeatable Read takes a snapshot at the start of the transaction. All reads see that snapshot.", "visual": "📸" },
+        "discovery": { "text": "This is the default in MySQL's InnoDB. It prevents dirty reads and non-repeatable reads.", "visual": "✅" },
+        "twist": { "text": "Phantom reads can still occur: new rows inserted by other transactions may appear in range queries.", "visual": "👻" },
+        "climax": { "text": "Postgres's Repeatable Read actually prevents phantoms too, using its MVCC snapshot.", "visual": "🐘" },
+        "punchline": { "text": "Repeatable Read: same snapshot, same data, every read in the transaction.", "visual": "📸" }
+      },
+      "quiz": {
+        "question": "What is a phantom read?",
+        "options": ["New rows inserted by another transaction appear in a repeated range query", "Reading data that was deleted by another transaction", "Reading data from a table that doesn't exist"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch03-isolation-levels",
+      "title": "Serializable Isolation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Serializable ensures transactions behave as if they ran one after another. No concurrency anomalies at all.", "visual": "📝" },
+        "buildup": { "text": "The database detects conflicts between concurrent transactions and aborts one of them to maintain correctness.", "visual": "🚫" },
+        "discovery": { "text": "Postgres uses Serializable Snapshot Isolation (SSI). It detects dependency cycles and rolls back the victim.", "visual": "🔄" },
+        "twist": { "text": "Serializable transactions can fail due to serialization errors. Your app must retry them.", "visual": "🔁" },
+        "climax": { "text": "Use serializable for critical invariants: account balances, inventory counts, seat reservations.", "visual": "🎫" },
+        "punchline": { "text": "Serializable: maximum safety, but your app must handle retries.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What must your application do when using serializable isolation?",
+        "options": ["Handle serialization errors by retrying the failed transaction", "Avoid using any indexes", "Open a new database connection for each query"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch03-isolation-levels",
+      "title": "Choosing the Right Level",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Read Committed for most queries. Repeatable Read for reporting. Serializable for money. Match the level to the need.", "visual": "🗺️" },
+        "buildup": { "text": "Higher isolation costs more: more locks, more aborts, less throughput. Don't over-isolate.", "visual": "💰" },
+        "discovery": { "text": "You can set isolation per transaction: SET TRANSACTION ISOLATION LEVEL SERIALIZABLE. Only critical paths pay the cost.", "visual": "🎯" },
+        "twist": { "text": "Many developers never change the default. They inherit Read Committed and discover anomalies in production.", "visual": "🐛" },
+        "climax": { "text": "Understand your anomalies first, then pick the level that prevents them. Don't guess.", "visual": "🧠" },
+        "punchline": { "text": "Match the isolation level to the anomaly you need to prevent.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "Why should you set isolation level per transaction instead of globally?",
+        "options": ["Only critical transactions need high isolation; others can run with less overhead", "Global settings are not supported by any database", "Per-transaction settings are faster in every case"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch04-locking-mechanisms",
+      "title": "Row-Level Locks",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Two users update different rows at the same time. Row-level locks let both proceed without waiting.", "visual": "🔓" },
+        "buildup": { "text": "When a transaction updates a row, it acquires a lock on that specific row. Other rows remain unlocked.", "visual": "🔑" },
+        "discovery": { "text": "Another transaction can read the row (in MVCC databases) but can't update it until the lock is released.", "visual": "⏳" },
+        "twist": { "text": "SELECT ... FOR UPDATE explicitly locks rows for reading. Use it when you plan to update based on what you read.", "visual": "🔒" },
+        "climax": { "text": "Row-level locks are fine-grained. They maximize concurrency by only blocking the specific rows being modified.", "visual": "⚡" },
+        "punchline": { "text": "Row locks: precise targeting. Only the affected rows are blocked.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "When should you use SELECT ... FOR UPDATE?",
+        "options": ["When you read a row and plan to update it, to prevent other transactions from changing it first", "When you want to read data faster", "For every SELECT query to ensure data safety"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch04-locking-mechanisms",
+      "title": "Table-Level Locks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "ALTER TABLE adds a column. The entire table is locked. No reads, no writes. Everyone waits.", "visual": "🔒" },
+        "buildup": { "text": "Table locks block everything on the table. They're used for DDL operations and some maintenance tasks.", "visual": "🚧" },
+        "discovery": { "text": "LOCK TABLE IN EXCLUSIVE MODE explicitly locks a table. Useful for batch operations that must be alone.", "visual": "🏗️" },
+        "twist": { "text": "In Postgres, most ALTER TABLE operations need an ACCESS EXCLUSIVE lock — the most restrictive kind.", "visual": "⛔" },
+        "climax": { "text": "Lock duration matters: a 2-second table lock during peak traffic can queue hundreds of waiting connections.", "visual": "📊" },
+        "punchline": { "text": "Table locks: nuclear option. Use briefly and during low traffic only.", "visual": "☢️" }
+      },
+      "quiz": {
+        "question": "Why are table-level locks dangerous during peak traffic?",
+        "options": ["They block all operations on the table, causing queued connections and cascading slowdowns", "They permanently prevent future queries on the table", "Table locks only exist in very old databases"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch04-locking-mechanisms",
+      "title": "Optimistic vs Pessimistic Locking",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Pessimistic locking grabs a lock upfront: 'Nobody touch this row.' Optimistic locking checks at save time.", "visual": "🤝" },
+        "buildup": { "text": "Pessimistic: SELECT FOR UPDATE locks the row immediately. Safe but blocks others.", "visual": "🔒" },
+        "discovery": { "text": "Optimistic: add a version column. Read version=3, update WHERE version=3 SET version=4. If it changes, retry.", "visual": "🔢" },
+        "twist": { "text": "Optimistic locking works best when conflicts are rare. If conflicts are frequent, retries pile up.", "visual": "🔁" },
+        "climax": { "text": "Web apps favor optimistic locking. Users edit forms offline and submit. Conflicts are resolved at save time.", "visual": "🌐" },
+        "punchline": { "text": "Low conflict? Optimistic. High conflict? Pessimistic. Match to contention.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "How does optimistic locking detect conflicts?",
+        "options": ["It checks a version column at update time and fails if the version has changed since the read", "It locks the entire table before any read", "It uses timestamps that are always synchronized across servers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch04-locking-mechanisms",
+      "title": "Advisory Locks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You need a distributed lock across app servers but don't want a separate Redis instance. Advisory locks in Postgres.", "visual": "🔐" },
+        "buildup": { "text": "Advisory locks are arbitrary locks managed by the database. You define the lock key, not the database.", "visual": "🗝️" },
+        "discovery": { "text": "pg_advisory_lock(12345) grabs a lock. Other sessions calling the same ID wait until you release it.", "visual": "⏳" },
+        "twist": { "text": "Advisory locks don't lock any actual data. They're pure coordination tools — the meaning is up to your app.", "visual": "🧩" },
+        "climax": { "text": "Use cases: preventing duplicate cron jobs, serializing rare operations, coordinating migrations.", "visual": "🔧" },
+        "punchline": { "text": "Advisory locks: app-defined coordination using the database as the lock manager.", "visual": "🎛️" }
+      },
+      "quiz": {
+        "question": "What makes advisory locks different from regular row or table locks?",
+        "options": ["They don't lock actual data — the application defines what the lock means", "They are automatically applied to every query", "Advisory locks are faster than all other lock types"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch04-locking-mechanisms",
+      "title": "MVCC: Multi-Version Concurrency",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Readers don't block writers. Writers don't block readers. How? MVCC keeps multiple versions of each row.", "visual": "📚" },
+        "buildup": { "text": "When a row is updated, the old version stays. Readers see the version valid at their snapshot time.", "visual": "📸" },
+        "discovery": { "text": "Postgres and MySQL InnoDB both use MVCC. It's the secret behind high concurrency in modern databases.", "visual": "⚡" },
+        "twist": { "text": "Old row versions accumulate. VACUUM in Postgres and purge threads in InnoDB clean them up.", "visual": "🧹" },
+        "climax": { "text": "MVCC eliminates most read locks. Only writers competing for the same row need to wait.", "visual": "🔓" },
+        "punchline": { "text": "MVCC: multiple versions, zero read locks, high concurrency.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "How does MVCC allow readers and writers to work without blocking each other?",
+        "options": ["It keeps old row versions so readers see a consistent snapshot while writers create new versions", "It copies the entire table for each transaction", "Readers and writers use different databases"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch05-concurrency-problems",
+      "title": "Lost Updates",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Two users read a counter value of 10. Both add 1 and write 11. One update is lost. The counter should be 12.", "visual": "🔢" },
+        "buildup": { "text": "Lost updates happen when two transactions read, compute, and write without seeing each other's changes.", "visual": "💥" },
+        "discovery": { "text": "Fix: use atomic updates. UPDATE counters SET value = value + 1. The database handles the increment internally.", "visual": "⚛️" },
+        "twist": { "text": "For complex logic, SELECT FOR UPDATE prevents others from reading the row until your transaction finishes.", "visual": "🔒" },
+        "climax": { "text": "Lost updates are the most common concurrency bug. Atomic operations and proper locking prevent them.", "visual": "🛡️" },
+        "punchline": { "text": "Lost updates: read-modify-write without protection. Use atomic operations.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why does UPDATE counters SET value = value + 1 prevent lost updates?",
+        "options": ["The database performs the read and write atomically, without a gap for other transactions to interfere", "It locks the entire table during the update", "The value + 1 expression is evaluated by the client, not the server"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch05-concurrency-problems",
+      "title": "Deadlocks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Transaction A locks row 1, waits for row 2. Transaction B locks row 2, waits for row 1. Neither can proceed. Deadlock.", "visual": "🔄" },
+        "buildup": { "text": "Deadlocks occur when two transactions hold locks that the other needs. A circular dependency forms.", "visual": "⛓️" },
+        "discovery": { "text": "Databases detect deadlocks automatically. They pick a victim transaction and roll it back.", "visual": "💀" },
+        "twist": { "text": "Prevention: always acquire locks in the same order. If everyone locks row 1 first, then row 2, no deadlock.", "visual": "📏" },
+        "climax": { "text": "Monitor deadlock frequency in logs. Frequent deadlocks indicate a design problem, not bad luck.", "visual": "📊" },
+        "punchline": { "text": "Deadlocks: circular waits. Fix by locking in consistent order.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How do databases resolve deadlocks?",
+        "options": ["They detect the circular wait and automatically roll back one of the transactions", "They restart both transactions simultaneously", "Deadlocks resolve themselves after a timeout"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch05-concurrency-problems",
+      "title": "Write Skew",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A hospital requires one doctor on call. Two doctors check, see the other is on call, and both sign off. Nobody's left.", "visual": "🏥" },
+        "buildup": { "text": "Write skew: two transactions read the same data, decide, and write different rows that together break an invariant.", "visual": "⚠️" },
+        "discovery": { "text": "Read Committed and Repeatable Read don't prevent write skew. Only Serializable does.", "visual": "📏" },
+        "twist": { "text": "Write skew is subtle. The individual transactions look correct. The problem only appears when both commit.", "visual": "🔍" },
+        "climax": { "text": "Fix: use SELECT FOR UPDATE on the rows being checked, or switch to Serializable isolation for that path.", "visual": "🔒" },
+        "punchline": { "text": "Write skew: valid alone, broken together. Serialize the critical path.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why is write skew hard to detect in testing?",
+        "options": ["Each transaction looks correct individually; the problem only appears when both run concurrently", "Write skew only occurs in production environments", "Testing tools automatically prevent write skew"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch05-concurrency-problems",
+      "title": "Phantom Reads in Practice",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Count rows where status = 'active': 100. Another transaction inserts a new active row. Count again: 101. Phantom.", "visual": "👻" },
+        "buildup": { "text": "Phantom reads occur when new rows appear in a range query between two reads in the same transaction.", "visual": "📊" },
+        "discovery": { "text": "Read Committed allows phantoms. Repeatable Read prevents them in Postgres (MVCC snapshot) but not always in MySQL.", "visual": "🔀" },
+        "twist": { "text": "Phantoms can break logic: 'There are 5 seats left' → insert a booking → now there are 6 bookings for 5 seats.", "visual": "🎫" },
+        "climax": { "text": "For booking systems, use SELECT ... FOR UPDATE on the resource row or Serializable isolation.", "visual": "🔒" },
+        "punchline": { "text": "Phantoms: new rows appearing mid-transaction. Lock the range or serialize.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "How can phantom reads break a booking system?",
+        "options": ["Multiple transactions see available seats and book them simultaneously, exceeding capacity", "Phantom reads delete existing bookings", "They only affect read-only reports"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch05-concurrency-problems",
+      "title": "Hot Row Contention",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A global counter row is updated by every request. 10,000 requests per second, all waiting for one lock.", "visual": "🔥" },
+        "buildup": { "text": "Hot rows are single rows that many transactions compete to update. They serialize all concurrent access.", "visual": "🚦" },
+        "discovery": { "text": "Fix: use sharded counters. Split one counter into 10 rows, each incrementing independently. Sum them when reading.", "visual": "🧩" },
+        "twist": { "text": "Queue tables where every worker pops row 1 have the same issue. SKIP LOCKED lets workers grab different rows.", "visual": "⏭️" },
+        "climax": { "text": "Identify hot rows with pg_stat_activity or lock monitoring. If many transactions wait on one row, it's hot.", "visual": "📊" },
+        "punchline": { "text": "Hot rows bottleneck concurrency. Shard or skip locked rows to spread load.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "How do sharded counters reduce hot row contention?",
+        "options": ["They split one counter into multiple rows so concurrent updates don't all compete for the same lock", "They eliminate the need for transactions entirely", "Sharded counters store data in memory instead of disk"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch06-practical-patterns",
+      "title": "Idempotent Operations",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A payment webhook fires twice. Without idempotency, the customer is charged twice. With it, the second call is a no-op.", "visual": "🔁" },
+        "buildup": { "text": "An idempotent operation produces the same result whether run once or many times.", "visual": "✅" },
+        "discovery": { "text": "Use an idempotency key: INSERT INTO payments (key, amount) ON CONFLICT (key) DO NOTHING. Second call is harmless.", "visual": "🔑" },
+        "twist": { "text": "DELETE and UPDATE are naturally idempotent for a specific row. INSERT is not — it creates duplicates.", "visual": "📝" },
+        "climax": { "text": "Every API endpoint that mutates data should be idempotent. Retries, webhooks, and network glitches demand it.", "visual": "🌐" },
+        "punchline": { "text": "Idempotency: safe to retry. Design every write operation to handle duplicates.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why is idempotency important for webhook handlers?",
+        "options": ["Webhooks can fire multiple times, and without idempotency each call would create duplicate effects", "Webhooks only work with idempotent databases", "Idempotency makes webhooks faster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch06-practical-patterns",
+      "title": "Outbox Pattern",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Save an order and send an email. The order saves but the email fails. Or the email sends but the order doesn't save.", "visual": "📧" },
+        "buildup": { "text": "You can't put a database write and an external call in the same transaction. They're different systems.", "visual": "🔀" },
+        "discovery": { "text": "The outbox pattern: save the order AND an outbox message in the same transaction. A worker processes the outbox later.", "visual": "📤" },
+        "twist": { "text": "The worker reads the outbox, sends the email, and marks the message as processed. If it fails, it retries.", "visual": "🔄" },
+        "climax": { "text": "The outbox guarantees at-least-once delivery. Combined with idempotency, you get exactly-once effect.", "visual": "🎯" },
+        "punchline": { "text": "Outbox: write the intent to the database. Process it asynchronously.", "visual": "📬" }
+      },
+      "quiz": {
+        "question": "Why can't you combine a database write and an external API call in one transaction?",
+        "options": ["They're separate systems — the database can't roll back an email or API call", "Databases don't support any external communication", "API calls are always faster than database writes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch06-practical-patterns",
+      "title": "Retry Logic",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A transaction fails with a serialization error. Don't show an error to the user. Just retry it.", "visual": "🔁" },
+        "buildup": { "text": "Transient failures (deadlocks, serialization errors, timeouts) are often resolved by a simple retry.", "visual": "⚡" },
+        "discovery": { "text": "Implement exponential backoff: wait 100 ms, then 200 ms, then 400 ms. Don't hammer the database with immediate retries.", "visual": "📈" },
+        "twist": { "text": "Add jitter: randomize the backoff slightly. Without jitter, all clients retry at the same time and collide again.", "visual": "🎲" },
+        "climax": { "text": "Set a max retry count. If it fails five times, it's not transient. Log it, alert, and let a human investigate.", "visual": "🚨" },
+        "punchline": { "text": "Retry with backoff and jitter. Handle transient failures gracefully.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "Why is jitter important in retry logic?",
+        "options": ["It prevents all clients from retrying at the exact same time, which would cause repeated collisions", "Jitter makes each retry attempt faster", "Without jitter, the database rejects all retry attempts"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch06-practical-patterns",
+      "title": "Saga Pattern",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A booking spans three services: payment, inventory, notification. No single database transaction can cover all three.", "visual": "🔗" },
+        "buildup": { "text": "A saga is a sequence of local transactions. Each step has a compensating action that undoes it if a later step fails.", "visual": "↩️" },
+        "discovery": { "text": "Step 1: charge payment. Step 2: reserve inventory. If step 2 fails, run compensator: refund payment.", "visual": "💸" },
+        "twist": { "text": "Sagas provide eventual consistency, not ACID. Between steps, the system is temporarily inconsistent.", "visual": "⏳" },
+        "climax": { "text": "Orchestrated sagas use a central coordinator. Choreographed sagas let each service react to events.", "visual": "🎭" },
+        "punchline": { "text": "Sagas: distributed transactions via compensating actions. Eventual, not atomic.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "How do sagas handle failures in distributed systems?",
+        "options": ["By running compensating actions that undo the effects of previously completed steps", "By rolling back all databases at once", "By ignoring the failure and continuing with the next step"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--transactions-and-concurrency--ch06-practical-patterns",
+      "title": "Queue Tables with SKIP LOCKED",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Multiple workers poll a jobs table. Without SKIP LOCKED, they all grab the same row and fight over the lock.", "visual": "⚔️" },
+        "buildup": { "text": "SKIP LOCKED tells a query: if a row is already locked by another transaction, skip it and grab the next one.", "visual": "⏭️" },
+        "discovery": { "text": "SELECT * FROM jobs WHERE status = 'pending' FOR UPDATE SKIP LOCKED LIMIT 1. Each worker gets a different job.", "visual": "🎯" },
+        "twist": { "text": "This turns a regular Postgres table into a simple job queue. No external queue system needed.", "visual": "📬" },
+        "climax": { "text": "Combined with advisory locks and LISTEN/NOTIFY, Postgres can replace Redis or RabbitMQ for simple queuing.", "visual": "🐘" },
+        "punchline": { "text": "SKIP LOCKED: turn a table into a queue. Workers don't fight over rows.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "What does SKIP LOCKED do in a query?",
+        "options": ["It skips rows that are currently locked by other transactions and returns the next available row", "It permanently deletes locked rows", "It unlocks all rows in the table"],
+        "correct": 0
+      }
+    }
+  ]
+}

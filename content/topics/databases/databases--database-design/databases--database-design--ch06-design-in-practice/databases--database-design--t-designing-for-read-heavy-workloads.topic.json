@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-designing-for-read-heavy-workloads",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch06-design-in-practice",
+  "title": "Designing for Read-Heavy Workloads",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "A fast breakdown of Designing for Read-Heavy Workloads for builders.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your app reads 100x more than it writes. The schema should optimize for reads, not writes.",
+      "visual": "📖"
+    },
+    "buildup": {
+      "text": "Add indexes on every column used in WHERE, ORDER BY, and JOIN. Reads speed up dramatically.",
+      "visual": "⚡"
+    },
+    "discovery": {
+      "text": "Denormalize hot queries: store computed values, cache aggregates, use materialized views.",
+      "visual": "💾"
+    },
+    "twist": {
+      "text": "Every index and denormalized column slows writes. Know your read-to-write ratio before optimizing.",
+      "visual": "⚖️"
+    },
+    "climax": {
+      "text": "Read replicas spread query load across multiple database copies. Writes go to the primary, reads to replicas.",
+      "visual": "📚"
+    },
+    "punchline": {
+      "text": "Read-heavy? Index generously and consider read replicas.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "How do read replicas help with read-heavy workloads?",
+    "options": [
+      "They distribute read queries across multiple database copies, reducing load on the primary",
+      "They store a compressed version of the data",
+      "They automatically fix slow queries"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-network-partitions",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch05-failure-handling",
+  "title": "Network Partitions",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "A quick win: understand Network Partitions.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The network link between two data centers goes down. Both sides are alive but can't communicate. A partition.",
+      "visual": "🔌"
+    },
+    "buildup": {
+      "text": "During a partition, each side sees the other as dead. They can't coordinate writes or elect a new leader.",
+      "visual": "🏝️"
+    },
+    "discovery": {
+      "text": "The minority side must stop accepting writes. Only the majority side (with quorum) can safely proceed.",
+      "visual": "🛑"
+    },
+    "twist": {
+      "text": "In a 2-node cluster, a partition is unsolvable. Neither side has a majority. Always use odd-numbered clusters.",
+      "visual": "🔢"
+    },
+    "climax": {
+      "text": "When the partition heals, the minority reconciles with the majority. Rejected writes must be retried by clients.",
+      "visual": "🔄"
+    },
+    "punchline": {
+      "text": "Network partitions happen. Odd-numbered clusters ensure a majority exists.",
+      "visual": "📏"
+    }
+  },
+  "quiz": {
+    "question": "Why should distributed database clusters have an odd number of nodes?",
+    "options": [
+      "An odd number guarantees a majority side exists during a network partition",
+      "Odd numbers of nodes use less memory",
+      "Even-numbered clusters can't store data"
+    ],
+    "correct": 0
+  }
+}

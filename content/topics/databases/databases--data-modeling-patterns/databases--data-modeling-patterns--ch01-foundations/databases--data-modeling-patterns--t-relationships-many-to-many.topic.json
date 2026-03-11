@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-relationships-many-to-many",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch01-foundations",
+  "title": "Relationships: Many-to-Many",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A micro-lesson that makes Relationships: Many-to-Many usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A student enrolls in many courses. A course has many students. Neither side can hold a single foreign key.",
+      "visual": "🔗"
+    },
+    "buildup": {
+      "text": "A junction table (enrollment) bridges the two: student_id and course_id as a composite key.",
+      "visual": "🌉"
+    },
+    "discovery": {
+      "text": "The junction table can hold extra data: enrollment_date, grade, status. It's a real entity, not just glue.",
+      "visual": "📝"
+    },
+    "twist": {
+      "text": "In document databases, many-to-many is modeled by embedding arrays of IDs. But updates are harder.",
+      "visual": "📄"
+    },
+    "climax": {
+      "text": "Tags, categories, permissions — many-to-many appears everywhere. Recognize it and use a junction table.",
+      "visual": "🏷️"
+    },
+    "punchline": {
+      "text": "Many-to-many: use a junction table. It can hold relationship-specific data too.",
+      "visual": "🧩"
+    }
+  },
+  "quiz": {
+    "question": "Why might a junction table have its own columns beyond the two foreign keys?",
+    "options": [
+      "To store data specific to the relationship, like an enrollment date or a grade",
+      "Junction tables must always have exactly two columns",
+      "Extra columns make the junction table easier to delete"
+    ],
+    "correct": 0
+  }
+}

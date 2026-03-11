@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-query-rewriting",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch05-optimization-techniques",
+  "title": "Query Rewriting",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A fast breakdown of Query Rewriting for builders.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "SELECT * FROM orders WHERE YEAR(created_at) = 2024 can't use an index. Rewrite it and it flies.",
+      "visual": "✏️"
+    },
+    "buildup": {
+      "text": "Functions on indexed columns prevent index use. WHERE created_at >= '2024-01-01' AND created_at < '2025-01-01' uses it.",
+      "visual": "📏"
+    },
+    "discovery": {
+      "text": "Replace OR with UNION ALL when each branch can use a different index. The planner handles each separately.",
+      "visual": "🔧"
+    },
+    "twist": {
+      "text": "Correlated subqueries can often be rewritten as JOINs. A JOIN lets the planner optimize both sides together.",
+      "visual": "🔗"
+    },
+    "climax": {
+      "text": "Small rewrites, big gains. The same logic expressed differently can be 100x faster.",
+      "visual": "🚀"
+    },
+    "punchline": {
+      "text": "Rewrite queries to match what indexes expect. Same result, faster path.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "Why does WHERE YEAR(created_at) = 2024 prevent index usage?",
+    "options": [
+      "The function wraps the indexed column, preventing the planner from matching it to the index",
+      "YEAR is not a valid SQL function",
+      "Index scans don't work on date columns"
+    ],
+    "correct": 0
+  }
+}

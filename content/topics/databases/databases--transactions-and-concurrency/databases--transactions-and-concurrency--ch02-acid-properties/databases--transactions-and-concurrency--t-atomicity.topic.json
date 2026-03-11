@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-atomicity",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch02-acid-properties",
+  "title": "Atomicity",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "Learn Atomicity in one minute.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Transfer money: debit one account, credit another. Atomicity means both happen or neither happens.",
+      "visual": "⚛️"
+    },
+    "buildup": {
+      "text": "Atomic means indivisible. The transaction is one unit of work. No observer sees it half-done.",
+      "visual": "🔒"
+    },
+    "discovery": {
+      "text": "If the server crashes mid-transaction, the write-ahead log replays and undoes uncommitted changes on recovery.",
+      "visual": "📝"
+    },
+    "twist": {
+      "text": "Atomicity doesn't mean instant. The transaction takes time, but the effects appear atomically at commit.",
+      "visual": "⏱️"
+    },
+    "climax": {
+      "text": "Without atomicity, every failure requires manual cleanup. With it, the database handles recovery for you.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Atomicity: all or nothing. The database cleans up failures.",
+      "visual": "🧹"
+    }
+  },
+  "quiz": {
+    "question": "How does a database achieve atomicity after a crash?",
+    "options": [
+      "It replays the write-ahead log and undoes any uncommitted transactions",
+      "It restores from the most recent backup",
+      "The operating system prevents crashes from affecting the database"
+    ],
+    "correct": 0
+  }
+}

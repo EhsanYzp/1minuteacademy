@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-graph-data-in-sql",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch05-hierarchies-and-graphs",
+  "title": "Graph Data in SQL",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A quick win: understand Graph Data in SQL.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Social networks: Alice follows Bob, Bob follows Carol. This isn't a hierarchy — it's a graph with arbitrary connections.",
+      "visual": "🕸️"
+    },
+    "buildup": {
+      "text": "Model graphs with two tables: nodes (people) and edges (follows). Edges have from_id and to_id.",
+      "visual": "🔗"
+    },
+    "discovery": {
+      "text": "Finding friends-of-friends: join edges twice. Friends-of-friends-of-friends: three joins. N degrees: N joins.",
+      "visual": "🔄"
+    },
+    "twist": {
+      "text": "SQL handles graphs but poorly at scale. Graph databases (Neo4j) are built for deep traversals.",
+      "visual": "📊"
+    },
+    "climax": {
+      "text": "For shallow graphs (2-3 hops), SQL is fine. For deep traversals, evaluate a graph database.",
+      "visual": "📏"
+    },
+    "punchline": {
+      "text": "SQL models graphs with edge tables. For deep traversals, use graph databases.",
+      "visual": "🧠"
+    }
+  },
+  "quiz": {
+    "question": "Why does SQL struggle with deep graph traversals?",
+    "options": [
+      "Each additional degree of connection requires another JOIN, making queries increasingly complex and slow",
+      "SQL cannot store graph data at all",
+      "Graph queries are always faster in SQL than in graph databases"
+    ],
+    "correct": 0
+  }
+}

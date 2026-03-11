@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-polymorphic-associations",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch04-relationships",
+  "title": "Polymorphic Associations",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "A micro-lesson that makes Polymorphic Associations usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Comments on posts, photos, and videos. Three different parents, one comments table. How do you link them?",
+      "visual": "🔗"
+    },
+    "buildup": {
+      "text": "Polymorphic associations use two columns: commentable_id and commentable_type (post, photo, or video).",
+      "visual": "🏷️"
+    },
+    "discovery": {
+      "text": "Rails' Active Record popularized this pattern. It's flexible and avoids creating three separate comment tables.",
+      "visual": "🔧"
+    },
+    "twist": {
+      "text": "The database can't enforce foreign keys across multiple tables with one column. Integrity relies on the app.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Alternative: separate join tables (post_comments, photo_comments). More tables, but full foreign key support.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Polymorphic is convenient. Separate tables are safer. Pick your trade-off.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "What is the main drawback of polymorphic associations?",
+    "options": [
+      "The database cannot enforce foreign key constraints across multiple parent tables",
+      "They only work with Rails and no other framework",
+      "Polymorphic associations make all queries slower"
+    ],
+    "correct": 0
+  }
+}

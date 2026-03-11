@@ -1,0 +1,559 @@
+{
+  "categoryId": "databases",
+  "subject": "Databases",
+  "courseId": "databases--database-security",
+  "courseTitle": "Database Security",
+  "emoji": "🛡️",
+  "color": "#14B8A6",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "databases--database-security--ch01-threat-landscape", "title": "Threat Landscape", "position": 1 },
+    { "id": "databases--database-security--ch02-authentication-and-access", "title": "Authentication and Access", "position": 2 },
+    { "id": "databases--database-security--ch03-sql-injection", "title": "SQL Injection", "position": 3 },
+    { "id": "databases--database-security--ch04-encryption", "title": "Encryption", "position": 4 },
+    { "id": "databases--database-security--ch05-auditing-and-compliance", "title": "Auditing and Compliance", "position": 5 },
+    { "id": "databases--database-security--ch06-operational-security", "title": "Operational Security", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "databases--database-security--ch01-threat-landscape",
+      "title": "Why Databases Are Targets",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Databases hold customer data, financial records, and secrets. They are the single richest target for attackers.", "visual": "🎯" },
+        "buildup": { "text": "A breached database leaks thousands or millions of records at once. One vulnerability, massive impact.", "visual": "💥" },
+        "discovery": { "text": "The 2017 Equifax breach exposed 147 million records. The attack exploited a known, unpatched vulnerability.", "visual": "🔓" },
+        "twist": { "text": "Most database breaches aren't sophisticated. They exploit default passwords, public endpoints, or missing patches.", "visual": "🤦" },
+        "climax": { "text": "Security isn't a feature you add later. It's a discipline applied from day one to every layer of the stack.", "visual": "🏗️" },
+        "punchline": { "text": "Databases are high-value targets. Most breaches exploit basic mistakes.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What was a major cause of the 2017 Equifax breach?",
+        "options": ["A known vulnerability that was left unpatched", "An advanced zero-day exploit", "A natural disaster that destroyed servers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch01-threat-landscape",
+      "title": "Internal vs External Threats",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Not all threats come from hackers. A disgruntled employee with database access can cause the same damage.", "visual": "👤" },
+        "buildup": { "text": "External threats: hackers, botnets, ransomware. Internal threats: employees, contractors, compromised accounts.", "visual": "⚠️" },
+        "discovery": { "text": "The Principle of Least Privilege: give every user only the permissions they need. No more, no less.", "visual": "🔒" },
+        "twist": { "text": "Studies show insider threats cause 60% of data breaches. The biggest risk is often someone with legitimate access.", "visual": "📊" },
+        "climax": { "text": "Audit who accesses what. Monitor for unusual patterns: bulk exports, off-hours access, privilege escalation.", "visual": "🔍" },
+        "punchline": { "text": "Trust no one by default. Apply least privilege and monitor access patterns.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What does the Principle of Least Privilege mean?",
+        "options": ["Give every user only the minimum permissions needed for their specific role", "Give all users full access to simplify management", "Remove all access and grant it only when requested"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch01-threat-landscape",
+      "title": "Common Attack Vectors",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "SQL injection, credential stuffing, exposed backups, unpatched software. Attackers have a menu of options.", "visual": "📋" },
+        "buildup": { "text": "SQL injection manipulates queries through user input. Credential stuffing tries leaked passwords from other sites.", "visual": "🔓" },
+        "discovery": { "text": "Misconfigured cloud storage exposes database backups. Shodan finds exposed database ports in minutes.", "visual": "🌐" },
+        "twist": { "text": "Supply chain attacks: a compromised library or plugin with database access becomes the attacker's backdoor.", "visual": "📦" },
+        "climax": { "text": "Defense in depth: multiple layers. Even if one fails, others catch the attack.", "visual": "🧅" },
+        "punchline": { "text": "Attackers try the easiest path. Close every door, not just the front one.", "visual": "🚪" }
+      },
+      "quiz": {
+        "question": "What is defense in depth?",
+        "options": ["Using multiple security layers so that if one fails, others still protect the system", "Installing the deepest possible firewall", "Defending only the most critical database table"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch01-threat-landscape",
+      "title": "The Cost of a Breach",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "IBM's 2023 report: the average cost of a data breach is $4.45 million. For healthcare, it's $10.93 million.", "visual": "💰" },
+        "buildup": { "text": "Costs include incident response, legal fees, regulatory fines, lost customers, and reputation damage.", "visual": "📉" },
+        "discovery": { "text": "GDPR fines can reach 4% of global annual revenue. For large companies, that's hundreds of millions.", "visual": "⚖️" },
+        "twist": { "text": "The hidden cost: lost trust. Customers leave and don't come back. Rebuilding reputation takes years.", "visual": "💔" },
+        "climax": { "text": "Prevention is cheaper than recovery. A $50,000 security audit prevents a $4 million breach.", "visual": "🛡️" },
+        "punchline": { "text": "Breaches cost millions. Investing in prevention is orders of magnitude cheaper.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "What is the maximum GDPR fine for a data breach?",
+        "options": ["4% of the company's global annual revenue", "A fixed amount of exactly one million euros", "GDPR does not impose any fines"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch01-threat-landscape",
+      "title": "Security Mindset",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Security isn't a checklist you finish. It's a continuous process of assessing, mitigating, and monitoring risks.", "visual": "🔄" },
+        "buildup": { "text": "Assume breach: design systems so that even if an attacker gets in, the damage is limited.", "visual": "🧱" },
+        "discovery": { "text": "Threat modeling: identify what you're protecting, who might attack, and how. Then prioritize defenses.", "visual": "📋" },
+        "twist": { "text": "Developers often focus on features and treat security as an afterthought. But attackers exploit what developers ignore.", "visual": "🐛" },
+        "climax": { "text": "Make security part of code review. Every PR that touches database access should be reviewed for security.", "visual": "👀" },
+        "punchline": { "text": "Assume breach, model threats, review continuously. Security is a process.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "What does 'assume breach' mean in security?",
+        "options": ["Design systems to limit damage even if an attacker successfully gains access", "Assume that all data has already been stolen", "Never trust any database to store data securely"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch02-authentication-and-access",
+      "title": "Database Users and Roles",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Everyone uses the same 'admin' account with full access. One compromised password exposes everything.", "visual": "🔓" },
+        "buildup": { "text": "Create separate database users for each application and person. Each user gets only the permissions they need.", "visual": "👥" },
+        "discovery": { "text": "Roles group permissions. 'readonly' gets SELECT only. 'writer' gets INSERT and UPDATE. Assign roles to users.", "visual": "🏷️" },
+        "twist": { "text": "The app should never connect as superuser. A dedicated app user with limited permissions limits blast radius.", "visual": "🎯" },
+        "climax": { "text": "GRANT SELECT ON orders TO app_readonly; REVOKE DELETE ON orders FROM app_writer; Be explicit.", "visual": "📝" },
+        "punchline": { "text": "Separate users, specific roles. Never share superuser passwords with apps.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why should applications never connect as the database superuser?",
+        "options": ["A compromised application with superuser access can do unlimited damage to all data", "Superuser connections are slower", "Databases don't allow superuser connections from applications"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch02-authentication-and-access",
+      "title": "Row-Level Security",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Tenant A's query accidentally returns Tenant B's data. Application code forgot the WHERE tenant_id = clause.", "visual": "😱" },
+        "buildup": { "text": "Row-Level Security (RLS) in Postgres lets the database enforce row filters automatically, regardless of the query.", "visual": "🔒" },
+        "discovery": { "text": "CREATE POLICY tenant_isolation ON orders USING (tenant_id = current_setting('app.tenant_id')). Automatic filtering.", "visual": "🛡️" },
+        "twist": { "text": "RLS policies run on every query. Even if application code has a bug, the database still enforces isolation.", "visual": "🧱" },
+        "climax": { "text": "Supabase uses RLS as its primary access control mechanism. Every table has policies that check the JWT claims.", "visual": "🔐" },
+        "punchline": { "text": "RLS: the database enforces access rules. App bugs can't leak tenant data.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "How does Row-Level Security prevent data leaks between tenants?",
+        "options": ["The database automatically filters rows based on policies, regardless of what the application query says", "It encrypts each tenant's data with a different key", "RLS deletes unauthorized rows before they can be read"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch02-authentication-and-access",
+      "title": "Connection Security",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A database accepts connections from any IP without encryption. Credentials fly over the network in plain text.", "visual": "📡" },
+        "buildup": { "text": "Require SSL/TLS for all database connections. Most modern databases support it natively.", "visual": "🔐" },
+        "discovery": { "text": "Restrict connections by IP: pg_hba.conf in Postgres controls which IPs can connect and with what auth method.", "visual": "📋" },
+        "twist": { "text": "Cloud databases should live in private subnets. No public IP. Access only through VPN or private endpoints.", "visual": "🏰" },
+        "climax": { "text": "Certificate-based auth is stronger than passwords. The client proves identity with a certificate, not a secret.", "visual": "📜" },
+        "punchline": { "text": "Encrypt connections, restrict IPs, use private networks. No public DB ports.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "Why should databases be placed in private subnets?",
+        "options": ["So they have no public IP and can only be accessed through secure internal paths like VPNs", "Private subnets make queries run faster", "Databases cannot function on public networks"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch02-authentication-and-access",
+      "title": "Password Management",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The database password is hardcoded in the app's config file. It's in the Git repo. Every developer has it forever.", "visual": "🤦" },
+        "buildup": { "text": "Never store database passwords in code or config files. Use environment variables or secret managers.", "visual": "🔐" },
+        "discovery": { "text": "AWS Secrets Manager, HashiCorp Vault, and Azure Key Vault store and rotate secrets automatically.", "visual": "🗄️" },
+        "twist": { "text": "Rotate passwords regularly. If a password is leaked, the window of exposure is limited to the rotation interval.", "visual": "🔄" },
+        "climax": { "text": "IAM-based authentication (AWS RDS IAM) eliminates passwords entirely. The app authenticates via its cloud role.", "visual": "☁️" },
+        "punchline": { "text": "No passwords in code. Use secret managers and rotate credentials regularly.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the safest way to manage database credentials?",
+        "options": ["Use a secret manager that stores and automatically rotates credentials", "Hardcode them in environment-specific config files", "Share one strong password across all environments"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch02-authentication-and-access",
+      "title": "Privilege Escalation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An app user with SELECT permission finds a way to execute CREATE EXTENSION and gains superuser powers.", "visual": "📈" },
+        "buildup": { "text": "Privilege escalation: gaining more permissions than intended. It turns a limited breach into a total compromise.", "visual": "💀" },
+        "discovery": { "text": "Review GRANT chains. In Postgres, a role can inherit permissions from other roles. Chains can grant unexpected access.", "visual": "🔗" },
+        "twist": { "text": "SECURITY DEFINER functions in Postgres run with the owner's privileges. A vulnerable function escalates the caller.", "visual": "⚠️" },
+        "climax": { "text": "Audit permissions regularly. Remove unnecessary grants. Use SECURITY INVOKER for functions when possible.", "visual": "🔍" },
+        "punchline": { "text": "Audit permissions. Remove extra grants. Watch SECURITY DEFINER functions.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "How can SECURITY DEFINER functions create a privilege escalation risk?",
+        "options": ["They run with the function owner's permissions, potentially giving callers access beyond their own grants", "They automatically grant superuser access to all callers", "SECURITY DEFINER functions cannot access any data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch03-sql-injection",
+      "title": "How SQL Injection Works",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Input: Robert'; DROP TABLE students;-- The database sees it as SQL and drops the table. Bobby Tables strikes again.", "visual": "💉" },
+        "buildup": { "text": "SQL injection happens when user input is concatenated directly into a SQL string. The input becomes code.", "visual": "🔓" },
+        "discovery": { "text": "The query: SELECT * FROM users WHERE name = '\" + input + \"'. Attacker input: ' OR '1'='1. Returns all users.", "visual": "📝" },
+        "twist": { "text": "SQL injection isn't just about dropping tables. Attackers extract data, bypass login, and escalate privileges.", "visual": "🕵️" },
+        "climax": { "text": "It's been the #1 web vulnerability for over 20 years. OWASP still ranks injection attacks at the top.", "visual": "🏆" },
+        "punchline": { "text": "SQL injection: user input becomes code. Never concatenate input into queries.", "visual": "🚫" }
+      },
+      "quiz": {
+        "question": "What causes SQL injection vulnerabilities?",
+        "options": ["Concatenating user input directly into SQL query strings without sanitization", "Using parameterized queries in application code", "Having too many tables in the database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch03-sql-injection",
+      "title": "Parameterized Queries",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "SELECT * FROM users WHERE email = $1 with parameters ['alice@example.com']. The input is data, never code.", "visual": "🛡️" },
+        "buildup": { "text": "Parameterized queries separate SQL structure from user data. The database treats parameters as values, never code.", "visual": "📏" },
+        "discovery": { "text": "Every modern language supports them: ? in Java, $1 in Postgres, :name in Python. No excuses.", "visual": "✅" },
+        "twist": { "text": "ORMs use parameterized queries under the hood. But raw SQL fragments in ORMs can still be vulnerable. Be careful.", "visual": "⚠️" },
+        "climax": { "text": "One rule: never build SQL by string concatenation with user input. Always use parameters.", "visual": "📝" },
+        "punchline": { "text": "Parameterized queries: the complete SQL injection defense. Always use them.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "Why do parameterized queries prevent SQL injection?",
+        "options": ["They separate SQL structure from data, so user input is always treated as a value, never as code", "They encrypt all query parameters", "They reject any query containing special characters"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch03-sql-injection",
+      "title": "Second-Order Injection",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An attacker stores malicious input in the database. Later, a different query reads it and uses it unsafely. Boom.", "visual": "💣" },
+        "buildup": { "text": "First-order injection: input goes directly into a query. Second-order: input is stored, then used in a query later.", "visual": "📦" },
+        "discovery": { "text": "A username stored as admin'-- is safe at registration. But if a password reset uses it unsafely, injection happens.", "visual": "🔓" },
+        "twist": { "text": "Developers often trust data from their own database. But if that data was user-supplied, it's still untrusted.", "visual": "⚠️" },
+        "climax": { "text": "Treat all data as untrusted, regardless of source. Parameterize every query, even those using stored data.", "visual": "🛡️" },
+        "punchline": { "text": "Second-order: stored data becomes the weapon. Trust nothing, parameterize all.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "What makes second-order SQL injection harder to detect?",
+        "options": ["The malicious input is stored in the database and exploited later by a different query", "It only works on NoSQL databases", "Second-order injections are automatically prevented by firewalls"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch03-sql-injection",
+      "title": "Blind SQL Injection",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The app shows no query results. The attacker asks yes/no: 'Is the first char of the admin password z?'", "visual": "🔍" },
+        "buildup": { "text": "Blind injection extracts data one bit at a time. The response differs (page loads vs error) based on the answer.", "visual": "📊" },
+        "discovery": { "text": "Time-based blind injection: IF true THEN SLEEP(5). If the response takes 5 seconds, the condition was true.", "visual": "⏱️" },
+        "twist": { "text": "Automated tools like sqlmap perform blind injection attacks in minutes. They test thousands of conditions rapidly.", "visual": "🤖" },
+        "climax": { "text": "Parameterized queries prevent blind injection too. The defense is the same: never concatenate user input.", "visual": "🛡️" },
+        "punchline": { "text": "Blind injection: data extracted via yes/no signals. Defense: parameterize.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "How does time-based blind SQL injection extract data?",
+        "options": ["By using conditional SLEEP commands and measuring response time to infer true/false answers", "By reading error messages displayed on the webpage", "It directly downloads the database file"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch03-sql-injection",
+      "title": "WAFs and Input Validation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A Web Application Firewall blocks requests containing suspicious SQL patterns. Defense in depth.", "visual": "🧱" },
+        "buildup": { "text": "WAFs inspect HTTP requests and block known attack patterns before they reach your application.", "visual": "🔍" },
+        "discovery": { "text": "Input validation: reject inputs that don't match expected formats. An email field should look like an email.", "visual": "✅" },
+        "twist": { "text": "WAFs and validation help but aren't sufficient alone. Attackers find bypasses. Parameterized queries are the fix.", "visual": "⚠️" },
+        "climax": { "text": "Layer defenses: parameterized queries, input validation, WAF, and principle of least privilege. All together.", "visual": "🧅" },
+        "punchline": { "text": "WAFs add defense layers. Parameterized queries remain the primary defense.", "visual": "🏗️" }
+      },
+      "quiz": {
+        "question": "Why are WAFs not sufficient as the sole defense against SQL injection?",
+        "options": ["Attackers can find bypasses around WAF rules, so parameterized queries are still essential", "WAFs block all legitimate queries along with attacks", "WAFs only work with NoSQL databases"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch04-encryption",
+      "title": "Encryption at Rest",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Someone steals the server's hard drive. Without encryption at rest, they can read every record directly from disk.", "visual": "💾" },
+        "buildup": { "text": "Encryption at rest encrypts the physical data files. Even with disk access, the data is unreadable without the key.", "visual": "🔐" },
+        "discovery": { "text": "Most cloud databases enable it by default: RDS, Cloud SQL, Azure SQL. On-premise databases need explicit setup.", "visual": "☁️" },
+        "twist": { "text": "Encryption at rest doesn't protect against SQL injection or stolen credentials. It only protects the physical media.", "visual": "⚠️" },
+        "climax": { "text": "It's a compliance requirement for most standards: PCI DSS, HIPAA, SOC 2. Enable it even if you think you don't need it.", "visual": "📋" },
+        "punchline": { "text": "Encryption at rest: protect stolen disks. A compliance must-have.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What threat does encryption at rest protect against?",
+        "options": ["Physical access to the storage media, such as stolen hard drives or decommissioned servers", "SQL injection attacks from the internet", "Unauthorized queries from authenticated database users"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch04-encryption",
+      "title": "Encryption in Transit",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A database query travels over the network. Without TLS, anyone on the network can read the SQL and the results.", "visual": "📡" },
+        "buildup": { "text": "Encryption in transit uses TLS to encrypt all communication between the application and the database.", "visual": "🔐" },
+        "discovery": { "text": "Enable sslmode=require in your connection string. The client refuses to connect without encryption.", "visual": "📝" },
+        "twist": { "text": "sslmode=require verifies encryption but not the server's identity. Use verify-full to also check the certificate.", "visual": "🔍" },
+        "climax": { "text": "Without verify-full, a man-in-the-middle can present a fake certificate. Verify the server's identity.", "visual": "🕵️" },
+        "punchline": { "text": "TLS with verify-full. Encrypt the connection and verify the server's identity.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "What is the difference between sslmode=require and sslmode=verify-full?",
+        "options": ["require only encrypts the connection, while verify-full also verifies the server's certificate identity", "They are identical in behavior", "verify-full disables encryption for performance"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch04-encryption",
+      "title": "Column-Level Encryption",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You encrypt the disk but the DBA can still SELECT credit_card_number. Column encryption adds another layer.", "visual": "🔐" },
+        "buildup": { "text": "Encrypt specific columns with a key the database doesn't have. Only the application can decrypt.", "visual": "🔑" },
+        "discovery": { "text": "pgcrypto in Postgres: INSERT INTO users (ssn) VALUES (pgp_sym_encrypt('123-45-6789', 'secret_key')).", "visual": "📝" },
+        "twist": { "text": "Encrypted columns can't be indexed or searched normally. You trade query flexibility for security.", "visual": "⚖️" },
+        "climax": { "text": "For PCI compliance, credit card numbers must be encrypted even within the database. Column encryption satisfies this.", "visual": "💳" },
+        "punchline": { "text": "Column encryption: protect sensitive fields even from DBAs and deeper attacks.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What is a limitation of column-level encryption?",
+        "options": ["Encrypted columns cannot be indexed or searched efficiently with standard queries", "It makes all database operations 100 times slower", "Column encryption is only available in NoSQL databases"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch04-encryption",
+      "title": "Hashing Passwords",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A breach leaks the users table. If passwords are stored in plain text, every account is instantly compromised.", "visual": "💀" },
+        "buildup": { "text": "Hashing converts passwords into fixed-length, irreversible strings. You can verify but not reverse them.", "visual": "🔄" },
+        "discovery": { "text": "Use bcrypt, scrypt, or Argon2. These are deliberately slow, making brute-force attacks impractical.", "visual": "🐢" },
+        "twist": { "text": "MD5 and SHA-256 are too fast for passwords. GPUs crack billions of MD5 hashes per second.", "visual": "⚡" },
+        "climax": { "text": "Add a unique salt per password. Even if two users have the same password, their hashes differ.", "visual": "🧂" },
+        "punchline": { "text": "Never store plain passwords. Use bcrypt or Argon2 with unique salts.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "Why are bcrypt and Argon2 preferred over SHA-256 for password hashing?",
+        "options": ["They are deliberately slow, making brute-force attacks computationally impractical", "They produce shorter hash values", "SHA-256 cannot hash passwords at all"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch04-encryption",
+      "title": "Key Management",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You encrypted the data with a key. Where is the key stored? If it's next to the encrypted data, encryption is pointless.", "visual": "🗝️" },
+        "buildup": { "text": "Key management is harder than encryption itself. Keys must be stored separately, rotated, and access-controlled.", "visual": "🔐" },
+        "discovery": { "text": "Use a Key Management Service (KMS): AWS KMS, Google Cloud KMS, or Azure Key Vault. They manage the lifecycle.", "visual": "☁️" },
+        "twist": { "text": "Envelope encryption: a data key encrypts data, a master key encrypts the data key. Rotate without re-encrypting.", "visual": "📦" },
+        "climax": { "text": "Log all key access. If someone accesses the master key outside normal patterns, investigate immediately.", "visual": "🚨" },
+        "punchline": { "text": "Keys must live separately from data. Use a KMS and rotate keys regularly.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is envelope encryption?",
+        "options": ["A data key encrypts the data, and a master key encrypts the data key, allowing key rotation without re-encrypting all data", "Encrypting data twice with the same key", "Storing encryption keys inside the encrypted data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch05-auditing-and-compliance",
+      "title": "Database Audit Logging",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A record was deleted. Who did it? When? From where? Without audit logs, these questions have no answers.", "visual": "🔍" },
+        "buildup": { "text": "Audit logging records who executed what query, when, from which IP, and what data was affected.", "visual": "📋" },
+        "discovery": { "text": "Postgres: pgaudit extension logs SELECT, INSERT, UPDATE, DELETE with user and table details.", "visual": "📝" },
+        "twist": { "text": "Logging everything creates massive log volumes. Filter: log DDL, privilege changes, and access to sensitive tables.", "visual": "📊" },
+        "climax": { "text": "Ship logs to a separate, immutable store. If an attacker compromises the database, they can't erase the audit trail.", "visual": "🏗️" },
+        "punchline": { "text": "Log access to sensitive data. Store logs separately from the database.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why should audit logs be stored separately from the database?",
+        "options": ["So an attacker who compromises the database cannot erase the evidence of their actions", "Separate storage makes logs easier to read", "Databases cannot store log data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch05-auditing-and-compliance",
+      "title": "GDPR and Data Privacy",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A user in the EU requests deletion of all their data. GDPR says you must comply within 30 days.", "visual": "🇪🇺" },
+        "buildup": { "text": "GDPR grants rights: access, correction, deletion, and portability. Your database must support all of them.", "visual": "📋" },
+        "discovery": { "text": "Design for deletion: cascading deletes, anonymization scripts, and data maps showing where personal data lives.", "visual": "🗺️" },
+        "twist": { "text": "Backups complicate deletion. Personal data in backups persists after deletion. Plan for backup retention policies.", "visual": "📦" },
+        "climax": { "text": "Pseudonymization: replace personal identifiers with tokens. The data is usable for analytics but not identifiable.", "visual": "🎭" },
+        "punchline": { "text": "Design for data deletion from day one. Know where personal data lives.", "visual": "🔍" }
+      },
+      "quiz": {
+        "question": "Why do database backups complicate GDPR deletion requests?",
+        "options": ["Personal data in backups persists even after the live database records are deleted", "GDPR requires deleting all backups immediately", "Backups are exempt from all privacy regulations"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch05-auditing-and-compliance",
+      "title": "Data Masking",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Developers need production data to debug issues. But production data contains real customer information.", "visual": "👀" },
+        "buildup": { "text": "Data masking replaces sensitive values with realistic fakes: real structure, fake content.", "visual": "🎭" },
+        "discovery": { "text": "Static masking: create a masked copy of the database. Dynamic masking: mask data at query time based on the user's role.", "visual": "📊" },
+        "twist": { "text": "Postgres 16 introduced dynamic column masking natively. Roles see masked values without changing the stored data.", "visual": "🐘" },
+        "climax": { "text": "Mask emails, phone numbers, SSNs, and addresses. Keep IDs and relationships intact for realistic testing.", "visual": "📝" },
+        "punchline": { "text": "Mask production data for non-production use. Real structure, fake content.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What is the difference between static and dynamic data masking?",
+        "options": ["Static creates a masked copy; dynamic masks data at query time based on the user's role", "Static masking is slower than dynamic masking", "There is no difference between static and dynamic masking"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch05-auditing-and-compliance",
+      "title": "PCI DSS Compliance",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You store credit card numbers. PCI DSS has 12 requirements. Fail and you lose card processing rights.", "visual": "💳" },
+        "buildup": { "text": "Requirement 3: protect stored cardholder data. Encrypt card numbers. Never store the CVV after authorization.", "visual": "🔐" },
+        "discovery": { "text": "Requirement 7: restrict access on a need-to-know basis. Only payment-processing code should access card data.", "visual": "🔒" },
+        "twist": { "text": "The easiest way to comply? Don't store card data at all. Use Stripe or a tokenization service. They handle PCI for you.", "visual": "💡" },
+        "climax": { "text": "If you must store cards, isolate them in a separate database with its own network, encryption, and access controls.", "visual": "🏗️" },
+        "punchline": { "text": "Best PCI compliance: don't store card data. Let payment providers handle it.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is the simplest way to achieve PCI DSS compliance for card data?",
+        "options": ["Don't store card data at all — use a payment provider like Stripe that handles it for you", "Store all card data in plain text for easy access", "Encrypt card data with MD5 hashing"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch05-auditing-and-compliance",
+      "title": "Retention Policies",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You keep data forever 'just in case.' But regulations say you must delete personal data after its purpose is fulfilled.", "visual": "📅" },
+        "buildup": { "text": "A retention policy defines how long each type of data is kept. Transaction logs: 7 years. Session data: 30 days.", "visual": "📋" },
+        "discovery": { "text": "Automate deletion: scheduled jobs that purge expired data. Don't rely on humans to remember.", "visual": "🤖" },
+        "twist": { "text": "Retention policies reduce breach risk. Data that doesn't exist can't be stolen. Less data, less liability.", "visual": "🧹" },
+        "climax": { "text": "Document your policies. Auditors will ask what you keep, why, and for how long.", "visual": "📝" },
+        "punchline": { "text": "Keep data only as long as needed. Automate deletion. Less data means less risk.", "visual": "🗑️" }
+      },
+      "quiz": {
+        "question": "How do retention policies reduce breach risk?",
+        "options": ["Data that has been deleted according to policy cannot be stolen in a breach", "Retention policies encrypt data automatically", "They prevent attackers from accessing the database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch06-operational-security",
+      "title": "Backup Security",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your database is locked down. But the nightly backup sits in an S3 bucket with public read access.", "visual": "🪣" },
+        "buildup": { "text": "Backups contain everything the database does. They need the same security: encryption, access control, and monitoring.", "visual": "🔐" },
+        "discovery": { "text": "Encrypt backups with a separate key. Store them in private, access-controlled storage. Test restores regularly.", "visual": "🧪" },
+        "twist": { "text": "Thousands of MongoDB and Elasticsearch databases have been ransomed after attackers found unprotected backups online.", "visual": "⚠️" },
+        "climax": { "text": "Automate backup verification: restore to a test instance. Don't discover a bad backup during an emergency.", "visual": "🔧" },
+        "punchline": { "text": "Encrypt backups, restrict access, test restores. They hold everything.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why is backup security as important as database security?",
+        "options": ["Backups contain the same sensitive data as the database and are often less protected", "Backups are always stored securely by default", "Attackers cannot access backup files"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch06-operational-security",
+      "title": "Patch Management",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A critical PostgreSQL vulnerability is announced. Exploit code is public within 48 hours. You haven't patched.", "visual": "🐛" },
+        "buildup": { "text": "Database vendors release security patches regularly. Unpatched databases are sitting ducks for known exploits.", "visual": "🎯" },
+        "discovery": { "text": "Create a patching schedule: test patches on staging within days, deploy to production within a week of critical fixes.", "visual": "📅" },
+        "twist": { "text": "Managed databases (RDS, Cloud SQL) apply patches automatically during maintenance windows. One less thing to forget.", "visual": "☁️" },
+        "climax": { "text": "Subscribe to security mailing lists for your database. Know about vulnerabilities before attackers exploit them.", "visual": "📧" },
+        "punchline": { "text": "Patch promptly. Known vulnerabilities are the easiest attack vector to exploit.", "visual": "🔧" }
+      },
+      "quiz": {
+        "question": "What is the advantage of managed database services for patch management?",
+        "options": ["They apply security patches automatically during maintenance windows", "They never need patches because they are immune to vulnerabilities", "Managed services are always cheaper than self-hosted"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch06-operational-security",
+      "title": "Monitoring and Alerting",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An attacker exports 2 million rows at 3 AM. No alert fires. You find out from a journalist six months later.", "visual": "📰" },
+        "buildup": { "text": "Monitor query patterns: sudden spikes in data volume, unusual access times, or queries hitting sensitive tables.", "visual": "📊" },
+        "discovery": { "text": "Alert on anomalies: large result sets, failed logins, privilege changes, new connections from unknown IPs.", "visual": "🚨" },
+        "twist": { "text": "Alert fatigue is real. Too many alerts and teams ignore them. Tune thresholds to minimize noise.", "visual": "🔕" },
+        "climax": { "text": "Tools: pgwatch2 for Postgres, MySQL Enterprise Monitor, AWS GuardDuty for cloud databases.", "visual": "🔧" },
+        "punchline": { "text": "Monitor anomalies, alert on threats. Detect breaches in hours, not months.", "visual": "⏰" }
+      },
+      "quiz": {
+        "question": "What is a sign of potential unauthorized database access?",
+        "options": ["Sudden spikes in data volume, unusual access times, or queries from unknown IP addresses", "Regularly scheduled backup operations", "Normal query response times during business hours"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch06-operational-security",
+      "title": "Disaster Recovery Planning",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Ransomware encrypts your database and backups. The attacker demands $500K. Do you have a recovery plan?", "visual": "💀" },
+        "buildup": { "text": "A disaster recovery plan covers backup strategy, restore procedures, failover steps, and communication protocols.", "visual": "📋" },
+        "discovery": { "text": "RPO (Recovery Point Objective): how much data can you lose? RTO (Recovery Time Objective): how long can you be down?", "visual": "⏱️" },
+        "twist": { "text": "Untested plans fail. Run recovery drills. Simulate failures and time recovery. Fix gaps before real crises.", "visual": "🧪" },
+        "climax": { "text": "Keep offline backups. Ransomware can encrypt network-accessible backups. An air-gapped copy is the last resort.", "visual": "💾" },
+        "punchline": { "text": "Plan for disaster. Test the plan. Keep offline backups. Prepare for the worst.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why should disaster recovery plans be tested regularly?",
+        "options": ["Untested plans often fail during real incidents due to undiscovered gaps and outdated procedures", "Testing is only required for compliance purposes", "Plans work perfectly the first time if written correctly"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-security--ch06-operational-security",
+      "title": "Security Checklist",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A new database goes to production. Default passwords changed? TLS on? Network restricted? Check everything.", "visual": "✅" },
+        "buildup": { "text": "Checklist: unique credentials, TLS enabled, firewall rules, least-privilege roles, encryption at rest, audit logging.", "visual": "📋" },
+        "discovery": { "text": "Add: disable remote root login, remove sample databases, enable connection limits, set statement timeouts.", "visual": "🔧" },
+        "twist": { "text": "CIS Benchmarks provide detailed hardening checklists for every major database. Use them as your starting point.", "visual": "📖" },
+        "climax": { "text": "Automate checks with tools like ScoutSuite or Prowler. Run them in CI/CD to catch misconfigurations before deploy.", "visual": "🤖" },
+        "punchline": { "text": "Security checklist for every new database. Automate so nothing is missed.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What are CIS Benchmarks?",
+        "options": ["Detailed security hardening checklists for major software, including databases", "Performance benchmarks for comparing database speeds", "Compliance certificates issued by the government"],
+        "correct": 0
+      }
+    }
+  ]
+}

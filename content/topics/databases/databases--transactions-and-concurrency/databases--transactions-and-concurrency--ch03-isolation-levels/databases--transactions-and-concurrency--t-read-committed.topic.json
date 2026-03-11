@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-read-committed",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch03-isolation-levels",
+  "title": "Read Committed",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A fast breakdown of Read Committed for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Transaction B only sees data that A has committed. No dirty reads. This is Read Committed.",
+      "visual": "✅"
+    },
+    "buildup": {
+      "text": "Each statement in B sees the latest committed state at that moment. Two SELECTs may see different data.",
+      "visual": "🔄"
+    },
+    "discovery": {
+      "text": "This is the default in Postgres and Oracle. It's good enough for most applications.",
+      "visual": "📊"
+    },
+    "twist": {
+      "text": "Non-repeatable reads are possible: read a value, another transaction changes it, read again — different result.",
+      "visual": "🔀"
+    },
+    "climax": {
+      "text": "For CRUD apps, Read Committed works. For financial calculations, you may need stronger isolation.",
+      "visual": "🏦"
+    },
+    "punchline": {
+      "text": "Read Committed: no dirty reads, but values can change between reads.",
+      "visual": "📏"
+    }
+  },
+  "quiz": {
+    "question": "What anomaly is possible under Read Committed isolation?",
+    "options": [
+      "Non-repeatable reads — reading the same row twice yields different values",
+      "Dirty reads — seeing uncommitted data",
+      "No anomalies are possible under Read Committed"
+    ],
+    "correct": 0
+  }
+}

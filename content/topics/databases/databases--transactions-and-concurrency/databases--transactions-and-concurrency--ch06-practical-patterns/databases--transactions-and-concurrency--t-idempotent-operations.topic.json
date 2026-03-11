@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-idempotent-operations",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch06-practical-patterns",
+  "title": "Idempotent Operations",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A quick, practical guide to Idempotent Operations.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A payment webhook fires twice. Without idempotency, the customer is charged twice. With it, the second call is a no-op.",
+      "visual": "🔁"
+    },
+    "buildup": {
+      "text": "An idempotent operation produces the same result whether run once or many times.",
+      "visual": "✅"
+    },
+    "discovery": {
+      "text": "Use an idempotency key: INSERT INTO payments (key, amount) ON CONFLICT (key) DO NOTHING. Second call is harmless.",
+      "visual": "🔑"
+    },
+    "twist": {
+      "text": "DELETE and UPDATE are naturally idempotent for a specific row. INSERT is not — it creates duplicates.",
+      "visual": "📝"
+    },
+    "climax": {
+      "text": "Every API endpoint that mutates data should be idempotent. Retries, webhooks, and network glitches demand it.",
+      "visual": "🌐"
+    },
+    "punchline": {
+      "text": "Idempotency: safe to retry. Design every write operation to handle duplicates.",
+      "visual": "🛡️"
+    }
+  },
+  "quiz": {
+    "question": "Why is idempotency important for webhook handlers?",
+    "options": [
+      "Webhooks can fire multiple times, and without idempotency each call would create duplicate effects",
+      "Webhooks only work with idempotent databases",
+      "Idempotency makes webhooks faster"
+    ],
+    "correct": 0
+  }
+}

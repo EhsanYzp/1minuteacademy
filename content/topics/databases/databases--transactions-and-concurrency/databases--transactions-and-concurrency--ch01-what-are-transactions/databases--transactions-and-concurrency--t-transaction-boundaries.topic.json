@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-transaction-boundaries",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch01-what-are-transactions",
+  "title": "Transaction Boundaries",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A quick win: understand Transaction Boundaries.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A developer opened a transaction, ran a query, and forgot to commit. The connection held locks for 8 hours.",
+      "visual": "😱"
+    },
+    "buildup": {
+      "text": "Transaction boundaries matter: open late, close early. Hold the transaction only for essential operations.",
+      "visual": "⏱️"
+    },
+    "discovery": {
+      "text": "Don't put HTTP calls or file operations inside a transaction. External calls can hang, keeping locks open.",
+      "visual": "🚫"
+    },
+    "twist": {
+      "text": "ORMs can hide transaction boundaries. A request handler might silently keep a transaction open for the entire request.",
+      "visual": "👻"
+    },
+    "climax": {
+      "text": "Set statement_timeout and idle_in_transaction_session_timeout in Postgres to kill runaway transactions.",
+      "visual": "⏰"
+    },
+    "punchline": {
+      "text": "Open late, close early. Never hold locks waiting on external calls.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "Why should you avoid making HTTP calls inside a database transaction?",
+    "options": [
+      "External calls can hang, keeping database locks held for an unpredictable amount of time",
+      "HTTP calls automatically roll back transactions",
+      "Databases block all network traffic during transactions"
+    ],
+    "correct": 0
+  }
+}

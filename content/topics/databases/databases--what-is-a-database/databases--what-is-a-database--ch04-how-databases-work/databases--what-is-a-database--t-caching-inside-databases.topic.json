@@ -1,0 +1,49 @@
+{
+  "id": "databases--what-is-a-database--t-caching-inside-databases",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "What Is a Database",
+  "course_id": "databases--what-is-a-database",
+  "chapter_id": "databases--what-is-a-database--ch04-how-databases-work",
+  "title": "Caching Inside Databases",
+  "emoji": "🗄️",
+  "color": "#6366F1",
+  "description": "A tiny lesson with a big payoff: Caching Inside Databases.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Disk is slow. Memory is fast. Databases keep frequently used data in a memory cache called the buffer pool.",
+      "visual": "💾"
+    },
+    "buildup": {
+      "text": "When you query a row, the database checks the buffer pool first. If it's there, no disk read needed.",
+      "visual": "⚡"
+    },
+    "discovery": {
+      "text": "MySQL's InnoDB and Postgres' shared buffers both use an LRU-style cache to keep hot data in RAM.",
+      "visual": "🔥"
+    },
+    "twist": {
+      "text": "If the buffer pool is too small, the database thrashes disk. Too large and the OS fights it for memory.",
+      "visual": "⚖️"
+    },
+    "climax": {
+      "text": "Tuning the buffer pool size is often the single biggest performance lever for a database.",
+      "visual": "🎛️"
+    },
+    "punchline": {
+      "text": "More data in memory means fewer disk reads. Size the cache.",
+      "visual": "📏"
+    }
+  },
+  "quiz": {
+    "question": "What is a buffer pool in a database?",
+    "options": [
+      "An in-memory cache that stores frequently accessed data pages",
+      "A backup copy of the entire database",
+      "A pool of network connections"
+    ],
+    "correct": 0
+  }
+}

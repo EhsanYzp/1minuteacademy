@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-nested-sets",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch05-hierarchies-and-graphs",
+  "title": "Nested Sets",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A 1-minute de-risking session on Nested Sets.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Each node stores a left and right number. All descendants have left and right values between the parent's.",
+      "visual": "🔢"
+    },
+    "buildup": {
+      "text": "Finding all descendants: WHERE lft BETWEEN parent_lft AND parent_rgt. One range query, no recursion.",
+      "visual": "⚡"
+    },
+    "discovery": {
+      "text": "Counting children, finding ancestors, and calculating depth are all simple arithmetic on left and right values.",
+      "visual": "🧮"
+    },
+    "twist": {
+      "text": "Inserting a node requires renumbering all nodes to the right. One insert can update half the table.",
+      "visual": "😱"
+    },
+    "climax": {
+      "text": "Nested sets are ideal for read-heavy, rarely-changing trees: product catalogs, geographic regions.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "Nested sets: blazing reads, expensive writes. Best for static hierarchies.",
+      "visual": "📏"
+    }
+  },
+  "quiz": {
+    "question": "Why are inserts expensive in the nested set model?",
+    "options": [
+      "Every node to the right of the insertion point must have its left and right values renumbered",
+      "Nested sets don't support inserts at all",
+      "Inserts require deleting and recreating the entire tree"
+    ],
+    "correct": 0
+  }
+}

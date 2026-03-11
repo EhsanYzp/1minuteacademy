@@ -1,0 +1,49 @@
+{
+  "id": "databases--nosql-explained--t-embedding-vs-referencing",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "NoSQL Explained",
+  "course_id": "databases--nosql-explained",
+  "chapter_id": "databases--nosql-explained--ch02-document-databases",
+  "title": "Embedding vs Referencing",
+  "emoji": "🔮",
+  "color": "#F59E0B",
+  "description": "A quick win: understand Embedding vs Referencing.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A blog post has comments. Embed them inside the post document or store them separately with a reference?",
+      "visual": "🤔"
+    },
+    "buildup": {
+      "text": "Embedding puts comments inside the post. One read gets post and comments together. Fast and simple.",
+      "visual": "📦"
+    },
+    "discovery": {
+      "text": "Referencing stores comment IDs in the post. Comments live in their own collection. Requires two reads.",
+      "visual": "🔗"
+    },
+    "twist": {
+      "text": "Embedded documents grow. A viral post with 10,000 comments bloats the document beyond MongoDB's 16 MB limit.",
+      "visual": "💥"
+    },
+    "climax": {
+      "text": "Rule of thumb: embed if data is always accessed together and won't grow unbounded. Reference otherwise.",
+      "visual": "📏"
+    },
+    "punchline": {
+      "text": "Embed for speed. Reference when data can grow large.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "When should you reference instead of embed in a document database?",
+    "options": [
+      "When the embedded data can grow unbounded and exceed document size limits",
+      "Always — embedding is never recommended",
+      "Only when you have fewer than 10 documents"
+    ],
+    "correct": 0
+  }
+}

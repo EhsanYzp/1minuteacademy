@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-security--t-connection-security",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Security",
+  "course_id": "databases--database-security",
+  "chapter_id": "databases--database-security--ch02-authentication-and-access",
+  "title": "Connection Security",
+  "emoji": "🛡️",
+  "color": "#14B8A6",
+  "description": "A 1-minute de-risking session on Connection Security.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A database accepts connections from any IP without encryption. Credentials fly over the network in plain text.",
+      "visual": "📡"
+    },
+    "buildup": {
+      "text": "Require SSL/TLS for all database connections. Most modern databases support it natively.",
+      "visual": "🔐"
+    },
+    "discovery": {
+      "text": "Restrict connections by IP: pg_hba.conf in Postgres controls which IPs can connect and with what auth method.",
+      "visual": "📋"
+    },
+    "twist": {
+      "text": "Cloud databases should live in private subnets. No public IP. Access only through VPN or private endpoints.",
+      "visual": "🏰"
+    },
+    "climax": {
+      "text": "Certificate-based auth is stronger than passwords. The client proves identity with a certificate, not a secret.",
+      "visual": "📜"
+    },
+    "punchline": {
+      "text": "Encrypt connections, restrict IPs, use private networks. No public DB ports.",
+      "visual": "🔒"
+    }
+  },
+  "quiz": {
+    "question": "Why should databases be placed in private subnets?",
+    "options": [
+      "So they have no public IP and can only be accessed through secure internal paths like VPNs",
+      "Private subnets make queries run faster",
+      "Databases cannot function on public networks"
+    ],
+    "correct": 0
+  }
+}

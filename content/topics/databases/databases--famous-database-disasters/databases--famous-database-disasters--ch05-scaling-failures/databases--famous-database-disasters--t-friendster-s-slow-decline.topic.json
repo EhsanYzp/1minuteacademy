@@ -1,0 +1,49 @@
+{
+  "id": "databases--famous-database-disasters--t-friendster-s-slow-decline",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Famous Database Disasters",
+  "course_id": "databases--famous-database-disasters",
+  "chapter_id": "databases--famous-database-disasters--ch05-scaling-failures",
+  "title": "Friendster's Slow Decline",
+  "emoji": "🔥",
+  "color": "#F97316",
+  "description": "A micro-lesson that makes Friendster's Slow Decline usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Friendster launched before Facebook. Page loads took 20+ seconds. Users left for faster competitors.",
+      "visual": "🐢"
+    },
+    "buildup": {
+      "text": "The social graph was stored in a relational database. Finding friends-of-friends required deep recursive joins.",
+      "visual": "🔄"
+    },
+    "discovery": {
+      "text": "Every profile page required queries that traversed multiple relationship levels. The database couldn't keep up.",
+      "visual": "💥"
+    },
+    "twist": {
+      "text": "Friendster had 115 million users at its peak. Technical debt, not lack of users, killed the platform.",
+      "visual": "📉"
+    },
+    "climax": {
+      "text": "Lesson: database architecture must match the access pattern. Social graphs need graph databases, not relational joins.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "Wrong database for the workload. Friendster had users but couldn't serve them.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "Why was a relational database a poor choice for Friendster's social graph?",
+    "options": [
+      "Traversing friend relationships required deep recursive joins that were too slow at scale",
+      "Relational databases cannot store user profiles",
+      "Friendster didn't have enough data to benefit from a database"
+    ],
+    "correct": 0
+  }
+}

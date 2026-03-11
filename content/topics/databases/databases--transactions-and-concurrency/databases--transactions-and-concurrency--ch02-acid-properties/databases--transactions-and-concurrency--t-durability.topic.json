@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-durability",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch02-acid-properties",
+  "title": "Durability",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A fast breakdown of Durability for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You got 'COMMIT successful.' The server crashes one second later. Is the data safe? Durability says yes.",
+      "visual": "💾"
+    },
+    "buildup": {
+      "text": "Durability guarantees committed data survives crashes, power failures, and hardware issues.",
+      "visual": "🛡️"
+    },
+    "discovery": {
+      "text": "The write-ahead log (WAL) is flushed to disk before COMMIT returns. The data is on stable storage.",
+      "visual": "📝"
+    },
+    "twist": {
+      "text": "fsync forces data from OS buffers to disk. Without it, a power loss could still lose committed data.",
+      "visual": "⚡"
+    },
+    "climax": {
+      "text": "Some databases offer relaxed durability for speed: synchronous_commit = off in Postgres skips fsync at COMMIT.",
+      "visual": "🏎️"
+    },
+    "punchline": {
+      "text": "Durability: committed means saved. Even after a crash.",
+      "visual": "🔒"
+    }
+  },
+  "quiz": {
+    "question": "What role does fsync play in database durability?",
+    "options": [
+      "It forces data from operating system buffers to physical disk, ensuring it survives power loss",
+      "It synchronizes data between two database servers",
+      "It compresses data before writing to disk"
+    ],
+    "correct": 0
+  }
+}

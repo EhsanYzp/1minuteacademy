@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-tunable-consistency",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch04-consistency-models",
+  "title": "Tunable Consistency",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "A fast breakdown of Tunable Consistency for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Cassandra lets you set consistency per query. Write with quorum for safety. Read with ONE for speed.",
+      "visual": "🎛️"
+    },
+    "buildup": {
+      "text": "Tunable consistency means different queries can make different trade-offs. No one-size-fits-all.",
+      "visual": "⚖️"
+    },
+    "discovery": {
+      "text": "Write ALL: max durability, but one slow node stalls the write. Write ONE: fast, but data may be lost if that node dies.",
+      "visual": "📊"
+    },
+    "twist": {
+      "text": "Change consistency mid-request. Check inventory with strong consistency, then log analytics with eventual.",
+      "visual": "🔀"
+    },
+    "climax": {
+      "text": "DynamoDB offers eventual and strong reads per query. Choose strong for critical reads, eventual for bulk scans.",
+      "visual": "☁️"
+    },
+    "punchline": {
+      "text": "Tunable consistency: match the guarantee to the query. Pay for what you need.",
+      "visual": "💰"
+    }
+  },
+  "quiz": {
+    "question": "What does tunable consistency allow you to do?",
+    "options": [
+      "Set different consistency levels per query, balancing safety and performance per use case",
+      "Automatically fix inconsistent data across all replicas",
+      "Disable all consistency checks for maximum speed"
+    ],
+    "correct": 0
+  }
+}

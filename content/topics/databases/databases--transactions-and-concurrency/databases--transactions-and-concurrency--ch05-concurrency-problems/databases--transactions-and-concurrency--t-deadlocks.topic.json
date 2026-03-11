@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-deadlocks",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch05-concurrency-problems",
+  "title": "Deadlocks",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A short lesson to help you apply Deadlocks.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Transaction A locks row 1, waits for row 2. Transaction B locks row 2, waits for row 1. Neither can proceed. Deadlock.",
+      "visual": "🔄"
+    },
+    "buildup": {
+      "text": "Deadlocks occur when two transactions hold locks that the other needs. A circular dependency forms.",
+      "visual": "⛓️"
+    },
+    "discovery": {
+      "text": "Databases detect deadlocks automatically. They pick a victim transaction and roll it back.",
+      "visual": "💀"
+    },
+    "twist": {
+      "text": "Prevention: always acquire locks in the same order. If everyone locks row 1 first, then row 2, no deadlock.",
+      "visual": "📏"
+    },
+    "climax": {
+      "text": "Monitor deadlock frequency in logs. Frequent deadlocks indicate a design problem, not bad luck.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "Deadlocks: circular waits. Fix by locking in consistent order.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "How do databases resolve deadlocks?",
+    "options": [
+      "They detect the circular wait and automatically roll back one of the transactions",
+      "They restart both transactions simultaneously",
+      "Deadlocks resolve themselves after a timeout"
+    ],
+    "correct": 0
+  }
+}

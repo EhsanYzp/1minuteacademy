@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-the-cap-theorem",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch01-why-distribute",
+  "title": "The CAP Theorem",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "A 1-minute de-risking session on The CAP Theorem.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Consistency, Availability, Partition tolerance: pick two. The CAP theorem says you can't have all three.",
+      "visual": "🔺"
+    },
+    "buildup": {
+      "text": "C: every read returns the latest write. A: every request gets a response. P: the system works despite network splits.",
+      "visual": "📊"
+    },
+    "discovery": {
+      "text": "Network partitions will happen. The real choice: during a partition, do you prioritize consistency or availability?",
+      "visual": "⚖️"
+    },
+    "twist": {
+      "text": "CP systems (HBase) refuse stale reads during a partition. AP systems (Cassandra) serve stale data but stay online.",
+      "visual": "🔀"
+    },
+    "climax": {
+      "text": "CAP is about the worst case. Normally, systems provide all three. The trade-off matters only during failures.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "CAP theorem: during a network split, choose consistency or availability.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "When does the CAP theorem trade-off actually apply?",
+    "options": [
+      "Only during network partitions — in normal operation systems can provide all three properties",
+      "At all times, even when the network is healthy",
+      "Only when the database is being backed up"
+    ],
+    "correct": 0
+  }
+}

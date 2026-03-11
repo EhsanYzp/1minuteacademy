@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-third-normal-form-3nf",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch02-normalization",
+  "title": "Third Normal Form (3NF)",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "A tiny lesson with a big payoff: Third Normal Form (3NF).",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A users table has city and zip_code. But city depends on zip_code, not directly on the user.",
+      "visual": "📮"
+    },
+    "buildup": {
+      "text": "3NF removes transitive dependencies. No non-key column should depend on another non-key column.",
+      "visual": "🔗"
+    },
+    "discovery": {
+      "text": "Fix: create a zip_codes table mapping zip to city. Users stores only zip_code.",
+      "visual": "✂️"
+    },
+    "twist": {
+      "text": "In practice, many teams stop at 3NF. Higher normal forms exist but rarely justify the added complexity.",
+      "visual": "🤷"
+    },
+    "climax": {
+      "text": "3NF is the sweet spot. It eliminates most redundancy without making the schema unmanageable.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "3NF: no column depends on another non-key column.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "What does Third Normal Form (3NF) eliminate?",
+    "options": [
+      "Transitive dependencies where a non-key column depends on another non-key column",
+      "All foreign keys from the database",
+      "The need for primary keys"
+    ],
+    "correct": 0
+  }
+}

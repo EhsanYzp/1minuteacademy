@@ -1,0 +1,49 @@
+{
+  "id": "databases--nosql-explained--t-conflict-resolution",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "NoSQL Explained",
+  "course_id": "databases--nosql-explained",
+  "chapter_id": "databases--nosql-explained--ch05-data-consistency",
+  "title": "Conflict Resolution",
+  "emoji": "🔮",
+  "color": "#F59E0B",
+  "description": "A 60-second lesson on Conflict Resolution.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Two users update the same document on two different replicas. Both writes succeed. Which one wins?",
+      "visual": "⚔️"
+    },
+    "buildup": {
+      "text": "Last-write-wins (LWW) is the simplest strategy. The latest timestamp wins. But clocks can disagree.",
+      "visual": "⏰"
+    },
+    "discovery": {
+      "text": "Vector clocks track causality. They detect true conflicts instead of relying on timestamps.",
+      "visual": "🧮"
+    },
+    "twist": {
+      "text": "CRDTs (Conflict-free Replicated Data Types) resolve conflicts automatically. Counters, sets, and maps that merge.",
+      "visual": "🔄"
+    },
+    "climax": {
+      "text": "Riak uses CRDTs. CouchDB stores all conflicting versions and lets the app resolve them.",
+      "visual": "🧩"
+    },
+    "punchline": {
+      "text": "Conflicts are inevitable. Resolution strategy is a design choice.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "What problem do CRDTs solve in distributed databases?",
+    "options": [
+      "They resolve write conflicts automatically without coordination between replicas",
+      "They compress data to reduce storage costs",
+      "They prevent any writes from happening simultaneously"
+    ],
+    "correct": 0
+  }
+}

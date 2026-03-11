@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-database-migrations",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch05-schema-evolution",
+  "title": "Database Migrations",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "A 60-second lesson on Database Migrations.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The schema changed. New column, renamed table, dropped constraint. How do you apply it safely? Migrations.",
+      "visual": "🔄"
+    },
+    "buildup": {
+      "text": "A migration is a versioned script: 001_create_users.sql, 002_add_email.sql. Applied in order, tracked.",
+      "visual": "📝"
+    },
+    "discovery": {
+      "text": "Tools like Flyway, Alembic, and Prisma Migrate run pending migrations and record which ones have been applied.",
+      "visual": "🔧"
+    },
+    "twist": {
+      "text": "Migrations are irreversible in production. You can't un-drop a column. Always add, then backfill, then remove.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Every schema change goes through a migration. No manual ALTER TABLE in production. Ever.",
+      "visual": "🚫"
+    },
+    "punchline": {
+      "text": "Migrations: versioned, ordered, automated schema changes.",
+      "visual": "📏"
+    }
+  },
+  "quiz": {
+    "question": "Why should you never run manual ALTER TABLE in production?",
+    "options": [
+      "Manual changes aren't tracked, versioned, or repeatable across environments",
+      "ALTER TABLE doesn't work in production databases",
+      "Manual changes are always faster than migrations"
+    ],
+    "correct": 0
+  }
+}

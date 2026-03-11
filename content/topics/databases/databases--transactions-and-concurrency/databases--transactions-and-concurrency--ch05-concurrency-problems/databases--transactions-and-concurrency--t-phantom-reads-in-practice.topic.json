@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-phantom-reads-in-practice",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch05-concurrency-problems",
+  "title": "Phantom Reads in Practice",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A fast breakdown of Phantom Reads in Practice for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Count rows where status = 'active': 100. Another transaction inserts a new active row. Count again: 101. Phantom.",
+      "visual": "👻"
+    },
+    "buildup": {
+      "text": "Phantom reads occur when new rows appear in a range query between two reads in the same transaction.",
+      "visual": "📊"
+    },
+    "discovery": {
+      "text": "Read Committed allows phantoms. Repeatable Read prevents them in Postgres (MVCC snapshot) but not always in MySQL.",
+      "visual": "🔀"
+    },
+    "twist": {
+      "text": "Phantoms can break logic: 'There are 5 seats left' → insert a booking → now there are 6 bookings for 5 seats.",
+      "visual": "🎫"
+    },
+    "climax": {
+      "text": "For booking systems, use SELECT ... FOR UPDATE on the resource row or Serializable isolation.",
+      "visual": "🔒"
+    },
+    "punchline": {
+      "text": "Phantoms: new rows appearing mid-transaction. Lock the range or serialize.",
+      "visual": "🛡️"
+    }
+  },
+  "quiz": {
+    "question": "How can phantom reads break a booking system?",
+    "options": [
+      "Multiple transactions see available seats and book them simultaneously, exceeding capacity",
+      "Phantom reads delete existing bookings",
+      "They only affect read-only reports"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-security--t-database-audit-logging",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Security",
+  "course_id": "databases--database-security",
+  "chapter_id": "databases--database-security--ch05-auditing-and-compliance",
+  "title": "Database Audit Logging",
+  "emoji": "🛡️",
+  "color": "#14B8A6",
+  "description": "A micro-lesson that makes Database Audit Logging usable.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A record was deleted. Who did it? When? From where? Without audit logs, these questions have no answers.",
+      "visual": "🔍"
+    },
+    "buildup": {
+      "text": "Audit logging records who executed what query, when, from which IP, and what data was affected.",
+      "visual": "📋"
+    },
+    "discovery": {
+      "text": "Postgres: pgaudit extension logs SELECT, INSERT, UPDATE, DELETE with user and table details.",
+      "visual": "📝"
+    },
+    "twist": {
+      "text": "Logging everything creates massive log volumes. Filter: log DDL, privilege changes, and access to sensitive tables.",
+      "visual": "📊"
+    },
+    "climax": {
+      "text": "Ship logs to a separate, immutable store. If an attacker compromises the database, they can't erase the audit trail.",
+      "visual": "🏗️"
+    },
+    "punchline": {
+      "text": "Log access to sensitive data. Store logs separately from the database.",
+      "visual": "🛡️"
+    }
+  },
+  "quiz": {
+    "question": "Why should audit logs be stored separately from the database?",
+    "options": [
+      "So an attacker who compromises the database cannot erase the evidence of their actions",
+      "Separate storage makes logs easier to read",
+      "Databases cannot store log data"
+    ],
+    "correct": 0
+  }
+}

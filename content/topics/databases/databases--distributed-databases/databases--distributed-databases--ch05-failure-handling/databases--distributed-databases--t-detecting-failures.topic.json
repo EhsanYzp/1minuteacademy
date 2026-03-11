@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-detecting-failures",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch05-failure-handling",
+  "title": "Detecting Failures",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "A quick, practical guide to Detecting Failures.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A node stops responding. Is it dead? Is the network broken? Is it just slow? You can't tell remotely.",
+      "visual": "❓"
+    },
+    "buildup": {
+      "text": "Heartbeats: nodes ping each other periodically. If a node misses several heartbeats, it's declared dead.",
+      "visual": "💓"
+    },
+    "discovery": {
+      "text": "Phi accrual failure detectors adapt to network conditions. They give a suspicion score, not a binary alive/dead.",
+      "visual": "📊"
+    },
+    "twist": {
+      "text": "Declaring a node dead too quickly causes false positives. A GC pause or network hiccup looks like a crash.",
+      "visual": "⏸️"
+    },
+    "climax": {
+      "text": "Too slow and a real failure wastes time. Tune detection thresholds for your environment's characteristics.",
+      "visual": "🎛️"
+    },
+    "punchline": {
+      "text": "Failure detection is probabilistic. Tune the timeout for your environment.",
+      "visual": "⏱️"
+    }
+  },
+  "quiz": {
+    "question": "Why can declaring a node dead too quickly cause problems?",
+    "options": [
+      "Temporary issues like GC pauses or network hiccups can be mistaken for permanent failures",
+      "Quick detection always gives the most accurate results",
+      "Databases automatically retry all operations on dead nodes"
+    ],
+    "correct": 0
+  }
+}

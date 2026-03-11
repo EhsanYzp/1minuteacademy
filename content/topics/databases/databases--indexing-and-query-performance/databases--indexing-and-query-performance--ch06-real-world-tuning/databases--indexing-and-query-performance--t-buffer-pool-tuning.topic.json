@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-buffer-pool-tuning",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch06-real-world-tuning",
+  "title": "Buffer Pool Tuning",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A 1-minute de-risking session on Buffer Pool Tuning.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Postgres defaults to 128 MB shared buffers. On a server with 64 GB RAM, that's painfully small.",
+      "visual": "📉"
+    },
+    "buildup": {
+      "text": "shared_buffers should be about 25% of total RAM. That gives Postgres a large in-memory cache.",
+      "visual": "💾"
+    },
+    "discovery": {
+      "text": "effective_cache_size tells the planner how much RAM is available (OS cache + shared_buffers). Set it to 75% of RAM.",
+      "visual": "🧮"
+    },
+    "twist": {
+      "text": "Setting shared_buffers too high steals memory from the OS file cache. Both caches matter.",
+      "visual": "⚖️"
+    },
+    "climax": {
+      "text": "InnoDB's buffer pool size has similar tuning. Set innodb_buffer_pool_size to 70–80% of RAM on a dedicated MySQL server.",
+      "visual": "🐬"
+    },
+    "punchline": {
+      "text": "Tune the buffer pool first. It's the single biggest performance knob.",
+      "visual": "🎛️"
+    }
+  },
+  "quiz": {
+    "question": "Why shouldn't you set shared_buffers to 100% of available RAM?",
+    "options": [
+      "The operating system also needs memory for its file cache, which databases rely on",
+      "PostgreSQL can only use a maximum of 1 GB",
+      "It would cause the database to restart constantly"
+    ],
+    "correct": 0
+  }
+}

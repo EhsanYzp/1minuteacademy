@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-security--t-privilege-escalation",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Security",
+  "course_id": "databases--database-security",
+  "chapter_id": "databases--database-security--ch02-authentication-and-access",
+  "title": "Privilege Escalation",
+  "emoji": "🛡️",
+  "color": "#14B8A6",
+  "description": "A short lesson to help you apply Privilege Escalation.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "An app user with SELECT permission finds a way to execute CREATE EXTENSION and gains superuser powers.",
+      "visual": "📈"
+    },
+    "buildup": {
+      "text": "Privilege escalation: gaining more permissions than intended. It turns a limited breach into a total compromise.",
+      "visual": "💀"
+    },
+    "discovery": {
+      "text": "Review GRANT chains. In Postgres, a role can inherit permissions from other roles. Chains can grant unexpected access.",
+      "visual": "🔗"
+    },
+    "twist": {
+      "text": "SECURITY DEFINER functions in Postgres run with the owner's privileges. A vulnerable function escalates the caller.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Audit permissions regularly. Remove unnecessary grants. Use SECURITY INVOKER for functions when possible.",
+      "visual": "🔍"
+    },
+    "punchline": {
+      "text": "Audit permissions. Remove extra grants. Watch SECURITY DEFINER functions.",
+      "visual": "🔒"
+    }
+  },
+  "quiz": {
+    "question": "How can SECURITY DEFINER functions create a privilege escalation risk?",
+    "options": [
+      "They run with the function owner's permissions, potentially giving callers access beyond their own grants",
+      "They automatically grant superuser access to all callers",
+      "SECURITY DEFINER functions cannot access any data"
+    ],
+    "correct": 0
+  }
+}

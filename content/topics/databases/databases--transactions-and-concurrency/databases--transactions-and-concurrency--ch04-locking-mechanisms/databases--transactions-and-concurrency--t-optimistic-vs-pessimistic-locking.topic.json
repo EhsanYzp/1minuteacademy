@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-optimistic-vs-pessimistic-locking",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch04-locking-mechanisms",
+  "title": "Optimistic vs Pessimistic Locking",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A tiny lesson with a big payoff: Optimistic vs Pessimistic Locking.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Pessimistic locking grabs a lock upfront: 'Nobody touch this row.' Optimistic locking checks at save time.",
+      "visual": "🤝"
+    },
+    "buildup": {
+      "text": "Pessimistic: SELECT FOR UPDATE locks the row immediately. Safe but blocks others.",
+      "visual": "🔒"
+    },
+    "discovery": {
+      "text": "Optimistic: add a version column. Read version=3, update WHERE version=3 SET version=4. If it changes, retry.",
+      "visual": "🔢"
+    },
+    "twist": {
+      "text": "Optimistic locking works best when conflicts are rare. If conflicts are frequent, retries pile up.",
+      "visual": "🔁"
+    },
+    "climax": {
+      "text": "Web apps favor optimistic locking. Users edit forms offline and submit. Conflicts are resolved at save time.",
+      "visual": "🌐"
+    },
+    "punchline": {
+      "text": "Low conflict? Optimistic. High conflict? Pessimistic. Match to contention.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "How does optimistic locking detect conflicts?",
+    "options": [
+      "It checks a version column at update time and fails if the version has changed since the read",
+      "It locks the entire table before any read",
+      "It uses timestamps that are always synchronized across servers"
+    ],
+    "correct": 0
+  }
+}

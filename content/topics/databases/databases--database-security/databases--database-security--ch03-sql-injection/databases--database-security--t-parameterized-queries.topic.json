@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-security--t-parameterized-queries",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Security",
+  "course_id": "databases--database-security",
+  "chapter_id": "databases--database-security--ch03-sql-injection",
+  "title": "Parameterized Queries",
+  "emoji": "🛡️",
+  "color": "#14B8A6",
+  "description": "One-minute skill: Parameterized Queries.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "SELECT * FROM users WHERE email = $1 with parameters ['alice@example.com']. The input is data, never code.",
+      "visual": "🛡️"
+    },
+    "buildup": {
+      "text": "Parameterized queries separate SQL structure from user data. The database treats parameters as values, never code.",
+      "visual": "📏"
+    },
+    "discovery": {
+      "text": "Every modern language supports them: ? in Java, $1 in Postgres, :name in Python. No excuses.",
+      "visual": "✅"
+    },
+    "twist": {
+      "text": "ORMs use parameterized queries under the hood. But raw SQL fragments in ORMs can still be vulnerable. Be careful.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "One rule: never build SQL by string concatenation with user input. Always use parameters.",
+      "visual": "📝"
+    },
+    "punchline": {
+      "text": "Parameterized queries: the complete SQL injection defense. Always use them.",
+      "visual": "🔒"
+    }
+  },
+  "quiz": {
+    "question": "Why do parameterized queries prevent SQL injection?",
+    "options": [
+      "They separate SQL structure from data, so user input is always treated as a value, never as code",
+      "They encrypt all query parameters",
+      "They reject any query containing special characters"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-denormalization-strategy",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch06-advanced-patterns",
+  "title": "Denormalization Strategy",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A tiny lesson with a big payoff: Denormalization Strategy.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Normalize for correctness. Denormalize for speed. Every fast read was once a slow join someone decided to pre-compute.",
+      "visual": "📊"
+    },
+    "buildup": {
+      "text": "Denormalization duplicates data intentionally. Store user_name on every order row to avoid joining the users table.",
+      "visual": "📝"
+    },
+    "discovery": {
+      "text": "The rule: normalize first, profile queries, denormalize the specific bottleneck. Never denormalize blindly.",
+      "visual": "🔍"
+    },
+    "twist": {
+      "text": "Every denormalization is a maintenance promise: when the source changes, all copies must update.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Triggers, background jobs, or materialized views can keep denormalized data in sync automatically.",
+      "visual": "🔧"
+    },
+    "punchline": {
+      "text": "Denormalize the proven bottleneck. Keep a sync mechanism. Never guess.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "What is the first step before denormalizing data?",
+    "options": [
+      "Normalize first, profile the actual slow queries, then denormalize only the proven bottleneck",
+      "Denormalize everything from the start for maximum speed",
+      "Remove all foreign keys before denormalizing"
+    ],
+    "correct": 0
+  }
+}

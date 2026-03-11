@@ -1,0 +1,49 @@
+{
+  "id": "databases--sql-fundamentals--t-delete-removes-rows",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "SQL Fundamentals",
+  "course_id": "databases--sql-fundamentals",
+  "chapter_id": "databases--sql-fundamentals--ch03-writing-data",
+  "title": "DELETE Removes Rows",
+  "emoji": "📝",
+  "color": "#3B82F6",
+  "description": "A quick win: understand DELETE Removes Rows.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "DELETE FROM users WHERE id = 42. The row is gone. No undo button unless you have a backup.",
+      "visual": "🗑️"
+    },
+    "buildup": {
+      "text": "Like UPDATE, WHERE picks the target. Forget WHERE and you delete every single row.",
+      "visual": "💥"
+    },
+    "discovery": {
+      "text": "Soft deletes add a deleted_at column instead of removing data. The row stays but is filtered from queries.",
+      "visual": "👻"
+    },
+    "twist": {
+      "text": "Foreign keys can block deletes. Delete a customer who has orders? The database says no. Cascading deletes fix that.",
+      "visual": "🔗"
+    },
+    "climax": {
+      "text": "TRUNCATE is faster than DELETE for emptying a table. It resets the table without logging each row.",
+      "visual": "⚡"
+    },
+    "punchline": {
+      "text": "DELETE is permanent. Soft deletes give you an undo.",
+      "visual": "🔄"
+    }
+  },
+  "quiz": {
+    "question": "What is the advantage of soft deletes over hard deletes?",
+    "options": [
+      "Data is preserved and can be recovered since the row is only marked, not removed",
+      "Soft deletes are faster than hard deletes",
+      "The database requires soft deletes for all tables"
+    ],
+    "correct": 0
+  }
+}

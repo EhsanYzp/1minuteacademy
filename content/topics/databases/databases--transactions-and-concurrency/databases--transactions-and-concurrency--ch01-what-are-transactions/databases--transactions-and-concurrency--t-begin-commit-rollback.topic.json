@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-begin-commit-rollback",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch01-what-are-transactions",
+  "title": "BEGIN, COMMIT, ROLLBACK",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A 60-second lesson on BEGIN, COMMIT, ROLLBACK.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "BEGIN; UPDATE accounts SET balance=balance-100 WHERE id=1; UPDATE accounts SET balance=balance+100 WHERE id=2; COMMIT;",
+      "visual": "📝"
+    },
+    "buildup": {
+      "text": "BEGIN starts a transaction. All statements after it are tentative until COMMIT makes them permanent.",
+      "visual": "🔄"
+    },
+    "discovery": {
+      "text": "ROLLBACK undoes everything since BEGIN. It's the escape hatch when something goes wrong.",
+      "visual": "↩️"
+    },
+    "twist": {
+      "text": "In autocommit mode (the default for most clients), every single statement is its own transaction.",
+      "visual": "⚡"
+    },
+    "climax": {
+      "text": "Explicit transactions let you group statements. Autocommit is fine for one-liners but dangerous for multi-step work.",
+      "visual": "📏"
+    },
+    "punchline": {
+      "text": "BEGIN groups work. COMMIT saves it. ROLLBACK undoes it.",
+      "visual": "🔄"
+    }
+  },
+  "quiz": {
+    "question": "What does autocommit mode mean?",
+    "options": [
+      "Each individual SQL statement is automatically wrapped in its own transaction",
+      "The database never commits any changes",
+      "All changes are committed only when the connection closes"
+    ],
+    "correct": 0
+  }
+}

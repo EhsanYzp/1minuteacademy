@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-range-partitioning",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch03-partitioning",
+  "title": "Range Partitioning",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "A quick win: understand Range Partitioning.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Partition by date: January data on node 1, February on node 2. Range query 'all of Q1' hits just three nodes.",
+      "visual": "📅"
+    },
+    "buildup": {
+      "text": "Range partitioning keeps related data together. Queries on the partition key scan only one partition.",
+      "visual": "📏"
+    },
+    "discovery": {
+      "text": "The risk: hot spots. If today's data is the busiest, one partition handles most traffic.",
+      "visual": "🔥"
+    },
+    "twist": {
+      "text": "Combine range with hash: partition by hash(user_id) first, then range by date within each partition.",
+      "visual": "🧩"
+    },
+    "climax": {
+      "text": "CockroachDB and Spanner use range partitioning. They automatically split and merge ranges as data grows.",
+      "visual": "🔄"
+    },
+    "punchline": {
+      "text": "Range partitioning: great for range queries, but watch for hot spots.",
+      "visual": "⚠️"
+    }
+  },
+  "quiz": {
+    "question": "How can range partitioning create hot spots?",
+    "options": [
+      "If most queries target recent data, the partition holding the latest range gets disproportionate traffic",
+      "Range partitioning always distributes data evenly",
+      "Hot spots only occur with hash partitioning"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-many-to-many-relationships",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch04-relationships",
+  "title": "Many-to-Many Relationships",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "A micro-lesson that makes Many-to-Many Relationships usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Students take many courses. Courses have many students. Neither side can hold a single foreign key.",
+      "visual": "🔄"
+    },
+    "buildup": {
+      "text": "A junction table (student_courses) links them: student_id and course_id as a composite key.",
+      "visual": "🌉"
+    },
+    "discovery": {
+      "text": "The junction table can carry extra data: grade, enrolled_at, status. It's a first-class entity.",
+      "visual": "📝"
+    },
+    "twist": {
+      "text": "Without the junction table, you'd need arrays or comma-separated IDs. Both violate 1NF and break queries.",
+      "visual": "🚫"
+    },
+    "climax": {
+      "text": "Tags, roles, playlists, and friends lists all use many-to-many with junction tables.",
+      "visual": "🌐"
+    },
+    "punchline": {
+      "text": "Many-to-many: always use a junction table. No exceptions.",
+      "visual": "🌉"
+    }
+  },
+  "quiz": {
+    "question": "Why is a junction table necessary for many-to-many relationships?",
+    "options": [
+      "Neither side can hold a foreign key for multiple related rows without violating normal forms",
+      "SQL doesn't support any other type of relationship",
+      "Junction tables make queries slower, but they're required by law"
+    ],
+    "correct": 0
+  }
+}

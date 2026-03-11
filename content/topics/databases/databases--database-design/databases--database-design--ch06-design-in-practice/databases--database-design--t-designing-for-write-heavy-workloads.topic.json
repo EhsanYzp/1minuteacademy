@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-designing-for-write-heavy-workloads",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch06-design-in-practice",
+  "title": "Designing for Write-Heavy Workloads",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "A micro-lesson that makes Designing for Write-Heavy Workloads usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "An IoT platform ingests a million events per second. Too many indexes and the writes can't keep up.",
+      "visual": "🌊"
+    },
+    "buildup": {
+      "text": "Minimize indexes on write-heavy tables. Every index must be updated on every INSERT.",
+      "visual": "📉"
+    },
+    "discovery": {
+      "text": "Append-only tables work well: no updates, just inserts. Time-series and event logs fit this pattern.",
+      "visual": "📋"
+    },
+    "twist": {
+      "text": "Partitioning splits one table into many. Writes spread across partitions. Old partitions can be dropped cheaply.",
+      "visual": "🗂️"
+    },
+    "climax": {
+      "text": "Buffer writes in memory (like Redis) and flush to the database in batches. Reduces per-row overhead.",
+      "visual": "🏎️"
+    },
+    "punchline": {
+      "text": "Write-heavy? Fewer indexes, append-only, batch inserts.",
+      "visual": "⚡"
+    }
+  },
+  "quiz": {
+    "question": "Why should you minimize indexes on write-heavy tables?",
+    "options": [
+      "Each index must be updated on every INSERT, slowing down write throughput",
+      "Indexes don't work on tables with many rows",
+      "Write-heavy tables can't have any indexes at all"
+    ],
+    "correct": 0
+  }
+}

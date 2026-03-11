@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-eav-entity-attribute-value",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch02-relational-patterns",
+  "title": "EAV: Entity-Attribute-Value",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A quick, practical guide to EAV: Entity-Attribute-Value.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Products have custom attributes: shirts have sizes, laptops have RAM, books have pages. Different columns per type.",
+      "visual": "🏷️"
+    },
+    "buildup": {
+      "text": "EAV uses three columns: entity_id, attribute_name, attribute_value. Any attribute for any entity.",
+      "visual": "📊"
+    },
+    "discovery": {
+      "text": "EAV is maximally flexible. Add new attributes without schema changes. Just insert a new row.",
+      "visual": "🔓"
+    },
+    "twist": {
+      "text": "EAV is a query nightmare. Simple lookups require pivoting rows into columns. No type safety, no constraints.",
+      "visual": "😱"
+    },
+    "climax": {
+      "text": "Modern alternative: use a JSONB column for flexible attributes. You get flexibility with indexing and type checks.",
+      "visual": "📄"
+    },
+    "punchline": {
+      "text": "EAV: flexible but painful. Prefer JSONB columns for dynamic attributes.",
+      "visual": "🧠"
+    }
+  },
+  "quiz": {
+    "question": "What is the main problem with the EAV pattern?",
+    "options": [
+      "Queries are complex, requiring pivoting, and there's no type safety or constraint enforcement",
+      "EAV tables cannot store more than 1000 attributes",
+      "EAV only works with NoSQL databases"
+    ],
+    "correct": 0
+  }
+}

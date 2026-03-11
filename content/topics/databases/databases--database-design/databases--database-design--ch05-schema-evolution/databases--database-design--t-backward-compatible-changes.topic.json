@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-backward-compatible-changes",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch05-schema-evolution",
+  "title": "Backward-Compatible Changes",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "Learn Backward-Compatible Changes in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Deploy a new schema, but the old app version is still running. If the schema breaks the old code, users see errors.",
+      "visual": "💥"
+    },
+    "buildup": {
+      "text": "Backward-compatible changes: add columns, add tables, add indexes. These don't break existing queries.",
+      "visual": "✅"
+    },
+    "discovery": {
+      "text": "Breaking changes: rename columns, change types, drop columns. Old code that references them fails.",
+      "visual": "🚫"
+    },
+    "twist": {
+      "text": "The expand-contract pattern: add the new column, migrate data and code, then remove the old column in a later deploy.",
+      "visual": "🔄"
+    },
+    "climax": {
+      "text": "Blue-green deployments need backward-compatible schemas. Both old and new code must work with the same database.",
+      "visual": "🟢"
+    },
+    "punchline": {
+      "text": "Add first, migrate, then remove. Never break what's running.",
+      "visual": "🛡️"
+    }
+  },
+  "quiz": {
+    "question": "What is the expand-contract pattern for schema changes?",
+    "options": [
+      "Add the new structure, migrate data and code, then remove the old structure in a later deploy",
+      "Expand the table size and then contract it to compress data",
+      "Run two databases simultaneously and merge them later"
+    ],
+    "correct": 0
+  }
+}

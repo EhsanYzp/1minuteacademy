@@ -1,0 +1,49 @@
+{
+  "id": "databases--sql-fundamentals--t-self-joins",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "SQL Fundamentals",
+  "course_id": "databases--sql-fundamentals",
+  "chapter_id": "databases--sql-fundamentals--ch04-joins-and-relationships",
+  "title": "Self Joins",
+  "emoji": "📝",
+  "color": "#3B82F6",
+  "description": "A short lesson to help you apply Self Joins.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "An employees table has a manager_id that references another employee. To find managers, join the table to itself.",
+      "visual": "🔄"
+    },
+    "buildup": {
+      "text": "SELECT e.name, m.name AS manager FROM employees e JOIN employees m ON e.manager_id = m.id.",
+      "visual": "👥"
+    },
+    "discovery": {
+      "text": "Self joins use aliases to treat one table as two. Without aliases, the database can't distinguish the copies.",
+      "visual": "🏷️"
+    },
+    "twist": {
+      "text": "Org charts, threaded comments, and category trees all use self-referencing foreign keys.",
+      "visual": "🌲"
+    },
+    "climax": {
+      "text": "Recursive CTEs extend self joins to unlimited depth: find all reports, not just direct ones.",
+      "visual": "🔁"
+    },
+    "punchline": {
+      "text": "Self joins: one table, two roles. Aliases make it work.",
+      "visual": "🪞"
+    }
+  },
+  "quiz": {
+    "question": "When would you use a self join?",
+    "options": [
+      "When a row references another row in the same table, like employees and their managers",
+      "When you want to duplicate all rows in a table",
+      "When you need to merge two different databases"
+    ],
+    "correct": 0
+  }
+}

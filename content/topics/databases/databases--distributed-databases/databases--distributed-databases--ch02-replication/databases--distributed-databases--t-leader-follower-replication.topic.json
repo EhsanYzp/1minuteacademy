@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-leader-follower-replication",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch02-replication",
+  "title": "Leader-Follower Replication",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "A 60-second lesson on Leader-Follower Replication.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "One primary (leader) accepts all writes. Followers copy data from the leader. Reads can go to any follower.",
+      "visual": "👑"
+    },
+    "buildup": {
+      "text": "The leader streams a replication log to followers. Each follower replays it to stay in sync.",
+      "visual": "📡"
+    },
+    "discovery": {
+      "text": "This is the most common setup. Postgres streaming replication, MySQL replication, and MongoDB replica sets all use it.",
+      "visual": "🌐"
+    },
+    "twist": {
+      "text": "Replication lag means followers may be a few milliseconds behind the leader. Stale reads are possible.",
+      "visual": "⏳"
+    },
+    "climax": {
+      "text": "If the leader fails, a follower is promoted. This failover can be automatic or manual.",
+      "visual": "🔄"
+    },
+    "punchline": {
+      "text": "Leader-follower: one writer, many readers. Simple and widely used.",
+      "visual": "📏"
+    }
+  },
+  "quiz": {
+    "question": "What is replication lag?",
+    "options": [
+      "The delay between a write on the leader and its appearance on a follower",
+      "The time it takes to create a new replica",
+      "The delay in processing a query on the leader"
+    ],
+    "correct": 0
+  }
+}

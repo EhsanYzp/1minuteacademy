@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-schema-versioning",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch03-document-patterns",
+  "title": "Schema Versioning",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A fast breakdown of Schema Versioning for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "V1 stores address as a string. V2 uses an object with street, city, zip. Both exist in the same collection.",
+      "visual": "🔢"
+    },
+    "buildup": {
+      "text": "Add a schema_version field to each document. Application code checks the version and handles each format.",
+      "visual": "📋"
+    },
+    "discovery": {
+      "text": "Migrate documents lazily: when a v1 document is read, transform it to v2 and write it back. Gradual migration.",
+      "visual": "🔄"
+    },
+    "twist": {
+      "text": "Or run a batch migration offline. But for billions of documents, lazy migration avoids long maintenance windows.",
+      "visual": "⏰"
+    },
+    "climax": {
+      "text": "Schema versioning is essential in document databases. There's no ALTER TABLE to enforce one shape.",
+      "visual": "📝"
+    },
+    "punchline": {
+      "text": "Version your schemas. Migrate lazily or in batches. Support both formats.",
+      "visual": "🛡️"
+    }
+  },
+  "quiz": {
+    "question": "Why is schema versioning important in document databases?",
+    "options": [
+      "Documents don't have enforced schemas, so different versions of the structure can coexist",
+      "Document databases automatically version all schemas",
+      "Schema versioning is only needed for relational databases"
+    ],
+    "correct": 0
+  }
+}

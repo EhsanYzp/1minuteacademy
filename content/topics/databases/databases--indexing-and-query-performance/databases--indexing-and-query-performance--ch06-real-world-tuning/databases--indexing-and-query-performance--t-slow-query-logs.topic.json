@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-slow-query-logs",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch06-real-world-tuning",
+  "title": "Slow Query Logs",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A tiny lesson with a big payoff: Slow Query Logs.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The app is slow but you don't know which query is the culprit. The slow query log tells you.",
+      "visual": "🔍"
+    },
+    "buildup": {
+      "text": "Postgres: log_min_duration_statement = 100 logs every query slower than 100 ms. MySQL has slow_query_log.",
+      "visual": "📝"
+    },
+    "discovery": {
+      "text": "pg_stat_statements ranks queries by total time, calls, and average duration. The top offenders stand out.",
+      "visual": "📊"
+    },
+    "twist": {
+      "text": "A query averaging 5 ms but called 500,000 times per day uses more total time than one 10-second query.",
+      "visual": "🤯"
+    },
+    "climax": {
+      "text": "Sort by total_time, not mean_time. Optimize the queries that consume the most total database time.",
+      "visual": "📈"
+    },
+    "punchline": {
+      "text": "Find the slow queries. Fix the biggest time consumers first.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "Why should you sort slow queries by total time rather than average time?",
+    "options": [
+      "A frequently called fast query can consume more total time than a rare slow one",
+      "Average time is always inaccurate",
+      "Total time includes network latency but average doesn't"
+    ],
+    "correct": 0
+  }
+}

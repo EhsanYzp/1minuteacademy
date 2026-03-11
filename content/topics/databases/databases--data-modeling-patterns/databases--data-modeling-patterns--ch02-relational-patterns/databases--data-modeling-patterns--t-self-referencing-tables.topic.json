@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-self-referencing-tables",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch02-relational-patterns",
+  "title": "Self-Referencing Tables",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A quick, practical guide to Self-Referencing Tables.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "An employee has a manager. The manager is also an employee. The employees table references itself.",
+      "visual": "🔄"
+    },
+    "buildup": {
+      "text": "employees.manager_id is a foreign key to employees.id. The table joins to itself to find reporting chains.",
+      "visual": "🔗"
+    },
+    "discovery": {
+      "text": "Self-joins: SELECT e.name, m.name FROM employees e JOIN employees m ON e.manager_id = m.id.",
+      "visual": "📝"
+    },
+    "twist": {
+      "text": "Top-level entries (CEO) have manager_id = NULL. Always handle the NULL case in your queries and code.",
+      "visual": "🏔️"
+    },
+    "climax": {
+      "text": "Categories with subcategories, folders with subfolders, comments with replies — self-references are everywhere.",
+      "visual": "🌐"
+    },
+    "punchline": {
+      "text": "Self-referencing: a table pointing to itself. Hierarchies in one table.",
+      "visual": "🔄"
+    }
+  },
+  "quiz": {
+    "question": "How do you handle the root node in a self-referencing table?",
+    "options": [
+      "Set the parent foreign key to NULL for root-level entries",
+      "Create a separate table for root nodes",
+      "Root nodes are not allowed in self-referencing tables"
+    ],
+    "correct": 0
+  }
+}

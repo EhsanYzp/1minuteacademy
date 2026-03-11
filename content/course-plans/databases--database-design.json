@@ -1,0 +1,559 @@
+{
+  "categoryId": "databases",
+  "subject": "Databases",
+  "courseId": "databases--database-design",
+  "courseTitle": "Database Design",
+  "emoji": "📐",
+  "color": "#10B981",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "databases--database-design--ch01-why-design-matters", "title": "Why Design Matters", "position": 1 },
+    { "id": "databases--database-design--ch02-normalization", "title": "Normalization", "position": 2 },
+    { "id": "databases--database-design--ch03-keys-and-constraints", "title": "Keys and Constraints", "position": 3 },
+    { "id": "databases--database-design--ch04-relationships", "title": "Relationships", "position": 4 },
+    { "id": "databases--database-design--ch05-schema-evolution", "title": "Schema Evolution", "position": 5 },
+    { "id": "databases--database-design--ch06-design-in-practice", "title": "Design in Practice", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "databases--database-design--ch01-why-design-matters",
+      "title": "Good Design vs Bad Design",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A startup stored users, orders, and payments in one giant table. Queries took 30 seconds by month six.", "visual": "💀" },
+        "buildup": { "text": "Bad design means duplicated data, slow queries, and bugs that are nearly impossible to fix later.", "visual": "🐛" },
+        "discovery": { "text": "Good design separates concerns: one table per entity, clear relationships, enforced constraints.", "visual": "✅" },
+        "twist": { "text": "Fixing a bad schema in production means migrating millions of rows while the app keeps running.", "visual": "😰" },
+        "climax": { "text": "Spend time on design upfront. It's cheaper than rewriting the schema under a live product.", "visual": "💰" },
+        "punchline": { "text": "Design well now or redesign painfully later.", "visual": "⏳" }
+      },
+      "quiz": {
+        "question": "Why is fixing a bad database design in production so difficult?",
+        "options": ["You must migrate millions of rows while keeping the application running", "Production databases cannot be altered at all", "Bad designs always crash the server immediately"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch01-why-design-matters",
+      "title": "Entity-Relationship Modeling",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Before writing CREATE TABLE, draw the entities and their relationships. An ER diagram is the blueprint.", "visual": "📐" },
+        "buildup": { "text": "Entities are nouns: User, Order, Product. Attributes are properties: name, price, quantity.", "visual": "🏷️" },
+        "discovery": { "text": "Relationships connect entities: a User places an Order. An Order contains Products.", "visual": "🔗" },
+        "twist": { "text": "The diagram exposes design problems early. Missing a relationship on paper is cheap. Missing it in code is expensive.", "visual": "💡" },
+        "climax": { "text": "Tools like dbdiagram.io and Lucidchart make ER diagrams fast to create and easy to share.", "visual": "🖥️" },
+        "punchline": { "text": "Draw the diagram first. Code the schema second.", "visual": "✏️" }
+      },
+      "quiz": {
+        "question": "Why should you create an ER diagram before writing SQL?",
+        "options": ["It reveals missing relationships and design flaws before they become expensive code problems", "Databases require an ER diagram file to function", "ER diagrams automatically generate the SQL for you"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch01-why-design-matters",
+      "title": "Data Integrity Matters",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A user's age was -5. Another had an email of 12345. No constraints meant garbage data slipped in.", "visual": "🗑️" },
+        "buildup": { "text": "Data integrity means every value in the database is accurate, consistent, and valid.", "visual": "✅" },
+        "discovery": { "text": "Databases enforce integrity through types, NOT NULL, UNIQUE, CHECK constraints, and foreign keys.", "visual": "🛡️" },
+        "twist": { "text": "App-level validation can be bypassed. Database constraints are the last line of defense.", "visual": "🏰" },
+        "climax": { "text": "Both layers matter: validate in the app for user feedback, enforce in the database for safety.", "visual": "🔒" },
+        "punchline": { "text": "Trust but verify. The database is the final gatekeeper.", "visual": "🚪" }
+      },
+      "quiz": {
+        "question": "Why should you enforce constraints at the database level, not just the app?",
+        "options": ["App validation can be bypassed; database constraints are the last line of defense", "App validation is always wrong", "Database constraints make the app faster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch01-why-design-matters",
+      "title": "Naming Conventions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "One table called Users, another tbl_order_data, another customerInfo. Inconsistent names cause chaos.", "visual": "😵" },
+        "buildup": { "text": "Pick a convention and stick with it: snake_case for columns, plural for tables, no prefixes.", "visual": "📏" },
+        "discovery": { "text": "user_id is clearer than uid. created_at beats cDate. Descriptive names save future developers hours.", "visual": "💡" },
+        "twist": { "text": "Renaming columns in production breaks existing queries. Get naming right early to avoid pain.", "visual": "⚠️" },
+        "climax": { "text": "Document the conventions in a style guide. New team members should know the rules from day one.", "visual": "📖" },
+        "punchline": { "text": "Consistent names prevent confusion. Choose a convention early.", "visual": "🏷️" }
+      },
+      "quiz": {
+        "question": "Why is it important to establish naming conventions early in a project?",
+        "options": ["Renaming columns later breaks existing queries and causes widespread code changes", "The database engine requires a specific naming format", "Names have no impact on database functionality"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch01-why-design-matters",
+      "title": "The Cost of Over-Engineering",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A team built 47 tables for an MVP that had 3 features. Six months later, half the tables were still empty.", "visual": "🏗️" },
+        "buildup": { "text": "Over-engineering means designing for problems you don't have yet. It wastes time and adds complexity.", "visual": "⏳" },
+        "discovery": { "text": "Start simple: the fewest tables that correctly model your data. Add complexity when real needs emerge.", "visual": "🎯" },
+        "twist": { "text": "Under-engineering is equally bad. A single catch-all table collapses under real data fast.", "visual": "💥" },
+        "climax": { "text": "Good design hits the middle: enough structure for today, easy to extend for tomorrow.", "visual": "⚖️" },
+        "punchline": { "text": "Design for today. Extend for tomorrow. Don't build for fantasy.", "visual": "🌱" }
+      },
+      "quiz": {
+        "question": "What is the risk of over-engineering a database schema?",
+        "options": ["Wasted time, unused tables, and unnecessary complexity that slows development", "The database will crash from too many tables", "Over-engineering always leads to better performance"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch02-normalization",
+      "title": "What Is Normalization",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "An orders table repeats the customer name and address in every row. Change the address? Update hundreds of rows.", "visual": "🔁" },
+        "buildup": { "text": "Normalization organizes data to reduce redundancy. Each fact is stored in exactly one place.", "visual": "🧹" },
+        "discovery": { "text": "Move customer data to a Customers table. Orders reference customer_id. One update fixes the address everywhere.", "visual": "🔗" },
+        "twist": { "text": "Normalization adds joins. More tables means more complex queries. It's a trade-off, not a free win.", "visual": "⚖️" },
+        "climax": { "text": "Most production databases are normalized to some degree. Pure denormalization leads to data chaos.", "visual": "🌪️" },
+        "punchline": { "text": "Normalize to eliminate redundancy. Each fact, one place.", "visual": "☝️" }
+      },
+      "quiz": {
+        "question": "What is the primary goal of normalization?",
+        "options": ["Reducing data redundancy by storing each fact in exactly one place", "Making the database use less disk space", "Eliminating the need for SQL queries"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch02-normalization",
+      "title": "First Normal Form (1NF)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A column called phone_numbers holds '555-0100, 555-0200'. Two values in one cell. That violates 1NF.", "visual": "📱" },
+        "buildup": { "text": "First Normal Form requires every column to hold one atomic value. No lists, no comma-separated strings.", "visual": "⚛️" },
+        "discovery": { "text": "Fix: create a separate phone_numbers table with one row per number. Now each value stands alone.", "visual": "📋" },
+        "twist": { "text": "JSON columns tempt developers to stuff lists into a single field. It works but breaks 1NF and complicates queries.", "visual": "🤔" },
+        "climax": { "text": "1NF is the entry-level requirement. If your data isn't even in 1NF, everything else falls apart.", "visual": "🧱" },
+        "punchline": { "text": "One value per cell. That's First Normal Form.", "visual": "☝️" }
+      },
+      "quiz": {
+        "question": "What does First Normal Form (1NF) require?",
+        "options": ["Every column must hold a single atomic value, not lists or sets", "Every table must have at least three columns", "All columns must be of the same data type"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch02-normalization",
+      "title": "Second Normal Form (2NF)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An order_items table has columns: order_id, product_id, product_name, quantity. Product name depends only on product_id.", "visual": "🔍" },
+        "buildup": { "text": "2NF removes partial dependencies. Every non-key column must depend on the entire primary key, not part of it.", "visual": "🔗" },
+        "discovery": { "text": "Fix: move product_name to a Products table. Order_items keeps order_id, product_id, and quantity.", "visual": "✂️" },
+        "twist": { "text": "2NF only matters for composite keys. If your primary key is a single column, you're already in 2NF.", "visual": "💡" },
+        "climax": { "text": "Partial dependencies cause update anomalies: rename a product and miss some rows.", "visual": "🐛" },
+        "punchline": { "text": "2NF: every column depends on the whole key, not just part.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "When does Second Normal Form (2NF) apply?",
+        "options": ["When a table has a composite primary key and non-key columns depend on only part of it", "It applies to every table regardless of key structure", "Only tables with no primary key need 2NF"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch02-normalization",
+      "title": "Third Normal Form (3NF)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A users table has city and zip_code. But city depends on zip_code, not directly on the user.", "visual": "📮" },
+        "buildup": { "text": "3NF removes transitive dependencies. No non-key column should depend on another non-key column.", "visual": "🔗" },
+        "discovery": { "text": "Fix: create a zip_codes table mapping zip to city. Users stores only zip_code.", "visual": "✂️" },
+        "twist": { "text": "In practice, many teams stop at 3NF. Higher normal forms exist but rarely justify the added complexity.", "visual": "🤷" },
+        "climax": { "text": "3NF is the sweet spot. It eliminates most redundancy without making the schema unmanageable.", "visual": "⚖️" },
+        "punchline": { "text": "3NF: no column depends on another non-key column.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does Third Normal Form (3NF) eliminate?",
+        "options": ["Transitive dependencies where a non-key column depends on another non-key column", "All foreign keys from the database", "The need for primary keys"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch02-normalization",
+      "title": "When to Denormalize",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A dashboard query joins six tables and takes 3 seconds. Denormalize into one table and it runs in 50 ms.", "visual": "🚀" },
+        "buildup": { "text": "Denormalization intentionally adds redundancy to speed up reads. Fewer joins, faster queries.", "visual": "⚡" },
+        "discovery": { "text": "Common pattern: keep the normalized source of truth, then create denormalized read tables or materialized views.", "visual": "📋" },
+        "twist": { "text": "Denormalized data must stay in sync. Update the source and forget the copy? Stale data bugs appear.", "visual": "🐛" },
+        "climax": { "text": "Analytics warehouses are heavily denormalized. OLTP systems stay normalized. Different jobs, different rules.", "visual": "🏭" },
+        "punchline": { "text": "Normalize for correctness. Denormalize for speed. Both have a place.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What is the main risk of denormalization?",
+        "options": ["Redundant data can become out of sync, leading to stale or inconsistent data", "Denormalized tables cannot be queried with SQL", "Denormalization always makes queries slower"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch03-keys-and-constraints",
+      "title": "Primary Key Strategies",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Auto-increment integers or UUIDs? The choice of primary key strategy affects performance and scalability.", "visual": "🔑" },
+        "buildup": { "text": "Auto-increment IDs are simple and compact. But they reveal record count and ordering to anyone who sees them.", "visual": "🔢" },
+        "discovery": { "text": "UUIDs are globally unique and hide ordering. But they're 16 bytes vs 4 bytes and fragment indexes.", "visual": "🆔" },
+        "twist": { "text": "ULIDs and UUIDv7 are time-sorted UUIDs. Globally unique, yet index-friendly. The best of both worlds.", "visual": "✨" },
+        "climax": { "text": "Pick the strategy that fits: integers for simple apps, UUIDs for distributed systems.", "visual": "🎯" },
+        "punchline": { "text": "IDs shape performance. Choose the right kind for your needs.", "visual": "⚙️" }
+      },
+      "quiz": {
+        "question": "Why do UUIDs fragment database indexes?",
+        "options": ["Their random ordering causes inserts to scatter across index pages instead of appending", "UUIDs are too large to fit in an index", "Indexes don't support non-numeric keys"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch03-keys-and-constraints",
+      "title": "Unique Constraints",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Two users with the same email? A UNIQUE constraint on the email column prevents that entirely.", "visual": "🚫" },
+        "buildup": { "text": "UNIQUE tells the database: no two rows can have the same value in this column (or combination of columns).", "visual": "🔒" },
+        "discovery": { "text": "Composite unique constraints work too: UNIQUE(user_id, course_id) means one enrollment per user per course.", "visual": "🎓" },
+        "twist": { "text": "NULLs are tricky. In most databases, multiple NULLs are allowed in a UNIQUE column. NULL isn't equal to NULL.", "visual": "🤔" },
+        "climax": { "text": "UNIQUE creates an index automatically. It speeds up lookups on that column for free.", "visual": "⚡" },
+        "punchline": { "text": "UNIQUE prevents duplicates and creates an index. Two benefits, one constraint.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why are multiple NULLs typically allowed in a UNIQUE column?",
+        "options": ["NULL is not equal to NULL in SQL, so the uniqueness check doesn't apply", "UNIQUE constraints ignore NULL values entirely", "Only the first NULL is stored; others are converted to zero"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch03-keys-and-constraints",
+      "title": "CHECK Constraints",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An order quantity of -3? A price of negative $50? CHECK constraints enforce business rules at the database level.", "visual": "✋" },
+        "buildup": { "text": "CHECK (quantity > 0) ensures no negative quantities. CHECK (status IN ('active','paused','cancelled')) limits values.", "visual": "📏" },
+        "discovery": { "text": "CHECK constraints run on every INSERT and UPDATE. Invalid data is rejected before it's stored.", "visual": "🛡️" },
+        "twist": { "text": "MySQL historically ignored CHECK constraints silently. Only version 8.0.16+ enforces them. Check your version.", "visual": "⚠️" },
+        "climax": { "text": "Combine CHECK with NOT NULL and UNIQUE for airtight data validation at the schema level.", "visual": "🔒" },
+        "punchline": { "text": "CHECK: define the rules. The database enforces them.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What risk existed with CHECK constraints in older MySQL versions?",
+        "options": ["MySQL silently accepted the syntax but didn't enforce the constraint", "CHECK constraints crashed the server", "They only worked on text columns"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch03-keys-and-constraints",
+      "title": "NOT NULL and Defaults",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A user signs up but skips the bio field. Should it be NULL or an empty string? NOT NULL with a default decides.", "visual": "❓" },
+        "buildup": { "text": "NOT NULL means the column must always have a value. The database rejects inserts that leave it empty.", "visual": "🚫" },
+        "discovery": { "text": "DEFAULT provides a fallback: created_at DEFAULT NOW(), status DEFAULT 'active'. No explicit value needed.", "visual": "⏰" },
+        "twist": { "text": "NULLs complicate queries. WHERE name != 'Ada' excludes NULL rows. Three-valued logic trips up even senior devs.", "visual": "🤯" },
+        "climax": { "text": "Use NOT NULL by default. Allow NULL only when the absence of a value has real meaning.", "visual": "📏" },
+        "punchline": { "text": "Default to NOT NULL. Allow NULL only when absence means something.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why can NULL values complicate SQL queries?",
+        "options": ["SQL uses three-valued logic where NULL comparisons behave unexpectedly", "NULL values take up more disk space", "NULLs prevent the table from being indexed"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch03-keys-and-constraints",
+      "title": "Foreign Key Cascades",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Delete a customer who has orders. ON DELETE CASCADE removes the orders too. Automatic cleanup.", "visual": "🗑️" },
+        "buildup": { "text": "CASCADE options: ON DELETE CASCADE, ON DELETE SET NULL, ON DELETE RESTRICT. Each handles orphans differently.", "visual": "🔗" },
+        "discovery": { "text": "RESTRICT blocks the delete entirely. SET NULL clears the foreign key. CASCADE deletes the child rows.", "visual": "📋" },
+        "twist": { "text": "Cascading deletes can be dangerous. Delete one parent row and hundreds of children vanish silently.", "visual": "💀" },
+        "climax": { "text": "Use RESTRICT for safety in most cases. Use CASCADE only when child data is meaningless without the parent.", "visual": "🛡️" },
+        "punchline": { "text": "CASCADE is powerful. RESTRICT is safer. Choose deliberately.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "When is ON DELETE CASCADE appropriate?",
+        "options": ["When child records have no meaning without the parent row", "Whenever you want to save disk space", "It should always be used as the default"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch04-relationships",
+      "title": "One-to-One Relationships",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A user has one profile. A profile belongs to one user. That's a one-to-one relationship.", "visual": "👤" },
+        "buildup": { "text": "Model it with a foreign key and a UNIQUE constraint: profiles.user_id UNIQUE REFERENCES users.id.", "visual": "🔗" },
+        "discovery": { "text": "One-to-one is useful for splitting large tables. Keep hot columns in one table, cold columns in another.", "visual": "❄️" },
+        "twist": { "text": "Some teams merge one-to-one tables into one. Fewer joins, simpler queries. It depends on access patterns.", "visual": "🤔" },
+        "climax": { "text": "Use one-to-one when data has different access patterns or when optional data would add many NULLs.", "visual": "📏" },
+        "punchline": { "text": "One-to-one: two tables, one link, clear separation.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "When is a one-to-one relationship better than merging columns into one table?",
+        "options": ["When the two sets of columns have different access patterns or one set is mostly NULL", "One-to-one is always better for performance", "Only when the table has fewer than 10 rows"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch04-relationships",
+      "title": "One-to-Many Relationships",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A customer has many orders. Each order belongs to one customer. The most common relationship in databases.", "visual": "📦" },
+        "buildup": { "text": "The 'many' side holds the foreign key: orders.customer_id references customers.id.", "visual": "🔑" },
+        "discovery": { "text": "Posts and comments, departments and employees, categories and products — all one-to-many.", "visual": "🔗" },
+        "twist": { "text": "Put the foreign key on the wrong side and you get one order with many customers. Direction matters.", "visual": "⚠️" },
+        "climax": { "text": "Always ask: which side is 'many'? That table gets the foreign key column.", "visual": "🧭" },
+        "punchline": { "text": "One-to-many: the foreign key lives on the many side. Always.", "visual": "📏" }
+      },
+      "quiz": {
+        "question": "In a one-to-many relationship, which table holds the foreign key?",
+        "options": ["The table on the 'many' side of the relationship", "The table on the 'one' side", "Both tables hold a foreign key to each other"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch04-relationships",
+      "title": "Many-to-Many Relationships",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Students take many courses. Courses have many students. Neither side can hold a single foreign key.", "visual": "🔄" },
+        "buildup": { "text": "A junction table (student_courses) links them: student_id and course_id as a composite key.", "visual": "🌉" },
+        "discovery": { "text": "The junction table can carry extra data: grade, enrolled_at, status. It's a first-class entity.", "visual": "📝" },
+        "twist": { "text": "Without the junction table, you'd need arrays or comma-separated IDs. Both violate 1NF and break queries.", "visual": "🚫" },
+        "climax": { "text": "Tags, roles, playlists, and friends lists all use many-to-many with junction tables.", "visual": "🌐" },
+        "punchline": { "text": "Many-to-many: always use a junction table. No exceptions.", "visual": "🌉" }
+      },
+      "quiz": {
+        "question": "Why is a junction table necessary for many-to-many relationships?",
+        "options": ["Neither side can hold a foreign key for multiple related rows without violating normal forms", "SQL doesn't support any other type of relationship", "Junction tables make queries slower, but they're required by law"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch04-relationships",
+      "title": "Polymorphic Associations",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Comments on posts, photos, and videos. Three different parents, one comments table. How do you link them?", "visual": "🔗" },
+        "buildup": { "text": "Polymorphic associations use two columns: commentable_id and commentable_type (post, photo, or video).", "visual": "🏷️" },
+        "discovery": { "text": "Rails' Active Record popularized this pattern. It's flexible and avoids creating three separate comment tables.", "visual": "🔧" },
+        "twist": { "text": "The database can't enforce foreign keys across multiple tables with one column. Integrity relies on the app.", "visual": "⚠️" },
+        "climax": { "text": "Alternative: separate join tables (post_comments, photo_comments). More tables, but full foreign key support.", "visual": "🛡️" },
+        "punchline": { "text": "Polymorphic is convenient. Separate tables are safer. Pick your trade-off.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What is the main drawback of polymorphic associations?",
+        "options": ["The database cannot enforce foreign key constraints across multiple parent tables", "They only work with Rails and no other framework", "Polymorphic associations make all queries slower"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch04-relationships",
+      "title": "Self-Referencing Tables",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An employee's manager is also an employee. A category's parent is also a category. Self-referencing tables.", "visual": "🔄" },
+        "buildup": { "text": "Add a parent_id column that references the same table's primary key. The CEO has parent_id NULL.", "visual": "🌲" },
+        "discovery": { "text": "This models trees: org charts, file systems, comment threads, nested categories.", "visual": "🗂️" },
+        "twist": { "text": "Querying deep trees is hard with basic SQL. Recursive CTEs or closure tables handle arbitrary depth.", "visual": "🔁" },
+        "climax": { "text": "Closure tables store every ancestor-descendant pair. Fast reads, more storage. Another trade-off.", "visual": "⚖️" },
+        "punchline": { "text": "Self-referencing models trees. Recursive CTEs walk them.", "visual": "🌳" }
+      },
+      "quiz": {
+        "question": "What is a closure table used for?",
+        "options": ["Storing all ancestor-descendant pairs to enable fast tree queries without recursion", "Closing database connections safely", "Preventing self-referencing foreign keys"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch05-schema-evolution",
+      "title": "Database Migrations",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "The schema changed. New column, renamed table, dropped constraint. How do you apply it safely? Migrations.", "visual": "🔄" },
+        "buildup": { "text": "A migration is a versioned script: 001_create_users.sql, 002_add_email.sql. Applied in order, tracked.", "visual": "📝" },
+        "discovery": { "text": "Tools like Flyway, Alembic, and Prisma Migrate run pending migrations and record which ones have been applied.", "visual": "🔧" },
+        "twist": { "text": "Migrations are irreversible in production. You can't un-drop a column. Always add, then backfill, then remove.", "visual": "⚠️" },
+        "climax": { "text": "Every schema change goes through a migration. No manual ALTER TABLE in production. Ever.", "visual": "🚫" },
+        "punchline": { "text": "Migrations: versioned, ordered, automated schema changes.", "visual": "📏" }
+      },
+      "quiz": {
+        "question": "Why should you never run manual ALTER TABLE in production?",
+        "options": ["Manual changes aren't tracked, versioned, or repeatable across environments", "ALTER TABLE doesn't work in production databases", "Manual changes are always faster than migrations"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch05-schema-evolution",
+      "title": "Zero-Downtime Migrations",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "ALTER TABLE on a billion-row table locks it for minutes. Users see errors. Zero-downtime migrations avoid that.", "visual": "⏱️" },
+        "buildup": { "text": "The trick: add the new column as nullable, backfill data in batches, then add the constraint.", "visual": "🧱" },
+        "discovery": { "text": "Rename a column? Add the new one, dual-write, migrate reads, drop the old one. Four steps, no downtime.", "visual": "🔄" },
+        "twist": { "text": "Some databases support non-blocking DDL (Postgres mostly does). Others lock the table during ALTER.", "visual": "🔒" },
+        "climax": { "text": "Tools like gh-ost and pt-online-schema-change do live migrations for MySQL without locking.", "visual": "🛠️" },
+        "punchline": { "text": "Migrate in steps. Never lock a live table for minutes.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why should you add new columns as nullable first during a live migration?",
+        "options": ["It avoids locking the table and lets you backfill data in safe batches", "Nullable columns use less disk space", "The database requires all new columns to be nullable"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch05-schema-evolution",
+      "title": "Backward-Compatible Changes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Deploy a new schema, but the old app version is still running. If the schema breaks the old code, users see errors.", "visual": "💥" },
+        "buildup": { "text": "Backward-compatible changes: add columns, add tables, add indexes. These don't break existing queries.", "visual": "✅" },
+        "discovery": { "text": "Breaking changes: rename columns, change types, drop columns. Old code that references them fails.", "visual": "🚫" },
+        "twist": { "text": "The expand-contract pattern: add the new column, migrate data and code, then remove the old column in a later deploy.", "visual": "🔄" },
+        "climax": { "text": "Blue-green deployments need backward-compatible schemas. Both old and new code must work with the same database.", "visual": "🟢" },
+        "punchline": { "text": "Add first, migrate, then remove. Never break what's running.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What is the expand-contract pattern for schema changes?",
+        "options": ["Add the new structure, migrate data and code, then remove the old structure in a later deploy", "Expand the table size and then contract it to compress data", "Run two databases simultaneously and merge them later"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch05-schema-evolution",
+      "title": "Schema Versioning",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Which migration has been applied? A schema_migrations table tracks every version that ran successfully.", "visual": "📋" },
+        "buildup": { "text": "Each migration gets a unique version: a timestamp or sequence number. Applied migrations are recorded.", "visual": "🔢" },
+        "discovery": { "text": "Run 'migrate up': pending migrations apply. Run 'migrate status': see what's applied and what's pending.", "visual": "📊" },
+        "twist": { "text": "Two developers create migration 005 for different changes. Conflict! Use timestamps instead of sequence numbers.", "visual": "⏰" },
+        "climax": { "text": "Store migrations in version control alongside app code. The schema and code evolve together.", "visual": "🔗" },
+        "punchline": { "text": "Track migrations like code commits. Every change is versioned.", "visual": "📝" }
+      },
+      "quiz": {
+        "question": "Why are timestamps better than sequence numbers for migration versions?",
+        "options": ["They avoid conflicts when multiple developers create migrations at the same time", "Timestamps make migrations run faster", "Sequence numbers are not supported by any migration tool"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch05-schema-evolution",
+      "title": "Data Backfills",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You added a new display_name column. Existing rows are NULL. A backfill populates them from the name column.", "visual": "🔄" },
+        "buildup": { "text": "Backfills update existing data to match a new schema. They run after the migration adds the column.", "visual": "📝" },
+        "discovery": { "text": "Do it in batches: UPDATE users SET display_name = name WHERE display_name IS NULL LIMIT 1000. Loop until done.", "visual": "🔁" },
+        "twist": { "text": "A single UPDATE on millions of rows locks the table and spikes CPU. Batching prevents the overload.", "visual": "⚡" },
+        "climax": { "text": "After the backfill completes, add the NOT NULL constraint. Now every row has a value.", "visual": "🛡️" },
+        "punchline": { "text": "Add the column. Backfill in batches. Then constrain.", "visual": "📏" }
+      },
+      "quiz": {
+        "question": "Why should data backfills be done in batches?",
+        "options": ["A single massive UPDATE locks the table and can overwhelm the database", "Databases can only process 1000 rows at a time", "Backfills only work with batch processing frameworks"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch06-design-in-practice",
+      "title": "Designing for Read-Heavy Workloads",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your app reads 100x more than it writes. The schema should optimize for reads, not writes.", "visual": "📖" },
+        "buildup": { "text": "Add indexes on every column used in WHERE, ORDER BY, and JOIN. Reads speed up dramatically.", "visual": "⚡" },
+        "discovery": { "text": "Denormalize hot queries: store computed values, cache aggregates, use materialized views.", "visual": "💾" },
+        "twist": { "text": "Every index and denormalized column slows writes. Know your read-to-write ratio before optimizing.", "visual": "⚖️" },
+        "climax": { "text": "Read replicas spread query load across multiple database copies. Writes go to the primary, reads to replicas.", "visual": "📚" },
+        "punchline": { "text": "Read-heavy? Index generously and consider read replicas.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "How do read replicas help with read-heavy workloads?",
+        "options": ["They distribute read queries across multiple database copies, reducing load on the primary", "They store a compressed version of the data", "They automatically fix slow queries"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch06-design-in-practice",
+      "title": "Designing for Write-Heavy Workloads",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An IoT platform ingests a million events per second. Too many indexes and the writes can't keep up.", "visual": "🌊" },
+        "buildup": { "text": "Minimize indexes on write-heavy tables. Every index must be updated on every INSERT.", "visual": "📉" },
+        "discovery": { "text": "Append-only tables work well: no updates, just inserts. Time-series and event logs fit this pattern.", "visual": "📋" },
+        "twist": { "text": "Partitioning splits one table into many. Writes spread across partitions. Old partitions can be dropped cheaply.", "visual": "🗂️" },
+        "climax": { "text": "Buffer writes in memory (like Redis) and flush to the database in batches. Reduces per-row overhead.", "visual": "🏎️" },
+        "punchline": { "text": "Write-heavy? Fewer indexes, append-only, batch inserts.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "Why should you minimize indexes on write-heavy tables?",
+        "options": ["Each index must be updated on every INSERT, slowing down write throughput", "Indexes don't work on tables with many rows", "Write-heavy tables can't have any indexes at all"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch06-design-in-practice",
+      "title": "Multi-Tenant Design",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "One database, many customers. How do you keep their data separate? Multi-tenant design has three approaches.", "visual": "🏢" },
+        "buildup": { "text": "Shared tables with a tenant_id column: simple, but every query must include WHERE tenant_id = ?.", "visual": "🔑" },
+        "discovery": { "text": "Schema-per-tenant: each customer gets their own schema. Good isolation, harder to manage at scale.", "visual": "🗂️" },
+        "twist": { "text": "Database-per-tenant gives maximum isolation but multiplies infrastructure. 1,000 tenants = 1,000 databases.", "visual": "🏗️" },
+        "climax": { "text": "Row-level security (Postgres RLS) automates tenant filtering. The database enforces isolation, not the app.", "visual": "🛡️" },
+        "punchline": { "text": "Shared tables with RLS: simple, safe, and scalable.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What advantage does row-level security (RLS) provide for multi-tenant databases?",
+        "options": ["The database automatically filters rows by tenant, removing the burden from application code", "RLS encrypts all data at the row level", "It allows tenants to modify each other's data safely"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch06-design-in-practice",
+      "title": "Soft Deletes vs Hard Deletes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A user clicks Delete. Do you erase the data forever, or mark it as deleted and keep it? Big decision.", "visual": "🗑️" },
+        "buildup": { "text": "Hard deletes: DELETE FROM users WHERE id = 42. The row is gone. No recovery without a backup.", "visual": "💀" },
+        "discovery": { "text": "Soft deletes: UPDATE users SET deleted_at = NOW() WHERE id = 42. The row stays, hidden from normal queries.", "visual": "👻" },
+        "twist": { "text": "Soft deletes need a WHERE deleted_at IS NULL filter on every query. Forget it and deleted data reappears.", "visual": "🐛" },
+        "climax": { "text": "Postgres views or RLS can auto-filter soft deletes. The app never sees deleted rows without special effort.", "visual": "🛡️" },
+        "punchline": { "text": "Soft deletes preserve data. Add automatic filtering to avoid leaks.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "What is the biggest risk of soft deletes without proper filtering?",
+        "options": ["Deleted data reappears in queries that forget to check the deleted_at column", "Soft-deleted rows take up extra disk space", "The database automatically restores soft-deleted rows after 30 days"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--database-design--ch06-design-in-practice",
+      "title": "Design Review Checklist",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Before deploying a new schema, run through a checklist. Missing one item can cause weeks of pain later.", "visual": "✅" },
+        "buildup": { "text": "Check: every table has a primary key, foreign keys are indexed, naming is consistent, NULLs are intentional.", "visual": "📋" },
+        "discovery": { "text": "Check: migrations are backward-compatible, constraints match business rules, no sensitive data is unencrypted.", "visual": "🔒" },
+        "twist": { "text": "The checklist catches mistakes that code reviews miss. Schema errors are costlier than code bugs.", "visual": "💰" },
+        "climax": { "text": "Automate what you can: linters for SQL, CI checks for migrations, schema diff tools for drift detection.", "visual": "🤖" },
+        "punchline": { "text": "Review the schema like you review code. Checklists catch mistakes.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "Why are schema errors costlier than typical code bugs?",
+        "options": ["Fixing a schema in production requires migrating live data, which is slow and risky", "Schema errors crash all servers instantly", "Code bugs are automatically fixed by the database"],
+        "correct": 0
+      }
+    }
+  ]
+}

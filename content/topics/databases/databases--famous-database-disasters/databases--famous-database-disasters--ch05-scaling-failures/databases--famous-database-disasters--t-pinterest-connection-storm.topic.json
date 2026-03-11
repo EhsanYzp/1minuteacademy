@@ -1,0 +1,49 @@
+{
+  "id": "databases--famous-database-disasters--t-pinterest-connection-storm",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Famous Database Disasters",
+  "course_id": "databases--famous-database-disasters",
+  "chapter_id": "databases--famous-database-disasters--ch05-scaling-failures",
+  "title": "Pinterest Connection Storm",
+  "emoji": "🔥",
+  "color": "#F97316",
+  "description": "A quick, practical guide to Pinterest Connection Storm.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Pinterest's MySQL had thousands of open connections. Each web server opened its own connection. Memory exhausted.",
+      "visual": "🔌"
+    },
+    "buildup": {
+      "text": "Without pooling, every process held a persistent connection. 200 servers × 10 connections = 2,000 per database.",
+      "visual": "📊"
+    },
+    "discovery": {
+      "text": "They added PgBouncer-style connection pooling. A pool of 50 connections served 2,000 application processes.",
+      "visual": "🔧"
+    },
+    "twist": {
+      "text": "The database spent more time managing connections than executing queries. Connection overhead was the bottleneck.",
+      "visual": "⚡"
+    },
+    "climax": {
+      "text": "Lesson: connection pooling is essential at scale. Don't let each application instance manage its own connection.",
+      "visual": "📏"
+    },
+    "punchline": {
+      "text": "Connection pooling: fewer connections, better performance. Essential at scale.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "How did connection pooling solve Pinterest's database performance problem?",
+    "options": [
+      "A small pool of shared connections served thousands of application processes, reducing overhead",
+      "It increased the number of connections to the database",
+      "Connection pooling eliminated the need for a database"
+    ],
+    "correct": 0
+  }
+}

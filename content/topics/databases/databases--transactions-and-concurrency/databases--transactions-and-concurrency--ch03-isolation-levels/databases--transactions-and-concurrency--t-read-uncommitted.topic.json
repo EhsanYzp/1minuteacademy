@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-read-uncommitted",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch03-isolation-levels",
+  "title": "Read Uncommitted",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A 60-second lesson on Read Uncommitted.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Transaction A writes a value but hasn't committed. Transaction B reads it. If A rolls back, B used phantom data.",
+      "visual": "👻"
+    },
+    "buildup": {
+      "text": "Read Uncommitted allows dirty reads: seeing data from uncommitted transactions.",
+      "visual": "🗑️"
+    },
+    "discovery": {
+      "text": "It's the lowest isolation level. Maximum concurrency, minimum safety.",
+      "visual": "📉"
+    },
+    "twist": {
+      "text": "Postgres doesn't actually implement Read Uncommitted. It silently upgrades to Read Committed.",
+      "visual": "🐘"
+    },
+    "climax": {
+      "text": "Almost no production application uses Read Uncommitted. The risk of dirty reads is too high.",
+      "visual": "🚫"
+    },
+    "punchline": {
+      "text": "Read Uncommitted: fast but dangerous. Rarely used in practice.",
+      "visual": "⚠️"
+    }
+  },
+  "quiz": {
+    "question": "What is a dirty read?",
+    "options": [
+      "Reading data from a transaction that hasn't been committed yet and might roll back",
+      "Reading data from a corrupted table",
+      "Reading data that has been deleted"
+    ],
+    "correct": 0
+  }
+}

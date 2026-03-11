@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-event-sourcing",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch04-time-and-history",
+  "title": "Event Sourcing",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A 1-minute de-risking session on Event Sourcing.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Instead of storing the current state, store every event that led to it. Cart: item added, item removed, checked out.",
+      "visual": "📜"
+    },
+    "buildup": {
+      "text": "Events are immutable facts. They're appended, never updated or deleted. The log is the source of truth.",
+      "visual": "📝"
+    },
+    "discovery": {
+      "text": "To get current state, replay all events from the beginning. Or keep a snapshot and replay from there.",
+      "visual": "🔄"
+    },
+    "twist": {
+      "text": "Event sourcing gives you complete history for free. Debug any past state by replaying to that point.",
+      "visual": "⏪"
+    },
+    "climax": {
+      "text": "The downside: querying current state is complex. You need materialized views or projections rebuilt from events.",
+      "visual": "⚠️"
+    },
+    "punchline": {
+      "text": "Event sourcing: store the story, not just the ending. Full history, full replay.",
+      "visual": "📖"
+    }
+  },
+  "quiz": {
+    "question": "How do you query the current state in an event-sourced system?",
+    "options": [
+      "By replaying events to build the current state, or by using pre-built materialized views",
+      "By reading the last event in the log",
+      "Current state queries are not possible with event sourcing"
+    ],
+    "correct": 0
+  }
+}

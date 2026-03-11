@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-linearizability",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch04-consistency-models",
+  "title": "Linearizability",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "Learn Linearizability in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Once a write is visible to one client, it's visible to all. No going back. That's linearizability — the gold standard.",
+      "visual": "🏆"
+    },
+    "buildup": {
+      "text": "Every operation appears to happen at a single, instant point in time. No client sees stale data after a newer read.",
+      "visual": "📌"
+    },
+    "discovery": {
+      "text": "Linearizability is needed for distributed locks, leader election, and unique constraint checks.",
+      "visual": "🔒"
+    },
+    "twist": {
+      "text": "It's expensive. Every write must be acknowledged by a majority of replicas before it's visible.",
+      "visual": "💰"
+    },
+    "climax": {
+      "text": "etcd and ZooKeeper provide linearizable reads and writes. They're used as coordination services, not data stores.",
+      "visual": "🔧"
+    },
+    "punchline": {
+      "text": "Linearizability: once visible, always visible. Essential for coordination.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "Why is linearizability needed for distributed locks?",
+    "options": [
+      "All nodes must agree on who holds the lock at any moment to prevent two holders at once",
+      "Distributed locks don't require any consistency guarantees",
+      "Linearizability makes locks faster to acquire"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-consistency",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch02-acid-properties",
+  "title": "Consistency",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A 1-minute de-risking session on Consistency.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A foreign key says every order must have a valid customer. Consistency means this rule holds after every transaction.",
+      "visual": "✅"
+    },
+    "buildup": {
+      "text": "Consistency guarantees the database moves from one valid state to another. Constraints are never violated.",
+      "visual": "📏"
+    },
+    "discovery": {
+      "text": "CHECK constraints, NOT NULL, UNIQUE, and foreign keys all define what 'valid state' means.",
+      "visual": "🛡️"
+    },
+    "twist": {
+      "text": "Within a transaction, the database may temporarily violate constraints. It checks them at COMMIT time.",
+      "visual": "⏳"
+    },
+    "climax": {
+      "text": "Deferred constraints (Postgres) wait until COMMIT to validate. Useful for circular foreign keys.",
+      "visual": "🔄"
+    },
+    "punchline": {
+      "text": "Consistency: every committed transaction leaves the database in a valid state.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "When are deferred constraints checked?",
+    "options": [
+      "At COMMIT time, not when the individual statement executes",
+      "Before the transaction begins",
+      "Only when the database is restarted"
+    ],
+    "correct": 0
+  }
+}

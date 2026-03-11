@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-security--t-second-order-injection",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Security",
+  "course_id": "databases--database-security",
+  "chapter_id": "databases--database-security--ch03-sql-injection",
+  "title": "Second-Order Injection",
+  "emoji": "🛡️",
+  "color": "#14B8A6",
+  "description": "A quick, practical guide to Second-Order Injection.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "An attacker stores malicious input in the database. Later, a different query reads it and uses it unsafely. Boom.",
+      "visual": "💣"
+    },
+    "buildup": {
+      "text": "First-order injection: input goes directly into a query. Second-order: input is stored, then used in a query later.",
+      "visual": "📦"
+    },
+    "discovery": {
+      "text": "A username stored as admin'-- is safe at registration. But if a password reset uses it unsafely, injection happens.",
+      "visual": "🔓"
+    },
+    "twist": {
+      "text": "Developers often trust data from their own database. But if that data was user-supplied, it's still untrusted.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Treat all data as untrusted, regardless of source. Parameterize every query, even those using stored data.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Second-order: stored data becomes the weapon. Trust nothing, parameterize all.",
+      "visual": "🔒"
+    }
+  },
+  "quiz": {
+    "question": "What makes second-order SQL injection harder to detect?",
+    "options": [
+      "The malicious input is stored in the database and exploited later by a different query",
+      "It only works on NoSQL databases",
+      "Second-order injections are automatically prevented by firewalls"
+    ],
+    "correct": 0
+  }
+}

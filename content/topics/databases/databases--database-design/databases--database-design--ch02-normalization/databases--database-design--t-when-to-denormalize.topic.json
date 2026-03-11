@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-when-to-denormalize",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch02-normalization",
+  "title": "When to Denormalize",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "A short lesson to help you apply When to Denormalize.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A dashboard query joins six tables and takes 3 seconds. Denormalize into one table and it runs in 50 ms.",
+      "visual": "🚀"
+    },
+    "buildup": {
+      "text": "Denormalization intentionally adds redundancy to speed up reads. Fewer joins, faster queries.",
+      "visual": "⚡"
+    },
+    "discovery": {
+      "text": "Common pattern: keep the normalized source of truth, then create denormalized read tables or materialized views.",
+      "visual": "📋"
+    },
+    "twist": {
+      "text": "Denormalized data must stay in sync. Update the source and forget the copy? Stale data bugs appear.",
+      "visual": "🐛"
+    },
+    "climax": {
+      "text": "Analytics warehouses are heavily denormalized. OLTP systems stay normalized. Different jobs, different rules.",
+      "visual": "🏭"
+    },
+    "punchline": {
+      "text": "Normalize for correctness. Denormalize for speed. Both have a place.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "What is the main risk of denormalization?",
+    "options": [
+      "Redundant data can become out of sync, leading to stale or inconsistent data",
+      "Denormalized tables cannot be queried with SQL",
+      "Denormalization always makes queries slower"
+    ],
+    "correct": 0
+  }
+}

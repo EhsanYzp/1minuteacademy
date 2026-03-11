@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-b-tree-index-basics",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch02-how-indexes-work",
+  "title": "B-Tree Index Basics",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A tiny lesson with a big payoff: B-Tree Index Basics.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A B-tree is a balanced tree structure. Finding any value takes the same number of steps, no matter where it is.",
+      "visual": "🌳"
+    },
+    "buildup": {
+      "text": "Each node holds sorted keys and pointers. The root splits into branches. Leaves point to actual data rows.",
+      "visual": "🔗"
+    },
+    "discovery": {
+      "text": "Looking up a value: start at root, compare, go left or right, repeat. Three or four levels reach billions of rows.",
+      "visual": "🔍"
+    },
+    "twist": {
+      "text": "B-trees are wide and short. A 4-level B-tree with 500 keys per node covers 62 billion entries.",
+      "visual": "🤯"
+    },
+    "climax": {
+      "text": "B-tree is the default index in Postgres, MySQL, and most relational databases. It handles 90% of use cases.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "B-trees: wide, balanced, fast. The workhorse of database indexing.",
+      "visual": "🐴"
+    }
+  },
+  "quiz": {
+    "question": "Why can a B-tree index find any value in just a few steps?",
+    "options": [
+      "It's a wide, balanced tree where each level narrows the search by hundreds of keys",
+      "It stores all values in memory",
+      "B-trees only work on tables with fewer than 1000 rows"
+    ],
+    "correct": 0
+  }
+}

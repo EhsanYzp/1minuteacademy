@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-implicit-vs-explicit-transactions",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch01-what-are-transactions",
+  "title": "Implicit vs Explicit Transactions",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A quick, practical guide to Implicit vs Explicit Transactions.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "SQL Server wraps every statement in an implicit transaction by default. Postgres uses explicit BEGIN/COMMIT.",
+      "visual": "🔀"
+    },
+    "buildup": {
+      "text": "Implicit transactions start automatically. Explicit transactions require you to write BEGIN.",
+      "visual": "📝"
+    },
+    "discovery": {
+      "text": "In explicit mode, forgetting BEGIN means each statement auto-commits. No grouping, no rollback.",
+      "visual": "⚠️"
+    },
+    "twist": {
+      "text": "Connection poolers like PgBouncer in transaction mode reset state between transactions. Session-level settings vanish.",
+      "visual": "🔄"
+    },
+    "climax": {
+      "text": "Know your database's default. Test transaction behavior before production, not after an incident.",
+      "visual": "🧪"
+    },
+    "punchline": {
+      "text": "Know implicit vs explicit. The default behavior varies by database.",
+      "visual": "📏"
+    }
+  },
+  "quiz": {
+    "question": "What happens in explicit transaction mode if you forget to write BEGIN?",
+    "options": [
+      "Each statement auto-commits individually, with no ability to roll back as a group",
+      "The database queues statements until you write BEGIN",
+      "All statements are silently rolled back"
+    ],
+    "correct": 0
+  }
+}

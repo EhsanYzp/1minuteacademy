@@ -1,0 +1,49 @@
+{
+  "id": "databases--sql-fundamentals--t-indexes-and-query-speed",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "SQL Fundamentals",
+  "course_id": "databases--sql-fundamentals",
+  "chapter_id": "databases--sql-fundamentals--ch06-beyond-basics",
+  "title": "Indexes and Query Speed",
+  "emoji": "📝",
+  "color": "#3B82F6",
+  "description": "A quick win: understand Indexes and Query Speed.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A slow query ran for 8 seconds. Add one index. Same query, 4 milliseconds. Indexes are that powerful.",
+      "visual": "⚡"
+    },
+    "buildup": {
+      "text": "CREATE INDEX idx_users_email ON users(email). Now lookups by email skip the full table scan.",
+      "visual": "🔍"
+    },
+    "discovery": {
+      "text": "Composite indexes cover multiple columns: (country, city). Order matters — country first, then city.",
+      "visual": "🔗"
+    },
+    "twist": {
+      "text": "Indexes speed reads but slow writes. Each insert must update every relevant index. Balance is key.",
+      "visual": "⚖️"
+    },
+    "climax": {
+      "text": "Use EXPLAIN to check if your queries actually use the indexes you created. Don't guess.",
+      "visual": "🧪"
+    },
+    "punchline": {
+      "text": "Indexes: the biggest lever for query speed. Use EXPLAIN to verify.",
+      "visual": "🔧"
+    }
+  },
+  "quiz": {
+    "question": "Why does column order matter in a composite index?",
+    "options": [
+      "The database can only use the index efficiently for queries that match columns from left to right",
+      "Column order is alphabetical by default",
+      "It only affects how the index is displayed, not performance"
+    ],
+    "correct": 0
+  }
+}

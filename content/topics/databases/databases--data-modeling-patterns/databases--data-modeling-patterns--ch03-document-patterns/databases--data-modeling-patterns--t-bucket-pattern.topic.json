@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-bucket-pattern",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch03-document-patterns",
+  "title": "Bucket Pattern",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A short lesson to help you apply Bucket Pattern.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A sensor sends data every second. One document per reading creates millions of tiny documents. Too many.",
+      "visual": "📡"
+    },
+    "buildup": {
+      "text": "The bucket pattern groups readings into time buckets. One document per hour holds 3,600 readings in an array.",
+      "visual": "🪣"
+    },
+    "discovery": {
+      "text": "Fewer documents mean less overhead: fewer indexes, fewer disk seeks, faster range queries.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "Pick bucket size by access pattern. Too large loads unneeded data. Too small loses the benefit.",
+      "visual": "📏"
+    },
+    "climax": {
+      "text": "MongoDB's time series collections automate this pattern. They bucket data by time automatically.",
+      "visual": "⏰"
+    },
+    "punchline": {
+      "text": "Bucket pattern: group frequent writes into fewer documents. Less overhead.",
+      "visual": "📦"
+    }
+  },
+  "quiz": {
+    "question": "What does the bucket pattern optimize for?",
+    "options": [
+      "Reducing the number of documents by grouping frequent writes into time-based buckets",
+      "Making each individual write faster",
+      "Eliminating the need for indexes entirely"
+    ],
+    "correct": 0
+  }
+}

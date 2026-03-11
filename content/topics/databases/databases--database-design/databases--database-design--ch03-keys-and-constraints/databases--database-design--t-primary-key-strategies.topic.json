@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-primary-key-strategies",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch03-keys-and-constraints",
+  "title": "Primary Key Strategies",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "One-minute skill: Primary Key Strategies.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Auto-increment integers or UUIDs? The choice of primary key strategy affects performance and scalability.",
+      "visual": "🔑"
+    },
+    "buildup": {
+      "text": "Auto-increment IDs are simple and compact. But they reveal record count and ordering to anyone who sees them.",
+      "visual": "🔢"
+    },
+    "discovery": {
+      "text": "UUIDs are globally unique and hide ordering. But they're 16 bytes vs 4 bytes and fragment indexes.",
+      "visual": "🆔"
+    },
+    "twist": {
+      "text": "ULIDs and UUIDv7 are time-sorted UUIDs. Globally unique, yet index-friendly. The best of both worlds.",
+      "visual": "✨"
+    },
+    "climax": {
+      "text": "Pick the strategy that fits: integers for simple apps, UUIDs for distributed systems.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "IDs shape performance. Choose the right kind for your needs.",
+      "visual": "⚙️"
+    }
+  },
+  "quiz": {
+    "question": "Why do UUIDs fragment database indexes?",
+    "options": [
+      "Their random ordering causes inserts to scatter across index pages instead of appending",
+      "UUIDs are too large to fit in an index",
+      "Indexes don't support non-numeric keys"
+    ],
+    "correct": 0
+  }
+}

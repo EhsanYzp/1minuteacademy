@@ -1,0 +1,49 @@
+{
+  "id": "databases--sql-fundamentals--t-limit-and-offset-for-paging",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "SQL Fundamentals",
+  "course_id": "databases--sql-fundamentals",
+  "chapter_id": "databases--sql-fundamentals--ch02-reading-data",
+  "title": "LIMIT and OFFSET for Paging",
+  "emoji": "📝",
+  "color": "#3B82F6",
+  "description": "A 60-second lesson on LIMIT and OFFSET for Paging.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A blog has 10,000 posts. Show 20 per page. LIMIT 20 OFFSET 40 gives you page three.",
+      "visual": "📄"
+    },
+    "buildup": {
+      "text": "LIMIT caps how many rows to return. OFFSET skips rows. Together they implement pagination.",
+      "visual": "📑"
+    },
+    "discovery": {
+      "text": "Page 1: OFFSET 0. Page 2: OFFSET 20. Page 3: OFFSET 40. Simple math.",
+      "visual": "🔢"
+    },
+    "twist": {
+      "text": "OFFSET 100000 is slow. The database still reads and discards 100,000 rows. Cursor-based paging is faster.",
+      "visual": "🐌"
+    },
+    "climax": {
+      "text": "Cursor paging: WHERE id > last_seen_id LIMIT 20. Fast at any depth. No rows skipped.",
+      "visual": "🚀"
+    },
+    "punchline": {
+      "text": "OFFSET works for small pages. Cursors scale better.",
+      "visual": "📈"
+    }
+  },
+  "quiz": {
+    "question": "Why is OFFSET-based pagination slow at high page numbers?",
+    "options": [
+      "The database reads and discards all skipped rows before returning the result",
+      "OFFSET only works for the first 100 pages",
+      "High page numbers corrupt the index"
+    ],
+    "correct": 0
+  }
+}

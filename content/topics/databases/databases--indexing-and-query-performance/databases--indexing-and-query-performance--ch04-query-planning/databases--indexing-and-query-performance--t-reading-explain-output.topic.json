@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-reading-explain-output",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch04-query-planning",
+  "title": "Reading EXPLAIN Output",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A quick win: understand Reading EXPLAIN Output.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "EXPLAIN SELECT * FROM users WHERE email = 'ada@test.com'. The output shows: Seq Scan or Index Scan? That's the key.",
+      "visual": "🔍"
+    },
+    "buildup": {
+      "text": "Seq Scan: reading every row. Index Scan: using an index to jump to matching rows. Index Scan is usually better.",
+      "visual": "📊"
+    },
+    "discovery": {
+      "text": "EXPLAIN ANALYZE actually runs the query and shows real timings vs estimates. Essential for debugging.",
+      "visual": "⏱️"
+    },
+    "twist": {
+      "text": "A Bitmap Index Scan reads the index first, builds a bitmap, then reads matching pages. Good for moderate selectivity.",
+      "visual": "🧩"
+    },
+    "climax": {
+      "text": "Nested Loop, Hash Join, Merge Join — the join strategy matters. EXPLAIN reveals which one the planner chose.",
+      "visual": "🔗"
+    },
+    "punchline": {
+      "text": "EXPLAIN is your X-ray into query execution. Learn to read it.",
+      "visual": "🩻"
+    }
+  },
+  "quiz": {
+    "question": "What additional information does EXPLAIN ANALYZE provide over plain EXPLAIN?",
+    "options": [
+      "It actually runs the query and shows real execution times vs the planner's estimates",
+      "It only shows the index names used",
+      "It analyzes the table schema for errors"
+    ],
+    "correct": 0
+  }
+}

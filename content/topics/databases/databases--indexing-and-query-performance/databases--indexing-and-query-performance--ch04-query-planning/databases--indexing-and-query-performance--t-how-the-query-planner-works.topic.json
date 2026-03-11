@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-how-the-query-planner-works",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch04-query-planning",
+  "title": "How the Query Planner Works",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A quick, practical guide to How the Query Planner Works.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You write SQL. The database doesn't run it directly. It creates a plan, estimates costs, and picks the cheapest path.",
+      "visual": "🗺️"
+    },
+    "buildup": {
+      "text": "The planner considers: available indexes, table sizes, column statistics, and join order.",
+      "visual": "📊"
+    },
+    "discovery": {
+      "text": "It estimates the cost of each plan in abstract I/O units. The plan with the lowest estimated cost wins.",
+      "visual": "🏆"
+    },
+    "twist": {
+      "text": "Estimates can be wrong. Outdated statistics or unusual data distributions fool the planner.",
+      "visual": "🤦"
+    },
+    "climax": {
+      "text": "Run ANALYZE to refresh statistics. Better stats lead to better plans. Do it after bulk loads.",
+      "visual": "📈"
+    },
+    "punchline": {
+      "text": "The planner picks the cheapest path. Keep its statistics fresh.",
+      "visual": "🧠"
+    }
+  },
+  "quiz": {
+    "question": "Why should you run ANALYZE after bulk loading data?",
+    "options": [
+      "It updates table statistics so the query planner can make accurate cost estimates",
+      "ANALYZE compresses the data to save disk space",
+      "It creates indexes automatically on all columns"
+    ],
+    "correct": 0
+  }
+}

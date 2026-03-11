@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-leaderless-replication",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch02-replication",
+  "title": "Leaderless Replication",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "A short lesson to help you apply Leaderless Replication.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "No leader at all. Write to any node. Read from multiple nodes. If enough agree, the value is correct.",
+      "visual": "🗳️"
+    },
+    "buildup": {
+      "text": "Dynamo-style databases (Cassandra, Riak) use leaderless replication. Writes go to W nodes, reads from R nodes.",
+      "visual": "📡"
+    },
+    "discovery": {
+      "text": "If W + R > N (total replicas), you're guaranteed to read the latest write. This is a quorum.",
+      "visual": "🧮"
+    },
+    "twist": {
+      "text": "Leaderless tolerates node failures gracefully. No leader election, no failover. Just reduce the quorum.",
+      "visual": "🛡️"
+    },
+    "climax": {
+      "text": "The trade-off: conflict resolution is needed. Stale data on some nodes must be repaired via read repair or anti-entropy.",
+      "visual": "🔧"
+    },
+    "punchline": {
+      "text": "Leaderless: write and read anywhere. Quorums ensure correctness.",
+      "visual": "🗳️"
+    }
+  },
+  "quiz": {
+    "question": "What does the quorum condition W + R > N guarantee?",
+    "options": [
+      "At least one node in the read set has the latest written value",
+      "All nodes always have the same data",
+      "Writes are faster because fewer nodes are involved"
+    ],
+    "correct": 0
+  }
+}

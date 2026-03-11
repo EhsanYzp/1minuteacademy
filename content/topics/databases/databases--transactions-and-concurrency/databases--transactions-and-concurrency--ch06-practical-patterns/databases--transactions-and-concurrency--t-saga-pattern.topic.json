@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-saga-pattern",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch06-practical-patterns",
+  "title": "Saga Pattern",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "Learn Saga Pattern in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A booking spans three services: payment, inventory, notification. No single database transaction can cover all three.",
+      "visual": "🔗"
+    },
+    "buildup": {
+      "text": "A saga is a sequence of local transactions. Each step has a compensating action that undoes it if a later step fails.",
+      "visual": "↩️"
+    },
+    "discovery": {
+      "text": "Step 1: charge payment. Step 2: reserve inventory. If step 2 fails, run compensator: refund payment.",
+      "visual": "💸"
+    },
+    "twist": {
+      "text": "Sagas provide eventual consistency, not ACID. Between steps, the system is temporarily inconsistent.",
+      "visual": "⏳"
+    },
+    "climax": {
+      "text": "Orchestrated sagas use a central coordinator. Choreographed sagas let each service react to events.",
+      "visual": "🎭"
+    },
+    "punchline": {
+      "text": "Sagas: distributed transactions via compensating actions. Eventual, not atomic.",
+      "visual": "🔄"
+    }
+  },
+  "quiz": {
+    "question": "How do sagas handle failures in distributed systems?",
+    "options": [
+      "By running compensating actions that undo the effects of previously completed steps",
+      "By rolling back all databases at once",
+      "By ignoring the failure and continuing with the next step"
+    ],
+    "correct": 0
+  }
+}

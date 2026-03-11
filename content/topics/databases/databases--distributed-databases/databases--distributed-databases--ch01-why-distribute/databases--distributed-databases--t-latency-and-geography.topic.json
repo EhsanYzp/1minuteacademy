@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-latency-and-geography",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch01-why-distribute",
+  "title": "Latency and Geography",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "A micro-lesson that makes Latency and Geography usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A user in Tokyo queries a database in New York. The speed of light adds 150 ms round trip. Physics won't budge.",
+      "visual": "🌏"
+    },
+    "buildup": {
+      "text": "Network latency grows with distance. Users on the other side of the world always get slower responses.",
+      "visual": "🐢"
+    },
+    "discovery": {
+      "text": "Place database replicas near users. Tokyo reads hit a Tokyo replica. New York reads hit a New York replica.",
+      "visual": "📍"
+    },
+    "twist": {
+      "text": "Reads are easy to distribute. Writes are hard: all replicas must agree. Multi-region writes cause conflicts.",
+      "visual": "⚔️"
+    },
+    "climax": {
+      "text": "Most apps use single-region writes with multi-region read replicas. Critical writes go to one region.",
+      "visual": "🗺️"
+    },
+    "punchline": {
+      "text": "Distribute reads to cut latency. Keep writes centralized to avoid conflicts.",
+      "visual": "⚡"
+    }
+  },
+  "quiz": {
+    "question": "Why are writes harder to distribute geographically than reads?",
+    "options": [
+      "All replicas must agree on the order of writes, which requires cross-region coordination",
+      "Writes are always faster than reads",
+      "Only one region can have network access at a time"
+    ],
+    "correct": 0
+  }
+}

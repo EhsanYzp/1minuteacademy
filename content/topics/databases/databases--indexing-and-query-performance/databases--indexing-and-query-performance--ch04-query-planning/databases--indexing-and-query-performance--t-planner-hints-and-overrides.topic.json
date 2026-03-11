@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-planner-hints-and-overrides",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch04-query-planning",
+  "title": "Planner Hints and Overrides",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A 60-second lesson on Planner Hints and Overrides.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The planner chose a nested loop. You know a hash join is faster. Can you override it?",
+      "visual": "🤔"
+    },
+    "buildup": {
+      "text": "Postgres doesn't support traditional optimizer hints. Instead, you can disable specific strategies temporarily.",
+      "visual": "🚫"
+    },
+    "discovery": {
+      "text": "SET enable_nestloop = off forces the planner to avoid nested loops for the current session.",
+      "visual": "⚙️"
+    },
+    "twist": {
+      "text": "MySQL does support hints: USE INDEX, FORCE INDEX, STRAIGHT_JOIN. But hints become stale as data grows.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "The better fix is usually updating statistics, adding an index, or rewriting the query. Don't fight the planner.",
+      "visual": "🧠"
+    },
+    "punchline": {
+      "text": "Fix the root cause: stats, indexes, or query shape. Hints are a last resort.",
+      "visual": "🔧"
+    }
+  },
+  "quiz": {
+    "question": "Why are optimizer hints generally discouraged?",
+    "options": [
+      "They become stale as data grows and can force worse plans over time",
+      "Hints are not supported by any database",
+      "They make queries run slower in every case"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-statistics-and-cardinality",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch04-query-planning",
+  "title": "Statistics and Cardinality",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A fast breakdown of Statistics and Cardinality for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The planner thinks a column has 100 distinct values. It actually has 10 million. The plan is wrong.",
+      "visual": "📊"
+    },
+    "buildup": {
+      "text": "Cardinality is the number of distinct values in a column. The planner uses it to estimate result sizes.",
+      "visual": "🔢"
+    },
+    "discovery": {
+      "text": "Postgres stores column statistics in pg_stats: most common values, histogram bounds, null fraction, and distinct count.",
+      "visual": "📋"
+    },
+    "twist": {
+      "text": "Skewed data fools the planner. If 99% of rows have status = 'completed', it misestimates queries on rare values.",
+      "visual": "📈"
+    },
+    "climax": {
+      "text": "Increase statistics granularity: ALTER TABLE SET STATISTICS 1000 on skewed columns. More samples, better estimates.",
+      "visual": "🔬"
+    },
+    "punchline": {
+      "text": "Good stats drive good plans. Tune statistics for skewed data.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "How does skewed data affect the query planner?",
+    "options": [
+      "It causes the planner to misestimate result sizes, potentially choosing a suboptimal plan",
+      "Skewed data always triggers a full table scan",
+      "The planner handles skewed data perfectly without intervention"
+    ],
+    "correct": 0
+  }
+}

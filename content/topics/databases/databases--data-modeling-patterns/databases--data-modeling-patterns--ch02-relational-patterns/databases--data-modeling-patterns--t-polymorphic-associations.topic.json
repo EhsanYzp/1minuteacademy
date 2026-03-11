@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-polymorphic-associations",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch02-relational-patterns",
+  "title": "Polymorphic Associations",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A micro-lesson that makes Polymorphic Associations usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Comments can belong to posts, photos, or videos. One comment table, three possible parents. How do you model that?",
+      "visual": "🔀"
+    },
+    "buildup": {
+      "text": "Polymorphic association: the comment has commentable_type and commentable_id. Type says which table, ID says which row.",
+      "visual": "🏷️"
+    },
+    "discovery": {
+      "text": "Rails and Laravel use this pattern. It's convenient but breaks foreign key constraints — the DB can't enforce it.",
+      "visual": "⚠️"
+    },
+    "twist": {
+      "text": "Alternative: use separate foreign key columns (post_id, photo_id, video_id) with a CHECK that exactly one is non-null.",
+      "visual": "📏"
+    },
+    "climax": {
+      "text": "Another alternative: separate join tables per type. More tables, but full referential integrity.",
+      "visual": "🔗"
+    },
+    "punchline": {
+      "text": "Polymorphic: flexible but no FK enforcement. Trade convenience for integrity.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "What is the main drawback of polymorphic associations?",
+    "options": [
+      "The database cannot enforce foreign key constraints because the reference target depends on a type column",
+      "They use too much disk space",
+      "Polymorphic associations don't work with SQL databases"
+    ],
+    "correct": 0
+  }
+}

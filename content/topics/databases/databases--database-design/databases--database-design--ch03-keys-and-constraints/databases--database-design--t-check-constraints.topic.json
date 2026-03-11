@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-check-constraints",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch03-keys-and-constraints",
+  "title": "CHECK Constraints",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "A quick, practical guide to CHECK Constraints.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "An order quantity of -3? A price of negative $50? CHECK constraints enforce business rules at the database level.",
+      "visual": "✋"
+    },
+    "buildup": {
+      "text": "CHECK (quantity > 0) ensures no negative quantities. CHECK (status IN ('active','paused','cancelled')) limits values.",
+      "visual": "📏"
+    },
+    "discovery": {
+      "text": "CHECK constraints run on every INSERT and UPDATE. Invalid data is rejected before it's stored.",
+      "visual": "🛡️"
+    },
+    "twist": {
+      "text": "MySQL historically ignored CHECK constraints silently. Only version 8.0.16+ enforces them. Check your version.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Combine CHECK with NOT NULL and UNIQUE for airtight data validation at the schema level.",
+      "visual": "🔒"
+    },
+    "punchline": {
+      "text": "CHECK: define the rules. The database enforces them.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "What risk existed with CHECK constraints in older MySQL versions?",
+    "options": [
+      "MySQL silently accepted the syntax but didn't enforce the constraint",
+      "CHECK constraints crashed the server",
+      "They only worked on text columns"
+    ],
+    "correct": 0
+  }
+}

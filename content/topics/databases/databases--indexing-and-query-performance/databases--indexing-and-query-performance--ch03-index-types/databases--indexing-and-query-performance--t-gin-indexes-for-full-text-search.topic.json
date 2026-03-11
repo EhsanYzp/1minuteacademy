@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-gin-indexes-for-full-text-search",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch03-index-types",
+  "title": "GIN Indexes for Full-Text Search",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "One-minute skill: GIN Indexes for Full-Text Search.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Search for articles containing 'database' and 'performance'. A GIN index on the text column finds them fast.",
+      "visual": "🔍"
+    },
+    "buildup": {
+      "text": "GIN (Generalized Inverted Index) maps each word to the rows that contain it. Like a book's index.",
+      "visual": "📖"
+    },
+    "discovery": {
+      "text": "Postgres tsvector converts text into searchable tokens. GIN indexes tsvector columns for fast full-text search.",
+      "visual": "📝"
+    },
+    "twist": {
+      "text": "GIN indexes are large and slow to update. Great for read-heavy text search, costly for write-heavy tables.",
+      "visual": "💾"
+    },
+    "climax": {
+      "text": "For many apps, Postgres full-text search with GIN replaces Elasticsearch entirely. One fewer service to run.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "GIN: full-text search inside Postgres. No external engine needed.",
+      "visual": "🐘"
+    }
+  },
+  "quiz": {
+    "question": "What does a GIN index map in full-text search?",
+    "options": [
+      "Each word or token to the list of rows that contain it",
+      "Each row to a single keyword",
+      "The table schema to a search engine"
+    ],
+    "correct": 0
+  }
+}

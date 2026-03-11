@@ -1,0 +1,49 @@
+{
+  "id": "databases--what-is-a-database--t-connection-pooling",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "What Is a Database",
+  "course_id": "databases--what-is-a-database",
+  "chapter_id": "databases--what-is-a-database--ch05-databases-in-practice",
+  "title": "Connection Pooling",
+  "emoji": "🗄️",
+  "color": "#6366F1",
+  "description": "A tiny lesson with a big payoff: Connection Pooling.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Every new database connection costs time and memory. Open 1,000 connections and the database chokes.",
+      "visual": "🤯"
+    },
+    "buildup": {
+      "text": "A connection pool keeps a set of connections open and shares them across requests.",
+      "visual": "🏊"
+    },
+    "discovery": {
+      "text": "PgBouncer, HikariCP, and Prisma all implement pooling. Reuse connections instead of opening new ones.",
+      "visual": "♻️"
+    },
+    "twist": {
+      "text": "Serverless functions make this worse. Each invocation wants its own connection. Pools are essential.",
+      "visual": "⚡"
+    },
+    "climax": {
+      "text": "Supabase adds PgBouncer by default. Without it, serverless would overwhelm Postgres in seconds.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Connection pools: reuse, don't reopen. Save memory and time.",
+      "visual": "🔄"
+    }
+  },
+  "quiz": {
+    "question": "Why is connection pooling especially important for serverless apps?",
+    "options": [
+      "Each invocation would open a new connection, quickly exhausting the database",
+      "Serverless functions don't support databases without pooling",
+      "Pooling makes serverless functions run faster code"
+    ],
+    "correct": 0
+  }
+}

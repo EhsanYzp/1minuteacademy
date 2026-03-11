@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-hash-partitioning",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch03-partitioning",
+  "title": "Hash Partitioning",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "A 1-minute de-risking session on Hash Partitioning.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Hash the partition key, mod by partition count. hash(user_id) % 4 sends each user to partition 0, 1, 2, or 3.",
+      "visual": "#️⃣"
+    },
+    "buildup": {
+      "text": "Hash partitioning distributes data evenly. Even if user IDs are sequential, the hash scrambles them.",
+      "visual": "🔀"
+    },
+    "discovery": {
+      "text": "The downside: range queries don't work. WHERE user_id BETWEEN 100 AND 200 hits all partitions.",
+      "visual": "🚫"
+    },
+    "twist": {
+      "text": "Consistent hashing minimizes data movement when adding or removing nodes. Only a fraction of keys relocate.",
+      "visual": "🔄"
+    },
+    "climax": {
+      "text": "Cassandra and DynamoDB use consistent hashing. It's the default strategy for distributed key-value stores.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "Hash partition for even distribution. Sacrifice range queries.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "Why does hash partitioning break range queries?",
+    "options": [
+      "Hashing scatters consecutive keys across different partitions, so ranges can't be read from one node",
+      "Hash functions only work with numeric keys",
+      "Range queries are not supported by any database"
+    ],
+    "correct": 0
+  }
+}

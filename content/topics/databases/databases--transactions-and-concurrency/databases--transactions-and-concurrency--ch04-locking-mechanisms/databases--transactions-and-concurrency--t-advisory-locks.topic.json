@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-advisory-locks",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch04-locking-mechanisms",
+  "title": "Advisory Locks",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A short lesson to help you apply Advisory Locks.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You need a distributed lock across app servers but don't want a separate Redis instance. Advisory locks in Postgres.",
+      "visual": "🔐"
+    },
+    "buildup": {
+      "text": "Advisory locks are arbitrary locks managed by the database. You define the lock key, not the database.",
+      "visual": "🗝️"
+    },
+    "discovery": {
+      "text": "pg_advisory_lock(12345) grabs a lock. Other sessions calling the same ID wait until you release it.",
+      "visual": "⏳"
+    },
+    "twist": {
+      "text": "Advisory locks don't lock any actual data. They're pure coordination tools — the meaning is up to your app.",
+      "visual": "🧩"
+    },
+    "climax": {
+      "text": "Use cases: preventing duplicate cron jobs, serializing rare operations, coordinating migrations.",
+      "visual": "🔧"
+    },
+    "punchline": {
+      "text": "Advisory locks: app-defined coordination using the database as the lock manager.",
+      "visual": "🎛️"
+    }
+  },
+  "quiz": {
+    "question": "What makes advisory locks different from regular row or table locks?",
+    "options": [
+      "They don't lock actual data — the application defines what the lock means",
+      "They are automatically applied to every query",
+      "Advisory locks are faster than all other lock types"
+    ],
+    "correct": 0
+  }
+}

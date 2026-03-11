@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-index-bloat",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch02-how-indexes-work",
+  "title": "Index Bloat",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A quick, practical guide to Index Bloat.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "After millions of updates and deletes, an index can be twice its optimal size. That's index bloat.",
+      "visual": "🎈"
+    },
+    "buildup": {
+      "text": "Postgres marks deleted rows as dead but doesn't reclaim the space immediately. The index grows with dead entries.",
+      "visual": "💀"
+    },
+    "discovery": {
+      "text": "VACUUM reclaims dead space in tables. REINDEX rebuilds the index from scratch, compacting it.",
+      "visual": "🧹"
+    },
+    "twist": {
+      "text": "REINDEX locks the table. In Postgres 12+, REINDEX CONCURRENTLY rebuilds without blocking reads or writes.",
+      "visual": "🔓"
+    },
+    "climax": {
+      "text": "Monitor index size vs table size. If the index is much larger than the data, bloat is likely.",
+      "visual": "📏"
+    },
+    "punchline": {
+      "text": "Bloated indexes waste RAM and slow scans. VACUUM and REINDEX are your friends.",
+      "visual": "🧹"
+    }
+  },
+  "quiz": {
+    "question": "What causes index bloat in PostgreSQL?",
+    "options": [
+      "Dead rows from updates and deletes aren't reclaimed immediately, wasting space",
+      "Too many columns in the index",
+      "The index is too small for the table"
+    ],
+    "correct": 0
+  }
+}

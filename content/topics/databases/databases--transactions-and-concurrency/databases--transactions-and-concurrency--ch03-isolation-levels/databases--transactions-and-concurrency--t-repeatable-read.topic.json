@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-repeatable-read",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch03-isolation-levels",
+  "title": "Repeatable Read",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A short lesson to help you apply Repeatable Read.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Read a row. Another transaction updates it and commits. Read the same row again. Same value. Repeatable Read.",
+      "visual": "🔒"
+    },
+    "buildup": {
+      "text": "Repeatable Read takes a snapshot at the start of the transaction. All reads see that snapshot.",
+      "visual": "📸"
+    },
+    "discovery": {
+      "text": "This is the default in MySQL's InnoDB. It prevents dirty reads and non-repeatable reads.",
+      "visual": "✅"
+    },
+    "twist": {
+      "text": "Phantom reads can still occur: new rows inserted by other transactions may appear in range queries.",
+      "visual": "👻"
+    },
+    "climax": {
+      "text": "Postgres's Repeatable Read actually prevents phantoms too, using its MVCC snapshot.",
+      "visual": "🐘"
+    },
+    "punchline": {
+      "text": "Repeatable Read: same snapshot, same data, every read in the transaction.",
+      "visual": "📸"
+    }
+  },
+  "quiz": {
+    "question": "What is a phantom read?",
+    "options": [
+      "New rows inserted by another transaction appear in a repeated range query",
+      "Reading data that was deleted by another transaction",
+      "Reading data from a table that doesn't exist"
+    ],
+    "correct": 0
+  }
+}

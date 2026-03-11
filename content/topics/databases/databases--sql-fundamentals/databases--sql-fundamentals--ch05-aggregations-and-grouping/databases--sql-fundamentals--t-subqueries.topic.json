@@ -1,0 +1,49 @@
+{
+  "id": "databases--sql-fundamentals--t-subqueries",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "SQL Fundamentals",
+  "course_id": "databases--sql-fundamentals",
+  "chapter_id": "databases--sql-fundamentals--ch05-aggregations-and-grouping",
+  "title": "Subqueries",
+  "emoji": "📝",
+  "color": "#3B82F6",
+  "description": "A short lesson to help you apply Subqueries.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Find users who spent more than average. First calculate the average, then filter. A subquery does both.",
+      "visual": "🪆"
+    },
+    "buildup": {
+      "text": "WHERE total > (SELECT AVG(total) FROM orders). The inner query runs first, then the outer uses its result.",
+      "visual": "🔄"
+    },
+    "discovery": {
+      "text": "Subqueries work in SELECT, FROM, and WHERE. In FROM, they create a temporary table for the outer query.",
+      "visual": "📦"
+    },
+    "twist": {
+      "text": "Correlated subqueries reference the outer query. They rerun for every row. That can be very slow.",
+      "visual": "🐌"
+    },
+    "climax": {
+      "text": "Often a JOIN can replace a subquery with better performance. But subqueries are more readable for some logic.",
+      "visual": "📖"
+    },
+    "punchline": {
+      "text": "Subqueries nest logic. Use them when joins feel forced.",
+      "visual": "🧩"
+    }
+  },
+  "quiz": {
+    "question": "Why are correlated subqueries potentially slow?",
+    "options": [
+      "They re-execute for every row in the outer query",
+      "They can only return one column",
+      "They bypass the query planner entirely"
+    ],
+    "correct": 0
+  }
+}

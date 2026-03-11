@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-second-normal-form-2nf",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch02-normalization",
+  "title": "Second Normal Form (2NF)",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "A quick win: understand Second Normal Form (2NF).",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "An order_items table has columns: order_id, product_id, product_name, quantity. Product name depends only on product_id.",
+      "visual": "🔍"
+    },
+    "buildup": {
+      "text": "2NF removes partial dependencies. Every non-key column must depend on the entire primary key, not part of it.",
+      "visual": "🔗"
+    },
+    "discovery": {
+      "text": "Fix: move product_name to a Products table. Order_items keeps order_id, product_id, and quantity.",
+      "visual": "✂️"
+    },
+    "twist": {
+      "text": "2NF only matters for composite keys. If your primary key is a single column, you're already in 2NF.",
+      "visual": "💡"
+    },
+    "climax": {
+      "text": "Partial dependencies cause update anomalies: rename a product and miss some rows.",
+      "visual": "🐛"
+    },
+    "punchline": {
+      "text": "2NF: every column depends on the whole key, not just part.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "When does Second Normal Form (2NF) apply?",
+    "options": [
+      "When a table has a composite primary key and non-key columns depend on only part of it",
+      "It applies to every table regardless of key structure",
+      "Only tables with no primary key need 2NF"
+    ],
+    "correct": 0
+  }
+}

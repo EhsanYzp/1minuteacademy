@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-savepoints",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch01-what-are-transactions",
+  "title": "Savepoints",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A micro-lesson that makes Savepoints usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A transaction has five steps. Step four fails. ROLLBACK undoes all five. But you only wanted to undo step four.",
+      "visual": "🔙"
+    },
+    "buildup": {
+      "text": "SAVEPOINT mid_point creates a checkpoint inside a transaction. You can roll back to it, not the beginning.",
+      "visual": "🏁"
+    },
+    "discovery": {
+      "text": "ROLLBACK TO SAVEPOINT mid_point undoes only the work after that savepoint. Earlier steps survive.",
+      "visual": "✅"
+    },
+    "twist": {
+      "text": "Nested try/catch in app code maps naturally to savepoints. Catch an error, roll back the sub-operation, continue.",
+      "visual": "🧩"
+    },
+    "climax": {
+      "text": "Some ORMs use savepoints automatically for nested transaction blocks. Check your framework's behavior.",
+      "visual": "🔧"
+    },
+    "punchline": {
+      "text": "Savepoints: partial rollbacks inside a transaction. Granular control.",
+      "visual": "🎛️"
+    }
+  },
+  "quiz": {
+    "question": "What does ROLLBACK TO SAVEPOINT do?",
+    "options": [
+      "Undoes all work after the savepoint while keeping earlier work in the transaction intact",
+      "Rolls back the entire transaction to the very beginning",
+      "Deletes the savepoint and commits all changes"
+    ],
+    "correct": 0
+  }
+}

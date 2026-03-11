@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-self-referencing-tables",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch04-relationships",
+  "title": "Self-Referencing Tables",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "A short lesson to help you apply Self-Referencing Tables.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "An employee's manager is also an employee. A category's parent is also a category. Self-referencing tables.",
+      "visual": "🔄"
+    },
+    "buildup": {
+      "text": "Add a parent_id column that references the same table's primary key. The CEO has parent_id NULL.",
+      "visual": "🌲"
+    },
+    "discovery": {
+      "text": "This models trees: org charts, file systems, comment threads, nested categories.",
+      "visual": "🗂️"
+    },
+    "twist": {
+      "text": "Querying deep trees is hard with basic SQL. Recursive CTEs or closure tables handle arbitrary depth.",
+      "visual": "🔁"
+    },
+    "climax": {
+      "text": "Closure tables store every ancestor-descendant pair. Fast reads, more storage. Another trade-off.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "Self-referencing models trees. Recursive CTEs walk them.",
+      "visual": "🌳"
+    }
+  },
+  "quiz": {
+    "question": "What is a closure table used for?",
+    "options": [
+      "Storing all ancestor-descendant pairs to enable fast tree queries without recursion",
+      "Closing database connections safely",
+      "Preventing self-referencing foreign keys"
+    ],
+    "correct": 0
+  }
+}

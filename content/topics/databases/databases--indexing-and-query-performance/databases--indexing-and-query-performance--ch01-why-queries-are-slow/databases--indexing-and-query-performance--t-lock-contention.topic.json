@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-lock-contention",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch01-why-queries-are-slow",
+  "title": "Lock Contention",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A 60-second lesson on Lock Contention.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A slow query holds a lock for 10 seconds. Every other query on that table waits in line. Cascading slowdown.",
+      "visual": "🔒"
+    },
+    "buildup": {
+      "text": "Databases use locks to prevent concurrent writes from corrupting data. But locks block other operations.",
+      "visual": "🚫"
+    },
+    "discovery": {
+      "text": "Row-level locks are fine-grained: only the modified rows are locked. Table-level locks block everything.",
+      "visual": "📏"
+    },
+    "twist": {
+      "text": "Long transactions hold locks longer. A forgotten BEGIN without COMMIT can lock rows for hours.",
+      "visual": "⏳"
+    },
+    "climax": {
+      "text": "Monitor lock waits. pg_stat_activity in Postgres shows queries waiting for locks right now.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "Short transactions, targeted locks. Don't block the whole table.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "Why do long transactions cause performance problems?",
+    "options": [
+      "They hold locks for extended periods, blocking other queries from proceeding",
+      "Long transactions use more disk space",
+      "The database resets after every long transaction"
+    ],
+    "correct": 0
+  }
+}

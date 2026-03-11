@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-slowly-changing-dimensions",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch04-time-and-history",
+  "title": "Slowly Changing Dimensions",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A tiny lesson with a big payoff: Slowly Changing Dimensions.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A customer moves from New York to London. Do you overwrite? Keep both? Track the change date?",
+      "visual": "📊"
+    },
+    "buildup": {
+      "text": "Type 1: overwrite. Simple, but history is lost. Type 2: add a new row with valid_from and valid_to dates.",
+      "visual": "📅"
+    },
+    "discovery": {
+      "text": "Type 2 preserves full history. Query 'where did this customer live in March?' is answerable.",
+      "visual": "🔍"
+    },
+    "twist": {
+      "text": "Type 3 adds a previous_value column. Limited history (only one change) but simplest to query.",
+      "visual": "📝"
+    },
+    "climax": {
+      "text": "Data warehouses use SCD patterns heavily. They need historical data for accurate reporting.",
+      "visual": "📈"
+    },
+    "punchline": {
+      "text": "SCD: Type 1 overwrites, Type 2 versions rows, Type 3 stores one prior value.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "What is the advantage of SCD Type 2 over Type 1?",
+    "options": [
+      "Type 2 preserves full change history by adding versioned rows with date ranges",
+      "Type 2 uses less storage space",
+      "Type 2 is simpler to implement"
+    ],
+    "correct": 0
+  }
+}

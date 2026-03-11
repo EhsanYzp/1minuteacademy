@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-batch-processing",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch05-optimization-techniques",
+  "title": "Batch Processing",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "Learn Batch Processing in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Inserting 100,000 rows one at a time: 90 seconds. Batched in groups of 1,000: 2 seconds.",
+      "visual": "⚡"
+    },
+    "buildup": {
+      "text": "Each individual INSERT has overhead: parse, plan, execute, commit. Batching amortizes that overhead.",
+      "visual": "📉"
+    },
+    "discovery": {
+      "text": "Use multi-row INSERT: INSERT INTO users VALUES (...), (...), (...). One statement, many rows.",
+      "visual": "📋"
+    },
+    "twist": {
+      "text": "COPY (Postgres) and LOAD DATA (MySQL) are even faster for bulk loads. They bypass the SQL parser.",
+      "visual": "🚀"
+    },
+    "climax": {
+      "text": "Wrap batches in a single transaction. One commit instead of 100,000 commits saves enormous overhead.",
+      "visual": "🔄"
+    },
+    "punchline": {
+      "text": "Batch writes. Reduce round trips. Commit once. Done.",
+      "visual": "✅"
+    }
+  },
+  "quiz": {
+    "question": "Why is the COPY command faster than multi-row INSERT for bulk loads?",
+    "options": [
+      "It bypasses the SQL parser and writes data directly in the database's internal format",
+      "COPY compresses data automatically",
+      "It doesn't require any disk writes"
+    ],
+    "correct": 0
+  }
+}

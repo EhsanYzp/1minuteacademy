@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-closure-table",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch05-hierarchies-and-graphs",
+  "title": "Closure Table",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "One-minute skill: Closure Table.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A table stores every ancestor-descendant pair. Node 5 under 3 under 1? Three rows: (1,5), (3,5), (5,5).",
+      "visual": "📋"
+    },
+    "buildup": {
+      "text": "Finding all descendants of node 1: WHERE ancestor = 1. Finding all ancestors of node 5: WHERE descendant = 5.",
+      "visual": "🔍"
+    },
+    "discovery": {
+      "text": "Closure tables support fast reads for all hierarchy queries without recursion or path string manipulation.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "The closure table can grow large: a tree of N nodes can have up to N² pairs. But most real trees are sparse.",
+      "visual": "📊"
+    },
+    "climax": {
+      "text": "Moving a subtree: delete old closure rows and insert new ones. More work than adjacency list, less than nested sets.",
+      "visual": "🔧"
+    },
+    "punchline": {
+      "text": "Closure table: ancestor-descendant pairs. Fast queries, moderate write cost.",
+      "visual": "🧩"
+    }
+  },
+  "quiz": {
+    "question": "How does a closure table represent hierarchy relationships?",
+    "options": [
+      "It stores every ancestor-descendant pair in a separate table with depth information",
+      "It uses left and right numbers like nested sets",
+      "Each row stores a full path string"
+    ],
+    "correct": 0
+  }
+}

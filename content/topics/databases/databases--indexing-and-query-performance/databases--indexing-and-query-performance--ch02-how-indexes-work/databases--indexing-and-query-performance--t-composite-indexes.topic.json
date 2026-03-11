@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-composite-indexes",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch02-how-indexes-work",
+  "title": "Composite Indexes",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A quick win: understand Composite Indexes.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A query filters by country AND city. A single-column index on country helps, but a composite index is better.",
+      "visual": "🔗"
+    },
+    "buildup": {
+      "text": "A composite index on (country, city) sorts by country first, then city within each country.",
+      "visual": "🗂️"
+    },
+    "discovery": {
+      "text": "The leftmost prefix rule: (country, city) supports queries on country alone, but NOT city alone.",
+      "visual": "📏"
+    },
+    "twist": {
+      "text": "Column order matters enormously. (city, country) and (country, city) serve different queries.",
+      "visual": "🔀"
+    },
+    "climax": {
+      "text": "Design composite indexes around your most common query patterns. Order columns by selectivity.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Composite indexes: column order defines which queries they accelerate.",
+      "visual": "📐"
+    }
+  },
+  "quiz": {
+    "question": "What is the leftmost prefix rule for composite indexes?",
+    "options": [
+      "The index can only be used for queries that start with the leftmost column in the index",
+      "The first column in the index must always be a string",
+      "You must always query all columns in the composite index"
+    ],
+    "correct": 0
+  }
+}

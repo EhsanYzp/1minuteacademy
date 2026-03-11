@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-soft-deletes",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch02-relational-patterns",
+  "title": "Soft Deletes",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A quick, practical guide to Soft Deletes.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A user deletes their account. Do you actually DELETE the row? What about their orders, reviews, and referral credits?",
+      "visual": "🗑️"
+    },
+    "buildup": {
+      "text": "Soft delete: add a deleted_at column. Set it to a timestamp instead of removing the row.",
+      "visual": "📅"
+    },
+    "discovery": {
+      "text": "All queries filter WHERE deleted_at IS NULL. Deleted data exists but is invisible to normal operations.",
+      "visual": "👻"
+    },
+    "twist": {
+      "text": "UNIQUE constraints break with soft deletes. Two rows with the same email can exist if one is soft-deleted.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Fix: partial unique indexes. CREATE UNIQUE INDEX ON users(email) WHERE deleted_at IS NULL.",
+      "visual": "🔧"
+    },
+    "punchline": {
+      "text": "Soft deletes: hide instead of remove. Use partial indexes for uniqueness.",
+      "visual": "🛡️"
+    }
+  },
+  "quiz": {
+    "question": "How do partial unique indexes solve the soft delete uniqueness problem?",
+    "options": [
+      "They enforce uniqueness only among non-deleted rows by filtering on deleted_at IS NULL",
+      "They prevent any rows from being soft deleted",
+      "Partial indexes make all queries faster"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--sql-fundamentals--t-upsert-insert-or-update",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "SQL Fundamentals",
+  "course_id": "databases--sql-fundamentals",
+  "chapter_id": "databases--sql-fundamentals--ch03-writing-data",
+  "title": "UPSERT: Insert or Update",
+  "emoji": "📝",
+  "color": "#3B82F6",
+  "description": "A quick win: understand UPSERT: Insert or Update.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A user signs in. If they exist, update last_login. If not, create them. UPSERT does both in one query.",
+      "visual": "🔄"
+    },
+    "buildup": {
+      "text": "Postgres: INSERT ... ON CONFLICT DO UPDATE. MySQL: INSERT ... ON DUPLICATE KEY UPDATE.",
+      "visual": "🧩"
+    },
+    "discovery": {
+      "text": "UPSERT is atomic. No race condition between checking existence and inserting or updating.",
+      "visual": "🔒"
+    },
+    "twist": {
+      "text": "Without UPSERT, you'd need two queries and a transaction. More code, more chances for bugs.",
+      "visual": "🐛"
+    },
+    "climax": {
+      "text": "UPSERT is perfect for syncing data, deduplication, and idempotent API handlers.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "UPSERT: one query, two outcomes. Insert or update, atomically.",
+      "visual": "⚡"
+    }
+  },
+  "quiz": {
+    "question": "Why is UPSERT safer than separate INSERT and UPDATE queries?",
+    "options": [
+      "It's atomic, preventing race conditions between checking and writing",
+      "It uses less disk space",
+      "It bypasses all database constraints"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-the-n-1-query-problem",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch01-why-queries-are-slow",
+  "title": "The N+1 Query Problem",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A quick, practical guide to The N+1 Query Problem.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Load 100 orders, then fetch the customer for each one. That's 101 queries instead of 1. The N+1 problem.",
+      "visual": "🔁"
+    },
+    "buildup": {
+      "text": "ORMs hide this: order.customer triggers a query per iteration. It looks clean but performs terribly.",
+      "visual": "🐌"
+    },
+    "discovery": {
+      "text": "Fix it with eager loading: fetch all 100 orders and their customers in two queries, not 101.",
+      "visual": "🚀"
+    },
+    "twist": {
+      "text": "A JOIN can do it in one query. But ORMs default to lazy loading, which creates N+1 silently.",
+      "visual": "👻"
+    },
+    "climax": {
+      "text": "N+1 is the most common ORM performance bug. Use query logging to detect it early.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "N+1: innocent-looking code, disastrous performance. Always check.",
+      "visual": "🔍"
+    }
+  },
+  "quiz": {
+    "question": "How does eager loading solve the N+1 query problem?",
+    "options": [
+      "It fetches all related records in one or two queries instead of one per record",
+      "It caches all queries in memory forever",
+      "It disables the ORM and uses raw SQL"
+    ],
+    "correct": 0
+  }
+}

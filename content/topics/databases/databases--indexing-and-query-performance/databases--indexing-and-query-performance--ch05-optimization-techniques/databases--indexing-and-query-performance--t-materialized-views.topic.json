@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-materialized-views",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch05-optimization-techniques",
+  "title": "Materialized Views",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "Learn Materialized Views in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A dashboard query joins five tables and aggregates millions of rows. It takes 8 seconds. Every. Single. Load.",
+      "visual": "🐌"
+    },
+    "buildup": {
+      "text": "A materialized view stores the query result. The dashboard reads the cached result instead of recomputing.",
+      "visual": "💾"
+    },
+    "discovery": {
+      "text": "CREATE MATERIALIZED VIEW dashboard_data AS SELECT ... REFRESH MATERIALIZED VIEW dashboard_data to update it.",
+      "visual": "🔄"
+    },
+    "twist": {
+      "text": "The data is stale between refreshes. REFRESH MATERIALIZED VIEW CONCURRENTLY updates without blocking reads.",
+      "visual": "⚡"
+    },
+    "climax": {
+      "text": "Schedule refreshes: every 5 minutes, every hour, or after data loads. Match freshness to business needs.",
+      "visual": "⏰"
+    },
+    "punchline": {
+      "text": "Materialized views: pre-computed results. Fast reads, controlled staleness.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "What is the trade-off of using materialized views?",
+    "options": [
+      "Reads are very fast but data can be stale between refreshes",
+      "They make all queries slower",
+      "Materialized views cannot be indexed"
+    ],
+    "correct": 0
+  }
+}

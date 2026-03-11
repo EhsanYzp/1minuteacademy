@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-not-null-and-defaults",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch03-keys-and-constraints",
+  "title": "NOT NULL and Defaults",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "One-minute skill: NOT NULL and Defaults.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A user signs up but skips the bio field. Should it be NULL or an empty string? NOT NULL with a default decides.",
+      "visual": "❓"
+    },
+    "buildup": {
+      "text": "NOT NULL means the column must always have a value. The database rejects inserts that leave it empty.",
+      "visual": "🚫"
+    },
+    "discovery": {
+      "text": "DEFAULT provides a fallback: created_at DEFAULT NOW(), status DEFAULT 'active'. No explicit value needed.",
+      "visual": "⏰"
+    },
+    "twist": {
+      "text": "NULLs complicate queries. WHERE name != 'Ada' excludes NULL rows. Three-valued logic trips up even senior devs.",
+      "visual": "🤯"
+    },
+    "climax": {
+      "text": "Use NOT NULL by default. Allow NULL only when the absence of a value has real meaning.",
+      "visual": "📏"
+    },
+    "punchline": {
+      "text": "Default to NOT NULL. Allow NULL only when absence means something.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "Why can NULL values complicate SQL queries?",
+    "options": [
+      "SQL uses three-valued logic where NULL comparisons behave unexpectedly",
+      "NULL values take up more disk space",
+      "NULLs prevent the table from being indexed"
+    ],
+    "correct": 0
+  }
+}

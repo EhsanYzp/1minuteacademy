@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-relationships-one-to-many",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch01-foundations",
+  "title": "Relationships: One-to-Many",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A tiny lesson with a big payoff: Relationships: One-to-Many.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "One customer places many orders. One department has many employees. One blog post has many comments.",
+      "visual": "1️⃣"
+    },
+    "buildup": {
+      "text": "A one-to-many relationship uses a foreign key on the 'many' side pointing to the 'one' side.",
+      "visual": "🔑"
+    },
+    "discovery": {
+      "text": "orders.customer_id references customers.id. Each order knows which customer it belongs to.",
+      "visual": "📎"
+    },
+    "twist": {
+      "text": "Indexing the foreign key is critical. Without it, finding all orders for a customer requires a full table scan.",
+      "visual": "🔍"
+    },
+    "climax": {
+      "text": "One-to-many is the most common relationship. Master it and you've covered 80% of data modeling.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "One-to-many: foreign key on the many side. Index it for fast lookups.",
+      "visual": "⚡"
+    }
+  },
+  "quiz": {
+    "question": "Where does the foreign key go in a one-to-many relationship?",
+    "options": [
+      "On the 'many' side, pointing back to the 'one' side",
+      "On the 'one' side, listing all related records",
+      "In a separate junction table"
+    ],
+    "correct": 0
+  }
+}

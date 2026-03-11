@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-hot-row-contention",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch05-concurrency-problems",
+  "title": "Hot Row Contention",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A short lesson to help you apply Hot Row Contention.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A global counter row is updated by every request. 10,000 requests per second, all waiting for one lock.",
+      "visual": "🔥"
+    },
+    "buildup": {
+      "text": "Hot rows are single rows that many transactions compete to update. They serialize all concurrent access.",
+      "visual": "🚦"
+    },
+    "discovery": {
+      "text": "Fix: use sharded counters. Split one counter into 10 rows, each incrementing independently. Sum them when reading.",
+      "visual": "🧩"
+    },
+    "twist": {
+      "text": "Queue tables where every worker pops row 1 have the same issue. SKIP LOCKED lets workers grab different rows.",
+      "visual": "⏭️"
+    },
+    "climax": {
+      "text": "Identify hot rows with pg_stat_activity or lock monitoring. If many transactions wait on one row, it's hot.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "Hot rows bottleneck concurrency. Shard or skip locked rows to spread load.",
+      "visual": "⚡"
+    }
+  },
+  "quiz": {
+    "question": "How do sharded counters reduce hot row contention?",
+    "options": [
+      "They split one counter into multiple rows so concurrent updates don't all compete for the same lock",
+      "They eliminate the need for transactions entirely",
+      "Sharded counters store data in memory instead of disk"
+    ],
+    "correct": 0
+  }
+}

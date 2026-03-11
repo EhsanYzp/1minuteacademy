@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-rebalancing-partitions",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch03-partitioning",
+  "title": "Rebalancing Partitions",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "A tiny lesson with a big payoff: Rebalancing Partitions.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A cluster has 4 nodes. Add a 5th node. Data must be redistributed. But the app can't go down during rebalancing.",
+      "visual": "🔄"
+    },
+    "buildup": {
+      "text": "Rebalancing moves data from overloaded nodes to new ones. It must happen online, without downtime.",
+      "visual": "🔧"
+    },
+    "discovery": {
+      "text": "Fixed partition count: create 1000 partitions across 4 nodes. Add a 5th node, move 200 partitions to it.",
+      "visual": "📦"
+    },
+    "twist": {
+      "text": "Automatic rebalancing can cause thundering herds: all nodes move data at once, overwhelming the network.",
+      "visual": "🌊"
+    },
+    "climax": {
+      "text": "Throttle rebalancing. Move partitions gradually. Monitor network bandwidth and latency during the process.",
+      "visual": "🎛️"
+    },
+    "punchline": {
+      "text": "Rebalance gradually. Don't move all data at once. Throttle and monitor.",
+      "visual": "📊"
+    }
+  },
+  "quiz": {
+    "question": "Why is it important to throttle partition rebalancing?",
+    "options": [
+      "Moving too much data at once can overwhelm the network and degrade performance for active queries",
+      "Rebalancing must complete in under one second",
+      "Throttling prevents data loss during moves"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--famous-database-disasters--t-capital-one-breach-2019",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Famous Database Disasters",
+  "course_id": "databases--famous-database-disasters",
+  "chapter_id": "databases--famous-database-disasters--ch04-security-breaches",
+  "title": "Capital One Breach 2019",
+  "emoji": "🔥",
+  "color": "#F97316",
+  "description": "A quick win: understand Capital One Breach 2019.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A former AWS employee exploits a misconfigured WAF to access Capital One's S3 buckets. 100 million records exposed.",
+      "visual": "☁️"
+    },
+    "buildup": {
+      "text": "The attacker used server-side request forgery (SSRF) to access AWS metadata and obtain IAM credentials.",
+      "visual": "🔑"
+    },
+    "discovery": {
+      "text": "With the credentials, they accessed S3 buckets containing credit card applications, SSNs, and bank accounts.",
+      "visual": "💳"
+    },
+    "twist": {
+      "text": "Data was encrypted at rest. But stolen credentials could decrypt it. Encryption without access control fails.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Lesson: encryption alone isn't enough. Combine it with strict IAM policies, network isolation, and monitoring.",
+      "visual": "🧅"
+    },
+    "punchline": {
+      "text": "Encryption without access control is a locked door with the key taped to it.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why didn't encryption at rest protect Capital One's data?",
+    "options": [
+      "The stolen credentials also had permission to decrypt the data, bypassing the encryption",
+      "Capital One didn't actually encrypt their data",
+      "The attacker broke the encryption algorithm"
+    ],
+    "correct": 0
+  }
+}

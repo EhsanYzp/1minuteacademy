@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-table-level-locks",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch04-locking-mechanisms",
+  "title": "Table-Level Locks",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A short lesson to help you apply Table-Level Locks.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "ALTER TABLE adds a column. The entire table is locked. No reads, no writes. Everyone waits.",
+      "visual": "🔒"
+    },
+    "buildup": {
+      "text": "Table locks block everything on the table. They're used for DDL operations and some maintenance tasks.",
+      "visual": "🚧"
+    },
+    "discovery": {
+      "text": "LOCK TABLE IN EXCLUSIVE MODE explicitly locks a table. Useful for batch operations that must be alone.",
+      "visual": "🏗️"
+    },
+    "twist": {
+      "text": "In Postgres, most ALTER TABLE operations need an ACCESS EXCLUSIVE lock — the most restrictive kind.",
+      "visual": "⛔"
+    },
+    "climax": {
+      "text": "Lock duration matters: a 2-second table lock during peak traffic can queue hundreds of waiting connections.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "Table locks: nuclear option. Use briefly and during low traffic only.",
+      "visual": "☢️"
+    }
+  },
+  "quiz": {
+    "question": "Why are table-level locks dangerous during peak traffic?",
+    "options": [
+      "They block all operations on the table, causing queued connections and cascading slowdowns",
+      "They permanently prevent future queries on the table",
+      "Table locks only exist in very old databases"
+    ],
+    "correct": 0
+  }
+}

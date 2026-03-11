@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-scaling-reads-vs-writes",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch01-why-distribute",
+  "title": "Scaling Reads vs Writes",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "One-minute skill: Scaling Reads vs Writes.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "An app gets 95% reads and 5% writes. Add read replicas and 95% of traffic is handled. Writes are still bottlenecked.",
+      "visual": "📊"
+    },
+    "buildup": {
+      "text": "Read replicas scale reads linearly. Add 3 replicas, handle 3x reads. But all writes still go to one primary.",
+      "visual": "📈"
+    },
+    "discovery": {
+      "text": "To scale writes, you need partitioning: split data across multiple primaries. Each handles a portion of writes.",
+      "visual": "🧩"
+    },
+    "twist": {
+      "text": "Partitioning writes adds complexity: cross-partition queries, distributed transactions, rebalancing.",
+      "visual": "🤯"
+    },
+    "climax": {
+      "text": "Start with read replicas. Only partition writes when the primary truly can't keep up.",
+      "visual": "📏"
+    },
+    "punchline": {
+      "text": "Scale reads with replicas, writes with partitions. Partition only when you must.",
+      "visual": "🧠"
+    }
+  },
+  "quiz": {
+    "question": "Why is scaling writes harder than scaling reads?",
+    "options": [
+      "Writes require partitioning data across primaries, adding complexity for cross-partition operations",
+      "Write operations use less CPU than read operations",
+      "Databases can only process one write per second"
+    ],
+    "correct": 0
+  }
+}

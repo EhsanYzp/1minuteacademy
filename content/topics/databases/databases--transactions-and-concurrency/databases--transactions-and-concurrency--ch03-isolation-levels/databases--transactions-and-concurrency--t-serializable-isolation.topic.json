@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-serializable-isolation",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch03-isolation-levels",
+  "title": "Serializable Isolation",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A 60-second lesson on Serializable Isolation.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Serializable ensures transactions behave as if they ran one after another. No concurrency anomalies at all.",
+      "visual": "📝"
+    },
+    "buildup": {
+      "text": "The database detects conflicts between concurrent transactions and aborts one of them to maintain correctness.",
+      "visual": "🚫"
+    },
+    "discovery": {
+      "text": "Postgres uses Serializable Snapshot Isolation (SSI). It detects dependency cycles and rolls back the victim.",
+      "visual": "🔄"
+    },
+    "twist": {
+      "text": "Serializable transactions can fail due to serialization errors. Your app must retry them.",
+      "visual": "🔁"
+    },
+    "climax": {
+      "text": "Use serializable for critical invariants: account balances, inventory counts, seat reservations.",
+      "visual": "🎫"
+    },
+    "punchline": {
+      "text": "Serializable: maximum safety, but your app must handle retries.",
+      "visual": "🛡️"
+    }
+  },
+  "quiz": {
+    "question": "What must your application do when using serializable isolation?",
+    "options": [
+      "Handle serialization errors by retrying the failed transaction",
+      "Avoid using any indexes",
+      "Open a new database connection for each query"
+    ],
+    "correct": 0
+  }
+}

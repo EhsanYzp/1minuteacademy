@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-choosing-the-right-level",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch03-isolation-levels",
+  "title": "Choosing the Right Level",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A 60-second lesson on Choosing the Right Level.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Read Committed for most queries. Repeatable Read for reporting. Serializable for money. Match the level to the need.",
+      "visual": "🗺️"
+    },
+    "buildup": {
+      "text": "Higher isolation costs more: more locks, more aborts, less throughput. Don't over-isolate.",
+      "visual": "💰"
+    },
+    "discovery": {
+      "text": "You can set isolation per transaction: SET TRANSACTION ISOLATION LEVEL SERIALIZABLE. Only critical paths pay the cost.",
+      "visual": "🎯"
+    },
+    "twist": {
+      "text": "Many developers never change the default. They inherit Read Committed and discover anomalies in production.",
+      "visual": "🐛"
+    },
+    "climax": {
+      "text": "Understand your anomalies first, then pick the level that prevents them. Don't guess.",
+      "visual": "🧠"
+    },
+    "punchline": {
+      "text": "Match the isolation level to the anomaly you need to prevent.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "Why should you set isolation level per transaction instead of globally?",
+    "options": [
+      "Only critical transactions need high isolation; others can run with less overhead",
+      "Global settings are not supported by any database",
+      "Per-transaction settings are faster in every case"
+    ],
+    "correct": 0
+  }
+}

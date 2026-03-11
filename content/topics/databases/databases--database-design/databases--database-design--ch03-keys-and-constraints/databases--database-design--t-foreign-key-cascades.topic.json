@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-foreign-key-cascades",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch03-keys-and-constraints",
+  "title": "Foreign Key Cascades",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "A fast breakdown of Foreign Key Cascades for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Delete a customer who has orders. ON DELETE CASCADE removes the orders too. Automatic cleanup.",
+      "visual": "🗑️"
+    },
+    "buildup": {
+      "text": "CASCADE options: ON DELETE CASCADE, ON DELETE SET NULL, ON DELETE RESTRICT. Each handles orphans differently.",
+      "visual": "🔗"
+    },
+    "discovery": {
+      "text": "RESTRICT blocks the delete entirely. SET NULL clears the foreign key. CASCADE deletes the child rows.",
+      "visual": "📋"
+    },
+    "twist": {
+      "text": "Cascading deletes can be dangerous. Delete one parent row and hundreds of children vanish silently.",
+      "visual": "💀"
+    },
+    "climax": {
+      "text": "Use RESTRICT for safety in most cases. Use CASCADE only when child data is meaningless without the parent.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "CASCADE is powerful. RESTRICT is safer. Choose deliberately.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "When is ON DELETE CASCADE appropriate?",
+    "options": [
+      "When child records have no meaning without the parent row",
+      "Whenever you want to save disk space",
+      "It should always be used as the default"
+    ],
+    "correct": 0
+  }
+}

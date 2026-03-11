@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-covering-indexes",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch02-how-indexes-work",
+  "title": "Covering Indexes",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "Learn Covering Indexes in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The query needs id and email. If both are in the index, the database never reads the actual table. Index-only scan.",
+      "visual": "🎯"
+    },
+    "buildup": {
+      "text": "A covering index includes all columns the query needs. The database answers from the index alone.",
+      "visual": "📋"
+    },
+    "discovery": {
+      "text": "CREATE INDEX idx ON users(email) INCLUDE (name). Now queries for email and name skip the table heap.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "Covering indexes are larger because they store extra columns. More storage, but much faster reads.",
+      "visual": "💾"
+    },
+    "climax": {
+      "text": "For high-frequency queries, a covering index can cut response time in half by eliminating the table lookup.",
+      "visual": "📉"
+    },
+    "punchline": {
+      "text": "If the index has everything the query needs, the table is never read.",
+      "visual": "🚀"
+    }
+  },
+  "quiz": {
+    "question": "What makes a covering index faster than a regular index?",
+    "options": [
+      "It contains all columns the query needs, eliminating the table lookup",
+      "It compresses data to half the size",
+      "It only works on the primary key column"
+    ],
+    "correct": 0
+  }
+}

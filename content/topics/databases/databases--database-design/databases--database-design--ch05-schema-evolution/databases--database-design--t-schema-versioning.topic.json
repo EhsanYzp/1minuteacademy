@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-schema-versioning",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch05-schema-evolution",
+  "title": "Schema Versioning",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "One-minute skill: Schema Versioning.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Which migration has been applied? A schema_migrations table tracks every version that ran successfully.",
+      "visual": "📋"
+    },
+    "buildup": {
+      "text": "Each migration gets a unique version: a timestamp or sequence number. Applied migrations are recorded.",
+      "visual": "🔢"
+    },
+    "discovery": {
+      "text": "Run 'migrate up': pending migrations apply. Run 'migrate status': see what's applied and what's pending.",
+      "visual": "📊"
+    },
+    "twist": {
+      "text": "Two developers create migration 005 for different changes. Conflict! Use timestamps instead of sequence numbers.",
+      "visual": "⏰"
+    },
+    "climax": {
+      "text": "Store migrations in version control alongside app code. The schema and code evolve together.",
+      "visual": "🔗"
+    },
+    "punchline": {
+      "text": "Track migrations like code commits. Every change is versioned.",
+      "visual": "📝"
+    }
+  },
+  "quiz": {
+    "question": "Why are timestamps better than sequence numbers for migration versions?",
+    "options": [
+      "They avoid conflicts when multiple developers create migrations at the same time",
+      "Timestamps make migrations run faster",
+      "Sequence numbers are not supported by any migration tool"
+    ],
+    "correct": 0
+  }
+}

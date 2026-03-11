@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-secondary-indexes-in-partitions",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch03-partitioning",
+  "title": "Secondary Indexes in Partitions",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "A quick, practical guide to Secondary Indexes in Partitions.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Data is partitioned by user_id. You need to query by email. The email index must span all partitions.",
+      "visual": "🔍"
+    },
+    "buildup": {
+      "text": "Local indexes live on each partition. A query by email hits every partition to find the right one. Scatter-gather.",
+      "visual": "🐢"
+    },
+    "discovery": {
+      "text": "Global indexes partition the index separately. Email queries hit one index partition, then one data partition.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "Global indexes must be updated on every write. Cross-partition index updates add latency to writes.",
+      "visual": "⏳"
+    },
+    "climax": {
+      "text": "Choose local for write-heavy workloads, global for read-heavy. There's no free lunch.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "Local index: fast writes, slow reads. Global index: slow writes, fast reads.",
+      "visual": "🔀"
+    }
+  },
+  "quiz": {
+    "question": "What is the trade-off between local and global secondary indexes?",
+    "options": [
+      "Local indexes have fast writes but require scatter-gather reads; global indexes have fast reads but slower writes",
+      "Local indexes take more disk space",
+      "Global indexes don't support unique constraints"
+    ],
+    "correct": 0
+  }
+}

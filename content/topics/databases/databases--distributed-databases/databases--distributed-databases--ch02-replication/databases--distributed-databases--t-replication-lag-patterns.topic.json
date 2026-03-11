@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-replication-lag-patterns",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch02-replication",
+  "title": "Replication Lag Patterns",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "A short lesson to help you apply Replication Lag Patterns.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A user updates their profile, refreshes the page, and sees the old data. Replication lag strikes again.",
+      "visual": "😤"
+    },
+    "buildup": {
+      "text": "Read-after-write consistency: after writing, the user should always see their own update.",
+      "visual": "📝"
+    },
+    "discovery": {
+      "text": "Fix: route the user's reads to the leader for a short time after their write. They always see fresh data.",
+      "visual": "🎯"
+    },
+    "twist": {
+      "text": "Monotonic reads prevent time travel: if a user reads version 5, they should never see version 4 next.",
+      "visual": "⏰"
+    },
+    "climax": {
+      "text": "Sticky sessions pin a user to one replica. They always read from the same follower, preventing inconsistency.",
+      "visual": "📌"
+    },
+    "punchline": {
+      "text": "Lag happens. Route reads wisely to mask it from users.",
+      "visual": "🧠"
+    }
+  },
+  "quiz": {
+    "question": "How does read-after-write consistency work?",
+    "options": [
+      "After writing, the user's reads are routed to the leader so they always see their own update",
+      "All reads are always sent to every replica simultaneously",
+      "The database delays all reads by a fixed amount of time"
+    ],
+    "correct": 0
+  }
+}

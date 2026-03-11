@@ -1,0 +1,559 @@
+{
+  "categoryId": "databases",
+  "subject": "Databases",
+  "courseId": "databases--data-modeling-patterns",
+  "courseTitle": "Data Modeling Patterns",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "databases--data-modeling-patterns--ch01-foundations", "title": "Foundations", "position": 1 },
+    { "id": "databases--data-modeling-patterns--ch02-relational-patterns", "title": "Relational Patterns", "position": 2 },
+    { "id": "databases--data-modeling-patterns--ch03-document-patterns", "title": "Document Patterns", "position": 3 },
+    { "id": "databases--data-modeling-patterns--ch04-time-and-history", "title": "Time and History", "position": 4 },
+    { "id": "databases--data-modeling-patterns--ch05-hierarchies-and-graphs", "title": "Hierarchies and Graphs", "position": 5 },
+    { "id": "databases--data-modeling-patterns--ch06-advanced-patterns", "title": "Advanced Patterns", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch01-foundations",
+      "title": "What Is a Data Model",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your app needs users, orders, and products. How you structure them in the database is your data model.", "visual": "📐" },
+        "buildup": { "text": "A data model defines entities, their attributes, and how they relate. It shapes every query you write.", "visual": "🗺️" },
+        "discovery": { "text": "Good models make common queries simple and fast. Bad models force workarounds and slow joins.", "visual": "⚡" },
+        "twist": { "text": "The data model isn't just a database concern. It reflects how your business thinks about its domain.", "visual": "🧠" },
+        "climax": { "text": "Change the model later and you rewrite queries, migrate data, and update application code. Get it right early.", "visual": "🏗️" },
+        "punchline": { "text": "A data model is a contract between your business logic and your database.", "visual": "📝" }
+      },
+      "quiz": {
+        "question": "Why is getting the data model right important early on?",
+        "options": ["Changing it later requires rewriting queries, migrating data, and updating application code", "Data models cannot be changed after the database is created", "Early models are always faster than later ones"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch01-foundations",
+      "title": "Entities and Attributes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A user has a name, email, and created_at. These are attributes. The user itself is an entity.", "visual": "👤" },
+        "buildup": { "text": "Entities are the nouns of your domain: users, products, orders. Attributes are their properties.", "visual": "📋" },
+        "discovery": { "text": "Choose the right data types for attributes. An email is text, a price is decimal, a timestamp is timestamptz.", "visual": "📏" },
+        "twist": { "text": "Not every real-world concept needs its own entity. A phone number might be an attribute, not a separate table.", "visual": "🤔" },
+        "climax": { "text": "Over-modeling creates too many tables and joins. Under-modeling stuffs unrelated data into one table.", "visual": "⚖️" },
+        "punchline": { "text": "Model entities as the nouns of your domain. Keep attributes focused and typed.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is the risk of over-modeling your data?",
+        "options": ["Creating too many tables and requiring excessive joins for simple queries", "Over-modeling makes databases faster", "Over-modeling only affects NoSQL databases"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch01-foundations",
+      "title": "Relationships: One-to-Many",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "One customer places many orders. One department has many employees. One blog post has many comments.", "visual": "1️⃣" },
+        "buildup": { "text": "A one-to-many relationship uses a foreign key on the 'many' side pointing to the 'one' side.", "visual": "🔑" },
+        "discovery": { "text": "orders.customer_id references customers.id. Each order knows which customer it belongs to.", "visual": "📎" },
+        "twist": { "text": "Indexing the foreign key is critical. Without it, finding all orders for a customer requires a full table scan.", "visual": "🔍" },
+        "climax": { "text": "One-to-many is the most common relationship. Master it and you've covered 80% of data modeling.", "visual": "📊" },
+        "punchline": { "text": "One-to-many: foreign key on the many side. Index it for fast lookups.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "Where does the foreign key go in a one-to-many relationship?",
+        "options": ["On the 'many' side, pointing back to the 'one' side", "On the 'one' side, listing all related records", "In a separate junction table"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch01-foundations",
+      "title": "Relationships: Many-to-Many",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A student enrolls in many courses. A course has many students. Neither side can hold a single foreign key.", "visual": "🔗" },
+        "buildup": { "text": "A junction table (enrollment) bridges the two: student_id and course_id as a composite key.", "visual": "🌉" },
+        "discovery": { "text": "The junction table can hold extra data: enrollment_date, grade, status. It's a real entity, not just glue.", "visual": "📝" },
+        "twist": { "text": "In document databases, many-to-many is modeled by embedding arrays of IDs. But updates are harder.", "visual": "📄" },
+        "climax": { "text": "Tags, categories, permissions — many-to-many appears everywhere. Recognize it and use a junction table.", "visual": "🏷️" },
+        "punchline": { "text": "Many-to-many: use a junction table. It can hold relationship-specific data too.", "visual": "🧩" }
+      },
+      "quiz": {
+        "question": "Why might a junction table have its own columns beyond the two foreign keys?",
+        "options": ["To store data specific to the relationship, like an enrollment date or a grade", "Junction tables must always have exactly two columns", "Extra columns make the junction table easier to delete"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch01-foundations",
+      "title": "Naming Conventions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "One table is called Users, another user_data, another tblUser. Three devs, three styles. Chaos.", "visual": "🤯" },
+        "buildup": { "text": "Consistent naming makes queries readable. Pick a convention (snake_case, singular/plural) and stick to it.", "visual": "📏" },
+        "discovery": { "text": "Common: plural snake_case tables (users, order_items), singular snake_case columns (email, created_at).", "visual": "✅" },
+        "twist": { "text": "Avoid reserved words as names. A table called 'order' or a column called 'user' causes quoting headaches.", "visual": "⚠️" },
+        "climax": { "text": "Boolean columns read best as questions: is_active, has_paid, can_edit. The intent is clear at a glance.", "visual": "📖" },
+        "punchline": { "text": "Name consistently. Your team will read these names thousands of times.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "Why should you avoid reserved words like 'order' as table names?",
+        "options": ["They clash with SQL keywords and require constant quoting in queries", "Reserved words make tables invisible to the query planner", "Databases reject tables with reserved word names"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch02-relational-patterns",
+      "title": "Lookup Tables",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "An order has a status: pending, shipped, delivered, cancelled. Store it as text? Or reference a lookup table?", "visual": "📋" },
+        "buildup": { "text": "A lookup table (order_statuses) holds valid values. The order table references it via a foreign key.", "visual": "🔗" },
+        "discovery": { "text": "Lookup tables enforce valid values at the database level. No typos like 'Shiped' or 'pendng' can sneak in.", "visual": "🛡️" },
+        "twist": { "text": "For simple cases, ENUM or CHECK works. Lookup tables shine when statuses need metadata like labels or sort order.", "visual": "📊" },
+        "climax": { "text": "Adding a new status? Insert a row in the lookup table. No schema migration, no code deploy.", "visual": "🚀" },
+        "punchline": { "text": "Lookup tables: enforced valid values with easy extensibility. No typos.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "When is a lookup table better than an ENUM type?",
+        "options": ["When statuses need metadata like labels, descriptions, or sort order, and when values change often", "When you have fewer than three possible values", "ENUMs are always better than lookup tables"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch02-relational-patterns",
+      "title": "Polymorphic Associations",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Comments can belong to posts, photos, or videos. One comment table, three possible parents. How do you model that?", "visual": "🔀" },
+        "buildup": { "text": "Polymorphic association: the comment has commentable_type and commentable_id. Type says which table, ID says which row.", "visual": "🏷️" },
+        "discovery": { "text": "Rails and Laravel use this pattern. It's convenient but breaks foreign key constraints — the DB can't enforce it.", "visual": "⚠️" },
+        "twist": { "text": "Alternative: use separate foreign key columns (post_id, photo_id, video_id) with a CHECK that exactly one is non-null.", "visual": "📏" },
+        "climax": { "text": "Another alternative: separate join tables per type. More tables, but full referential integrity.", "visual": "🔗" },
+        "punchline": { "text": "Polymorphic: flexible but no FK enforcement. Trade convenience for integrity.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What is the main drawback of polymorphic associations?",
+        "options": ["The database cannot enforce foreign key constraints because the reference target depends on a type column", "They use too much disk space", "Polymorphic associations don't work with SQL databases"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch02-relational-patterns",
+      "title": "Self-Referencing Tables",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An employee has a manager. The manager is also an employee. The employees table references itself.", "visual": "🔄" },
+        "buildup": { "text": "employees.manager_id is a foreign key to employees.id. The table joins to itself to find reporting chains.", "visual": "🔗" },
+        "discovery": { "text": "Self-joins: SELECT e.name, m.name FROM employees e JOIN employees m ON e.manager_id = m.id.", "visual": "📝" },
+        "twist": { "text": "Top-level entries (CEO) have manager_id = NULL. Always handle the NULL case in your queries and code.", "visual": "🏔️" },
+        "climax": { "text": "Categories with subcategories, folders with subfolders, comments with replies — self-references are everywhere.", "visual": "🌐" },
+        "punchline": { "text": "Self-referencing: a table pointing to itself. Hierarchies in one table.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "How do you handle the root node in a self-referencing table?",
+        "options": ["Set the parent foreign key to NULL for root-level entries", "Create a separate table for root nodes", "Root nodes are not allowed in self-referencing tables"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch02-relational-patterns",
+      "title": "Soft Deletes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A user deletes their account. Do you actually DELETE the row? What about their orders, reviews, and referral credits?", "visual": "🗑️" },
+        "buildup": { "text": "Soft delete: add a deleted_at column. Set it to a timestamp instead of removing the row.", "visual": "📅" },
+        "discovery": { "text": "All queries filter WHERE deleted_at IS NULL. Deleted data exists but is invisible to normal operations.", "visual": "👻" },
+        "twist": { "text": "UNIQUE constraints break with soft deletes. Two rows with the same email can exist if one is soft-deleted.", "visual": "⚠️" },
+        "climax": { "text": "Fix: partial unique indexes. CREATE UNIQUE INDEX ON users(email) WHERE deleted_at IS NULL.", "visual": "🔧" },
+        "punchline": { "text": "Soft deletes: hide instead of remove. Use partial indexes for uniqueness.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "How do partial unique indexes solve the soft delete uniqueness problem?",
+        "options": ["They enforce uniqueness only among non-deleted rows by filtering on deleted_at IS NULL", "They prevent any rows from being soft deleted", "Partial indexes make all queries faster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch02-relational-patterns",
+      "title": "EAV: Entity-Attribute-Value",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Products have custom attributes: shirts have sizes, laptops have RAM, books have pages. Different columns per type.", "visual": "🏷️" },
+        "buildup": { "text": "EAV uses three columns: entity_id, attribute_name, attribute_value. Any attribute for any entity.", "visual": "📊" },
+        "discovery": { "text": "EAV is maximally flexible. Add new attributes without schema changes. Just insert a new row.", "visual": "🔓" },
+        "twist": { "text": "EAV is a query nightmare. Simple lookups require pivoting rows into columns. No type safety, no constraints.", "visual": "😱" },
+        "climax": { "text": "Modern alternative: use a JSONB column for flexible attributes. You get flexibility with indexing and type checks.", "visual": "📄" },
+        "punchline": { "text": "EAV: flexible but painful. Prefer JSONB columns for dynamic attributes.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "What is the main problem with the EAV pattern?",
+        "options": ["Queries are complex, requiring pivoting, and there's no type safety or constraint enforcement", "EAV tables cannot store more than 1000 attributes", "EAV only works with NoSQL databases"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch03-document-patterns",
+      "title": "Embedding vs Referencing",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A blog post has comments. Embed comments inside the post document? Or store them separately and reference?", "visual": "📄" },
+        "buildup": { "text": "Embedding puts related data in one document. One read fetches everything. Fast for reads.", "visual": "📦" },
+        "discovery": { "text": "Referencing stores a foreign ID. Like relational joins, but done in application code, not the database.", "visual": "🔗" },
+        "twist": { "text": "Embed when data is read together and rarely updated independently. Reference when it changes often or is shared.", "visual": "⚖️" },
+        "climax": { "text": "MongoDB's 16 MB document limit forces you to reference if embedded data grows too large.", "visual": "📏" },
+        "punchline": { "text": "Embed for read speed. Reference for flexibility and independent updates.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "When should you embed data in a document database?",
+        "options": ["When the data is always read together and rarely updated independently", "When the data changes frequently and is shared across documents", "Embedding is always better than referencing"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch03-document-patterns",
+      "title": "Bucket Pattern",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A sensor sends data every second. One document per reading creates millions of tiny documents. Too many.", "visual": "📡" },
+        "buildup": { "text": "The bucket pattern groups readings into time buckets. One document per hour holds 3,600 readings in an array.", "visual": "🪣" },
+        "discovery": { "text": "Fewer documents mean less overhead: fewer indexes, fewer disk seeks, faster range queries.", "visual": "⚡" },
+        "twist": { "text": "Pick bucket size by access pattern. Too large loads unneeded data. Too small loses the benefit.", "visual": "📏" },
+        "climax": { "text": "MongoDB's time series collections automate this pattern. They bucket data by time automatically.", "visual": "⏰" },
+        "punchline": { "text": "Bucket pattern: group frequent writes into fewer documents. Less overhead.", "visual": "📦" }
+      },
+      "quiz": {
+        "question": "What does the bucket pattern optimize for?",
+        "options": ["Reducing the number of documents by grouping frequent writes into time-based buckets", "Making each individual write faster", "Eliminating the need for indexes entirely"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch03-document-patterns",
+      "title": "Computed Pattern",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every page load calculates average rating from 10,000 reviews. That's 10,000 reads for a single number.", "visual": "📊" },
+        "buildup": { "text": "The computed pattern stores pre-calculated values. The product document holds average_rating and review_count.", "visual": "🧮" },
+        "discovery": { "text": "When a review is added, update the average incrementally: new_avg = ((old_avg × count) + new_rating) / (count + 1).", "visual": "📝" },
+        "twist": { "text": "Computed values can drift from source data. Periodically recalculate to fix any accumulated rounding errors.", "visual": "🔄" },
+        "climax": { "text": "Use this for dashboards, leaderboards, and summary statistics. Trade write complexity for read speed.", "visual": "⚡" },
+        "punchline": { "text": "Computed pattern: pre-calculate and store. Don't recompute on every read.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "What is the trade-off of the computed pattern?",
+        "options": ["Writes become more complex because they must update computed values, but reads become much faster", "It eliminates the need for any indexes", "Reads become slower but writes are simpler"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch03-document-patterns",
+      "title": "Extended Reference Pattern",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An order references a customer by ID. To display the order, you need the customer's name. That's a second query.", "visual": "🔗" },
+        "buildup": { "text": "The extended reference embeds frequently-read fields alongside the ID: { customer_id: 42, customer_name: 'Alice' }.", "visual": "📋" },
+        "discovery": { "text": "Now displaying the order requires one read. The customer name is right there in the order document.", "visual": "⚡" },
+        "twist": { "text": "If Alice changes her name, you must update it in every order. Trade stale data risk for read performance.", "visual": "⚠️" },
+        "climax": { "text": "Only embed fields that rarely change: names, categories, labels. Not prices or stock counts.", "visual": "📏" },
+        "punchline": { "text": "Extended reference: copy stable fields to avoid extra lookups. Update on change.", "visual": "📎" }
+      },
+      "quiz": {
+        "question": "What is the risk of the extended reference pattern?",
+        "options": ["Copied fields can become stale if the source data changes and the copies aren't updated", "It uses twice as much disk space for every document", "Extended references prevent all future schema changes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch03-document-patterns",
+      "title": "Schema Versioning",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "V1 stores address as a string. V2 uses an object with street, city, zip. Both exist in the same collection.", "visual": "🔢" },
+        "buildup": { "text": "Add a schema_version field to each document. Application code checks the version and handles each format.", "visual": "📋" },
+        "discovery": { "text": "Migrate documents lazily: when a v1 document is read, transform it to v2 and write it back. Gradual migration.", "visual": "🔄" },
+        "twist": { "text": "Or run a batch migration offline. But for billions of documents, lazy migration avoids long maintenance windows.", "visual": "⏰" },
+        "climax": { "text": "Schema versioning is essential in document databases. There's no ALTER TABLE to enforce one shape.", "visual": "📝" },
+        "punchline": { "text": "Version your schemas. Migrate lazily or in batches. Support both formats.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why is schema versioning important in document databases?",
+        "options": ["Documents don't have enforced schemas, so different versions of the structure can coexist", "Document databases automatically version all schemas", "Schema versioning is only needed for relational databases"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch04-time-and-history",
+      "title": "Audit Trails",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Who changed this record? When? What was the old value? Without an audit trail, you have no answers.", "visual": "🔍" },
+        "buildup": { "text": "An audit table logs every change: table name, row ID, old value, new value, changed_by, changed_at.", "visual": "📝" },
+        "discovery": { "text": "Use database triggers to populate the audit table. Application code doesn't need to remember to log changes.", "visual": "🔧" },
+        "twist": { "text": "Audit tables grow fast. Partition by date and archive old data to keep the active table small.", "visual": "📦" },
+        "climax": { "text": "For compliance (GDPR, SOX, HIPAA), audit trails aren't optional. They're a legal requirement.", "visual": "⚖️" },
+        "punchline": { "text": "Audit trails: who changed what, when. Triggers capture changes automatically.", "visual": "📋" }
+      },
+      "quiz": {
+        "question": "Why are database triggers a good choice for audit trails?",
+        "options": ["Triggers capture changes automatically without relying on application code to remember to log them", "Triggers make all queries faster", "Triggers are the only way to create audit trails"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch04-time-and-history",
+      "title": "Event Sourcing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Instead of storing the current state, store every event that led to it. Cart: item added, item removed, checked out.", "visual": "📜" },
+        "buildup": { "text": "Events are immutable facts. They're appended, never updated or deleted. The log is the source of truth.", "visual": "📝" },
+        "discovery": { "text": "To get current state, replay all events from the beginning. Or keep a snapshot and replay from there.", "visual": "🔄" },
+        "twist": { "text": "Event sourcing gives you complete history for free. Debug any past state by replaying to that point.", "visual": "⏪" },
+        "climax": { "text": "The downside: querying current state is complex. You need materialized views or projections rebuilt from events.", "visual": "⚠️" },
+        "punchline": { "text": "Event sourcing: store the story, not just the ending. Full history, full replay.", "visual": "📖" }
+      },
+      "quiz": {
+        "question": "How do you query the current state in an event-sourced system?",
+        "options": ["By replaying events to build the current state, or by using pre-built materialized views", "By reading the last event in the log", "Current state queries are not possible with event sourcing"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch04-time-and-history",
+      "title": "Slowly Changing Dimensions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A customer moves from New York to London. Do you overwrite? Keep both? Track the change date?", "visual": "📊" },
+        "buildup": { "text": "Type 1: overwrite. Simple, but history is lost. Type 2: add a new row with valid_from and valid_to dates.", "visual": "📅" },
+        "discovery": { "text": "Type 2 preserves full history. Query 'where did this customer live in March?' is answerable.", "visual": "🔍" },
+        "twist": { "text": "Type 3 adds a previous_value column. Limited history (only one change) but simplest to query.", "visual": "📝" },
+        "climax": { "text": "Data warehouses use SCD patterns heavily. They need historical data for accurate reporting.", "visual": "📈" },
+        "punchline": { "text": "SCD: Type 1 overwrites, Type 2 versions rows, Type 3 stores one prior value.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is the advantage of SCD Type 2 over Type 1?",
+        "options": ["Type 2 preserves full change history by adding versioned rows with date ranges", "Type 2 uses less storage space", "Type 2 is simpler to implement"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch04-time-and-history",
+      "title": "Temporal Tables",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "SQL:2011 introduced system-versioned temporal tables. The database tracks row history automatically.", "visual": "⏰" },
+        "buildup": { "text": "Every row has valid_from and valid_to timestamps. Updates create a new current row and archive the old one.", "visual": "📅" },
+        "discovery": { "text": "Query the past: SELECT * FROM products FOR SYSTEM_TIME AS OF '2024-01-15'. The database returns that day's data.", "visual": "🔍" },
+        "twist": { "text": "MariaDB and SQL Server support temporal tables natively. Postgres doesn't yet, but extensions exist.", "visual": "🐘" },
+        "climax": { "text": "Temporal tables simplify auditing, compliance, and debugging. History is automatic, not hand-coded.", "visual": "🛡️" },
+        "punchline": { "text": "Temporal tables: automatic history. Query any point in time with standard SQL.", "visual": "📜" }
+      },
+      "quiz": {
+        "question": "What does the FOR SYSTEM_TIME AS OF clause do?",
+        "options": ["It queries the table as it existed at a specific point in time, using the database's version history", "It sets the system clock to a different time", "It creates a backup of the table at the specified time"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch04-time-and-history",
+      "title": "Immutable Data Patterns",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An invoice is generated. Never update it. If there's a correction, issue a credit note — a new record.", "visual": "📄" },
+        "buildup": { "text": "Immutable data is append-only. Records are created but never modified. New records represent changes.", "visual": "📝" },
+        "discovery": { "text": "Accounting uses double-entry: every transaction creates two entries. You never edit a ledger line.", "visual": "📒" },
+        "twist": { "text": "Immutable data simplifies concurrency: no update conflicts, no lost updates. Only inserts.", "visual": "🔒" },
+        "climax": { "text": "Combine with computed views for current state. The immutable log is truth; the view is convenience.", "visual": "🔄" },
+        "punchline": { "text": "Immutable data: append-only records. No edits, no conflicts, full history.", "visual": "🧱" }
+      },
+      "quiz": {
+        "question": "Why does immutable data simplify concurrency?",
+        "options": ["There are no update conflicts or lost updates because records are only inserted, never modified", "Immutable data is stored in memory instead of on disk", "It eliminates the need for a database entirely"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch05-hierarchies-and-graphs",
+      "title": "Adjacency List",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Each row has a parent_id. Categories, org charts, file trees — all are hierarchies stored with adjacency lists.", "visual": "🌲" },
+        "buildup": { "text": "Finding direct children is easy: WHERE parent_id = 42. Finding all descendants requires recursion.", "visual": "🔍" },
+        "discovery": { "text": "Recursive CTEs in SQL traverse the tree: WITH RECURSIVE tree AS (... UNION ALL ... JOIN tree). One query, full depth.", "visual": "📝" },
+        "twist": { "text": "Adjacency lists are simple to insert and update. Moving a subtree is just one UPDATE on parent_id.", "visual": "⚡" },
+        "climax": { "text": "For shallow hierarchies (under 10 levels), adjacency lists with recursive CTEs perform well.", "visual": "📊" },
+        "punchline": { "text": "Adjacency list: simple and flexible. Use recursive CTEs for tree traversal.", "visual": "🌳" }
+      },
+      "quiz": {
+        "question": "How do you query all descendants in an adjacency list model?",
+        "options": ["Use a recursive CTE (WITH RECURSIVE) that traverses the parent-child relationships", "Query every row and filter in application code", "Adjacency lists cannot query descendants"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch05-hierarchies-and-graphs",
+      "title": "Materialized Path",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Each row stores its full path: /electronics/phones/smartphones. Finding all children of electronics is a LIKE query.", "visual": "📂" },
+        "buildup": { "text": "WHERE path LIKE '/electronics/%' returns all items under electronics. No recursion needed.", "visual": "🔍" },
+        "discovery": { "text": "The path encodes the full ancestry. Depth is the number of separators. Sorting by path gives tree order.", "visual": "📏" },
+        "twist": { "text": "Moving a subtree means updating every descendant's path. One move can touch thousands of rows.", "visual": "⚠️" },
+        "climax": { "text": "Use materialized paths for read-heavy hierarchies where moves are rare: category trees, URL structures.", "visual": "🌐" },
+        "punchline": { "text": "Materialized path: fast reads without recursion. Expensive moves.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "What is the downside of materialized path for hierarchies?",
+        "options": ["Moving a subtree requires updating the path of every descendant row", "It cannot represent hierarchies deeper than 3 levels", "Materialized paths use too much memory"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch05-hierarchies-and-graphs",
+      "title": "Nested Sets",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Each node stores a left and right number. All descendants have left and right values between the parent's.", "visual": "🔢" },
+        "buildup": { "text": "Finding all descendants: WHERE lft BETWEEN parent_lft AND parent_rgt. One range query, no recursion.", "visual": "⚡" },
+        "discovery": { "text": "Counting children, finding ancestors, and calculating depth are all simple arithmetic on left and right values.", "visual": "🧮" },
+        "twist": { "text": "Inserting a node requires renumbering all nodes to the right. One insert can update half the table.", "visual": "😱" },
+        "climax": { "text": "Nested sets are ideal for read-heavy, rarely-changing trees: product catalogs, geographic regions.", "visual": "📊" },
+        "punchline": { "text": "Nested sets: blazing reads, expensive writes. Best for static hierarchies.", "visual": "📏" }
+      },
+      "quiz": {
+        "question": "Why are inserts expensive in the nested set model?",
+        "options": ["Every node to the right of the insertion point must have its left and right values renumbered", "Nested sets don't support inserts at all", "Inserts require deleting and recreating the entire tree"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch05-hierarchies-and-graphs",
+      "title": "Closure Table",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A table stores every ancestor-descendant pair. Node 5 under 3 under 1? Three rows: (1,5), (3,5), (5,5).", "visual": "📋" },
+        "buildup": { "text": "Finding all descendants of node 1: WHERE ancestor = 1. Finding all ancestors of node 5: WHERE descendant = 5.", "visual": "🔍" },
+        "discovery": { "text": "Closure tables support fast reads for all hierarchy queries without recursion or path string manipulation.", "visual": "⚡" },
+        "twist": { "text": "The closure table can grow large: a tree of N nodes can have up to N² pairs. But most real trees are sparse.", "visual": "📊" },
+        "climax": { "text": "Moving a subtree: delete old closure rows and insert new ones. More work than adjacency list, less than nested sets.", "visual": "🔧" },
+        "punchline": { "text": "Closure table: ancestor-descendant pairs. Fast queries, moderate write cost.", "visual": "🧩" }
+      },
+      "quiz": {
+        "question": "How does a closure table represent hierarchy relationships?",
+        "options": ["It stores every ancestor-descendant pair in a separate table with depth information", "It uses left and right numbers like nested sets", "Each row stores a full path string"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch05-hierarchies-and-graphs",
+      "title": "Graph Data in SQL",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Social networks: Alice follows Bob, Bob follows Carol. This isn't a hierarchy — it's a graph with arbitrary connections.", "visual": "🕸️" },
+        "buildup": { "text": "Model graphs with two tables: nodes (people) and edges (follows). Edges have from_id and to_id.", "visual": "🔗" },
+        "discovery": { "text": "Finding friends-of-friends: join edges twice. Friends-of-friends-of-friends: three joins. N degrees: N joins.", "visual": "🔄" },
+        "twist": { "text": "SQL handles graphs but poorly at scale. Graph databases (Neo4j) are built for deep traversals.", "visual": "📊" },
+        "climax": { "text": "For shallow graphs (2-3 hops), SQL is fine. For deep traversals, evaluate a graph database.", "visual": "📏" },
+        "punchline": { "text": "SQL models graphs with edge tables. For deep traversals, use graph databases.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "Why does SQL struggle with deep graph traversals?",
+        "options": ["Each additional degree of connection requires another JOIN, making queries increasingly complex and slow", "SQL cannot store graph data at all", "Graph queries are always faster in SQL than in graph databases"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch06-advanced-patterns",
+      "title": "CQRS: Command Query Separation",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Reads need denormalized, wide tables. Writes need normalized, narrow tables. One schema can't optimize both.", "visual": "🔀" },
+        "buildup": { "text": "CQRS splits the read model and write model into separate databases. Writes go to a normalized store.", "visual": "📝" },
+        "discovery": { "text": "A sync process builds a denormalized read model from write events. Reads query the pre-built views.", "visual": "📊" },
+        "twist": { "text": "The read model is eventually consistent. There's a small delay after a write before reads reflect the change.", "visual": "⏳" },
+        "climax": { "text": "CQRS shines for systems with vastly different read and write patterns: dashboards, reporting, and search.", "visual": "🔍" },
+        "punchline": { "text": "CQRS: separate models for reads and writes. Optimize each independently.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What is the main benefit of CQRS?",
+        "options": ["Read and write models can be optimized independently for their different access patterns", "It eliminates the need for a database entirely", "CQRS makes all writes faster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch06-advanced-patterns",
+      "title": "Multi-Tenancy Patterns",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your SaaS serves 100 companies. Their data must be isolated. Three strategies: shared table, schema, or separate DB.", "visual": "🏢" },
+        "buildup": { "text": "Shared table: add a tenant_id column. Simplest, but every query must filter by tenant_id. Easy to forget.", "visual": "🔑" },
+        "discovery": { "text": "Shared schema (Postgres): one schema per tenant. Stronger isolation, same database. Switch with SET search_path.", "visual": "📂" },
+        "twist": { "text": "Separate databases: maximum isolation, but operational overhead multiplies. 100 tenants, 100 databases to manage.", "visual": "💰" },
+        "climax": { "text": "Row-level security (RLS) in Postgres enforces tenant isolation automatically. Queries can't leak across tenants.", "visual": "🔒" },
+        "punchline": { "text": "Shared table with RLS for most apps. Separate databases for compliance.", "visual": "🏗️" }
+      },
+      "quiz": {
+        "question": "How does Row-Level Security help with multi-tenancy?",
+        "options": ["It automatically filters queries to only return data belonging to the current tenant", "It encrypts all data per tenant", "RLS creates separate physical databases for each tenant"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch06-advanced-patterns",
+      "title": "Materialized Views",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A dashboard query joins five tables and aggregates millions of rows. It takes 30 seconds every time.", "visual": "⏳" },
+        "buildup": { "text": "A materialized view stores the query result as a physical table. Reads are instant — it's pre-computed.", "visual": "⚡" },
+        "discovery": { "text": "REFRESH MATERIALIZED VIEW recalculates it. Run it on a schedule or after significant data changes.", "visual": "🔄" },
+        "twist": { "text": "Between refreshes, the view shows stale data. The trade-off: speed vs freshness.", "visual": "⏰" },
+        "climax": { "text": "CONCURRENTLY option in Postgres refreshes without locking reads. Users see old data during refresh, not errors.", "visual": "🔓" },
+        "punchline": { "text": "Materialized views: pre-computed query results. Fast reads, periodic refresh.", "visual": "🧮" }
+      },
+      "quiz": {
+        "question": "What is the trade-off of using materialized views?",
+        "options": ["Reads are very fast but the data can be stale between refreshes", "They use zero additional storage", "Materialized views slow down all write operations"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch06-advanced-patterns",
+      "title": "Denormalization Strategy",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Normalize for correctness. Denormalize for speed. Every fast read was once a slow join someone decided to pre-compute.", "visual": "📊" },
+        "buildup": { "text": "Denormalization duplicates data intentionally. Store user_name on every order row to avoid joining the users table.", "visual": "📝" },
+        "discovery": { "text": "The rule: normalize first, profile queries, denormalize the specific bottleneck. Never denormalize blindly.", "visual": "🔍" },
+        "twist": { "text": "Every denormalization is a maintenance promise: when the source changes, all copies must update.", "visual": "⚠️" },
+        "climax": { "text": "Triggers, background jobs, or materialized views can keep denormalized data in sync automatically.", "visual": "🔧" },
+        "punchline": { "text": "Denormalize the proven bottleneck. Keep a sync mechanism. Never guess.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is the first step before denormalizing data?",
+        "options": ["Normalize first, profile the actual slow queries, then denormalize only the proven bottleneck", "Denormalize everything from the start for maximum speed", "Remove all foreign keys before denormalizing"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--data-modeling-patterns--ch06-advanced-patterns",
+      "title": "Choosing the Right Pattern",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "There is no universal best pattern. The right model depends on your access patterns, scale, and consistency needs.", "visual": "🗺️" },
+        "buildup": { "text": "Ask: what are the most common queries? How often does data change? How strict is consistency?", "visual": "🤔" },
+        "discovery": { "text": "High-read, low-write: denormalize and cache. High-write: normalize and append. Mixed: CQRS.", "visual": "⚖️" },
+        "twist": { "text": "Patterns combine. Use adjacency lists with soft deletes, EAV with JSONB, or event sourcing with materialized views.", "visual": "🧩" },
+        "climax": { "text": "Start simple. Add patterns when bottlenecks appear. Premature optimization adds complexity without solving real issues.", "visual": "📏" },
+        "punchline": { "text": "Let your queries guide the model. Start simple, evolve as needed.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "When should you apply advanced data modeling patterns?",
+        "options": ["When profiling reveals actual bottlenecks, not as premature optimization", "Always from the very beginning of a project", "Only when using NoSQL databases"],
+        "correct": 0
+      }
+    }
+  ]
+}

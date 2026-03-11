@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-temporal-tables",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch04-time-and-history",
+  "title": "Temporal Tables",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A fast breakdown of Temporal Tables for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "SQL:2011 introduced system-versioned temporal tables. The database tracks row history automatically.",
+      "visual": "⏰"
+    },
+    "buildup": {
+      "text": "Every row has valid_from and valid_to timestamps. Updates create a new current row and archive the old one.",
+      "visual": "📅"
+    },
+    "discovery": {
+      "text": "Query the past: SELECT * FROM products FOR SYSTEM_TIME AS OF '2024-01-15'. The database returns that day's data.",
+      "visual": "🔍"
+    },
+    "twist": {
+      "text": "MariaDB and SQL Server support temporal tables natively. Postgres doesn't yet, but extensions exist.",
+      "visual": "🐘"
+    },
+    "climax": {
+      "text": "Temporal tables simplify auditing, compliance, and debugging. History is automatic, not hand-coded.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Temporal tables: automatic history. Query any point in time with standard SQL.",
+      "visual": "📜"
+    }
+  },
+  "quiz": {
+    "question": "What does the FOR SYSTEM_TIME AS OF clause do?",
+    "options": [
+      "It queries the table as it existed at a specific point in time, using the database's version history",
+      "It sets the system clock to a different time",
+      "It creates a backup of the table at the specified time"
+    ],
+    "correct": 0
+  }
+}

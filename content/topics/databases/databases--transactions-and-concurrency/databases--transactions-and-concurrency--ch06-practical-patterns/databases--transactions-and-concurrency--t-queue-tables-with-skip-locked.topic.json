@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-queue-tables-with-skip-locked",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch06-practical-patterns",
+  "title": "Queue Tables with SKIP LOCKED",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "One-minute skill: Queue Tables with SKIP LOCKED.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Multiple workers poll a jobs table. Without SKIP LOCKED, they all grab the same row and fight over the lock.",
+      "visual": "⚔️"
+    },
+    "buildup": {
+      "text": "SKIP LOCKED tells a query: if a row is already locked by another transaction, skip it and grab the next one.",
+      "visual": "⏭️"
+    },
+    "discovery": {
+      "text": "SELECT * FROM jobs WHERE status = 'pending' FOR UPDATE SKIP LOCKED LIMIT 1. Each worker gets a different job.",
+      "visual": "🎯"
+    },
+    "twist": {
+      "text": "This turns a regular Postgres table into a simple job queue. No external queue system needed.",
+      "visual": "📬"
+    },
+    "climax": {
+      "text": "Combined with advisory locks and LISTEN/NOTIFY, Postgres can replace Redis or RabbitMQ for simple queuing.",
+      "visual": "🐘"
+    },
+    "punchline": {
+      "text": "SKIP LOCKED: turn a table into a queue. Workers don't fight over rows.",
+      "visual": "🤝"
+    }
+  },
+  "quiz": {
+    "question": "What does SKIP LOCKED do in a query?",
+    "options": [
+      "It skips rows that are currently locked by other transactions and returns the next available row",
+      "It permanently deletes locked rows",
+      "It unlocks all rows in the table"
+    ],
+    "correct": 0
+  }
+}

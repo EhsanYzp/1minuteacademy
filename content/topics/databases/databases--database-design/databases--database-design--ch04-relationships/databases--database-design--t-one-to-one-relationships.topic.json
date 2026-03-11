@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-one-to-one-relationships",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch04-relationships",
+  "title": "One-to-One Relationships",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "A 1-minute de-risking session on One-to-One Relationships.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A user has one profile. A profile belongs to one user. That's a one-to-one relationship.",
+      "visual": "👤"
+    },
+    "buildup": {
+      "text": "Model it with a foreign key and a UNIQUE constraint: profiles.user_id UNIQUE REFERENCES users.id.",
+      "visual": "🔗"
+    },
+    "discovery": {
+      "text": "One-to-one is useful for splitting large tables. Keep hot columns in one table, cold columns in another.",
+      "visual": "❄️"
+    },
+    "twist": {
+      "text": "Some teams merge one-to-one tables into one. Fewer joins, simpler queries. It depends on access patterns.",
+      "visual": "🤔"
+    },
+    "climax": {
+      "text": "Use one-to-one when data has different access patterns or when optional data would add many NULLs.",
+      "visual": "📏"
+    },
+    "punchline": {
+      "text": "One-to-one: two tables, one link, clear separation.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "When is a one-to-one relationship better than merging columns into one table?",
+    "options": [
+      "When the two sets of columns have different access patterns or one set is mostly NULL",
+      "One-to-one is always better for performance",
+      "Only when the table has fewer than 10 rows"
+    ],
+    "correct": 0
+  }
+}

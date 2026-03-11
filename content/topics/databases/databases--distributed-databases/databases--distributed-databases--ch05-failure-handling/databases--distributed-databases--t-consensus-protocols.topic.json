@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-consensus-protocols",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch05-failure-handling",
+  "title": "Consensus Protocols",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "A short lesson to help you apply Consensus Protocols.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Three nodes must agree on which transaction to commit next. If two agree, it's committed. That's consensus.",
+      "visual": "🤝"
+    },
+    "buildup": {
+      "text": "Raft and Paxos are consensus algorithms. They guarantee agreement even if some nodes fail, given a majority survives.",
+      "visual": "🗳️"
+    },
+    "discovery": {
+      "text": "Raft is simpler: a leader proposes, followers vote, majority wins. If the leader dies, a new election starts.",
+      "visual": "📝"
+    },
+    "twist": {
+      "text": "Consensus has a cost: every write requires a round trip to a majority of nodes. Latency increases with cluster size.",
+      "visual": "🐢"
+    },
+    "climax": {
+      "text": "etcd (Raft), ZooKeeper (Zab), and CockroachDB (Raft) all use consensus. It's the foundation of distributed correctness.",
+      "visual": "🏗️"
+    },
+    "punchline": {
+      "text": "Consensus: majority agreement. Correct even when some nodes fail.",
+      "visual": "✅"
+    }
+  },
+  "quiz": {
+    "question": "Why does consensus add latency to writes?",
+    "options": [
+      "Every write must wait for a majority of nodes to acknowledge before it's committed",
+      "Consensus algorithms compress data before writing",
+      "Only one node can process writes, creating a queue"
+    ],
+    "correct": 0
+  }
+}

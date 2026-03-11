@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-hash-indexes",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch03-index-types",
+  "title": "Hash Indexes",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A quick, practical guide to Hash Indexes.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "WHERE email = 'ada@test.com' is a pure equality check. A hash index handles this in O(1) time.",
+      "visual": "🗝️"
+    },
+    "buildup": {
+      "text": "Hash indexes map keys to buckets using a hash function. Lookup is direct — no tree traversal needed.",
+      "visual": "#️⃣"
+    },
+    "discovery": {
+      "text": "They're faster than B-trees for exact equality. But they can't handle ranges: WHERE age > 18 won't work.",
+      "visual": "🚫"
+    },
+    "twist": {
+      "text": "Postgres hash indexes weren't crash-safe until version 10. Before that, they were rarely used in production.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Use hash indexes for exact lookups on large text columns where B-tree overhead is high.",
+      "visual": "📏"
+    },
+    "punchline": {
+      "text": "Hash: fast equality, no ranges. Use B-tree for everything else.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "Why can't hash indexes support range queries?",
+    "options": [
+      "Hash functions destroy ordering, so there's no way to find values in a range",
+      "Hash indexes can only store numbers",
+      "Range queries are not supported by any index type"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-audit-trails",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch04-time-and-history",
+  "title": "Audit Trails",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A quick, practical guide to Audit Trails.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Who changed this record? When? What was the old value? Without an audit trail, you have no answers.",
+      "visual": "🔍"
+    },
+    "buildup": {
+      "text": "An audit table logs every change: table name, row ID, old value, new value, changed_by, changed_at.",
+      "visual": "📝"
+    },
+    "discovery": {
+      "text": "Use database triggers to populate the audit table. Application code doesn't need to remember to log changes.",
+      "visual": "🔧"
+    },
+    "twist": {
+      "text": "Audit tables grow fast. Partition by date and archive old data to keep the active table small.",
+      "visual": "📦"
+    },
+    "climax": {
+      "text": "For compliance (GDPR, SOX, HIPAA), audit trails aren't optional. They're a legal requirement.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "Audit trails: who changed what, when. Triggers capture changes automatically.",
+      "visual": "📋"
+    }
+  },
+  "quiz": {
+    "question": "Why are database triggers a good choice for audit trails?",
+    "options": [
+      "Triggers capture changes automatically without relying on application code to remember to log them",
+      "Triggers make all queries faster",
+      "Triggers are the only way to create audit trails"
+    ],
+    "correct": 0
+  }
+}

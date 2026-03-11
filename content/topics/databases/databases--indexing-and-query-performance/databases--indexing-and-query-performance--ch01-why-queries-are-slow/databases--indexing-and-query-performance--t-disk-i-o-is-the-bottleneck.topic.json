@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-disk-i-o-is-the-bottleneck",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch01-why-queries-are-slow",
+  "title": "Disk I/O Is the Bottleneck",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A quick win: understand Disk I/O Is the Bottleneck.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A CPU processes data in nanoseconds. Reading from an SSD takes microseconds. That's 1,000x slower.",
+      "visual": "⏱️"
+    },
+    "buildup": {
+      "text": "Databases spend most of their time waiting for disk reads, not computing. I/O dominates query time.",
+      "visual": "💿"
+    },
+    "discovery": {
+      "text": "The buffer pool caches hot data in RAM. Cache hits avoid disk entirely. Cold data forces slow reads.",
+      "visual": "🔥"
+    },
+    "twist": {
+      "text": "An index reduces I/O by reading only the relevant pages. Fewer pages read means faster queries.",
+      "visual": "📉"
+    },
+    "climax": {
+      "text": "SSD replaced spinning disks and cut random I/O time by 100x. But memory is still 100x faster than SSD.",
+      "visual": "⚡"
+    },
+    "punchline": {
+      "text": "Performance is about reducing disk reads. Everything else is secondary.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "Why is disk I/O the main bottleneck for database queries?",
+    "options": [
+      "Disk reads are orders of magnitude slower than CPU processing or memory access",
+      "Disks can only read one byte at a time",
+      "Modern CPUs are too slow to process query results"
+    ],
+    "correct": 0
+  }
+}

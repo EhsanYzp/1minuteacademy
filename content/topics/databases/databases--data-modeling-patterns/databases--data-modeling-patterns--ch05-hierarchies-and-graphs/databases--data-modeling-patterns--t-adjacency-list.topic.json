@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-adjacency-list",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch05-hierarchies-and-graphs",
+  "title": "Adjacency List",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A 1-minute de-risking session on Adjacency List.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Each row has a parent_id. Categories, org charts, file trees — all are hierarchies stored with adjacency lists.",
+      "visual": "🌲"
+    },
+    "buildup": {
+      "text": "Finding direct children is easy: WHERE parent_id = 42. Finding all descendants requires recursion.",
+      "visual": "🔍"
+    },
+    "discovery": {
+      "text": "Recursive CTEs in SQL traverse the tree: WITH RECURSIVE tree AS (... UNION ALL ... JOIN tree). One query, full depth.",
+      "visual": "📝"
+    },
+    "twist": {
+      "text": "Adjacency lists are simple to insert and update. Moving a subtree is just one UPDATE on parent_id.",
+      "visual": "⚡"
+    },
+    "climax": {
+      "text": "For shallow hierarchies (under 10 levels), adjacency lists with recursive CTEs perform well.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "Adjacency list: simple and flexible. Use recursive CTEs for tree traversal.",
+      "visual": "🌳"
+    }
+  },
+  "quiz": {
+    "question": "How do you query all descendants in an adjacency list model?",
+    "options": [
+      "Use a recursive CTE (WITH RECURSIVE) that traverses the parent-child relationships",
+      "Query every row and filter in application code",
+      "Adjacency lists cannot query descendants"
+    ],
+    "correct": 0
+  }
+}

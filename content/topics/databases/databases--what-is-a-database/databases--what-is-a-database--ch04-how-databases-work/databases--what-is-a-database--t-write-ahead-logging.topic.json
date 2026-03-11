@@ -1,0 +1,49 @@
+{
+  "id": "databases--what-is-a-database--t-write-ahead-logging",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "What Is a Database",
+  "course_id": "databases--what-is-a-database",
+  "chapter_id": "databases--what-is-a-database--ch04-how-databases-work",
+  "title": "Write-Ahead Logging",
+  "emoji": "🗄️",
+  "color": "#6366F1",
+  "description": "A quick win: understand Write-Ahead Logging.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The server crashes mid-write. Is the data lost? Not if the database uses a write-ahead log.",
+      "visual": "💥"
+    },
+    "buildup": {
+      "text": "Before changing data, the database writes the intended change to a log file. Log first, data second.",
+      "visual": "📝"
+    },
+    "discovery": {
+      "text": "On crash, the database replays the log. Committed changes survive. Uncommitted ones are rolled back.",
+      "visual": "🔄"
+    },
+    "twist": {
+      "text": "The WAL is sequential writes — very fast on disk. The actual data pages update lazily in the background.",
+      "visual": "⚡"
+    },
+    "climax": {
+      "text": "PostgreSQL, MySQL, and SQLite all use WAL. It's the foundation of database durability.",
+      "visual": "🏗️"
+    },
+    "punchline": {
+      "text": "Write the log first. Crash safely. Recover cleanly.",
+      "visual": "🛡️"
+    }
+  },
+  "quiz": {
+    "question": "What is the purpose of a write-ahead log?",
+    "options": [
+      "To ensure committed data survives crashes by logging changes before applying them",
+      "To speed up read queries",
+      "To compress data on disk"
+    ],
+    "correct": 0
+  }
+}

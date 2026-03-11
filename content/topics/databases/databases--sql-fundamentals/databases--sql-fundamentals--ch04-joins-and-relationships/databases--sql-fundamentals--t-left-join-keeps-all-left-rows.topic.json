@@ -1,0 +1,49 @@
+{
+  "id": "databases--sql-fundamentals--t-left-join-keeps-all-left-rows",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "SQL Fundamentals",
+  "course_id": "databases--sql-fundamentals",
+  "chapter_id": "databases--sql-fundamentals--ch04-joins-and-relationships",
+  "title": "LEFT JOIN Keeps All Left Rows",
+  "emoji": "📝",
+  "color": "#3B82F6",
+  "description": "Learn LEFT JOIN Keeps All Left Rows in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You want all users, even those without orders. LEFT JOIN keeps every row from the left table.",
+      "visual": "⬅️"
+    },
+    "buildup": {
+      "text": "SELECT * FROM users LEFT JOIN orders ON users.id = orders.user_id. All users appear.",
+      "visual": "📋"
+    },
+    "discovery": {
+      "text": "Users without orders have NULL in every order column. That's how you spot the unmatched rows.",
+      "visual": "🔍"
+    },
+    "twist": {
+      "text": "WHERE orders.id IS NULL finds users who never ordered. A LEFT JOIN plus a NULL check is a powerful pattern.",
+      "visual": "💡"
+    },
+    "climax": {
+      "text": "LEFT JOIN is essential for reports: show all products, even those never sold.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "LEFT JOIN: everyone on the left shows up, matched or not.",
+      "visual": "✅"
+    }
+  },
+  "quiz": {
+    "question": "How can you find users who have never placed an order using LEFT JOIN?",
+    "options": [
+      "LEFT JOIN orders then filter WHERE orders.id IS NULL",
+      "Use INNER JOIN and check for empty rows",
+      "LEFT JOIN automatically excludes users without orders"
+    ],
+    "correct": 0
+  }
+}

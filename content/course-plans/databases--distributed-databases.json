@@ -1,0 +1,559 @@
+{
+  "categoryId": "databases",
+  "subject": "Databases",
+  "courseId": "databases--distributed-databases",
+  "courseTitle": "Distributed Databases",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "databases--distributed-databases--ch01-why-distribute", "title": "Why Distribute", "position": 1 },
+    { "id": "databases--distributed-databases--ch02-replication", "title": "Replication", "position": 2 },
+    { "id": "databases--distributed-databases--ch03-partitioning", "title": "Partitioning", "position": 3 },
+    { "id": "databases--distributed-databases--ch04-consistency-models", "title": "Consistency Models", "position": 4 },
+    { "id": "databases--distributed-databases--ch05-failure-handling", "title": "Failure Handling", "position": 5 },
+    { "id": "databases--distributed-databases--ch06-real-world-systems", "title": "Real-World Systems", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "databases--distributed-databases--ch01-why-distribute",
+      "title": "Limits of a Single Server",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "One server handles 10,000 queries per second. Traffic doubles. The CPU melts. You can't grow the box forever.", "visual": "🖥️" },
+        "buildup": { "text": "Vertical scaling (bigger hardware) hits physical limits. More RAM, faster CPUs — but there's always a ceiling.", "visual": "📈" },
+        "discovery": { "text": "Horizontal scaling adds more machines. Spread the load across many servers instead of one giant one.", "visual": "🖧" },
+        "twist": { "text": "Horizontal scaling isn't free. Data must be split and coordinated. Queries that span machines become complex.", "visual": "🧩" },
+        "climax": { "text": "Distributed databases exist because single servers can't handle the scale of modern applications.", "visual": "🌐" },
+        "punchline": { "text": "One server has limits. Distribute data across many to scale beyond them.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "What is the main problem with vertical scaling?",
+        "options": ["Physical hardware limits create a ceiling that can't be exceeded regardless of cost", "Bigger servers are always cheaper than multiple small ones", "Vertical scaling requires rewriting all application code"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch01-why-distribute",
+      "title": "Availability and Redundancy",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your only database server dies at 2 AM. The entire application is down. No failover, no backup ready to go.", "visual": "💀" },
+        "buildup": { "text": "A single server is a single point of failure. Hardware fails, data centers lose power, networks break.", "visual": "🔌" },
+        "discovery": { "text": "Replicas keep copies of data on separate machines. If one dies, another takes over immediately.", "visual": "🔄" },
+        "twist": { "text": "Availability isn't just about crashes. Planned maintenance needs rolling updates. Zero downtime requires replicas.", "visual": "🔧" },
+        "climax": { "text": "99.99% uptime allows only 52 minutes of downtime per year. Achieving that demands distributed architecture.", "visual": "⏱️" },
+        "punchline": { "text": "Redundancy prevents outages. Multiple copies mean no single point of failure.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "How do replicas improve database availability?",
+        "options": ["If one server fails, another replica can immediately take over and serve requests", "Replicas make queries run faster by compressing data", "Each replica stores a different portion of the data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch01-why-distribute",
+      "title": "Latency and Geography",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A user in Tokyo queries a database in New York. The speed of light adds 150 ms round trip. Physics won't budge.", "visual": "🌏" },
+        "buildup": { "text": "Network latency grows with distance. Users on the other side of the world always get slower responses.", "visual": "🐢" },
+        "discovery": { "text": "Place database replicas near users. Tokyo reads hit a Tokyo replica. New York reads hit a New York replica.", "visual": "📍" },
+        "twist": { "text": "Reads are easy to distribute. Writes are hard: all replicas must agree. Multi-region writes cause conflicts.", "visual": "⚔️" },
+        "climax": { "text": "Most apps use single-region writes with multi-region read replicas. Critical writes go to one region.", "visual": "🗺️" },
+        "punchline": { "text": "Distribute reads to cut latency. Keep writes centralized to avoid conflicts.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "Why are writes harder to distribute geographically than reads?",
+        "options": ["All replicas must agree on the order of writes, which requires cross-region coordination", "Writes are always faster than reads", "Only one region can have network access at a time"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch01-why-distribute",
+      "title": "The CAP Theorem",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Consistency, Availability, Partition tolerance: pick two. The CAP theorem says you can't have all three.", "visual": "🔺" },
+        "buildup": { "text": "C: every read returns the latest write. A: every request gets a response. P: the system works despite network splits.", "visual": "📊" },
+        "discovery": { "text": "Network partitions will happen. The real choice: during a partition, do you prioritize consistency or availability?", "visual": "⚖️" },
+        "twist": { "text": "CP systems (HBase) refuse stale reads during a partition. AP systems (Cassandra) serve stale data but stay online.", "visual": "🔀" },
+        "climax": { "text": "CAP is about the worst case. Normally, systems provide all three. The trade-off matters only during failures.", "visual": "🎯" },
+        "punchline": { "text": "CAP theorem: during a network split, choose consistency or availability.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "When does the CAP theorem trade-off actually apply?",
+        "options": ["Only during network partitions — in normal operation systems can provide all three properties", "At all times, even when the network is healthy", "Only when the database is being backed up"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch01-why-distribute",
+      "title": "Scaling Reads vs Writes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An app gets 95% reads and 5% writes. Add read replicas and 95% of traffic is handled. Writes are still bottlenecked.", "visual": "📊" },
+        "buildup": { "text": "Read replicas scale reads linearly. Add 3 replicas, handle 3x reads. But all writes still go to one primary.", "visual": "📈" },
+        "discovery": { "text": "To scale writes, you need partitioning: split data across multiple primaries. Each handles a portion of writes.", "visual": "🧩" },
+        "twist": { "text": "Partitioning writes adds complexity: cross-partition queries, distributed transactions, rebalancing.", "visual": "🤯" },
+        "climax": { "text": "Start with read replicas. Only partition writes when the primary truly can't keep up.", "visual": "📏" },
+        "punchline": { "text": "Scale reads with replicas, writes with partitions. Partition only when you must.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "Why is scaling writes harder than scaling reads?",
+        "options": ["Writes require partitioning data across primaries, adding complexity for cross-partition operations", "Write operations use less CPU than read operations", "Databases can only process one write per second"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch02-replication",
+      "title": "Leader-Follower Replication",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "One primary (leader) accepts all writes. Followers copy data from the leader. Reads can go to any follower.", "visual": "👑" },
+        "buildup": { "text": "The leader streams a replication log to followers. Each follower replays it to stay in sync.", "visual": "📡" },
+        "discovery": { "text": "This is the most common setup. Postgres streaming replication, MySQL replication, and MongoDB replica sets all use it.", "visual": "🌐" },
+        "twist": { "text": "Replication lag means followers may be a few milliseconds behind the leader. Stale reads are possible.", "visual": "⏳" },
+        "climax": { "text": "If the leader fails, a follower is promoted. This failover can be automatic or manual.", "visual": "🔄" },
+        "punchline": { "text": "Leader-follower: one writer, many readers. Simple and widely used.", "visual": "📏" }
+      },
+      "quiz": {
+        "question": "What is replication lag?",
+        "options": ["The delay between a write on the leader and its appearance on a follower", "The time it takes to create a new replica", "The delay in processing a query on the leader"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch02-replication",
+      "title": "Multi-Leader Replication",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Two data centers, each with a leader. Users write to their local leader. Both leaders replicate to each other.", "visual": "🔀" },
+        "buildup": { "text": "Multi-leader replication reduces write latency for global users. Each region has a fast, local writer.", "visual": "⚡" },
+        "discovery": { "text": "The problem: two leaders can accept conflicting writes at the same time. Conflict resolution is mandatory.", "visual": "⚔️" },
+        "twist": { "text": "Strategies: last-write-wins (simple but lossy), merge values, or let the application resolve conflicts.", "visual": "🔧" },
+        "climax": { "text": "Multi-leader is rare in practice. Most apps use single-leader with read replicas instead.", "visual": "📊" },
+        "punchline": { "text": "Multi-leader: write anywhere, but you must handle conflicts.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What is the biggest challenge with multi-leader replication?",
+        "options": ["Conflicting writes on different leaders must be detected and resolved", "It requires more disk space than single-leader", "Multi-leader setups can only handle read operations"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch02-replication",
+      "title": "Leaderless Replication",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "No leader at all. Write to any node. Read from multiple nodes. If enough agree, the value is correct.", "visual": "🗳️" },
+        "buildup": { "text": "Dynamo-style databases (Cassandra, Riak) use leaderless replication. Writes go to W nodes, reads from R nodes.", "visual": "📡" },
+        "discovery": { "text": "If W + R > N (total replicas), you're guaranteed to read the latest write. This is a quorum.", "visual": "🧮" },
+        "twist": { "text": "Leaderless tolerates node failures gracefully. No leader election, no failover. Just reduce the quorum.", "visual": "🛡️" },
+        "climax": { "text": "The trade-off: conflict resolution is needed. Stale data on some nodes must be repaired via read repair or anti-entropy.", "visual": "🔧" },
+        "punchline": { "text": "Leaderless: write and read anywhere. Quorums ensure correctness.", "visual": "🗳️" }
+      },
+      "quiz": {
+        "question": "What does the quorum condition W + R > N guarantee?",
+        "options": ["At least one node in the read set has the latest written value", "All nodes always have the same data", "Writes are faster because fewer nodes are involved"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch02-replication",
+      "title": "Synchronous vs Asynchronous",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Synchronous replication: the leader waits until the follower confirms the write. Safe, but slow.", "visual": "🐢" },
+        "buildup": { "text": "If the follower is slow or down, synchronous replication blocks the leader. Every write waits.", "visual": "⏳" },
+        "discovery": { "text": "Asynchronous replication: the leader confirms the write immediately. The follower catches up later.", "visual": "⚡" },
+        "twist": { "text": "With async, if the leader crashes before the follower replays the log, committed writes are lost forever.", "visual": "💀" },
+        "climax": { "text": "Semi-synchronous: one follower is synchronous (safe copy), the rest are async. A practical middle ground.", "visual": "⚖️" },
+        "punchline": { "text": "Synchronous for safety, asynchronous for speed. Semi-sync balances both.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is the risk of fully asynchronous replication?",
+        "options": ["If the leader crashes, committed writes not yet replicated to followers are lost", "It makes all queries slower", "Followers can never catch up to the leader"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch02-replication",
+      "title": "Replication Lag Patterns",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A user updates their profile, refreshes the page, and sees the old data. Replication lag strikes again.", "visual": "😤" },
+        "buildup": { "text": "Read-after-write consistency: after writing, the user should always see their own update.", "visual": "📝" },
+        "discovery": { "text": "Fix: route the user's reads to the leader for a short time after their write. They always see fresh data.", "visual": "🎯" },
+        "twist": { "text": "Monotonic reads prevent time travel: if a user reads version 5, they should never see version 4 next.", "visual": "⏰" },
+        "climax": { "text": "Sticky sessions pin a user to one replica. They always read from the same follower, preventing inconsistency.", "visual": "📌" },
+        "punchline": { "text": "Lag happens. Route reads wisely to mask it from users.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "How does read-after-write consistency work?",
+        "options": ["After writing, the user's reads are routed to the leader so they always see their own update", "All reads are always sent to every replica simultaneously", "The database delays all reads by a fixed amount of time"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch03-partitioning",
+      "title": "What Is Partitioning",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A table has 10 billion rows. It doesn't fit on one machine. Split it across 10 machines, 1 billion each.", "visual": "🔪" },
+        "buildup": { "text": "Partitioning (sharding) divides data into subsets. Each subset lives on a different node.", "visual": "🧩" },
+        "discovery": { "text": "Queries hitting one partition are fast. The node has less data to scan and less traffic to handle.", "visual": "⚡" },
+        "twist": { "text": "Queries spanning all partitions (scatter-gather) are slow. They must contact every node and merge results.", "visual": "🐢" },
+        "climax": { "text": "Choose a partition key that matches your access patterns. Good keys mean most queries hit one partition.", "visual": "🔑" },
+        "punchline": { "text": "Partitioning: split data across nodes. The partition key determines performance.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why are scatter-gather queries slow on partitioned databases?",
+        "options": ["They must contact every partition and merge results, multiplying the work", "Partitions refuse to answer queries from other nodes", "The network encrypts every inter-node message"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch03-partitioning",
+      "title": "Hash Partitioning",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Hash the partition key, mod by partition count. hash(user_id) % 4 sends each user to partition 0, 1, 2, or 3.", "visual": "#️⃣" },
+        "buildup": { "text": "Hash partitioning distributes data evenly. Even if user IDs are sequential, the hash scrambles them.", "visual": "🔀" },
+        "discovery": { "text": "The downside: range queries don't work. WHERE user_id BETWEEN 100 AND 200 hits all partitions.", "visual": "🚫" },
+        "twist": { "text": "Consistent hashing minimizes data movement when adding or removing nodes. Only a fraction of keys relocate.", "visual": "🔄" },
+        "climax": { "text": "Cassandra and DynamoDB use consistent hashing. It's the default strategy for distributed key-value stores.", "visual": "📊" },
+        "punchline": { "text": "Hash partition for even distribution. Sacrifice range queries.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "Why does hash partitioning break range queries?",
+        "options": ["Hashing scatters consecutive keys across different partitions, so ranges can't be read from one node", "Hash functions only work with numeric keys", "Range queries are not supported by any database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch03-partitioning",
+      "title": "Range Partitioning",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Partition by date: January data on node 1, February on node 2. Range query 'all of Q1' hits just three nodes.", "visual": "📅" },
+        "buildup": { "text": "Range partitioning keeps related data together. Queries on the partition key scan only one partition.", "visual": "📏" },
+        "discovery": { "text": "The risk: hot spots. If today's data is the busiest, one partition handles most traffic.", "visual": "🔥" },
+        "twist": { "text": "Combine range with hash: partition by hash(user_id) first, then range by date within each partition.", "visual": "🧩" },
+        "climax": { "text": "CockroachDB and Spanner use range partitioning. They automatically split and merge ranges as data grows.", "visual": "🔄" },
+        "punchline": { "text": "Range partitioning: great for range queries, but watch for hot spots.", "visual": "⚠️" }
+      },
+      "quiz": {
+        "question": "How can range partitioning create hot spots?",
+        "options": ["If most queries target recent data, the partition holding the latest range gets disproportionate traffic", "Range partitioning always distributes data evenly", "Hot spots only occur with hash partitioning"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch03-partitioning",
+      "title": "Rebalancing Partitions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A cluster has 4 nodes. Add a 5th node. Data must be redistributed. But the app can't go down during rebalancing.", "visual": "🔄" },
+        "buildup": { "text": "Rebalancing moves data from overloaded nodes to new ones. It must happen online, without downtime.", "visual": "🔧" },
+        "discovery": { "text": "Fixed partition count: create 1000 partitions across 4 nodes. Add a 5th node, move 200 partitions to it.", "visual": "📦" },
+        "twist": { "text": "Automatic rebalancing can cause thundering herds: all nodes move data at once, overwhelming the network.", "visual": "🌊" },
+        "climax": { "text": "Throttle rebalancing. Move partitions gradually. Monitor network bandwidth and latency during the process.", "visual": "🎛️" },
+        "punchline": { "text": "Rebalance gradually. Don't move all data at once. Throttle and monitor.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "Why is it important to throttle partition rebalancing?",
+        "options": ["Moving too much data at once can overwhelm the network and degrade performance for active queries", "Rebalancing must complete in under one second", "Throttling prevents data loss during moves"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch03-partitioning",
+      "title": "Secondary Indexes in Partitions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Data is partitioned by user_id. You need to query by email. The email index must span all partitions.", "visual": "🔍" },
+        "buildup": { "text": "Local indexes live on each partition. A query by email hits every partition to find the right one. Scatter-gather.", "visual": "🐢" },
+        "discovery": { "text": "Global indexes partition the index separately. Email queries hit one index partition, then one data partition.", "visual": "⚡" },
+        "twist": { "text": "Global indexes must be updated on every write. Cross-partition index updates add latency to writes.", "visual": "⏳" },
+        "climax": { "text": "Choose local for write-heavy workloads, global for read-heavy. There's no free lunch.", "visual": "⚖️" },
+        "punchline": { "text": "Local index: fast writes, slow reads. Global index: slow writes, fast reads.", "visual": "🔀" }
+      },
+      "quiz": {
+        "question": "What is the trade-off between local and global secondary indexes?",
+        "options": ["Local indexes have fast writes but require scatter-gather reads; global indexes have fast reads but slower writes", "Local indexes take more disk space", "Global indexes don't support unique constraints"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch04-consistency-models",
+      "title": "Strong Consistency",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Write a value, read it from any node, always get the latest. That's strong consistency. Everyone sees the same state.", "visual": "💪" },
+        "buildup": { "text": "Strong consistency requires coordination. All replicas must agree before a read returns.", "visual": "🤝" },
+        "discovery": { "text": "Google Spanner achieves strong consistency globally using synchronized atomic clocks (TrueTime).", "visual": "⏰" },
+        "twist": { "text": "Strong consistency adds latency. Cross-region coordination means waiting for the slowest replica.", "visual": "🐢" },
+        "climax": { "text": "Use strong consistency for critical data: balances, inventory counts, permission checks.", "visual": "🔒" },
+        "punchline": { "text": "Strong consistency: always correct, but coordination costs latency.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "How does Google Spanner achieve global strong consistency?",
+        "options": ["It uses synchronized atomic clocks (TrueTime) to order transactions across data centers", "It stores all data in a single data center", "It only allows one transaction at a time globally"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch04-consistency-models",
+      "title": "Eventual Consistency",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Write a value. Read from another node. Get the old value. Wait. Read again. Now it's updated. Eventual consistency.", "visual": "⏳" },
+        "buildup": { "text": "Eventually consistent systems don't guarantee when replicas converge. Just that they will, eventually.", "visual": "🔄" },
+        "discovery": { "text": "DNS is eventually consistent. Update a record, and it propagates over hours as caches expire.", "visual": "🌐" },
+        "twist": { "text": "For many use cases, eventual consistency is fine. A social media feed showing a post 2 seconds late harms no one.", "visual": "📱" },
+        "climax": { "text": "DynamoDB, Cassandra, and S3 all offer eventual consistency as their default or an option.", "visual": "☁️" },
+        "punchline": { "text": "Eventual consistency: fast and available. Data converges over time.", "visual": "⏳" }
+      },
+      "quiz": {
+        "question": "In what scenario is eventual consistency acceptable?",
+        "options": ["When a small delay in seeing the latest data doesn't cause correctness issues, like social media feeds", "When handling financial transactions that require exact balances", "Eventual consistency is never acceptable for production use"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch04-consistency-models",
+      "title": "Causal Consistency",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Alice posts a message. Bob replies. A third person sees Bob's reply before Alice's post. That violates causal order.", "visual": "🔀" },
+        "buildup": { "text": "Causal consistency ensures that if event B depends on event A, everyone sees A before B.", "visual": "📏" },
+        "discovery": { "text": "It's weaker than strong consistency but stronger than eventual. It preserves logical order, not total order.", "visual": "⚖️" },
+        "twist": { "text": "Independent events (no causal relation) can be seen in any order. Only dependent events are ordered.", "visual": "🧩" },
+        "climax": { "text": "MongoDB's causal consistency sessions guarantee this. Read your writes and see cause before effect.", "visual": "🍃" },
+        "punchline": { "text": "Causal consistency: if B depends on A, you always see A first.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "How is causal consistency different from strong consistency?",
+        "options": ["It only orders causally related events, while strong consistency orders all events globally", "Causal consistency is stricter than strong consistency", "They are identical in behavior"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch04-consistency-models",
+      "title": "Linearizability",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Once a write is visible to one client, it's visible to all. No going back. That's linearizability — the gold standard.", "visual": "🏆" },
+        "buildup": { "text": "Every operation appears to happen at a single, instant point in time. No client sees stale data after a newer read.", "visual": "📌" },
+        "discovery": { "text": "Linearizability is needed for distributed locks, leader election, and unique constraint checks.", "visual": "🔒" },
+        "twist": { "text": "It's expensive. Every write must be acknowledged by a majority of replicas before it's visible.", "visual": "💰" },
+        "climax": { "text": "etcd and ZooKeeper provide linearizable reads and writes. They're used as coordination services, not data stores.", "visual": "🔧" },
+        "punchline": { "text": "Linearizability: once visible, always visible. Essential for coordination.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why is linearizability needed for distributed locks?",
+        "options": ["All nodes must agree on who holds the lock at any moment to prevent two holders at once", "Distributed locks don't require any consistency guarantees", "Linearizability makes locks faster to acquire"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch04-consistency-models",
+      "title": "Tunable Consistency",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Cassandra lets you set consistency per query. Write with quorum for safety. Read with ONE for speed.", "visual": "🎛️" },
+        "buildup": { "text": "Tunable consistency means different queries can make different trade-offs. No one-size-fits-all.", "visual": "⚖️" },
+        "discovery": { "text": "Write ALL: max durability, but one slow node stalls the write. Write ONE: fast, but data may be lost if that node dies.", "visual": "📊" },
+        "twist": { "text": "Change consistency mid-request. Check inventory with strong consistency, then log analytics with eventual.", "visual": "🔀" },
+        "climax": { "text": "DynamoDB offers eventual and strong reads per query. Choose strong for critical reads, eventual for bulk scans.", "visual": "☁️" },
+        "punchline": { "text": "Tunable consistency: match the guarantee to the query. Pay for what you need.", "visual": "💰" }
+      },
+      "quiz": {
+        "question": "What does tunable consistency allow you to do?",
+        "options": ["Set different consistency levels per query, balancing safety and performance per use case", "Automatically fix inconsistent data across all replicas", "Disable all consistency checks for maximum speed"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch05-failure-handling",
+      "title": "Detecting Failures",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A node stops responding. Is it dead? Is the network broken? Is it just slow? You can't tell remotely.", "visual": "❓" },
+        "buildup": { "text": "Heartbeats: nodes ping each other periodically. If a node misses several heartbeats, it's declared dead.", "visual": "💓" },
+        "discovery": { "text": "Phi accrual failure detectors adapt to network conditions. They give a suspicion score, not a binary alive/dead.", "visual": "📊" },
+        "twist": { "text": "Declaring a node dead too quickly causes false positives. A GC pause or network hiccup looks like a crash.", "visual": "⏸️" },
+        "climax": { "text": "Too slow and a real failure wastes time. Tune detection thresholds for your environment's characteristics.", "visual": "🎛️" },
+        "punchline": { "text": "Failure detection is probabilistic. Tune the timeout for your environment.", "visual": "⏱️" }
+      },
+      "quiz": {
+        "question": "Why can declaring a node dead too quickly cause problems?",
+        "options": ["Temporary issues like GC pauses or network hiccups can be mistaken for permanent failures", "Quick detection always gives the most accurate results", "Databases automatically retry all operations on dead nodes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch05-failure-handling",
+      "title": "Automatic Failover",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The primary database crashes. A replica detects it, promotes itself to primary, and starts accepting writes in seconds.", "visual": "👑" },
+        "buildup": { "text": "Automatic failover minimizes downtime. No human needs to wake up at 2 AM to flip a switch.", "visual": "⚡" },
+        "discovery": { "text": "Consensus protocols (Raft, Paxos) elect a new leader. The replica with the most up-to-date data wins.", "visual": "🗳️" },
+        "twist": { "text": "Split-brain: two nodes both think they're the leader. Both accept writes. Data diverges. This is catastrophic.", "visual": "💀" },
+        "climax": { "text": "Fencing tokens prevent split-brain. The new leader gets a higher token. The old leader's writes are rejected by storage.", "visual": "🔒" },
+        "punchline": { "text": "Auto-failover: fast recovery. Use fencing tokens to prevent split-brain.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What is split-brain in a database cluster?",
+        "options": ["Two nodes both believe they are the leader and accept conflicting writes simultaneously", "The database splits data into two halves for performance", "A node intentionally shuts down to save resources"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch05-failure-handling",
+      "title": "Consensus Protocols",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Three nodes must agree on which transaction to commit next. If two agree, it's committed. That's consensus.", "visual": "🤝" },
+        "buildup": { "text": "Raft and Paxos are consensus algorithms. They guarantee agreement even if some nodes fail, given a majority survives.", "visual": "🗳️" },
+        "discovery": { "text": "Raft is simpler: a leader proposes, followers vote, majority wins. If the leader dies, a new election starts.", "visual": "📝" },
+        "twist": { "text": "Consensus has a cost: every write requires a round trip to a majority of nodes. Latency increases with cluster size.", "visual": "🐢" },
+        "climax": { "text": "etcd (Raft), ZooKeeper (Zab), and CockroachDB (Raft) all use consensus. It's the foundation of distributed correctness.", "visual": "🏗️" },
+        "punchline": { "text": "Consensus: majority agreement. Correct even when some nodes fail.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "Why does consensus add latency to writes?",
+        "options": ["Every write must wait for a majority of nodes to acknowledge before it's committed", "Consensus algorithms compress data before writing", "Only one node can process writes, creating a queue"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch05-failure-handling",
+      "title": "Network Partitions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The network link between two data centers goes down. Both sides are alive but can't communicate. A partition.", "visual": "🔌" },
+        "buildup": { "text": "During a partition, each side sees the other as dead. They can't coordinate writes or elect a new leader.", "visual": "🏝️" },
+        "discovery": { "text": "The minority side must stop accepting writes. Only the majority side (with quorum) can safely proceed.", "visual": "🛑" },
+        "twist": { "text": "In a 2-node cluster, a partition is unsolvable. Neither side has a majority. Always use odd-numbered clusters.", "visual": "🔢" },
+        "climax": { "text": "When the partition heals, the minority reconciles with the majority. Rejected writes must be retried by clients.", "visual": "🔄" },
+        "punchline": { "text": "Network partitions happen. Odd-numbered clusters ensure a majority exists.", "visual": "📏" }
+      },
+      "quiz": {
+        "question": "Why should distributed database clusters have an odd number of nodes?",
+        "options": ["An odd number guarantees a majority side exists during a network partition", "Odd numbers of nodes use less memory", "Even-numbered clusters can't store data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch05-failure-handling",
+      "title": "Data Repair and Anti-Entropy",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A node was down for an hour and missed 50,000 writes. It's back now. How does it catch up?", "visual": "🔧" },
+        "buildup": { "text": "Read repair: when a read detects stale data on a node, it sends the latest value back to update it.", "visual": "📖" },
+        "discovery": { "text": "Anti-entropy processes run in the background, comparing data across replicas and fixing differences.", "visual": "🔄" },
+        "twist": { "text": "Merkle trees speed up comparison. They hash data in a tree structure so only differing branches are transferred.", "visual": "🌳" },
+        "climax": { "text": "Cassandra uses both read repair and anti-entropy. Together, they keep all replicas converging over time.", "visual": "🤝" },
+        "punchline": { "text": "Read repair on access. Anti-entropy in background. Both keep replicas synced.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "How do Merkle trees help with anti-entropy repair?",
+        "options": ["They allow efficient comparison of large datasets by only transferring differing branches", "They compress data to save storage space", "Merkle trees encrypt data during transfer between nodes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch06-real-world-systems",
+      "title": "Amazon DynamoDB",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Amazon needed a database that never fails. DynamoDB was born from the Dynamo paper: always on, eventually consistent.", "visual": "☁️" },
+        "buildup": { "text": "DynamoDB is a managed key-value and document store. You define a partition key and optional sort key.", "visual": "🔑" },
+        "discovery": { "text": "It auto-scales capacity. You never manage servers, replication, or backups. AWS handles everything.", "visual": "🤖" },
+        "twist": { "text": "DynamoDB offers both eventual and strongly consistent reads. Single-digit millisecond latency at any scale.", "visual": "⚡" },
+        "climax": { "text": "Global tables replicate data across AWS regions. Multi-region writes with last-writer-wins conflict resolution.", "visual": "🌍" },
+        "punchline": { "text": "DynamoDB: fully managed, infinitely scalable, always available.", "visual": "🏆" }
+      },
+      "quiz": {
+        "question": "How does DynamoDB handle multi-region writes with global tables?",
+        "options": ["It uses last-writer-wins conflict resolution across regions", "It locks all regions during a write operation", "Multi-region writes are not supported"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch06-real-world-systems",
+      "title": "Google Spanner",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A globally distributed SQL database with strong consistency? Google built Spanner to do exactly that.", "visual": "🌐" },
+        "buildup": { "text": "Spanner uses TrueTime: GPS and atomic clocks in every data center give a globally synchronized time source.", "visual": "⏰" },
+        "discovery": { "text": "With synchronized time, Spanner orders transactions globally without expensive cross-region coordination for every read.", "visual": "📏" },
+        "twist": { "text": "Spanner is the only database that offers external consistency (stronger than linearizability) at global scale.", "visual": "🏆" },
+        "climax": { "text": "Cloud Spanner is the managed version. It scales horizontally while supporting SQL, schemas, and ACID transactions.", "visual": "☁️" },
+        "punchline": { "text": "Spanner: global SQL, strong consistency, powered by atomic clocks.", "visual": "⚛️" }
+      },
+      "quiz": {
+        "question": "What technology does Google Spanner use to achieve global strong consistency?",
+        "options": ["TrueTime — GPS and atomic clocks that provide synchronized time across all data centers", "A single master node that coordinates all transactions", "Eventually consistent replication with client-side conflict resolution"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch06-real-world-systems",
+      "title": "CockroachDB",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Inspired by Spanner but without Google's atomic clocks. CockroachDB brings distributed SQL to everyone.", "visual": "🪳" },
+        "buildup": { "text": "CockroachDB uses Raft consensus. Data is split into ranges, each replicated across three or more nodes.", "visual": "📊" },
+        "discovery": { "text": "It's PostgreSQL-compatible. Your existing SQL queries and ORMs work with minimal changes.", "visual": "🐘" },
+        "twist": { "text": "Without atomic clocks, CockroachDB uses hybrid-logical clocks and occasionally waits to ensure ordering.", "visual": "⏳" },
+        "climax": { "text": "It survives node, rack, and data center failures. 'Cockroach' because it's designed to survive anything.", "visual": "🛡️" },
+        "punchline": { "text": "CockroachDB: distributed SQL with Postgres compatibility. Survives anything.", "visual": "💪" }
+      },
+      "quiz": {
+        "question": "How is CockroachDB different from Google Spanner?",
+        "options": ["It achieves similar goals without atomic clocks, using hybrid-logical clocks and occasional waits instead", "CockroachDB is a NoSQL database while Spanner uses SQL", "Spanner is open source and CockroachDB is proprietary"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch06-real-world-systems",
+      "title": "Apache Cassandra",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Facebook needed to search inboxes across billions of messages. Cassandra was built for massive write throughput.", "visual": "📬" },
+        "buildup": { "text": "Cassandra is leaderless. Every node can accept writes. Data is replicated to configurable numbers of nodes.", "visual": "🗳️" },
+        "discovery": { "text": "It uses consistent hashing for partitioning and tunable consistency per query. Read ONE, write QUORUM — your choice.", "visual": "🎛️" },
+        "twist": { "text": "Cassandra has no joins and limited secondary indexes. Model your data around your queries, not the other way.", "visual": "📝" },
+        "climax": { "text": "Apple, Netflix, and Discord use Cassandra for massive-scale workloads. Trillions of rows, petabytes of data.", "visual": "🏢" },
+        "punchline": { "text": "Cassandra: leaderless, tunable consistency, built for massive write throughput.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "What is a key limitation when using Cassandra?",
+        "options": ["It has no joins and limited secondary indexes, requiring query-driven data modeling", "It can only store up to 1 million rows per table", "Cassandra only supports eventual consistency, never strong"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--distributed-databases--ch06-real-world-systems",
+      "title": "Choosing a Distributed Database",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Do you actually need a distributed database? If your data fits on one machine, Postgres is simpler and cheaper.", "visual": "🤔" },
+        "buildup": { "text": "Distributed databases add complexity: replication lag, partitioning, consensus, failure handling. All are costs.", "visual": "💰" },
+        "discovery": { "text": "Need scale? Pick DynamoDB or Cassandra. Need SQL? CockroachDB or Spanner. Need simplicity? Postgres with replicas.", "visual": "🗺️" },
+        "twist": { "text": "Many 'big data' problems are actually small data with bad queries. Optimize before you distribute.", "visual": "🔍" },
+        "climax": { "text": "Managed services (RDS, Aurora, Cloud SQL) give you replicas and failover without operating a distributed database.", "visual": "☁️" },
+        "punchline": { "text": "Don't distribute prematurely. Most apps scale fine on one well-tuned database.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "When should you consider a distributed database?",
+        "options": ["When your data truly exceeds what a single well-tuned server can handle, after optimizing queries first", "Whenever you have more than 100 users", "Always — single-server databases are outdated"],
+        "correct": 0
+      }
+    }
+  ]
+}

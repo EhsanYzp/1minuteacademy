@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-security--t-database-users-and-roles",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Security",
+  "course_id": "databases--database-security",
+  "chapter_id": "databases--database-security--ch02-authentication-and-access",
+  "title": "Database Users and Roles",
+  "emoji": "🛡️",
+  "color": "#14B8A6",
+  "description": "A tiny lesson with a big payoff: Database Users and Roles.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Everyone uses the same 'admin' account with full access. One compromised password exposes everything.",
+      "visual": "🔓"
+    },
+    "buildup": {
+      "text": "Create separate database users for each application and person. Each user gets only the permissions they need.",
+      "visual": "👥"
+    },
+    "discovery": {
+      "text": "Roles group permissions. 'readonly' gets SELECT only. 'writer' gets INSERT and UPDATE. Assign roles to users.",
+      "visual": "🏷️"
+    },
+    "twist": {
+      "text": "The app should never connect as superuser. A dedicated app user with limited permissions limits blast radius.",
+      "visual": "🎯"
+    },
+    "climax": {
+      "text": "GRANT SELECT ON orders TO app_readonly; REVOKE DELETE ON orders FROM app_writer; Be explicit.",
+      "visual": "📝"
+    },
+    "punchline": {
+      "text": "Separate users, specific roles. Never share superuser passwords with apps.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why should applications never connect as the database superuser?",
+    "options": [
+      "A compromised application with superuser access can do unlimited damage to all data",
+      "Superuser connections are slower",
+      "Databases don't allow superuser connections from applications"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-partial-indexes",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch03-index-types",
+  "title": "Partial Indexes",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "Learn Partial Indexes in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Only 2% of orders are 'pending'. A full index on status wastes space on the 98% that are 'completed'.",
+      "visual": "📊"
+    },
+    "buildup": {
+      "text": "A partial index includes only rows that match a condition: CREATE INDEX ON orders(id) WHERE status = 'pending'.",
+      "visual": "✂️"
+    },
+    "discovery": {
+      "text": "The index is tiny. It covers only the rows you actually query. Faster to scan, less RAM used.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "The query's WHERE clause must match the index condition. Otherwise the planner ignores the partial index.",
+      "visual": "🤔"
+    },
+    "climax": {
+      "text": "Partial indexes are perfect for status flags, soft deletes, and active/inactive filters.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Index only what you query. Partial indexes save space and speed.",
+      "visual": "📏"
+    }
+  },
+  "quiz": {
+    "question": "When is a partial index most beneficial?",
+    "options": [
+      "When queries only target a small subset of rows, like active records or pending orders",
+      "When the table has fewer than 100 rows",
+      "Partial indexes are always better than full indexes"
+    ],
+    "correct": 0
+  }
+}

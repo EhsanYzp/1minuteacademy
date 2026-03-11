@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-causal-consistency",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch04-consistency-models",
+  "title": "Causal Consistency",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "A quick win: understand Causal Consistency.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Alice posts a message. Bob replies. A third person sees Bob's reply before Alice's post. That violates causal order.",
+      "visual": "🔀"
+    },
+    "buildup": {
+      "text": "Causal consistency ensures that if event B depends on event A, everyone sees A before B.",
+      "visual": "📏"
+    },
+    "discovery": {
+      "text": "It's weaker than strong consistency but stronger than eventual. It preserves logical order, not total order.",
+      "visual": "⚖️"
+    },
+    "twist": {
+      "text": "Independent events (no causal relation) can be seen in any order. Only dependent events are ordered.",
+      "visual": "🧩"
+    },
+    "climax": {
+      "text": "MongoDB's causal consistency sessions guarantee this. Read your writes and see cause before effect.",
+      "visual": "🍃"
+    },
+    "punchline": {
+      "text": "Causal consistency: if B depends on A, you always see A first.",
+      "visual": "📊"
+    }
+  },
+  "quiz": {
+    "question": "How is causal consistency different from strong consistency?",
+    "options": [
+      "It only orders causally related events, while strong consistency orders all events globally",
+      "Causal consistency is stricter than strong consistency",
+      "They are identical in behavior"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-mvcc-multi-version-concurrency",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch04-locking-mechanisms",
+  "title": "MVCC: Multi-Version Concurrency",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A short lesson to help you apply MVCC: Multi-Version Concurrency.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Readers don't block writers. Writers don't block readers. How? MVCC keeps multiple versions of each row.",
+      "visual": "📚"
+    },
+    "buildup": {
+      "text": "When a row is updated, the old version stays. Readers see the version valid at their snapshot time.",
+      "visual": "📸"
+    },
+    "discovery": {
+      "text": "Postgres and MySQL InnoDB both use MVCC. It's the secret behind high concurrency in modern databases.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "Old row versions accumulate. VACUUM in Postgres and purge threads in InnoDB clean them up.",
+      "visual": "🧹"
+    },
+    "climax": {
+      "text": "MVCC eliminates most read locks. Only writers competing for the same row need to wait.",
+      "visual": "🔓"
+    },
+    "punchline": {
+      "text": "MVCC: multiple versions, zero read locks, high concurrency.",
+      "visual": "🚀"
+    }
+  },
+  "quiz": {
+    "question": "How does MVCC allow readers and writers to work without blocking each other?",
+    "options": [
+      "It keeps old row versions so readers see a consistent snapshot while writers create new versions",
+      "It copies the entire table for each transaction",
+      "Readers and writers use different databases"
+    ],
+    "correct": 0
+  }
+}

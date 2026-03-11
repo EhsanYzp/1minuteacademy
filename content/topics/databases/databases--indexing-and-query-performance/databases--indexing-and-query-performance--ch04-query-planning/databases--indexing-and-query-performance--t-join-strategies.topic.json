@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-join-strategies",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch04-query-planning",
+  "title": "Join Strategies",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A fast breakdown of Join Strategies for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "JOIN users ON orders.user_id = users.id. The planner picks from three strategies: nested loop, hash, or merge.",
+      "visual": "🔗"
+    },
+    "buildup": {
+      "text": "Nested Loop: for each outer row, scan the inner table. Good when the inner table is small or indexed.",
+      "visual": "🔁"
+    },
+    "discovery": {
+      "text": "Hash Join: build a hash table from one side, probe it with the other. Great for large unsorted tables.",
+      "visual": "#️⃣"
+    },
+    "twist": {
+      "text": "Merge Join: both sides must be sorted. It walks through both in order. Very fast when both are pre-sorted.",
+      "visual": "🔀"
+    },
+    "climax": {
+      "text": "The planner picks the best strategy based on data size and available indexes. You rarely choose manually.",
+      "visual": "🧠"
+    },
+    "punchline": {
+      "text": "Three join strategies. The planner picks. EXPLAIN tells you which.",
+      "visual": "📋"
+    }
+  },
+  "quiz": {
+    "question": "When does the planner typically choose a Hash Join?",
+    "options": [
+      "When joining large unsorted tables where building a hash table is cheaper than sorting",
+      "When both tables are already sorted",
+      "When the join key is a primary key"
+    ],
+    "correct": 0
+  }
+}

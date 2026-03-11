@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-multi-leader-replication",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch02-replication",
+  "title": "Multi-Leader Replication",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "One-minute skill: Multi-Leader Replication.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Two data centers, each with a leader. Users write to their local leader. Both leaders replicate to each other.",
+      "visual": "🔀"
+    },
+    "buildup": {
+      "text": "Multi-leader replication reduces write latency for global users. Each region has a fast, local writer.",
+      "visual": "⚡"
+    },
+    "discovery": {
+      "text": "The problem: two leaders can accept conflicting writes at the same time. Conflict resolution is mandatory.",
+      "visual": "⚔️"
+    },
+    "twist": {
+      "text": "Strategies: last-write-wins (simple but lossy), merge values, or let the application resolve conflicts.",
+      "visual": "🔧"
+    },
+    "climax": {
+      "text": "Multi-leader is rare in practice. Most apps use single-leader with read replicas instead.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "Multi-leader: write anywhere, but you must handle conflicts.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "What is the biggest challenge with multi-leader replication?",
+    "options": [
+      "Conflicting writes on different leaders must be detected and resolved",
+      "It requires more disk space than single-leader",
+      "Multi-leader setups can only handle read operations"
+    ],
+    "correct": 0
+  }
+}

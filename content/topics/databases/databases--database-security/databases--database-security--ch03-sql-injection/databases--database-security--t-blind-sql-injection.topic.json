@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-security--t-blind-sql-injection",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Security",
+  "course_id": "databases--database-security",
+  "chapter_id": "databases--database-security--ch03-sql-injection",
+  "title": "Blind SQL Injection",
+  "emoji": "🛡️",
+  "color": "#14B8A6",
+  "description": "A quick win: understand Blind SQL Injection.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The app shows no query results. The attacker asks yes/no: 'Is the first char of the admin password z?'",
+      "visual": "🔍"
+    },
+    "buildup": {
+      "text": "Blind injection extracts data one bit at a time. The response differs (page loads vs error) based on the answer.",
+      "visual": "📊"
+    },
+    "discovery": {
+      "text": "Time-based blind injection: IF true THEN SLEEP(5). If the response takes 5 seconds, the condition was true.",
+      "visual": "⏱️"
+    },
+    "twist": {
+      "text": "Automated tools like sqlmap perform blind injection attacks in minutes. They test thousands of conditions rapidly.",
+      "visual": "🤖"
+    },
+    "climax": {
+      "text": "Parameterized queries prevent blind injection too. The defense is the same: never concatenate user input.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Blind injection: data extracted via yes/no signals. Defense: parameterize.",
+      "visual": "🔒"
+    }
+  },
+  "quiz": {
+    "question": "How does time-based blind SQL injection extract data?",
+    "options": [
+      "By using conditional SLEEP commands and measuring response time to infer true/false answers",
+      "By reading error messages displayed on the webpage",
+      "It directly downloads the database file"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-table-partitioning",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch05-optimization-techniques",
+  "title": "Table Partitioning",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A short lesson to help you apply Table Partitioning.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A table has 2 billion rows. Queries only need this month's data. Partitioning lets the database skip the rest.",
+      "visual": "🗂️"
+    },
+    "buildup": {
+      "text": "Partition by range: each partition holds one month. Queries on a date range scan only relevant partitions.",
+      "visual": "📅"
+    },
+    "discovery": {
+      "text": "Partition pruning: the planner excludes partitions that can't match the WHERE clause. Huge I/O savings.",
+      "visual": "✂️"
+    },
+    "twist": {
+      "text": "Queries without a partition key in WHERE scan all partitions. Worse than no partitioning.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Drop old partitions instead of deleting rows. DROP PARTITION is instant. DELETE is slow on billions of rows.",
+      "visual": "🗑️"
+    },
+    "punchline": {
+      "text": "Partition big tables by time or key. Prune what you don't need.",
+      "visual": "📏"
+    }
+  },
+  "quiz": {
+    "question": "Why is dropping a partition faster than deleting rows?",
+    "options": [
+      "DROP PARTITION removes the entire data file instantly without scanning individual rows",
+      "Deleting rows requires an internet connection",
+      "Partitions are already empty by default"
+    ],
+    "correct": 0
+  }
+}

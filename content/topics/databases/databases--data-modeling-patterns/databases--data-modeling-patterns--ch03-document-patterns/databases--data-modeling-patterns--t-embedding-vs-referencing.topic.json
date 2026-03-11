@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-embedding-vs-referencing",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch03-document-patterns",
+  "title": "Embedding vs Referencing",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "Learn Embedding vs Referencing in one minute.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A blog post has comments. Embed comments inside the post document? Or store them separately and reference?",
+      "visual": "📄"
+    },
+    "buildup": {
+      "text": "Embedding puts related data in one document. One read fetches everything. Fast for reads.",
+      "visual": "📦"
+    },
+    "discovery": {
+      "text": "Referencing stores a foreign ID. Like relational joins, but done in application code, not the database.",
+      "visual": "🔗"
+    },
+    "twist": {
+      "text": "Embed when data is read together and rarely updated independently. Reference when it changes often or is shared.",
+      "visual": "⚖️"
+    },
+    "climax": {
+      "text": "MongoDB's 16 MB document limit forces you to reference if embedded data grows too large.",
+      "visual": "📏"
+    },
+    "punchline": {
+      "text": "Embed for read speed. Reference for flexibility and independent updates.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "When should you embed data in a document database?",
+    "options": [
+      "When the data is always read together and rarely updated independently",
+      "When the data changes frequently and is shared across documents",
+      "Embedding is always better than referencing"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-automatic-failover",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch05-failure-handling",
+  "title": "Automatic Failover",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "A tiny lesson with a big payoff: Automatic Failover.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The primary database crashes. A replica detects it, promotes itself to primary, and starts accepting writes in seconds.",
+      "visual": "👑"
+    },
+    "buildup": {
+      "text": "Automatic failover minimizes downtime. No human needs to wake up at 2 AM to flip a switch.",
+      "visual": "⚡"
+    },
+    "discovery": {
+      "text": "Consensus protocols (Raft, Paxos) elect a new leader. The replica with the most up-to-date data wins.",
+      "visual": "🗳️"
+    },
+    "twist": {
+      "text": "Split-brain: two nodes both think they're the leader. Both accept writes. Data diverges. This is catastrophic.",
+      "visual": "💀"
+    },
+    "climax": {
+      "text": "Fencing tokens prevent split-brain. The new leader gets a higher token. The old leader's writes are rejected by storage.",
+      "visual": "🔒"
+    },
+    "punchline": {
+      "text": "Auto-failover: fast recovery. Use fencing tokens to prevent split-brain.",
+      "visual": "🛡️"
+    }
+  },
+  "quiz": {
+    "question": "What is split-brain in a database cluster?",
+    "options": [
+      "Two nodes both believe they are the leader and accept conflicting writes simultaneously",
+      "The database splits data into two halves for performance",
+      "A node intentionally shuts down to save resources"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-extended-reference-pattern",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch03-document-patterns",
+  "title": "Extended Reference Pattern",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "One-minute skill: Extended Reference Pattern.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "An order references a customer by ID. To display the order, you need the customer's name. That's a second query.",
+      "visual": "🔗"
+    },
+    "buildup": {
+      "text": "The extended reference embeds frequently-read fields alongside the ID: { customer_id: 42, customer_name: 'Alice' }.",
+      "visual": "📋"
+    },
+    "discovery": {
+      "text": "Now displaying the order requires one read. The customer name is right there in the order document.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "If Alice changes her name, you must update it in every order. Trade stale data risk for read performance.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Only embed fields that rarely change: names, categories, labels. Not prices or stock counts.",
+      "visual": "📏"
+    },
+    "punchline": {
+      "text": "Extended reference: copy stable fields to avoid extra lookups. Update on change.",
+      "visual": "📎"
+    }
+  },
+  "quiz": {
+    "question": "What is the risk of the extended reference pattern?",
+    "options": [
+      "Copied fields can become stale if the source data changes and the copies aren't updated",
+      "It uses twice as much disk space for every document",
+      "Extended references prevent all future schema changes"
+    ],
+    "correct": 0
+  }
+}

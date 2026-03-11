@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-multi-tenancy-patterns",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch06-advanced-patterns",
+  "title": "Multi-Tenancy Patterns",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A tiny lesson with a big payoff: Multi-Tenancy Patterns.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your SaaS serves 100 companies. Their data must be isolated. Three strategies: shared table, schema, or separate DB.",
+      "visual": "🏢"
+    },
+    "buildup": {
+      "text": "Shared table: add a tenant_id column. Simplest, but every query must filter by tenant_id. Easy to forget.",
+      "visual": "🔑"
+    },
+    "discovery": {
+      "text": "Shared schema (Postgres): one schema per tenant. Stronger isolation, same database. Switch with SET search_path.",
+      "visual": "📂"
+    },
+    "twist": {
+      "text": "Separate databases: maximum isolation, but operational overhead multiplies. 100 tenants, 100 databases to manage.",
+      "visual": "💰"
+    },
+    "climax": {
+      "text": "Row-level security (RLS) in Postgres enforces tenant isolation automatically. Queries can't leak across tenants.",
+      "visual": "🔒"
+    },
+    "punchline": {
+      "text": "Shared table with RLS for most apps. Separate databases for compliance.",
+      "visual": "🏗️"
+    }
+  },
+  "quiz": {
+    "question": "How does Row-Level Security help with multi-tenancy?",
+    "options": [
+      "It automatically filters queries to only return data belonging to the current tenant",
+      "It encrypts all data per tenant",
+      "RLS creates separate physical databases for each tenant"
+    ],
+    "correct": 0
+  }
+}

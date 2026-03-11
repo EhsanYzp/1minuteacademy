@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-synchronous-vs-asynchronous",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch02-replication",
+  "title": "Synchronous vs Asynchronous",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "A tiny lesson with a big payoff: Synchronous vs Asynchronous.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Synchronous replication: the leader waits until the follower confirms the write. Safe, but slow.",
+      "visual": "🐢"
+    },
+    "buildup": {
+      "text": "If the follower is slow or down, synchronous replication blocks the leader. Every write waits.",
+      "visual": "⏳"
+    },
+    "discovery": {
+      "text": "Asynchronous replication: the leader confirms the write immediately. The follower catches up later.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "With async, if the leader crashes before the follower replays the log, committed writes are lost forever.",
+      "visual": "💀"
+    },
+    "climax": {
+      "text": "Semi-synchronous: one follower is synchronous (safe copy), the rest are async. A practical middle ground.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "Synchronous for safety, asynchronous for speed. Semi-sync balances both.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "What is the risk of fully asynchronous replication?",
+    "options": [
+      "If the leader crashes, committed writes not yet replicated to followers are lost",
+      "It makes all queries slower",
+      "Followers can never catch up to the leader"
+    ],
+    "correct": 0
+  }
+}

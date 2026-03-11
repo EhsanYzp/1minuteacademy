@@ -1,0 +1,49 @@
+{
+  "id": "databases--nosql-explained--t-choosing-key-value-vs-wide-column",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "NoSQL Explained",
+  "course_id": "databases--nosql-explained",
+  "chapter_id": "databases--nosql-explained--ch03-key-value-and-wide-column",
+  "title": "Choosing Key-Value vs Wide-Column",
+  "emoji": "🔮",
+  "color": "#F59E0B",
+  "description": "A short lesson to help you apply Choosing Key-Value vs Wide-Column.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Both scale horizontally. Both are fast. When do you pick a key-value store over a wide-column store?",
+      "visual": "🤔"
+    },
+    "buildup": {
+      "text": "Key-value: pure lookups by key. Caching, sessions, config. Simple access pattern, maximum speed.",
+      "visual": "🗝️"
+    },
+    "discovery": {
+      "text": "Wide-column: range queries within a partition. Time-series, logs, messaging. Data has natural ordering.",
+      "visual": "📈"
+    },
+    "twist": {
+      "text": "Redis is in-memory; data size is bounded by RAM. Cassandra stores on disk; it handles petabytes.",
+      "visual": "💾"
+    },
+    "climax": {
+      "text": "Many architectures use both: Redis for hot cache, Cassandra for persistent storage. Complementary tools.",
+      "visual": "🔧"
+    },
+    "punchline": {
+      "text": "Key-value for lookups. Wide-column for sorted ranges. Both scale.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "When is a wide-column store better than a key-value store?",
+    "options": [
+      "When you need range queries over sorted data within partitions, like time-series",
+      "When you only need simple key lookups",
+      "When your data fits entirely in memory"
+    ],
+    "correct": 0
+  }
+}

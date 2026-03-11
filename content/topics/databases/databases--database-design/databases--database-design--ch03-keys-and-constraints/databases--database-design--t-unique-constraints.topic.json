@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-unique-constraints",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch03-keys-and-constraints",
+  "title": "Unique Constraints",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "A tiny lesson with a big payoff: Unique Constraints.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Two users with the same email? A UNIQUE constraint on the email column prevents that entirely.",
+      "visual": "🚫"
+    },
+    "buildup": {
+      "text": "UNIQUE tells the database: no two rows can have the same value in this column (or combination of columns).",
+      "visual": "🔒"
+    },
+    "discovery": {
+      "text": "Composite unique constraints work too: UNIQUE(user_id, course_id) means one enrollment per user per course.",
+      "visual": "🎓"
+    },
+    "twist": {
+      "text": "NULLs are tricky. In most databases, multiple NULLs are allowed in a UNIQUE column. NULL isn't equal to NULL.",
+      "visual": "🤔"
+    },
+    "climax": {
+      "text": "UNIQUE creates an index automatically. It speeds up lookups on that column for free.",
+      "visual": "⚡"
+    },
+    "punchline": {
+      "text": "UNIQUE prevents duplicates and creates an index. Two benefits, one constraint.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "Why are multiple NULLs typically allowed in a UNIQUE column?",
+    "options": [
+      "NULL is not equal to NULL in SQL, so the uniqueness check doesn't apply",
+      "UNIQUE constraints ignore NULL values entirely",
+      "Only the first NULL is stored; others are converted to zero"
+    ],
+    "correct": 0
+  }
+}

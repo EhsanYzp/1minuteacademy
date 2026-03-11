@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-expression-indexes",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch03-index-types",
+  "title": "Expression Indexes",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A micro-lesson that makes Expression Indexes usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "WHERE LOWER(email) = 'ada@test.com' can't use a regular index on email. The function blocks it.",
+      "visual": "🚫"
+    },
+    "buildup": {
+      "text": "An expression index indexes the result of a function: CREATE INDEX ON users(LOWER(email)).",
+      "visual": "🔧"
+    },
+    "discovery": {
+      "text": "Now WHERE LOWER(email) = ... uses the index. The indexed expression must match the query expression exactly.",
+      "visual": "✅"
+    },
+    "twist": {
+      "text": "Expression indexes work with any immutable function. JSON field extraction, date parts, string transforms.",
+      "visual": "🧩"
+    },
+    "climax": {
+      "text": "Indexing JSONB fields: CREATE INDEX ON events((data->>'type')). Query JSON efficiently without changing schema.",
+      "visual": "📄"
+    },
+    "punchline": {
+      "text": "Expression indexes: index the computed value you actually query.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "Why can't a regular index on email support WHERE LOWER(email) = ...?",
+    "options": [
+      "The index stores raw email values, not the lowercased version the query needs",
+      "Regular indexes don't support text columns",
+      "The LOWER function is too slow for indexing"
+    ],
+    "correct": 0
+  }
+}

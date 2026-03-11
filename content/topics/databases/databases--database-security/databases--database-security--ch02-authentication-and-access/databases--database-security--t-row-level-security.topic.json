@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-security--t-row-level-security",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Security",
+  "course_id": "databases--database-security",
+  "chapter_id": "databases--database-security--ch02-authentication-and-access",
+  "title": "Row-Level Security",
+  "emoji": "🛡️",
+  "color": "#14B8A6",
+  "description": "One-minute skill: Row-Level Security.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Tenant A's query accidentally returns Tenant B's data. Application code forgot the WHERE tenant_id = clause.",
+      "visual": "😱"
+    },
+    "buildup": {
+      "text": "Row-Level Security (RLS) in Postgres lets the database enforce row filters automatically, regardless of the query.",
+      "visual": "🔒"
+    },
+    "discovery": {
+      "text": "CREATE POLICY tenant_isolation ON orders USING (tenant_id = current_setting('app.tenant_id')). Automatic filtering.",
+      "visual": "🛡️"
+    },
+    "twist": {
+      "text": "RLS policies run on every query. Even if application code has a bug, the database still enforces isolation.",
+      "visual": "🧱"
+    },
+    "climax": {
+      "text": "Supabase uses RLS as its primary access control mechanism. Every table has policies that check the JWT claims.",
+      "visual": "🔐"
+    },
+    "punchline": {
+      "text": "RLS: the database enforces access rules. App bugs can't leak tenant data.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "How does Row-Level Security prevent data leaks between tenants?",
+    "options": [
+      "The database automatically filters rows based on policies, regardless of what the application query says",
+      "It encrypts each tenant's data with a different key",
+      "RLS deletes unauthorized rows before they can be read"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-multi-tenant-design",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch06-design-in-practice",
+  "title": "Multi-Tenant Design",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "A short lesson to help you apply Multi-Tenant Design.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "One database, many customers. How do you keep their data separate? Multi-tenant design has three approaches.",
+      "visual": "🏢"
+    },
+    "buildup": {
+      "text": "Shared tables with a tenant_id column: simple, but every query must include WHERE tenant_id = ?.",
+      "visual": "🔑"
+    },
+    "discovery": {
+      "text": "Schema-per-tenant: each customer gets their own schema. Good isolation, harder to manage at scale.",
+      "visual": "🗂️"
+    },
+    "twist": {
+      "text": "Database-per-tenant gives maximum isolation but multiplies infrastructure. 1,000 tenants = 1,000 databases.",
+      "visual": "🏗️"
+    },
+    "climax": {
+      "text": "Row-level security (Postgres RLS) automates tenant filtering. The database enforces isolation, not the app.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Shared tables with RLS: simple, safe, and scalable.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "What advantage does row-level security (RLS) provide for multi-tenant databases?",
+    "options": [
+      "The database automatically filters rows by tenant, removing the burden from application code",
+      "RLS encrypts all data at the row level",
+      "It allows tenants to modify each other's data safely"
+    ],
+    "correct": 0
+  }
+}

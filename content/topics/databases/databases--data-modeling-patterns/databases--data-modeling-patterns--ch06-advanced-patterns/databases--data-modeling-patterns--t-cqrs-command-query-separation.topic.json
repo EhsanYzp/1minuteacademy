@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-cqrs-command-query-separation",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch06-advanced-patterns",
+  "title": "CQRS: Command Query Separation",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A 60-second lesson on CQRS: Command Query Separation.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Reads need denormalized, wide tables. Writes need normalized, narrow tables. One schema can't optimize both.",
+      "visual": "🔀"
+    },
+    "buildup": {
+      "text": "CQRS splits the read model and write model into separate databases. Writes go to a normalized store.",
+      "visual": "📝"
+    },
+    "discovery": {
+      "text": "A sync process builds a denormalized read model from write events. Reads query the pre-built views.",
+      "visual": "📊"
+    },
+    "twist": {
+      "text": "The read model is eventually consistent. There's a small delay after a write before reads reflect the change.",
+      "visual": "⏳"
+    },
+    "climax": {
+      "text": "CQRS shines for systems with vastly different read and write patterns: dashboards, reporting, and search.",
+      "visual": "🔍"
+    },
+    "punchline": {
+      "text": "CQRS: separate models for reads and writes. Optimize each independently.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "What is the main benefit of CQRS?",
+    "options": [
+      "Read and write models can be optimized independently for their different access patterns",
+      "It eliminates the need for a database entirely",
+      "CQRS makes all writes faster"
+    ],
+    "correct": 0
+  }
+}

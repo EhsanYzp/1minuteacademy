@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-computed-pattern",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch03-document-patterns",
+  "title": "Computed Pattern",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A fast breakdown of Computed Pattern for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Every page load calculates average rating from 10,000 reviews. That's 10,000 reads for a single number.",
+      "visual": "📊"
+    },
+    "buildup": {
+      "text": "The computed pattern stores pre-calculated values. The product document holds average_rating and review_count.",
+      "visual": "🧮"
+    },
+    "discovery": {
+      "text": "When a review is added, update the average incrementally: new_avg = ((old_avg × count) + new_rating) / (count + 1).",
+      "visual": "📝"
+    },
+    "twist": {
+      "text": "Computed values can drift from source data. Periodically recalculate to fix any accumulated rounding errors.",
+      "visual": "🔄"
+    },
+    "climax": {
+      "text": "Use this for dashboards, leaderboards, and summary statistics. Trade write complexity for read speed.",
+      "visual": "⚡"
+    },
+    "punchline": {
+      "text": "Computed pattern: pre-calculate and store. Don't recompute on every read.",
+      "visual": "🧠"
+    }
+  },
+  "quiz": {
+    "question": "What is the trade-off of the computed pattern?",
+    "options": [
+      "Writes become more complex because they must update computed values, but reads become much faster",
+      "It eliminates the need for any indexes",
+      "Reads become slower but writes are simpler"
+    ],
+    "correct": 0
+  }
+}

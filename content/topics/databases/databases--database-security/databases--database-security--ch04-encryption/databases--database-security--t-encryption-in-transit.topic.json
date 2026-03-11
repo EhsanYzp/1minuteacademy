@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-security--t-encryption-in-transit",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Security",
+  "course_id": "databases--database-security",
+  "chapter_id": "databases--database-security--ch04-encryption",
+  "title": "Encryption in Transit",
+  "emoji": "🛡️",
+  "color": "#14B8A6",
+  "description": "A 1-minute de-risking session on Encryption in Transit.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A database query travels over the network. Without TLS, anyone on the network can read the SQL and the results.",
+      "visual": "📡"
+    },
+    "buildup": {
+      "text": "Encryption in transit uses TLS to encrypt all communication between the application and the database.",
+      "visual": "🔐"
+    },
+    "discovery": {
+      "text": "Enable sslmode=require in your connection string. The client refuses to connect without encryption.",
+      "visual": "📝"
+    },
+    "twist": {
+      "text": "sslmode=require verifies encryption but not the server's identity. Use verify-full to also check the certificate.",
+      "visual": "🔍"
+    },
+    "climax": {
+      "text": "Without verify-full, a man-in-the-middle can present a fake certificate. Verify the server's identity.",
+      "visual": "🕵️"
+    },
+    "punchline": {
+      "text": "TLS with verify-full. Encrypt the connection and verify the server's identity.",
+      "visual": "🔒"
+    }
+  },
+  "quiz": {
+    "question": "What is the difference between sslmode=require and sslmode=verify-full?",
+    "options": [
+      "require only encrypts the connection, while verify-full also verifies the server's certificate identity",
+      "They are identical in behavior",
+      "verify-full disables encryption for performance"
+    ],
+    "correct": 0
+  }
+}

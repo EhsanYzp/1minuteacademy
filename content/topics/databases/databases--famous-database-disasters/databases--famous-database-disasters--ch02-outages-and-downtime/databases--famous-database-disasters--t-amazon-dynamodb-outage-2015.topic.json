@@ -1,0 +1,49 @@
+{
+  "id": "databases--famous-database-disasters--t-amazon-dynamodb-outage-2015",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Famous Database Disasters",
+  "course_id": "databases--famous-database-disasters",
+  "chapter_id": "databases--famous-database-disasters--ch02-outages-and-downtime",
+  "title": "Amazon DynamoDB Outage 2015",
+  "emoji": "🔥",
+  "color": "#F97316",
+  "description": "One-minute skill: Amazon DynamoDB Outage 2015.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "September 2015. DynamoDB in US-East-1 goes down. Services depending on it cascade into failure across AWS.",
+      "visual": "☁️"
+    },
+    "buildup": {
+      "text": "The root cause: metadata for a storage partition got corrupted. The system couldn't route requests to the right nodes.",
+      "visual": "🔀"
+    },
+    "discovery": {
+      "text": "Recovery took hours. Every service built on DynamoDB without fallbacks went down with it.",
+      "visual": "📉"
+    },
+    "twist": {
+      "text": "Some teams had multi-region failover. Their services stayed up. Single-region teams learned a painful lesson.",
+      "visual": "🌐"
+    },
+    "climax": {
+      "text": "Lesson: managed services are not invincible. Plan for their failure. Have circuit breakers and fallback paths.",
+      "visual": "🔧"
+    },
+    "punchline": {
+      "text": "Even managed databases fail. Design for the failure of every dependency.",
+      "visual": "🛡️"
+    }
+  },
+  "quiz": {
+    "question": "What lesson did the 2015 DynamoDB outage teach?",
+    "options": [
+      "Even managed cloud services can fail, so applications need circuit breakers and fallback paths",
+      "DynamoDB should never be used in production",
+      "AWS regions never experience outages"
+    ],
+    "correct": 0
+  }
+}

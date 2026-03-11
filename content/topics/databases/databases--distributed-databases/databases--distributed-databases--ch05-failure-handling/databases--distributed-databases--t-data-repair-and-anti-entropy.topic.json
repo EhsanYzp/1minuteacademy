@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-data-repair-and-anti-entropy",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch05-failure-handling",
+  "title": "Data Repair and Anti-Entropy",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "A short lesson to help you apply Data Repair and Anti-Entropy.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A node was down for an hour and missed 50,000 writes. It's back now. How does it catch up?",
+      "visual": "🔧"
+    },
+    "buildup": {
+      "text": "Read repair: when a read detects stale data on a node, it sends the latest value back to update it.",
+      "visual": "📖"
+    },
+    "discovery": {
+      "text": "Anti-entropy processes run in the background, comparing data across replicas and fixing differences.",
+      "visual": "🔄"
+    },
+    "twist": {
+      "text": "Merkle trees speed up comparison. They hash data in a tree structure so only differing branches are transferred.",
+      "visual": "🌳"
+    },
+    "climax": {
+      "text": "Cassandra uses both read repair and anti-entropy. Together, they keep all replicas converging over time.",
+      "visual": "🤝"
+    },
+    "punchline": {
+      "text": "Read repair on access. Anti-entropy in background. Both keep replicas synced.",
+      "visual": "🔄"
+    }
+  },
+  "quiz": {
+    "question": "How do Merkle trees help with anti-entropy repair?",
+    "options": [
+      "They allow efficient comparison of large datasets by only transferring differing branches",
+      "They compress data to save storage space",
+      "Merkle trees encrypt data during transfer between nodes"
+    ],
+    "correct": 0
+  }
+}

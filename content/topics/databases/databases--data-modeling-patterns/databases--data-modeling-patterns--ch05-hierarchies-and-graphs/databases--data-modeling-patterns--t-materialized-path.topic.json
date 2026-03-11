@@ -1,0 +1,49 @@
+{
+  "id": "databases--data-modeling-patterns--t-materialized-path",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Data Modeling Patterns",
+  "course_id": "databases--data-modeling-patterns",
+  "chapter_id": "databases--data-modeling-patterns--ch05-hierarchies-and-graphs",
+  "title": "Materialized Path",
+  "emoji": "🧱",
+  "color": "#D946EF",
+  "description": "A short lesson to help you apply Materialized Path.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Each row stores its full path: /electronics/phones/smartphones. Finding all children of electronics is a LIKE query.",
+      "visual": "📂"
+    },
+    "buildup": {
+      "text": "WHERE path LIKE '/electronics/%' returns all items under electronics. No recursion needed.",
+      "visual": "🔍"
+    },
+    "discovery": {
+      "text": "The path encodes the full ancestry. Depth is the number of separators. Sorting by path gives tree order.",
+      "visual": "📏"
+    },
+    "twist": {
+      "text": "Moving a subtree means updating every descendant's path. One move can touch thousands of rows.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Use materialized paths for read-heavy hierarchies where moves are rare: category trees, URL structures.",
+      "visual": "🌐"
+    },
+    "punchline": {
+      "text": "Materialized path: fast reads without recursion. Expensive moves.",
+      "visual": "⚡"
+    }
+  },
+  "quiz": {
+    "question": "What is the downside of materialized path for hierarchies?",
+    "options": [
+      "Moving a subtree requires updating the path of every descendant row",
+      "It cannot represent hierarchies deeper than 3 levels",
+      "Materialized paths use too much memory"
+    ],
+    "correct": 0
+  }
+}

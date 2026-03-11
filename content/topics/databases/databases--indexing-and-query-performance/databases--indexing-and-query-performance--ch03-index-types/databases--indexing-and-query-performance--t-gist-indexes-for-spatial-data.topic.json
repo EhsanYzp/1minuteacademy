@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-gist-indexes-for-spatial-data",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch03-index-types",
+  "title": "GiST Indexes for Spatial Data",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A tiny lesson with a big payoff: GiST Indexes for Spatial Data.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Find all restaurants within 5 km. A B-tree can't help — it doesn't understand geographic distance.",
+      "visual": "🗺️"
+    },
+    "buildup": {
+      "text": "GiST (Generalized Search Tree) indexes support geometric and spatial queries. Bounding boxes, ranges, nearest-neighbor.",
+      "visual": "📐"
+    },
+    "discovery": {
+      "text": "PostGIS uses GiST indexes to power geographic queries in Postgres. Points, polygons, and distances.",
+      "visual": "🌍"
+    },
+    "twist": {
+      "text": "GiST also handles range types, IP addresses, and full-text search — an alternative to GIN with different trade-offs.",
+      "visual": "🔧"
+    },
+    "climax": {
+      "text": "If your data has geometry, proximity, or overlap semantics, GiST is likely the right index.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "GiST: the index for spatial and geometric data. B-trees can't do this.",
+      "visual": "🌐"
+    }
+  },
+  "quiz": {
+    "question": "Why can't B-tree indexes handle spatial queries?",
+    "options": [
+      "B-trees only sort on one dimension and can't evaluate geometric relationships like distance",
+      "B-trees are too slow for any query",
+      "Spatial data cannot be stored in a database"
+    ],
+    "correct": 0
+  }
+}

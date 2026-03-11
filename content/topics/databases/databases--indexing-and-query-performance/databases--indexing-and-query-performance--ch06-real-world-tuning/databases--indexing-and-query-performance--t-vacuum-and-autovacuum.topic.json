@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-vacuum-and-autovacuum",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch06-real-world-tuning",
+  "title": "Vacuum and Autovacuum",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "Learn Vacuum and Autovacuum in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Postgres uses MVCC: updates create new row versions instead of overwriting. Old versions pile up as dead tuples.",
+      "visual": "💀"
+    },
+    "buildup": {
+      "text": "VACUUM reclaims space from dead tuples. Without it, tables and indexes bloat and queries slow down.",
+      "visual": "🎈"
+    },
+    "discovery": {
+      "text": "Autovacuum runs VACUUM automatically in the background. It's enabled by default and should never be turned off.",
+      "visual": "🤖"
+    },
+    "twist": {
+      "text": "Autovacuum's default settings are conservative. High-write tables may need more aggressive thresholds.",
+      "visual": "⚙️"
+    },
+    "climax": {
+      "text": "Monitor dead tuple counts. If they're growing faster than autovacuum cleans them, tune the settings.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "Autovacuum keeps Postgres healthy. Tune it, don't disable it.",
+      "visual": "🩺"
+    }
+  },
+  "quiz": {
+    "question": "What happens if autovacuum can't keep up with dead tuple accumulation?",
+    "options": [
+      "Tables and indexes bloat, causing increasingly slow queries and wasted storage",
+      "The database automatically deletes all tables",
+      "Dead tuples are moved to a backup server"
+    ],
+    "correct": 0
+  }
+}

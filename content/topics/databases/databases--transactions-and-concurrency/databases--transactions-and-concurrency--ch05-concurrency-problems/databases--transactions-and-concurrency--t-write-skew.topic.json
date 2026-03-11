@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-write-skew",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch05-concurrency-problems",
+  "title": "Write Skew",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A 60-second lesson on Write Skew.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A hospital requires one doctor on call. Two doctors check, see the other is on call, and both sign off. Nobody's left.",
+      "visual": "🏥"
+    },
+    "buildup": {
+      "text": "Write skew: two transactions read the same data, decide, and write different rows that together break an invariant.",
+      "visual": "⚠️"
+    },
+    "discovery": {
+      "text": "Read Committed and Repeatable Read don't prevent write skew. Only Serializable does.",
+      "visual": "📏"
+    },
+    "twist": {
+      "text": "Write skew is subtle. The individual transactions look correct. The problem only appears when both commit.",
+      "visual": "🔍"
+    },
+    "climax": {
+      "text": "Fix: use SELECT FOR UPDATE on the rows being checked, or switch to Serializable isolation for that path.",
+      "visual": "🔒"
+    },
+    "punchline": {
+      "text": "Write skew: valid alone, broken together. Serialize the critical path.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "Why is write skew hard to detect in testing?",
+    "options": [
+      "Each transaction looks correct individually; the problem only appears when both run concurrently",
+      "Write skew only occurs in production environments",
+      "Testing tools automatically prevent write skew"
+    ],
+    "correct": 0
+  }
+}

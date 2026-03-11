@@ -1,0 +1,49 @@
+{
+  "id": "databases--distributed-databases--t-what-is-partitioning",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Distributed Databases",
+  "course_id": "databases--distributed-databases",
+  "chapter_id": "databases--distributed-databases--ch03-partitioning",
+  "title": "What Is Partitioning",
+  "emoji": "🌍",
+  "color": "#0EA5E9",
+  "description": "One-minute skill: What Is Partitioning.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A table has 10 billion rows. It doesn't fit on one machine. Split it across 10 machines, 1 billion each.",
+      "visual": "🔪"
+    },
+    "buildup": {
+      "text": "Partitioning (sharding) divides data into subsets. Each subset lives on a different node.",
+      "visual": "🧩"
+    },
+    "discovery": {
+      "text": "Queries hitting one partition are fast. The node has less data to scan and less traffic to handle.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "Queries spanning all partitions (scatter-gather) are slow. They must contact every node and merge results.",
+      "visual": "🐢"
+    },
+    "climax": {
+      "text": "Choose a partition key that matches your access patterns. Good keys mean most queries hit one partition.",
+      "visual": "🔑"
+    },
+    "punchline": {
+      "text": "Partitioning: split data across nodes. The partition key determines performance.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "Why are scatter-gather queries slow on partitioned databases?",
+    "options": [
+      "They must contact every partition and merge results, multiplying the work",
+      "Partitions refuse to answer queries from other nodes",
+      "The network encrypts every inter-node message"
+    ],
+    "correct": 0
+  }
+}

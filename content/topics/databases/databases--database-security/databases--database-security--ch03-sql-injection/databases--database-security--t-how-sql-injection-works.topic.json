@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-security--t-how-sql-injection-works",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Security",
+  "course_id": "databases--database-security",
+  "chapter_id": "databases--database-security--ch03-sql-injection",
+  "title": "How SQL Injection Works",
+  "emoji": "🛡️",
+  "color": "#14B8A6",
+  "description": "One-minute skill: How SQL Injection Works.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Input: Robert'; DROP TABLE students;-- The database sees it as SQL and drops the table. Bobby Tables strikes again.",
+      "visual": "💉"
+    },
+    "buildup": {
+      "text": "SQL injection happens when user input is concatenated directly into a SQL string. The input becomes code.",
+      "visual": "🔓"
+    },
+    "discovery": {
+      "text": "The query: SELECT * FROM users WHERE name = '\" + input + \"'. Attacker input: ' OR '1'='1. Returns all users.",
+      "visual": "📝"
+    },
+    "twist": {
+      "text": "SQL injection isn't just about dropping tables. Attackers extract data, bypass login, and escalate privileges.",
+      "visual": "🕵️"
+    },
+    "climax": {
+      "text": "It's been the #1 web vulnerability for over 20 years. OWASP still ranks injection attacks at the top.",
+      "visual": "🏆"
+    },
+    "punchline": {
+      "text": "SQL injection: user input becomes code. Never concatenate input into queries.",
+      "visual": "🚫"
+    }
+  },
+  "quiz": {
+    "question": "What causes SQL injection vulnerabilities?",
+    "options": [
+      "Concatenating user input directly into SQL query strings without sanitization",
+      "Using parameterized queries in application code",
+      "Having too many tables in the database"
+    ],
+    "correct": 0
+  }
+}

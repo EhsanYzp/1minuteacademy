@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-row-level-locks",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch04-locking-mechanisms",
+  "title": "Row-Level Locks",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A 60-second lesson on Row-Level Locks.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Two users update different rows at the same time. Row-level locks let both proceed without waiting.",
+      "visual": "🔓"
+    },
+    "buildup": {
+      "text": "When a transaction updates a row, it acquires a lock on that specific row. Other rows remain unlocked.",
+      "visual": "🔑"
+    },
+    "discovery": {
+      "text": "Another transaction can read the row (in MVCC databases) but can't update it until the lock is released.",
+      "visual": "⏳"
+    },
+    "twist": {
+      "text": "SELECT ... FOR UPDATE explicitly locks rows for reading. Use it when you plan to update based on what you read.",
+      "visual": "🔒"
+    },
+    "climax": {
+      "text": "Row-level locks are fine-grained. They maximize concurrency by only blocking the specific rows being modified.",
+      "visual": "⚡"
+    },
+    "punchline": {
+      "text": "Row locks: precise targeting. Only the affected rows are blocked.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "When should you use SELECT ... FOR UPDATE?",
+    "options": [
+      "When you read a row and plan to update it, to prevent other transactions from changing it first",
+      "When you want to read data faster",
+      "For every SELECT query to ensure data safety"
+    ],
+    "correct": 0
+  }
+}

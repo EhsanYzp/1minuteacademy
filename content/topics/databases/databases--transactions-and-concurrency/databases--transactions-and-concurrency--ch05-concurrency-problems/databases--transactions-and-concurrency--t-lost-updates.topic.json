@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-lost-updates",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch05-concurrency-problems",
+  "title": "Lost Updates",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A fast breakdown of Lost Updates for builders.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Two users read a counter value of 10. Both add 1 and write 11. One update is lost. The counter should be 12.",
+      "visual": "🔢"
+    },
+    "buildup": {
+      "text": "Lost updates happen when two transactions read, compute, and write without seeing each other's changes.",
+      "visual": "💥"
+    },
+    "discovery": {
+      "text": "Fix: use atomic updates. UPDATE counters SET value = value + 1. The database handles the increment internally.",
+      "visual": "⚛️"
+    },
+    "twist": {
+      "text": "For complex logic, SELECT FOR UPDATE prevents others from reading the row until your transaction finishes.",
+      "visual": "🔒"
+    },
+    "climax": {
+      "text": "Lost updates are the most common concurrency bug. Atomic operations and proper locking prevent them.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Lost updates: read-modify-write without protection. Use atomic operations.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "Why does UPDATE counters SET value = value + 1 prevent lost updates?",
+    "options": [
+      "The database performs the read and write atomically, without a gap for other transactions to interfere",
+      "It locks the entire table during the update",
+      "The value + 1 expression is evaluated by the client, not the server"
+    ],
+    "correct": 0
+  }
+}

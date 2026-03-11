@@ -1,0 +1,49 @@
+{
+  "id": "databases--famous-database-disasters--t-spotify-s-silent-data-corruption",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Famous Database Disasters",
+  "course_id": "databases--famous-database-disasters",
+  "chapter_id": "databases--famous-database-disasters--ch03-migration-gone-wrong",
+  "title": "Spotify's Silent Data Corruption",
+  "emoji": "🔥",
+  "color": "#F97316",
+  "description": "A 60-second lesson on Spotify's Silent Data Corruption.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Spotify discovered that some users' playlists had silently lost songs. No error, no alert. Songs just vanished.",
+      "visual": "🎧"
+    },
+    "buildup": {
+      "text": "The cause: a race condition during a storage migration. Concurrent writes during the move occasionally dropped data.",
+      "visual": "🔀"
+    },
+    "discovery": {
+      "text": "The bug was subtle. It only triggered under specific timing conditions. Standard tests never hit the race window.",
+      "visual": "🐛"
+    },
+    "twist": {
+      "text": "By the time they found it, the corrupted state had been replicated to all replicas. Clean data was gone.",
+      "visual": "💔"
+    },
+    "climax": {
+      "text": "Lesson: migrations must be idempotent and verifiable. Checksum data before and after. Detect silent corruption.",
+      "visual": "🔍"
+    },
+    "punchline": {
+      "text": "Silent corruption is the worst kind. Verify integrity at every migration step.",
+      "visual": "✅"
+    }
+  },
+  "quiz": {
+    "question": "Why was Spotify's data corruption particularly dangerous?",
+    "options": [
+      "It was silent — no errors or alerts — and had already replicated to all copies before detection",
+      "It affected all Spotify users simultaneously",
+      "The corruption was immediately detected and fixed"
+    ],
+    "correct": 0
+  }
+}

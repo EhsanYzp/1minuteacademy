@@ -1,0 +1,49 @@
+{
+  "id": "databases--famous-database-disasters--t-github-mysql-incident-2018",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Famous Database Disasters",
+  "course_id": "databases--famous-database-disasters",
+  "chapter_id": "databases--famous-database-disasters--ch02-outages-and-downtime",
+  "title": "GitHub MySQL Incident 2018",
+  "emoji": "🔥",
+  "color": "#F97316",
+  "description": "A micro-lesson that makes GitHub MySQL Incident 2018 usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "October 2018. A network issue causes GitHub's MySQL primary to lose connection with replicas for 43 seconds.",
+      "visual": "🔌"
+    },
+    "buildup": {
+      "text": "Orchestrator promotes a replica to primary. But the old primary had 43 seconds of unreplicated writes.",
+      "visual": "⏱️"
+    },
+    "discovery": {
+      "text": "Both the old and new primaries had unique data. Merging them without data loss took 24 hours of careful work.",
+      "visual": "🔧"
+    },
+    "twist": {
+      "text": "GitHub chose data integrity over speed. They kept the site in degraded mode until every row was reconciled.",
+      "visual": "⚖️"
+    },
+    "climax": {
+      "text": "Lesson: automatic failover can cause split-brain. Reconciliation plans must exist before incidents happen.",
+      "visual": "📋"
+    },
+    "punchline": {
+      "text": "Failover creates divergent data. Plan the reconciliation before you need it.",
+      "visual": "🧠"
+    }
+  },
+  "quiz": {
+    "question": "What problem did GitHub face after automatic failover?",
+    "options": [
+      "The old and new primaries had different data that needed careful reconciliation",
+      "All data was lost on both servers",
+      "The failover completed instantly with no issues"
+    ],
+    "correct": 0
+  }
+}

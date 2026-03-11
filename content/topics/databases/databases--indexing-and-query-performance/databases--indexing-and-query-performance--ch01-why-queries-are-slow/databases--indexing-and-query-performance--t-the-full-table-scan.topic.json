@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-the-full-table-scan",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch01-why-queries-are-slow",
+  "title": "The Full Table Scan",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A fast breakdown of The Full Table Scan for builders.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A query searched 50 million rows to find one customer. It took 12 seconds. That's a full table scan.",
+      "visual": "🐌"
+    },
+    "buildup": {
+      "text": "Without an index, the database reads every single row to check if it matches the WHERE clause.",
+      "visual": "📖"
+    },
+    "discovery": {
+      "text": "Full scans read the entire table from disk. For large tables, that's gigabytes of data to sift through.",
+      "visual": "💿"
+    },
+    "twist": {
+      "text": "Sometimes a full scan is correct. If you need 90% of the rows, an index actually makes it slower.",
+      "visual": "🤔"
+    },
+    "climax": {
+      "text": "The goal: make selective queries use indexes and let analytical scans read sequentially.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Full scans aren't always bad. But for selective queries, they're deadly.",
+      "visual": "💀"
+    }
+  },
+  "quiz": {
+    "question": "When is a full table scan actually more efficient than using an index?",
+    "options": [
+      "When the query needs to read the majority of rows in the table",
+      "When the table has a primary key",
+      "Full table scans are never efficient"
+    ],
+    "correct": 0
+  }
+}

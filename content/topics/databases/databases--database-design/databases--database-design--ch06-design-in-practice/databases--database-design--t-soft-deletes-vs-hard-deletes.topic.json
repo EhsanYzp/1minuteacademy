@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-soft-deletes-vs-hard-deletes",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch06-design-in-practice",
+  "title": "Soft Deletes vs Hard Deletes",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "A fast breakdown of Soft Deletes vs Hard Deletes for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A user clicks Delete. Do you erase the data forever, or mark it as deleted and keep it? Big decision.",
+      "visual": "🗑️"
+    },
+    "buildup": {
+      "text": "Hard deletes: DELETE FROM users WHERE id = 42. The row is gone. No recovery without a backup.",
+      "visual": "💀"
+    },
+    "discovery": {
+      "text": "Soft deletes: UPDATE users SET deleted_at = NOW() WHERE id = 42. The row stays, hidden from normal queries.",
+      "visual": "👻"
+    },
+    "twist": {
+      "text": "Soft deletes need a WHERE deleted_at IS NULL filter on every query. Forget it and deleted data reappears.",
+      "visual": "🐛"
+    },
+    "climax": {
+      "text": "Postgres views or RLS can auto-filter soft deletes. The app never sees deleted rows without special effort.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Soft deletes preserve data. Add automatic filtering to avoid leaks.",
+      "visual": "🔒"
+    }
+  },
+  "quiz": {
+    "question": "What is the biggest risk of soft deletes without proper filtering?",
+    "options": [
+      "Deleted data reappears in queries that forget to check the deleted_at column",
+      "Soft-deleted rows take up extra disk space",
+      "The database automatically restores soft-deleted rows after 30 days"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--indexing-and-query-performance--t-index-maintenance-costs",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Indexing and Query Performance",
+  "course_id": "databases--indexing-and-query-performance",
+  "chapter_id": "databases--indexing-and-query-performance--ch02-how-indexes-work",
+  "title": "Index Maintenance Costs",
+  "emoji": "⚡",
+  "color": "#EF4444",
+  "description": "A short lesson to help you apply Index Maintenance Costs.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Every INSERT updates every index on the table. Five indexes means five extra writes per row inserted.",
+      "visual": "✍️"
+    },
+    "buildup": {
+      "text": "Indexes speed up reads but slow down writes. Each write must update the B-tree and rebalance if needed.",
+      "visual": "⚖️"
+    },
+    "discovery": {
+      "text": "Unused indexes waste write performance and disk space for zero benefit. Audit indexes regularly.",
+      "visual": "🗑️"
+    },
+    "twist": {
+      "text": "pg_stat_user_indexes shows how often each index is used. An index with zero scans? Drop it.",
+      "visual": "📊"
+    },
+    "climax": {
+      "text": "The sweet spot: enough indexes for critical queries, not so many that writes become the bottleneck.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Indexes aren't free. Every one adds write cost. Audit and prune.",
+      "visual": "✂️"
+    }
+  },
+  "quiz": {
+    "question": "How can you find unused indexes in PostgreSQL?",
+    "options": [
+      "Check pg_stat_user_indexes for indexes with zero scan counts",
+      "Unused indexes are automatically removed by the database",
+      "Run EXPLAIN on every query to see which indexes are unused"
+    ],
+    "correct": 0
+  }
+}

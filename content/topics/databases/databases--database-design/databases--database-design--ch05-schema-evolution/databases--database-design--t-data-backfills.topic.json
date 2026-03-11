@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-design--t-data-backfills",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Design",
+  "course_id": "databases--database-design",
+  "chapter_id": "databases--database-design--ch05-schema-evolution",
+  "title": "Data Backfills",
+  "emoji": "📐",
+  "color": "#10B981",
+  "description": "A tiny lesson with a big payoff: Data Backfills.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You added a new display_name column. Existing rows are NULL. A backfill populates them from the name column.",
+      "visual": "🔄"
+    },
+    "buildup": {
+      "text": "Backfills update existing data to match a new schema. They run after the migration adds the column.",
+      "visual": "📝"
+    },
+    "discovery": {
+      "text": "Do it in batches: UPDATE users SET display_name = name WHERE display_name IS NULL LIMIT 1000. Loop until done.",
+      "visual": "🔁"
+    },
+    "twist": {
+      "text": "A single UPDATE on millions of rows locks the table and spikes CPU. Batching prevents the overload.",
+      "visual": "⚡"
+    },
+    "climax": {
+      "text": "After the backfill completes, add the NOT NULL constraint. Now every row has a value.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Add the column. Backfill in batches. Then constrain.",
+      "visual": "📏"
+    }
+  },
+  "quiz": {
+    "question": "Why should data backfills be done in batches?",
+    "options": [
+      "A single massive UPDATE locks the table and can overwhelm the database",
+      "Databases can only process 1000 rows at a time",
+      "Backfills only work with batch processing frameworks"
+    ],
+    "correct": 0
+  }
+}

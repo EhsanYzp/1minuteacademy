@@ -1,0 +1,49 @@
+{
+  "id": "databases--transactions-and-concurrency--t-retry-logic",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Transactions and Concurrency",
+  "course_id": "databases--transactions-and-concurrency",
+  "chapter_id": "databases--transactions-and-concurrency--ch06-practical-patterns",
+  "title": "Retry Logic",
+  "emoji": "🔒",
+  "color": "#8B5CF6",
+  "description": "A quick win: understand Retry Logic.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A transaction fails with a serialization error. Don't show an error to the user. Just retry it.",
+      "visual": "🔁"
+    },
+    "buildup": {
+      "text": "Transient failures (deadlocks, serialization errors, timeouts) are often resolved by a simple retry.",
+      "visual": "⚡"
+    },
+    "discovery": {
+      "text": "Implement exponential backoff: wait 100 ms, then 200 ms, then 400 ms. Don't hammer the database with immediate retries.",
+      "visual": "📈"
+    },
+    "twist": {
+      "text": "Add jitter: randomize the backoff slightly. Without jitter, all clients retry at the same time and collide again.",
+      "visual": "🎲"
+    },
+    "climax": {
+      "text": "Set a max retry count. If it fails five times, it's not transient. Log it, alert, and let a human investigate.",
+      "visual": "🚨"
+    },
+    "punchline": {
+      "text": "Retry with backoff and jitter. Handle transient failures gracefully.",
+      "visual": "🧠"
+    }
+  },
+  "quiz": {
+    "question": "Why is jitter important in retry logic?",
+    "options": [
+      "It prevents all clients from retrying at the exact same time, which would cause repeated collisions",
+      "Jitter makes each retry attempt faster",
+      "Without jitter, the database rejects all retry attempts"
+    ],
+    "correct": 0
+  }
+}

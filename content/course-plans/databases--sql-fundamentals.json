@@ -1,0 +1,559 @@
+{
+  "categoryId": "databases",
+  "subject": "Databases",
+  "courseId": "databases--sql-fundamentals",
+  "courseTitle": "SQL Fundamentals",
+  "emoji": "📝",
+  "color": "#3B82F6",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "databases--sql-fundamentals--ch01-what-is-sql", "title": "What Is SQL", "position": 1 },
+    { "id": "databases--sql-fundamentals--ch02-reading-data", "title": "Reading Data", "position": 2 },
+    { "id": "databases--sql-fundamentals--ch03-writing-data", "title": "Writing Data", "position": 3 },
+    { "id": "databases--sql-fundamentals--ch04-joins-and-relationships", "title": "Joins and Relationships", "position": 4 },
+    { "id": "databases--sql-fundamentals--ch05-aggregations-and-grouping", "title": "Aggregations and Grouping", "position": 5 },
+    { "id": "databases--sql-fundamentals--ch06-beyond-basics", "title": "Beyond the Basics", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "databases--sql-fundamentals--ch01-what-is-sql",
+      "title": "The Birth of SQL",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "In the 1970s, IBM researchers needed a language to talk to relational databases. SQL was born.", "visual": "🏛️" },
+        "buildup": { "text": "Raymond Boyce and Donald Chamberlin created SEQUEL, later renamed SQL, based on Codd's relational model.", "visual": "📜" },
+        "discovery": { "text": "SQL reads like English: SELECT name FROM users WHERE age > 18. Even non-programmers can follow it.", "visual": "💬" },
+        "twist": { "text": "Despite being 50+ years old, SQL outlived thousands of newer query languages. Nothing replaced it.", "visual": "🏆" },
+        "climax": { "text": "Today SQL is the most widely used database language on the planet.", "visual": "🌍" },
+        "punchline": { "text": "SQL: born in the 70s, still running the world.", "visual": "👑" }
+      },
+      "quiz": {
+        "question": "Why has SQL endured for over 50 years?",
+        "options": ["It reads like English and nothing has successfully replaced it for querying relational data", "It is the fastest programming language ever created", "It was designed for AI applications"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch01-what-is-sql",
+      "title": "SQL Is Declarative",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In Python, you write loops to filter data. In SQL, you say what you want and the database figures out how.", "visual": "🧠" },
+        "buildup": { "text": "Declarative means you describe the result, not the steps. SELECT name WHERE age > 18 — no loops needed.", "visual": "📋" },
+        "discovery": { "text": "The query planner decides the execution strategy: which index to use, what order to join tables.", "visual": "🗺️" },
+        "twist": { "text": "This means two identical queries can run very differently depending on the data and indexes available.", "visual": "🔀" },
+        "climax": { "text": "Declarative SQL lets beginners write correct queries. Performance tuning comes later with experience.", "visual": "📈" },
+        "punchline": { "text": "Tell SQL what you want. It decides how to get it.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does it mean that SQL is declarative?",
+        "options": ["You describe the result you want, not the step-by-step procedure to get it", "You must declare all variables before using them", "SQL only works with declared schemas"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch01-what-is-sql",
+      "title": "SQL Dialects",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "PostgreSQL, MySQL, SQL Server, Oracle — they all speak SQL, but each adds its own twist.", "visual": "🗣️" },
+        "buildup": { "text": "The ANSI SQL standard defines the core language. Most databases follow it, then add extensions.", "visual": "📏" },
+        "discovery": { "text": "Postgres has JSONB operators. MySQL has LIMIT. SQL Server has TOP. Same idea, different syntax.", "visual": "🧩" },
+        "twist": { "text": "Write standard SQL and your queries work almost everywhere. Use extensions and you're locked in.", "visual": "🔒" },
+        "climax": { "text": "Knowing standard SQL transfers across every database. Dialect details are easy to pick up.", "visual": "🌐" },
+        "punchline": { "text": "Learn standard SQL first. Dialects are small detours.", "visual": "🗺️" }
+      },
+      "quiz": {
+        "question": "What is the relationship between ANSI SQL and database dialects?",
+        "options": ["ANSI SQL defines the core standard; each database adds its own extensions", "They are completely unrelated languages", "ANSI SQL only works with Oracle databases"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch01-what-is-sql",
+      "title": "Tables Are the Foundation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Everything in a relational database lives in tables. No tables, no SQL.", "visual": "📋" },
+        "buildup": { "text": "A table has a name, columns with types, and rows of data. Think of a spreadsheet tab with strict rules.", "visual": "📊" },
+        "discovery": { "text": "CREATE TABLE users (id INT, name TEXT, email TEXT) — that's all it takes to define one.", "visual": "🔨" },
+        "twist": { "text": "Tables enforce structure. Every row has the same columns. No surprises, no missing fields.", "visual": "✅" },
+        "climax": { "text": "Good table design is the foundation of a good database. Get it wrong and queries suffer forever.", "visual": "🏗️" },
+        "punchline": { "text": "Tables: rigid by design. That's the strength.", "visual": "💪" }
+      },
+      "quiz": {
+        "question": "Why is table design so important in relational databases?",
+        "options": ["It forms the foundation — poor design leads to difficult and slow queries", "Tables are the only way to display data visually", "Table design only matters for very large databases"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch01-what-is-sql",
+      "title": "Running Your First Query",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "SELECT 1 + 1; — run that in any SQL client and it returns 2. Your first query, no tables needed.", "visual": "🎉" },
+        "buildup": { "text": "SELECT is the most common SQL command. It retrieves data. Every analyst and developer uses it daily.", "visual": "🔍" },
+        "discovery": { "text": "SELECT * FROM users returns every column for every user. The star means all columns.", "visual": "⭐" },
+        "twist": { "text": "Never use SELECT * in production. Fetching unused columns wastes bandwidth and slows the query.", "visual": "⚠️" },
+        "climax": { "text": "SELECT name, email FROM users — ask for exactly what you need. Nothing more, nothing less.", "visual": "🎯" },
+        "punchline": { "text": "SELECT starts every read. Be specific about what you ask for.", "visual": "📌" }
+      },
+      "quiz": {
+        "question": "Why should you avoid SELECT * in production?",
+        "options": ["It fetches all columns including ones you don't need, wasting resources", "It deletes all data from the table", "It only works in test environments"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch02-reading-data",
+      "title": "WHERE Filters Rows",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A table has a million users. You want the ones from Canada. WHERE country = 'CA' does the job.", "visual": "🍁" },
+        "buildup": { "text": "WHERE adds conditions. Only rows that match the condition appear in the result.", "visual": "🔍" },
+        "discovery": { "text": "Use operators: =, !=, >, <, BETWEEN, IN, LIKE. Combine with AND/OR for complex filters.", "visual": "⚙️" },
+        "twist": { "text": "WHERE name LIKE '%smith%' searches for any name containing smith. But LIKE can be slow without an index.", "visual": "🐌" },
+        "climax": { "text": "Indexed columns in WHERE clauses run fast. Non-indexed ones cause full table scans.", "visual": "⚡" },
+        "punchline": { "text": "WHERE picks the rows you need. Index the columns it uses.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What happens when you use WHERE on a non-indexed column?",
+        "options": ["The database scans every row in the table to find matches", "The query fails with an error", "The database automatically creates an index"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch02-reading-data",
+      "title": "ORDER BY Sorts Results",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Query results come back in no guaranteed order. ORDER BY gives you control.", "visual": "🔀" },
+        "buildup": { "text": "ORDER BY name ASC sorts alphabetically. ORDER BY created_at DESC puts newest first.", "visual": "📊" },
+        "discovery": { "text": "You can sort by multiple columns: ORDER BY country, name. First by country, then by name within each.", "visual": "🗂️" },
+        "twist": { "text": "Sorting a million rows in memory is expensive. An index on the sorted column avoids the work.", "visual": "💰" },
+        "climax": { "text": "Combine ORDER BY with LIMIT to get the top N results. Leaderboards, newest posts, biggest orders.", "visual": "🏆" },
+        "punchline": { "text": "ORDER BY controls the sequence. LIMIT caps the count.", "visual": "📏" }
+      },
+      "quiz": {
+        "question": "Why is ORDER BY on a non-indexed column expensive?",
+        "options": ["The database must sort all matching rows in memory before returning them", "It requires a separate sorting server", "Non-indexed columns cannot be sorted at all"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch02-reading-data",
+      "title": "LIMIT and OFFSET for Paging",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A blog has 10,000 posts. Show 20 per page. LIMIT 20 OFFSET 40 gives you page three.", "visual": "📄" },
+        "buildup": { "text": "LIMIT caps how many rows to return. OFFSET skips rows. Together they implement pagination.", "visual": "📑" },
+        "discovery": { "text": "Page 1: OFFSET 0. Page 2: OFFSET 20. Page 3: OFFSET 40. Simple math.", "visual": "🔢" },
+        "twist": { "text": "OFFSET 100000 is slow. The database still reads and discards 100,000 rows. Cursor-based paging is faster.", "visual": "🐌" },
+        "climax": { "text": "Cursor paging: WHERE id > last_seen_id LIMIT 20. Fast at any depth. No rows skipped.", "visual": "🚀" },
+        "punchline": { "text": "OFFSET works for small pages. Cursors scale better.", "visual": "📈" }
+      },
+      "quiz": {
+        "question": "Why is OFFSET-based pagination slow at high page numbers?",
+        "options": ["The database reads and discards all skipped rows before returning the result", "OFFSET only works for the first 100 pages", "High page numbers corrupt the index"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch02-reading-data",
+      "title": "DISTINCT Removes Duplicates",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You want every unique country in your users table. SELECT DISTINCT country FROM users. Done.", "visual": "🌍" },
+        "buildup": { "text": "DISTINCT scans all matching rows and removes duplicates from the result set.", "visual": "🧹" },
+        "discovery": { "text": "It works on multiple columns: SELECT DISTINCT city, country returns unique city-country pairs.", "visual": "🏙️" },
+        "twist": { "text": "DISTINCT can be slow on large tables. It sorts or hashes all results to find duplicates.", "visual": "⏳" },
+        "climax": { "text": "Sometimes GROUP BY is a better alternative. It lets you aggregate while removing duplicates.", "visual": "📊" },
+        "punchline": { "text": "DISTINCT cuts duplicates. Use it when you need unique values.", "visual": "✂️" }
+      },
+      "quiz": {
+        "question": "When might GROUP BY be preferred over DISTINCT?",
+        "options": ["When you want to aggregate data like counting or summing while removing duplicates", "GROUP BY is always faster than DISTINCT", "DISTINCT doesn't work with text columns"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch02-reading-data",
+      "title": "Aliases Make Queries Readable",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "SELECT u.name, o.total FROM users u JOIN orders o — aliases shorten table names in queries.", "visual": "🏷️" },
+        "buildup": { "text": "Use AS to rename columns in output: SELECT name AS customer_name. Clearer results.", "visual": "✏️" },
+        "discovery": { "text": "Table aliases are essential in joins. Without them, column names collide: users.id vs orders.id.", "visual": "💥" },
+        "twist": { "text": "Aliases exist only in the query. They don't change the table or column in the database.", "visual": "👻" },
+        "climax": { "text": "Good aliases make complex queries readable. Bad aliases (a, b, c) make them worse.", "visual": "📖" },
+        "punchline": { "text": "Aliases: short but meaningful. Readability matters.", "visual": "👓" }
+      },
+      "quiz": {
+        "question": "Why are table aliases essential when writing JOIN queries?",
+        "options": ["They prevent column name collisions between tables with identical column names", "They make the query run faster", "The database requires them for every query"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch03-writing-data",
+      "title": "INSERT Adds Rows",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "INSERT INTO users (name, email) VALUES ('Ada', 'ada@test.com') — one new row, added in milliseconds.", "visual": "➕" },
+        "buildup": { "text": "List the columns and their values. The database validates types and constraints before saving.", "visual": "✅" },
+        "discovery": { "text": "Bulk inserts are faster: INSERT INTO users VALUES (...), (...), (...). One statement, many rows.", "visual": "🚀" },
+        "twist": { "text": "Forget a NOT NULL column? The database rejects the insert. Constraints protect data quality.", "visual": "🛡️" },
+        "climax": { "text": "RETURNING (in Postgres) gives you the new row back, including any auto-generated ID. No second query needed.", "visual": "🔙" },
+        "punchline": { "text": "INSERT adds data. Constraints keep it clean.", "visual": "🧹" }
+      },
+      "quiz": {
+        "question": "Why are bulk inserts faster than individual ones?",
+        "options": ["They reduce round trips and overhead by sending multiple rows in one statement", "They bypass all database constraints", "Bulk inserts skip the write-ahead log"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch03-writing-data",
+      "title": "UPDATE Changes Rows",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A user changed their email. UPDATE users SET email = 'new@test.com' WHERE id = 42. One row updated.", "visual": "✏️" },
+        "buildup": { "text": "SET specifies the new values. WHERE picks which rows to change. Both are essential.", "visual": "🎯" },
+        "discovery": { "text": "You can update multiple columns at once: SET name = 'Ada', email = 'ada@new.com'.", "visual": "📝" },
+        "twist": { "text": "Forget the WHERE clause? UPDATE users SET email = 'oops' changes EVERY row. Dangerous.", "visual": "💀" },
+        "climax": { "text": "Always test updates with a SELECT first. See which rows match before you change them.", "visual": "🧪" },
+        "punchline": { "text": "UPDATE without WHERE hits every row. Always double-check.", "visual": "⚠️" }
+      },
+      "quiz": {
+        "question": "What happens if you run UPDATE without a WHERE clause?",
+        "options": ["Every row in the table gets updated with the new values", "Only the first row is updated", "The database returns an error"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch03-writing-data",
+      "title": "DELETE Removes Rows",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "DELETE FROM users WHERE id = 42. The row is gone. No undo button unless you have a backup.", "visual": "🗑️" },
+        "buildup": { "text": "Like UPDATE, WHERE picks the target. Forget WHERE and you delete every single row.", "visual": "💥" },
+        "discovery": { "text": "Soft deletes add a deleted_at column instead of removing data. The row stays but is filtered from queries.", "visual": "👻" },
+        "twist": { "text": "Foreign keys can block deletes. Delete a customer who has orders? The database says no. Cascading deletes fix that.", "visual": "🔗" },
+        "climax": { "text": "TRUNCATE is faster than DELETE for emptying a table. It resets the table without logging each row.", "visual": "⚡" },
+        "punchline": { "text": "DELETE is permanent. Soft deletes give you an undo.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "What is the advantage of soft deletes over hard deletes?",
+        "options": ["Data is preserved and can be recovered since the row is only marked, not removed", "Soft deletes are faster than hard deletes", "The database requires soft deletes for all tables"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch03-writing-data",
+      "title": "UPSERT: Insert or Update",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A user signs in. If they exist, update last_login. If not, create them. UPSERT does both in one query.", "visual": "🔄" },
+        "buildup": { "text": "Postgres: INSERT ... ON CONFLICT DO UPDATE. MySQL: INSERT ... ON DUPLICATE KEY UPDATE.", "visual": "🧩" },
+        "discovery": { "text": "UPSERT is atomic. No race condition between checking existence and inserting or updating.", "visual": "🔒" },
+        "twist": { "text": "Without UPSERT, you'd need two queries and a transaction. More code, more chances for bugs.", "visual": "🐛" },
+        "climax": { "text": "UPSERT is perfect for syncing data, deduplication, and idempotent API handlers.", "visual": "🎯" },
+        "punchline": { "text": "UPSERT: one query, two outcomes. Insert or update, atomically.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "Why is UPSERT safer than separate INSERT and UPDATE queries?",
+        "options": ["It's atomic, preventing race conditions between checking and writing", "It uses less disk space", "It bypasses all database constraints"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch03-writing-data",
+      "title": "Transactions Keep Data Safe",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Transfer $100: subtract from Account A, add to Account B. If step two fails, step one must undo.", "visual": "🏦" },
+        "buildup": { "text": "BEGIN starts a transaction. COMMIT saves all changes. ROLLBACK undoes everything since BEGIN.", "visual": "🔄" },
+        "discovery": { "text": "Inside a transaction, all statements succeed together or fail together. That's atomicity.", "visual": "⚛️" },
+        "twist": { "text": "Long transactions hold locks. Other queries wait. Keep transactions short to avoid blocking.", "visual": "⏱️" },
+        "climax": { "text": "Every production app uses transactions. Without them, partial writes corrupt data silently.", "visual": "🛡️" },
+        "punchline": { "text": "Transactions: all or nothing. No partial writes.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does ROLLBACK do inside a transaction?",
+        "options": ["It undoes all changes made since the transaction began", "It saves the transaction permanently", "It restarts the database server"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch04-joins-and-relationships",
+      "title": "INNER JOIN Basics",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Users in one table, orders in another. INNER JOIN combines them where a user has matching orders.", "visual": "🤝" },
+        "buildup": { "text": "SELECT * FROM users JOIN orders ON users.id = orders.user_id. Rows with matching IDs are combined.", "visual": "🔗" },
+        "discovery": { "text": "INNER JOIN only returns rows that have matches in both tables. No match? The row is excluded.", "visual": "🚫" },
+        "twist": { "text": "A user with no orders vanishes from the result. That's by design with INNER JOIN.", "visual": "👻" },
+        "climax": { "text": "INNER JOIN is the most common join type. It's the default when you write just JOIN.", "visual": "📊" },
+        "punchline": { "text": "INNER JOIN: only matching rows from both sides.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What happens to a user with no orders in an INNER JOIN between users and orders?",
+        "options": ["The user is excluded from the results entirely", "The user appears with NULL order values", "The query returns an error"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch04-joins-and-relationships",
+      "title": "LEFT JOIN Keeps All Left Rows",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You want all users, even those without orders. LEFT JOIN keeps every row from the left table.", "visual": "⬅️" },
+        "buildup": { "text": "SELECT * FROM users LEFT JOIN orders ON users.id = orders.user_id. All users appear.", "visual": "📋" },
+        "discovery": { "text": "Users without orders have NULL in every order column. That's how you spot the unmatched rows.", "visual": "🔍" },
+        "twist": { "text": "WHERE orders.id IS NULL finds users who never ordered. A LEFT JOIN plus a NULL check is a powerful pattern.", "visual": "💡" },
+        "climax": { "text": "LEFT JOIN is essential for reports: show all products, even those never sold.", "visual": "📊" },
+        "punchline": { "text": "LEFT JOIN: everyone on the left shows up, matched or not.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "How can you find users who have never placed an order using LEFT JOIN?",
+        "options": ["LEFT JOIN orders then filter WHERE orders.id IS NULL", "Use INNER JOIN and check for empty rows", "LEFT JOIN automatically excludes users without orders"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch04-joins-and-relationships",
+      "title": "Many-to-Many with Junction Tables",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A student takes many courses. A course has many students. How do you model that? A junction table.", "visual": "🔗" },
+        "buildup": { "text": "Create a student_courses table with student_id and course_id. Each row is one enrollment.", "visual": "📋" },
+        "discovery": { "text": "Join three tables: students → student_courses → courses. The junction table links the two sides.", "visual": "🌉" },
+        "twist": { "text": "Junction tables can carry extra data: enrolled_at, grade, status. They're more than just links.", "visual": "📝" },
+        "climax": { "text": "Tags, permissions, and playlists all use junction tables. The pattern is everywhere.", "visual": "🌐" },
+        "punchline": { "text": "Many-to-many needs a junction table. It's the bridge.", "visual": "🌉" }
+      },
+      "quiz": {
+        "question": "Why do many-to-many relationships require a junction table?",
+        "options": ["Neither table can hold multiple foreign keys for the other, so a linking table is needed", "Databases can only join two tables at a time", "It's a performance optimization required by SQL"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch04-joins-and-relationships",
+      "title": "Self Joins",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An employees table has a manager_id that references another employee. To find managers, join the table to itself.", "visual": "🔄" },
+        "buildup": { "text": "SELECT e.name, m.name AS manager FROM employees e JOIN employees m ON e.manager_id = m.id.", "visual": "👥" },
+        "discovery": { "text": "Self joins use aliases to treat one table as two. Without aliases, the database can't distinguish the copies.", "visual": "🏷️" },
+        "twist": { "text": "Org charts, threaded comments, and category trees all use self-referencing foreign keys.", "visual": "🌲" },
+        "climax": { "text": "Recursive CTEs extend self joins to unlimited depth: find all reports, not just direct ones.", "visual": "🔁" },
+        "punchline": { "text": "Self joins: one table, two roles. Aliases make it work.", "visual": "🪞" }
+      },
+      "quiz": {
+        "question": "When would you use a self join?",
+        "options": ["When a row references another row in the same table, like employees and their managers", "When you want to duplicate all rows in a table", "When you need to merge two different databases"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch04-joins-and-relationships",
+      "title": "Cross Joins and Cartesian Products",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Three sizes and four colors. CROSS JOIN gives you all 12 combinations — every possible pairing.", "visual": "🎨" },
+        "buildup": { "text": "CROSS JOIN returns every row from table A combined with every row from table B. No ON clause needed.", "visual": "✖️" },
+        "discovery": { "text": "It's useful for generating combinations: sizes × colors, dates × products, time slots × rooms.", "visual": "📅" },
+        "twist": { "text": "10,000 rows × 10,000 rows = 100 million results. Cross joins explode fast. Use with small tables only.", "visual": "💥" },
+        "climax": { "text": "An accidental cross join (forgetting the ON clause) is a common SQL bug. Spot it by checking row counts.", "visual": "🐛" },
+        "punchline": { "text": "Cross joins: every combo. Powerful but dangerous at scale.", "visual": "⚠️" }
+      },
+      "quiz": {
+        "question": "Why are accidental cross joins dangerous?",
+        "options": ["They produce a massive result set that can overwhelm memory and slow the database", "They permanently delete data from both tables", "They only work on numeric columns"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch05-aggregations-and-grouping",
+      "title": "COUNT, SUM, AVG, MIN, MAX",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "How many users signed up this month? SELECT COUNT(*) FROM users WHERE created_at > '2024-01-01'.", "visual": "📊" },
+        "buildup": { "text": "Aggregate functions collapse many rows into one value. COUNT counts. SUM adds. AVG averages.", "visual": "🔢" },
+        "discovery": { "text": "MIN and MAX find extremes. Oldest user? SELECT MIN(created_at) FROM users.", "visual": "📉" },
+        "twist": { "text": "COUNT(*) counts all rows. COUNT(email) counts only non-NULL emails. A subtle but important difference.", "visual": "🔍" },
+        "climax": { "text": "Aggregates power dashboards, reports, and analytics. They're the backbone of data analysis in SQL.", "visual": "📈" },
+        "punchline": { "text": "Five functions. Endless insights. Master the aggregates.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "What is the difference between COUNT(*) and COUNT(column)?",
+        "options": ["COUNT(*) counts all rows; COUNT(column) counts only rows where that column is not NULL", "There is no difference between them", "COUNT(column) is always faster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch05-aggregations-and-grouping",
+      "title": "GROUP BY Splits Data",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "How many users per country? GROUP BY country turns one big table into groups, one per country.", "visual": "🗂️" },
+        "buildup": { "text": "SELECT country, COUNT(*) FROM users GROUP BY country. Each group gets its own aggregate.", "visual": "📊" },
+        "discovery": { "text": "You can group by multiple columns: GROUP BY country, city. Groups within groups.", "visual": "🏙️" },
+        "twist": { "text": "Every column in SELECT must either be in GROUP BY or wrapped in an aggregate function. Otherwise, error.", "visual": "🚫" },
+        "climax": { "text": "GROUP BY is the key to reporting: revenue by month, signups by source, errors by type.", "visual": "📈" },
+        "punchline": { "text": "GROUP BY: split rows into buckets, then aggregate each.", "visual": "🪣" }
+      },
+      "quiz": {
+        "question": "Why must non-aggregated columns appear in GROUP BY?",
+        "options": ["The database needs to know which value to show when multiple rows are collapsed into one group", "It is an optional best practice, not a requirement", "GROUP BY only works with numeric columns"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch05-aggregations-and-grouping",
+      "title": "HAVING Filters Groups",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Show countries with more than 1,000 users. WHERE can't do it because WHERE runs before GROUP BY.", "visual": "🤔" },
+        "buildup": { "text": "HAVING filters groups after aggregation. HAVING COUNT(*) > 1000 keeps only large groups.", "visual": "🔍" },
+        "discovery": { "text": "WHERE filters rows before grouping. HAVING filters groups after. They're complementary, not interchangeable.", "visual": "⚖️" },
+        "twist": { "text": "Using WHERE for row-level filters and HAVING for group-level filters in the same query is common and correct.", "visual": "✅" },
+        "climax": { "text": "Find products with average rating above 4: GROUP BY product HAVING AVG(rating) > 4.", "visual": "⭐" },
+        "punchline": { "text": "WHERE filters rows. HAVING filters groups. Know the difference.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "When should you use HAVING instead of WHERE?",
+        "options": ["When filtering on an aggregate result that only exists after GROUP BY", "When you want the query to run faster", "HAVING and WHERE are interchangeable in all cases"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch05-aggregations-and-grouping",
+      "title": "Subqueries",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Find users who spent more than average. First calculate the average, then filter. A subquery does both.", "visual": "🪆" },
+        "buildup": { "text": "WHERE total > (SELECT AVG(total) FROM orders). The inner query runs first, then the outer uses its result.", "visual": "🔄" },
+        "discovery": { "text": "Subqueries work in SELECT, FROM, and WHERE. In FROM, they create a temporary table for the outer query.", "visual": "📦" },
+        "twist": { "text": "Correlated subqueries reference the outer query. They rerun for every row. That can be very slow.", "visual": "🐌" },
+        "climax": { "text": "Often a JOIN can replace a subquery with better performance. But subqueries are more readable for some logic.", "visual": "📖" },
+        "punchline": { "text": "Subqueries nest logic. Use them when joins feel forced.", "visual": "🧩" }
+      },
+      "quiz": {
+        "question": "Why are correlated subqueries potentially slow?",
+        "options": ["They re-execute for every row in the outer query", "They can only return one column", "They bypass the query planner entirely"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch05-aggregations-and-grouping",
+      "title": "Common Table Expressions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A complex query with three nested subqueries? CTEs break it into named, readable steps.", "visual": "📝" },
+        "buildup": { "text": "WITH active_users AS (SELECT ...) SELECT * FROM active_users. Name a subquery, use it like a table.", "visual": "🏷️" },
+        "discovery": { "text": "Chain multiple CTEs: WITH a AS (...), b AS (... FROM a) SELECT * FROM b. Each builds on the last.", "visual": "🔗" },
+        "twist": { "text": "CTEs aren't always faster. Some databases treat them as optimization barriers. Check your query plan.", "visual": "🔍" },
+        "climax": { "text": "Recursive CTEs walk trees: org charts, categories, file paths. WITH RECURSIVE is the key.", "visual": "🌳" },
+        "punchline": { "text": "CTEs: named steps for complex queries. Clean and readable.", "visual": "✨" }
+      },
+      "quiz": {
+        "question": "What is the main benefit of using CTEs over nested subqueries?",
+        "options": ["They break complex queries into named, readable steps", "They always run faster than subqueries", "They allow you to modify data in the database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch06-beyond-basics",
+      "title": "Views: Saved Queries",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A dashboard query is 50 lines long. Save it as a view and query it like a table.", "visual": "👁️" },
+        "buildup": { "text": "CREATE VIEW active_users AS SELECT * FROM users WHERE status = 'active'. Now SELECT * FROM active_users.", "visual": "📋" },
+        "discovery": { "text": "Views don't store data. They store the query. Every time you query a view, the underlying SQL runs.", "visual": "🔄" },
+        "twist": { "text": "Materialized views do store data. They cache results and refresh on demand. Fast reads, stale data risk.", "visual": "💾" },
+        "climax": { "text": "Views simplify access control. Grant a user access to a view instead of the raw table.", "visual": "🔒" },
+        "punchline": { "text": "Views: named queries. Materialized views: cached results.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "How do views differ from materialized views?",
+        "options": ["Views run the query each time; materialized views cache the result and refresh on demand", "Views store data permanently; materialized views are temporary", "There is no difference between them"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch06-beyond-basics",
+      "title": "Window Functions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Rank users by score without collapsing rows. Window functions compute across rows while keeping them all.", "visual": "🪟" },
+        "buildup": { "text": "ROW_NUMBER() OVER (ORDER BY score DESC) assigns rank 1, 2, 3 to each row by score.", "visual": "🏅" },
+        "discovery": { "text": "PARTITION BY splits the window: rank users within each country, not globally.", "visual": "🗂️" },
+        "twist": { "text": "Unlike GROUP BY, window functions don't collapse rows. Every original row stays in the result.", "visual": "📊" },
+        "climax": { "text": "Running totals, moving averages, and lag/lead comparisons — all powered by window functions.", "visual": "📈" },
+        "punchline": { "text": "Window functions: aggregate without collapsing. Powerful and elegant.", "visual": "✨" }
+      },
+      "quiz": {
+        "question": "How do window functions differ from GROUP BY?",
+        "options": ["Window functions compute values across rows without collapsing them into groups", "Window functions are faster in every case", "GROUP BY can do everything window functions can"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch06-beyond-basics",
+      "title": "Indexes and Query Speed",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A slow query ran for 8 seconds. Add one index. Same query, 4 milliseconds. Indexes are that powerful.", "visual": "⚡" },
+        "buildup": { "text": "CREATE INDEX idx_users_email ON users(email). Now lookups by email skip the full table scan.", "visual": "🔍" },
+        "discovery": { "text": "Composite indexes cover multiple columns: (country, city). Order matters — country first, then city.", "visual": "🔗" },
+        "twist": { "text": "Indexes speed reads but slow writes. Each insert must update every relevant index. Balance is key.", "visual": "⚖️" },
+        "climax": { "text": "Use EXPLAIN to check if your queries actually use the indexes you created. Don't guess.", "visual": "🧪" },
+        "punchline": { "text": "Indexes: the biggest lever for query speed. Use EXPLAIN to verify.", "visual": "🔧" }
+      },
+      "quiz": {
+        "question": "Why does column order matter in a composite index?",
+        "options": ["The database can only use the index efficiently for queries that match columns from left to right", "Column order is alphabetical by default", "It only affects how the index is displayed, not performance"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch06-beyond-basics",
+      "title": "SQL Injection Explained",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A hacker typed ' OR 1=1 -- into a login form and got access to every account. SQL injection at work.", "visual": "🏴‍☠️" },
+        "buildup": { "text": "If the app builds SQL by gluing strings, user input becomes part of the query. That's the vulnerability.", "visual": "🧨" },
+        "discovery": { "text": "Parameterized queries separate data from SQL: WHERE email = $1. The input is never treated as code.", "visual": "🛡️" },
+        "twist": { "text": "SQL injection is decades old but still in the OWASP Top 10. It's preventable yet still widespread.", "visual": "😰" },
+        "climax": { "text": "ORMs and query builders use parameters by default. Raw string queries are the main risk.", "visual": "⚠️" },
+        "punchline": { "text": "Never glue user input into SQL. Use parameters. Always.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "How do parameterized queries prevent SQL injection?",
+        "options": ["They treat user input as data, never as executable SQL code", "They encrypt the SQL before sending it", "They block all queries that contain special characters"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "databases--sql-fundamentals--ch06-beyond-basics",
+      "title": "SQL in the Real World",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Data analysts write SQL daily. So do backend developers, DBAs, and data scientists. It's universal.", "visual": "🌐" },
+        "buildup": { "text": "Business intelligence tools (Metabase, Looker) generate SQL under the hood. Know SQL and you know the engine.", "visual": "📊" },
+        "discovery": { "text": "Even NoSQL databases added SQL-like query languages. Cassandra has CQL, Spark has SparkSQL.", "visual": "🔄" },
+        "twist": { "text": "AI can generate SQL from natural language, but reviewing and fixing it still requires understanding SQL.", "visual": "🤖" },
+        "climax": { "text": "SQL is a career multiplier. It's useful in engineering, analytics, product, and data science roles.", "visual": "📈" },
+        "punchline": { "text": "SQL: one skill, every data role. Learn it well.", "visual": "💎" }
+      },
+      "quiz": {
+        "question": "Why is SQL knowledge still valuable even with AI-generated queries?",
+        "options": ["You need to review, understand, and fix the SQL that AI produces", "AI cannot generate any SQL at all", "SQL will be completely replaced by AI within a year"],
+        "correct": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "id": "databases--database-security--t-column-level-encryption",
+  "version": 1,
+  "subject": "Databases",
+  "subcategory": "Database Security",
+  "course_id": "databases--database-security",
+  "chapter_id": "databases--database-security--ch04-encryption",
+  "title": "Column-Level Encryption",
+  "emoji": "🛡️",
+  "color": "#14B8A6",
+  "description": "A quick, practical guide to Column-Level Encryption.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You encrypt the disk but the DBA can still SELECT credit_card_number. Column encryption adds another layer.",
+      "visual": "🔐"
+    },
+    "buildup": {
+      "text": "Encrypt specific columns with a key the database doesn't have. Only the application can decrypt.",
+      "visual": "🔑"
+    },
+    "discovery": {
+      "text": "pgcrypto in Postgres: INSERT INTO users (ssn) VALUES (pgp_sym_encrypt('123-45-6789', 'secret_key')).",
+      "visual": "📝"
+    },
+    "twist": {
+      "text": "Encrypted columns can't be indexed or searched normally. You trade query flexibility for security.",
+      "visual": "⚖️"
+    },
+    "climax": {
+      "text": "For PCI compliance, credit card numbers must be encrypted even within the database. Column encryption satisfies this.",
+      "visual": "💳"
+    },
+    "punchline": {
+      "text": "Column encryption: protect sensitive fields even from DBAs and deeper attacks.",
+      "visual": "🛡️"
+    }
+  },
+  "quiz": {
+    "question": "What is a limitation of column-level encryption?",
+    "options": [
+      "Encrypted columns cannot be indexed or searched efficiently with standard queries",
+      "It makes all database operations 100 times slower",
+      "Column encryption is only available in NoSQL databases"
+    ],
+    "correct": 0
+  }
+}
