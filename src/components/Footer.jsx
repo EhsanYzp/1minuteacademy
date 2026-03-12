@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { getCurrentTier } from '../services/entitlements';
@@ -36,6 +37,24 @@ export default function Footer() {
   const showLandingFineprint = location?.pathname === '/';
   const year = new Date().getFullYear();
 
+  const emailHref = useMemo(() => `mailto:${SUPPORT_EMAIL}`, []);
+  const [emailCopied, setEmailCopied] = useState(false);
+
+  useEffect(() => {
+    if (!emailCopied) return;
+    const t = setTimeout(() => setEmailCopied(false), 2200);
+    return () => clearTimeout(t);
+  }, [emailCopied]);
+
+  async function copySupportEmailToClipboard() {
+    try {
+      await navigator.clipboard.writeText(SUPPORT_EMAIL);
+      setEmailCopied(true);
+    } catch {
+      // Clipboard API may be unavailable; silently ignore.
+    }
+  }
+
   return (
     <footer className="footer" role="contentinfo">
       <div className="footer-inner">
@@ -47,7 +66,13 @@ export default function Footer() {
           <div className="footer-tagline">One minute. One idea.</div>
 
           <div className="footer-contact" aria-label="Contact">
-            <a className="footer-iconLink" href={`mailto:${SUPPORT_EMAIL}`} aria-label="Email 1 Minute Academy">
+            <a
+              className="footer-iconLink"
+              href={emailHref}
+              aria-label="Email 1 Minute Academy"
+              title={SUPPORT_EMAIL}
+              onClick={copySupportEmailToClipboard}
+            >
               <EmailIcon />
             </a>
             <a
@@ -56,9 +81,14 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Visit 1 Minute Academy on X"
+              title="x.com/1MinuteAcademy"
             >
               <XIcon />
             </a>
+
+            {emailCopied ? (
+              <span className="footer-contactHint" aria-live="polite">Copied</span>
+            ) : null}
           </div>
         </div>
 
