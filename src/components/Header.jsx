@@ -193,13 +193,15 @@ function Header() {
       >
         <div className="header-left">
           <Link to="/" className="logo" aria-label="1 minute academy" onClick={closeMobileMenu}>
-            <motion.span
+            <motion.img
               className="logo-icon"
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-            >
-              ⏱️
-            </motion.span>
+              src="/logo-1ma.svg"
+              alt=""
+              aria-hidden="true"
+              draggable={false}
+              animate={{ rotate: [0, 3, -3, 0] }}
+              transition={{ duration: 2.2, repeat: Infinity, repeatDelay: 3.2 }}
+            />
             <span className="logo-text logo-text-long" aria-hidden="true">
               <span className="logo-number">1</span> <span className="logo-minute">minute</span>{' '}
               <span className="logo-academy">academy</span>

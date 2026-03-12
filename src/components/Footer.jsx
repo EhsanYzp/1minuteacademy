@@ -18,7 +18,10 @@ export default function Footer() {
     <footer className="footer" role="contentinfo">
       <div className="footer-inner">
         <div className="footer-brand">
-          <div className="footer-logo">⏱️ 1 Minute Academy</div>
+          <div className="footer-logo">
+            <img className="footer-logoIcon" src="/logo-1ma.svg" alt="" aria-hidden="true" draggable={false} />
+            <span>1 Minute Academy</span>
+          </div>
           <div className="footer-tagline">One minute. One idea.</div>
         </div>
 
