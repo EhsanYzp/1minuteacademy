@@ -62,6 +62,34 @@
   gap: 6px;
   font-family: var(--font-display);
   font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.logo-text-long {
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.logo-text-long::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 3px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  opacity: 0.22;
+  transform: scaleX(0.92);
+  transform-origin: left;
+  transition: opacity var(--transition-normal), transform var(--transition-normal);
+}
+
+.logo:hover .logo-text-long::after,
+.logo:focus-visible .logo-text-long::after {
+  opacity: 0.42;
+  transform: scaleX(1);
 }
 
 .logo-text-short {
@@ -77,11 +105,22 @@
 .logo-number {
   font-size: 2rem;
   color: var(--color-primary);
+  font-weight: 900;
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .logo-number {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }
 
 .logo-minute {
   font-size: 1.5rem;
   color: var(--color-secondary);
+  font-weight: 800;
 }
 
 .logo-academy {
