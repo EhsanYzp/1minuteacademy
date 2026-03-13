@@ -29,6 +29,8 @@ const AuthCallbackPage = lazy(() => import('./pages/AuthCallbackPage'));
 const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage'));
 const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+const AdminLoginPage = lazy(() => import('./pages/AdminLoginPage'));
+const AdminDashboardPage = lazy(() => import('./pages/AdminDashboardPage'));
 
 function AppFrame() {
   const location = useLocation();
@@ -97,6 +99,8 @@ const router = createBrowserRouter([
       { path: 'lesson/:topicId', element: <LessonPage /> },
       { path: 'review/:topicId', element: <ReviewPage /> },
       { path: 'reviews', element: <ReviewsPage /> },
+      { path: 'admin', element: <AdminLoginPage /> },
+      { path: 'admin/dashboard', element: <AdminDashboardPage /> },
       { path: '*', element: <NotFoundPage /> },
     ],
   },
