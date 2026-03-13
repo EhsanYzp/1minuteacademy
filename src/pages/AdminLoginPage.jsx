@@ -12,6 +12,19 @@ export default function AdminLoginPage() {
   const [error, setError] = useState(null);
   const [busy, setBusy] = useState(false);
 
+  async function expectJson(res) {
+    const contentType = res.headers.get('content-type') || '';
+    if (!contentType.toLowerCase().includes('application/json')) {
+      const sample = await res.text().catch(() => '');
+      const preview = sample.slice(0, 120).replace(/\s+/g, ' ').trim();
+      throw new Error(
+        `Admin API is not returning JSON. This usually means /api is not running locally. ` +
+        `Start "vercel dev" (port 3000) so Vite can proxy /api. Preview: ${preview || '—'}`
+      );
+    }
+    return res.json();
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     setError(null);
@@ -32,10 +45,13 @@ export default function AdminLoginPage() {
       }
 
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
+        const data = await expectJson(res).catch(() => ({}));
         setError(data.error || `Error ${res.status}`);
         return;
       }
+
+      // Ensure we're actually talking to the API and not getting a static file.
+      await expectJson(res);
 
       // Credentials valid — store token and navigate
       sessionStorage.setItem(STORAGE_KEY, token);
