@@ -108,21 +108,25 @@ export default async function handler(req, res) {
       }));
 
     /* ── Process stripe customers ── */
+    // Table columns: customer_id, user_id, subscription_id, status, price_id, interval, current_period_end
     const customers = stripeCustomersRes?.data ?? [];
-    const activeSubscribers = customers.filter(c => c.plan && !c.paused);
-    const pausedSubscribers = customers.filter(c => c.paused);
-    const monthlySubscribers = activeSubscribers.filter(c => c.plan === 'month' || c.interval === 'month');
-    const yearlySubscribers = activeSubscribers.filter(c => c.plan === 'year' || c.interval === 'year');
+    const activeSubscribers = customers.filter(c => c.status === 'active' || c.status === 'trialing');
+    const canceledSubscribers = customers.filter(c => c.status === 'canceled');
+    const pastDueSubscribers = customers.filter(c => c.status === 'past_due');
+    const monthlySubscribers = activeSubscribers.filter(c => c.interval === 'month');
+    const yearlySubscribers = activeSubscribers.filter(c => c.interval === 'year');
 
     const recentPayments = customers
-      .filter(c => c.plan)
+      .filter(c => c.subscription_id)
       .sort((a, b) => new Date(b.updated_at || b.created_at || 0) - new Date(a.updated_at || a.created_at || 0))
       .slice(0, 20)
       .map(c => ({
         user_id: c.user_id,
-        stripe_customer_id: c.stripe_customer_id,
-        plan: c.plan,
-        paused: c.paused ?? false,
+        customer_id: c.customer_id,
+        subscription_id: c.subscription_id,
+        status: c.status,
+        interval: c.interval,
+        current_period_end: c.current_period_end,
         updated_at: c.updated_at,
       }));
 
@@ -155,9 +159,10 @@ export default async function handler(req, res) {
         recent: recentSignups,
       },
       billing: {
-        total_subscribers: activeSubscribers.length + pausedSubscribers.length,
+        total_customers: customers.length,
         active_subscribers: activeSubscribers.length,
-        paused_subscribers: pausedSubscribers.length,
+        canceled: canceledSubscribers.length,
+        past_due: pastDueSubscribers.length,
         monthly: monthlySubscribers.length,
         yearly: yearlySubscribers.length,
         recent_payments: recentPayments,

@@ -177,9 +177,10 @@ export default function AdminDashboardPage() {
             sub={`${billing.monthly} monthly · ${billing.yearly} yearly`}
           />
           <KpiCard
-            icon="⏸️"
-            value={billing.paused_subscribers}
-            label="Paused"
+            icon="🚫"
+            value={billing.canceled}
+            label="Canceled"
+            sub={billing.past_due > 0 ? `${billing.past_due} past due` : undefined}
           />
           <KpiCard
             icon="💬"
@@ -262,32 +263,33 @@ export default function AdminDashboardPage() {
               <table className="admin-table">
                 <thead>
                   <tr>
-                    <th>Stripe Customer</th>
-                    <th>Plan</th>
+                    <th>Customer</th>
+                    <th>Interval</th>
                     <th>Status</th>
+                    <th>Period End</th>
                     <th>Updated</th>
                   </tr>
                 </thead>
                 <tbody>
                   {billing.recent_payments.map((p, i) => (
-                    <tr key={p.stripe_customer_id || i}>
-                      <td title={p.user_id}>{p.stripe_customer_id || '—'}</td>
+                    <tr key={p.customer_id || i}>
+                      <td title={p.user_id}>{p.customer_id || '—'}</td>
                       <td>
-                        <span className={`admin-badge admin-badge--${p.plan === 'year' ? 'green' : 'blue'}`}>
-                          {p.plan || '—'}
+                        <span className={`admin-badge admin-badge--${p.interval === 'year' ? 'green' : 'blue'}`}>
+                          {p.interval || '—'}
                         </span>
                       </td>
                       <td>
-                        {p.paused
-                          ? <span className="admin-badge admin-badge--yellow">paused</span>
-                          : <span className="admin-badge admin-badge--green">active</span>
-                        }
+                        <span className={`admin-badge admin-badge--${p.status === 'active' ? 'green' : p.status === 'canceled' ? 'red' : 'yellow'}`}>
+                          {p.status || '—'}
+                        </span>
                       </td>
+                      <td>{formatDate(p.current_period_end)}</td>
                       <td>{relativeTime(p.updated_at)}</td>
                     </tr>
                   ))}
                   {billing.recent_payments.length === 0 && (
-                    <tr><td colSpan={4} style={{ textAlign: 'center', color: '#64748b' }}>No paying users yet</td></tr>
+                    <tr><td colSpan={5} style={{ textAlign: 'center', color: '#64748b' }}>No paying users yet</td></tr>
                   )}
                 </tbody>
               </table>
