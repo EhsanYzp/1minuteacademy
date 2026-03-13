@@ -139,7 +139,7 @@ function OverviewTab({ data }) {
         <KpiCard icon="👥" value={users.total.toLocaleString()} label="Total Users"
           sub={`+${users.signups_24h} today · +${users.signups_7d} this week`} />
         <KpiCard icon="💳" value={billing.active} label="Active Subscribers"
-          sub={`${billing.monthly} mo · ${billing.yearly} yr`} color="green" />
+          sub={`${billing.monthly} mo · ${billing.yearly} yr${billing.canceling ? ` · ${billing.canceling} canceling` : ''}`} color="green" />
         <KpiCard icon="📈" value={`${conversionRate}%`} label="Conversion Rate"
           sub={`${billing.active} of ${users.total} users`} color="blue" />
         <KpiCard icon="🔥" value={learning.active_today} label="Active Today"
@@ -369,6 +369,9 @@ function RevenueTab({ data }) {
       <div className="admin-kpi-grid">
         <KpiCard icon="💳" value={billing.active} label="Active Subscribers" color="green"
           sub={`${billing.monthly} monthly · ${billing.yearly} yearly`} />
+        <KpiCard icon="⏳" value={billing.canceling ?? 0} label="Canceling"
+          color={billing.canceling > 0 ? 'yellow' : 'gray'}
+          sub="Active until period end" />
         <KpiCard icon="🚫" value={billing.canceled} label="Canceled" color="red" />
         <KpiCard icon="⚠️" value={billing.past_due} label="Past Due"
           color={billing.past_due > 0 ? 'red' : 'gray'} />
@@ -387,6 +390,7 @@ function RevenueTab({ data }) {
           <DistChart
             data={{
               'Active': billing.active,
+              'Canceling': billing.canceling ?? 0,
               'Canceled': billing.canceled,
               'Past Due': billing.past_due,
             }}
@@ -427,7 +431,9 @@ function RevenueTab({ data }) {
                   <td>
                     <Badge variant={
                       c.status === 'active' ? 'green' :
+                      c.status === 'canceling' ? 'yellow' :
                       c.status === 'canceled' ? 'red' :
+                      c.status === 'deleted' ? 'red' :
                       c.status === 'past_due' ? 'yellow' : 'gray'
                     }>
                       {c.status || '—'}

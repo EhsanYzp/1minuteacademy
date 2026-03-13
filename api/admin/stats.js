@@ -100,10 +100,13 @@ export default async function handler(req, res) {
     /* ═══════════ BILLING ═══════════ */
     const customers = stripeRes?.data ?? [];
     const activeSubs = customers.filter(c => c.status === 'active' || c.status === 'trialing');
-    const canceledSubs = customers.filter(c => c.status === 'canceled');
+    const cancelingSubs = customers.filter(c => c.status === 'canceling' || (c.cancel_at_period_end === true && (c.status === 'active' || c.status === 'trialing')));
+    const canceledSubs = customers.filter(c => c.status === 'canceled' || c.status === 'deleted');
     const pastDueSubs = customers.filter(c => c.status === 'past_due');
-    const monthlySubs = activeSubs.filter(c => c.interval === 'month');
-    const yearlySubs = activeSubs.filter(c => c.interval === 'year');
+    // For monthly/yearly counts, include canceling subs (still paying until period end)
+    const paidSubs = [...activeSubs, ...cancelingSubs.filter(c => !activeSubs.includes(c))];
+    const monthlySubs = paidSubs.filter(c => c.interval === 'month');
+    const yearlySubs = paidSubs.filter(c => c.interval === 'year');
 
     const customersList = customers
       .sort((a, b) => new Date(b.updated_at || b.created_at || 0) - new Date(a.updated_at || a.created_at || 0))
@@ -114,6 +117,8 @@ export default async function handler(req, res) {
         status: c.status,
         interval: c.interval,
         current_period_end: c.current_period_end,
+        cancel_at_period_end: c.cancel_at_period_end ?? false,
+        canceled_at: c.canceled_at ?? null,
         created_at: c.created_at,
         updated_at: c.updated_at,
       }));
@@ -268,6 +273,7 @@ export default async function handler(req, res) {
       billing: {
         total_customers: customers.length,
         active: activeSubs.length,
+        canceling: cancelingSubs.length,
         canceled: canceledSubs.length,
         past_due: pastDueSubs.length,
         monthly: monthlySubs.length,

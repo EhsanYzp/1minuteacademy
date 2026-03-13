@@ -70,6 +70,8 @@ async function upsertStripeCustomerMapping({
   priceId,
   interval,
   currentPeriodEnd,
+  cancelAtPeriodEnd,
+  canceledAt,
 }) {
   const cid = typeof customerId === 'string' || typeof customerId === 'number' ? String(customerId) : null;
   if (!cid) return;
@@ -81,6 +83,12 @@ async function upsertStripeCustomerMapping({
   if (priceId) payload.price_id = String(priceId);
   if (interval) payload.interval = String(interval);
   if (currentPeriodEnd) payload.current_period_end = currentPeriodEnd;
+
+  // Always write cancellation fields so they get cleared when a sub is un-canceled.
+  if (typeof cancelAtPeriodEnd === 'boolean') {
+    payload.cancel_at_period_end = cancelAtPeriodEnd;
+  }
+  payload.canceled_at = canceledAt ?? null;
 
   await supabaseAdmin
     .from('stripe_customers')
@@ -166,12 +174,15 @@ export default async function handler(req, res) {
         priceId,
         interval,
         currentPeriodEnd: cpe,
+        cancelAtPeriodEnd: false,
+        canceledAt: null,
       });
 
       if (userId) {
         const isPro = isProSubscriptionStatus(String(sub?.status ?? 'active'));
         await updateUserMetadataMerged(supabaseAdmin, userId, {
           plan: isPro ? 'pro' : 'free',
+          plan_status: isPro ? 'active' : String(sub?.status ?? 'active'),
           stripe_customer_id: customerId || undefined,
           stripe_subscription_id: subscriptionId || undefined,
           plan_interval: typeof interval === 'string' ? interval : undefined,
@@ -193,6 +204,13 @@ export default async function handler(req, res) {
         ? new Date(subscription.current_period_end * 1000).toISOString()
         : null;
 
+      // Cancellation detection: when a user cancels via the Stripe portal,
+      // Stripe keeps status = 'active' but sets cancel_at_period_end = true.
+      const cancelAtPeriodEnd = Boolean(subscription?.cancel_at_period_end);
+      const canceledAt = subscription?.canceled_at
+        ? new Date(subscription.canceled_at * 1000).toISOString()
+        : null;
+
       const userId = await resolveUserIdFromStripe({
         supabaseAdmin,
         metadataUserId,
@@ -200,21 +218,31 @@ export default async function handler(req, res) {
         subscriptionId,
       });
 
+      // If the sub is technically active but scheduled for cancellation,
+      // store status as "canceling" so the DB / admin panel are unambiguous.
+      const effectiveStatus = (isProSubscriptionStatus(String(status ?? '')) && cancelAtPeriodEnd)
+        ? 'canceling'
+        : status;
+
       await upsertStripeCustomerMapping({
         supabaseAdmin,
         customerId,
         userId,
         subscriptionId,
-        status,
+        status: effectiveStatus,
         priceId,
         interval,
         currentPeriodEnd: cpe,
+        cancelAtPeriodEnd,
+        canceledAt,
       });
 
       if (userId) {
         const isPro = isProSubscriptionStatus(String(status ?? ''));
         await updateUserMetadataMerged(supabaseAdmin, userId, {
+          // Users who cancel keep Pro access until the period ends.
           plan: isPro ? 'pro' : 'free',
+          plan_status: cancelAtPeriodEnd ? 'canceling' : (isPro ? 'active' : status),
           stripe_customer_id: customerId || undefined,
           stripe_subscription_id: subscriptionId || undefined,
           plan_interval: interval || null,
@@ -242,11 +270,16 @@ export default async function handler(req, res) {
         userId,
         subscriptionId,
         status: subscription?.status || 'deleted',
+        cancelAtPeriodEnd: false,
+        canceledAt: subscription?.canceled_at
+          ? new Date(subscription.canceled_at * 1000).toISOString()
+          : null,
       });
 
       if (userId) {
         await updateUserMetadataMerged(supabaseAdmin, userId, {
           plan: 'free',
+          plan_status: 'canceled',
           // Keep the subscription id so the app can still show status/history.
           stripe_subscription_id: subscription?.id || null,
           plan_interval: null,
