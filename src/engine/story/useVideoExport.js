@@ -7,6 +7,12 @@ import { useState, useCallback, useRef } from 'react';
 const BEATS = ['hook', 'buildup', 'discovery', 'twist', 'climax', 'punchline'];
 const BEAT_DURATION_S = 8;
 const TOTAL_SECONDS = 60;
+const INTRO_S = 2;   // 0‒2 s  – intro card
+const OUTRO_S = 2;   // 58‒60 s – outro card
+const QUIZ_S = 8;    // 50‒58 s – quiz
+const BEATS_START_S = INTRO_S;                           // 2 s
+const QUIZ_START_S = BEATS_START_S + BEATS.length * BEAT_DURATION_S; // 50 s
+const OUTRO_START_S = QUIZ_START_S + QUIZ_S;             // 58 s
 const W = 1920;
 const H = 1080;
 const FLOAT_CYCLE_S = 3; // matches CSS @keyframes float (3s ease-in-out infinite)
@@ -676,6 +682,117 @@ function drawQuizFrame(ctx, { s, question, options, correct, topicTitle, topicEm
   }
 }
 
+/* ── Intro card (0‒2 s) ─────────────────────────────────── */
+// Shows: category → course → topic with emoji, fading in nicely.
+
+function drawIntroFrame(ctx, { s, topicTitle, topicEmoji, category, course, elapsed }) {
+  drawBg(ctx, s);
+
+  const cx = W / 2;
+  const fade = Math.min(1, elapsed / 0.4); // fade in over 0.4s
+  ctx.save();
+  ctx.globalAlpha = fade;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  // Logo / branding at top
+  ctx.font = `800 28px ${s.font}`;
+  ctx.fillStyle = s.subtext;
+  ctx.fillText('🎓  One Minute Academy', cx, 120);
+
+  // Category (small caps style)
+  ctx.font = `700 24px ${s.font}`;
+  ctx.fillStyle = s.subtext;
+  ctx.fillText((category || '').toUpperCase(), cx, H / 2 - 120);
+
+  // Course name
+  ctx.font = `800 40px ${s.font}`;
+  ctx.fillStyle = s.text;
+  ctx.globalAlpha = fade;
+  const courseLines = wrapText(ctx, course || '', BEAT_TEXT_MAX_W);
+  const courseLH = 52;
+  const courseStartY = H / 2 - 60;
+  for (let i = 0; i < courseLines.length; i++) {
+    ctx.fillText(courseLines[i], cx, courseStartY + i * courseLH, BEAT_TEXT_MAX_W);
+  }
+
+  // Divider line
+  const divY = courseStartY + courseLines.length * courseLH + 24;
+  ctx.strokeStyle = s.subtext;
+  ctx.globalAlpha = fade * 0.3;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(cx - 80, divY);
+  ctx.lineTo(cx + 80, divY);
+  ctx.stroke();
+  ctx.globalAlpha = fade;
+
+  // Topic emoji + title
+  const topicY = divY + 48;
+  const emojiStr = topicEmoji || '';
+  ctx.font = `${BEAT_EMOJI_SIZE}px ${s.font}`;
+  ctx.fillStyle = s.text;
+  ctx.fillText(emojiStr, cx, topicY);
+
+  ctx.font = `800 ${BEAT_FONT_SIZE}px ${s.font}`;
+  ctx.fillStyle = s.text;
+  const titleLines = wrapText(ctx, topicTitle || '', BEAT_TEXT_MAX_W);
+  const titleLH = BEAT_FONT_SIZE * BEAT_LINE_H;
+  const titleStartY = topicY + BEAT_EMOJI_SIZE / 2 + 32;
+  for (let i = 0; i < titleLines.length; i++) {
+    ctx.fillText(titleLines[i], cx, titleStartY + i * titleLH, BEAT_TEXT_MAX_W);
+  }
+
+  // Watermark at bottom
+  ctx.font = `600 24px ${s.font}`;
+  ctx.fillStyle = s.subtext;
+  ctx.globalAlpha = fade * 0.45;
+  ctx.fillText('1minute.academy', cx, H - 60);
+
+  ctx.restore();
+}
+
+/* ── Outro card (58‒60 s) ────────────────────────────────── */
+// Shows: motivational tagline + URL + branding.
+
+function drawOutroFrame(ctx, { s, elapsed }) {
+  drawBg(ctx, s);
+
+  const cx = W / 2;
+  const fade = Math.min(1, elapsed / 0.4);
+  ctx.save();
+  ctx.globalAlpha = fade;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  // Large emoji accent
+  ctx.font = '96px serif';
+  ctx.fillText('🎓', cx, H / 2 - 140);
+
+  // Tagline
+  ctx.font = `800 52px ${s.font}`;
+  ctx.fillStyle = s.text;
+  ctx.fillText('One Minute. One Idea.', cx, H / 2 - 20);
+
+  // Sub-tagline
+  ctx.font = `600 30px ${s.font}`;
+  ctx.fillStyle = s.subtext;
+  ctx.fillText('Micro-lessons that stick.', cx, H / 2 + 40);
+
+  // URL
+  ctx.font = `800 36px ${s.font}`;
+  ctx.fillStyle = s.timerBg;
+  ctx.fillText('1minute.academy', cx, H / 2 + 120);
+
+  // Bottom credit
+  ctx.font = `600 22px ${s.font}`;
+  ctx.fillStyle = s.subtext;
+  ctx.globalAlpha = fade * 0.55;
+  ctx.fillText('© One Minute Academy', cx, H - 60);
+
+  ctx.restore();
+}
+
 /* ── API check ────────────────────────────────────────────── */
 
 export function isVideoExportSupported() {
@@ -710,6 +827,8 @@ export default function useVideoExport() {
     const quiz = topicRow.quiz;
     const topicTitle = String(topicRow.title || 'Lesson');
     const topicEmoji = topicRow.emoji || '\ud83d\udcda';
+    const category = topicRow.subject || '';
+    const course = topicRow.subcategory || '';
     const s = getStyle(presentationStyle);
 
     try {
@@ -768,24 +887,31 @@ export default function useVideoExport() {
 
         const elapsedS = frame / FPS;
         const timeRemaining = Math.max(0, Math.ceil(TOTAL_SECONDS - elapsedS));
-        const beatIdx = Math.min(BEATS.length, Math.floor(elapsedS / BEAT_DURATION_S));
 
-        if (beatIdx >= BEATS.length) {
-          const quizElapsed = elapsedS - BEATS.length * BEAT_DURATION_S;
-          drawQuizFrame(ctx, {
+        // ── Segment dispatch ──
+        // 0‒2 s  : intro card
+        // 2‒50 s : 6 beats × 8 s
+        // 50‒58 s: quiz (8 s)
+        // 58‒60 s: outro card
+
+        if (elapsedS < INTRO_S) {
+          // ── Intro ──
+          drawIntroFrame(ctx, {
             s,
-            question: quiz?.question || '',
-            options: quiz?.options || [],
-            correct: quiz?.correct ?? 0,
             topicTitle,
             topicEmoji,
-            timeRemaining,
-            showAnswer: quizElapsed >= 4,
+            category,
+            course,
+            elapsed: elapsedS,
           });
-        } else {
+
+        } else if (elapsedS < QUIZ_START_S) {
+          // ── Story beats ──
+          const beatTime = elapsedS - BEATS_START_S;
+          const beatIdx = Math.min(BEATS.length - 1, Math.floor(beatTime / BEAT_DURATION_S));
           const beatKey = BEATS[beatIdx];
           const beatData = storyBeats?.[beatKey];
-          const beatElapsed = elapsedS - beatIdx * BEAT_DURATION_S;
+          const beatElapsed = beatTime - beatIdx * BEAT_DURATION_S;
           drawBeatFrame(ctx, {
             s,
             visual: beatData?.visual,
@@ -796,6 +922,27 @@ export default function useVideoExport() {
             fadeIn: Math.min(1, beatElapsed / 0.5),
             beatIdx,
             elapsedS,
+          });
+
+        } else if (elapsedS < OUTRO_START_S) {
+          // ── Quiz ──
+          const quizElapsed = elapsedS - QUIZ_START_S;
+          drawQuizFrame(ctx, {
+            s,
+            question: quiz?.question || '',
+            options: quiz?.options || [],
+            correct: quiz?.correct ?? 0,
+            topicTitle,
+            topicEmoji,
+            timeRemaining,
+            showAnswer: quizElapsed >= 4,
+          });
+
+        } else {
+          // ── Outro ──
+          drawOutroFrame(ctx, {
+            s,
+            elapsed: elapsedS - OUTRO_START_S,
           });
         }
 
