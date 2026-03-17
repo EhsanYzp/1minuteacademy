@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
-// webm-muxer is dynamically imported inside exportVideo() to avoid
+// mp4-muxer is dynamically imported inside exportVideo() to avoid
 // bundling it for users who never click the download button.
 
 /* ── Constants ─────────────────────────────────────────────── */
@@ -869,7 +869,7 @@ export default function useVideoExport() {
       // Pre-load logo image + dynamic import muxer in parallel
       const [logoImg, { Muxer, ArrayBufferTarget }] = await Promise.all([
         loadLogo(),
-        import('webm-muxer'),
+        import('mp4-muxer'),
       ]);
 
       const canvas = document.createElement('canvas');
@@ -877,30 +877,22 @@ export default function useVideoExport() {
       canvas.height = H;
       const ctx = canvas.getContext('2d');
 
-      // ── Fast offline encoding via WebCodecs + webm-muxer ──
+      // ── Fast offline encoding via WebCodecs + mp4-muxer ──
       // All 1800 frames are rendered as fast as the CPU can draw them
       // (typically 2-5 seconds), completely independent of wall-clock time.
+      // Output is MP4 (H.264) — compatible with TikTok, Instagram, X, etc.
 
       const FPS = 30;
       const totalFrames = TOTAL_SECONDS * FPS; // 1800 frames
 
-      // Determine best codec (VP9 preferred, VP8 fallback)
-      let codec = 'vp09.00.10.08';
-      let muxerCodec = 'V_VP9';
-      try {
-        const { supported } = await VideoEncoder.isConfigSupported({
-          codec, width: W, height: H, bitrate: 2_500_000,
-        });
-        if (!supported) throw new Error('VP9 not supported');
-      } catch {
-        codec = 'vp8';
-        muxerCodec = 'V_VP8';
-      }
+      // H.264 Baseline profile, level 4.0 (1080p30)
+      const codec = 'avc1.42002A';
 
       const target = new ArrayBufferTarget();
       const muxer = new Muxer({
         target,
-        video: { codec: muxerCodec, width: W, height: H },
+        video: { codec: 'avc', width: W, height: H },
+        fastStart: 'in-memory',
       });
 
       let encoderError = null;
@@ -1008,19 +1000,19 @@ export default function useVideoExport() {
 
       if (!cancelRef.current) {
         setProgress(1);
-        const blob = new Blob([target.buffer], { type: 'video/webm' });
+        const blob = new Blob([target.buffer], { type: 'video/mp4' });
         const safeName = topicTitle
           .replace(/[^a-zA-Z0-9 _-]/g, '')
           .replace(/\s+/g, '_')
           .slice(0, 60);
-        const fileName = `${safeName}_OneMinuteAcademy.webm`;
+        const fileName = `${safeName}_OneMinuteAcademy.mp4`;
 
         // Mobile: prefer navigator.share (native share-sheet / "Save to Files")
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         let shared = false;
         if (isMobile && navigator.canShare) {
           try {
-            const file = new File([blob], fileName, { type: 'video/webm' });
+            const file = new File([blob], fileName, { type: 'video/mp4' });
             if (navigator.canShare({ files: [file] })) {
               await navigator.share({ files: [file], title: fileName });
               shared = true;

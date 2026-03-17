@@ -370,7 +370,7 @@ export default function UpgradePage() {
                 </div>
                 <div className="pricing-glossary-item">
                   <div className="pricing-glossary-term">Video export</div>
-                  <div className="pricing-glossary-def">Download any completed lesson as a 60-second .webm video — great for sharing on social media or keeping offline. Pro only.</div>
+                  <div className="pricing-glossary-def">Download any completed lesson as a 60-second .mp4 video — great for sharing on TikTok, Instagram, X, or keeping offline. Pro only.</div>
                 </div>
                 <div className="pricing-glossary-item">
                   <div className="pricing-glossary-term">Lesson styles</div>

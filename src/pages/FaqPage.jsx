@@ -81,10 +81,10 @@ export default function FaqPage() {
 
             <FaqItem q="Can I download a lesson as a video?">
               <p>
-                Yes — <strong>Pro</strong> members can export any completed lesson as a 60-second <strong>.webm</strong> video.
+                Yes — <strong>Pro</strong> members can export any completed lesson as a 60-second <strong>.mp4</strong> video.
                 After finishing a topic, tap the <strong>Download video</strong> button on the completion screen.
                 The video is generated instantly in your browser (no server needed) and includes the intro,
-                all six beats, the quiz, and an outro — ready to share on social media or keep offline.
+                all six beats, the quiz, and an outro — ready to share on TikTok, Instagram, X, or any platform.
               </p>
             </FaqItem>
 
