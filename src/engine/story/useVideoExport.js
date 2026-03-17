@@ -15,6 +15,11 @@ const QUIZ_START_S = BEATS_START_S + BEATS.length * BEAT_DURATION_S; // 52 s
 const OUTRO_START_S = QUIZ_START_S + QUIZ_S;             // 58 s
 const W = 1920;
 const H = 1080;
+const IS_MOBILE = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+// Mobile uses 720p to avoid iOS Safari killing the tab for memory pressure
+const EXPORT_W = IS_MOBILE ? 1280 : W;
+const EXPORT_H = IS_MOBILE ? 720 : H;
+const EXPORT_SCALE = EXPORT_W / W; // 1.0 on desktop, 0.667 on mobile
 const FLOAT_CYCLE_S = 3; // matches CSS @keyframes float (3s ease-in-out infinite)
 const FLOAT_AMPLITUDE = 10; // matches CSS translateY(-10px)
 
@@ -845,6 +850,7 @@ export function isVideoExportSupported() {
 export default function useVideoExport() {
   const [isExporting, setIsExporting] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [exportError, setExportError] = useState(null);
   // After encoding completes, store the blob so the UI can offer a real
   // user-gesture-driven save/share button (required on iOS Safari).
   const [readyBlob, setReadyBlob] = useState(null);   // { blob, fileName }
@@ -900,6 +906,7 @@ export default function useVideoExport() {
     cancelRef.current = false;
     setIsExporting(true);
     setProgress(0);
+    setExportError(null);
 
     const storyBeats = topicRow.story;
     const quiz = topicRow.quiz;
@@ -917,25 +924,31 @@ export default function useVideoExport() {
       ]);
 
       const canvas = document.createElement('canvas');
-      canvas.width = W;
-      canvas.height = H;
+      canvas.width = EXPORT_W;
+      canvas.height = EXPORT_H;
       const ctx = canvas.getContext('2d');
 
+      // On mobile (720p) scale down all drawing ops so the 1920×1080
+      // coordinate system used by draw* functions maps to the smaller canvas.
+      if (EXPORT_SCALE !== 1) {
+        ctx.scale(EXPORT_SCALE, EXPORT_SCALE);
+      }
+
       // ── Fast offline encoding via WebCodecs + mp4-muxer ──
-      // All 1800 frames are rendered as fast as the CPU can draw them
-      // (typically 2-5 seconds), completely independent of wall-clock time.
+      // All frames are rendered as fast as the CPU can draw them,
+      // completely independent of wall-clock time.
       // Output is MP4 (H.264) — compatible with TikTok, Instagram, X, etc.
 
       const FPS = 30;
       const totalFrames = TOTAL_SECONDS * FPS; // 1800 frames
 
-      // H.264 Baseline profile, level 4.0 (1080p30)
-      const codec = 'avc1.42002A';
+      // H.264 Baseline profile, level 4.0 (1080p30) / 3.1 (720p30)
+      const codec = EXPORT_W > 1280 ? 'avc1.42002A' : 'avc1.42001F';
 
       const target = new ArrayBufferTarget();
       const muxer = new Muxer({
         target,
-        video: { codec: 'avc', width: W, height: H },
+        video: { codec: 'avc', width: EXPORT_W, height: EXPORT_H },
         fastStart: 'in-memory',
       });
 
@@ -947,13 +960,16 @@ export default function useVideoExport() {
 
       encoder.configure({
         codec,
-        width: W,
-        height: H,
-        bitrate: 2_500_000,
+        width: EXPORT_W,
+        height: EXPORT_H,
+        bitrate: EXPORT_W > 1280 ? 2_500_000 : 1_800_000,
         framerate: FPS,
       });
 
       const usPerFrame = Math.round(1_000_000 / FPS);
+      // On mobile yield every 5 frames (~167ms of video) to let GC breathe;
+      // on desktop yield every 30 frames (1 second of video).
+      const yieldInterval = IS_MOBILE ? 5 : FPS;
 
       for (let frame = 0; frame <= totalFrames; frame++) {
         if (cancelRef.current || encoderError) break;
@@ -1028,8 +1044,14 @@ export default function useVideoExport() {
         encoder.encode(videoFrame, { keyFrame: frame % (FPS * 2) === 0 });
         videoFrame.close();
 
-        // Yield every ~1 second of video time to keep UI responsive
-        if (frame % FPS === 0) {
+        // Backpressure: if the encoder queue is deep, wait for it to drain
+        // so we don't pile up uncompressed frames in memory (critical on iOS).
+        while (encoder.encodeQueueSize > 5) {
+          await new Promise((r) => setTimeout(r, 1));
+        }
+
+        // Yield periodically to keep UI responsive and let GC reclaim memory
+        if (frame % yieldInterval === 0) {
           setProgress(frame / totalFrames);
           await new Promise((r) => setTimeout(r, 0));
         }
@@ -1071,11 +1093,12 @@ export default function useVideoExport() {
       }
     } catch (err) {
       console.error('[useVideoExport] export failed:', err);
+      setExportError(err?.message || 'Video export failed. Your browser may not support this feature.');
     } finally {
       setIsExporting(false);
       setProgress(0);
     }
   }, []);
 
-  return { exportVideo, isExporting, progress, cancelExport, readyBlob, saveVideo, dismissVideo };
+  return { exportVideo, isExporting, progress, cancelExport, readyBlob, saveVideo, dismissVideo, exportError };
 }

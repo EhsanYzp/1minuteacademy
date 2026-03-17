@@ -33,7 +33,7 @@ export default function CompletionScreen({
   const navigate = useNavigate();
   const { categoryId: routeCategoryId, courseId: routeCourseId, chapterId: routeChapterId } = useParams();
 
-  const { exportVideo, isExporting, progress, cancelExport, readyBlob, saveVideo, dismissVideo } = useVideoExport();
+  const { exportVideo, isExporting, progress, cancelExport, readyBlob, saveVideo, dismissVideo, exportError } = useVideoExport();
   const canExport = canExportVideo(tier) && isVideoExportSupported();
 
   const handleExportVideo = () => {
@@ -244,6 +244,19 @@ export default function CompletionScreen({
                       onClick={dismissVideo}
                     >
                       Dismiss
+                    </button>
+                  </div>
+                ) : exportError ? (
+                  <div className="completion-videoExport-ready">
+                    <div className="completion-videoExport-label" style={{ color: '#dc2626' }}>
+                      ⚠️ {exportError}
+                    </div>
+                    <button
+                      type="button"
+                      className="completion-videoExport-btn"
+                      onClick={handleExportVideo}
+                    >
+                      🔄 Try Again
                     </button>
                   </div>
                 ) : (
