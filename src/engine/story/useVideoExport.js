@@ -543,15 +543,16 @@ const BEAT_LINE_H = 1.2;            // line-height: 1.2
 const BEAT_TEXT_MAX_W = Math.round(CONTENT_MAX_W * 0.85); // .story-text max-width: 85%
 const BEAT_EMOJI_SIZE = 80;         // .story-visual font-size: 5rem
 const BEAT_GAP = 24;                // gap: 1.5rem
-const QUIZ_Q_SIZE = 44;             // clamp(1.75rem, 5vw, 2.75rem)
+const QUIZ_SCALE = EXPORT_READABILITY_SCALE;
+const QUIZ_Q_SIZE = Math.round(52 * QUIZ_SCALE);             // bigger for social readability
 const QUIZ_Q_LINE_H = 1.25;        // line-height: 1.25
-const QUIZ_OPT_MAX_W = 500;        // .quiz-options max-width: 500px
-const QUIZ_OPT_PAD_Y = 20;         // padding: 1.25rem
-const QUIZ_OPT_PAD_X = 24;         // padding: 1.5rem
-const QUIZ_OPT_GAP = 14;           // gap: 0.875rem
-const QUIZ_OPT_FONT = 18;          // font-size: 1.1rem
-const QUIZ_FB_SIZE = 24;            // font-size: 1.5rem
-const QUIZ_INNER_GAP = 32;         // gap: 2rem
+const QUIZ_OPT_MAX_W = Math.round(640 * QUIZ_SCALE);        // wider choices so text isn't cramped
+const QUIZ_OPT_PAD_Y = Math.round(24 * QUIZ_SCALE);
+const QUIZ_OPT_PAD_X = Math.round(28 * QUIZ_SCALE);
+const QUIZ_OPT_GAP = Math.round(16 * QUIZ_SCALE);
+const QUIZ_OPT_FONT = Math.round(24 * QUIZ_SCALE);
+const QUIZ_FB_SIZE = Math.round(30 * QUIZ_SCALE);
+const QUIZ_INNER_GAP = Math.round(40 * QUIZ_SCALE);
 
 /* ── Topbar (matches .story-topbar) ──────────────────────── */
 
@@ -799,8 +800,12 @@ function drawQuizFrame(ctx, { s, question, options, correct, topicTitle, topicEm
   ctx.textBaseline = 'middle';
   ctx.font = `800 ${QUIZ_Q_SIZE}px ${s.font}`;
   ctx.fillStyle = s.text;
+  ctx.lineJoin = 'round';
+  ctx.lineWidth = Math.max(3, Math.round(3 * EXPORT_READABILITY_SCALE));
+  ctx.strokeStyle = 'rgba(0,0,0,0.28)';
   const qStartY = startY + qLineH / 2;
   for (let i = 0; i < qLines.length; i++) {
+    ctx.strokeText(qLines[i], W / 2, qStartY + i * qLineH, qMaxW);
     ctx.fillText(qLines[i], W / 2, qStartY + i * qLineH, qMaxW);
   }
   ctx.restore();
@@ -845,7 +850,15 @@ function drawQuizFrame(ctx, { s, question, options, correct, topicTitle, topicEm
     ctx.textBaseline = 'middle';
     ctx.font = `600 ${QUIZ_OPT_FONT}px ${s.font}`;
     ctx.fillStyle = s.optText;
-    ctx.fillText(String(opts[i] ?? ''), x + QUIZ_OPT_PAD_X, y + optH / 2, QUIZ_OPT_MAX_W - QUIZ_OPT_PAD_X * 2);
+    ctx.lineJoin = 'round';
+    ctx.lineWidth = Math.max(3, Math.round(3 * EXPORT_READABILITY_SCALE));
+    ctx.strokeStyle = 'rgba(0,0,0,0.30)';
+    const optText = String(opts[i] ?? '');
+    const tx = x + QUIZ_OPT_PAD_X;
+    const ty = y + optH / 2;
+    const tw = QUIZ_OPT_MAX_W - QUIZ_OPT_PAD_X * 2;
+    ctx.strokeText(optText, tx, ty, tw);
+    ctx.fillText(optText, tx, ty, tw);
 
     ctx.restore();
   }
@@ -872,7 +885,10 @@ function drawIntroFrame(ctx, { s, topicTitle, topicEmoji, category, course, elap
   const ui = EXPORT_READABILITY_SCALE;
 
   const cx = W / 2;
-  const fade = Math.min(1, elapsed / 0.4); // fade in over 0.4s
+  // Many platforms pick the first frame as the video's thumbnail.
+  // If we start at alpha=0, the thumbnail becomes “empty background”.
+  // Bias the fade so frame 0 still contains visible text/logo.
+  const fade = Math.min(1, (elapsed + 0.25) / 0.4);
   ctx.save();
   ctx.globalAlpha = fade;
   ctx.textAlign = 'center';
