@@ -54,8 +54,14 @@ function loadLogo() {
 
 /** Check whether the first bytes are an Annex B start code. */
 function _isAnnexB(d) {
-  return (d[0] === 0 && d[1] === 0 && d[2] === 1) ||
-         (d[0] === 0 && d[1] === 0 && d[2] === 0 && d[3] === 1);
+  // Some encoders may prepend extra zeros before the first start code.
+  // Scan a small window instead of only checking at offset 0.
+  const scan = Math.min(d.length - 3, 64);
+  for (let i = 0; i <= scan; i++) {
+    if (d[i] === 0 && d[i + 1] === 0 && d[i + 2] === 1) return true;
+    if (i + 3 <= scan && d[i] === 0 && d[i + 1] === 0 && d[i + 2] === 0 && d[i + 3] === 1) return true;
+  }
+  return false;
 }
 
 /** Split an Annex B bitstream into individual NAL units (start codes removed). */
@@ -102,6 +108,30 @@ function _buildAVCDescription(sps, pps) {
   buf[o++] = pps.length & 0xFF;         // PPS length (low)
   buf.set(pps, o);
   return buf.buffer;                    // ArrayBuffer
+}
+
+/** Split a length-prefixed AVC bitstream (4-byte big-endian lengths) into NAL units. */
+function _splitNALUsAVC(data) {
+  const nalus = [];
+  let o = 0;
+  while (o + 4 <= data.length) {
+    const nLen = (data[o] << 24) | (data[o + 1] << 16) | (data[o + 2] << 8) | data[o + 3];
+    o += 4;
+    if (nLen <= 0 || o + nLen > data.length) return null;
+    nalus.push(data.subarray(o, o + nLen));
+    o += nLen;
+  }
+  return nalus;
+}
+
+function _looksLikeAVC(data) {
+  // Very lightweight sniff: first 4 bytes is a plausible length and we can parse at least one NAL.
+  if (!data || data.length < 8) return false;
+  const nLen = (data[0] << 24) | (data[1] << 16) | (data[2] << 8) | data[3];
+  if (nLen <= 0 || 4 + nLen > data.length) return false;
+  const firstNalu = data.subarray(4, 4 + nLen);
+  const naluType = firstNalu[0] & 0x1F;
+  return naluType >= 1 && naluType <= 31;
 }
 
 /** Convert Annex B data → AVC (4-byte length-prefixed NALUs, SPS/PPS stripped). */
@@ -1030,8 +1060,10 @@ export default function useVideoExport() {
       });
 
       let encoderError = null;
-      let _annexBMode = false;   // true once we detect Annex B output
+      let _outputFormat = null; // 'annexb' | 'avc'
       let _gotDescription = false;
+      let _pendingSps = null;
+      let _pendingPps = null;
 
       const encoder = new VideoEncoder({
         output: (chunk, meta) => {
@@ -1048,48 +1080,73 @@ export default function useVideoExport() {
           const raw = new Uint8Array(chunk.byteLength);
           chunk.copyTo(raw);
 
-          // On the first keyframe, check if data is Annex B and extract
-          // SPS + PPS to build the AVCDecoderConfigurationRecord that
-          // mp4-muxer requires for the avcC box.
-          if (chunk.type === 'key' && !_gotDescription && _isAnnexB(raw)) {
-            _annexBMode = true;
-            const nalus = _splitNALUs(raw);
-            let sps = null, pps = null;
-            for (const nalu of nalus) {
-              const type = nalu[0] & 0x1F;
-              if (type === 7 && !sps) sps = nalu;
-              if (type === 8 && !pps) pps = nalu;
+          // If we don't have a decoderConfig yet, try to derive SPS/PPS from
+          // any chunk until we succeed (some browsers don't mark type reliably,
+          // and parameter sets can appear more than once in the stream).
+          if (!_gotDescription) {
+            let nalus = null;
+            if (_isAnnexB(raw)) {
+              _outputFormat = 'annexb';
+              nalus = _splitNALUs(raw);
+            } else if (_looksLikeAVC(raw)) {
+              _outputFormat = 'avc';
+              nalus = _splitNALUsAVC(raw);
             }
-            if (sps && pps) {
-              const description = _buildAVCDescription(sps, pps);
-              const syntheticMeta = {
-                decoderConfig: {
-                  codec,
-                  description,
-                  colorSpace: { primaries: 'bt709', transfer: 'bt709',
-                                matrix: 'bt709', fullRange: false },
-                },
-              };
-              const avcData = _annexBToAVC(raw);
-              muxer.addVideoChunkRaw(
-                avcData, chunk.type, chunk.timestamp, chunk.duration, syntheticMeta,
-              );
-              _gotDescription = true;
-              return;
+
+            if (nalus && nalus.length) {
+              for (const nalu of nalus) {
+                const type = nalu[0] & 0x1F;
+                if (type === 7 && !_pendingSps) _pendingSps = nalu;
+                if (type === 8 && !_pendingPps) _pendingPps = nalu;
+              }
+              if (_pendingSps && _pendingPps) {
+                const description = _buildAVCDescription(_pendingSps, _pendingPps);
+                const syntheticMeta = {
+                  decoderConfig: {
+                    codec,
+                    description,
+                    colorSpace: {
+                      primaries: 'bt709',
+                      transfer: 'bt709',
+                      matrix: 'bt709',
+                      fullRange: false,
+                    },
+                  },
+                };
+
+                const dataOut = _outputFormat === 'annexb' ? _annexBToAVC(raw) : raw;
+                muxer.addVideoChunkRaw(
+                  dataOut,
+                  chunk.type,
+                  chunk.timestamp,
+                  chunk.duration,
+                  syntheticMeta,
+                );
+                _gotDescription = true;
+                return;
+              }
             }
           }
 
-          // Subsequent frames in Annex B mode → convert data format
-          if (_annexBMode) {
+          // Once format is known, ensure we feed mp4-muxer AVC length-prefixed data.
+          if (_outputFormat === 'annexb') {
             const avcData = _annexBToAVC(raw);
-            muxer.addVideoChunkRaw(
-              avcData, chunk.type, chunk.timestamp, chunk.duration,
-            );
+            muxer.addVideoChunkRaw(avcData, chunk.type, chunk.timestamp, chunk.duration);
             return;
           }
 
-          // Fallback: pass through (shouldn't normally reach here)
-          muxer.addVideoChunk(chunk, meta ?? undefined);
+          if (_outputFormat === 'avc') {
+            muxer.addVideoChunkRaw(raw, chunk.type, chunk.timestamp, chunk.duration);
+            return;
+          }
+
+          // Unknown format: avoid passing decoderConfig:null through.
+          if (meta && meta.decoderConfig === null) {
+            const { decoderConfig: _ignored, ...safeMeta } = meta;
+            muxer.addVideoChunk(chunk, safeMeta);
+          } else {
+            muxer.addVideoChunk(chunk, meta ?? undefined);
+          }
         },
         error: (e) => { encoderError = e; },
       });
@@ -1203,6 +1260,14 @@ export default function useVideoExport() {
       // Flush remaining encoded frames and finalize container
       await encoder.flush();
       encoder.close();
+
+      // mp4-muxer requires decoderConfig for AVC. If iOS never exposed
+      // SPS/PPS in the bitstream, finalize would crash; surface a clean error.
+      if (!_gotDescription) {
+        throw new Error(
+          'Video export failed on this iOS browser (missing H.264 decoder config). Please update iOS/Safari, or try Chrome on desktop.'
+        );
+      }
       muxer.finalize();
 
       if (!cancelRef.current) {
@@ -1234,7 +1299,14 @@ export default function useVideoExport() {
       }
     } catch (err) {
       console.error('[useVideoExport] export failed:', err);
-      setExportError(err?.message || 'Video export failed. Your browser may not support this feature.');
+      const rawMsg = err?.message || 'Video export failed. Your browser may not support this feature.';
+      // If you still see the old mp4-muxer crash here on iOS, it strongly
+      // suggests the device is running a cached/older bundle.
+      if (/decoderconfig\.colorspace/i.test(rawMsg)) {
+        setExportError('iOS MP4 muxing failed (E_IOS_DECODERCONFIG_NULL). Hard refresh / reopen in a new tab and try again.');
+      } else {
+        setExportError(rawMsg);
+      }
     } finally {
       setIsExporting(false);
       setProgress(0);
