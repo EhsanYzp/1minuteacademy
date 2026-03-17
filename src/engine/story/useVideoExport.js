@@ -1009,18 +1009,47 @@ export default function useVideoExport() {
       if (!cancelRef.current) {
         setProgress(1);
         const blob = new Blob([target.buffer], { type: 'video/webm' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
         const safeName = topicTitle
           .replace(/[^a-zA-Z0-9 _-]/g, '')
           .replace(/\s+/g, '_')
           .slice(0, 60);
-        a.download = `${safeName}_OneMinuteAcademy.webm`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        setTimeout(() => URL.revokeObjectURL(url), 10_000);
+        const fileName = `${safeName}_OneMinuteAcademy.webm`;
+
+        // Mobile: prefer navigator.share (native share-sheet / "Save to Files")
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        let shared = false;
+        if (isMobile && navigator.canShare) {
+          try {
+            const file = new File([blob], fileName, { type: 'video/webm' });
+            if (navigator.canShare({ files: [file] })) {
+              await navigator.share({ files: [file], title: fileName });
+              shared = true;
+            }
+          } catch (shareErr) {
+            // User cancelled share-sheet or share not supported — fall through
+            if (shareErr?.name !== 'AbortError') {
+              console.warn('[useVideoExport] share failed, falling back:', shareErr);
+            } else {
+              shared = true; // user intentionally dismissed
+            }
+          }
+        }
+
+        if (!shared) {
+          // Desktop (or mobile fallback): programmatic <a download>
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = fileName;
+          // Use target=_blank so mobile browsers don't navigate the current page
+          a.target = '_blank';
+          a.rel = 'noopener';
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(() => URL.revokeObjectURL(url), 30_000);
+        }
       }
     } catch (err) {
       console.error('[useVideoExport] export failed:', err);
