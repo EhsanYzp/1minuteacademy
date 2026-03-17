@@ -4,7 +4,8 @@ import Header from '../Header';
 import ToastStack from '../ToastStack';
 import JourneyBlocks from '../../engine/journey/JourneyBlocks';
 import { whenMatches } from '../../engine/journey/when';
-import { getTopicGate } from '../../services/entitlements';
+import { getTopicGate, canExportVideo } from '../../services/entitlements';
+import useVideoExport, { isVideoExportSupported } from '../../engine/story/useVideoExport';
 
 function interpolate(text, vars) {
   if (typeof text !== 'string') return '';
@@ -25,11 +26,20 @@ export default function CompletionScreen({
   onDismissToast,
   relatedTopics,
   topicRow,
+  storyPresentationStyle,
 }) {
   const tier = String(journeyCtx?.tier ?? 'guest');
   const location = useLocation();
   const navigate = useNavigate();
   const { categoryId: routeCategoryId, courseId: routeCourseId, chapterId: routeChapterId } = useParams();
+
+  const { exportVideo, isExporting, progress, phase, cancelExport } = useVideoExport();
+  const canExport = canExportVideo(tier) && isVideoExportSupported();
+
+  const handleExportVideo = () => {
+    if (isExporting) return;
+    exportVideo({ topicRow, presentationStyle: storyPresentationStyle });
+  };
 
   const isShuffleFlow = String(location?.state?.learningFlow ?? '') === 'shuffle';
   const shuffleIncludeCompleted = Boolean(location?.state?.shuffle?.includeCompleted);
@@ -189,6 +199,43 @@ export default function CompletionScreen({
                     ) : null}
                   </details>
                 ) : null}
+              </div>
+            ) : null}
+
+            {canExport ? (
+              <div className="completion-videoExport" aria-label="Download video">
+                {isExporting ? (
+                  <div className="completion-videoExport-progress">
+                    <div className="completion-videoExport-label">
+                      🎬 Recording: {phase || 'Preparing…'}
+                    </div>
+                    <div className="completion-videoExport-bar">
+                      <div
+                        className="completion-videoExport-barFill"
+                        style={{ width: `${Math.round(progress * 100)}%` }}
+                      />
+                    </div>
+                    <div className="completion-videoExport-meta">
+                      {Math.round(progress * 100)}%{' · '}
+                      ~{Math.max(1, Math.ceil(60 * (1 - progress)))}s remaining
+                    </div>
+                    <button
+                      type="button"
+                      className="completion-videoExport-cancel"
+                      onClick={cancelExport}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    className="completion-videoExport-btn"
+                    onClick={handleExportVideo}
+                  >
+                    📹 Download as Video
+                  </button>
+                )}
               </div>
             ) : null}
 

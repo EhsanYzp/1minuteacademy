@@ -91,6 +91,11 @@ export function canReview(tier) {
   return tier === 'pro';
 }
 
+export function canExportVideo(tier) {
+  if (tier === 'paused') return false;
+  return tier === 'pro';
+}
+
 export function formatTierLabel(tier) {
   if (tier === 'guest') return 'Free (Guest)';
   if (tier === 'free') return 'Free (Account)';

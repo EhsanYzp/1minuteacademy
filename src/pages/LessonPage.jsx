@@ -838,6 +838,7 @@ function LessonPage() {
           onDismissToast={dismissToast}
           relatedTopics={relatedTopics}
           topicRow={topicRow}
+          storyPresentationStyle={storyPresentationStyle}
         />
       ) : (
         <div className="lesson-container">
