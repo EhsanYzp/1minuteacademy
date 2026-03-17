@@ -18,6 +18,28 @@ const H = 1080;
 const FLOAT_CYCLE_S = 3; // matches CSS @keyframes float (3s ease-in-out infinite)
 const FLOAT_AMPLITUDE = 10; // matches CSS translateY(-10px)
 
+/* ── Font stacks (match index.css / story.css) ────────────── */
+const FONT_DISPLAY = "'Fredoka', sans-serif";     // headings, buttons, timer, UI
+const FONT_BODY    = "'Baloo 2', cursive";         // story text, quiz, body copy
+const FONT_MONO    = "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
+const FONT_SERIF   = "Georgia, 'Times New Roman', serif";
+
+/* ── Logo loader ──────────────────────────────────────────── */
+// Pre-loads the SVG logo as an Image so we can draw it on canvas.
+let _logoImg = null;
+let _logoPromise = null;
+function loadLogo() {
+  if (_logoImg) return Promise.resolve(_logoImg);
+  if (_logoPromise) return _logoPromise;
+  _logoPromise = new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => { _logoImg = img; resolve(img); };
+    img.onerror = () => resolve(null);
+    img.src = '/logo-1ma.svg';
+  });
+  return _logoPromise;
+}
+
 /* ── Per-style visual config (mirrors story.css) ──────────── */
 
 const STYLES = {
@@ -38,7 +60,8 @@ const STYLES = {
     correctBg: 'rgba(46,204,113,0.20)',
     correctBorder: '#2ecc71',
     feedbackColor: '#27ae60',
-    font: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+    font: FONT_BODY,
+    displayFont: FONT_DISPLAY,
   },
   dark: {
     name: 'dark',
@@ -60,7 +83,8 @@ const STYLES = {
     correctBg: 'rgba(46,204,113,0.20)',
     correctBorder: 'rgba(46,204,113,0.60)',
     feedbackColor: '#2ecc71',
-    font: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+    font: FONT_BODY,
+    displayFont: FONT_DISPLAY,
   },
   terminal: {
     name: 'terminal',
@@ -82,7 +106,8 @@ const STYLES = {
     correctBg: 'rgba(34,197,94,0.22)',
     correctBorder: 'rgba(34,197,94,0.65)',
     feedbackColor: '#22c55e',
-    font: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+    font: FONT_MONO,
+    displayFont: FONT_DISPLAY,
   },
   glass: {
     name: 'glass',
@@ -104,7 +129,8 @@ const STYLES = {
     correctBg: 'rgba(46,204,113,0.20)',
     correctBorder: '#2ecc71',
     feedbackColor: '#27ae60',
-    font: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+    font: FONT_BODY,
+    displayFont: FONT_DISPLAY,
   },
   paper: {
     name: 'paper',
@@ -126,7 +152,8 @@ const STYLES = {
     correctBg: 'rgba(46,204,113,0.20)',
     correctBorder: '#2ecc71',
     feedbackColor: '#27ae60',
-    font: 'Georgia, "Times New Roman", serif',
+    font: FONT_SERIF,
+    displayFont: FONT_DISPLAY,
   },
   bold: {
     name: 'bold',
@@ -148,7 +175,8 @@ const STYLES = {
     correctBg: 'rgba(46,204,113,0.20)',
     correctBorder: '#2ecc71',
     feedbackColor: '#27ae60',
-    font: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+    font: FONT_BODY,
+    displayFont: FONT_DISPLAY,
     textScale: 1.15,
   },
   cards: {
@@ -168,7 +196,8 @@ const STYLES = {
     correctBg: 'rgba(46,204,113,0.20)',
     correctBorder: '#2ecc71',
     feedbackColor: '#27ae60',
-    font: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+    font: FONT_BODY,
+    displayFont: FONT_DISPLAY,
   },
   split: {
     name: 'split',
@@ -187,7 +216,8 @@ const STYLES = {
     correctBg: 'rgba(46,204,113,0.20)',
     correctBorder: '#2ecc71',
     feedbackColor: '#27ae60',
-    font: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+    font: FONT_BODY,
+    displayFont: FONT_DISPLAY,
   },
   minimal: {
     name: 'minimal',
@@ -206,7 +236,8 @@ const STYLES = {
     correctBg: 'rgba(46,204,113,0.15)',
     correctBorder: '#2ecc71',
     feedbackColor: '#27ae60',
-    font: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+    font: FONT_BODY,
+    displayFont: FONT_DISPLAY,
   },
 };
 
@@ -274,7 +305,7 @@ function drawBranding(ctx, s) {
   ctx.save();
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.font = `bold 28px ${s.font}`;
+  ctx.font = `700 28px ${s.displayFont}`;
   ctx.fillStyle = s.subtext;
   ctx.fillText('🎓  One Minute Academy', W / 2, 52);
   ctx.restore();
@@ -284,7 +315,7 @@ function drawTopicTitle(ctx, s, title, emoji) {
   ctx.save();
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.font = `bold 36px ${s.font}`;
+  ctx.font = `700 36px ${s.displayFont}`;
   ctx.fillStyle = s.text;
   ctx.globalAlpha = 0.75;
   const str = emoji ? `${emoji}  ${title}` : title;
@@ -336,7 +367,7 @@ function drawTimer(ctx, s, timeRemaining) {
 
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.font = `800 30px ${s.font}`;
+  ctx.font = `800 30px ${s.displayFont}`;
   ctx.fillStyle = s.timerText;
   const mins = Math.floor(timeRemaining / 60);
   const secs = String(timeRemaining % 60).padStart(2, '0');
@@ -348,7 +379,7 @@ function drawWatermark(ctx, s) {
   ctx.save();
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.font = `600 26px ${s.font}`;
+  ctx.font = `600 26px ${s.displayFont}`;
   ctx.fillStyle = s.subtext;
   ctx.globalAlpha = 0.45;
   ctx.fillText('1minute.academy', W / 2, H - 50);
@@ -401,21 +432,21 @@ function drawTopbar(ctx, s, topicTitle, topicEmoji, timeRemaining) {
   const nameStr = topicTitle || 'Learning...';
   ctx.textBaseline = 'middle';
 
-  ctx.font = `24px ${s.font}`;
+  ctx.font = `24px ${s.displayFont}`;
   const emojiW = emojiStr ? ctx.measureText(emojiStr).width : 0;
-  ctx.font = `700 18px ${s.font}`;
+  ctx.font = `700 18px ${s.displayFont}`;
   const nameW = ctx.measureText(nameStr).width;
   const titleGap = emojiStr ? 10 : 0;
   const totalTitleW = emojiW + titleGap + nameW;
   const titleStartX = (W - totalTitleW) / 2;
 
   if (emojiStr) {
-    ctx.font = `24px ${s.font}`;
+    ctx.font = `24px ${s.displayFont}`;
     ctx.textAlign = 'left';
     ctx.fillStyle = s.topicColor;
     ctx.fillText(emojiStr, titleStartX, midY);
   }
-  ctx.font = `700 18px ${s.font}`;
+  ctx.font = `700 18px ${s.displayFont}`;
   ctx.textAlign = 'left';
   ctx.fillStyle = s.topicColor;
   ctx.fillText(nameStr, titleStartX + emojiW + titleGap, midY);
@@ -439,7 +470,7 @@ function drawTopbar(ctx, s, topicTitle, topicEmoji, timeRemaining) {
 
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.font = `800 22px ${s.font}`;
+  ctx.font = `800 22px ${s.displayFont}`;
   ctx.fillStyle = '#ffffff';
   const mins = Math.floor(timeRemaining / 60);
   const secs = String(timeRemaining % 60).padStart(2, '0');
@@ -674,7 +705,7 @@ function drawQuizFrame(ctx, { s, question, options, correct, topicTitle, topicEm
     ctx.save();
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.font = `800 ${QUIZ_FB_SIZE}px ${s.font}`;
+    ctx.font = `700 ${QUIZ_FB_SIZE}px ${s.displayFont}`;
     ctx.fillStyle = s.feedbackColor;
     const fbY = optStartY + optsBlockH + QUIZ_INNER_GAP + QUIZ_FB_SIZE / 2;
     ctx.fillText('✓ Correct!', W / 2, fbY);
@@ -685,7 +716,7 @@ function drawQuizFrame(ctx, { s, question, options, correct, topicTitle, topicEm
 /* ── Intro card (0‒2 s) ─────────────────────────────────── */
 // Shows: category → course → topic with emoji, fading in nicely.
 
-function drawIntroFrame(ctx, { s, topicTitle, topicEmoji, category, course, elapsed }) {
+function drawIntroFrame(ctx, { s, topicTitle, topicEmoji, category, course, elapsed, logoImg }) {
   drawBg(ctx, s);
 
   const cx = W / 2;
@@ -695,18 +726,19 @@ function drawIntroFrame(ctx, { s, topicTitle, topicEmoji, category, course, elap
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
 
-  // Logo / branding at top
-  ctx.font = `800 28px ${s.font}`;
-  ctx.fillStyle = s.subtext;
-  ctx.fillText('🎓  One Minute Academy', cx, 120);
+  // Logo icon at top
+  if (logoImg) {
+    const logoSize = 72;
+    ctx.drawImage(logoImg, cx - logoSize / 2, 80, logoSize, logoSize);
+  }
 
-  // Category (small caps style)
-  ctx.font = `700 24px ${s.font}`;
+  // Category (small caps style) — display font
+  ctx.font = `600 24px ${s.displayFont}`;
   ctx.fillStyle = s.subtext;
   ctx.fillText((category || '').toUpperCase(), cx, H / 2 - 120);
 
-  // Course name
-  ctx.font = `800 40px ${s.font}`;
+  // Course name — display font (heading)
+  ctx.font = `700 40px ${s.displayFont}`;
   ctx.fillStyle = s.text;
   ctx.globalAlpha = fade;
   const courseLines = wrapText(ctx, course || '', BEAT_TEXT_MAX_W);
@@ -730,11 +762,11 @@ function drawIntroFrame(ctx, { s, topicTitle, topicEmoji, category, course, elap
   // Topic emoji + title
   const topicY = divY + 48;
   const emojiStr = topicEmoji || '';
-  ctx.font = `${BEAT_EMOJI_SIZE}px ${s.font}`;
+  ctx.font = `${BEAT_EMOJI_SIZE}px ${s.displayFont}`;
   ctx.fillStyle = s.text;
   ctx.fillText(emojiStr, cx, topicY);
 
-  ctx.font = `800 ${BEAT_FONT_SIZE}px ${s.font}`;
+  ctx.font = `700 ${BEAT_FONT_SIZE}px ${s.displayFont}`;
   ctx.fillStyle = s.text;
   const titleLines = wrapText(ctx, topicTitle || '', BEAT_TEXT_MAX_W);
   const titleLH = BEAT_FONT_SIZE * BEAT_LINE_H;
@@ -743,8 +775,8 @@ function drawIntroFrame(ctx, { s, topicTitle, topicEmoji, category, course, elap
     ctx.fillText(titleLines[i], cx, titleStartY + i * titleLH, BEAT_TEXT_MAX_W);
   }
 
-  // Watermark at bottom
-  ctx.font = `600 24px ${s.font}`;
+  // Watermark at bottom — display font
+  ctx.font = `600 24px ${s.displayFont}`;
   ctx.fillStyle = s.subtext;
   ctx.globalAlpha = fade * 0.45;
   ctx.fillText('1minute.academy', cx, H - 60);
@@ -755,7 +787,7 @@ function drawIntroFrame(ctx, { s, topicTitle, topicEmoji, category, course, elap
 /* ── Outro card (58‒60 s) ────────────────────────────────── */
 // Shows: motivational tagline + URL + branding.
 
-function drawOutroFrame(ctx, { s, elapsed }) {
+function drawOutroFrame(ctx, { s, elapsed, logoImg }) {
   drawBg(ctx, s);
 
   const cx = W / 2;
@@ -765,27 +797,29 @@ function drawOutroFrame(ctx, { s, elapsed }) {
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
 
-  // Large emoji accent
-  ctx.font = '96px serif';
-  ctx.fillText('🎓', cx, H / 2 - 140);
+  // Official logo
+  if (logoImg) {
+    const logoSize = 120;
+    ctx.drawImage(logoImg, cx - logoSize / 2, H / 2 - 190, logoSize, logoSize);
+  }
 
-  // Tagline
-  ctx.font = `800 52px ${s.font}`;
+  // Tagline — display font
+  ctx.font = `700 52px ${s.displayFont}`;
   ctx.fillStyle = s.text;
   ctx.fillText('One Minute. One Idea.', cx, H / 2 - 20);
 
-  // Sub-tagline
+  // Sub-tagline — body font
   ctx.font = `600 30px ${s.font}`;
   ctx.fillStyle = s.subtext;
   ctx.fillText('Micro-lessons that stick.', cx, H / 2 + 40);
 
-  // URL
-  ctx.font = `800 36px ${s.font}`;
+  // URL — display font, accent color
+  ctx.font = `700 36px ${s.displayFont}`;
   ctx.fillStyle = s.timerBg;
   ctx.fillText('1minute.academy', cx, H / 2 + 120);
 
-  // Bottom credit
-  ctx.font = `600 22px ${s.font}`;
+  // Bottom credit — display font
+  ctx.font = `500 22px ${s.displayFont}`;
   ctx.fillStyle = s.subtext;
   ctx.globalAlpha = fade * 0.55;
   ctx.fillText('© One Minute Academy', cx, H - 60);
@@ -832,8 +866,11 @@ export default function useVideoExport() {
     const s = getStyle(presentationStyle);
 
     try {
-      // Dynamic import so the muxer is only loaded when actually exporting
-      const { Muxer, ArrayBufferTarget } = await import('webm-muxer');
+      // Pre-load logo image + dynamic import muxer in parallel
+      const [logoImg, { Muxer, ArrayBufferTarget }] = await Promise.all([
+        loadLogo(),
+        import('webm-muxer'),
+      ]);
 
       const canvas = document.createElement('canvas');
       canvas.width = W;
@@ -903,6 +940,7 @@ export default function useVideoExport() {
             category,
             course,
             elapsed: elapsedS,
+            logoImg,
           });
 
         } else if (elapsedS < QUIZ_START_S) {
@@ -943,6 +981,7 @@ export default function useVideoExport() {
           drawOutroFrame(ctx, {
             s,
             elapsed: elapsedS - OUTRO_START_S,
+            logoImg,
           });
         }
 
