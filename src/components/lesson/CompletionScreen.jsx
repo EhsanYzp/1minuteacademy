@@ -33,7 +33,7 @@ export default function CompletionScreen({
   const navigate = useNavigate();
   const { categoryId: routeCategoryId, courseId: routeCourseId, chapterId: routeChapterId } = useParams();
 
-  const { exportVideo, isExporting, progress, phase, cancelExport } = useVideoExport();
+  const { exportVideo, isExporting, progress, cancelExport } = useVideoExport();
   const canExport = canExportVideo(tier) && isVideoExportSupported();
 
   const handleExportVideo = () => {
@@ -207,7 +207,7 @@ export default function CompletionScreen({
                 {isExporting ? (
                   <div className="completion-videoExport-progress">
                     <div className="completion-videoExport-label">
-                      🎬 Recording: {phase || 'Preparing…'}
+                      🎬 Generating video…
                     </div>
                     <div className="completion-videoExport-bar">
                       <div
@@ -216,8 +216,7 @@ export default function CompletionScreen({
                       />
                     </div>
                     <div className="completion-videoExport-meta">
-                      {Math.round(progress * 100)}%{' · '}
-                      ~{Math.max(1, Math.ceil(60 * (1 - progress)))}s remaining
+                      {Math.round(progress * 100)}%
                     </div>
                     <button
                       type="button"

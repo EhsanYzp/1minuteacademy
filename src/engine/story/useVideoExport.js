@@ -1,4 +1,6 @@
 import { useState, useCallback, useRef } from 'react';
+// webm-muxer is dynamically imported inside exportVideo() to avoid
+// bundling it for users who never click the download button.
 
 /* ── Constants ─────────────────────────────────────────────── */
 
@@ -443,8 +445,8 @@ function drawQuizFrame(ctx, { s, question, options, correct, topicTitle, topicEm
 export function isVideoExportSupported() {
   try {
     return (
-      typeof MediaRecorder !== 'undefined' &&
-      typeof HTMLCanvasElement?.prototype?.captureStream === 'function'
+      typeof VideoEncoder !== 'undefined' &&
+      typeof VideoFrame !== 'undefined'
     );
   } catch {
     return false;
@@ -456,7 +458,6 @@ export function isVideoExportSupported() {
 export default function useVideoExport() {
   const [isExporting, setIsExporting] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [phase, setPhase] = useState('');
   const cancelRef = useRef(false);
 
   const cancelExport = useCallback(() => {
@@ -468,76 +469,73 @@ export default function useVideoExport() {
     cancelRef.current = false;
     setIsExporting(true);
     setProgress(0);
-    setPhase('Starting…');
 
     const storyBeats = topicRow.story;
     const quiz = topicRow.quiz;
     const topicTitle = String(topicRow.title || 'Lesson');
-    const topicEmoji = topicRow.emoji || '📚';
+    const topicEmoji = topicRow.emoji || '\ud83d\udcda';
     const s = getStyle(presentationStyle);
 
     try {
+      // Dynamic import so the muxer is only loaded when actually exporting
+      const { Muxer, ArrayBufferTarget } = await import('webm-muxer');
+
       const canvas = document.createElement('canvas');
       canvas.width = W;
       canvas.height = H;
       const ctx = canvas.getContext('2d');
 
-      // ── Virtual-time, frame-by-frame recording ──────────
-      // Instead of tying to wall-clock via requestAnimationFrame (which
-      // throttles / drifts), we step through virtual time at a fixed FPS.
-      // This guarantees exactly 60 s of video with no lag or frame drops.
+      // ── Fast offline encoding via WebCodecs + webm-muxer ──
+      // All 1800 frames are rendered as fast as the CPU can draw them
+      // (typically 2-5 seconds), completely independent of wall-clock time.
 
       const FPS = 30;
-      const totalFrames = TOTAL_SECONDS * FPS;          // 1800 frames
-      const frameDurationMs = 1000 / FPS;               // ~33.3 ms
+      const totalFrames = TOTAL_SECONDS * FPS; // 1800 frames
 
-      const stream = canvas.captureStream(FPS);
-
-      // Pick best supported codec
-      let mimeType = 'video/webm;codecs=vp9';
-      if (typeof MediaRecorder.isTypeSupported !== 'function' || !MediaRecorder.isTypeSupported(mimeType)) {
-        mimeType = 'video/webm;codecs=vp8';
-        if (typeof MediaRecorder.isTypeSupported !== 'function' || !MediaRecorder.isTypeSupported(mimeType)) {
-          mimeType = 'video/webm';
-        }
+      // Determine best codec (VP9 preferred, VP8 fallback)
+      let codec = 'vp09.00.10.08';
+      let muxerCodec = 'V_VP9';
+      try {
+        const { supported } = await VideoEncoder.isConfigSupported({
+          codec, width: W, height: H, bitrate: 2_500_000,
+        });
+        if (!supported) throw new Error('VP9 not supported');
+      } catch {
+        codec = 'vp8';
+        muxerCodec = 'V_VP8';
       }
 
-      const recorder = new MediaRecorder(stream, {
-        mimeType,
-        videoBitsPerSecond: 2_500_000,
+      const target = new ArrayBufferTarget();
+      const muxer = new Muxer({
+        target,
+        video: { codec: muxerCodec, width: W, height: H },
       });
 
-      const chunks = [];
-      recorder.ondataavailable = (e) => {
-        if (e.data && e.data.size > 0) chunks.push(e.data);
-      };
+      let encoderError = null;
+      const encoder = new VideoEncoder({
+        output: (chunk, meta) => muxer.addVideoChunk(chunk, meta),
+        error: (e) => { encoderError = e; },
+      });
 
-      recorder.start(500);
+      encoder.configure({
+        codec,
+        width: W,
+        height: H,
+        bitrate: 2_500_000,
+        framerate: FPS,
+      });
 
-      // Small helper – awaitable delay
-      const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
-      let prevSecond = -1;
+      const usPerFrame = Math.round(1_000_000 / FPS);
 
       for (let frame = 0; frame <= totalFrames; frame++) {
-        if (cancelRef.current) break;
+        if (cancelRef.current || encoderError) break;
 
         const elapsedS = frame / FPS;
         const timeRemaining = Math.max(0, Math.ceil(TOTAL_SECONDS - elapsedS));
-        const second = Math.floor(elapsedS);
-
-        // Update React progress at most once per virtual second
-        if (second !== prevSecond) {
-          prevSecond = second;
-          setProgress(frame / totalFrames);
-        }
-
         const beatIdx = Math.min(BEATS.length, Math.floor(elapsedS / BEAT_DURATION_S));
-        const inQuiz = beatIdx >= BEATS.length;
 
-        if (inQuiz) {
+        if (beatIdx >= BEATS.length) {
           const quizElapsed = elapsedS - BEATS.length * BEAT_DURATION_S;
-          setPhase('Quiz');
           drawQuizFrame(ctx, {
             s,
             question: quiz?.question || '',
@@ -552,9 +550,6 @@ export default function useVideoExport() {
           const beatKey = BEATS[beatIdx];
           const beatData = storyBeats?.[beatKey];
           const beatElapsed = elapsedS - beatIdx * BEAT_DURATION_S;
-          const fadeIn = Math.min(1, beatElapsed / 0.5);
-
-          setPhase(`Beat ${beatIdx + 1} of ${BEATS.length}`);
           drawBeatFrame(ctx, {
             s,
             visual: beatData?.visual,
@@ -562,32 +557,36 @@ export default function useVideoExport() {
             topicTitle,
             topicEmoji,
             timeRemaining,
-            fadeIn,
+            fadeIn: Math.min(1, beatElapsed / 0.5),
             beatIdx,
             elapsedS,
           });
         }
 
-        // Yield to let the MediaRecorder capture this frame.
-        // A short sleep keeps the browser responsive and gives
-        // the encoder time to consume the canvas content.
-        await sleep(frameDurationMs);
+        // Encode the frame with proper timestamp
+        const videoFrame = new VideoFrame(canvas, {
+          timestamp: frame * usPerFrame,
+        });
+        encoder.encode(videoFrame, { keyFrame: frame % (FPS * 2) === 0 });
+        videoFrame.close();
+
+        // Yield every ~1 second of video time to keep UI responsive
+        if (frame % FPS === 0) {
+          setProgress(frame / totalFrames);
+          await new Promise((r) => setTimeout(r, 0));
+        }
       }
 
-      // Stop & wait for final data
-      if (recorder.state !== 'inactive') {
-        recorder.stop();
-      }
-      await new Promise((resolve) => {
-        if (recorder.state === 'inactive') { resolve(); return; }
-        recorder.onstop = resolve;
-      });
-      // Extra settle time for the encoder to flush
-      await sleep(300);
+      if (encoderError) throw encoderError;
 
-      if (!cancelRef.current && chunks.length > 0) {
-        setPhase('Downloading…');
-        const blob = new Blob(chunks, { type: mimeType.split(';')[0] || 'video/webm' });
+      // Flush remaining encoded frames and finalize container
+      await encoder.flush();
+      encoder.close();
+      muxer.finalize();
+
+      if (!cancelRef.current) {
+        setProgress(1);
+        const blob = new Blob([target.buffer], { type: 'video/webm' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -606,9 +605,8 @@ export default function useVideoExport() {
     } finally {
       setIsExporting(false);
       setProgress(0);
-      setPhase('');
     }
   }, []);
 
-  return { exportVideo, isExporting, progress, phase, cancelExport };
+  return { exportVideo, isExporting, progress, cancelExport };
 }
