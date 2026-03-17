@@ -845,11 +845,55 @@ export function isVideoExportSupported() {
 export default function useVideoExport() {
   const [isExporting, setIsExporting] = useState(false);
   const [progress, setProgress] = useState(0);
+  // After encoding completes, store the blob so the UI can offer a real
+  // user-gesture-driven save/share button (required on iOS Safari).
+  const [readyBlob, setReadyBlob] = useState(null);   // { blob, fileName }
   const cancelRef = useRef(false);
 
   const cancelExport = useCallback(() => {
     cancelRef.current = true;
   }, []);
+
+  const dismissVideo = useCallback(() => {
+    setReadyBlob(null);
+  }, []);
+
+  /** Trigger the native share-sheet (mobile) or <a download> (desktop).
+   *  MUST be called from a direct user-gesture handler so iOS Safari trusts it. */
+  const saveVideo = useCallback(async () => {
+    if (!readyBlob) return;
+    const { blob, fileName } = readyBlob;
+
+    // iOS / Android: prefer native share-sheet
+    if (navigator.canShare) {
+      try {
+        const file = new File([blob], fileName, { type: 'video/mp4' });
+        if (navigator.canShare({ files: [file] })) {
+          await navigator.share({ files: [file], title: fileName });
+          setReadyBlob(null);
+          return;
+        }
+      } catch (shareErr) {
+        if (shareErr?.name === 'AbortError') {
+          // User dismissed share-sheet — keep readyBlob so they can retry
+          return;
+        }
+        console.warn('[useVideoExport] share failed, falling back:', shareErr);
+      }
+    }
+
+    // Desktop (or fallback): programmatic <a download>
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 30_000);
+    setReadyBlob(null);
+  }, [readyBlob]);
 
   const exportVideo = useCallback(async ({ topicRow, presentationStyle = 'focus' }) => {
     if (!topicRow) return;
@@ -1007,41 +1051,9 @@ export default function useVideoExport() {
           .slice(0, 60);
         const fileName = `${safeName}_OneMinuteAcademy.mp4`;
 
-        // Mobile: prefer navigator.share (native share-sheet / "Save to Files")
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        let shared = false;
-        if (isMobile && navigator.canShare) {
-          try {
-            const file = new File([blob], fileName, { type: 'video/mp4' });
-            if (navigator.canShare({ files: [file] })) {
-              await navigator.share({ files: [file], title: fileName });
-              shared = true;
-            }
-          } catch (shareErr) {
-            // User cancelled share-sheet or share not supported — fall through
-            if (shareErr?.name !== 'AbortError') {
-              console.warn('[useVideoExport] share failed, falling back:', shareErr);
-            } else {
-              shared = true; // user intentionally dismissed
-            }
-          }
-        }
-
-        if (!shared) {
-          // Desktop (or mobile fallback): programmatic <a download>
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = fileName;
-          // Use target=_blank so mobile browsers don't navigate the current page
-          a.target = '_blank';
-          a.rel = 'noopener';
-          a.style.display = 'none';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          setTimeout(() => URL.revokeObjectURL(url), 30_000);
-        }
+        // Store the blob so the UI can present a user-gesture-driven
+        // save/share button (required on iOS Safari).
+        setReadyBlob({ blob, fileName });
       }
     } catch (err) {
       console.error('[useVideoExport] export failed:', err);
@@ -1051,5 +1063,5 @@ export default function useVideoExport() {
     }
   }, []);
 
-  return { exportVideo, isExporting, progress, cancelExport };
+  return { exportVideo, isExporting, progress, cancelExport, readyBlob, saveVideo, dismissVideo };
 }

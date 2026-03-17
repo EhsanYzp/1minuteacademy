@@ -33,11 +33,11 @@ export default function CompletionScreen({
   const navigate = useNavigate();
   const { categoryId: routeCategoryId, courseId: routeCourseId, chapterId: routeChapterId } = useParams();
 
-  const { exportVideo, isExporting, progress, cancelExport } = useVideoExport();
+  const { exportVideo, isExporting, progress, cancelExport, readyBlob, saveVideo, dismissVideo } = useVideoExport();
   const canExport = canExportVideo(tier) && isVideoExportSupported();
 
   const handleExportVideo = () => {
-    if (isExporting) return;
+    if (isExporting || readyBlob) return;
     exportVideo({ topicRow, presentationStyle: storyPresentationStyle });
   };
 
@@ -224,6 +224,26 @@ export default function CompletionScreen({
                       onClick={cancelExport}
                     >
                       Cancel
+                    </button>
+                  </div>
+                ) : readyBlob ? (
+                  <div className="completion-videoExport-ready">
+                    <div className="completion-videoExport-label">
+                      ✅ Video ready!
+                    </div>
+                    <button
+                      type="button"
+                      className="completion-videoExport-btn"
+                      onClick={saveVideo}
+                    >
+                      💾 Save / Share Video
+                    </button>
+                    <button
+                      type="button"
+                      className="completion-videoExport-cancel"
+                      onClick={dismissVideo}
+                    >
+                      Dismiss
                     </button>
                   </div>
                 ) : (
