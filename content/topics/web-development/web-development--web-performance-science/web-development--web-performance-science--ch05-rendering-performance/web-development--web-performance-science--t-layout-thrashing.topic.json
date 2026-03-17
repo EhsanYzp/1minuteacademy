@@ -1,0 +1,49 @@
+{
+  "id": "web-development--web-performance-science--t-layout-thrashing",
+  "version": 1,
+  "subject": "Web Development",
+  "subcategory": "Web Performance Science",
+  "course_id": "web-development--web-performance-science",
+  "chapter_id": "web-development--web-performance-science--ch05-rendering-performance",
+  "title": "Layout Thrashing",
+  "emoji": "🚀",
+  "color": "#EC4899",
+  "description": "A 60-second lesson on Layout Thrashing.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Reading an element's size, then changing it, then reading again causes the browser to panic.",
+      "visual": "😰"
+    },
+    "buildup": {
+      "text": "Each read forces the browser to recalculate layout. Rapid read-write loops multiply the cost.",
+      "visual": "🔄"
+    },
+    "discovery": {
+      "text": "This is called layout thrashing — it can drop frame rates from 60 fps to single digits.",
+      "visual": "📉"
+    },
+    "twist": {
+      "text": "A single for-loop reading offsetHeight and setting style can freeze the page for seconds.",
+      "visual": "🧊"
+    },
+    "climax": {
+      "text": "Batching reads and writes separately prevents thrashing and keeps animations fluid.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Read all first, then write all. Never mix.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What causes layout thrashing?",
+    "options": [
+      "Rapid read-write loops on layout",
+      "Using too many images",
+      "Having too much CSS"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,559 @@
+{
+  "categoryId": "web-development",
+  "subject": "Web Development",
+  "courseId": "web-development--web-performance-science",
+  "courseTitle": "Web Performance Science",
+  "emoji": "🚀",
+  "color": "#EC4899",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "web-development--web-performance-science--ch01-why-speed-matters", "title": "Why Speed Matters", "position": 1 },
+    { "id": "web-development--web-performance-science--ch02-how-pages-load", "title": "How Pages Load", "position": 2 },
+    { "id": "web-development--web-performance-science--ch03-measuring-performance", "title": "Measuring Performance", "position": 3 },
+    { "id": "web-development--web-performance-science--ch04-network-and-delivery", "title": "Network and Delivery", "position": 4 },
+    { "id": "web-development--web-performance-science--ch05-rendering-performance", "title": "Rendering Performance", "position": 5 },
+    { "id": "web-development--web-performance-science--ch06-performance-culture", "title": "Performance Culture", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "web-development--web-performance-science--ch01-why-speed-matters",
+      "title": "The Cost of Slow Websites",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Amazon found that every 100 milliseconds of latency cost them one percent in sales.", "visual": "💰" },
+        "buildup": { "text": "Google discovered that a half-second delay in search results dropped traffic by 20 percent.", "visual": "📉" },
+        "discovery": { "text": "Speed isn't a nice-to-have. It directly determines how much money a website makes.", "visual": "🎯" },
+        "twist": { "text": "Users don't complain about slow sites. They just leave — silently and permanently.", "visual": "🚶" },
+        "climax": { "text": "Performance is the invisible feature that makes or breaks every other feature on the page.", "visual": "🏆" },
+        "punchline": { "text": "Speed is a feature users never notice until it's gone.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What did Amazon discover about latency?",
+        "options": ["100ms cost 1% in sales", "Speed had no impact", "Users preferred slower pages"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch01-why-speed-matters",
+      "title": "The Psychology of Waiting",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Humans perceive anything under 100 milliseconds as instant. Our brains can't detect it.", "visual": "🧠" },
+        "buildup": { "text": "After one second, users notice the delay. After three seconds, they consider leaving.", "visual": "⏱️" },
+        "discovery": { "text": "Progress indicators trick the brain into patience. Spinners buy time that blank screens can't.", "visual": "🔄" },
+        "twist": { "text": "Perceived performance matters more than actual speed. Skeleton screens feel faster than they are.", "visual": "💀" },
+        "climax": { "text": "Web performance is as much psychology as engineering — fool the brain and users stay.", "visual": "🎭" },
+        "punchline": { "text": "Feeling fast matters more than being fast.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "At what delay do users notice a page is slow?",
+        "options": ["About one second", "About ten seconds", "About 10 milliseconds"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch01-why-speed-matters",
+      "title": "Mobile Speed and the Real World",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Most developers test on fast Wi-Fi. Most users browse on spotty 3G connections.", "visual": "📱" },
+        "buildup": { "text": "In emerging markets, a web page may take 20 seconds to load on average hardware.", "visual": "🐌" },
+        "discovery": { "text": "Mobile devices have less RAM, slower CPUs, and unreliable networks than development machines.", "visual": "⚡" },
+        "twist": { "text": "The next billion internet users will come from regions with the slowest connections.", "visual": "🌍" },
+        "climax": { "text": "Building for the slowest device means building for the widest possible audience.", "visual": "👥" },
+        "punchline": { "text": "Your test environment is not your user's reality.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is mobile performance often worse than desktop?",
+        "options": ["Less RAM, slower CPUs, and weaker networks", "Mobile screens are smaller", "Browsers are different"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch01-why-speed-matters",
+      "title": "Speed and Search Rankings",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2010, Google announced page speed would affect search rankings. The web panicked.", "visual": "😱" },
+        "buildup": { "text": "Suddenly performance wasn't just about user experience — it affected discoverability.", "visual": "🔍" },
+        "discovery": { "text": "Core Web Vitals in 2021 made specific performance metrics part of Google's ranking algorithm.", "visual": "📊" },
+        "twist": { "text": "Many sites that ranked first for years suddenly dropped because they loaded too slowly.", "visual": "📉" },
+        "climax": { "text": "Google turned performance into an SEO requirement, forcing the entire web to speed up.", "visual": "🏃" },
+        "punchline": { "text": "Google made speed a ranking factor for everyone.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "When did Google make page speed a ranking signal?",
+        "options": ["2010", "2020", "2005"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch01-why-speed-matters",
+      "title": "Performance Budgets",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Without limits, websites grow heavier every sprint. New features add kilobytes quietly.", "visual": "📈" },
+        "buildup": { "text": "A performance budget sets hard limits: no more than 200 KB of JavaScript, for example.", "visual": "📏" },
+        "discovery": { "text": "Teams with budgets catch regressions before users do. The budget becomes a quality gate.", "visual": "🚧" },
+        "twist": { "text": "Most teams set budgets once and then ignore them under deadline pressure.", "visual": "🙈" },
+        "climax": { "text": "The teams that enforce budgets ship faster sites year after year. Discipline beats talent.", "visual": "🏆" },
+        "punchline": { "text": "What gets measured gets managed.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a performance budget limit?",
+        "options": ["Page size and load metrics", "Number of developers", "Server uptime"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch02-how-pages-load",
+      "title": "The Critical Rendering Path",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A browser must complete a series of steps before it can paint a single pixel on screen.", "visual": "🎨" },
+        "buildup": { "text": "It downloads HTML, parses it, fetches CSS, builds the DOM and CSSOM, then calculates layout.", "visual": "🔗" },
+        "discovery": { "text": "This chain of dependencies is called the critical rendering path. Each step blocks the next.", "visual": "⛓️" },
+        "twist": { "text": "One render-blocking CSS file can delay the entire page, even if the HTML arrived instantly.", "visual": "🚧" },
+        "climax": { "text": "Optimizing the critical path means removing bottlenecks from this dependency chain.", "visual": "✂️" },
+        "punchline": { "text": "First paint is a chain — break any link and it stalls.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does the critical rendering path determine?",
+        "options": ["When the browser can first paint pixels", "How long the server takes to respond", "How fast JavaScript runs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch02-how-pages-load",
+      "title": "Render-Blocking Resources",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "CSS and synchronous scripts can freeze the entire rendering pipeline until they load.", "visual": "🧊" },
+        "buildup": { "text": "The browser pauses painting when it encounters a stylesheet it hasn't downloaded yet.", "visual": "⏸️" },
+        "discovery": { "text": "Scripts without 'async' or 'defer' halt HTML parsing completely while they execute.", "visual": "🛑" },
+        "twist": { "text": "A tiny analytics script in the head tag can delay your entire above-the-fold content.", "visual": "📊" },
+        "climax": { "text": "Identifying and eliminating render blockers is the fastest way to improve load time.", "visual": "🚀" },
+        "punchline": { "text": "The fastest resource is the one you don't block on.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What can block the browser from rendering?",
+        "options": ["CSS files and synchronous scripts", "Images below the fold", "Favicon files"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch02-how-pages-load",
+      "title": "JavaScript's Heavy Cost",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A 200 KB image and 200 KB of JavaScript are not equally expensive for the browser.", "visual": "⚖️" },
+        "buildup": { "text": "Images just need decoding. JavaScript must be parsed, compiled, and executed line by line.", "visual": "🔨" },
+        "discovery": { "text": "On a mid-range phone, parsing one megabyte of JavaScript can take over four seconds.", "visual": "📱" },
+        "twist": { "text": "Most websites ship megabytes of JavaScript that users never even trigger or interact with.", "visual": "📦" },
+        "climax": { "text": "JavaScript is the most expensive resource on the web, byte for byte, bar none.", "visual": "💸" },
+        "punchline": { "text": "Not all bytes cost the same to process.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is JavaScript more expensive than an image of the same size?",
+        "options": ["It must be parsed, compiled, and executed", "It uses more bandwidth", "Images are compressed more"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch02-how-pages-load",
+      "title": "Lazy Loading and Code Splitting",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Why download a page's footer images before the user even scrolls past the hero?", "visual": "👇" },
+        "buildup": { "text": "Lazy loading delays non-critical resources until they're actually needed.", "visual": "😴" },
+        "discovery": { "text": "Code splitting breaks JavaScript into chunks loaded on demand, not all upfront.", "visual": "✂️" },
+        "twist": { "text": "Native lazy loading landed in browsers in 2019. Before that, developers used JS libraries.", "visual": "🌐" },
+        "climax": { "text": "Loading only what's needed, when it's needed, cuts initial page weight dramatically.", "visual": "🪶" },
+        "punchline": { "text": "Don't load what the user hasn't asked for yet.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does code splitting do?",
+        "options": ["Breaks JS into chunks loaded on demand", "Compresses CSS files", "Splits HTML into pages"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch02-how-pages-load",
+      "title": "Preloading and Prefetching",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Sometimes the browser discovers a critical resource too late in the loading process.", "visual": "🔍" },
+        "buildup": { "text": "Preload hints tell the browser to start fetching a resource before it naturally discovers it.", "visual": "📣" },
+        "discovery": { "text": "Prefetch goes further — downloading resources the user will probably need on the next page.", "visual": "🔮" },
+        "twist": { "text": "Overusing preload can backfire. Too many hints compete for bandwidth and slow everything down.", "visual": "🚦" },
+        "climax": { "text": "Smart preloading is surgical — prioritize the one font or script that blocks first paint.", "visual": "🎯" },
+        "punchline": { "text": "Hint wisely and the browser rewards you.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does prefetch do?",
+        "options": ["Downloads resources for a likely next page", "Compresses images", "Validates HTML syntax"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch03-measuring-performance",
+      "title": "Largest Contentful Paint",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "When does a page feel loaded? Google says it's when the biggest visible element appears.", "visual": "📐" },
+        "buildup": { "text": "Largest Contentful Paint (LCP) measures the time until the main image or text block renders.", "visual": "⏱️" },
+        "discovery": { "text": "A good LCP is under 2.5 seconds. Anything slower signals a poor user experience to Google.", "visual": "✅" },
+        "twist": { "text": "A huge hero image can tank your LCP if it loads from a slow server without optimization.", "visual": "🖼️" },
+        "climax": { "text": "LCP became the most important Core Web Vital for measuring perceived load speed.", "visual": "🏆" },
+        "punchline": { "text": "The biggest element sets the pace for the page.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does LCP measure?",
+        "options": ["Time until the largest element renders", "Total page download time", "JavaScript execution speed"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch03-measuring-performance",
+      "title": "Cumulative Layout Shift",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You're about to tap a button and suddenly the page jumps. An ad loaded above it.", "visual": "😤" },
+        "buildup": { "text": "Cumulative Layout Shift (CLS) measures how much page content moves unexpectedly during load.", "visual": "📏" },
+        "discovery": { "text": "A good CLS score is under 0.1. Anything higher means elements are shifting around too much.", "visual": "✅" },
+        "twist": { "text": "Images without width and height attributes are the number one cause of layout shift worldwide.", "visual": "🖼️" },
+        "climax": { "text": "CLS turned a user annoyance into a measurable metric that affects search rankings.", "visual": "📊" },
+        "punchline": { "text": "Set your dimensions or watch your content dance.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What causes high CLS scores?",
+        "options": ["Unexpected layout shifts during loading", "Slow server response", "Too much JavaScript"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch03-measuring-performance",
+      "title": "Interaction to Next Paint",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A page can load fast but feel sluggish when you try to interact with it.", "visual": "🐌" },
+        "buildup": { "text": "Interaction to Next Paint (INP) measures the delay between a click and the visual response.", "visual": "👆" },
+        "discovery": { "text": "Good INP is under 200 milliseconds. Slower means the page feels unresponsive to touch.", "visual": "⏱️" },
+        "twist": { "text": "INP replaced First Input Delay in 2024 because it measures all interactions, not just the first.", "visual": "🔄" },
+        "climax": { "text": "INP captures what users actually feel — whether the page responds when they act.", "visual": "🎯" },
+        "punchline": { "text": "Responsiveness is the metric users feel most.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What replaced First Input Delay as a Core Web Vital?",
+        "options": ["Interaction to Next Paint", "Time to First Byte", "Cumulative Layout Shift"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch03-measuring-performance",
+      "title": "Lab Data vs. Field Data",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Lighthouse says your site is fast. Real users say it's slow. Who's right?", "visual": "🤷" },
+        "buildup": { "text": "Lab tools test on powerful machines with fast networks. Field data comes from real users.", "visual": "🧪" },
+        "discovery": { "text": "Chrome User Experience Report collects real performance data from millions of Chrome users.", "visual": "📊" },
+        "twist": { "text": "A perfect Lighthouse score means nothing if real users on slow phones experience something else.", "visual": "📱" },
+        "climax": { "text": "Field data tells you what users actually experience. Lab data tells you what to fix.", "visual": "🔧" },
+        "punchline": { "text": "Test in the lab; trust the field.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why can lab data differ from field data?",
+        "options": ["Lab uses fast hardware, users don't", "Lab data is always wrong", "Field data is estimated"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch03-measuring-performance",
+      "title": "Lighthouse and DevTools",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Chrome DevTools includes a built-in performance auditor. It's called Lighthouse.", "visual": "🏠" },
+        "buildup": { "text": "Lighthouse scores your page on performance, accessibility, SEO, and best practices.", "visual": "💯" },
+        "discovery": { "text": "It provides specific recommendations: compress images, remove unused JavaScript, defer CSS.", "visual": "📝" },
+        "twist": { "text": "Chasing a perfect 100 score can lead to diminishing returns. Real-world impact matters more.", "visual": "🎯" },
+        "climax": { "text": "Lighthouse democratized performance testing. Any developer can audit a page in seconds.", "visual": "🌍" },
+        "punchline": { "text": "One click shows you exactly what to fix.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does Lighthouse measure?",
+        "options": ["Performance, accessibility, SEO, best practices", "Only page speed", "Only accessibility"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch04-network-and-delivery",
+      "title": "How CDNs Work",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A server in Virginia takes 200 ms to reach a user in Tokyo. Physics sets the speed limit.", "visual": "🌏" },
+        "buildup": { "text": "CDNs copy your content to servers worldwide. Users download from the nearest one.", "visual": "🗺️" },
+        "discovery": { "text": "Cloudflare, Akamai, and Fastly run edge servers in hundreds of cities across every continent.", "visual": "🏢" },
+        "twist": { "text": "CDNs were once only for big companies. Now services like Vercel and Netlify CDN everything free.", "visual": "🆓" },
+        "climax": { "text": "CDNs made geographic distance nearly irrelevant for static content delivery.", "visual": "🚀" },
+        "punchline": { "text": "Copy it closer to beat the speed of light.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What do CDNs reduce?",
+        "options": ["Physical distance between user and content", "Total file sizes", "Number of DNS lookups"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch04-network-and-delivery",
+      "title": "HTTP/2 and Multiplexing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "HTTP/1.1 loaded resources one at a time per connection. Six connections was the browser limit.", "visual": "🚧" },
+        "buildup": { "text": "Developers hacked around this by combining files, using sprites, and sharding domains.", "visual": "🔧" },
+        "discovery": { "text": "HTTP/2 introduced multiplexing — many resources flowing through one connection simultaneously.", "visual": "🔀" },
+        "twist": { "text": "Many old optimization tricks like file concatenation actually hurt performance under HTTP/2.", "visual": "🤦" },
+        "climax": { "text": "HTTP/2 made the network layer smarter so developers could stop working around its limits.", "visual": "🧠" },
+        "punchline": { "text": "Better protocols made old hacks unnecessary.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What did HTTP/2 introduce?",
+        "options": ["Multiplexing over one connection", "Larger file size limits", "Built-in image compression"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch04-network-and-delivery",
+      "title": "Image Optimization",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Images account for roughly half of all bytes transferred on an average web page.", "visual": "🖼️" },
+        "buildup": { "text": "Formats like JPEG, PNG, and GIF were designed decades ago without the modern web in mind.", "visual": "📅" },
+        "discovery": { "text": "WebP and AVIF compress images 30-50% smaller than JPEG with comparable visual quality.", "visual": "📉" },
+        "twist": { "text": "Many sites still serve unoptimized PNGs because no one checked the asset pipeline.", "visual": "🤷" },
+        "climax": { "text": "Responsive images with srcset serve the right size to every screen, saving mobile users megabytes.", "visual": "📱" },
+        "punchline": { "text": "The easiest performance win is smaller images.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What percentage of page weight do images typically represent?",
+        "options": ["About half", "About 10%", "Nearly 90%"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch04-network-and-delivery",
+      "title": "Caching Strategies",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The fastest HTTP request is the one that never happens. Caching makes that possible.", "visual": "⚡" },
+        "buildup": { "text": "Cache-Control headers tell the browser how long to reuse a downloaded resource.", "visual": "📋" },
+        "discovery": { "text": "Immutable assets with content hashes can be cached forever — the filename changes when content does.", "visual": "🔒" },
+        "twist": { "text": "Bad caching causes stale content bugs that are nearly impossible to debug from the server side.", "visual": "🐛" },
+        "climax": { "text": "A solid caching strategy can eliminate 80% of requests on repeat visits.", "visual": "📉" },
+        "punchline": { "text": "Cache well and most requests disappear.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What can caching eliminate on repeat visits?",
+        "options": ["Up to 80% of requests", "All server-side code", "The need for JavaScript"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch04-network-and-delivery",
+      "title": "Compression: Gzip and Brotli",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Text-based files like HTML, CSS, and JavaScript shrink dramatically when compressed.", "visual": "📦" },
+        "buildup": { "text": "Gzip has been the default web compression for over two decades. It's fast and reliable.", "visual": "🗜️" },
+        "discovery": { "text": "Brotli, developed by Google, compresses 15-20% better than Gzip for text content.", "visual": "📊" },
+        "twist": { "text": "Brotli is slower to compress but faster to decompress. Pre-compressing at build time fixes this.", "visual": "🔧" },
+        "climax": { "text": "Every modern browser supports Brotli. Free performance is sitting on most servers, unclaimed.", "visual": "🎁" },
+        "punchline": { "text": "Compression is free speed hiding in plain sight.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How much better does Brotli compress than Gzip?",
+        "options": ["15-20% better for text", "Twice as good", "They are identical"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch05-rendering-performance",
+      "title": "The Browser's Rendering Pipeline",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "After the browser builds the DOM and CSSOM, the real work of painting pixels begins.", "visual": "🎨" },
+        "buildup": { "text": "The pipeline flows: style calculation, layout, paint, and finally compositing on the GPU.", "visual": "🔗" },
+        "discovery": { "text": "Changing certain CSS properties triggers different stages. Some are cheap; others are expensive.", "visual": "💸" },
+        "twist": { "text": "Animating width or height forces layout recalculation. Animating transform skips to compositing.", "visual": "⚡" },
+        "climax": { "text": "Knowing which properties trigger which pipeline stages is the key to smooth animations.", "visual": "🔑" },
+        "punchline": { "text": "Animate the cheap properties; avoid the rest.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Which CSS property is cheapest to animate?",
+        "options": ["transform", "width", "padding"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch05-rendering-performance",
+      "title": "Layout Thrashing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Reading an element's size, then changing it, then reading again causes the browser to panic.", "visual": "😰" },
+        "buildup": { "text": "Each read forces the browser to recalculate layout. Rapid read-write loops multiply the cost.", "visual": "🔄" },
+        "discovery": { "text": "This is called layout thrashing — it can drop frame rates from 60 fps to single digits.", "visual": "📉" },
+        "twist": { "text": "A single for-loop reading offsetHeight and setting style can freeze the page for seconds.", "visual": "🧊" },
+        "climax": { "text": "Batching reads and writes separately prevents thrashing and keeps animations fluid.", "visual": "🎯" },
+        "punchline": { "text": "Read all first, then write all. Never mix.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What causes layout thrashing?",
+        "options": ["Rapid read-write loops on layout", "Using too many images", "Having too much CSS"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch05-rendering-performance",
+      "title": "The 60 Frames Per Second Target",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Most screens refresh 60 times per second. That gives JavaScript 16 milliseconds per frame.", "visual": "🖥️" },
+        "buildup": { "text": "If your code takes longer than 16 ms, the browser drops a frame. Users see jank.", "visual": "⏱️" },
+        "discovery": { "text": "requestAnimationFrame schedules work in sync with the display refresh for smooth rendering.", "visual": "🎬" },
+        "twist": { "text": "Modern phones run at 120 Hz. That cuts the budget to just 8 milliseconds per frame.", "visual": "📱" },
+        "climax": { "text": "Hitting consistent frame rates requires treating every millisecond as precious.", "visual": "💎" },
+        "punchline": { "text": "Sixteen milliseconds is all you get per frame.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How much time does 60fps give per frame?",
+        "options": ["About 16 milliseconds", "About 100 milliseconds", "About 1 second"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch05-rendering-performance",
+      "title": "Web Workers and Off-Main-Thread",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "JavaScript runs on a single thread. Heavy computation blocks rendering and user input.", "visual": "🧵" },
+        "buildup": { "text": "Web Workers let you run scripts in background threads that don't block the main thread.", "visual": "🏃" },
+        "discovery": { "text": "Complex calculations, data processing, and parsing can happen without freezing the interface.", "visual": "⚡" },
+        "twist": { "text": "Workers can't touch the DOM directly. They communicate through messages, adding complexity.", "visual": "📬" },
+        "climax": { "text": "Moving work off the main thread is the only way to keep interactive responsiveness at scale.", "visual": "🎯" },
+        "punchline": { "text": "Heavy work belongs in the background thread.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What limitation do Web Workers have?",
+        "options": ["They cannot access the DOM", "They can't do math", "They only work on desktop"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch05-rendering-performance",
+      "title": "GPU Compositing and Layers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Modern browsers don't paint everything on one surface. They split content into layers.", "visual": "📚" },
+        "buildup": { "text": "The GPU composites these layers together, handling transforms and opacity at hardware speed.", "visual": "🖥️" },
+        "discovery": { "text": "Promoting an element to its own layer with 'will-change' lets the GPU animate it cheaply.", "visual": "⚡" },
+        "twist": { "text": "Too many layers waste GPU memory. Mobile devices crash when layer count spirals out of control.", "visual": "💥" },
+        "climax": { "text": "Layer management is a balancing act between smooth animation and memory efficiency.", "visual": "⚖️" },
+        "punchline": { "text": "The GPU is powerful but not unlimited.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What hardware handles compositing layers?",
+        "options": ["The GPU", "The CPU only", "Network card"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch06-performance-culture",
+      "title": "Performance as a Team Sport",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Performance work fails when it's one person's responsibility. It takes the whole team.", "visual": "👥" },
+        "buildup": { "text": "Designers choose image-heavy layouts. Product managers add third-party scripts. Code grows.", "visual": "📈" },
+        "discovery": { "text": "When everyone owns performance — design, product, engineering — regressions get caught early.", "visual": "🔍" },
+        "twist": { "text": "Most performance regressions come from business decisions, not engineering mistakes.", "visual": "💼" },
+        "climax": { "text": "Building a performance culture means making speed a shared value, not just a tech metric.", "visual": "🏗️" },
+        "punchline": { "text": "Speed is a team value, not one person's job.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Where do most performance regressions originate?",
+        "options": ["Business decisions", "CSS bugs", "Server hardware failures"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch06-performance-culture",
+      "title": "Third-Party Script Bloat",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Marketing wants analytics. Sales wants chat widgets. Each adds a script tag to the page.", "visual": "📊" },
+        "buildup": { "text": "Third-party scripts run code you don't control on your users' browsers.", "visual": "🎭" },
+        "discovery": { "text": "The average website loads 20+ third-party scripts, often adding 500 KB or more.", "visual": "📦" },
+        "twist": { "text": "A single slow third-party script can tank your Core Web Vitals, even if your code is perfect.", "visual": "💀" },
+        "climax": { "text": "Auditing and trimming third-party scripts is the most impactful and most political performance fix.", "visual": "✂️" },
+        "punchline": { "text": "Other people's code is your performance problem.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why are third-party scripts risky for performance?",
+        "options": ["You don't control their size or speed", "They always contain viruses", "Browsers block them by default"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch06-performance-culture",
+      "title": "Real User Monitoring",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Lab tests show what could happen. Real User Monitoring shows what actually happened.", "visual": "📡" },
+        "buildup": { "text": "RUM collects performance data from every real page visit, across all devices and networks.", "visual": "📊" },
+        "discovery": { "text": "You see p50, p75, and p99 latencies — revealing how the slowest users actually experience your site.", "visual": "📈" },
+        "twist": { "text": "The p99 is often 10x slower than the median. The worst experience matters most.", "visual": "😱" },
+        "climax": { "text": "RUM turns performance from a guess into a science with real data from real users.", "visual": "🔬" },
+        "punchline": { "text": "Real users show you what tests can't.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does RUM stand for?",
+        "options": ["Real User Monitoring", "Responsive URL Metrics", "Runtime Usage Mapping"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch06-performance-culture",
+      "title": "Sustainable Web Performance",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every byte transferred burns energy. The internet produces roughly 4% of global emissions.", "visual": "🌍" },
+        "buildup": { "text": "Lighter pages mean less data transferred, fewer server cycles, and lower carbon footprints.", "visual": "🌱" },
+        "discovery": { "text": "A fast website is an efficient website. Performance optimization is accidentally environmental.", "visual": "♻️" },
+        "twist": { "text": "Dark mode saves energy on OLED screens. Design choices directly impact power consumption.", "visual": "🌙" },
+        "climax": { "text": "Sustainable web design and performance optimization share the same goal: do more with less.", "visual": "✨" },
+        "punchline": { "text": "Fast pages are green pages.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How does web performance relate to sustainability?",
+        "options": ["Lighter pages use less energy", "Fast sites use more servers", "Performance has no environmental impact"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-performance-science--ch06-performance-culture",
+      "title": "The Future of Web Speed",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "New standards and technologies keep pushing what's possible for web performance.", "visual": "🔮" },
+        "buildup": { "text": "HTTP/3 uses QUIC to reduce connection setup time. 103 Early Hints start loading before HTML.", "visual": "⚡" },
+        "discovery": { "text": "Edge computing runs server logic closer to users, cutting latency to single-digit milliseconds.", "visual": "🌐" },
+        "twist": { "text": "Despite better tools, the average web page keeps getting heavier every year.", "visual": "📈" },
+        "climax": { "text": "Technology alone won't fix performance. It takes discipline, measurement, and culture.", "visual": "🧠" },
+        "punchline": { "text": "Better tools don't fix bad habits.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does edge computing reduce?",
+        "options": ["Latency by running code closer to users", "The number of CSS files", "HTML page size"],
+        "correct": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,559 @@
+{
+  "categoryId": "web-development",
+  "subject": "Web Development",
+  "courseId": "web-development--web-security-fundamentals",
+  "courseTitle": "Web Security Fundamentals",
+  "emoji": "🔒",
+  "color": "#EF4444",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "web-development--web-security-fundamentals--ch01-the-threat-landscape", "title": "The Threat Landscape", "position": 1 },
+    { "id": "web-development--web-security-fundamentals--ch02-common-vulnerabilities", "title": "Common Vulnerabilities", "position": 2 },
+    { "id": "web-development--web-security-fundamentals--ch03-authentication-and-identity", "title": "Authentication and Identity", "position": 3 },
+    { "id": "web-development--web-security-fundamentals--ch04-data-protection", "title": "Data Protection", "position": 4 },
+    { "id": "web-development--web-security-fundamentals--ch05-famous-web-breaches", "title": "Famous Web Breaches", "position": 5 },
+    { "id": "web-development--web-security-fundamentals--ch06-defense-strategies", "title": "Defense Strategies", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch01-the-threat-landscape",
+      "title": "Why Websites Get Hacked",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A website gets hacked every 39 seconds on average. It happens far more than people realize.", "visual": "⏱️" },
+        "buildup": { "text": "Attackers want data, money, computing power, or simply the thrill of breaking in.", "visual": "💰" },
+        "discovery": { "text": "Most attacks aren't personal. Automated bots scan the entire web for known vulnerabilities.", "visual": "🤖" },
+        "twist": { "text": "Small sites aren't safer. Bots don't check your traffic — they check your software version.", "visual": "🎯" },
+        "climax": { "text": "Every website is a target. Security isn't optional, no matter how small or obscure the site.", "visual": "🛡️" },
+        "punchline": { "text": "Bots don't care how small your site is.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How often does a website get hacked on average?",
+        "options": ["Every 39 seconds", "Once a day", "Once a month"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch01-the-threat-landscape",
+      "title": "The OWASP Top Ten",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The same ten types of vulnerabilities account for most web security breaches worldwide.", "visual": "🔟" },
+        "buildup": { "text": "OWASP publishes a list of the most critical web application security risks every few years.", "visual": "📋" },
+        "discovery": { "text": "Injection, broken auth, and misconfiguration have topped the list for over a decade.", "visual": "📊" },
+        "twist": { "text": "The list barely changes between editions. The industry keeps making the same mistakes.", "visual": "🔄" },
+        "climax": { "text": "OWASP Top Ten is the minimum every web developer should understand about security.", "visual": "📖" },
+        "punchline": { "text": "The same ten flaws haunt the web for decades.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does OWASP publish?",
+        "options": ["A list of top web security risks", "A JavaScript framework", "A web browser"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch01-the-threat-landscape",
+      "title": "Attack Surfaces and Entry Points",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every form, API endpoint, and file upload is a door an attacker might try to open.", "visual": "🚪" },
+        "buildup": { "text": "The attack surface is the total set of points where an unauthorized user can try to enter.", "visual": "🗺️" },
+        "discovery": { "text": "More features mean more surface area. Every new endpoint is another potential vulnerability.", "visual": "📈" },
+        "twist": { "text": "Forgotten admin panels and old API versions are some of the most exploited entry points.", "visual": "👻" },
+        "climax": { "text": "Reducing your attack surface — removing what you don't need — is the first line of defense.", "visual": "✂️" },
+        "punchline": { "text": "Less surface area means fewer ways in.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is an attack surface?",
+        "options": ["All points where attackers can try to enter", "A type of malware", "A security testing tool"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch01-the-threat-landscape",
+      "title": "Social Engineering on the Web",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The easiest way to break into a system is to trick a human into opening the door.", "visual": "🎭" },
+        "buildup": { "text": "Phishing emails mimic trusted brands and lure users into entering passwords on fake sites.", "visual": "🎣" },
+        "discovery": { "text": "Even experienced developers fall for well-crafted phishing attacks that mimic real workflows.", "visual": "😱" },
+        "twist": { "text": "Over 90% of data breaches start with a phishing email, not a technical exploit.", "visual": "📧" },
+        "climax": { "text": "The weakest link in web security is always the human being sitting at the keyboard.", "visual": "⌨️" },
+        "punchline": { "text": "Hackers hack people, not just computers.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What percentage of breaches start with phishing?",
+        "options": ["Over 90%", "About 20%", "Less than 5%"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch01-the-threat-landscape",
+      "title": "Supply Chain Attacks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Modern websites depend on hundreds of third-party packages. Each one is a trust decision.", "visual": "📦" },
+        "buildup": { "text": "A supply chain attack compromises a dependency that thousands of projects rely on.", "visual": "🔗" },
+        "discovery": { "text": "The event-stream npm package was hijacked in 2018 to steal Bitcoin from a specific wallet.", "visual": "💰" },
+        "twist": { "text": "The attacker gained trust by maintaining the package for months before inserting malicious code.", "visual": "🎭" },
+        "climax": { "text": "Every npm install is an act of trust. Supply chain security is now a critical web concern.", "visual": "⚠️" },
+        "punchline": { "text": "Your dependencies are someone else's code.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a supply chain attack?",
+        "options": ["Compromising a dependency others rely on", "Attacking shipping companies", "Breaking physical hardware"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch02-common-vulnerabilities",
+      "title": "Cross-Site Scripting (XSS)",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "What if an attacker could run their JavaScript inside your website, as if you wrote it?", "visual": "💉" },
+        "buildup": { "text": "XSS happens when a site displays user input without sanitizing it first.", "visual": "📝" },
+        "discovery": { "text": "An attacker injects a script tag into a comment field. Every visitor's browser executes it.", "visual": "🔁" },
+        "twist": { "text": "XSS can steal cookies, redirect users, or impersonate them — all silently.", "visual": "🤫" },
+        "climax": { "text": "XSS has been in the OWASP Top Ten since its first edition. It remains devastatingly common.", "visual": "📊" },
+        "punchline": { "text": "Never trust user input — ever.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What causes XSS vulnerabilities?",
+        "options": ["Displaying unsanitized user input", "Using HTTPS", "Having too many pages"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch02-common-vulnerabilities",
+      "title": "SQL Injection",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A login form asks for a username. An attacker types SQL code instead of a name.", "visual": "🗄️" },
+        "buildup": { "text": "If the server builds queries by concatenating user input, that SQL code executes directly.", "visual": "⚠️" },
+        "discovery": { "text": "One crafted input can dump entire databases, delete tables, or bypass authentication.", "visual": "💀" },
+        "twist": { "text": "SQL injection was discovered in 1998. Over 25 years later, it still causes major breaches.", "visual": "📅" },
+        "climax": { "text": "Parameterized queries prevent SQL injection completely. The fix is simple — but often forgotten.", "visual": "🔧" },
+        "punchline": { "text": "A 25-year-old bug still breaks websites daily.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What prevents SQL injection?",
+        "options": ["Parameterized queries", "Stronger passwords", "More server RAM"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch02-common-vulnerabilities",
+      "title": "Cross-Site Request Forgery (CSRF)",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You're logged into your bank. You visit a malicious site. It submits a transfer on your behalf.", "visual": "🏦" },
+        "buildup": { "text": "CSRF tricks your browser into making authenticated requests to sites you're already logged into.", "visual": "🎭" },
+        "discovery": { "text": "The attack works because browsers automatically send cookies with every request to a domain.", "visual": "🍪" },
+        "twist": { "text": "CSRF tokens — unique values per form — stop the attack by proving the request came from your site.", "visual": "🎫" },
+        "climax": { "text": "SameSite cookies now block most CSRF by default, but legacy applications remain vulnerable.", "visual": "🔒" },
+        "punchline": { "text": "Your browser's helpfulness is the vulnerability.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What makes CSRF possible?",
+        "options": ["Browsers auto-send cookies with requests", "Weak passwords", "Slow network connections"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch02-common-vulnerabilities",
+      "title": "Broken Access Control",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You change the URL from /user/123 to /user/124 and suddenly see someone else's data.", "visual": "🔓" },
+        "buildup": { "text": "Broken access control means the server doesn't verify if you're allowed to see what you asked for.", "visual": "🚧" },
+        "discovery": { "text": "OWASP ranked broken access control as the number one web vulnerability in its 2021 list.", "visual": "🥇" },
+        "twist": { "text": "It's not a coding bug — it's a missing check. The hardest vulnerabilities are the ones you forget.", "visual": "🤔" },
+        "climax": { "text": "Every endpoint must verify authorization. Assuming the frontend will prevent access is a fatal flaw.", "visual": "💀" },
+        "punchline": { "text": "Always check permissions on the server side.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Where should access control be enforced?",
+        "options": ["On the server side", "Only in the frontend", "In CSS stylesheets"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch02-common-vulnerabilities",
+      "title": "Security Misconfiguration",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A developer leaves debug mode on in production. Error pages now show database credentials.", "visual": "🐛" },
+        "buildup": { "text": "Default passwords, open cloud storage, and verbose error messages are all misconfigurations.", "visual": "⚙️" },
+        "discovery": { "text": "AWS S3 buckets with public read access have leaked millions of records from major companies.", "visual": "☁️" },
+        "twist": { "text": "The code can be perfectly secure. One wrong setting in the server config undoes everything.", "visual": "💥" },
+        "climax": { "text": "Security checklists and automated config scanning prevent the most common deployment mistakes.", "visual": "✅" },
+        "punchline": { "text": "One wrong setting can undo perfect code.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a common security misconfiguration?",
+        "options": ["Leaving debug mode on in production", "Using HTTPS", "Having too many users"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch03-authentication-and-identity",
+      "title": "Passwords and Their Problems",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "The most common password in the world is still '123456.' It has been for over a decade.", "visual": "🔢" },
+        "buildup": { "text": "Users reuse passwords across sites. One breach exposes credentials for dozens of accounts.", "visual": "🔁" },
+        "discovery": { "text": "Credential stuffing attacks try leaked passwords on other sites — and succeed alarmingly often.", "visual": "📊" },
+        "twist": { "text": "Complex password rules don't help. Users just add '!' at the end and capitalize the first letter.", "visual": "🤦" },
+        "climax": { "text": "Passwords are the weakest link in web security, yet we still rely on them for almost everything.", "visual": "⛓️" },
+        "punchline": { "text": "Humans are terrible at making passwords.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the most common password?",
+        "options": ["123456", "password", "qwerty"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch03-authentication-and-identity",
+      "title": "Hashing: Storing Passwords Safely",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "If a database is stolen, are passwords exposed? Only if they were stored wrong.", "visual": "🗄️" },
+        "buildup": { "text": "Hashing converts a password into a fixed-length string that can't be reversed.", "visual": "🔨" },
+        "discovery": { "text": "bcrypt and Argon2 add salt — random data — making identical passwords hash differently.", "visual": "🧂" },
+        "twist": { "text": "MD5 and SHA-1 are too fast for passwords. Attackers can try billions of guesses per second.", "visual": "⚡" },
+        "climax": { "text": "Slow hashing algorithms like bcrypt make brute-force attacks impractically expensive.", "visual": "🐌" },
+        "punchline": { "text": "A slow hash is a safe hash.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is bcrypt better than MD5 for passwords?",
+        "options": ["It's intentionally slow to resist brute force", "It creates shorter hashes", "It's newer"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch03-authentication-and-identity",
+      "title": "Two-Factor Authentication",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A password proves you know something. But what if someone else knows it too?", "visual": "🤔" },
+        "buildup": { "text": "Two-factor authentication adds a second proof — something you have, like a phone.", "visual": "📱" },
+        "discovery": { "text": "Time-based codes, push notifications, and hardware keys all serve as second factors.", "visual": "🔐" },
+        "twist": { "text": "SMS-based 2FA is better than nothing but vulnerable to SIM-swapping attacks.", "visual": "📲" },
+        "climax": { "text": "Hardware security keys like YubiKey are nearly impossible to phish — the gold standard.", "visual": "🏆" },
+        "punchline": { "text": "Two proofs are exponentially harder to steal.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the strongest second factor?",
+        "options": ["Hardware security keys", "SMS codes", "Email links"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch03-authentication-and-identity",
+      "title": "OAuth and Single Sign-On",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "'Sign in with Google' is everywhere. But how does a third party verify your identity safely?", "visual": "🔑" },
+        "buildup": { "text": "OAuth lets users grant limited access to their data without sharing their password.", "visual": "🤝" },
+        "discovery": { "text": "You authenticate with Google. Google gives the app a token — not your password.", "visual": "🎫" },
+        "twist": { "text": "OAuth was designed for authorization, not authentication. OpenID Connect fills that gap.", "visual": "🧩" },
+        "climax": { "text": "Single sign-on reduces password fatigue and centralizes security in trusted providers.", "visual": "🏛️" },
+        "punchline": { "text": "Let the experts handle the login.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does OAuth share instead of passwords?",
+        "options": ["Tokens with limited access", "The actual password", "Cookie data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch03-authentication-and-identity",
+      "title": "Passkeys: The Post-Password Future",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Apple, Google, and Microsoft agreed on something rare: passwords should die.", "visual": "💀" },
+        "buildup": { "text": "Passkeys use public-key cryptography tied to your device — no shared secret to steal.", "visual": "🔐" },
+        "discovery": { "text": "You authenticate with a fingerprint or face scan. The private key never leaves your device.", "visual": "👆" },
+        "twist": { "text": "Passkeys are phishing-resistant by design. The key only works on the real domain.", "visual": "🛡️" },
+        "climax": { "text": "Passkeys may finally end the era of passwords — if adoption reaches critical mass.", "visual": "🌅" },
+        "punchline": { "text": "Your fingerprint replaces your password.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Where does a passkey's private key live?",
+        "options": ["On your device only", "On the website's server", "In a shared cloud database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch04-data-protection",
+      "title": "HTTPS and TLS",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "On HTTP, every message between browser and server travels in plain text anyone can read.", "visual": "📖" },
+        "buildup": { "text": "TLS encrypts the connection. HTTPS means your data is scrambled in transit.", "visual": "🔒" },
+        "discovery": { "text": "Let's Encrypt made TLS certificates free in 2015, removing the biggest barrier to HTTPS.", "visual": "🆓" },
+        "twist": { "text": "Before Let's Encrypt, certificates cost hundreds of dollars per year. Many sites skipped security.", "visual": "💸" },
+        "climax": { "text": "Today browsers mark HTTP sites as 'Not Secure.' HTTPS is the baseline, not a bonus.", "visual": "🌐" },
+        "punchline": { "text": "Encryption went from luxury to minimum standard.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What did Let's Encrypt change about TLS?",
+        "options": ["Made certificates free", "Invented a new protocol", "Replaced HTTPS with HTTP/3"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch04-data-protection",
+      "title": "Content Security Policy",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "What if you could tell the browser exactly which scripts are allowed to run on your page?", "visual": "📋" },
+        "buildup": { "text": "Content Security Policy (CSP) is an HTTP header that whitelists trusted content sources.", "visual": "✅" },
+        "discovery": { "text": "CSP blocks inline scripts, unauthorized domains, and eval — killing most XSS attacks.", "visual": "🛡️" },
+        "twist": { "text": "Strict CSP breaks many sites at first. Third-party widgets and analytics often violate the policy.", "visual": "💥" },
+        "climax": { "text": "CSP is one of the strongest defenses against XSS, but requires careful ongoing maintenance.", "visual": "🔧" },
+        "punchline": { "text": "A whitelist stops scripts before they run.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does CSP prevent?",
+        "options": ["Unauthorized scripts from running", "Slow page loads", "Database connection errors"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch04-data-protection",
+      "title": "CORS: Who Can Talk to Your API",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your API has sensitive data. Should any website in the world be able to request it?", "visual": "🌐" },
+        "buildup": { "text": "The same-origin policy blocks cross-origin requests by default. CORS selectively opens them.", "visual": "🚧" },
+        "discovery": { "text": "CORS headers tell the browser which domains are allowed to make requests to your server.", "visual": "📋" },
+        "twist": { "text": "Setting Access-Control-Allow-Origin to '*' disables the protection entirely — a common mistake.", "visual": "🤦" },
+        "climax": { "text": "CORS is the web's bouncer. Configure it wrong and everyone gets in.", "visual": "🚪" },
+        "punchline": { "text": "Wildcard CORS is no CORS at all.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does CORS control?",
+        "options": ["Which domains can access your API", "How fast pages load", "Database connection pooling"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch04-data-protection",
+      "title": "Cookie Security",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Cookies store session tokens that prove you're logged in. Steal one and you're that user.", "visual": "🍪" },
+        "buildup": { "text": "The HttpOnly flag prevents JavaScript from reading cookies, blocking XSS-based theft.", "visual": "🚫" },
+        "discovery": { "text": "Secure flag ensures cookies only travel over HTTPS. SameSite prevents CSRF attacks.", "visual": "🔒" },
+        "twist": { "text": "Many sites still use cookies without these flags set, leaving sessions exposed to attack.", "visual": "😬" },
+        "climax": { "text": "Three simple flags — HttpOnly, Secure, SameSite — prevent the majority of cookie attacks.", "visual": "✅" },
+        "punchline": { "text": "Three flags protect your sessions from most attacks.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does the HttpOnly flag do?",
+        "options": ["Blocks JavaScript from reading cookies", "Makes cookies expire faster", "Encrypts cookie values"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch04-data-protection",
+      "title": "Data Privacy and GDPR",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The EU's GDPR fined companies billions for mishandling personal data since 2018.", "visual": "💶" },
+        "buildup": { "text": "GDPR requires explicit consent, data minimization, and the right to be forgotten.", "visual": "📜" },
+        "discovery": { "text": "Users can request all data a company holds on them — and demand its complete deletion.", "visual": "🗑️" },
+        "twist": { "text": "GDPR applies to any site with EU visitors, regardless of where the company is based.", "visual": "🌍" },
+        "climax": { "text": "Privacy regulation turned data protection from a best practice into a legal obligation worldwide.", "visual": "⚖️" },
+        "punchline": { "text": "Collect less data and sleep better at night.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does GDPR give users the right to?",
+        "options": ["Request deletion of their data", "Free premium features", "Unlimited storage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch05-famous-web-breaches",
+      "title": "The Yahoo Breach: Three Billion Accounts",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "In 2013, every single Yahoo account was compromised. All three billion of them.", "visual": "💀" },
+        "buildup": { "text": "Attackers accessed names, emails, phone numbers, and hashed passwords for every user.", "visual": "📊" },
+        "discovery": { "text": "Yahoo didn't disclose the breach until 2016 — three years after it happened.", "visual": "🤫" },
+        "twist": { "text": "The breach was revealed during Verizon's acquisition. Yahoo's price dropped $350 million.", "visual": "📉" },
+        "climax": { "text": "The Yahoo breach remains the largest data breach in history by number of affected accounts.", "visual": "🏆" },
+        "punchline": { "text": "Three billion accounts, three years of silence.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How many Yahoo accounts were breached?",
+        "options": ["Three billion", "One million", "Fifty thousand"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch05-famous-web-breaches",
+      "title": "The Equifax Disaster",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2017, hackers stole Social Security numbers for 147 million Americans from Equifax.", "visual": "🪪" },
+        "buildup": { "text": "The attackers exploited a known vulnerability in Apache Struts that had a patch available.", "visual": "🔓" },
+        "discovery": { "text": "Equifax knew about the vulnerability but failed to apply the patch for over two months.", "visual": "⏰" },
+        "twist": { "text": "The breach check website Equifax created had its own security flaws and served wrong information.", "visual": "🤦" },
+        "climax": { "text": "Equifax paid over $700 million in settlements. The CEO resigned. Patching would have cost nothing.", "visual": "💸" },
+        "punchline": { "text": "A free patch would have prevented a $700M fine.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What caused the Equifax breach?",
+        "options": ["An unpatched known vulnerability", "A zero-day exploit", "An insider threat"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch05-famous-web-breaches",
+      "title": "The Target Credit Card Hack",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2013, hackers stole 40 million credit card numbers from Target during the holiday season.", "visual": "🎄" },
+        "buildup": { "text": "The attackers entered through a third-party HVAC contractor with network access.", "visual": "❄️" },
+        "discovery": { "text": "Malware on point-of-sale systems captured card data as customers swiped at checkout.", "visual": "💳" },
+        "twist": { "text": "Target's security system flagged the intrusion. The alerts were ignored by the team.", "visual": "🔔" },
+        "climax": { "text": "Target spent over $200 million on the breach. The CIO and CEO both resigned.", "visual": "📉" },
+        "punchline": { "text": "The alarm went off; nobody listened.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How did attackers enter Target's network?",
+        "options": ["Through a third-party contractor", "By guessing the admin password", "Through the website frontend"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch05-famous-web-breaches",
+      "title": "The SolarWinds Supply Chain Attack",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2020, hackers compromised SolarWinds' software update system used by 18,000 organizations.", "visual": "🌐" },
+        "buildup": { "text": "Malicious code was inserted into a legitimate software update that customers installed trustingly.", "visual": "📦" },
+        "discovery": { "text": "US government agencies, Fortune 500 companies, and security firms were all compromised.", "visual": "🏛️" },
+        "twist": { "text": "The attack went undetected for nine months. The attackers had access the entire time.", "visual": "👻" },
+        "climax": { "text": "SolarWinds showed that supply chain trust is one of cybersecurity's hardest unsolved problems.", "visual": "🔓" },
+        "punchline": { "text": "Trusted updates delivered the attack itself.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How was the SolarWinds attack delivered?",
+        "options": ["Through a compromised software update", "Via phishing emails", "By brute-forcing passwords"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch05-famous-web-breaches",
+      "title": "The Log4Shell Vulnerability",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In December 2021, a flaw in a Java logging library put half the internet at risk overnight.", "visual": "🌍" },
+        "buildup": { "text": "Log4j was used by millions of servers. A simple text string could trigger remote code execution.", "visual": "💻" },
+        "discovery": { "text": "Attackers could take complete control of a server by typing a crafted string into a search box.", "visual": "⌨️" },
+        "twist": { "text": "Log4j was maintained by a handful of unpaid volunteers. Critical infrastructure ran on free labor.", "visual": "😰" },
+        "climax": { "text": "Log4Shell exposed how fragile the web's foundations are when key libraries are under-resourced.", "visual": "🏚️" },
+        "punchline": { "text": "Free software supported the world but not itself.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What was Log4Shell?",
+        "options": ["A vulnerability in a widely used Java logging library", "A new JavaScript framework", "A social media hack"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch06-defense-strategies",
+      "title": "Defense in Depth",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A castle has walls, a moat, guards, and a locked treasury. Web security works the same way.", "visual": "🏰" },
+        "buildup": { "text": "Defense in depth layers multiple security controls so no single failure is catastrophic.", "visual": "🧅" },
+        "discovery": { "text": "Firewalls, input validation, authentication, and encryption each stop different attacks.", "visual": "🛡️" },
+        "twist": { "text": "If your only defense is a strong password, one phishing email takes down everything.", "visual": "🎣" },
+        "climax": { "text": "Layered security means an attacker must beat every defense, not just the weakest one.", "visual": "🏆" },
+        "punchline": { "text": "One wall isn't enough; layer your defenses.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is defense in depth?",
+        "options": ["Layering multiple security controls", "Using the strongest single defense", "Hiring more security staff"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch06-defense-strategies",
+      "title": "Input Validation and Sanitization",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every piece of data from a user is potentially hostile. Treat it that way.", "visual": "⚠️" },
+        "buildup": { "text": "Validation checks that input matches expected formats — numbers, emails, dates.", "visual": "✅" },
+        "discovery": { "text": "Sanitization strips dangerous characters before data reaches the database or the page.", "visual": "🧹" },
+        "twist": { "text": "Client-side validation improves UX but provides zero security. Attackers bypass it trivially.", "visual": "🚫" },
+        "climax": { "text": "Server-side validation is the only real barrier. Never trust what arrives from the browser.", "visual": "🛡️" },
+        "punchline": { "text": "Validate on the server; everything else is cosmetic.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is client-side validation insufficient for security?",
+        "options": ["Attackers can bypass it easily", "It runs too slowly", "Browsers don't support it"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch06-defense-strategies",
+      "title": "Rate Limiting and Bot Protection",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An attacker tries 10,000 password combinations per second against your login form.", "visual": "🤖" },
+        "buildup": { "text": "Rate limiting caps the number of requests from a single source in a given time window.", "visual": "🚧" },
+        "discovery": { "text": "After five failed logins, lock the account temporarily. Simple but devastatingly effective.", "visual": "🔒" },
+        "twist": { "text": "Sophisticated attackers rotate IP addresses. CAPTCHAs and device fingerprinting counter this.", "visual": "🧩" },
+        "climax": { "text": "Rate limiting is the simplest defense against brute force and one of the most neglected.", "visual": "😴" },
+        "punchline": { "text": "Slow down attackers and they'll move on.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does rate limiting prevent?",
+        "options": ["Brute force attacks", "SQL injection", "CSS styling errors"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch06-defense-strategies",
+      "title": "Security Headers Every Site Needs",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "HTTP response headers can activate powerful browser security features at zero cost.", "visual": "📋" },
+        "buildup": { "text": "Strict-Transport-Security forces HTTPS. X-Frame-Options blocks clickjacking attacks.", "visual": "🔒" },
+        "discovery": { "text": "X-Content-Type-Options stops browsers from guessing file types — a common attack vector.", "visual": "🛡️" },
+        "twist": { "text": "Most sites are missing at least three critical security headers. The defaults are insecure.", "visual": "😬" },
+        "climax": { "text": "Adding security headers takes minutes and blocks entire categories of attacks automatically.", "visual": "⚡" },
+        "punchline": { "text": "A few headers block entire attack categories.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does Strict-Transport-Security do?",
+        "options": ["Forces the browser to use HTTPS", "Limits JavaScript execution", "Blocks all cookies"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "web-development--web-security-fundamentals--ch06-defense-strategies",
+      "title": "Security Is a Process Not a Product",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You can't buy a product and declare your website secure. Security is ongoing work.", "visual": "🔄" },
+        "buildup": { "text": "New vulnerabilities are discovered daily. Dependencies need updating. Threats evolve.", "visual": "📅" },
+        "discovery": { "text": "Penetration testing, dependency audits, and security training must happen continuously.", "visual": "🔍" },
+        "twist": { "text": "The most secure organizations assume they will be breached and plan for containment.", "visual": "🏥" },
+        "climax": { "text": "Security culture — where every developer thinks about threats — is the strongest defense of all.", "visual": "🧠" },
+        "punchline": { "text": "Security is a habit, not a checkbox.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the strongest security defense?",
+        "options": ["A security-aware culture", "An expensive firewall", "A single annual audit"],
+        "correct": 0
+      }
+    }
+  ]
+}
