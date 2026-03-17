@@ -7,11 +7,11 @@ import { useState, useCallback, useRef } from 'react';
 const BEATS = ['hook', 'buildup', 'discovery', 'twist', 'climax', 'punchline'];
 const BEAT_DURATION_S = 8;
 const TOTAL_SECONDS = 60;
-const INTRO_S = 2;   // 0‒2 s  – intro card
+const INTRO_S = 4;   // 0‒4 s  – intro card
 const OUTRO_S = 2;   // 58‒60 s – outro card
-const QUIZ_S = 8;    // 50‒58 s – quiz
-const BEATS_START_S = INTRO_S;                           // 2 s
-const QUIZ_START_S = BEATS_START_S + BEATS.length * BEAT_DURATION_S; // 50 s
+const QUIZ_S = 6;    // 52‒58 s – quiz
+const BEATS_START_S = INTRO_S;                           // 4 s
+const QUIZ_START_S = BEATS_START_S + BEATS.length * BEAT_DURATION_S; // 52 s
 const OUTRO_START_S = QUIZ_START_S + QUIZ_S;             // 58 s
 const W = 1920;
 const H = 1080;
@@ -973,7 +973,7 @@ export default function useVideoExport() {
             topicTitle,
             topicEmoji,
             timeRemaining,
-            showAnswer: quizElapsed >= 4,
+            showAnswer: quizElapsed >= 3,
           });
 
         } else {
