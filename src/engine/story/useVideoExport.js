@@ -10,12 +10,16 @@ const TOTAL_SECONDS = 60;
 const W = 1920;
 const H = 1080;
 const FLOAT_CYCLE_S = 3; // matches CSS @keyframes float (3s ease-in-out infinite)
-const FLOAT_AMPLITUDE = 14; // pixels up/down
+const FLOAT_AMPLITUDE = 10; // matches CSS translateY(-10px)
 
 /* ── Per-style visual config (mirrors story.css) ──────────── */
 
 const STYLES = {
   focus: {
+    name: 'focus',
+    topbarBg: 'rgba(255,255,255,0.85)',
+    topbarBorder: 'rgba(0,0,0,0.08)',
+    topicColor: '#2d3436',
     bgColors: ['#FFF9F0', '#FFE8D6'],
     overlays: [],
     text: '#2d3436',
@@ -31,6 +35,10 @@ const STYLES = {
     font: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
   },
   dark: {
+    name: 'dark',
+    topbarBg: 'rgba(10,16,28,0.70)',
+    topbarBorder: 'rgba(255,255,255,0.10)',
+    topicColor: 'rgba(255,255,255,0.92)',
     bgColors: ['#0b1220', '#070b14'],
     overlays: [
       { x: 0.25, y: 0.15, r: 500, color: 'rgba(78,205,196,0.18)' },
@@ -49,6 +57,10 @@ const STYLES = {
     font: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
   },
   terminal: {
+    name: 'terminal',
+    topbarBg: 'rgba(5,10,8,0.72)',
+    topbarBorder: 'rgba(34,197,94,0.18)',
+    topicColor: 'rgba(229,255,240,0.95)',
     bgColors: ['#050a08', '#040806'],
     overlays: [
       { x: 0.20, y: 0.15, r: 550, color: 'rgba(34,197,94,0.10)' },
@@ -67,6 +79,10 @@ const STYLES = {
     font: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
   },
   glass: {
+    name: 'glass',
+    topbarBg: 'rgba(255,255,255,0.85)',
+    topbarBorder: 'rgba(0,0,0,0.08)',
+    topicColor: '#2d3436',
     bgColors: ['#f8fbff', '#eef6ff'],
     overlays: [
       { x: 0.20, y: 0.20, r: 650, color: 'rgba(99,102,241,0.18)' },
@@ -85,6 +101,10 @@ const STYLES = {
     font: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
   },
   paper: {
+    name: 'paper',
+    topbarBg: 'rgba(255,255,255,0.85)',
+    topbarBorder: 'rgba(0,0,0,0.08)',
+    topicColor: '#2b2a28',
     bgColors: ['#fbf3e4', '#f7ead7'],
     overlays: [
       { x: 0.20, y: 0.20, r: 650, color: 'rgba(225,112,85,0.10)' },
@@ -103,6 +123,10 @@ const STYLES = {
     font: 'Georgia, "Times New Roman", serif',
   },
   bold: {
+    name: 'bold',
+    topbarBg: 'rgba(255,255,255,0.85)',
+    topbarBorder: 'rgba(0,0,0,0.08)',
+    topicColor: '#2d3436',
     bgColors: ['#FFF9F0', '#FFE8D6'],
     overlays: [
       { x: 0.20, y: 0.20, r: 650, color: 'rgba(78,205,196,0.22)' },
@@ -122,6 +146,10 @@ const STYLES = {
     textScale: 1.15,
   },
   cards: {
+    name: 'cards',
+    topbarBg: 'rgba(255,255,255,0.85)',
+    topbarBorder: 'rgba(0,0,0,0.08)',
+    topicColor: '#2d3436',
     bgColors: ['#FFF9F0', '#FFE8D6'],
     overlays: [],
     text: '#2d3436',
@@ -137,6 +165,10 @@ const STYLES = {
     font: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
   },
   split: {
+    name: 'split',
+    topbarBg: 'rgba(255,255,255,0.85)',
+    topbarBorder: 'rgba(0,0,0,0.08)',
+    topicColor: '#2d3436',
     bgColors: ['#FFF9F0', '#FFE8D6'],
     overlays: [],
     text: '#2d3436',
@@ -152,6 +184,10 @@ const STYLES = {
     font: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
   },
   minimal: {
+    name: 'minimal',
+    topbarBg: 'rgba(255,255,255,0.85)',
+    topbarBorder: 'rgba(0,0,0,0.08)',
+    topicColor: '#2d3436',
     bgColors: ['#ffffff', '#f8f9fa'],
     overlays: [],
     text: '#2d3436',
@@ -314,90 +350,292 @@ function drawWatermark(ctx, s) {
   ctx.restore();
 }
 
+/* ── Layout constants (match story.css at 1920 × 1080) ───── */
+
+const TOPBAR_H = 76;
+const CONTENT_MAX_W = 920;          // .story-beat-inner { max-width: 920px }
+const CONTENT_TOP = TOPBAR_H + 16;  // padding-top: calc(topbar + 16px)
+const CONTENT_CENTER_Y = CONTENT_TOP + (H - CONTENT_TOP) / 2;
+const BEAT_FONT_SIZE = 56;          // clamp(2rem, 6vw, 3.5rem) at 1920px
+const BEAT_LINE_H = 1.2;            // line-height: 1.2
+const BEAT_TEXT_MAX_W = Math.round(CONTENT_MAX_W * 0.85); // .story-text max-width: 85%
+const BEAT_EMOJI_SIZE = 80;         // .story-visual font-size: 5rem
+const BEAT_GAP = 24;                // gap: 1.5rem
+const QUIZ_Q_SIZE = 44;             // clamp(1.75rem, 5vw, 2.75rem)
+const QUIZ_Q_LINE_H = 1.25;        // line-height: 1.25
+const QUIZ_OPT_MAX_W = 500;        // .quiz-options max-width: 500px
+const QUIZ_OPT_PAD_Y = 20;         // padding: 1.25rem
+const QUIZ_OPT_PAD_X = 24;         // padding: 1.5rem
+const QUIZ_OPT_GAP = 14;           // gap: 0.875rem
+const QUIZ_OPT_FONT = 18;          // font-size: 1.1rem
+const QUIZ_FB_SIZE = 24;            // font-size: 1.5rem
+const QUIZ_INNER_GAP = 32;         // gap: 2rem
+
+/* ── Topbar (matches .story-topbar) ──────────────────────── */
+
+function drawTopbar(ctx, s, topicTitle, topicEmoji, timeRemaining) {
+  ctx.save();
+
+  // Background bar
+  ctx.fillStyle = s.topbarBg;
+  ctx.fillRect(0, 0, W, TOPBAR_H);
+
+  // Bottom border
+  ctx.strokeStyle = s.topbarBorder;
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(0, TOPBAR_H - 0.5);
+  ctx.lineTo(W, TOPBAR_H - 0.5);
+  ctx.stroke();
+
+  const midY = TOPBAR_H / 2;
+
+  // Centered topic title: emoji + name
+  const emojiStr = topicEmoji || '';
+  const nameStr = topicTitle || 'Learning...';
+  ctx.textBaseline = 'middle';
+
+  ctx.font = `24px ${s.font}`;
+  const emojiW = emojiStr ? ctx.measureText(emojiStr).width : 0;
+  ctx.font = `700 18px ${s.font}`;
+  const nameW = ctx.measureText(nameStr).width;
+  const titleGap = emojiStr ? 10 : 0;
+  const totalTitleW = emojiW + titleGap + nameW;
+  const titleStartX = (W - totalTitleW) / 2;
+
+  if (emojiStr) {
+    ctx.font = `24px ${s.font}`;
+    ctx.textAlign = 'left';
+    ctx.fillStyle = s.topicColor;
+    ctx.fillText(emojiStr, titleStartX, midY);
+  }
+  ctx.font = `700 18px ${s.font}`;
+  ctx.textAlign = 'left';
+  ctx.fillStyle = s.topicColor;
+  ctx.fillText(nameStr, titleStartX + emojiW + titleGap, midY);
+
+  // Timer pill (right side — gradient matches .story-timer-large)
+  const pillW = 90;
+  const pillH = 44;
+  const pillX = W - pillW - 24;
+  const pillY = midY - pillH / 2;
+
+  ctx.shadowColor = 'rgba(214,48,49,0.30)';
+  ctx.shadowBlur = 15;
+  ctx.shadowOffsetY = 4;
+  rrPath(ctx, pillX, pillY, pillW, pillH, 12);
+  const tg = ctx.createLinearGradient(pillX, pillY, pillX + pillW, pillY + pillH);
+  tg.addColorStop(0, '#e17055');
+  tg.addColorStop(1, '#d63031');
+  ctx.fillStyle = tg;
+  ctx.fill();
+  ctx.shadowColor = 'transparent';
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = `800 22px ${s.font}`;
+  ctx.fillStyle = '#ffffff';
+  const mins = Math.floor(timeRemaining / 60);
+  const secs = String(timeRemaining % 60).padStart(2, '0');
+  ctx.fillText(`${mins}:${secs}`, pillX + pillW / 2, midY);
+
+  ctx.restore();
+}
+
+/* ── Panel for cards / glass styles ──────────────────────── */
+
+function drawPanel(ctx, styleName, x, y, w, h) {
+  ctx.save();
+  if (styleName === 'cards') {
+    ctx.shadowColor = 'rgba(0,0,0,0.12)';
+    ctx.shadowBlur = 60;
+    ctx.shadowOffsetY = 18;
+    rrPath(ctx, x, y, w, h, 28);
+    ctx.fillStyle = 'rgba(255,255,255,0.75)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(0,0,0,0.08)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  } else if (styleName === 'glass') {
+    ctx.shadowColor = 'rgba(0,0,0,0.08)';
+    ctx.shadowBlur = 60;
+    ctx.shadowOffsetY = 18;
+    rrPath(ctx, x, y, w, h, 24);
+    ctx.fillStyle = 'rgba(255,255,255,0.60)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+  ctx.shadowColor = 'transparent';
+  ctx.restore();
+}
+
 /* ── Beat frame ───────────────────────────────────────────── */
 
 function drawBeatFrame(ctx, { s, visual, text, topicTitle, topicEmoji, timeRemaining, fadeIn = 1, beatIdx = 0, elapsedS = 0 }) {
   drawBg(ctx, s);
-  drawBranding(ctx, s);
-  drawTopicTitle(ctx, s, topicTitle, topicEmoji);
+  drawTopbar(ctx, s, topicTitle, topicEmoji, timeRemaining);
 
   ctx.save();
   ctx.globalAlpha = Math.max(0, Math.min(1, fadeIn));
 
-  // Floating emoji — sinusoidal bob matching the CSS animation
-  const floatOffset = Math.sin((elapsedS / FLOAT_CYCLE_S) * Math.PI * 2) * FLOAT_AMPLITUDE;
-  ctx.font = `120px ${s.font}`;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillStyle = s.text;
-  ctx.fillText(visual || '📚', W / 2, 310 + floatOffset);
+  const styleName = s.name || 'focus';
+  const isSplit = styleName === 'split';
+  const isBold = styleName === 'bold';
+  const isMinimal = styleName === 'minimal';
 
-  // Beat text (word-wrapped, centered)
-  const scale = s.textScale || 1;
-  const fontSize = Math.round(52 * scale);
-  ctx.font = `800 ${fontSize}px ${s.font}`;
-  ctx.fillStyle = s.text;
-  const lines = wrapText(ctx, text, W - 240);
-  const lh = fontSize * 1.35;
-  const totalHeight = lines.length * lh;
-  const textCenterY = 600;
-  const startY = textCenterY - totalHeight / 2 + lh / 2;
-  for (let i = 0; i < lines.length; i++) {
-    ctx.fillText(lines[i], W / 2, startY + i * lh, W - 160);
+  // Font sizes matching story.css at 1920px viewport
+  const fontSize = isBold ? 64 : BEAT_FONT_SIZE;
+  const fontWeight = isMinimal ? '750' : '800';
+  const textMaxW = isMinimal ? 900 : BEAT_TEXT_MAX_W;
+
+  if (isSplit) {
+    // Split layout: emoji left (320px col), text right (matches .style-split grid)
+    const gridW = CONTENT_MAX_W;
+    const gridX = (W - gridW) / 2;
+    const emojiColW = 320;
+    const textColX = gridX + emojiColW + 32;
+    const textColW = gridW - emojiColW - 32;
+
+    const floatOffset = Math.sin((elapsedS / FLOAT_CYCLE_S) * Math.PI * 2) * FLOAT_AMPLITUDE;
+    ctx.font = `${BEAT_EMOJI_SIZE}px ${s.font}`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = s.text;
+    ctx.shadowColor = 'rgba(0,0,0,0.15)';
+    ctx.shadowBlur = 20;
+    ctx.shadowOffsetY = 4;
+    ctx.fillText(visual || '\ud83d\udcda', gridX + emojiColW / 2, CONTENT_CENTER_Y + floatOffset);
+    ctx.shadowColor = 'transparent';
+
+    const splitFontSize = 51; // clamp(1.75rem,4.6vw,3.2rem)=~51px
+    ctx.font = `${fontWeight} ${splitFontSize}px ${s.font}`;
+    const splitLines = wrapText(ctx, text, textColW);
+    const splitLineH = splitFontSize * BEAT_LINE_H;
+    const splitTextH = splitLines.length * splitLineH;
+    const splitStartY = CONTENT_CENTER_Y - splitTextH / 2 + splitLineH / 2;
+
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = s.text;
+    for (let i = 0; i < splitLines.length; i++) {
+      ctx.fillText(splitLines[i], textColX, splitStartY + i * splitLineH, textColW);
+    }
+  } else {
+    // Standard centered column layout (focus, dark, terminal, glass, paper, bold, cards, minimal)
+    ctx.font = `${fontWeight} ${fontSize}px ${s.font}`;
+    const lines = wrapText(ctx, text, textMaxW);
+    const lineH = fontSize * BEAT_LINE_H;
+    const textBlockH = lines.length * lineH;
+    const totalContentH = BEAT_EMOJI_SIZE + BEAT_GAP + textBlockH;
+    const contentStartY = CONTENT_CENTER_Y - totalContentH / 2;
+
+    // Panel for cards / glass styles
+    if (styleName === 'cards' || styleName === 'glass') {
+      const panelPad = styleName === 'cards' ? 36 : 24;
+      const panelW = Math.min(styleName === 'cards' ? 980 : CONTENT_MAX_W, textMaxW + panelPad * 2 + 80);
+      const panelH = totalContentH + panelPad * 2;
+      drawPanel(ctx, styleName, (W - panelW) / 2, contentStartY - panelPad, panelW, panelH);
+    }
+
+    // Floating emoji — sinusoidal bob matching CSS @keyframes float
+    const floatOffset = Math.sin((elapsedS / FLOAT_CYCLE_S) * Math.PI * 2) * FLOAT_AMPLITUDE;
+    ctx.font = `${BEAT_EMOJI_SIZE}px ${s.font}`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = s.text;
+    if (!isMinimal) {
+      ctx.shadowColor = 'rgba(0,0,0,0.15)';
+      ctx.shadowBlur = 20;
+      ctx.shadowOffsetY = 4;
+    }
+    ctx.globalAlpha = isMinimal ? 0.9 * fadeIn : fadeIn;
+    ctx.fillText(visual || '\ud83d\udcda', W / 2, contentStartY + BEAT_EMOJI_SIZE / 2 + floatOffset);
+    ctx.shadowColor = 'transparent';
+    ctx.globalAlpha = Math.max(0, Math.min(1, fadeIn));
+
+    // Beat text (word-wrapped, constrained to ≤920px × 85% zone)
+    ctx.font = `${fontWeight} ${fontSize}px ${s.font}`;
+    ctx.fillStyle = s.text;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    if (isBold) {
+      ctx.shadowColor = 'rgba(0,0,0,0.10)';
+      ctx.shadowBlur = 40;
+      ctx.shadowOffsetY = 10;
+    }
+    const textStartY = contentStartY + BEAT_EMOJI_SIZE + BEAT_GAP + lineH / 2;
+    for (let i = 0; i < lines.length; i++) {
+      ctx.fillText(lines[i], W / 2, textStartY + i * lineH, textMaxW);
+    }
+    ctx.shadowColor = 'transparent';
   }
 
   ctx.restore();
-
-  drawBeatDots(ctx, s, beatIdx);
-  drawTimer(ctx, s, timeRemaining);
-  drawWatermark(ctx, s);
 }
 
 /* ── Quiz frame ───────────────────────────────────────────── */
 
 function drawQuizFrame(ctx, { s, question, options, correct, topicTitle, topicEmoji, timeRemaining, showAnswer }) {
   drawBg(ctx, s);
-  drawBranding(ctx, s);
-  drawTopicTitle(ctx, s, topicTitle, topicEmoji);
+  drawTopbar(ctx, s, topicTitle, topicEmoji, timeRemaining);
 
-  // "QUICK QUIZ" header
-  ctx.save();
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.font = `900 22px ${s.font}`;
-  ctx.fillStyle = s.subtext;
-  ctx.fillText('QUICK QUIZ', W / 2, 175);
-  ctx.restore();
+  const opts = Array.isArray(options) ? options : [];
+  const optH = QUIZ_OPT_PAD_Y * 2 + QUIZ_OPT_FONT; // ~58px
+
+  // Measure content for vertical centering
+  ctx.font = `800 ${QUIZ_Q_SIZE}px ${s.font}`;
+  const qMaxW = BEAT_TEXT_MAX_W; // 85% of 920 = 782px
+  const qLines = wrapText(ctx, question, qMaxW);
+  const qLineH = Math.round(QUIZ_Q_SIZE * QUIZ_Q_LINE_H);
+  const qBlockH = qLines.length * qLineH;
+
+  const optsBlockH = opts.length * optH + Math.max(0, opts.length - 1) * QUIZ_OPT_GAP;
+  const fbH = showAnswer ? QUIZ_FB_SIZE + 16 : 0;
+  const totalH = qBlockH + QUIZ_INNER_GAP + optsBlockH + (fbH ? QUIZ_INNER_GAP + fbH : 0);
+  const startY = CONTENT_CENTER_Y - totalH / 2;
+
+  const styleName = s.name || 'focus';
+
+  // Panel for cards / glass
+  if (styleName === 'cards' || styleName === 'glass') {
+    const panelPad = styleName === 'cards' ? 36 : 24;
+    const panelW = Math.min(styleName === 'cards' ? 980 : CONTENT_MAX_W, Math.max(qMaxW, QUIZ_OPT_MAX_W) + panelPad * 2 + 80);
+    const panelH = totalH + panelPad * 2;
+    drawPanel(ctx, styleName, (W - panelW) / 2, startY - panelPad, panelW, panelH);
+  }
 
   // Question
   ctx.save();
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.font = `800 42px ${s.font}`;
+  ctx.font = `800 ${QUIZ_Q_SIZE}px ${s.font}`;
   ctx.fillStyle = s.text;
-  const qLines = wrapText(ctx, question, W - 240);
-  const qlh = 56;
-  const qStartY = 260;
+  const qStartY = startY + qLineH / 2;
   for (let i = 0; i < qLines.length; i++) {
-    ctx.fillText(qLines[i], W / 2, qStartY + i * qlh, W - 160);
+    ctx.fillText(qLines[i], W / 2, qStartY + i * qLineH, qMaxW);
   }
   ctx.restore();
 
-  // Options — single column, centered
-  const opts = Array.isArray(options) ? options : [];
-  const optW = Math.min(800, W - 200);
-  const optH = 76;
-  const optGap = 16;
-  const optStartX = (W - optW) / 2;
-  const optStartY = qStartY + qLines.length * qlh + 50;
+  // Options — single column, 500px wide, centered (matches .quiz-options)
+  const optStartY = startY + qBlockH + QUIZ_INNER_GAP;
+  const optStartX = (W - QUIZ_OPT_MAX_W) / 2;
 
   for (let i = 0; i < opts.length; i++) {
     const x = optStartX;
-    const y = optStartY + i * (optH + optGap);
+    const y = optStartY + i * (optH + QUIZ_OPT_GAP);
     const isCorrect = i === correct;
 
     ctx.save();
-    rrPath(ctx, x, y, optW, optH, 16);
+    ctx.shadowColor = 'rgba(0,0,0,0.05)';
+    ctx.shadowBlur = 15;
+    ctx.shadowOffsetY = 4;
+    if (showAnswer && isCorrect) {
+      ctx.shadowColor = 'rgba(46,204,113,0.30)';
+      ctx.shadowBlur = 20;
+    }
+    rrPath(ctx, x, y, QUIZ_OPT_MAX_W, optH, 16);
 
     if (showAnswer && isCorrect) {
       ctx.fillStyle = s.correctBg;
@@ -412,14 +650,15 @@ function drawQuizFrame(ctx, { s, question, options, correct, topicTitle, topicEm
       ctx.lineWidth = 2;
       ctx.stroke();
     }
+    ctx.shadowColor = 'transparent';
 
     const dimmed = showAnswer && !isCorrect;
     ctx.globalAlpha = dimmed ? 0.35 : 1;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
-    ctx.font = `600 30px ${s.font}`;
+    ctx.font = `600 ${QUIZ_OPT_FONT}px ${s.font}`;
     ctx.fillStyle = s.optText;
-    ctx.fillText(String(opts[i] ?? ''), x + 24, y + optH / 2, optW - 48);
+    ctx.fillText(String(opts[i] ?? ''), x + QUIZ_OPT_PAD_X, y + optH / 2, QUIZ_OPT_MAX_W - QUIZ_OPT_PAD_X * 2);
 
     ctx.restore();
   }
@@ -429,15 +668,12 @@ function drawQuizFrame(ctx, { s, question, options, correct, topicTitle, topicEm
     ctx.save();
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.font = `800 40px ${s.font}`;
+    ctx.font = `800 ${QUIZ_FB_SIZE}px ${s.font}`;
     ctx.fillStyle = s.feedbackColor;
-    const fbY = optStartY + opts.length * (optH + optGap) + 24;
+    const fbY = optStartY + optsBlockH + QUIZ_INNER_GAP + QUIZ_FB_SIZE / 2;
     ctx.fillText('✓ Correct!', W / 2, fbY);
     ctx.restore();
   }
-
-  drawTimer(ctx, s, timeRemaining);
-  drawWatermark(ctx, s);
 }
 
 /* ── API check ────────────────────────────────────────────── */
