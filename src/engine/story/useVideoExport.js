@@ -45,6 +45,83 @@ function loadLogo() {
   return _logoPromise;
 }
 
+/* ── Annex B → AVC helpers (iOS Safari fallback) ─────────── */
+// iOS Safari's VideoEncoder may ignore { avc: { format: 'avc' } } and
+// output raw Annex B bitstream without decoderConfig metadata.
+// mp4-muxer needs (a) length-prefixed AVC data and (b) an
+// AVCDecoderConfigurationRecord (the "description").  These helpers
+// parse the Annex B output and provide both.
+
+/** Check whether the first bytes are an Annex B start code. */
+function _isAnnexB(d) {
+  return (d[0] === 0 && d[1] === 0 && d[2] === 1) ||
+         (d[0] === 0 && d[1] === 0 && d[2] === 0 && d[3] === 1);
+}
+
+/** Split an Annex B bitstream into individual NAL units (start codes removed). */
+function _splitNALUs(data) {
+  const nalus = [];
+  const len = data.length;
+  let i = 0;
+  while (i < len - 2) {
+    if (data[i] !== 0 || data[i + 1] !== 0) { i++; continue; }
+    let sc = 0;
+    if (data[i + 2] === 1) sc = 3;
+    else if (i + 3 < len && data[i + 2] === 0 && data[i + 3] === 1) sc = 4;
+    if (!sc) { i++; continue; }
+    const start = i + sc;
+    let end = len;
+    for (let j = start + 1; j < len - 2; j++) {
+      if (data[j] === 0 && data[j + 1] === 0 &&
+          (data[j + 2] === 1 || (j + 3 < len && data[j + 2] === 0 && data[j + 3] === 1))) {
+        end = j;
+        break;
+      }
+    }
+    if (start < end) nalus.push(data.subarray(start, end));
+    i = end;
+  }
+  return nalus;
+}
+
+/** Build an AVCDecoderConfigurationRecord from raw SPS & PPS NAL units. */
+function _buildAVCDescription(sps, pps) {
+  const buf = new Uint8Array(11 + sps.length + pps.length);
+  let o = 0;
+  buf[o++] = 1;                         // configurationVersion
+  buf[o++] = sps[1];                    // AVCProfileIndication
+  buf[o++] = sps[2];                    // profile_compatibility
+  buf[o++] = sps[3];                    // AVCLevelIndication
+  buf[o++] = 0xFF;                      // reserved(6) + lengthSizeMinusOne=3
+  buf[o++] = 0xE1;                      // reserved(3) + numSPS=1
+  buf[o++] = (sps.length >> 8) & 0xFF;  // SPS length (high)
+  buf[o++] = sps.length & 0xFF;         // SPS length (low)
+  buf.set(sps, o); o += sps.length;
+  buf[o++] = 1;                         // numPPS
+  buf[o++] = (pps.length >> 8) & 0xFF;  // PPS length (high)
+  buf[o++] = pps.length & 0xFF;         // PPS length (low)
+  buf.set(pps, o);
+  return buf.buffer;                    // ArrayBuffer
+}
+
+/** Convert Annex B data → AVC (4-byte length-prefixed NALUs, SPS/PPS stripped). */
+function _annexBToAVC(data) {
+  const nalus = _splitNALUs(data)
+    .filter(n => { const t = n[0] & 0x1F; return t !== 7 && t !== 8; }); // drop SPS/PPS
+  let total = 0;
+  for (const n of nalus) total += 4 + n.length;
+  const out = new Uint8Array(total);
+  let o = 0;
+  for (const n of nalus) {
+    out[o++] = (n.length >>> 24) & 0xFF;
+    out[o++] = (n.length >>> 16) & 0xFF;
+    out[o++] = (n.length >>> 8)  & 0xFF;
+    out[o++] =  n.length         & 0xFF;
+    out.set(n, o); o += n.length;
+  }
+  return out;
+}
+
 /* ── Per-style visual config (mirrors story.css) ──────────── */
 
 const STYLES = {
@@ -953,18 +1030,66 @@ export default function useVideoExport() {
       });
 
       let encoderError = null;
+      let _annexBMode = false;   // true once we detect Annex B output
+      let _gotDescription = false;
+
       const encoder = new VideoEncoder({
         output: (chunk, meta) => {
-          // iOS Safari may emit meta.decoderConfig as null.  mp4-muxer
-          // then stores null in track.info.decoderConfig and crashes at
-          // finalization when it reads .colorSpace on null.
-          // Fix: replace null with undefined so the muxer skips the
-          // assignment entirely and only uses a real decoderConfig if
-          // the encoder eventually provides one.
-          if (meta && meta.decoderConfig === null) {
-            meta = { ...meta, decoderConfig: undefined };
+          // ── Happy path: encoder provided real decoderConfig ──
+          // (Chrome, desktop Safari with avc format support)
+          if (meta?.decoderConfig?.description) {
+            muxer.addVideoChunk(chunk, meta);
+            _gotDescription = true;
+            return;
           }
-          muxer.addVideoChunk(chunk, meta);
+
+          // ── iOS Safari fallback: Annex B without decoderConfig ──
+          // Copy the raw encoded bytes so we can inspect / convert them.
+          const raw = new Uint8Array(chunk.byteLength);
+          chunk.copyTo(raw);
+
+          // On the first keyframe, check if data is Annex B and extract
+          // SPS + PPS to build the AVCDecoderConfigurationRecord that
+          // mp4-muxer requires for the avcC box.
+          if (chunk.type === 'key' && !_gotDescription && _isAnnexB(raw)) {
+            _annexBMode = true;
+            const nalus = _splitNALUs(raw);
+            let sps = null, pps = null;
+            for (const nalu of nalus) {
+              const type = nalu[0] & 0x1F;
+              if (type === 7 && !sps) sps = nalu;
+              if (type === 8 && !pps) pps = nalu;
+            }
+            if (sps && pps) {
+              const description = _buildAVCDescription(sps, pps);
+              const syntheticMeta = {
+                decoderConfig: {
+                  codec,
+                  description,
+                  colorSpace: { primaries: 'bt709', transfer: 'bt709',
+                                matrix: 'bt709', fullRange: false },
+                },
+              };
+              const avcData = _annexBToAVC(raw);
+              muxer.addVideoChunkRaw(
+                avcData, chunk.type, chunk.timestamp, chunk.duration, syntheticMeta,
+              );
+              _gotDescription = true;
+              return;
+            }
+          }
+
+          // Subsequent frames in Annex B mode → convert data format
+          if (_annexBMode) {
+            const avcData = _annexBToAVC(raw);
+            muxer.addVideoChunkRaw(
+              avcData, chunk.type, chunk.timestamp, chunk.duration,
+            );
+            return;
+          }
+
+          // Fallback: pass through (shouldn't normally reach here)
+          muxer.addVideoChunk(chunk, meta ?? undefined);
         },
         error: (e) => { encoderError = e; },
       });
