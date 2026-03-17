@@ -1,0 +1,559 @@
+{
+  "categoryId": "mobile-development",
+  "subject": "Mobile Development",
+  "courseId": "mobile-development--mobile-operating-systems",
+  "courseTitle": "Mobile Operating Systems",
+  "emoji": "🖥️",
+  "color": "#059669",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "mobile-development--mobile-operating-systems--ch01-what-is-a-mobile-os", "title": "What Is a Mobile OS", "position": 1 },
+    { "id": "mobile-development--mobile-operating-systems--ch02-the-rise-of-ios", "title": "The Rise of iOS", "position": 2 },
+    { "id": "mobile-development--mobile-operating-systems--ch03-androids-open-world", "title": "Android's Open World", "position": 3 },
+    { "id": "mobile-development--mobile-operating-systems--ch04-the-fallen-giants", "title": "The Fallen Giants", "position": 4 },
+    { "id": "mobile-development--mobile-operating-systems--ch05-how-mobile-oses-work", "title": "How Mobile OSes Work", "position": 5 },
+    { "id": "mobile-development--mobile-operating-systems--ch06-the-next-generation", "title": "The Next Generation", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch01-what-is-a-mobile-os",
+      "title": "What an Operating System Actually Does",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your phone has a camera, GPS, screen, and radio. Something must coordinate all of them.", "visual": "🧩" },
+        "buildup": { "text": "The operating system manages hardware, runs apps, handles input, and controls memory.", "visual": "⚙️" },
+        "discovery": { "text": "Without an OS, every app would need to know how to talk to every hardware component directly.", "visual": "🔌" },
+        "twist": { "text": "The OS is invisible to users. They only notice it when something goes wrong.", "visual": "👻" },
+        "climax": { "text": "A mobile OS juggles dozens of tasks while making the phone feel responsive and simple.", "visual": "🤹" },
+        "punchline": { "text": "The OS does everything you never see.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a mobile operating system manage?",
+        "options": ["Hardware, apps, memory, and input", "Only the screen brightness", "Only phone calls"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch01-what-is-a-mobile-os",
+      "title": "Desktop vs. Mobile Operating Systems",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Windows runs on a laptop plugged into a wall. Mobile OSes must survive on a tiny battery.", "visual": "🔋" },
+        "buildup": { "text": "Mobile OSes aggressively suspend apps, dim screens, and throttle processors to save power.", "visual": "⏸️" },
+        "discovery": { "text": "Touch input replaces keyboard and mouse. The entire UI paradigm changes.", "visual": "👆" },
+        "twist": { "text": "Modern phones have more RAM and processing power than most 2010-era desktop computers.", "visual": "💪" },
+        "climax": { "text": "Mobile OSes aren't weaker — they're optimized for different constraints than desktops.", "visual": "🎯" },
+        "punchline": { "text": "Same power, different priorities.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why do mobile OSes aggressively suspend apps?",
+        "options": ["To save battery power", "To free up storage", "To improve sound quality"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch01-what-is-a-mobile-os",
+      "title": "The Market Share Battle",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Android runs on 72% of the world's smartphones. iOS runs on 27%. The rest? Barely 1%.", "visual": "📊" },
+        "buildup": { "text": "In 2009, there were six major mobile OSes competing for dominance.", "visual": "🏁" },
+        "discovery": { "text": "By 2014, the race was over. Android and iOS together held over 95% of the market.", "visual": "🏆" },
+        "twist": { "text": "In wealthy countries, iOS leads. Globally, Android dominates because of cheaper phones.", "visual": "🌍" },
+        "climax": { "text": "The mobile OS war is the most lopsided duopoly in computing history.", "visual": "⚖️" },
+        "punchline": { "text": "Two survivors in a six-horse race.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is Android's approximate global market share?",
+        "options": ["About 72%", "About 50%", "About 30%"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch01-what-is-a-mobile-os",
+      "title": "Why Only Two Survived",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The desktop had Windows, macOS, and Linux for decades. Mobile couldn't sustain three.", "visual": "✌️" },
+        "buildup": { "text": "App ecosystems create network effects: more users attract more developers, and vice versa.", "visual": "🔄" },
+        "discovery": { "text": "Without a critical mass of apps, no OS could attract enough users to survive.", "visual": "📉" },
+        "twist": { "text": "Even billions in subsidies from Microsoft and others couldn't break the two-horse race.", "visual": "💸" },
+        "climax": { "text": "Mobile proved that platform economics are winner-take-all faster than any tech market before.", "visual": "🏎️" },
+        "punchline": { "text": "Apps make the platform; the platform makes the apps.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What creates the network effect in mobile OSes?",
+        "options": ["More users attract more developers, which attracts more users", "Better hardware", "Lower prices"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch01-what-is-a-mobile-os",
+      "title": "RTOS: The OS You Never See",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your phone runs iOS or Android, but underneath that is another tiny operating system.", "visual": "🔬" },
+        "buildup": { "text": "The cellular modem runs a real-time OS that handles radio signals with split-second timing.", "visual": "📡" },
+        "discovery": { "text": "This baseband OS processes calls, texts, and data connections independently of the main OS.", "visual": "📶" },
+        "twist": { "text": "Security researchers have found vulnerabilities in baseband OSes that bypass all phone security.", "visual": "😱" },
+        "climax": { "text": "Your phone runs multiple operating systems at once. You only interact with one of them.", "visual": "🪆" },
+        "punchline": { "text": "Hidden beneath your OS lies another OS.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does the baseband OS handle?",
+        "options": ["Radio signals for calls, texts, and data", "App installations", "Screen brightness"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch02-the-rise-of-ios",
+      "title": "iPhone OS: The Beginning",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "In 2007, the first iPhone ran 'iPhone OS' — a stripped-down version of Mac OS X.", "visual": "🍎" },
+        "buildup": { "text": "Apple adapted its desktop Unix-based system for a device with no keyboard and limited RAM.", "visual": "🔧" },
+        "discovery": { "text": "The first iPhone OS had no App Store, no copy-paste, and no multitasking.", "visual": "😳" },
+        "twist": { "text": "Steve Jobs initially wanted only web apps. Engineers secretly prototyped native app support.", "visual": "🤫" },
+        "climax": { "text": "That secret prototype became the SDK that launched the app revolution in 2008.", "visual": "🚀" },
+        "punchline": { "text": "The app revolution started as a secret project.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What was iOS originally called?",
+        "options": ["iPhone OS", "Apple Mobile", "iOS Mini"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch02-the-rise-of-ios",
+      "title": "iOS Version Milestones",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Each iOS version added features that defined how we use phones today.", "visual": "📱" },
+        "buildup": { "text": "iOS 3 brought copy-paste. iOS 4 added multitasking. iOS 7 redesigned everything flat.", "visual": "🎨" },
+        "discovery": { "text": "iOS 10 opened Siri to developers. iOS 14 brought home screen widgets for the first time.", "visual": "📦" },
+        "twist": { "text": "Despite yearly updates, iOS still can't set default apps for everything. Apple chooses for you.", "visual": "🔒" },
+        "climax": { "text": "iOS evolves slowly and deliberately. Apple adds features when it decides users are ready.", "visual": "🐢" },
+        "punchline": { "text": "Apple moves slowly — on purpose.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Which iOS version introduced home screen widgets?",
+        "options": ["iOS 14", "iOS 7", "iOS 3"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch02-the-rise-of-ios",
+      "title": "Apple's Hardware-Software Integration",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Apple makes both the phone and its OS. That's rare — and powerful.", "visual": "🔗" },
+        "buildup": { "text": "Designing hardware and software together lets Apple optimize every interaction.", "visual": "⚙️" },
+        "discovery": { "text": "Apple's custom chips are designed specifically for iOS, squeezing out maximum performance.", "visual": "🧠" },
+        "twist": { "text": "This integration means Apple controls the entire experience — and locks users in.", "visual": "🔒" },
+        "climax": { "text": "The tight coupling makes iPhones feel fast and smooth, but switching to Android is painful.", "visual": "😩" },
+        "punchline": { "text": "Control everything, optimize everything.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why can Apple optimize performance better than competitors?",
+        "options": ["It designs both hardware and software together", "It uses cheaper components", "It has more apps"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch02-the-rise-of-ios",
+      "title": "iOS Updates Reach Everyone",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "When Apple releases a new iOS, 80% of iPhones update within months. Android can't match that.", "visual": "📲" },
+        "buildup": { "text": "Apple pushes updates directly to every supported iPhone simultaneously worldwide.", "visual": "🌍" },
+        "discovery": { "text": "iPhones get 5-6 years of software updates — far longer than most Android devices.", "visual": "📅" },
+        "twist": { "text": "Fast adoption means developers can use new features immediately. On Android, they wait years.", "visual": "⏳" },
+        "climax": { "text": "Uniform updates are iOS's greatest advantage for both security and developer experience.", "visual": "🛡️" },
+        "punchline": { "text": "One update reaches everyone at once.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How long do iPhones typically receive software updates?",
+        "options": ["5-6 years", "1 year", "10 years"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch02-the-rise-of-ios",
+      "title": "iPadOS: When One OS Wasn't Enough",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The iPad ran iPhone OS for a decade. Then Apple gave it its own identity.", "visual": "📱" },
+        "buildup": { "text": "In 2019, Apple split iPadOS from iOS to add tablet-specific features like multitasking.", "visual": "✂️" },
+        "discovery": { "text": "iPadOS gained desktop-class features: file management, mouse support, and external displays.", "visual": "🖱️" },
+        "twist": { "text": "Despite the rebrand, iPadOS still can't run full desktop apps. It's stuck between phone and laptop.", "visual": "🤔" },
+        "climax": { "text": "iPadOS shows how hard it is to make one OS serve both casual and professional users.", "visual": "⚖️" },
+        "punchline": { "text": "Too powerful for a phone OS, too limited for a desktop.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "When did Apple split iPadOS from iOS?",
+        "options": ["2019", "2007", "2023"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch03-androids-open-world",
+      "title": "Android's Open Source Foundation",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Android's source code is free for anyone to download, modify, and use. iOS is not.", "visual": "📖" },
+        "buildup": { "text": "Google releases Android through the Android Open Source Project, or AOSP.", "visual": "🤖" },
+        "discovery": { "text": "Any company can build a phone using AOSP without paying Google a cent.", "visual": "💰" },
+        "twist": { "text": "But Google Play Services — the part with maps, payments, and the Play Store — isn't open source.", "visual": "🔒" },
+        "climax": { "text": "Android is open at the base but controlled at the service layer. Google has it both ways.", "visual": "🎭" },
+        "punchline": { "text": "Open source at the bottom; Google's rules on top.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What part of Android is NOT open source?",
+        "options": ["Google Play Services", "The Linux kernel", "The home screen launcher"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch03-androids-open-world",
+      "title": "The Fragmentation Problem",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "There are over 24,000 distinct Android device models. Each runs a different configuration.", "visual": "🧩" },
+        "buildup": { "text": "Manufacturers customize Android with their own skins: Samsung One UI, Xiaomi MIUI, and more.", "visual": "🎨" },
+        "discovery": { "text": "Updates must pass through Google, the manufacturer, and sometimes the carrier before reaching users.", "visual": "🐌" },
+        "twist": { "text": "Over 40% of active Android phones run OS versions more than two years old.", "visual": "📊" },
+        "climax": { "text": "Fragmentation gives users choice but creates a nightmare for developers and security teams.", "visual": "😤" },
+        "punchline": { "text": "24,000 devices means 24,000 potential bugs.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What causes Android fragmentation?",
+        "options": ["Many manufacturers customizing Android differently", "Google releasing updates too fast", "Users refusing to buy phones"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch03-androids-open-world",
+      "title": "Android Without Google",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Can you run Android without any Google involvement? Yes — and billions of phones do.", "visual": "🤖" },
+        "buildup": { "text": "Chinese manufacturers ship Android phones without Google services, using their own app stores.", "visual": "🇨🇳" },
+        "discovery": { "text": "Amazon's Fire tablets run a heavily modified Android without any Google apps.", "visual": "🔥" },
+        "twist": { "text": "Huawei was forced to go Google-free after US sanctions. It built HarmonyOS as a replacement.", "visual": "🚫" },
+        "climax": { "text": "Android's openness means Google can't prevent forks — but losing Google services hurts.", "visual": "✂️" },
+        "punchline": { "text": "Android without Google works. But it's harder.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why did Huawei stop using Google services?",
+        "options": ["US sanctions blocked Huawei from using them", "Huawei chose to leave voluntarily", "Google shut down its services"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch03-androids-open-world",
+      "title": "Project Treble: Fixing Updates",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Android updates used to take 6 to 18 months to reach most phones. Google tried to fix it.", "visual": "🔧" },
+        "buildup": { "text": "Project Treble separated the OS framework from hardware-specific vendor code.", "visual": "✂️" },
+        "discovery": { "text": "This lets Google update the OS without waiting for each chip maker to adapt their drivers.", "visual": "⚡" },
+        "twist": { "text": "Despite Treble, many manufacturers still delay updates for months to add their own features.", "visual": "😤" },
+        "climax": { "text": "Treble improved the situation but didn't solve it. Android updates are still slower than iOS.", "visual": "🐢" },
+        "punchline": { "text": "Google split the OS in two to speed up updates.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What did Project Treble do?",
+        "options": ["Separated OS framework from vendor-specific code", "Added triple the storage", "Created three new Android versions"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch03-androids-open-world",
+      "title": "Android Go: For Budget Phones",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A billion people use phones with 1-2 GB of RAM. Standard Android is too heavy for them.", "visual": "🪶" },
+        "buildup": { "text": "Android Go is a lightweight version designed for entry-level devices with limited specs.", "visual": "📱" },
+        "discovery": { "text": "Go apps use less storage and data. YouTube Go streams video using 75% less data.", "visual": "📉" },
+        "twist": { "text": "Many budget phone makers ship Android Go without telling users. They think it's regular Android.", "visual": "🤫" },
+        "climax": { "text": "Android Go brings smartphones to people who could never afford high-end hardware.", "visual": "🌍" },
+        "punchline": { "text": "A lighter OS for the next billion users.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is Android Go designed for?",
+        "options": ["Budget phones with limited RAM and storage", "Gaming phones", "Foldable phones"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch04-the-fallen-giants",
+      "title": "Symbian: The First Smartphone OS",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Before iOS or Android existed, Symbian ran on half the world's smartphones.", "visual": "📱" },
+        "buildup": { "text": "Nokia, Sony Ericsson, and Motorola all used Symbian for their smart devices.", "visual": "🤝" },
+        "discovery": { "text": "Symbian was designed for tiny processors and minimal memory — efficient but rigid.", "visual": "⚙️" },
+        "twist": { "text": "When touchscreens arrived, Symbian's UI couldn't adapt. The code was too old and brittle.", "visual": "💔" },
+        "climax": { "text": "Nokia killed Symbian in 2012. The OS that once led the market died almost overnight.", "visual": "⚰️" },
+        "punchline": { "text": "Market leader to dead in three years.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why did Symbian fail?",
+        "options": ["It couldn't adapt to touchscreen interfaces", "It was too expensive", "Apple bought it"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch04-the-fallen-giants",
+      "title": "BlackBerry OS: Security First",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "BlackBerry OS was so secure that the US President used it. Then the world moved on.", "visual": "🫐" },
+        "buildup": { "text": "BlackBerry dominated enterprise email with push delivery and hardware encryption.", "visual": "📧" },
+        "discovery": { "text": "The physical keyboard and secure messaging made BlackBerry the business standard.", "visual": "⌨️" },
+        "twist": { "text": "When consumers wanted touchscreens and apps, BlackBerry was years behind iOS and Android.", "visual": "📉" },
+        "climax": { "text": "BlackBerry's market share fell from 20% to under 1% in five years.", "visual": "💀" },
+        "punchline": { "text": "Security wasn't enough when the world wanted apps.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What was BlackBerry OS best known for?",
+        "options": ["Enterprise security and push email", "Gaming capabilities", "Camera quality"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch04-the-fallen-giants",
+      "title": "Windows Phone: Microsoft's Failed Gamble",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Microsoft spent billions on a mobile OS. It had a beautiful interface. Nobody cared.", "visual": "🪟" },
+        "buildup": { "text": "Windows Phone launched in 2010 with a bold tile-based UI that reviewers praised.", "visual": "🎨" },
+        "discovery": { "text": "Microsoft bought Nokia's phone business for $7.2 billion to make hardware for Windows Phone.", "visual": "💸" },
+        "twist": { "text": "Developers refused to build apps. Without apps, users refused to buy. A death spiral formed.", "visual": "🔄" },
+        "climax": { "text": "Microsoft wrote off the Nokia purchase and killed Windows Phone in 2017.", "visual": "⚰️" },
+        "punchline": { "text": "Seven billion dollars bought a beautiful failure.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How much did Microsoft pay for Nokia's phone business?",
+        "options": ["$7.2 billion", "$100 million", "$50 billion"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch04-the-fallen-giants",
+      "title": "Palm webOS: Ahead of Its Time",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "WebOS had gesture navigation in 2009 — a feature iOS wouldn't add until 2017.", "visual": "👋" },
+        "buildup": { "text": "Palm built webOS with web technologies. Cards, gestures, and notifications were innovative.", "visual": "🃏" },
+        "discovery": { "text": "Critics loved it. The interface felt fluid and intuitive — years ahead of the competition.", "visual": "⭐" },
+        "twist": { "text": "HP bought Palm, launched one device, then killed the entire platform in 49 days.", "visual": "💀" },
+        "climax": { "text": "WebOS proved innovation alone doesn't win. Timing, ecosystem, and execution matter more.", "visual": "⏰" },
+        "punchline": { "text": "The best ideas came too early to survive.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What happened after HP acquired Palm's webOS?",
+        "options": ["HP killed the platform after just 49 days", "It became the market leader", "HP sold it to Apple"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch04-the-fallen-giants",
+      "title": "Firefox OS: The Web-Only Bet",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "What if every app on your phone was just a web page? Firefox OS tried exactly that.", "visual": "🦊" },
+        "buildup": { "text": "Mozilla built an entire OS where every app was HTML, CSS, and JavaScript.", "visual": "🌐" },
+        "discovery": { "text": "It targeted ultra-cheap phones in developing markets where app stores didn't reach.", "visual": "💰" },
+        "twist": { "text": "Web apps were too slow on budget hardware. The user experience couldn't compete.", "visual": "🐌" },
+        "climax": { "text": "Mozilla discontinued Firefox OS in 2016. The web-only phone dream ended.", "visual": "📴" },
+        "punchline": { "text": "The web wasn't ready to replace native apps.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What made Firefox OS unique?",
+        "options": ["Every app was built with web technologies", "It had no screen", "It only worked offline"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch05-how-mobile-oses-work",
+      "title": "Memory Management on Phones",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your phone has 8 GB of RAM but runs dozens of apps. How does it all fit?", "visual": "🧮" },
+        "buildup": { "text": "The OS assigns each app a memory budget and monitors usage continuously.", "visual": "📊" },
+        "discovery": { "text": "When memory runs low, the OS kills background apps starting with the least recently used.", "visual": "💀" },
+        "twist": { "text": "iOS is more aggressive than Android. It kills background apps faster to keep the foreground smooth.", "visual": "⚡" },
+        "climax": { "text": "Memory management is the invisible art that makes phones feel responsive with limited hardware.", "visual": "🎭" },
+        "punchline": { "text": "Limited RAM forces ruthless prioritization.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What happens when a phone runs low on memory?",
+        "options": ["The OS kills least recently used background apps", "The phone shuts down", "All apps crash simultaneously"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch05-how-mobile-oses-work",
+      "title": "How the Touch Screen Talks to the OS",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You press a button on screen. Electricity, circuits, and software all react in milliseconds.", "visual": "⚡" },
+        "buildup": { "text": "A capacitive grid detects where your finger touches by measuring electrical field changes.", "visual": "🔌" },
+        "discovery": { "text": "A touch controller chip converts the raw signal into coordinates 120 times per second.", "visual": "📐" },
+        "twist": { "text": "The OS must predict where your finger is going to reduce perceived latency.", "visual": "🔮" },
+        "climax": { "text": "Touch feels instant because hardware and software conspire to hide every delay.", "visual": "🏎️" },
+        "punchline": { "text": "Prediction makes touch feel zero-latency.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How do phones reduce perceived touch latency?",
+        "options": ["By predicting where your finger is going", "By making the screen brighter", "By increasing volume"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch05-how-mobile-oses-work",
+      "title": "File Systems: Where Data Lives",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every photo, message, and app on your phone is stored in a file system you never see.", "visual": "📁" },
+        "buildup": { "text": "iOS uses APFS. Android uses ext4 or F2FS. Each is optimized for flash storage.", "visual": "💾" },
+        "discovery": { "text": "Flash storage wears out with writes. File systems spread data evenly to extend chip life.", "visual": "⚖️" },
+        "twist": { "text": "Full-disk encryption means even stolen storage chips reveal nothing without the passcode.", "visual": "🔐" },
+        "climax": { "text": "The file system silently organizes billions of bytes while keeping everything encrypted.", "visual": "🗄️" },
+        "punchline": { "text": "Every file is encrypted before it hits storage.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What file system does iOS use?",
+        "options": ["APFS", "NTFS", "FAT32"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch05-how-mobile-oses-work",
+      "title": "Power Management: The Silent Optimizer",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your phone lasts all day on a battery smaller than a candy bar. The OS makes that possible.", "visual": "🔋" },
+        "buildup": { "text": "The OS constantly adjusts CPU speed, screen brightness, and radio power based on usage.", "visual": "📉" },
+        "discovery": { "text": "Big.LITTLE CPU designs let the OS use power-efficient cores for simple tasks.", "visual": "🧩" },
+        "twist": { "text": "Aggressive power management is why background apps sometimes miss notifications or updates.", "visual": "🔕" },
+        "climax": { "text": "Every millisecond of battery life is fought for by thousands of optimization decisions per second.", "visual": "⚔️" },
+        "punchline": { "text": "Battery life is won one optimization at a time.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is Big.LITTLE in mobile CPUs?",
+        "options": ["A design with efficient cores for light tasks and powerful ones for heavy tasks", "A screen size standard", "A battery technology"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch05-how-mobile-oses-work",
+      "title": "Security Enclaves and Biometrics",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your fingerprint and face data are stored in a chip that even the OS can't read.", "visual": "🔐" },
+        "buildup": { "text": "Apple's Secure Enclave and Android's StrongBox are isolated processors for sensitive data.", "visual": "🛡️" },
+        "discovery": { "text": "Biometric data never leaves this chip. Authentication happens entirely inside it.", "visual": "🧩" },
+        "twist": { "text": "Even if the entire OS is compromised by malware, the enclave remains sealed.", "visual": "🏰" },
+        "climax": { "text": "Security enclaves make phones more secure for authentication than most desktop computers.", "visual": "💻" },
+        "punchline": { "text": "A chip within a chip guards your identity.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Where is biometric data stored on iPhones?",
+        "options": ["In the Secure Enclave, isolated from the main OS", "In iCloud", "In the app that uses it"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch06-the-next-generation",
+      "title": "HarmonyOS: China's Answer",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "When the US banned Huawei from using Google, Huawei built its own operating system.", "visual": "🇨🇳" },
+        "buildup": { "text": "HarmonyOS launched in 2021 as a cross-device OS for phones, tablets, watches, and cars.", "visual": "🔗" },
+        "discovery": { "text": "HarmonyOS initially used Android app compatibility but has been removing it since 2024.", "visual": "✂️" },
+        "twist": { "text": "With 900 million devices, HarmonyOS became the third-largest mobile OS nearly overnight.", "visual": "📈" },
+        "climax": { "text": "HarmonyOS proves that geopolitics can birth a new platform when the stakes are high enough.", "visual": "🌍" },
+        "punchline": { "text": "Sanctions created a new operating system.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why did Huawei create HarmonyOS?",
+        "options": ["US sanctions blocked access to Google services", "To compete with Windows", "For fun"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch06-the-next-generation",
+      "title": "Google Fuchsia: The Android Successor?",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Google is quietly building a new OS from scratch. It's not based on Linux.", "visual": "🔬" },
+        "buildup": { "text": "Fuchsia uses a custom kernel called Zircon instead of Linux, avoiding legacy baggage.", "visual": "🧪" },
+        "discovery": { "text": "Google shipped Fuchsia on the Nest Hub smart display in 2021 — its first real device.", "visual": "📺" },
+        "twist": { "text": "Google has never confirmed Fuchsia will replace Android. It may never reach phones at all.", "visual": "🤷" },
+        "climax": { "text": "Fuchsia is Google's insurance policy: a modern OS ready if Android's legacy becomes too heavy.", "visual": "🛡️" },
+        "punchline": { "text": "Google's backup plan runs on a kernel called Zircon.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What kernel does Google Fuchsia use?",
+        "options": ["Zircon", "Linux", "XNU"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch06-the-next-generation",
+      "title": "Mobile OS Meets AI",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your phone's OS is getting an AI layer. It's the biggest change since the app store.", "visual": "🤖" },
+        "buildup": { "text": "Apple Intelligence and Google Gemini are being embedded directly into the operating system.", "visual": "🧠" },
+        "discovery": { "text": "On-device AI can summarize texts, generate images, and understand context without the cloud.", "visual": "⚡" },
+        "twist": { "text": "AI features require powerful chips. Older phones can't run them, creating a new digital divide.", "visual": "📱" },
+        "climax": { "text": "AI-native operating systems will change how we interact with phones more than touch did.", "visual": "🚀" },
+        "punchline": { "text": "The OS is learning to think for you.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a limitation of on-device AI?",
+        "options": ["It requires powerful chips that older phones lack", "It only works in English", "It needs constant internet"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch06-the-next-generation",
+      "title": "The Convergence Dream",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "What if your phone could replace your laptop? Samsung DeX and Motorola tried this.", "visual": "💻" },
+        "buildup": { "text": "Docking stations let phones drive external monitors with a desktop-style interface.", "visual": "🖥️" },
+        "discovery": { "text": "Apple's M-series chips blurred the line by running the same chip in iPads and MacBooks.", "visual": "🔗" },
+        "twist": { "text": "Despite the hardware power, software gaps keep phones from truly replacing laptops.", "visual": "📉" },
+        "climax": { "text": "Convergence keeps getting closer but never quite arrives. The gap is software, not hardware.", "visual": "🎯" },
+        "punchline": { "text": "Phones have laptop power but not laptop software.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What prevents phones from replacing laptops?",
+        "options": ["Software limitations, not hardware", "Screen size only", "Battery life"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--mobile-operating-systems--ch06-the-next-generation",
+      "title": "Privacy-First Operating Systems",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "GrapheneOS and CalyxOS strip Google services from Android to maximize user privacy.", "visual": "🛡️" },
+        "buildup": { "text": "These privacy-focused forks remove telemetry, tracking, and pre-installed Google apps.", "visual": "🔒" },
+        "discovery": { "text": "Edward Snowden publicly recommended GrapheneOS as the most secure mobile OS available.", "visual": "📰" },
+        "twist": { "text": "Without Google Play Services, many popular apps refuse to work or lose key features.", "visual": "⚠️" },
+        "climax": { "text": "Privacy OSes prove maximum security is possible — but at a convenience cost most won't accept.", "visual": "⚖️" },
+        "punchline": { "text": "Total privacy exists — if you sacrifice convenience.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the main trade-off of privacy-focused mobile operating systems?",
+        "options": ["Many popular apps don't work without Google services", "They cost more money", "They only run on old phones"],
+        "correct": 0
+      }
+    }
+  ]
+}

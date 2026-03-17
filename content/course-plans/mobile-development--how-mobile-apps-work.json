@@ -1,0 +1,559 @@
+{
+  "categoryId": "mobile-development",
+  "subject": "Mobile Development",
+  "courseId": "mobile-development--how-mobile-apps-work",
+  "courseTitle": "How Mobile Apps Work",
+  "emoji": "⚙️",
+  "color": "#DC2626",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "mobile-development--how-mobile-apps-work--ch01-what-is-a-mobile-app", "title": "What Is a Mobile App", "position": 1 },
+    { "id": "mobile-development--how-mobile-apps-work--ch02-inside-the-operating-system", "title": "Inside the Operating System", "position": 2 },
+    { "id": "mobile-development--how-mobile-apps-work--ch03-how-apps-connect", "title": "How Apps Connect", "position": 3 },
+    { "id": "mobile-development--how-mobile-apps-work--ch04-the-user-interface", "title": "The User Interface", "position": 4 },
+    { "id": "mobile-development--how-mobile-apps-work--ch05-data-and-storage", "title": "Data and Storage", "position": 5 },
+    { "id": "mobile-development--how-mobile-apps-work--ch06-from-code-to-phone", "title": "From Code to Phone", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch01-what-is-a-mobile-app",
+      "title": "Native Apps vs. Web Apps",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Some apps you download. Others run in your browser. They look similar but work differently.", "visual": "📱" },
+        "buildup": { "text": "Native apps are installed from an app store and run directly on the operating system.", "visual": "📦" },
+        "discovery": { "text": "Web apps run inside a browser. They need no installation but can't access all phone features.", "visual": "🌐" },
+        "twist": { "text": "Progressive Web Apps blur the line — they're web apps that feel almost native.", "visual": "🤔" },
+        "climax": { "text": "The choice between native and web shapes cost, performance, and user experience.", "visual": "⚖️" },
+        "punchline": { "text": "Installed or browsed — that's the real divide.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What's a key difference between native and web apps?",
+        "options": ["Native apps are installed; web apps run in a browser", "Web apps are always faster", "Native apps are free"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch01-what-is-a-mobile-app",
+      "title": "Hybrid Apps: The Middle Ground",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Building separate apps for iOS and Android costs twice as much. Hybrid apps cut that cost.", "visual": "💰" },
+        "buildup": { "text": "Frameworks like React Native and Flutter let developers write once and run on both platforms.", "visual": "🔄" },
+        "discovery": { "text": "Hybrid apps use a shared codebase but compile to native components for each platform.", "visual": "🧩" },
+        "twist": { "text": "Performance is close to native but not identical. Complex animations can stutter.", "visual": "🐌" },
+        "climax": { "text": "Most startups choose hybrid to ship faster. Most tech giants build fully native.", "visual": "🏢" },
+        "punchline": { "text": "One codebase, two platforms, some tradeoffs.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What do hybrid app frameworks allow?",
+        "options": ["Writing code once for both iOS and Android", "Only iOS development", "Hardware manufacturing"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch01-what-is-a-mobile-app",
+      "title": "What Happens When You Tap an App Icon",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You tap an icon and the app appears. But dozens of steps happen in between.", "visual": "👆" },
+        "buildup": { "text": "The OS loads the app's binary into memory and creates a new process with its own sandbox.", "visual": "📦" },
+        "discovery": { "text": "The app's main thread starts, loads resources, and draws the first screen.", "visual": "🎨" },
+        "twist": { "text": "If the first screen doesn't appear within 3 seconds, most users abandon the app.", "visual": "⏱️" },
+        "climax": { "text": "App launch optimization is an art — every millisecond between tap and display matters.", "visual": "🏎️" },
+        "punchline": { "text": "Three seconds decides if users stay or leave.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How long do users wait before abandoning a slow app?",
+        "options": ["About 3 seconds", "About 30 seconds", "About 1 minute"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch01-what-is-a-mobile-app",
+      "title": "App Permissions Explained",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A flashlight app asks for your camera, contacts, and location. Why?", "visual": "🔦" },
+        "buildup": { "text": "Apps request permissions to access hardware and data — camera, GPS, microphone, storage.", "visual": "🔐" },
+        "discovery": { "text": "Modern systems ask permission at the moment an app needs it, not during installation.", "visual": "🪟" },
+        "twist": { "text": "Some apps request far more permissions than they need — to harvest data for advertising.", "visual": "🕵️" },
+        "climax": { "text": "Permission systems are the frontline defense between your data and apps that want it.", "visual": "🛡️" },
+        "punchline": { "text": "Every permission is a trust decision.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why do some apps request unnecessary permissions?",
+        "options": ["To harvest data for advertising", "Because the OS requires it", "To improve performance"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch01-what-is-a-mobile-app",
+      "title": "The App Lifecycle",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your phone shows dozens of apps in the app switcher. Most aren't actually running.", "visual": "📋" },
+        "buildup": { "text": "Apps have states: active, background, suspended, and terminated by the system.", "visual": "🔄" },
+        "discovery": { "text": "When RAM runs low, the OS quietly kills suspended apps to free memory.", "visual": "💀" },
+        "twist": { "text": "Apps must save their state before suspension — or the user loses their work.", "visual": "💾" },
+        "climax": { "text": "The lifecycle system is how phones juggle dozens of apps with limited memory.", "visual": "🤹" },
+        "punchline": { "text": "Most 'open' apps are actually frozen.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What happens when a phone runs low on RAM?",
+        "options": ["The OS kills suspended apps", "All apps crash", "The phone shuts down"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch02-inside-the-operating-system",
+      "title": "The App Sandbox",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Every app on your phone runs in a sandbox — a virtual jail it can't escape.", "visual": "📦" },
+        "buildup": { "text": "Sandboxing means one app can't read another app's data or interfere with its process.", "visual": "🚧" },
+        "discovery": { "text": "Even if a game has malware, the sandbox prevents it from accessing your banking app.", "visual": "🏦" },
+        "twist": { "text": "Sandboxing limits functionality too. Apps can't share data without explicit OS permission.", "visual": "🤝" },
+        "climax": { "text": "The sandbox is the core security model that makes smartphones safer than old PCs.", "visual": "🛡️" },
+        "punchline": { "text": "Every app lives in its own tiny prison.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does app sandboxing prevent?",
+        "options": ["Apps from accessing each other's data", "Apps from using the internet", "Apps from being updated"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch02-inside-the-operating-system",
+      "title": "Push Notifications: How They Really Work",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your phone buzzes with a notification. But the app wasn't even running. How?", "visual": "🔔" },
+        "buildup": { "text": "A server sends the message to Apple or Google's push service, not directly to your phone.", "visual": "☁️" },
+        "discovery": { "text": "Your phone maintains one persistent connection to the push service, saving battery.", "visual": "🔋" },
+        "twist": { "text": "The app developer never knows your IP address. The push service is the middleman.", "visual": "🤫" },
+        "climax": { "text": "Push notifications are why apps feel alive even when they're not running.", "visual": "💡" },
+        "punchline": { "text": "One connection delivers all your notifications.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How do push notifications reach your phone?",
+        "options": ["Through Apple or Google's centralized push service", "The app runs constantly in background", "Via SMS messages"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch02-inside-the-operating-system",
+      "title": "Background Processing Limits",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On a desktop, apps run forever in the background. On a phone, they can't.", "visual": "🖥️" },
+        "buildup": { "text": "Mobile operating systems strictly limit background activity to preserve battery life.", "visual": "🔋" },
+        "discovery": { "text": "Apps get brief windows — a few seconds — to finish work before the OS suspends them.", "visual": "⏳" },
+        "twist": { "text": "Music players and navigation apps get exceptions. Most other apps are paused ruthlessly.", "visual": "🎵" },
+        "climax": { "text": "Background limits are why your phone battery lasts all day despite dozens of installed apps.", "visual": "📱" },
+        "punchline": { "text": "Battery life comes from killing background apps.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why do mobile OSes limit background processing?",
+        "options": ["To preserve battery life", "To increase screen brightness", "To speed up downloads"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch02-inside-the-operating-system",
+      "title": "How the GPS in Your Phone Works",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your phone knows where you are within three meters. It uses satellites in orbit.", "visual": "🛰️" },
+        "buildup": { "text": "GPS receivers listen to signals from at least four satellites to triangulate your position.", "visual": "📡" },
+        "discovery": { "text": "Phones also use cell towers and Wi-Fi networks to speed up location fixes.", "visual": "📶" },
+        "twist": { "text": "GPS is power-hungry. A navigation app can drain 20% of your battery in one hour.", "visual": "🪫" },
+        "climax": { "text": "Location services power maps, ride-sharing, weather, and fitness — all enabled by GPS chips.", "visual": "🗺️" },
+        "punchline": { "text": "Four satellites tell your phone where you stand.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How many GPS satellites are needed for a position fix?",
+        "options": ["At least four", "One", "Twelve"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch02-inside-the-operating-system",
+      "title": "The Kernel: The Phone's Brain",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Beneath every app and every screen, a kernel manages the entire phone.", "visual": "🧠" },
+        "buildup": { "text": "The kernel allocates memory, schedules processes, and talks to hardware drivers.", "visual": "⚙️" },
+        "discovery": { "text": "Both iOS and Android use kernels derived from Unix — a 1970s operating system family.", "visual": "🏛️" },
+        "twist": { "text": "Android uses the Linux kernel. iOS uses XNU, a hybrid of Mach and BSD Unix.", "visual": "🐧" },
+        "climax": { "text": "The kernel runs silently, but every tap, swipe, and notification flows through it.", "visual": "🌊" },
+        "punchline": { "text": "1970s Unix runs every modern smartphone.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What kernel does Android use?",
+        "options": ["Linux", "Windows NT", "macOS"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch03-how-apps-connect",
+      "title": "APIs: How Apps Talk to Servers",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "When you check the weather in an app, the data doesn't live on your phone.", "visual": "🌤️" },
+        "buildup": { "text": "The app sends an API request to a server, which responds with structured data.", "visual": "📡" },
+        "discovery": { "text": "APIs use standard formats like JSON so any app can understand the response.", "visual": "📋" },
+        "twist": { "text": "Most apps are thin clients — they display data but store almost nothing locally.", "visual": "🪶" },
+        "climax": { "text": "APIs are the invisible backbone connecting every mobile app to the cloud.", "visual": "☁️" },
+        "punchline": { "text": "The app asks; the server answers.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What format do most mobile APIs use?",
+        "options": ["JSON", "PDF", "MP3"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch03-how-apps-connect",
+      "title": "WebSockets: Real-Time Communication",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In a chat app, messages appear instantly. Regular API requests are too slow for that.", "visual": "💬" },
+        "buildup": { "text": "WebSockets open a persistent two-way connection between the app and server.", "visual": "🔗" },
+        "discovery": { "text": "Once connected, either side can send messages instantly without waiting for a request.", "visual": "⚡" },
+        "twist": { "text": "Keeping connections open on millions of phones requires massive server infrastructure.", "visual": "🏗️" },
+        "climax": { "text": "WebSockets power chat, gaming, stock tickers, and any app that needs real-time updates.", "visual": "📊" },
+        "punchline": { "text": "A persistent pipe delivers instant messages.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What makes WebSockets different from regular API calls?",
+        "options": ["They maintain a persistent two-way connection", "They only work on Wi-Fi", "They don't use the internet"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch03-how-apps-connect",
+      "title": "Offline Mode and Sync",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You lose signal on the subway. A good app keeps working; a bad one shows a blank screen.", "visual": "🚇" },
+        "buildup": { "text": "Offline-capable apps cache data locally and queue changes until connectivity returns.", "visual": "💾" },
+        "discovery": { "text": "Conflict resolution matters: what happens if you edit offline and someone else edits online?", "visual": "⚔️" },
+        "twist": { "text": "Building reliable offline sync is one of the hardest problems in mobile development.", "visual": "😰" },
+        "climax": { "text": "Great offline support is invisible when it works and infuriating when it doesn't.", "visual": "🎭" },
+        "punchline": { "text": "Good apps work even without signal.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a challenge of offline sync?",
+        "options": ["Resolving conflicts when both sides changed data", "Using too much bandwidth", "Running out of storage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch03-how-apps-connect",
+      "title": "CDNs: Serving Content Fast",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your app loads images from a server in Virginia. But you're in Tokyo. That's slow.", "visual": "🐌" },
+        "buildup": { "text": "A CDN caches content on servers around the world, closer to each user.", "visual": "🌐" },
+        "discovery": { "text": "When you load an image, the CDN serves it from the nearest city — often in milliseconds.", "visual": "⚡" },
+        "twist": { "text": "CDNs handle 60% or more of all internet traffic. Without them, apps would crawl.", "visual": "📊" },
+        "climax": { "text": "CDNs are the invisible acceleration layer that makes mobile apps feel instantaneous.", "visual": "🚀" },
+        "punchline": { "text": "Content flies from the nearest server, not the farthest.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a CDN do?",
+        "options": ["Caches content on servers close to users", "Encrypts all data", "Blocks advertisements"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch03-how-apps-connect",
+      "title": "Bluetooth and Near-Field Connections",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your phone connects to earbuds, watches, and car stereos without any cables.", "visual": "🎧" },
+        "buildup": { "text": "Bluetooth Low Energy uses tiny amounts of power to maintain short-range connections.", "visual": "🔋" },
+        "discovery": { "text": "NFC lets two devices communicate by touching — powering contactless payments.", "visual": "💳" },
+        "twist": { "text": "COVID contact tracing apps used Bluetooth beacons to detect nearby phones anonymously.", "visual": "🦠" },
+        "climax": { "text": "Short-range wireless turns phones into controllers for an ever-growing ecosystem of devices.", "visual": "🌐" },
+        "punchline": { "text": "Phones talk to everything nearby.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What powers contactless mobile payments?",
+        "options": ["NFC (Near Field Communication)", "Wi-Fi", "GPS"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch04-the-user-interface",
+      "title": "The 60 Frames Per Second Target",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Scroll a list on your phone. If it stutters, something is wrong with the rendering.", "visual": "📜" },
+        "buildup": { "text": "Smooth scrolling requires the screen to redraw 60 times per second — every 16 milliseconds.", "visual": "⏱️" },
+        "discovery": { "text": "The GPU composites layers while the CPU handles logic, both racing against the clock.", "visual": "🏎️" },
+        "twist": { "text": "One heavy operation on the main thread can freeze the entire UI for visible milliseconds.", "visual": "🧊" },
+        "climax": { "text": "60fps is the threshold where motion feels fluid. Drop below it and users notice instantly.", "visual": "👀" },
+        "punchline": { "text": "Sixteen milliseconds is all you get per frame.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How often must the screen redraw for smooth scrolling?",
+        "options": ["60 times per second", "10 times per second", "1000 times per second"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch04-the-user-interface",
+      "title": "How Touch Events Work",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You tap a button and it responds. Beneath that tap, a complex event chain fires.", "visual": "👆" },
+        "buildup": { "text": "The screen detects electrical changes from your finger at up to 240 times per second.", "visual": "⚡" },
+        "discovery": { "text": "The OS turns raw coordinates into gesture events: tap, swipe, pinch, long press.", "visual": "🤏" },
+        "twist": { "text": "The system must decide in milliseconds: is this a tap, a scroll start, or a swipe?", "visual": "🤔" },
+        "climax": { "text": "Touch handling is a real-time decision system that makes interfaces feel responsive.", "visual": "✨" },
+        "punchline": { "text": "Your phone reads your finger 240 times a second.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does the OS interpret raw touch coordinates as?",
+        "options": ["Gesture events like tap, swipe, and pinch", "Sound waves", "GPS coordinates"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch04-the-user-interface",
+      "title": "Dark Mode: More Than a Trend",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Dark mode turns backgrounds black and text white. It's the most requested phone feature.", "visual": "🌙" },
+        "buildup": { "text": "On OLED screens, dark mode saves battery because black pixels are completely off.", "visual": "🔋" },
+        "discovery": { "text": "Studies show dark mode reduces eye strain in low-light environments.", "visual": "👁️" },
+        "twist": { "text": "In bright sunlight, dark mode is actually harder to read than light mode.", "visual": "☀️" },
+        "climax": { "text": "Most modern apps support both modes, switching automatically based on time of day.", "visual": "🔄" },
+        "punchline": { "text": "Black pixels save power on OLED screens.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why does dark mode save battery on OLED?",
+        "options": ["Black pixels are completely turned off", "The screen refreshes slower", "The CPU works less"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch04-the-user-interface",
+      "title": "Accessibility on Mobile",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Over a billion people worldwide live with disabilities. Their phones must work for them too.", "visual": "♿" },
+        "buildup": { "text": "VoiceOver on iOS and TalkBack on Android read the screen aloud for blind users.", "visual": "🔊" },
+        "discovery": { "text": "Switch Control lets people with motor disabilities navigate using a single button press.", "visual": "🔘" },
+        "twist": { "text": "Many apps ship without accessibility support. Custom controls often break screen readers.", "visual": "😤" },
+        "climax": { "text": "Accessible apps serve everyone — including users with temporary injuries or situational needs.", "visual": "🌐" },
+        "punchline": { "text": "Accessibility helps everyone, not just some.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does VoiceOver do on iOS?",
+        "options": ["Reads the screen aloud for blind users", "Records voice memos", "Makes calls louder"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch04-the-user-interface",
+      "title": "Responsive Layouts for Every Screen",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Phones come in dozens of sizes. An app must look good on a 5-inch phone and a 13-inch tablet.", "visual": "📐" },
+        "buildup": { "text": "Responsive layouts use flexible grids and constraints instead of fixed pixel positions.", "visual": "🧩" },
+        "discovery": { "text": "Auto Layout on iOS and ConstraintLayout on Android calculate positions dynamically.", "visual": "🔧" },
+        "twist": { "text": "Foldable phones added a new challenge: the screen size changes while the app is running.", "visual": "📱" },
+        "climax": { "text": "Great mobile design adapts to the screen it finds, not the screen the designer imagined.", "visual": "🎨" },
+        "punchline": { "text": "One app, infinite screen sizes.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why can't apps use fixed pixel positions?",
+        "options": ["Phones come in dozens of different screen sizes", "Pixels are too small", "Colors vary by device"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch05-data-and-storage",
+      "title": "Local Databases on Phones",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your contacts, messages, and app data are stored in databases right on your phone.", "visual": "🗄️" },
+        "buildup": { "text": "SQLite is the most-used database engine in the world. It runs on every smartphone.", "visual": "💾" },
+        "discovery": { "text": "It's a single file with no server needed. Apps read and write directly to it.", "visual": "📄" },
+        "twist": { "text": "There are more SQLite instances running than all other database engines combined.", "visual": "🤯" },
+        "climax": { "text": "SQLite is the silent workhorse that stores data on billions of devices.", "visual": "🐴" },
+        "punchline": { "text": "The world's most popular database fits in one file.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What makes SQLite unique among databases?",
+        "options": ["It runs without a server as a single file", "It only works online", "It requires a license"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch05-data-and-storage",
+      "title": "Cloud Sync: Your Data Everywhere",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You take a photo on your phone. Seconds later it appears on your tablet and laptop.", "visual": "📸" },
+        "buildup": { "text": "Cloud sync uploads data to remote servers and pushes it to all your connected devices.", "visual": "☁️" },
+        "discovery": { "text": "iCloud, Google Drive, and Dropbox handle sync transparently in the background.", "visual": "🔄" },
+        "twist": { "text": "Sync conflicts happen when two devices edit the same file offline simultaneously.", "visual": "⚔️" },
+        "climax": { "text": "Seamless sync makes devices feel like windows into one unified digital life.", "visual": "🪟" },
+        "punchline": { "text": "Your data lives in the cloud, shown on every screen.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What causes cloud sync conflicts?",
+        "options": ["Two devices editing the same file offline", "Too much storage", "Slow internet speed"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch05-data-and-storage",
+      "title": "Caching: Speed Through Memory",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Open Instagram. The feed appears before the network even responds. That's caching.", "visual": "⚡" },
+        "buildup": { "text": "Apps store previously loaded data in memory or on disk to avoid repeated network calls.", "visual": "💾" },
+        "discovery": { "text": "Image caches can consume hundreds of megabytes. That's why 'clear cache' frees space.", "visual": "🧹" },
+        "twist": { "text": "Stale caches show outdated data. Balancing freshness and speed is a constant tradeoff.", "visual": "⚖️" },
+        "climax": { "text": "Smart caching makes apps feel instant while quietly keeping data fresh.", "visual": "🧠" },
+        "punchline": { "text": "Speed is showing old data while fetching new.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why might clearing an app's cache free storage?",
+        "options": ["Caches store copies of previously loaded data", "It deletes the app", "It removes your account"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch05-data-and-storage",
+      "title": "Keychain and Secure Storage",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your phone stores passwords, tokens, and biometric data. Where does it keep them safe?", "visual": "🔐" },
+        "buildup": { "text": "iOS Keychain and Android Keystore encrypt sensitive data using hardware-backed security.", "visual": "🛡️" },
+        "discovery": { "text": "A dedicated security chip stores encryption keys. Even the OS can't read them directly.", "visual": "🧠" },
+        "twist": { "text": "Many apps store passwords in plain text instead of the keychain. It's alarmingly common.", "visual": "😱" },
+        "climax": { "text": "Secure storage hardware is available on every modern phone — developers just need to use it.", "visual": "✅" },
+        "punchline": { "text": "Your phone has a vault; not all apps use it.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What backs the security of iOS Keychain?",
+        "options": ["A dedicated hardware security chip", "Cloud-based encryption", "The app developer's server"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch05-data-and-storage",
+      "title": "How App Updates Work",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You open the app store and see 23 updates waiting. What actually happens when you tap update?", "visual": "🔄" },
+        "buildup": { "text": "The store downloads a new binary, verifies its signature, and replaces the old version.", "visual": "📥" },
+        "discovery": { "text": "Apps must migrate their local databases when the data structure changes between versions.", "visual": "🗄️" },
+        "twist": { "text": "A botched migration can corrupt user data. Some bugs only appear on update, not fresh install.", "visual": "🐛" },
+        "climax": { "text": "Smooth updates are critical — one bad release can trigger a wave of one-star reviews.", "visual": "⭐" },
+        "punchline": { "text": "Updates must keep old data while running new code.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What must apps do when their data structure changes in an update?",
+        "options": ["Migrate the local database", "Delete all user data", "Ask users to reinstall"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch06-from-code-to-phone",
+      "title": "App Store Review: The Gatekeepers",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You finish building an app. You can't just give it to users. Apple must approve it first.", "visual": "🚪" },
+        "buildup": { "text": "Apple reviews every app for guidelines compliance, privacy, and content standards.", "visual": "📋" },
+        "discovery": { "text": "Reviews typically take 24 to 48 hours. Rejections come with a reason but no negotiation.", "visual": "❌" },
+        "twist": { "text": "Google Play's review is faster but catches fewer policy violations before they go live.", "visual": "⚡" },
+        "climax": { "text": "App review is the choke point between a developer's code and the user's phone.", "visual": "⏳" },
+        "punchline": { "text": "Every app needs a gatekeeper's approval first.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How long does Apple's app review typically take?",
+        "options": ["24 to 48 hours", "5 minutes", "30 days"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch06-from-code-to-phone",
+      "title": "Code Signing and Trust",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "How does your phone know an app is genuine and hasn't been tampered with?", "visual": "🤔" },
+        "buildup": { "text": "Every app is digitally signed with the developer's certificate before it reaches the store.", "visual": "✍️" },
+        "discovery": { "text": "The OS verifies the signature at install time. If it doesn't match, installation is blocked.", "visual": "🚫" },
+        "twist": { "text": "Stolen signing certificates have been used to distribute malware disguised as legitimate apps.", "visual": "😈" },
+        "climax": { "text": "Code signing creates a chain of trust from the developer's machine to the user's phone.", "visual": "🔗" },
+        "punchline": { "text": "A digital signature proves who built the app.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does code signing verify?",
+        "options": ["That the app hasn't been tampered with", "That the app is free", "That the app uses dark mode"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch06-from-code-to-phone",
+      "title": "Beta Testing and TestFlight",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Before an app hits the store, it needs real users to find bugs the developer missed.", "visual": "🐛" },
+        "buildup": { "text": "Apple's TestFlight and Google Play's beta tracks let developers distribute pre-release builds.", "visual": "🧪" },
+        "discovery": { "text": "Beta testers get early access and provide feedback before the public release.", "visual": "📝" },
+        "twist": { "text": "Some critical bugs only appear on specific devices or with specific data — beta catches those.", "visual": "📱" },
+        "climax": { "text": "Beta testing is the last safety net between a developer's optimism and reality.", "visual": "🛡️" },
+        "punchline": { "text": "Ship to a few before you ship to millions.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is Apple's beta testing platform called?",
+        "options": ["TestFlight", "Beta Store", "App Lab"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch06-from-code-to-phone",
+      "title": "Crash Reporting and Analytics",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An app crashes. The user sees a brief flash. The developer sees a stack trace.", "visual": "💥" },
+        "buildup": { "text": "Crash reporting tools like Firebase Crashlytics capture the exact error and send it back.", "visual": "📡" },
+        "discovery": { "text": "Developers can see which device, OS version, and screen caused the crash.", "visual": "🔍" },
+        "twist": { "text": "The top 1% of crashes usually affect 90% of users. Fixing those few bugs matters most.", "visual": "📊" },
+        "climax": { "text": "Crash reporting turns invisible failures into actionable data that improves the app.", "visual": "📈" },
+        "punchline": { "text": "Every crash is a bug report from the field.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does Firebase Crashlytics do?",
+        "options": ["Captures crash data and sends it to developers", "Prevents all crashes", "Speeds up the app"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "mobile-development--how-mobile-apps-work--ch06-from-code-to-phone",
+      "title": "Over-the-Air Updates",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "What if you could fix a bug without waiting for app store review?", "visual": "🔧" },
+        "buildup": { "text": "Some frameworks support hot updates — pushing new code directly to users' devices.", "visual": "📲" },
+        "discovery": { "text": "React Native and Flutter can ship JavaScript or Dart patches without a full store release.", "visual": "⚡" },
+        "twist": { "text": "Apple restricts OTA updates that change app behavior. Violators risk removal from the store.", "visual": "⚠️" },
+        "climax": { "text": "OTA updates offer speed but exist in a gray area between convenience and platform rules.", "visual": "⚖️" },
+        "punchline": { "text": "Fix bugs without the app store — maybe.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What risk do over-the-air updates carry?",
+        "options": ["Apple may remove the app for violating rules", "Users lose their data", "The phone overheats"],
+        "correct": 0
+      }
+    }
+  ]
+}
