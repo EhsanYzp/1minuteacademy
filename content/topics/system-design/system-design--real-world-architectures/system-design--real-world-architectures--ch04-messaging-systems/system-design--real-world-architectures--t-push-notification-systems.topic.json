@@ -1,0 +1,49 @@
+{
+  "id": "system-design--real-world-architectures--t-push-notification-systems",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Real-World Architectures",
+  "course_id": "system-design--real-world-architectures",
+  "chapter_id": "system-design--real-world-architectures--ch04-messaging-systems",
+  "title": "Push Notification Systems",
+  "emoji": "🏛️",
+  "color": "#4338CA",
+  "description": "A 60-second lesson on Push Notification Systems.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your phone buzzes with a notification. That message traveled from an app server through Apple or Google to your device.",
+      "visual": "📲"
+    },
+    "buildup": {
+      "text": "Push notifications go through platform gateways: APNs for Apple, FCM for Android. Apps can't push directly to devices.",
+      "visual": "🚪"
+    },
+    "discovery": {
+      "text": "Each device registers a unique token. The app server sends the message with the token to the platform gateway.",
+      "visual": "🔑"
+    },
+    "twist": {
+      "text": "Tokens change. Users reinstall apps, get new phones. Invalid tokens must be cleaned up or you waste gateway quota.",
+      "visual": "🗑️"
+    },
+    "climax": {
+      "text": "Push systems batch millions of messages, handle token rotation, and manage delivery across two platform gateways.",
+      "visual": "🏗️"
+    },
+    "punchline": {
+      "text": "Send to the gateway with a device token — the platform delivers it.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why can't apps push notifications directly to devices?",
+    "options": [
+      "Notifications must go through Apple (APNs) or Google (FCM) gateways",
+      "Devices don't have IP addresses",
+      "Direct push is too slow"
+    ],
+    "correct": 0
+  }
+}

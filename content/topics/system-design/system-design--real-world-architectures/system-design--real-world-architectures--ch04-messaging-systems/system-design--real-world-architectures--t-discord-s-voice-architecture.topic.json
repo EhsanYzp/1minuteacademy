@@ -1,0 +1,49 @@
+{
+  "id": "system-design--real-world-architectures--t-discord-s-voice-architecture",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Real-World Architectures",
+  "course_id": "system-design--real-world-architectures",
+  "chapter_id": "system-design--real-world-architectures--ch04-messaging-systems",
+  "title": "Discord's Voice Architecture",
+  "emoji": "🏛️",
+  "color": "#4338CA",
+  "description": "A 60-second lesson on Discord's Voice Architecture.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "200 people in a Discord voice channel, all talking and listening simultaneously. That's 200 audio streams to mix.",
+      "visual": "🎙️"
+    },
+    "buildup": {
+      "text": "Discord uses selective forwarding: instead of mixing audio on the server, it sends individual streams to each client.",
+      "visual": "📡"
+    },
+    "discovery": {
+      "text": "Clients decide which streams to prioritize. Active speakers get full quality; silent users get minimal bandwidth.",
+      "visual": "🔊"
+    },
+    "twist": {
+      "text": "Voice data uses UDP, not TCP. Lost packets are acceptable — a tiny glitch is better than waiting for a retransmission.",
+      "visual": "📦"
+    },
+    "climax": {
+      "text": "Discord's voice system prioritizes low latency over perfection: fast and slightly imperfect beats slow and perfect.",
+      "visual": "⚡"
+    },
+    "punchline": {
+      "text": "Forward audio selectively — low latency beats perfect quality.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why does Discord voice use UDP instead of TCP?",
+    "options": [
+      "Lost packets cause tiny glitches, which is better than retransmission delays",
+      "UDP is more secure",
+      "TCP can't carry audio data"
+    ],
+    "correct": 0
+  }
+}

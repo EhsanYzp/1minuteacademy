@@ -1,0 +1,49 @@
+{
+  "id": "system-design--caching-and-performance--t-eviction-policies",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Caching and Performance",
+  "course_id": "system-design--caching-and-performance",
+  "chapter_id": "system-design--caching-and-performance--ch01-caching-fundamentals",
+  "title": "Eviction Policies",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "One-minute skill: Eviction Policies.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your cache holds 10,000 items but an 11th arrives. Which item gets kicked out to make room?",
+      "visual": "🚪"
+    },
+    "buildup": {
+      "text": "Eviction policies decide which items to remove: LRU (Least Recently Used), LFU (Least Frequently Used), or FIFO.",
+      "visual": "📋"
+    },
+    "discovery": {
+      "text": "LRU evicts the item that hasn't been accessed longest. It works well for most workloads.",
+      "visual": "⏰"
+    },
+    "twist": {
+      "text": "LRU fails for scan-heavy workloads: one full table scan evicts all your hot data and pollutes the cache.",
+      "visual": "💥"
+    },
+    "climax": {
+      "text": "No eviction policy is universal. The right one depends on your data's access patterns.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Eviction decides what stays in cache and what leaves.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What does LRU eviction do?",
+    "options": [
+      "Removes the item that hasn't been accessed for the longest time",
+      "Removes the most recently used item",
+      "Removes the largest item"
+    ],
+    "correct": 0
+  }
+}

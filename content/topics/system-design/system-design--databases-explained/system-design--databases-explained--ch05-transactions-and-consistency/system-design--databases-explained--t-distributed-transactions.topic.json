@@ -1,0 +1,49 @@
+{
+  "id": "system-design--databases-explained--t-distributed-transactions",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Databases Explained",
+  "course_id": "system-design--databases-explained",
+  "chapter_id": "system-design--databases-explained--ch05-transactions-and-consistency",
+  "title": "Distributed Transactions",
+  "emoji": "🗄️",
+  "color": "#7C3AED",
+  "description": "A quick win: understand Distributed Transactions.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A payment service debits the wallet while an inventory service reserves the item. Both must succeed or both fail.",
+      "visual": "🤝"
+    },
+    "buildup": {
+      "text": "Distributed transactions span multiple services or databases. Two-phase commit coordinates them.",
+      "visual": "2️⃣"
+    },
+    "discovery": {
+      "text": "Phase 1: all participants vote yes or no. Phase 2: if all voted yes, commit. Otherwise, all roll back.",
+      "visual": "🗳️"
+    },
+    "twist": {
+      "text": "If the coordinator crashes between phases, participants are blocked, holding locks indefinitely.",
+      "visual": "💀"
+    },
+    "climax": {
+      "text": "Two-phase commit is correct but fragile. Modern systems prefer sagas — a sequence of compensating actions.",
+      "visual": "🔄"
+    },
+    "punchline": {
+      "text": "Distributed transactions are correct but dangerously fragile.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What happens if the coordinator crashes in two-phase commit?",
+    "options": [
+      "Participants are blocked holding locks indefinitely",
+      "Everything rolls back automatically",
+      "The transaction completes"
+    ],
+    "correct": 0
+  }
+}

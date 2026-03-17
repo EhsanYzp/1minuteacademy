@@ -1,0 +1,49 @@
+{
+  "id": "system-design--distributed-systems--t-multi-leader-replication",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Distributed Systems Explained",
+  "course_id": "system-design--distributed-systems",
+  "chapter_id": "system-design--distributed-systems--ch03-replication",
+  "title": "Multi-Leader Replication",
+  "emoji": "🔗",
+  "color": "#D97706",
+  "description": "One-minute skill: Multi-Leader Replication.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Users in Tokyo write to the Tokyo leader. Users in London write to the London leader. Both are authoritative.",
+      "visual": "🌏"
+    },
+    "buildup": {
+      "text": "Multi-leader replication allows writes at multiple nodes, each replicating to the others asynchronously.",
+      "visual": "🔄"
+    },
+    "discovery": {
+      "text": "This reduces write latency for geographically distributed users — writes go to the nearest leader.",
+      "visual": "📍"
+    },
+    "twist": {
+      "text": "Two leaders can accept conflicting writes simultaneously. Conflict resolution is complex and error-prone.",
+      "visual": "💥"
+    },
+    "climax": {
+      "text": "Multi-leader is powerful for global systems but introduces the hardest problem: concurrent write conflicts.",
+      "visual": "⚠️"
+    },
+    "punchline": {
+      "text": "Multiple writers, global reach — but conflicts everywhere.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is the biggest challenge of multi-leader replication?",
+    "options": [
+      "Resolving conflicting writes from different leaders",
+      "High read latency",
+      "Limited storage capacity"
+    ],
+    "correct": 0
+  }
+}

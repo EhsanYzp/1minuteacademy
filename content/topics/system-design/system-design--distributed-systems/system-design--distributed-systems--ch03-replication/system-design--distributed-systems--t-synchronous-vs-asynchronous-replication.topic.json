@@ -1,0 +1,49 @@
+{
+  "id": "system-design--distributed-systems--t-synchronous-vs-asynchronous-replication",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Distributed Systems Explained",
+  "course_id": "system-design--distributed-systems",
+  "chapter_id": "system-design--distributed-systems--ch03-replication",
+  "title": "Synchronous vs Asynchronous Replication",
+  "emoji": "🔗",
+  "color": "#D97706",
+  "description": "A 60-second lesson on Synchronous vs Asynchronous Replication.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Synchronous: the write waits for all replicas to confirm. Asynchronous: the write returns immediately.",
+      "visual": "⏱️"
+    },
+    "buildup": {
+      "text": "Synchronous replication guarantees all replicas have the data but slows every write to the slowest replica.",
+      "visual": "🐌"
+    },
+    "discovery": {
+      "text": "Asynchronous replication is fast but risks data loss — if the primary dies before replication, writes are gone.",
+      "visual": "💨"
+    },
+    "twist": {
+      "text": "Semi-synchronous is a middle ground: one replica must confirm synchronously, the rest catch up asynchronously.",
+      "visual": "🤝"
+    },
+    "climax": {
+      "text": "The choice between sync and async replication is a trade-off between durability and latency.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "Sync is safe but slow. Async is fast but risky.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is the risk of asynchronous replication?",
+    "options": [
+      "Data loss if the primary fails before replicas receive writes",
+      "Slower write performance",
+      "Higher storage costs"
+    ],
+    "correct": 0
+  }
+}

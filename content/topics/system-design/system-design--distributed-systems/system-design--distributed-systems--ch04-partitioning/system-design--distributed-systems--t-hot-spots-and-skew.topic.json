@@ -1,0 +1,49 @@
+{
+  "id": "system-design--distributed-systems--t-hot-spots-and-skew",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Distributed Systems Explained",
+  "course_id": "system-design--distributed-systems",
+  "chapter_id": "system-design--distributed-systems--ch04-partitioning",
+  "title": "Hot Spots and Skew",
+  "emoji": "🔗",
+  "color": "#D97706",
+  "description": "A tiny lesson with a big payoff: Hot Spots and Skew.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A celebrity tweets and the partition holding their data receives 1,000x more traffic than others.",
+      "visual": "🔥"
+    },
+    "buildup": {
+      "text": "Hot spots occur when one partition receives disproportionate traffic due to skewed access patterns.",
+      "visual": "📊"
+    },
+    "discovery": {
+      "text": "Adding a random suffix to hot keys spreads load across partitions: userID becomes userID_1, userID_2, etc.",
+      "visual": "🎲"
+    },
+    "twist": {
+      "text": "The suffix trick works but complicates reads: you must query all suffixed keys and merge the results.",
+      "visual": "🧩"
+    },
+    "climax": {
+      "text": "Perfectly even distribution is impossible in practice. The goal is to minimize skew, not eliminate it.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Hot spots overload one partition — spread the keys.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What causes hot spots in partitioned systems?",
+    "options": [
+      "Skewed access patterns where one key gets disproportionate traffic",
+      "Too many partitions",
+      "Slow network connections"
+    ],
+    "correct": 0
+  }
+}

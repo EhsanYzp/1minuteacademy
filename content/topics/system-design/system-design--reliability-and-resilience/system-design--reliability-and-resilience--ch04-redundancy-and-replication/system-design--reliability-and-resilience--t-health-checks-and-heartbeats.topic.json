@@ -1,0 +1,49 @@
+{
+  "id": "system-design--reliability-and-resilience--t-health-checks-and-heartbeats",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Reliability and Resilience",
+  "course_id": "system-design--reliability-and-resilience",
+  "chapter_id": "system-design--reliability-and-resilience--ch04-redundancy-and-replication",
+  "title": "Health Checks and Heartbeats",
+  "emoji": "🛡️",
+  "color": "#0D9488",
+  "description": "One-minute skill: Health Checks and Heartbeats.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A server crashes but the load balancer keeps sending it traffic. Users see errors for 5 minutes until someone notices.",
+      "visual": "🚨"
+    },
+    "buildup": {
+      "text": "Health checks are periodic probes: the load balancer asks each server 'are you alive?' every few seconds.",
+      "visual": "🏥"
+    },
+    "discovery": {
+      "text": "Shallow checks test if the process is running. Deep checks test if the database, cache, and dependencies are reachable.",
+      "visual": "🔍"
+    },
+    "twist": {
+      "text": "If checks are too deep, a dependency outage makes all servers report unhealthy — the load balancer removes them all.",
+      "visual": "💥"
+    },
+    "climax": {
+      "text": "Health checks should be deep enough to catch real problems but not so deep that they cause false negatives.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "Check if services are truly healthy — not just running.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is the risk of overly deep health checks?",
+    "options": [
+      "A dependency outage makes all servers appear unhealthy, removing them all",
+      "They consume too much CPU",
+      "They slow down user requests"
+    ],
+    "correct": 0
+  }
+}

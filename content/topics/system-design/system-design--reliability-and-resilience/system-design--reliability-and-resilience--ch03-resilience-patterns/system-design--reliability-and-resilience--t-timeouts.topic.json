@@ -1,0 +1,49 @@
+{
+  "id": "system-design--reliability-and-resilience--t-timeouts",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Reliability and Resilience",
+  "course_id": "system-design--reliability-and-resilience",
+  "chapter_id": "system-design--reliability-and-resilience--ch03-resilience-patterns",
+  "title": "Timeouts",
+  "emoji": "🛡️",
+  "color": "#0D9488",
+  "description": "Learn Timeouts in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your HTTP client has no timeout. The server hangs. Your request waits forever, holding a thread, connection, and memory.",
+      "visual": "⏰"
+    },
+    "buildup": {
+      "text": "Timeouts set a maximum wait time. If the server doesn't respond in 5 seconds, the client gives up and moves on.",
+      "visual": "✂️"
+    },
+    "discovery": {
+      "text": "Set two timeouts: a connection timeout (how long to establish contact) and a read timeout (how long to wait for data).",
+      "visual": "🔧"
+    },
+    "twist": {
+      "text": "Timeouts that are too short cause false failures on slow but successful requests. Too long and threads pile up waiting.",
+      "visual": "⚖️"
+    },
+    "climax": {
+      "text": "Every network call needs a timeout. A missing timeout is a bug — it's an implicit decision to wait forever.",
+      "visual": "🐛"
+    },
+    "punchline": {
+      "text": "Always set timeouts — waiting forever is never acceptable.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why are missing timeouts considered a bug?",
+    "options": [
+      "They allow requests to wait forever, consuming resources indefinitely",
+      "They make responses faster",
+      "They're required by HTTP specification"
+    ],
+    "correct": 0
+  }
+}

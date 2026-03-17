@@ -1,0 +1,49 @@
+{
+  "id": "system-design--microservices-vs-monoliths--t-data-duplication",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Microservices vs Monoliths",
+  "course_id": "system-design--microservices-vs-monoliths",
+  "chapter_id": "system-design--microservices-vs-monoliths--ch04-data-ownership",
+  "title": "Data Duplication",
+  "emoji": "🧩",
+  "color": "#BE185D",
+  "description": "A 1-minute de-risking session on Data Duplication.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The order service needs the customer's name. Should it call the customer service every time? That's slow.",
+      "visual": "🐌"
+    },
+    "buildup": {
+      "text": "Data duplication stores a copy of needed data locally. The order service keeps a copy of the customer name.",
+      "visual": "📋"
+    },
+    "discovery": {
+      "text": "This eliminates cross-service calls for reads. The order service reads from its own database — fast and decoupled.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "The customer name changes. Now the order service has stale data. Events propagate the change, but there's a delay.",
+      "visual": "⏳"
+    },
+    "climax": {
+      "text": "Data duplication trades storage and freshness for independence and speed. Embrace it in microservices.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "Copy what you need — accept eventual consistency.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why duplicate data across microservices?",
+    "options": [
+      "To avoid cross-service calls and improve read performance",
+      "To use more storage",
+      "To make writes faster"
+    ],
+    "correct": 0
+  }
+}

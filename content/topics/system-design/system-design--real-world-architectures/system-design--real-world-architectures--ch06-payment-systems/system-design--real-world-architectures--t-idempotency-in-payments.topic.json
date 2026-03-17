@@ -1,0 +1,49 @@
+{
+  "id": "system-design--real-world-architectures--t-idempotency-in-payments",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Real-World Architectures",
+  "course_id": "system-design--real-world-architectures",
+  "chapter_id": "system-design--real-world-architectures--ch06-payment-systems",
+  "title": "Idempotency in Payments",
+  "emoji": "🏛️",
+  "color": "#4338CA",
+  "description": "A 1-minute de-risking session on Idempotency in Payments.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The network times out after you click pay. Did it go through? You click again. You're now charged twice. Disaster.",
+      "visual": "😱"
+    },
+    "buildup": {
+      "text": "Idempotency means running the same operation twice produces the same result. Charge $10 twice? Still $10.",
+      "visual": "🔒"
+    },
+    "discovery": {
+      "text": "An idempotency key is sent with each request. If the server sees the same key again, it returns the original result.",
+      "visual": "🔑"
+    },
+    "twist": {
+      "text": "Without idempotency, retries cause duplicate operations. Networks are unreliable — retries are inevitable.",
+      "visual": "🔄"
+    },
+    "climax": {
+      "text": "Idempotency is not optional in payment systems. It's the difference between charging once and charging repeatedly.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Same key, same result — no matter how many retries.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What does an idempotency key prevent?",
+    "options": [
+      "Duplicate charges when a payment request is retried",
+      "Unauthorized access to payment data",
+      "Slow payment processing"
+    ],
+    "correct": 0
+  }
+}

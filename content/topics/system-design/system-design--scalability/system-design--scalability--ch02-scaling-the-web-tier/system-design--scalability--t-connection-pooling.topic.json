@@ -1,0 +1,49 @@
+{
+  "id": "system-design--scalability--t-connection-pooling",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Scalability: From One to Millions",
+  "course_id": "system-design--scalability",
+  "chapter_id": "system-design--scalability--ch02-scaling-the-web-tier",
+  "title": "Connection Pooling",
+  "emoji": "📈",
+  "color": "#059669",
+  "description": "A quick win: understand Connection Pooling.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Opening a database connection takes 50ms. With 10,000 requests per second, that overhead is devastating.",
+      "visual": "⏱️"
+    },
+    "buildup": {
+      "text": "Connection pooling pre-opens a set of connections and reuses them across requests.",
+      "visual": "🏊"
+    },
+    "discovery": {
+      "text": "Instead of open-use-close, it's borrow-use-return. Each request borrows from the pool instantly.",
+      "visual": "🔄"
+    },
+    "twist": {
+      "text": "Too few connections starve the app. Too many overwhelm the database. The pool size is a tuning art.",
+      "visual": "🎚️"
+    },
+    "climax": {
+      "text": "Connection pooling is invisible when done right but catastrophic when misconfigured.",
+      "visual": "💥"
+    },
+    "punchline": {
+      "text": "Reuse connections — don't rebuild them every time.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why is connection pooling important?",
+    "options": [
+      "It avoids the overhead of opening new connections for every request",
+      "It encrypts data",
+      "It compresses responses"
+    ],
+    "correct": 0
+  }
+}

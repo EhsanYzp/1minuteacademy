@@ -1,0 +1,49 @@
+{
+  "id": "system-design--real-world-architectures--t-real-time-location-tracking",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Real-World Architectures",
+  "course_id": "system-design--real-world-architectures",
+  "chapter_id": "system-design--real-world-architectures--ch03-ride-sharing-and-delivery",
+  "title": "Real-Time Location Tracking",
+  "emoji": "🏛️",
+  "color": "#4338CA",
+  "description": "One-minute skill: Real-Time Location Tracking.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your Uber driver's car moves on the map in real time. Millions of drivers send GPS updates every 4 seconds.",
+      "visual": "📍"
+    },
+    "buildup": {
+      "text": "Each driver sends latitude, longitude, speed, and heading. The system ingests millions of location events per second.",
+      "visual": "📡"
+    },
+    "discovery": {
+      "text": "Uber uses Apache Kafka to ingest location streams and stores them in a geospatial database for fast proximity queries.",
+      "visual": "🗄️"
+    },
+    "twist": {
+      "text": "GPS is noisy. A driver appears to jump between buildings. Snap-to-road algorithms correct position to the actual road.",
+      "visual": "🛤️"
+    },
+    "climax": {
+      "text": "Real-time location tracking needs high-throughput ingestion, geospatial indexing, and noise correction at scale.",
+      "visual": "🏗️"
+    },
+    "punchline": {
+      "text": "Millions of GPS pings per second — ingest, index, and correct.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why do ride-sharing apps need snap-to-road algorithms?",
+    "options": [
+      "GPS is noisy and shows cars in wrong locations that need correcting",
+      "Roads change frequently",
+      "To calculate fares accurately"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "system-design--distributed-systems--t-secondary-indexes-in-partitioned-systems",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Distributed Systems Explained",
+  "course_id": "system-design--distributed-systems",
+  "chapter_id": "system-design--distributed-systems--ch04-partitioning",
+  "title": "Secondary Indexes in Partitioned Systems",
+  "emoji": "🔗",
+  "color": "#D97706",
+  "description": "A fast breakdown of Secondary Indexes in Partitioned Systems for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Data is partitioned by user ID. A query asks for all users in New York. The index must span all partitions.",
+      "visual": "🗽"
+    },
+    "buildup": {
+      "text": "Local indexes live on each partition. A query must scatter to all partitions and gather results.",
+      "visual": "🔀"
+    },
+    "discovery": {
+      "text": "Global indexes are partitioned separately by the indexed value. One query hits one index partition.",
+      "visual": "🎯"
+    },
+    "twist": {
+      "text": "Global indexes must be updated across partitions on every write. Async updates mean stale index results.",
+      "visual": "⏳"
+    },
+    "climax": {
+      "text": "Local indexes are write-efficient but read-expensive. Global indexes are the opposite. Pick your trade-off.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "Local indexes: fast writes. Global indexes: fast reads.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is the downside of local secondary indexes in partitioned systems?",
+    "options": [
+      "Queries must scatter across all partitions",
+      "Writes are slower",
+      "They use too much memory"
+    ],
+    "correct": 0
+  }
+}

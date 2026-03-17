@@ -1,0 +1,49 @@
+{
+  "id": "system-design--caching-and-performance--t-event-driven-invalidation",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Caching and Performance",
+  "course_id": "system-design--caching-and-performance",
+  "chapter_id": "system-design--caching-and-performance--ch05-cache-invalidation",
+  "title": "Event-Driven Invalidation",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A fast breakdown of Event-Driven Invalidation for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A product price changes. Instead of waiting for the TTL, the database publishes a change event to invalidate the cache.",
+      "visual": "📢"
+    },
+    "buildup": {
+      "text": "Event-driven invalidation uses message queues or change data capture to notify caches of data changes.",
+      "visual": "📬"
+    },
+    "discovery": {
+      "text": "PostgreSQL's LISTEN/NOTIFY or Debezium can stream database changes to cache invalidation consumers.",
+      "visual": "📡"
+    },
+    "twist": {
+      "text": "Events can be delayed, duplicated, or lost. The cache might still serve stale data for a brief window.",
+      "visual": "⏳"
+    },
+    "climax": {
+      "text": "Event-driven invalidation is faster than TTL but adds infrastructure complexity and delivery guarantees to manage.",
+      "visual": "🏗️"
+    },
+    "punchline": {
+      "text": "Database changes trigger cache invalidation in near real time.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "How does event-driven cache invalidation work?",
+    "options": [
+      "Database changes publish events that trigger cache deletion",
+      "The cache checks the database periodically",
+      "Users manually clear the cache"
+    ],
+    "correct": 0
+  }
+}

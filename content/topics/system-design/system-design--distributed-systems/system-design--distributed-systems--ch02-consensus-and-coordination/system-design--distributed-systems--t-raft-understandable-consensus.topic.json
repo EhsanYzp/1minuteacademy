@@ -1,0 +1,49 @@
+{
+  "id": "system-design--distributed-systems--t-raft-understandable-consensus",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Distributed Systems Explained",
+  "course_id": "system-design--distributed-systems",
+  "chapter_id": "system-design--distributed-systems--ch02-consensus-and-coordination",
+  "title": "Raft: Understandable Consensus",
+  "emoji": "🔗",
+  "color": "#D97706",
+  "description": "A fast breakdown of Raft: Understandable Consensus for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Paxos is famously hard to understand. Raft was designed to be a consensus algorithm anyone can learn.",
+      "visual": "📚"
+    },
+    "buildup": {
+      "text": "Raft elects a leader. The leader accepts writes and replicates them to followers. Followers just apply logs.",
+      "visual": "👑"
+    },
+    "discovery": {
+      "text": "If the leader crashes, followers detect the timeout and elect a new leader through voting.",
+      "visual": "🗳️"
+    },
+    "twist": {
+      "text": "During an election, no writes are accepted. The cluster is briefly unavailable — a deliberate safety trade-off.",
+      "visual": "⏸️"
+    },
+    "climax": {
+      "text": "Raft powers etcd, Consul, and CockroachDB. It's the most widely deployed consensus algorithm today.",
+      "visual": "🌐"
+    },
+    "punchline": {
+      "text": "One leader writes, followers replicate, elections on failure.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What happens when a Raft leader crashes?",
+    "options": [
+      "Followers detect the timeout and elect a new leader",
+      "The cluster shuts down",
+      "Data is lost permanently"
+    ],
+    "correct": 0
+  }
+}

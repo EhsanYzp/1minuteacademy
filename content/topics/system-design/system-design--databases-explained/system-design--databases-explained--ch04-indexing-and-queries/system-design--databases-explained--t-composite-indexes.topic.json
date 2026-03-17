@@ -1,0 +1,49 @@
+{
+  "id": "system-design--databases-explained--t-composite-indexes",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Databases Explained",
+  "course_id": "system-design--databases-explained",
+  "chapter_id": "system-design--databases-explained--ch04-indexing-and-queries",
+  "title": "Composite Indexes",
+  "emoji": "🗄️",
+  "color": "#7C3AED",
+  "description": "A 60-second lesson on Composite Indexes.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You have an index on last_name and another on city. But a query filtering by both is still slow.",
+      "visual": "🐌"
+    },
+    "buildup": {
+      "text": "A composite index combines multiple columns into one index, ordered left to right.",
+      "visual": "📊"
+    },
+    "discovery": {
+      "text": "An index on (last_name, city) efficiently filters by last_name, or last_name AND city — but not city alone.",
+      "visual": "📋"
+    },
+    "twist": {
+      "text": "Column order matters enormously. (city, last_name) and (last_name, city) serve completely different queries.",
+      "visual": "🔀"
+    },
+    "climax": {
+      "text": "Composite indexes are the most underused optimization. Most slow queries can be fixed by the right composite index.",
+      "visual": "💡"
+    },
+    "punchline": {
+      "text": "Combine columns in one index — order matters.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why does column order matter in composite indexes?",
+    "options": [
+      "The index is ordered left to right and can only filter by leftmost columns first",
+      "It affects storage size",
+      "It changes data types"
+    ],
+    "correct": 0
+  }
+}

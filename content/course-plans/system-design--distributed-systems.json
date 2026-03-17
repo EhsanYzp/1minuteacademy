@@ -1,0 +1,559 @@
+{
+  "categoryId": "system-design",
+  "subject": "System Design",
+  "courseId": "system-design--distributed-systems",
+  "courseTitle": "Distributed Systems Explained",
+  "emoji": "🔗",
+  "color": "#D97706",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "system-design--distributed-systems--ch01-why-distribute", "title": "Why Distribute", "position": 1 },
+    { "id": "system-design--distributed-systems--ch02-consensus-and-coordination", "title": "Consensus and Coordination", "position": 2 },
+    { "id": "system-design--distributed-systems--ch03-replication", "title": "Replication Strategies", "position": 3 },
+    { "id": "system-design--distributed-systems--ch04-partitioning", "title": "Partitioning Data", "position": 4 },
+    { "id": "system-design--distributed-systems--ch05-clocks-and-ordering", "title": "Clocks and Ordering", "position": 5 },
+    { "id": "system-design--distributed-systems--ch06-failure-modes", "title": "Failure Modes", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "system-design--distributed-systems--ch01-why-distribute",
+      "title": "What Is a Distributed System",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A distributed system is a group of computers that appear to the user as a single coherent system.", "visual": "🖥️" },
+        "buildup": { "text": "Google Search runs on thousands of machines, yet you see one search box and one result page.", "visual": "🔍" },
+        "discovery": { "text": "Distribution provides fault tolerance, scalability, and geographic proximity that one machine can't offer.", "visual": "🌍" },
+        "twist": { "text": "Distribution also brings partial failures: one node can fail while others keep running. Debugging becomes nightmarish.", "visual": "🐛" },
+        "climax": { "text": "A distributed system trades simplicity for capability. Every benefit comes with a new class of problems.", "visual": "⚖️" },
+        "punchline": { "text": "Many machines, one illusion — and many hidden problems.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What defines a distributed system?",
+        "options": ["Multiple computers appearing as one coherent system to users", "A single powerful server", "A database with multiple tables"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch01-why-distribute",
+      "title": "The Fallacies of Distributed Computing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The network is reliable. Latency is zero. Bandwidth is infinite. All false — but developers assume them daily.", "visual": "🤥" },
+        "buildup": { "text": "Peter Deutsch defined 8 fallacies that developers wrongly assume when building distributed systems.", "visual": "8️⃣" },
+        "discovery": { "text": "Networks fail, latency varies, bandwidth costs money, and the network is not secure. Every assumption breaks.", "visual": "💥" },
+        "twist": { "text": "Even experienced teams fall for these fallacies. They only surface under real production load.", "visual": "🔥" },
+        "climax": { "text": "Understanding these fallacies is the first step to building systems that survive real-world conditions.", "visual": "🛡️" },
+        "punchline": { "text": "Every network assumption you make will eventually break.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Which is one of the 8 fallacies of distributed computing?",
+        "options": ["The network is reliable", "Databases are always consistent", "Servers never crash"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch01-why-distribute",
+      "title": "CAP Theorem Deep Dive",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You can have Consistency, Availability, and Partition tolerance — but never all three at once.", "visual": "🔺" },
+        "buildup": { "text": "Eric Brewer proposed the CAP theorem in 2000. It became the most debated principle in distributed systems.", "visual": "📜" },
+        "discovery": { "text": "During a network partition, you must choose: reject requests (CP) or serve possibly stale data (AP).", "visual": "⚖️" },
+        "twist": { "text": "When there's no partition, you can have both consistency and availability. CAP only kicks in during failures.", "visual": "☀️" },
+        "climax": { "text": "CAP is a simplification. The real trade-off is a spectrum between consistency and latency in normal operation.", "visual": "📊" },
+        "punchline": { "text": "CAP forces a choice only when the network splits.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "When does the CAP theorem force a trade-off?",
+        "options": ["During a network partition", "At all times", "Only during peak traffic"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch01-why-distribute",
+      "title": "The Two Generals Problem",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Two generals must attack simultaneously. They communicate by messenger across enemy territory. Can they ever be sure?", "visual": "⚔️" },
+        "buildup": { "text": "General A sends: 'Attack at dawn.' But the messenger might be captured. A can't know if B got the message.", "visual": "📩" },
+        "discovery": { "text": "Even if B sends back a confirmation, that confirmation might be lost. Neither can be 100% certain.", "visual": "❓" },
+        "twist": { "text": "This is provably unsolvable over an unreliable channel. No number of messages guarantees agreement.", "visual": "♾️" },
+        "climax": { "text": "This problem models real distributed systems: you can never be perfectly certain a remote node received your message.", "visual": "🌐" },
+        "punchline": { "text": "You can't guarantee agreement over an unreliable network.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does the Two Generals Problem prove?",
+        "options": ["Agreement over unreliable channels is impossible to guarantee", "Two servers can always agree", "Messages are always delivered"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch01-why-distribute",
+      "title": "The Byzantine Generals Problem",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "What if some generals are traitors who send conflicting messages? How do loyal generals still agree?", "visual": "🗡️" },
+        "buildup": { "text": "Byzantine fault tolerance handles nodes that lie, send wrong data, or behave maliciously.", "visual": "🎭" },
+        "discovery": { "text": "You need at least 3f+1 nodes to tolerate f Byzantine faults. With 1 traitor, you need 4 generals.", "visual": "🔢" },
+        "twist": { "text": "Bitcoin solved the Byzantine Generals Problem for open networks using proof of work — a breakthrough.", "visual": "₿" },
+        "climax": { "text": "Most internal systems assume crash failures, not Byzantine ones. Blockchains assume Byzantine failures everywhere.", "visual": "🔗" },
+        "punchline": { "text": "Byzantine tolerance: reaching agreement despite liars.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How many nodes are needed to tolerate f Byzantine faults?",
+        "options": ["3f + 1 nodes", "f + 1 nodes", "2f nodes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch02-consensus-and-coordination",
+      "title": "What Is Consensus",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Five servers need to agree on who the leader is. Two think it's server A, three think it's server B. Chaos.", "visual": "🤯" },
+        "buildup": { "text": "Consensus is the process of getting multiple nodes to agree on a single value, even when some fail.", "visual": "🤝" },
+        "discovery": { "text": "Consensus algorithms ensure safety: nodes never disagree, and progress: they eventually decide.", "visual": "✅" },
+        "twist": { "text": "The FLP impossibility theorem proves that consensus is impossible with even one faulty node in an async system.", "visual": "📜" },
+        "climax": { "text": "Practical algorithms like Raft and Paxos use timeouts to work around FLP and achieve consensus in practice.", "visual": "⏱️" },
+        "punchline": { "text": "Getting distributed nodes to agree is harder than it sounds.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is consensus in distributed systems?",
+        "options": ["Getting multiple nodes to agree on a single value", "Electing a leader manually", "Synchronizing clocks"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch02-consensus-and-coordination",
+      "title": "Raft: Understandable Consensus",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Paxos is famously hard to understand. Raft was designed to be a consensus algorithm anyone can learn.", "visual": "📚" },
+        "buildup": { "text": "Raft elects a leader. The leader accepts writes and replicates them to followers. Followers just apply logs.", "visual": "👑" },
+        "discovery": { "text": "If the leader crashes, followers detect the timeout and elect a new leader through voting.", "visual": "🗳️" },
+        "twist": { "text": "During an election, no writes are accepted. The cluster is briefly unavailable — a deliberate safety trade-off.", "visual": "⏸️" },
+        "climax": { "text": "Raft powers etcd, Consul, and CockroachDB. It's the most widely deployed consensus algorithm today.", "visual": "🌐" },
+        "punchline": { "text": "One leader writes, followers replicate, elections on failure.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What happens when a Raft leader crashes?",
+        "options": ["Followers detect the timeout and elect a new leader", "The cluster shuts down", "Data is lost permanently"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch02-consensus-and-coordination",
+      "title": "Leader Election",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Three servers all think they're the leader. Each accepts conflicting writes. Data is now corrupt.", "visual": "👑" },
+        "buildup": { "text": "Leader election ensures exactly one node is the leader at any time. It coordinates all writes.", "visual": "1️⃣" },
+        "discovery": { "text": "Algorithms use terms or epochs — monotonically increasing numbers — to prevent stale leaders from acting.", "visual": "🔢" },
+        "twist": { "text": "A split brain occurs when the network partitions and both sides elect a leader. Fencing tokens prevent this.", "visual": "🧱" },
+        "climax": { "text": "Leader election is the foundation of consensus, replication, and coordination in distributed systems.", "visual": "🏗️" },
+        "punchline": { "text": "Exactly one leader, or the data diverges.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a split brain in distributed systems?",
+        "options": ["Two parts of a cluster each elect a leader after a partition", "A server that runs out of memory", "A database that loses data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch02-consensus-and-coordination",
+      "title": "Distributed Locks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Two workers process the same payment. Without a distributed lock, the customer is charged twice.", "visual": "💳" },
+        "buildup": { "text": "A distributed lock ensures only one process can access a resource across multiple machines.", "visual": "🔒" },
+        "discovery": { "text": "Redis and ZooKeeper provide lock primitives. Redlock uses multiple Redis instances for safer locking.", "visual": "🔐" },
+        "twist": { "text": "Distributed locks can fail: clock skew, GC pauses, or network delays can cause two processes to hold the same lock.", "visual": "⏱️" },
+        "climax": { "text": "Distributed locks are necessary but imperfect. Idempotent operations are safer than relying on locks alone.", "visual": "🛡️" },
+        "punchline": { "text": "Locks prevent double-processing — but are never perfect.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why can distributed locks fail?",
+        "options": ["Clock skew, GC pauses, or network delays can invalidate locks", "They only work on one machine", "They require too much memory"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch02-consensus-and-coordination",
+      "title": "Service Discovery",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Service A needs to call Service B. But Service B has 20 instances across 3 data centers. Which one?", "visual": "🔍" },
+        "buildup": { "text": "Service discovery maintains a registry of available service instances and their locations.", "visual": "📋" },
+        "discovery": { "text": "Consul, etcd, and Kubernetes DNS register services automatically as they start and deregister when they stop.", "visual": "🔄" },
+        "twist": { "text": "Stale registries route traffic to dead instances. Health checks must be fast and frequent to stay accurate.", "visual": "💀" },
+        "climax": { "text": "Service discovery is the address book of microservices — without it, services can't find each other.", "visual": "📞" },
+        "punchline": { "text": "Services register themselves; others look them up.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does service discovery do?",
+        "options": ["Maintains a registry of available service instances and their locations", "Encrypts service communication", "Monitors CPU usage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch03-replication",
+      "title": "Single-Leader Replication",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "All writes go to one leader. The leader copies them to followers. Reads can go to any node.", "visual": "👑" },
+        "buildup": { "text": "Single-leader replication is the simplest model. PostgreSQL, MySQL, and MongoDB all default to it.", "visual": "📋" },
+        "discovery": { "text": "It's easy to reason about: the leader has the authoritative copy. Conflicts are impossible on writes.", "visual": "✅" },
+        "twist": { "text": "The leader is a single point of failure. If it dies, a failover is needed — and failovers can lose recent writes.", "visual": "💀" },
+        "climax": { "text": "Single-leader is the go-to for most systems. It's simple, battle-tested, and good enough for most workloads.", "visual": "🏆" },
+        "punchline": { "text": "One writer, many readers — simple and proven.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the main weakness of single-leader replication?",
+        "options": ["The leader is a single point of failure", "It can't handle any reads", "It requires too many servers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch03-replication",
+      "title": "Multi-Leader Replication",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Users in Tokyo write to the Tokyo leader. Users in London write to the London leader. Both are authoritative.", "visual": "🌏" },
+        "buildup": { "text": "Multi-leader replication allows writes at multiple nodes, each replicating to the others asynchronously.", "visual": "🔄" },
+        "discovery": { "text": "This reduces write latency for geographically distributed users — writes go to the nearest leader.", "visual": "📍" },
+        "twist": { "text": "Two leaders can accept conflicting writes simultaneously. Conflict resolution is complex and error-prone.", "visual": "💥" },
+        "climax": { "text": "Multi-leader is powerful for global systems but introduces the hardest problem: concurrent write conflicts.", "visual": "⚠️" },
+        "punchline": { "text": "Multiple writers, global reach — but conflicts everywhere.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the biggest challenge of multi-leader replication?",
+        "options": ["Resolving conflicting writes from different leaders", "High read latency", "Limited storage capacity"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch03-replication",
+      "title": "Leaderless Replication",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In Cassandra, there's no leader at all. Writes go to any node. Reads check multiple nodes for the latest value.", "visual": "🔀" },
+        "buildup": { "text": "Leaderless replication writes to W nodes and reads from R nodes. If W + R > N, you get consistency.", "visual": "🔢" },
+        "discovery": { "text": "Quorum reads and writes ensure at least one node has the latest value, even without a leader.", "visual": "🗳️" },
+        "twist": { "text": "With sloppy quorums, even W + R > N doesn't guarantee consistency. Edge cases abound.", "visual": "🧊" },
+        "climax": { "text": "Leaderless systems maximize availability but require careful tuning of W, R, and N for your use case.", "visual": "🎚️" },
+        "punchline": { "text": "No leader, quorum-based — available but tricky.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What ensures consistency in leaderless replication?",
+        "options": ["W + R > N where W is writes, R is reads, N is total nodes", "Having exactly one leader", "Locking all nodes during writes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch03-replication",
+      "title": "Synchronous vs Asynchronous Replication",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Synchronous: the write waits for all replicas to confirm. Asynchronous: the write returns immediately.", "visual": "⏱️" },
+        "buildup": { "text": "Synchronous replication guarantees all replicas have the data but slows every write to the slowest replica.", "visual": "🐌" },
+        "discovery": { "text": "Asynchronous replication is fast but risks data loss — if the primary dies before replication, writes are gone.", "visual": "💨" },
+        "twist": { "text": "Semi-synchronous is a middle ground: one replica must confirm synchronously, the rest catch up asynchronously.", "visual": "🤝" },
+        "climax": { "text": "The choice between sync and async replication is a trade-off between durability and latency.", "visual": "⚖️" },
+        "punchline": { "text": "Sync is safe but slow. Async is fast but risky.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the risk of asynchronous replication?",
+        "options": ["Data loss if the primary fails before replicas receive writes", "Slower write performance", "Higher storage costs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch03-replication",
+      "title": "Conflict Resolution Strategies",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Two users edit the same document on different continents. Both changes arrive at the server. Which wins?", "visual": "🤺" },
+        "buildup": { "text": "Last Write Wins (LWW) picks the most recent write by timestamp. Simple, but it silently drops the other.", "visual": "⏰" },
+        "discovery": { "text": "Application-level resolution lets the app merge both changes — like Git's merge for user data.", "visual": "🔀" },
+        "twist": { "text": "LWW with clock skew can discard the truly latest write. Timestamps across machines are never perfectly synced.", "visual": "🕰️" },
+        "climax": { "text": "There's no universal conflict resolution. The right strategy depends on your data model and user expectations.", "visual": "🎯" },
+        "punchline": { "text": "Conflicts are inevitable — the resolution strategy defines correctness.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the problem with Last Write Wins?",
+        "options": ["Clock skew can cause the wrong write to be kept", "It's too slow", "It requires too much storage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch04-partitioning",
+      "title": "Why Partition Data",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your database has 10 terabytes. No single disk can hold it. No single CPU can query it fast enough.", "visual": "🧱" },
+        "buildup": { "text": "Partitioning splits data across multiple nodes. Each node holds and processes a subset of the data.", "visual": "🔪" },
+        "discovery": { "text": "Queries that hit one partition are fast. The node processes only its own data, not the entire dataset.", "visual": "⚡" },
+        "twist": { "text": "Queries that span all partitions are slow. A scatter-gather across 100 nodes adds latency from the slowest one.", "visual": "🐌" },
+        "climax": { "text": "Good partitioning ensures most queries hit one or few partitions. Bad partitioning defeats the purpose.", "visual": "🎯" },
+        "punchline": { "text": "Split data so queries stay local to one partition.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is partitioning important?",
+        "options": ["No single machine can store or process the entire dataset", "It makes backups easier", "It improves network security"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch04-partitioning",
+      "title": "Consistent Hashing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You add a fourth server to a three-server cluster. With naive hashing, 75% of keys get remapped. Chaos.", "visual": "🔄" },
+        "buildup": { "text": "Consistent hashing maps keys and nodes onto a ring. Each key goes to the next node clockwise on the ring.", "visual": "💍" },
+        "discovery": { "text": "Adding a node only remaps keys between it and its neighbor — about 1/N of the total, not nearly all.", "visual": "📊" },
+        "twist": { "text": "Basic consistent hashing creates uneven distribution. Virtual nodes — multiple positions per server — fix this.", "visual": "🔗" },
+        "climax": { "text": "Consistent hashing powers DynamoDB, Cassandra, and every major distributed cache and database.", "visual": "🌐" },
+        "punchline": { "text": "Add or remove nodes without remapping everything.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What problem does consistent hashing solve?",
+        "options": ["Minimizes key remapping when nodes are added or removed", "Encrypts data at rest", "Compresses stored data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch04-partitioning",
+      "title": "Hot Spots and Skew",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A celebrity tweets and the partition holding their data receives 1,000x more traffic than others.", "visual": "🔥" },
+        "buildup": { "text": "Hot spots occur when one partition receives disproportionate traffic due to skewed access patterns.", "visual": "📊" },
+        "discovery": { "text": "Adding a random suffix to hot keys spreads load across partitions: userID becomes userID_1, userID_2, etc.", "visual": "🎲" },
+        "twist": { "text": "The suffix trick works but complicates reads: you must query all suffixed keys and merge the results.", "visual": "🧩" },
+        "climax": { "text": "Perfectly even distribution is impossible in practice. The goal is to minimize skew, not eliminate it.", "visual": "🎯" },
+        "punchline": { "text": "Hot spots overload one partition — spread the keys.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What causes hot spots in partitioned systems?",
+        "options": ["Skewed access patterns where one key gets disproportionate traffic", "Too many partitions", "Slow network connections"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch04-partitioning",
+      "title": "Secondary Indexes in Partitioned Systems",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Data is partitioned by user ID. A query asks for all users in New York. The index must span all partitions.", "visual": "🗽" },
+        "buildup": { "text": "Local indexes live on each partition. A query must scatter to all partitions and gather results.", "visual": "🔀" },
+        "discovery": { "text": "Global indexes are partitioned separately by the indexed value. One query hits one index partition.", "visual": "🎯" },
+        "twist": { "text": "Global indexes must be updated across partitions on every write. Async updates mean stale index results.", "visual": "⏳" },
+        "climax": { "text": "Local indexes are write-efficient but read-expensive. Global indexes are the opposite. Pick your trade-off.", "visual": "⚖️" },
+        "punchline": { "text": "Local indexes: fast writes. Global indexes: fast reads.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the downside of local secondary indexes in partitioned systems?",
+        "options": ["Queries must scatter across all partitions", "Writes are slower", "They use too much memory"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch04-partitioning",
+      "title": "Rebalancing Partitions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your cluster grows from 5 to 10 nodes. How do you redistribute data without taking the system down?", "visual": "📦" },
+        "buildup": { "text": "Rebalancing moves partitions between nodes to distribute load evenly after cluster changes.", "visual": "⚖️" },
+        "discovery": { "text": "Fixed partition count is simplest: create more partitions than nodes. New nodes take over whole partitions.", "visual": "🧩" },
+        "twist": { "text": "Moving data between nodes uses network bandwidth. If done too aggressively, it saturates the network.", "visual": "🌊" },
+        "climax": { "text": "Good rebalancing is invisible to users. Bad rebalancing causes outages during the migration.", "visual": "🎭" },
+        "punchline": { "text": "Rebalance gradually — or crash under the load.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why should rebalancing be done gradually?",
+        "options": ["Aggressive data movement saturates the network", "It's cheaper", "Users prefer slow changes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch05-clocks-and-ordering",
+      "title": "The Problem with Physical Clocks",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Server A's clock says 10:00:00.000. Server B's clock says 10:00:00.032. Which write happened first?", "visual": "🕐" },
+        "buildup": { "text": "Physical clocks on different machines drift apart. NTP synchronizes them but only to within milliseconds.", "visual": "⏱️" },
+        "discovery": { "text": "Google's Spanner uses GPS and atomic clocks to keep servers within 7 microseconds of each other.", "visual": "📡" },
+        "twist": { "text": "Most companies don't have GPS clocks. Clock drift of 100ms is common and can silently corrupt data ordering.", "visual": "💀" },
+        "climax": { "text": "Using wall-clock timestamps for ordering in distributed systems is fundamentally unreliable.", "visual": "⚠️" },
+        "punchline": { "text": "Distributed clocks drift — don't trust timestamps for ordering.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why are physical clocks unreliable for ordering events?",
+        "options": ["Clocks on different machines drift apart by milliseconds", "They're too precise", "They stop during network partitions"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch05-clocks-and-ordering",
+      "title": "Lamport Clocks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Leslie Lamport asked: can we order events without synchronized physical clocks? The answer changed everything.", "visual": "💡" },
+        "buildup": { "text": "A Lamport clock is a logical counter. Each node increments it on every event and sends it with messages.", "visual": "🔢" },
+        "discovery": { "text": "If event A happened before B, then A's Lamport timestamp is lower. Causal ordering is preserved.", "visual": "📊" },
+        "twist": { "text": "Two events with equal Lamport timestamps might be concurrent — or not. Lamport clocks can't tell the difference.", "visual": "🤷" },
+        "climax": { "text": "Lamport clocks give a total order that's consistent with causality — a foundation of distributed systems theory.", "visual": "🏗️" },
+        "punchline": { "text": "Logical clocks order events without physical time.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What do Lamport clocks provide?",
+        "options": ["A total order of events consistent with causality", "Perfect physical time synchronization", "Conflict resolution for writes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch05-clocks-and-ordering",
+      "title": "Vector Clocks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Lamport clocks say A < B, but can't tell if A caused B or if they were concurrent. Vector clocks can.", "visual": "🔬" },
+        "buildup": { "text": "A vector clock tracks a counter per node. Each node increments its own counter and merges received vectors.", "visual": "📊" },
+        "discovery": { "text": "If A's vector is element-wise less than B's, A happened before B. Otherwise, they're concurrent.", "visual": "⚡" },
+        "twist": { "text": "Vector clocks grow linearly with the number of nodes. In a 1,000-node cluster, each vector has 1,000 entries.", "visual": "📈" },
+        "climax": { "text": "Vector clocks detect concurrency precisely — the key to correct conflict detection in distributed databases.", "visual": "🎯" },
+        "punchline": { "text": "Vector clocks detect if events are causally related or concurrent.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What can vector clocks do that Lamport clocks cannot?",
+        "options": ["Distinguish between causally related and concurrent events", "Synchronize physical clocks", "Order events faster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch05-clocks-and-ordering",
+      "title": "Happens-Before Relationship",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Event A sends a message. Event B receives it. A happened before B — we know this for certain.", "visual": "📩" },
+        "buildup": { "text": "The happens-before relation defines causal ordering: A → B means A could have influenced B.", "visual": "➡️" },
+        "discovery": { "text": "If neither A → B nor B → A, the events are concurrent. No observer can determine which came first.", "visual": "🔀" },
+        "twist": { "text": "Concurrency doesn't mean simultaneous. It means neither event could have caused the other.", "visual": "🤔" },
+        "climax": { "text": "Happens-before is the foundation of reasoning about distributed systems. It replaces time with causality.", "visual": "🏗️" },
+        "punchline": { "text": "Causality, not time, defines event ordering.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does 'concurrent' mean in distributed systems?",
+        "options": ["Neither event could have caused the other", "Both happened at the same time", "Both ran on the same server"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch05-clocks-and-ordering",
+      "title": "Google Spanner and TrueTime",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Google Spanner is the only database that provides global strong consistency with external consistency.", "visual": "🌍" },
+        "buildup": { "text": "TrueTime uses GPS receivers and atomic clocks in every data center to bound clock uncertainty.", "visual": "📡" },
+        "discovery": { "text": "TrueTime returns an interval: earliest and latest possible time. Spanner waits out the uncertainty window.", "visual": "⏳" },
+        "twist": { "text": "Waiting out uncertainty adds latency to every commit — typically 7ms. Google accepts this for correctness.", "visual": "⚖️" },
+        "climax": { "text": "Spanner proves that with precise enough clocks, global strong consistency is achievable at scale.", "visual": "🏆" },
+        "punchline": { "text": "GPS and atomic clocks make global consistency possible.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How does Google Spanner achieve global consistency?",
+        "options": ["Using GPS and atomic clocks to bound clock uncertainty", "By using a single leader", "By avoiding distributed transactions"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch06-failure-modes",
+      "title": "Crash Failures vs Byzantine Failures",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A crashed node is predictable: it stops responding. A Byzantine node is unpredictable: it lies.", "visual": "🎭" },
+        "buildup": { "text": "Crash-stop failures mean a node simply stops. It doesn't send wrong data or corrupt messages.", "visual": "💀" },
+        "discovery": { "text": "Byzantine failures include bugs that produce wrong results, hardware that flips bits, or malicious actors.", "visual": "🐛" },
+        "twist": { "text": "Most internal systems only handle crash failures. Byzantine tolerance is 10x more expensive in complexity.", "visual": "💰" },
+        "climax": { "text": "Know your failure model. Over-engineering for Byzantine faults wastes effort in trusted environments.", "visual": "🎯" },
+        "punchline": { "text": "Crashed is predictable. Byzantine is chaotic. Design accordingly.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What makes Byzantine failures harder to handle?",
+        "options": ["Faulty nodes can send wrong or contradictory information", "They always crash immediately", "They only affect storage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch06-failure-modes",
+      "title": "Network Partitions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A network cable is cut between two data centers. Each side thinks the other has crashed.", "visual": "✂️" },
+        "buildup": { "text": "A network partition splits a cluster into groups that can't communicate with each other.", "visual": "🔀" },
+        "discovery": { "text": "Each side may elect its own leader, accept conflicting writes, or refuse to serve requests.", "visual": "⚠️" },
+        "twist": { "text": "When the partition heals, the two sides must reconcile divergent state — often with data loss or conflicts.", "visual": "🔄" },
+        "climax": { "text": "Partitions are rare but inevitable. Systems must be designed to handle them, not assume they won't happen.", "visual": "🛡️" },
+        "punchline": { "text": "Partitions split clusters — plan for the reunion.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What happens during a network partition?",
+        "options": ["Parts of the cluster can't communicate and may diverge", "All servers crash", "Data is automatically backed up"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch06-failure-modes",
+      "title": "Cascading Failures",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "One server crashes. Traffic shifts to the remaining servers. They become overloaded and crash too. A domino effect.", "visual": "🀫" },
+        "buildup": { "text": "Cascading failures occur when one failure increases load on other components, causing them to fail as well.", "visual": "📈" },
+        "discovery": { "text": "The 2017 S3 outage cascaded because restarting subsystems took hours due to the sheer scale of metadata.", "visual": "☁️" },
+        "twist": { "text": "Adding retries without backoff accelerates cascading failures. Every retry adds load to an already overwhelmed system.", "visual": "🔄" },
+        "climax": { "text": "Circuit breakers, load shedding, and exponential backoff are the primary defenses against cascading failures.", "visual": "🛡️" },
+        "punchline": { "text": "One failure triggers many — break the chain early.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What accelerates cascading failures?",
+        "options": ["Retries without backoff adding load to overwhelmed systems", "Having too many servers", "Using strong consistency"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch06-failure-modes",
+      "title": "Idempotency",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A payment request times out. Did it go through? You retry. Now the customer might be charged twice.", "visual": "💳" },
+        "buildup": { "text": "An idempotent operation produces the same result no matter how many times it's executed.", "visual": "♻️" },
+        "discovery": { "text": "Assigning an idempotency key to each request lets the server detect retries and return the cached result.", "visual": "🔑" },
+        "twist": { "text": "Not all operations are naturally idempotent. 'Add $100' is not idempotent. 'Set balance to $500' is.", "visual": "⚠️" },
+        "climax": { "text": "In distributed systems where retries are inevitable, idempotency is the only safe way to handle them.", "visual": "🛡️" },
+        "punchline": { "text": "Make every operation safe to retry — always.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What makes an operation idempotent?",
+        "options": ["It produces the same result no matter how many times it runs", "It runs faster each time", "It never fails"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--distributed-systems--ch06-failure-modes",
+      "title": "Graceful Degradation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The recommendation engine is down. Does the entire shopping site crash? Or does it show popular items instead?", "visual": "🛒" },
+        "buildup": { "text": "Graceful degradation means reducing functionality instead of failing completely when a component breaks.", "visual": "📉" },
+        "discovery": { "text": "Netflix degrades by showing cached content when its personalization service fails. Users barely notice.", "visual": "📺" },
+        "twist": { "text": "Graceful degradation must be designed and tested in advance. You can't improvise it during an outage.", "visual": "📋" },
+        "climax": { "text": "The best systems fail partially, not totally. Users get a reduced experience, not an error page.", "visual": "🎯" },
+        "punchline": { "text": "Fail partially, not completely — keep the core working.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is graceful degradation?",
+        "options": ["Reducing functionality instead of failing completely", "Shutting down the system safely", "Restarting failed services automatically"],
+        "correct": 0
+      }
+    }
+  ]
+}

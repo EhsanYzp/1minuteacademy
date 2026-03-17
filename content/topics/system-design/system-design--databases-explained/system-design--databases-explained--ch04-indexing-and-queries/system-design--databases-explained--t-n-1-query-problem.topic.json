@@ -1,0 +1,49 @@
+{
+  "id": "system-design--databases-explained--t-n-1-query-problem",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Databases Explained",
+  "course_id": "system-design--databases-explained",
+  "chapter_id": "system-design--databases-explained--ch04-indexing-and-queries",
+  "title": "N+1 Query Problem",
+  "emoji": "🗄️",
+  "color": "#7C3AED",
+  "description": "One-minute skill: N+1 Query Problem.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You load 100 blog posts, then for each post, run a query to load the author. That's 101 queries.",
+      "visual": "💥"
+    },
+    "buildup": {
+      "text": "The N+1 problem occurs when code fetches a list, then queries for related data one item at a time.",
+      "visual": "🔄"
+    },
+    "discovery": {
+      "text": "The fix is eager loading: one query for posts, one query for all related authors. Two queries instead of 101.",
+      "visual": "2️⃣"
+    },
+    "twist": {
+      "text": "ORMs often hide N+1 problems. The code looks clean, but the generated SQL is catastrophically inefficient.",
+      "visual": "🙈"
+    },
+    "climax": {
+      "text": "N+1 queries are the most common performance bug in web applications. Always check your ORM's query log.",
+      "visual": "🔍"
+    },
+    "punchline": {
+      "text": "One query for the list, one for the relations — not one per item.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What causes the N+1 query problem?",
+    "options": [
+      "Querying for related data one item at a time instead of in batch",
+      "Using too many indexes",
+      "Having too few database connections"
+    ],
+    "correct": 0
+  }
+}

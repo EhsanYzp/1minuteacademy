@@ -1,0 +1,49 @@
+{
+  "id": "system-design--databases-explained--t-database-migration-strategies",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Databases Explained",
+  "course_id": "system-design--databases-explained",
+  "chapter_id": "system-design--databases-explained--ch06-choosing-the-right-database",
+  "title": "Database Migration Strategies",
+  "emoji": "🗄️",
+  "color": "#7C3AED",
+  "description": "A 60-second lesson on Database Migration Strategies.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your MySQL database can't scale anymore. You need to migrate to Cassandra. With zero downtime.",
+      "visual": "🔄"
+    },
+    "buildup": {
+      "text": "The dual-write strategy writes to both old and new databases during migration, then switches reads.",
+      "visual": "✍️"
+    },
+    "discovery": {
+      "text": "Shadow reads compare results from both databases to verify data consistency before the final switch.",
+      "visual": "🔍"
+    },
+    "twist": {
+      "text": "Migrations fail when the new database models data differently. Schema translation is the hardest part.",
+      "visual": "🧩"
+    },
+    "climax": {
+      "text": "Zero-downtime migration takes months of parallel running, careful validation, and a quick rollback plan.",
+      "visual": "📅"
+    },
+    "punchline": {
+      "text": "Migrate in parallel, validate in shadow, switch with confidence.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What does the dual-write migration strategy involve?",
+    "options": [
+      "Writing to both old and new databases simultaneously during migration",
+      "Stopping the old database and starting the new one",
+      "Copying all data at once"
+    ],
+    "correct": 0
+  }
+}

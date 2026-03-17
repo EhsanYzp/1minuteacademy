@@ -1,0 +1,49 @@
+{
+  "id": "system-design--scalability--t-database-indexing",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Scalability: From One to Millions",
+  "course_id": "system-design--scalability",
+  "chapter_id": "system-design--scalability--ch04-scaling-for-speed",
+  "title": "Database Indexing",
+  "emoji": "📈",
+  "color": "#059669",
+  "description": "A 60-second lesson on Database Indexing.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A query scans 100 million rows to find one user. Add an index and the same query touches 3 rows.",
+      "visual": "🔍"
+    },
+    "buildup": {
+      "text": "An index is a data structure — usually a B-tree — that maps values to their row locations.",
+      "visual": "🌳"
+    },
+    "discovery": {
+      "text": "Indexes turn O(n) scans into O(log n) lookups. For 100 million rows, that's 27 steps instead of 100 million.",
+      "visual": "📊"
+    },
+    "twist": {
+      "text": "Every index slows down writes because the index must be updated on every insert and update.",
+      "visual": "🐌"
+    },
+    "climax": {
+      "text": "Indexing is the highest-impact optimization in databases — and the most commonly neglected.",
+      "visual": "🏆"
+    },
+    "punchline": {
+      "text": "The right index makes a slow query instant.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is the trade-off of adding database indexes?",
+    "options": [
+      "Faster reads but slower writes",
+      "Faster writes but slower reads",
+      "More storage but same speed"
+    ],
+    "correct": 0
+  }
+}

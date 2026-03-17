@@ -1,0 +1,559 @@
+{
+  "categoryId": "system-design",
+  "subject": "System Design",
+  "courseId": "system-design--scalability",
+  "courseTitle": "Scalability: From One to Millions",
+  "emoji": "📈",
+  "color": "#059669",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "system-design--scalability--ch01-what-is-scalability", "title": "What Is Scalability", "position": 1 },
+    { "id": "system-design--scalability--ch02-scaling-the-web-tier", "title": "Scaling the Web Tier", "position": 2 },
+    { "id": "system-design--scalability--ch03-scaling-the-data-tier", "title": "Scaling the Data Tier", "position": 3 },
+    { "id": "system-design--scalability--ch04-scaling-for-speed", "title": "Scaling for Speed", "position": 4 },
+    { "id": "system-design--scalability--ch05-scaling-globally", "title": "Scaling Globally", "position": 5 },
+    { "id": "system-design--scalability--ch06-scaling-lessons", "title": "Scaling Lessons from the Giants", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "system-design--scalability--ch01-what-is-scalability",
+      "title": "Scalability Defined",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your app works perfectly for 100 users. At 10,000 users, pages take 30 seconds to load.", "visual": "🐌" },
+        "buildup": { "text": "Scalability is a system's ability to handle growing load without degrading performance.", "visual": "📈" },
+        "discovery": { "text": "A scalable system maintains response times and reliability as users, data, or traffic increase.", "visual": "✅" },
+        "twist": { "text": "Scalability isn't just about traffic. Data growth, team size, and feature complexity all need to scale too.", "visual": "🔄" },
+        "climax": { "text": "Scalability is not a feature you add later — it's a property you design for from the start.", "visual": "🏗️" },
+        "punchline": { "text": "Scalability means growing without breaking.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does scalability mean?",
+        "options": ["Handling growing load without degrading performance", "Making the code run faster", "Adding more features"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch01-what-is-scalability",
+      "title": "Measuring Load",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Before you can scale, you need to know what you're scaling. What metric defines your load?", "visual": "📊" },
+        "buildup": { "text": "Load parameters vary: requests per second, concurrent connections, database reads, or cache hit ratio.", "visual": "🎯" },
+        "discovery": { "text": "Twitter's key load parameter is fan-out: each tweet must reach thousands of followers' timelines.", "visual": "🐦" },
+        "twist": { "text": "Optimizing the wrong metric wastes effort. A system bottlenecked on writes won't benefit from read caching.", "visual": "🚫" },
+        "climax": { "text": "Identify your load parameter first, then design your scaling strategy around it.", "visual": "🔍" },
+        "punchline": { "text": "Measure the right thing before scaling anything.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a load parameter?",
+        "options": ["A metric that defines the system's primary load, like requests per second", "The maximum number of servers", "The cost per user"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch01-what-is-scalability",
+      "title": "Percentile Latencies",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your average response time is 200ms. But 1% of users wait 5 seconds. The average hides the pain.", "visual": "😤" },
+        "buildup": { "text": "Percentiles show the distribution: p50 is the median, p99 is the slowest 1% of requests.", "visual": "📉" },
+        "discovery": { "text": "Amazon found that every 100ms of p99 latency costs them 1% in sales. Tail latency matters.", "visual": "💰" },
+        "twist": { "text": "The slowest requests often come from your best customers — those with the most data and activity.", "visual": "👑" },
+        "climax": { "text": "Averages lie. Percentiles reveal the real user experience, especially at the tail.", "visual": "📊" },
+        "punchline": { "text": "Don't trust averages — measure the p99.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does p99 latency measure?",
+        "options": ["The response time that 99% of requests are faster than", "The average response time", "The fastest request"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch01-what-is-scalability",
+      "title": "The Scalability Ceiling",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You add servers, but performance stops improving. You've hit a scalability ceiling.", "visual": "🧱" },
+        "buildup": { "text": "Amdahl's Law says speedup is limited by the portion of work that can't be parallelized.", "visual": "📐" },
+        "discovery": { "text": "If 10% of your workload is sequential, adding infinite servers only gives you a 10x speedup.", "visual": "🔢" },
+        "twist": { "text": "Shared state, locks, and coordination create sequential bottlenecks that limit horizontal scaling.", "visual": "🔒" },
+        "climax": { "text": "To break through ceilings, you must redesign the sequential parts, not just add more machines.", "visual": "💡" },
+        "punchline": { "text": "More servers can't fix a sequential bottleneck.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does Amdahl's Law describe?",
+        "options": ["Speedup is limited by the non-parallelizable portion of work", "More servers always means more speed", "Databases can't scale"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch01-what-is-scalability",
+      "title": "Stateless vs Stateful Services",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A stateless server treats every request as brand new. A stateful one remembers your previous requests.", "visual": "🧠" },
+        "buildup": { "text": "Stateless services store no user data locally. Any server can handle any request.", "visual": "🔀" },
+        "discovery": { "text": "This makes scaling trivial: just add more servers behind a load balancer.", "visual": "➕" },
+        "twist": { "text": "Stateful services like WebSocket servers need sticky sessions, making them harder to scale and replace.", "visual": "🔗" },
+        "climax": { "text": "Making services stateless is one of the most impactful decisions for scalability.", "visual": "🏆" },
+        "punchline": { "text": "Stateless services are trivially scalable.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why are stateless services easier to scale?",
+        "options": ["Any server can handle any request", "They use less memory", "They're faster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch02-scaling-the-web-tier",
+      "title": "Horizontal Scaling with Auto-Scaling",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Black Friday traffic spikes 10x. Your servers auto-scale from 5 to 50 in minutes, then scale back down.", "visual": "🛒" },
+        "buildup": { "text": "Auto-scaling monitors CPU, memory, or request count and adds or removes servers automatically.", "visual": "📊" },
+        "discovery": { "text": "Cloud providers like AWS and GCP offer auto-scaling groups that react to traffic in real time.", "visual": "☁️" },
+        "twist": { "text": "Scaling up takes minutes. If traffic spikes faster than new servers boot, users experience errors.", "visual": "⏱️" },
+        "climax": { "text": "Auto-scaling handles predictable growth. Unpredictable spikes need pre-warming or over-provisioning.", "visual": "🔥" },
+        "punchline": { "text": "Auto-scale for the expected; pre-warm for the spike.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What triggers auto-scaling?",
+        "options": ["Metrics like CPU usage, memory, or request count", "Manual commands only", "Time of day only"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch02-scaling-the-web-tier",
+      "title": "Reverse Proxies",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Clients never talk directly to your servers. A reverse proxy sits in front, guarding and routing traffic.", "visual": "🛡️" },
+        "buildup": { "text": "NGINX and HAProxy accept client requests, apply security rules, and forward them to backend servers.", "visual": "🔀" },
+        "discovery": { "text": "Reverse proxies handle SSL termination, compression, rate limiting, and request routing in one place.", "visual": "🔧" },
+        "twist": { "text": "A misconfigured reverse proxy becomes a single point of failure for the entire system.", "visual": "💀" },
+        "climax": { "text": "Reverse proxies consolidate cross-cutting concerns so application servers focus only on business logic.", "visual": "🎯" },
+        "punchline": { "text": "One gatekeeper for security, routing, and speed.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a reverse proxy do?",
+        "options": ["Sits in front of servers to route, secure, and optimize traffic", "Stores data permanently", "Replaces the database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch02-scaling-the-web-tier",
+      "title": "Rate Limiting",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A single user sends 10,000 requests per second to your API. Without limits, they crash everyone's experience.", "visual": "🌊" },
+        "buildup": { "text": "Rate limiting caps how many requests a client can make in a time window.", "visual": "🚦" },
+        "discovery": { "text": "Token bucket and sliding window are common algorithms. Each balances burst tolerance and fairness.", "visual": "🪣" },
+        "twist": { "text": "Distributed rate limiting is hard. Each server must share state or accept some over-counting.", "visual": "🤝" },
+        "climax": { "text": "Rate limiting protects systems from abuse, bot traffic, and accidental client bugs.", "visual": "🛡️" },
+        "punchline": { "text": "Cap requests to protect everyone's experience.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the token bucket algorithm used for?",
+        "options": ["Rate limiting with burst tolerance", "Encrypting data", "Sorting database results"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch02-scaling-the-web-tier",
+      "title": "API Gateways",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your mobile app calls 8 microservices to render one screen. An API gateway reduces that to one call.", "visual": "📱" },
+        "buildup": { "text": "An API gateway aggregates multiple backend calls into a single response for the client.", "visual": "🧩" },
+        "discovery": { "text": "It also handles authentication, rate limiting, logging, and request transformation centrally.", "visual": "🔐" },
+        "twist": { "text": "The gateway itself must scale and not become the bottleneck. It's a critical infrastructure component.", "visual": "⚠️" },
+        "climax": { "text": "API gateways simplify client communication at the cost of adding a central dependency.", "visual": "⚖️" },
+        "punchline": { "text": "One door in, many services behind it.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does an API gateway do?",
+        "options": ["Aggregates multiple backend calls into one response", "Stores user passwords", "Replaces the database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch02-scaling-the-web-tier",
+      "title": "Connection Pooling",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Opening a database connection takes 50ms. With 10,000 requests per second, that overhead is devastating.", "visual": "⏱️" },
+        "buildup": { "text": "Connection pooling pre-opens a set of connections and reuses them across requests.", "visual": "🏊" },
+        "discovery": { "text": "Instead of open-use-close, it's borrow-use-return. Each request borrows from the pool instantly.", "visual": "🔄" },
+        "twist": { "text": "Too few connections starve the app. Too many overwhelm the database. The pool size is a tuning art.", "visual": "🎚️" },
+        "climax": { "text": "Connection pooling is invisible when done right but catastrophic when misconfigured.", "visual": "💥" },
+        "punchline": { "text": "Reuse connections — don't rebuild them every time.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is connection pooling important?",
+        "options": ["It avoids the overhead of opening new connections for every request", "It encrypts data", "It compresses responses"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch03-scaling-the-data-tier",
+      "title": "Read Replicas",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your database handles 50,000 reads per second but only 500 writes. Most traffic is reads.", "visual": "📖" },
+        "buildup": { "text": "Read replicas copy data from the primary database. Reads go to replicas; writes stay on the primary.", "visual": "📋" },
+        "discovery": { "text": "Adding 4 replicas gives you 5x read capacity without changing your application logic.", "visual": "5️⃣" },
+        "twist": { "text": "Replicas have lag. A user writes data, then reads from a replica that hasn't received the write yet.", "visual": "⏳" },
+        "climax": { "text": "Read replicas are the simplest way to scale reads, but eventual consistency must be managed.", "visual": "⚖️" },
+        "punchline": { "text": "More replicas, more reads — but watch the lag.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the main benefit of read replicas?",
+        "options": ["They multiply read capacity across multiple copies", "They make writes faster", "They eliminate data loss"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch03-scaling-the-data-tier",
+      "title": "Database Sharding Strategies",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your database has 2 billion rows. Even indexed queries are slow. It's time to shard.", "visual": "🔪" },
+        "buildup": { "text": "Range sharding splits by value ranges. Hash sharding distributes evenly using a hash function.", "visual": "🎲" },
+        "discovery": { "text": "Hash sharding prevents hot spots but makes range queries expensive. Range sharding is the opposite.", "visual": "⚖️" },
+        "twist": { "text": "Resharding — changing the number of shards — requires migrating billions of rows with zero downtime.", "visual": "😰" },
+        "climax": { "text": "Choose your shard key carefully. Changing it later is one of the most painful operations in engineering.", "visual": "🔑" },
+        "punchline": { "text": "The shard key is a one-way door — choose wisely.", "visual": "🚪" }
+      },
+      "quiz": {
+        "question": "What is the downside of hash sharding?",
+        "options": ["Range queries become expensive", "It creates hot spots", "It doesn't distribute data evenly"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch03-scaling-the-data-tier",
+      "title": "Denormalization for Performance",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your normalized database requires 5 JOINs to render a user profile. Each JOIN slows the query.", "visual": "🐌" },
+        "buildup": { "text": "Denormalization duplicates data to reduce JOINs. The profile data is pre-computed into a single row.", "visual": "📦" },
+        "discovery": { "text": "Reads become blazing fast — one row, one query, no joins. Response time drops from 200ms to 5ms.", "visual": "⚡" },
+        "twist": { "text": "Writes become complex. Updating a user's name means updating it in every denormalized copy.", "visual": "🔄" },
+        "climax": { "text": "Denormalization trades write complexity for read performance — ideal for read-heavy systems.", "visual": "📊" },
+        "punchline": { "text": "Duplicate data to avoid slow JOINs.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the trade-off of denormalization?",
+        "options": ["Faster reads but more complex writes", "Faster writes but slower reads", "Less storage usage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch03-scaling-the-data-tier",
+      "title": "Write-Ahead Logs",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A database crashes mid-write. The data was half-saved. How does it recover without corruption?", "visual": "💥" },
+        "buildup": { "text": "A write-ahead log records every change before applying it. If a crash occurs, the log replays cleanly.", "visual": "📝" },
+        "discovery": { "text": "WALs are sequential writes — much faster than random writes to disk. This speeds up commits too.", "visual": "⚡" },
+        "twist": { "text": "WALs also power replication. Replicas read the primary's log and apply changes in the same order.", "visual": "📋" },
+        "climax": { "text": "The write-ahead log is one of the most important data structures in all of database engineering.", "visual": "🏆" },
+        "punchline": { "text": "Log the change first — then apply it safely.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a write-ahead log do?",
+        "options": ["Records changes before applying them for crash recovery", "Deletes old data", "Compresses the database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch03-scaling-the-data-tier",
+      "title": "NoSQL at Scale",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Cassandra handles 1 million writes per second across hundreds of nodes. How does it manage that?", "visual": "🚀" },
+        "buildup": { "text": "NoSQL databases like Cassandra and DynamoDB are designed for horizontal scaling from the ground up.", "visual": "📐" },
+        "discovery": { "text": "They use consistent hashing to distribute data across nodes without a central coordinator.", "visual": "🔄" },
+        "twist": { "text": "The trade-off: no JOINs, limited transactions, and you must design your schema around your queries.", "visual": "🤔" },
+        "climax": { "text": "NoSQL at scale is powerful but demands a query-first mindset that feels alien to SQL developers.", "visual": "🧠" },
+        "punchline": { "text": "Design your tables for your queries, not your data.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How do NoSQL databases like Cassandra distribute data?",
+        "options": ["Using consistent hashing across nodes", "Storing everything on one server", "Random assignment to nodes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch04-scaling-for-speed",
+      "title": "Content Delivery Networks",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A user in Tokyo requests an image from a server in New York. Light takes 70ms just to cross the ocean.", "visual": "🌊" },
+        "buildup": { "text": "A CDN caches content on edge servers worldwide, placing copies close to every user.", "visual": "🌍" },
+        "discovery": { "text": "Cloudflare, Akamai, and CloudFront serve cached content from the nearest edge — often in under 20ms.", "visual": "⚡" },
+        "twist": { "text": "CDNs work great for static content. Dynamic, personalized content still needs to reach the origin server.", "visual": "🤔" },
+        "climax": { "text": "CDNs eliminate the speed of light as a bottleneck for most web content.", "visual": "💨" },
+        "punchline": { "text": "Put copies of your content near every user.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a CDN do?",
+        "options": ["Caches content on servers close to users worldwide", "Replaces the database", "Encrypts all traffic"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch04-scaling-for-speed",
+      "title": "Database Indexing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A query scans 100 million rows to find one user. Add an index and the same query touches 3 rows.", "visual": "🔍" },
+        "buildup": { "text": "An index is a data structure — usually a B-tree — that maps values to their row locations.", "visual": "🌳" },
+        "discovery": { "text": "Indexes turn O(n) scans into O(log n) lookups. For 100 million rows, that's 27 steps instead of 100 million.", "visual": "📊" },
+        "twist": { "text": "Every index slows down writes because the index must be updated on every insert and update.", "visual": "🐌" },
+        "climax": { "text": "Indexing is the highest-impact optimization in databases — and the most commonly neglected.", "visual": "🏆" },
+        "punchline": { "text": "The right index makes a slow query instant.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the trade-off of adding database indexes?",
+        "options": ["Faster reads but slower writes", "Faster writes but slower reads", "More storage but same speed"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch04-scaling-for-speed",
+      "title": "Compression",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A web page is 2 MB uncompressed. With gzip, it's 200 KB. That's 10x less data over the wire.", "visual": "📦" },
+        "buildup": { "text": "Compression reduces the size of data transferred between servers and clients.", "visual": "📉" },
+        "discovery": { "text": "Brotli compresses 20% better than gzip for web content and is supported by all modern browsers.", "visual": "🏎️" },
+        "twist": { "text": "Compression uses CPU. For high-throughput services, the CPU cost of compressing every response adds up.", "visual": "🔥" },
+        "climax": { "text": "Compression trades CPU cycles for bandwidth. On most networks, the bandwidth savings far outweigh the cost.", "visual": "⚖️" },
+        "punchline": { "text": "Shrink the data, speed up the transfer.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does Brotli do better than gzip?",
+        "options": ["Achieves about 20% better compression for web content", "Works without a browser", "Encrypts data end-to-end"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch04-scaling-for-speed",
+      "title": "Lazy Loading and Pagination",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Instagram doesn't load all 10,000 photos in your feed at once. It loads 20 and fetches more as you scroll.", "visual": "📱" },
+        "buildup": { "text": "Pagination returns data in small pages. Lazy loading defers work until the user actually needs it.", "visual": "📄" },
+        "discovery": { "text": "Cursor-based pagination uses a pointer to the last seen item, scaling better than offset-based pagination.", "visual": "📌" },
+        "twist": { "text": "Offset pagination breaks at scale: OFFSET 1000000 still scans a million rows before returning results.", "visual": "💀" },
+        "climax": { "text": "Load only what's needed, when it's needed. This principle applies to data, images, and code alike.", "visual": "🎯" },
+        "punchline": { "text": "Load less, load later, load smarter.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why does cursor-based pagination scale better than offset?",
+        "options": ["It doesn't scan past rows to reach the requested page", "It loads all data at once", "It uses less memory"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch04-scaling-for-speed",
+      "title": "Async Processing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A user uploads a photo. Resizing it takes 10 seconds. Do you make them wait?", "visual": "⏳" },
+        "buildup": { "text": "Async processing offloads slow work to background workers. The user gets an instant response.", "visual": "📤" },
+        "discovery": { "text": "A job queue accepts the task. Workers pick it up, process it, and update the status when done.", "visual": "📬" },
+        "twist": { "text": "Async introduces eventual consistency. The user may see a placeholder before processing completes.", "visual": "⏱️" },
+        "climax": { "text": "Moving slow work off the request path is the most reliable way to keep response times low.", "visual": "🏎️" },
+        "punchline": { "text": "Respond now, process later.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the benefit of async processing?",
+        "options": ["Users get instant responses while slow work happens in the background", "It eliminates all errors", "It reduces storage costs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch05-scaling-globally",
+      "title": "Multi-Region Architecture",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your servers are in Virginia. Users in Sydney experience 300ms latency just from distance.", "visual": "🌏" },
+        "buildup": { "text": "Multi-region deploys copies of your service in data centers around the world.", "visual": "🌍" },
+        "discovery": { "text": "Users are routed to the nearest region. A request from Tokyo hits the Tokyo data center, not Virginia.", "visual": "🎯" },
+        "twist": { "text": "Keeping data in sync across regions is the hardest part. Conflict resolution is an unsolved general problem.", "visual": "🤯" },
+        "climax": { "text": "Multi-region reduces latency and improves availability but multiplies operational complexity.", "visual": "📈" },
+        "punchline": { "text": "Deploy everywhere, sync everything — carefully.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the biggest challenge of multi-region architecture?",
+        "options": ["Keeping data in sync across regions", "Finding data centers", "Hiring enough engineers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch05-scaling-globally",
+      "title": "DNS-Based Global Load Balancing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "How does your browser know to connect to the nearest data center? DNS tells it where to go.", "visual": "🧭" },
+        "buildup": { "text": "GeoDNS resolves the same domain to different IP addresses based on the user's geographic location.", "visual": "🌐" },
+        "discovery": { "text": "AWS Route 53 and Cloudflare DNS route users to the closest healthy endpoint automatically.", "visual": "🔀" },
+        "twist": { "text": "DNS has a TTL cache. If a region goes down, users may still be routed there until the cache expires.", "visual": "⏱️" },
+        "climax": { "text": "DNS-based routing is the simplest form of global load balancing — and the first line of defense.", "visual": "🛡️" },
+        "punchline": { "text": "DNS picks the nearest server before you connect.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does GeoDNS do?",
+        "options": ["Routes users to the nearest data center based on location", "Encrypts DNS queries", "Speeds up database lookups"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch05-scaling-globally",
+      "title": "Edge Computing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Why send a request to a server 5,000 miles away when the nearest cell tower could process it?", "visual": "📡" },
+        "buildup": { "text": "Edge computing moves computation closer to users — to CDN nodes, cell towers, or local servers.", "visual": "🏘️" },
+        "discovery": { "text": "Cloudflare Workers and AWS Lambda@Edge run code at the edge in under 50ms worldwide.", "visual": "⚡" },
+        "twist": { "text": "Edge functions have limited memory, no persistent state, and short execution time limits.", "visual": "📏" },
+        "climax": { "text": "Edge computing is ideal for low-latency tasks like authentication, A/B testing, and content personalization.", "visual": "🎯" },
+        "punchline": { "text": "Run code where your users are, not where your servers are.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the main benefit of edge computing?",
+        "options": ["Processing happens closer to users, reducing latency", "It's cheaper than cloud computing", "It replaces all servers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch05-scaling-globally",
+      "title": "Data Sovereignty and Compliance",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "GDPR says European user data must stay in Europe. Your US servers can't touch it.", "visual": "🇪🇺" },
+        "buildup": { "text": "Data sovereignty laws dictate where data can be stored and processed geographically.", "visual": "📍" },
+        "discovery": { "text": "Compliance requires geo-fenced databases, regional encryption keys, and audit-ready data flows.", "visual": "🔐" },
+        "twist": { "text": "Global systems must shard by region for compliance, not just performance. This adds architectural complexity.", "visual": "🧩" },
+        "climax": { "text": "Data sovereignty turns a technical scaling decision into a legal and political constraint.", "visual": "⚖️" },
+        "punchline": { "text": "Where data lives is a legal decision, not just technical.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does data sovereignty require?",
+        "options": ["Data stored and processed within specific geographic boundaries", "Encrypting all data", "Using only one database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch05-scaling-globally",
+      "title": "Global Consistency with CRDTs",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Two users edit the same document in different countries simultaneously. Who wins?", "visual": "📝" },
+        "buildup": { "text": "CRDTs — Conflict-free Replicated Data Types — are data structures that merge without conflicts.", "visual": "🔗" },
+        "discovery": { "text": "A CRDT counter at two nodes can be incremented independently. The merged result is always correct.", "visual": "🧮" },
+        "twist": { "text": "CRDTs only work for specific operations. Not all data models can be made conflict-free.", "visual": "⚠️" },
+        "climax": { "text": "CRDTs enable truly distributed, conflict-free collaboration — the secret behind tools like Figma.", "visual": "🎨" },
+        "punchline": { "text": "Data structures that merge without conflicts.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What are CRDTs?",
+        "options": ["Data structures that merge without conflicts across replicas", "A type of database", "A caching strategy"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch06-scaling-lessons",
+      "title": "How Twitter Scaled the Timeline",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A user with 50 million followers tweets. Delivering that tweet to 50 million timelines is a massive problem.", "visual": "🐦" },
+        "buildup": { "text": "Twitter first used a pull model: query all followed accounts when loading the timeline. It was too slow.", "visual": "🐌" },
+        "discovery": { "text": "They switched to fan-out: when you tweet, it's pre-written into all followers' cached timelines.", "visual": "📨" },
+        "twist": { "text": "Celebrities broke fan-out. 50 million writes per tweet was too expensive. They use a hybrid approach.", "visual": "🔀" },
+        "climax": { "text": "Twitter's timeline is fan-out for most users, pull for mega-celebrities. A blend of both strategies.", "visual": "⚖️" },
+        "punchline": { "text": "No single approach works at every scale.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why did Twitter switch from pull to fan-out for timelines?",
+        "options": ["Querying all followed accounts on every load was too slow", "Fan-out uses less storage", "Pull wasn't supported by their database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch06-scaling-lessons",
+      "title": "How YouTube Handles Video at Scale",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "500 hours of video are uploaded to YouTube every minute. Storing and serving that is an engineering marvel.", "visual": "📹" },
+        "buildup": { "text": "Each video is transcoded into dozens of formats and resolutions for different devices and speeds.", "visual": "🔄" },
+        "discovery": { "text": "Videos are stored in Google's distributed file system and served from CDN edge caches worldwide.", "visual": "🌐" },
+        "twist": { "text": "Adaptive bitrate streaming adjusts quality in real time based on your connection speed.", "visual": "📶" },
+        "climax": { "text": "YouTube's scale is staggering: over 1 billion hours watched daily across every country on Earth.", "visual": "🌍" },
+        "punchline": { "text": "A billion hours daily, streamed without buffering.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is adaptive bitrate streaming?",
+        "options": ["Adjusting video quality in real time based on connection speed", "Streaming at the highest quality always", "Compressing video to one format"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch06-scaling-lessons",
+      "title": "How Slack Scaled Real-Time Messaging",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Slack delivers billions of messages per day in real time to millions of concurrent users.", "visual": "💬" },
+        "buildup": { "text": "Each workspace is a separate channel namespace. Messages route through WebSocket connections.", "visual": "🔌" },
+        "discovery": { "text": "Slack moved from a monolithic PHP app to a microservices architecture as they grew.", "visual": "🔀" },
+        "twist": { "text": "Their biggest challenge wasn't message delivery — it was the database query load from search and history.", "visual": "🔍" },
+        "climax": { "text": "Slack's journey shows that the bottleneck shifts as you scale. Today's solution is tomorrow's problem.", "visual": "🔄" },
+        "punchline": { "text": "Scaling is a moving target, not a destination.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What was Slack's biggest scaling challenge?",
+        "options": ["Database query load from search and message history", "Sending messages in real time", "Handling user sign-ups"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch06-scaling-lessons",
+      "title": "How WhatsApp Served 2 Billion with 50 Engineers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "WhatsApp served 900 million users with just 50 engineers. Most companies need 10x more.", "visual": "🤯" },
+        "buildup": { "text": "They chose Erlang, a language built for telecom systems that handles millions of concurrent connections.", "visual": "📞" },
+        "discovery": { "text": "Each server handled 2 million connections. Erlang's lightweight processes made this possible.", "visual": "⚡" },
+        "twist": { "text": "WhatsApp kept their architecture simple: no microservices, no Kubernetes, no trendy tools.", "visual": "🧘" },
+        "climax": { "text": "Simplicity was their superpower. Fewer moving parts meant fewer failures and a smaller team.", "visual": "💡" },
+        "punchline": { "text": "The right tool and simplicity beat complexity.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why could WhatsApp operate with so few engineers?",
+        "options": ["They chose simple architecture and the right technology", "They didn't have many users", "They outsourced engineering"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--scalability--ch06-scaling-lessons",
+      "title": "When Not to Scale",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A startup with 500 users builds a system designed for 50 million. They run out of money first.", "visual": "💸" },
+        "buildup": { "text": "Premature optimization is spending time on scalability problems you don't yet have.", "visual": "⏰" },
+        "discovery": { "text": "A single PostgreSQL server can handle millions of rows and thousands of queries per second.", "visual": "🐘" },
+        "twist": { "text": "Many successful startups ran on a single server for years. Complexity kills more startups than traffic does.", "visual": "☠️" },
+        "climax": { "text": "Build for today's load with an eye on tomorrow. Scale when data proves you need to, not when fear says so.", "visual": "📊" },
+        "punchline": { "text": "Don't scale for users you don't have yet.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is premature optimization?",
+        "options": ["Solving scalability problems you don't yet have", "Optimizing code for readability", "Scaling too late"],
+        "correct": 0
+      }
+    }
+  ]
+}

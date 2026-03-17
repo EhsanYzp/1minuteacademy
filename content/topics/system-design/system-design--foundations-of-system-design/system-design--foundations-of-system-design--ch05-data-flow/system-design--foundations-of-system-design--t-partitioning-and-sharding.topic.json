@@ -1,0 +1,49 @@
+{
+  "id": "system-design--foundations-of-system-design--t-partitioning-and-sharding",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Foundations of System Design",
+  "course_id": "system-design--foundations-of-system-design",
+  "chapter_id": "system-design--foundations-of-system-design--ch05-data-flow",
+  "title": "Partitioning and Sharding",
+  "emoji": "🏗️",
+  "color": "#2563EB",
+  "description": "Learn Partitioning and Sharding in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "One database holds 10 TB. Queries are slow. Splitting it across 10 machines makes each one fast again.",
+      "visual": "🔪"
+    },
+    "buildup": {
+      "text": "Sharding splits data into partitions. Each shard holds a subset, like users A-M on shard 1, N-Z on shard 2.",
+      "visual": "📂"
+    },
+    "discovery": {
+      "text": "A good shard key distributes data evenly. A bad one creates hot spots that overload one shard.",
+      "visual": "🔥"
+    },
+    "twist": {
+      "text": "Cross-shard queries are expensive. If user A's data needs user B's data on another shard, joins get complex.",
+      "visual": "🧩"
+    },
+    "climax": {
+      "text": "Sharding enables massive scale but adds complexity in routing, rebalancing, and cross-shard operations.",
+      "visual": "📈"
+    },
+    "punchline": {
+      "text": "Split data to scale — but choose the split wisely.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is a hot spot in sharding?",
+    "options": [
+      "One shard receiving disproportionately more traffic",
+      "A shard that's physically warm",
+      "The fastest shard in the cluster"
+    ],
+    "correct": 0
+  }
+}

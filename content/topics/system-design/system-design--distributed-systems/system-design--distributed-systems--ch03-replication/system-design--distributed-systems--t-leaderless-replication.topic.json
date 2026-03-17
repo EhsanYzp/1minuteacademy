@@ -1,0 +1,49 @@
+{
+  "id": "system-design--distributed-systems--t-leaderless-replication",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Distributed Systems Explained",
+  "course_id": "system-design--distributed-systems",
+  "chapter_id": "system-design--distributed-systems--ch03-replication",
+  "title": "Leaderless Replication",
+  "emoji": "🔗",
+  "color": "#D97706",
+  "description": "A quick, practical guide to Leaderless Replication.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "In Cassandra, there's no leader at all. Writes go to any node. Reads check multiple nodes for the latest value.",
+      "visual": "🔀"
+    },
+    "buildup": {
+      "text": "Leaderless replication writes to W nodes and reads from R nodes. If W + R > N, you get consistency.",
+      "visual": "🔢"
+    },
+    "discovery": {
+      "text": "Quorum reads and writes ensure at least one node has the latest value, even without a leader.",
+      "visual": "🗳️"
+    },
+    "twist": {
+      "text": "With sloppy quorums, even W + R > N doesn't guarantee consistency. Edge cases abound.",
+      "visual": "🧊"
+    },
+    "climax": {
+      "text": "Leaderless systems maximize availability but require careful tuning of W, R, and N for your use case.",
+      "visual": "🎚️"
+    },
+    "punchline": {
+      "text": "No leader, quorum-based — available but tricky.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What ensures consistency in leaderless replication?",
+    "options": [
+      "W + R > N where W is writes, R is reads, N is total nodes",
+      "Having exactly one leader",
+      "Locking all nodes during writes"
+    ],
+    "correct": 0
+  }
+}

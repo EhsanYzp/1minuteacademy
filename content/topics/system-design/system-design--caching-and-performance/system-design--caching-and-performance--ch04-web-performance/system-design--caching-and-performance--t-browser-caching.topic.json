@@ -1,0 +1,49 @@
+{
+  "id": "system-design--caching-and-performance--t-browser-caching",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Caching and Performance",
+  "course_id": "system-design--caching-and-performance",
+  "chapter_id": "system-design--caching-and-performance--ch04-web-performance",
+  "title": "Browser Caching",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A tiny lesson with a big payoff: Browser Caching.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You visit a website twice. The second time, images load instantly. Your browser cached them locally.",
+      "visual": "🖥️"
+    },
+    "buildup": {
+      "text": "Cache-Control headers tell browsers what to cache and for how long: max-age, no-cache, immutable.",
+      "visual": "📋"
+    },
+    "discovery": {
+      "text": "Immutable assets with content hashes (app.abc123.js) can be cached forever — the hash changes on updates.",
+      "visual": "♾️"
+    },
+    "twist": {
+      "text": "Over-caching HTML pages can serve stale content for hours. HTML should use no-cache with ETags for revalidation.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Browser caching is free performance. Proper Cache-Control headers can eliminate most repeat network requests.",
+      "visual": "🎁"
+    },
+    "punchline": {
+      "text": "Cache assets forever; revalidate HTML on every visit.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why should immutable assets have long cache times?",
+    "options": [
+      "Their content hash changes on updates, so stale versions are never served",
+      "They never change",
+      "Browsers can't cache them otherwise"
+    ],
+    "correct": 0
+  }
+}

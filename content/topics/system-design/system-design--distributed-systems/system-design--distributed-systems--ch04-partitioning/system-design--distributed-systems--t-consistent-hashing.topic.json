@@ -1,0 +1,49 @@
+{
+  "id": "system-design--distributed-systems--t-consistent-hashing",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Distributed Systems Explained",
+  "course_id": "system-design--distributed-systems",
+  "chapter_id": "system-design--distributed-systems--ch04-partitioning",
+  "title": "Consistent Hashing",
+  "emoji": "🔗",
+  "color": "#D97706",
+  "description": "A 1-minute de-risking session on Consistent Hashing.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You add a fourth server to a three-server cluster. With naive hashing, 75% of keys get remapped. Chaos.",
+      "visual": "🔄"
+    },
+    "buildup": {
+      "text": "Consistent hashing maps keys and nodes onto a ring. Each key goes to the next node clockwise on the ring.",
+      "visual": "💍"
+    },
+    "discovery": {
+      "text": "Adding a node only remaps keys between it and its neighbor — about 1/N of the total, not nearly all.",
+      "visual": "📊"
+    },
+    "twist": {
+      "text": "Basic consistent hashing creates uneven distribution. Virtual nodes — multiple positions per server — fix this.",
+      "visual": "🔗"
+    },
+    "climax": {
+      "text": "Consistent hashing powers DynamoDB, Cassandra, and every major distributed cache and database.",
+      "visual": "🌐"
+    },
+    "punchline": {
+      "text": "Add or remove nodes without remapping everything.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What problem does consistent hashing solve?",
+    "options": [
+      "Minimizes key remapping when nodes are added or removed",
+      "Encrypts data at rest",
+      "Compresses stored data"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "system-design--scalability--t-how-twitter-scaled-the-timeline",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Scalability: From One to Millions",
+  "course_id": "system-design--scalability",
+  "chapter_id": "system-design--scalability--ch06-scaling-lessons",
+  "title": "How Twitter Scaled the Timeline",
+  "emoji": "📈",
+  "color": "#059669",
+  "description": "A fast breakdown of How Twitter Scaled the Timeline for builders.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A user with 50 million followers tweets. Delivering that tweet to 50 million timelines is a massive problem.",
+      "visual": "🐦"
+    },
+    "buildup": {
+      "text": "Twitter first used a pull model: query all followed accounts when loading the timeline. It was too slow.",
+      "visual": "🐌"
+    },
+    "discovery": {
+      "text": "They switched to fan-out: when you tweet, it's pre-written into all followers' cached timelines.",
+      "visual": "📨"
+    },
+    "twist": {
+      "text": "Celebrities broke fan-out. 50 million writes per tweet was too expensive. They use a hybrid approach.",
+      "visual": "🔀"
+    },
+    "climax": {
+      "text": "Twitter's timeline is fan-out for most users, pull for mega-celebrities. A blend of both strategies.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "No single approach works at every scale.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why did Twitter switch from pull to fan-out for timelines?",
+    "options": [
+      "Querying all followed accounts on every load was too slow",
+      "Fan-out uses less storage",
+      "Pull wasn't supported by their database"
+    ],
+    "correct": 0
+  }
+}

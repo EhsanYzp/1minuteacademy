@@ -1,0 +1,49 @@
+{
+  "id": "system-design--microservices-vs-monoliths--t-database-per-service",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Microservices vs Monoliths",
+  "course_id": "system-design--microservices-vs-monoliths",
+  "chapter_id": "system-design--microservices-vs-monoliths--ch04-data-ownership",
+  "title": "Database per Service",
+  "emoji": "🧩",
+  "color": "#BE185D",
+  "description": "A short lesson to help you apply Database per Service.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Two microservices share one database. One changes a table schema. The other breaks. Shared databases create coupling.",
+      "visual": "🔗"
+    },
+    "buildup": {
+      "text": "Database per service means each microservice owns its data. No other service accesses its tables directly.",
+      "visual": "🗄️"
+    },
+    "discovery": {
+      "text": "This enables independent schema evolution. The orders service can change its tables without affecting payments.",
+      "visual": "🔄"
+    },
+    "twist": {
+      "text": "Joins across services are impossible. What was one SQL join now requires multiple API calls and client-side merging.",
+      "visual": "🤯"
+    },
+    "climax": {
+      "text": "Database per service is the foundation of true microservice independence but makes reporting and analytics harder.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "Each service owns its data — no shared databases.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why does database per service matter?",
+    "options": [
+      "It enables independent schema changes without breaking other services",
+      "It reduces storage costs",
+      "It makes queries faster"
+    ],
+    "correct": 0
+  }
+}

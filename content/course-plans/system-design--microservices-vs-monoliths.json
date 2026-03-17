@@ -1,0 +1,559 @@
+{
+  "categoryId": "system-design",
+  "subject": "System Design",
+  "courseId": "system-design--microservices-vs-monoliths",
+  "courseTitle": "Microservices vs Monoliths",
+  "emoji": "🧩",
+  "color": "#BE185D",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "system-design--microservices-vs-monoliths--ch01-the-monolith", "title": "The Monolith", "position": 1 },
+    { "id": "system-design--microservices-vs-monoliths--ch02-enter-microservices", "title": "Enter Microservices", "position": 2 },
+    { "id": "system-design--microservices-vs-monoliths--ch03-communication-patterns", "title": "Communication Patterns", "position": 3 },
+    { "id": "system-design--microservices-vs-monoliths--ch04-data-ownership", "title": "Data Ownership", "position": 4 },
+    { "id": "system-design--microservices-vs-monoliths--ch05-operational-complexity", "title": "Operational Complexity", "position": 5 },
+    { "id": "system-design--microservices-vs-monoliths--ch06-choosing-your-architecture", "title": "Choosing Your Architecture", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch01-the-monolith",
+      "title": "What Is a Monolith",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Every feature, every module, every line of code lives in one deployable unit. That's a monolith.", "visual": "🏢" },
+        "buildup": { "text": "A monolithic application ships as a single binary or package. All components share the same process and memory.", "visual": "📦" },
+        "discovery": { "text": "Monoliths are simple to develop, test, and deploy. One build, one deploy, one running process.", "visual": "✅" },
+        "twist": { "text": "As the codebase grows, teams step on each other. A bug in one module can crash the entire application.", "visual": "💥" },
+        "climax": { "text": "Monoliths aren't bad — they're the simplest starting point. Most successful companies started with one.", "visual": "🚀" },
+        "punchline": { "text": "One codebase, one deploy — simple until it isn't.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a monolithic application?",
+        "options": ["A single deployable unit containing all features", "A collection of independent services", "A database-only architecture"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch01-the-monolith",
+      "title": "The Big Ball of Mud",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Nobody planned it. Over years, shortcuts and patches tangled the code into an unmaintainable mess.", "visual": "🧶" },
+        "buildup": { "text": "A Big Ball of Mud is a monolith with no clear internal structure. Every module depends on every other module.", "visual": "🕸️" },
+        "discovery": { "text": "Changing one feature requires understanding dozens of unrelated modules because the boundaries eroded.", "visual": "🔗" },
+        "twist": { "text": "Most legacy monoliths become Big Balls of Mud not from bad design but from years of well-intentioned shortcuts.", "visual": "🛤️" },
+        "climax": { "text": "The Big Ball of Mud is the most common software architecture in the world — by accident, not by choice.", "visual": "🌍" },
+        "punchline": { "text": "Without boundaries, every monolith becomes a tangled mess.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What causes a Big Ball of Mud?",
+        "options": ["Years of shortcuts eroding internal boundaries", "Using microservices", "Having too few developers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch01-the-monolith",
+      "title": "Modular Monoliths",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "What if a monolith had clear internal boundaries? Each module owns its code and data, but they deploy together.", "visual": "🧱" },
+        "buildup": { "text": "A modular monolith enforces boundaries between modules while keeping the simplicity of a single deployment.", "visual": "📐" },
+        "discovery": { "text": "Shopify runs a modular monolith. Strict module boundaries let hundreds of developers work independently.", "visual": "🏪" },
+        "twist": { "text": "Enforcing module boundaries in a monolith requires discipline. Without tooling, boundaries erode over time.", "visual": "⚠️" },
+        "climax": { "text": "The modular monolith gives you microservice-like modularity without the distributed system complexity.", "visual": "🏆" },
+        "punchline": { "text": "Enforce boundaries within the monolith — best of both worlds.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a modular monolith?",
+        "options": ["A monolith with enforced internal boundaries between modules", "A monolith split into microservices", "A serverless application"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch01-the-monolith",
+      "title": "Deployment Coupling",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You changed one line of code in the payment module. Now you have to redeploy the entire 2 million-line app.", "visual": "🚢" },
+        "buildup": { "text": "Deployment coupling means every change, no matter how small, requires deploying the entire monolith.", "visual": "🔗" },
+        "discovery": { "text": "Slow deploys mean fewer releases. Teams batch changes into large, risky releases instead of small, safe ones.", "visual": "📦" },
+        "twist": { "text": "Feature flags decouple deployment from release. Deploy the code but toggle the feature on only when ready.", "visual": "🏁" },
+        "climax": { "text": "Deployment coupling is the number one reason teams consider breaking a monolith into services.", "visual": "✂️" },
+        "punchline": { "text": "One change deploys everything — that's deployment coupling.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How do feature flags help with deployment coupling?",
+        "options": ["They separate deploying code from releasing features to users", "They speed up the build process", "They reduce code size"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch01-the-monolith",
+      "title": "Scaling a Monolith",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your search feature needs 10x more compute. But you can only scale the entire monolith, not just search.", "visual": "📈" },
+        "buildup": { "text": "Monoliths scale by running more copies of the entire application behind a load balancer.", "visual": "🔄" },
+        "discovery": { "text": "Each copy runs every feature, even if only one feature needs scaling. Resources are wasted on idle modules.", "visual": "💸" },
+        "twist": { "text": "Vertical scaling — bigger servers — works too, and it's simpler. A single powerful machine can run a large monolith.", "visual": "💪" },
+        "climax": { "text": "Monoliths can scale further than most teams think. Scaling problems are often code problems, not architecture ones.", "visual": "🔍" },
+        "punchline": { "text": "Scale the whole thing or not at all — that's the monolith trade-off.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is scaling a monolith inefficient?",
+        "options": ["You must scale the entire app even if only one feature needs more resources", "Monoliths can't be load balanced", "Only vertical scaling is possible"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch02-enter-microservices",
+      "title": "What Are Microservices",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Instead of one big app, you build many small, independent services that communicate over the network.", "visual": "🧩" },
+        "buildup": { "text": "Each microservice owns a specific business capability: orders, payments, users, notifications.", "visual": "🏗️" },
+        "discovery": { "text": "Services deploy independently. The payments team can release 10 times a day without touching the orders service.", "visual": "🚀" },
+        "twist": { "text": "Network calls replace function calls. What was a 1ms in-process call becomes a 50ms HTTP request.", "visual": "🌐" },
+        "climax": { "text": "Microservices trade code complexity for operational complexity. The code is simpler; running it is harder.", "visual": "⚖️" },
+        "punchline": { "text": "Small, independent services — simple code, complex operations.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the main trade-off of microservices?",
+        "options": ["Simpler code but more operational complexity", "Faster network calls", "Less need for testing"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch02-enter-microservices",
+      "title": "Service Boundaries",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Where do you draw the line between services? Get it wrong, and you'll be refactoring for years.", "visual": "✂️" },
+        "buildup": { "text": "Domain-Driven Design suggests splitting services along bounded contexts — natural business boundaries.", "visual": "📐" },
+        "discovery": { "text": "An order service owns order logic and data. It doesn't know how payments work, only that it requests one.", "visual": "📦" },
+        "twist": { "text": "Splitting too fine creates chatty services that need 10 network calls for one user action. Latency explodes.", "visual": "🐌" },
+        "climax": { "text": "Good boundaries minimize cross-service communication. If two services always change together, they should merge.", "visual": "🎯" },
+        "punchline": { "text": "Split along business boundaries, not technical layers.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What makes a good service boundary?",
+        "options": ["It follows natural business boundaries and minimizes cross-service calls", "It splits by technical layer (UI, logic, data)", "It makes each service as small as possible"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch02-enter-microservices",
+      "title": "API Gateways",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A mobile app needs data from 5 microservices. Should it make 5 separate API calls? That's slow and fragile.", "visual": "📱" },
+        "buildup": { "text": "An API gateway sits between clients and services. It routes, aggregates, and transforms requests.", "visual": "🚪" },
+        "discovery": { "text": "The gateway combines multiple service calls into one client-friendly response, reducing round trips.", "visual": "🔀" },
+        "twist": { "text": "The gateway becomes a single point of failure. If it's down, every service is unreachable from the outside.", "visual": "💀" },
+        "climax": { "text": "API gateways also handle authentication, rate limiting, and SSL termination — centralizing cross-cutting concerns.", "visual": "🔐" },
+        "punchline": { "text": "One front door for all services — route, aggregate, protect.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does an API gateway do?",
+        "options": ["Routes, aggregates, and transforms requests between clients and services", "Stores data for microservices", "Replaces the database layer"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch02-enter-microservices",
+      "title": "Service Discovery",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The orders service needs to call the payments service. But its IP address changed after a deploy. Where is it now?", "visual": "🔍" },
+        "buildup": { "text": "Service discovery maintains a registry of all services and their network locations.", "visual": "📖" },
+        "discovery": { "text": "Services register themselves on startup. Clients query the registry to find the current address of a service.", "visual": "📡" },
+        "twist": { "text": "If the registry is down, no service can find any other service. The registry is now a critical dependency.", "visual": "⚠️" },
+        "climax": { "text": "Kubernetes solves this with DNS-based service discovery. Each service gets a stable DNS name that routes automatically.", "visual": "☸️" },
+        "punchline": { "text": "Services need to find each other — discovery makes it automatic.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What problem does service discovery solve?",
+        "options": ["Finding the current network address of services that move between deploys", "Debugging service errors", "Encrypting service communication"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch02-enter-microservices",
+      "title": "The Distributed Monolith",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You split into microservices but every deploy requires updating 5 services simultaneously. This isn't microservices.", "visual": "🤦" },
+        "buildup": { "text": "A distributed monolith has the complexity of microservices with none of the benefits of independent deployment.", "visual": "🕸️" },
+        "discovery": { "text": "It happens when services share databases, use synchronous chains, or have tightly coupled data contracts.", "visual": "🔗" },
+        "twist": { "text": "A distributed monolith is worse than a regular monolith. Same coupling, but now with network failures added.", "visual": "💥" },
+        "climax": { "text": "If services can't deploy independently, you've built a distributed monolith — the worst of both worlds.", "visual": "🚨" },
+        "punchline": { "text": "Microservices that deploy together are just a distributed monolith.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a distributed monolith?",
+        "options": ["Microservices that are tightly coupled and must deploy together", "A monolith running on multiple servers", "A well-designed microservice system"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch03-communication-patterns",
+      "title": "Synchronous Communication",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Service A calls Service B and waits for a response. If B is slow, A is slow too. They're coupled by time.", "visual": "⏳" },
+        "buildup": { "text": "REST and gRPC are synchronous: the caller blocks until the callee responds or a timeout is reached.", "visual": "🔗" },
+        "discovery": { "text": "Synchronous calls are simple to reason about. Request in, response out. The flow is linear and predictable.", "visual": "📏" },
+        "twist": { "text": "A chain of synchronous calls amplifies latency and failure. If any link in the chain fails, the whole request fails.", "visual": "💥" },
+        "climax": { "text": "Synchronous communication works for simple request-response. Avoid deep synchronous chains across many services.", "visual": "⚠️" },
+        "punchline": { "text": "Call and wait — simple but every service in the chain must be fast.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the risk of synchronous service chains?",
+        "options": ["If any service in the chain fails or is slow, the entire request fails", "They use too much memory", "They can't handle read requests"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch03-communication-patterns",
+      "title": "Asynchronous Messaging",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Service A publishes a message and moves on. It doesn't wait. Service B processes the message whenever it's ready.", "visual": "📬" },
+        "buildup": { "text": "Message queues like Kafka, RabbitMQ, and SQS decouple services in time. The producer doesn't wait for the consumer.", "visual": "📨" },
+        "discovery": { "text": "If Service B is down, messages queue up and are processed when it recovers. No data is lost.", "visual": "📥" },
+        "twist": { "text": "Async messaging makes debugging harder. Where did the message go? Why wasn't it processed? Tracing is essential.", "visual": "🔍" },
+        "climax": { "text": "Asynchronous communication is more resilient and scalable but harder to reason about than synchronous calls.", "visual": "⚖️" },
+        "punchline": { "text": "Fire and forget — the producer moves on, the consumer catches up.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What happens if a consumer is down in async messaging?",
+        "options": ["Messages queue up and are processed when it recovers", "Messages are lost permanently", "The producer crashes too"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch03-communication-patterns",
+      "title": "Event-Driven Architecture",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An order is placed. Instead of calling 5 services, the order service publishes an OrderPlaced event. Others listen.", "visual": "📢" },
+        "buildup": { "text": "In event-driven architecture, services emit events about what happened. Other services react to those events.", "visual": "🔔" },
+        "discovery": { "text": "The order service doesn't know who listens. Payments, inventory, and email all subscribe independently.", "visual": "👂" },
+        "twist": { "text": "Event storms can create cascading reactions. One event triggers another, which triggers another — hard to trace.", "visual": "🌀" },
+        "climax": { "text": "Event-driven architecture decouples services powerfully but requires careful event design and monitoring.", "visual": "🏗️" },
+        "punchline": { "text": "Publish what happened — let interested services react.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does event-driven architecture decouple?",
+        "options": ["The producer from knowing who consumes its events", "The database from the application", "The frontend from the backend"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch03-communication-patterns",
+      "title": "REST vs gRPC",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "REST uses JSON over HTTP. gRPC uses Protocol Buffers over HTTP/2. One is human-readable; the other is faster.", "visual": "🆚" },
+        "buildup": { "text": "REST is simple, widely adopted, and works everywhere. Every language and tool speaks JSON over HTTP.", "visual": "🌐" },
+        "discovery": { "text": "gRPC serializes data in binary, reducing payload size by 10x and adding strict type contracts between services.", "visual": "📦" },
+        "twist": { "text": "gRPC is hard to debug — binary payloads aren't readable in browser tools. REST wins for public-facing APIs.", "visual": "🔍" },
+        "climax": { "text": "Use REST for external APIs and gRPC for internal service-to-service communication where speed matters.", "visual": "🎯" },
+        "punchline": { "text": "REST for humans, gRPC for machines.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "When is gRPC preferred over REST?",
+        "options": ["For internal service-to-service calls where speed matters", "For public browser-facing APIs", "For file uploads"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch03-communication-patterns",
+      "title": "The Saga Pattern",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An order needs payment, inventory, and shipping. If payment succeeds but inventory fails, how do you roll back?", "visual": "🔄" },
+        "buildup": { "text": "A saga is a sequence of local transactions. Each service executes its step and triggers the next.", "visual": "🔗" },
+        "discovery": { "text": "If a step fails, compensating transactions undo previous steps: refund the payment, restore the inventory.", "visual": "↩️" },
+        "twist": { "text": "Compensating transactions are tricky. You can't un-send an email. Some actions have no perfect undo.", "visual": "📧" },
+        "climax": { "text": "Sagas replace distributed transactions in microservices. They're complex but necessary for multi-service workflows.", "visual": "🏗️" },
+        "punchline": { "text": "Chain local transactions with compensating undo steps.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a compensating transaction in a saga?",
+        "options": ["An action that undoes a previous step when a later step fails", "A faster version of the original transaction", "A backup of the database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch04-data-ownership",
+      "title": "Database per Service",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Two microservices share one database. One changes a table schema. The other breaks. Shared databases create coupling.", "visual": "🔗" },
+        "buildup": { "text": "Database per service means each microservice owns its data. No other service accesses its tables directly.", "visual": "🗄️" },
+        "discovery": { "text": "This enables independent schema evolution. The orders service can change its tables without affecting payments.", "visual": "🔄" },
+        "twist": { "text": "Joins across services are impossible. What was one SQL join now requires multiple API calls and client-side merging.", "visual": "🤯" },
+        "climax": { "text": "Database per service is the foundation of true microservice independence but makes reporting and analytics harder.", "visual": "📊" },
+        "punchline": { "text": "Each service owns its data — no shared databases.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why does database per service matter?",
+        "options": ["It enables independent schema changes without breaking other services", "It reduces storage costs", "It makes queries faster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch04-data-ownership",
+      "title": "Event Sourcing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Instead of storing the current state, store every event that led to it. Replay the events to rebuild state.", "visual": "📜" },
+        "buildup": { "text": "Event sourcing stores events: OrderPlaced, ItemAdded, PaymentReceived. The current state is derived from them.", "visual": "📋" },
+        "discovery": { "text": "You get a complete audit trail for free. Time-travel debugging becomes possible: replay events up to any point.", "visual": "⏰" },
+        "twist": { "text": "Schema evolution is brutal. Changing the structure of past events requires careful versioning and migration.", "visual": "😰" },
+        "climax": { "text": "Event sourcing is powerful for audit-heavy domains like banking but overkill for simple CRUD applications.", "visual": "🏦" },
+        "punchline": { "text": "Store what happened, not what is — replay to rebuild.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does event sourcing store?",
+        "options": ["Every event that led to the current state", "Only the current state", "Database snapshots at intervals"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch04-data-ownership",
+      "title": "CQRS: Reads vs Writes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Reads and writes have completely different requirements. Why force them through the same data model?", "visual": "🆚" },
+        "buildup": { "text": "CQRS separates the command (write) model from the query (read) model. Each is optimized independently.", "visual": "✂️" },
+        "discovery": { "text": "Writes go to a normalized relational database. Reads go to a denormalized view optimized for fast lookups.", "visual": "⚡" },
+        "twist": { "text": "The read model lags behind the write model. Eventual consistency means a user might not see their own writes.", "visual": "⏳" },
+        "climax": { "text": "CQRS shines when read and write patterns are wildly different — heavy reads with complex queries, simple writes.", "visual": "🎯" },
+        "punchline": { "text": "Separate reads from writes — optimize each independently.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does CQRS stand for?",
+        "options": ["Command Query Responsibility Segregation", "Cache Query Routing System", "Complex Query Response Service"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch04-data-ownership",
+      "title": "Data Duplication",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The order service needs the customer's name. Should it call the customer service every time? That's slow.", "visual": "🐌" },
+        "buildup": { "text": "Data duplication stores a copy of needed data locally. The order service keeps a copy of the customer name.", "visual": "📋" },
+        "discovery": { "text": "This eliminates cross-service calls for reads. The order service reads from its own database — fast and decoupled.", "visual": "⚡" },
+        "twist": { "text": "The customer name changes. Now the order service has stale data. Events propagate the change, but there's a delay.", "visual": "⏳" },
+        "climax": { "text": "Data duplication trades storage and freshness for independence and speed. Embrace it in microservices.", "visual": "⚖️" },
+        "punchline": { "text": "Copy what you need — accept eventual consistency.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why duplicate data across microservices?",
+        "options": ["To avoid cross-service calls and improve read performance", "To use more storage", "To make writes faster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch04-data-ownership",
+      "title": "The Outbox Pattern",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The service updates the database and publishes an event. The database write succeeds, but the event publish fails.", "visual": "💥" },
+        "buildup": { "text": "The outbox pattern writes the event to a local outbox table in the same database transaction as the data change.", "visual": "📬" },
+        "discovery": { "text": "A separate process reads the outbox table and publishes events. The database guarantees both writes succeed or fail.", "visual": "✅" },
+        "twist": { "text": "The publisher might crash after sending but before marking the event as sent. Events can be delivered more than once.", "visual": "🔁" },
+        "climax": { "text": "The outbox pattern ensures at-least-once event delivery without distributed transactions. Consumers must be idempotent.", "visual": "🎯" },
+        "punchline": { "text": "Write data and event in one transaction — publish from the outbox.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What problem does the outbox pattern solve?",
+        "options": ["Ensuring data changes and events are both committed or both rolled back", "Reducing database size", "Speeding up event delivery"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch05-operational-complexity",
+      "title": "Observability",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A user request touches 12 services. It's slow. Which service is the bottleneck? Without observability, you're blind.", "visual": "🔍" },
+        "buildup": { "text": "Observability has three pillars: metrics (numbers), logs (events), and traces (request paths across services).", "visual": "📊" },
+        "discovery": { "text": "Distributed tracing assigns a unique trace ID to each request, following it through every service it touches.", "visual": "🔗" },
+        "twist": { "text": "Microservices without observability are a black box. Debugging is guesswork. Most outages last longer than necessary.", "visual": "🕳️" },
+        "climax": { "text": "Observability is not optional in microservices. It's the cost of admission for distributed architecture.", "visual": "🎟️" },
+        "punchline": { "text": "Metrics, logs, and traces — see what's happening everywhere.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What are the three pillars of observability?",
+        "options": ["Metrics, logs, and traces", "CPU, memory, and disk", "Alerts, dashboards, and reports"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch05-operational-complexity",
+      "title": "Service Mesh",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every microservice needs retries, timeouts, encryption, and load balancing. Coding this in each service is redundant.", "visual": "🔁" },
+        "buildup": { "text": "A service mesh adds a sidecar proxy to each service. The proxy handles networking concerns transparently.", "visual": "🛡️" },
+        "discovery": { "text": "Istio and Linkerd inject proxies that handle mTLS, retries, circuit breaking, and traffic shaping automatically.", "visual": "🤖" },
+        "twist": { "text": "A service mesh adds latency (extra network hop per call) and significant operational complexity to manage.", "visual": "⚙️" },
+        "climax": { "text": "Service meshes are powerful for large-scale deployments but overkill for teams with fewer than 20 services.", "visual": "📏" },
+        "punchline": { "text": "A sidecar proxy handles networking so your code doesn't have to.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a service mesh sidecar proxy do?",
+        "options": ["Handles networking concerns like retries, encryption, and load balancing transparently", "Stores application data", "Replaces the API gateway"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch05-operational-complexity",
+      "title": "Container Orchestration",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You have 200 microservices across 50 servers. One server dies. Which services were on it? How do you restart them?", "visual": "💀" },
+        "buildup": { "text": "Container orchestrators like Kubernetes schedule containers across machines and restart failed ones automatically.", "visual": "☸️" },
+        "discovery": { "text": "Define desired state: 3 replicas of the order service. Kubernetes ensures exactly 3 are running at all times.", "visual": "🎯" },
+        "twist": { "text": "Kubernetes is complex. A simple deployment requires YAML for pods, services, config maps, and ingress rules.", "visual": "📄" },
+        "climax": { "text": "Kubernetes became the standard for running microservices. Its complexity is the price of automating operations.", "visual": "🏗️" },
+        "punchline": { "text": "Declare what you want running — the orchestrator makes it happen.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does Kubernetes do when a container crashes?",
+        "options": ["Automatically restarts it to maintain the desired number of replicas", "Alerts the developer to restart it manually", "Shuts down the entire cluster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch05-operational-complexity",
+      "title": "CI/CD for Microservices",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "With one monolith, you had one build pipeline. With 50 microservices, you need 50 independent pipelines.", "visual": "🔧" },
+        "buildup": { "text": "Each service needs its own build, test, and deploy pipeline to enable independent releases.", "visual": "🏭" },
+        "discovery": { "text": "Monorepos share one repository but build only changed services. Polyrepos give each service its own repository.", "visual": "📁" },
+        "twist": { "text": "Testing is hard. How do you test that 5 services work together? Contract tests verify API agreements between services.", "visual": "🤝" },
+        "climax": { "text": "CI/CD complexity scales linearly with the number of services. Invest in automation early or drown in manual work.", "visual": "📈" },
+        "punchline": { "text": "One pipeline per service — automate everything or drown.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What do contract tests verify in microservices?",
+        "options": ["That services agree on API formats and expectations", "That all services use the same language", "That databases are in sync"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch05-operational-complexity",
+      "title": "Debugging Distributed Systems",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In a monolith, you set a breakpoint and step through. In microservices, the bug spans 3 services and a message queue.", "visual": "🐛" },
+        "buildup": { "text": "Distributed tracing tools like Jaeger and Zipkin visualize the full path of a request across all services.", "visual": "🗺️" },
+        "discovery": { "text": "Correlation IDs propagated through headers let you search logs across all services for a single user request.", "visual": "🔗" },
+        "twist": { "text": "Async message processing makes traces non-linear. A message might be processed hours after it was published.", "visual": "⏳" },
+        "climax": { "text": "Debugging distributed systems requires better tooling, not better developers. Invest in observability infrastructure.", "visual": "🛠️" },
+        "punchline": { "text": "Trace requests across services — don't debug in the dark.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a correlation ID used for?",
+        "options": ["Linking logs from different services that belong to the same request", "Encrypting messages between services", "Ordering database transactions"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch06-choosing-your-architecture",
+      "title": "Start with a Monolith",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Martin Fowler's advice: almost all successful microservice architectures started as a monolith that outgrew itself.", "visual": "📖" },
+        "buildup": { "text": "Startups need speed. A monolith lets a small team ship fast without distributed system overhead.", "visual": "🚀" },
+        "discovery": { "text": "You don't know your domain well enough at the start to draw good service boundaries. A monolith lets you learn.", "visual": "🧭" },
+        "twist": { "text": "Some teams adopt microservices on day one for a 3-person team. They spend more time on infrastructure than product.", "visual": "🤦" },
+        "climax": { "text": "Start with a monolith. Extract services only when the monolith's pain exceeds the cost of distributed complexity.", "visual": "⚖️" },
+        "punchline": { "text": "Build a monolith first — extract services when the pain demands it.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why start with a monolith?",
+        "options": ["You learn domain boundaries before committing to service splits", "Monoliths are always better", "Microservices don't work at scale"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch06-choosing-your-architecture",
+      "title": "The Strangler Fig Pattern",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A strangler fig wraps around a tree, slowly replacing it. You can migrate from monolith to microservices the same way.", "visual": "🌿" },
+        "buildup": { "text": "Route new features to new services. Gradually move old features out of the monolith, one at a time.", "visual": "🔀" },
+        "discovery": { "text": "The monolith and new services run side by side. A routing layer directs traffic to the right destination.", "visual": "🚦" },
+        "twist": { "text": "Some monolith features are too entangled to extract cleanly. You might need to rewrite them rather than migrate.", "visual": "✂️" },
+        "climax": { "text": "The strangler fig pattern avoids the risk of a big-bang rewrite by migrating incrementally over months or years.", "visual": "📅" },
+        "punchline": { "text": "Wrap the monolith gradually — replace it piece by piece.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the strangler fig pattern?",
+        "options": ["Gradually replacing a monolith by routing features to new services one at a time", "Killing the monolith immediately", "Running two monoliths side by side"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch06-choosing-your-architecture",
+      "title": "Team Size and Architecture",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Conway's Law: organizations design systems that mirror their communication structure. Architecture follows teams.", "visual": "👥" },
+        "buildup": { "text": "A 5-person team doesn't need microservices. The communication overhead exceeds the modularity benefits.", "visual": "📉" },
+        "discovery": { "text": "Amazon's two-pizza rule: each service should be owned by a team small enough to be fed by two pizzas.", "visual": "🍕" },
+        "twist": { "text": "Splitting services without splitting teams creates shared ownership. No one feels responsible; quality drops.", "visual": "😟" },
+        "climax": { "text": "Architecture should match team structure. Split services when you split teams, not before.", "visual": "🎯" },
+        "punchline": { "text": "Architecture mirrors teams — split services when you split teams.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does Conway's Law state?",
+        "options": ["Organizations design systems that mirror their communication structure", "Bigger teams build better software", "Microservices are always faster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch06-choosing-your-architecture",
+      "title": "Serverless: Beyond Microservices",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "What if you didn't manage any servers at all? Each function runs on demand, scales automatically, and bills per call.", "visual": "☁️" },
+        "buildup": { "text": "Serverless functions like AWS Lambda execute code without managing infrastructure. Deploy a function, not a service.", "visual": "⚡" },
+        "discovery": { "text": "Serverless eliminates idle costs. A function that runs once a day costs almost nothing compared to an always-on server.", "visual": "💰" },
+        "twist": { "text": "Cold starts add latency. A function that hasn't run recently takes 500ms-2s to start. Not great for real-time use.", "visual": "🥶" },
+        "climax": { "text": "Serverless is ideal for event-driven, bursty workloads but less suited for long-running, latency-sensitive processes.", "visual": "🎯" },
+        "punchline": { "text": "No servers to manage — just deploy functions and pay per call.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a cold start in serverless?",
+        "options": ["Delay when a function hasn't run recently and needs to initialize", "A function that runs in cold regions", "Starting a server for the first time"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--microservices-vs-monoliths--ch06-choosing-your-architecture",
+      "title": "There Is No Silver Bullet",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Microservices won't fix bad code. Monoliths won't fix bad teams. Architecture doesn't solve people problems.", "visual": "🚫" },
+        "buildup": { "text": "All architectures have trade-offs. Monoliths trade modularity for simplicity. Microservices do the reverse.", "visual": "⚖️" },
+        "discovery": { "text": "The best architecture depends on team size, domain complexity, scaling needs, and organizational culture.", "visual": "📐" },
+        "twist": { "text": "Many teams chase microservices as a status symbol. Premature decomposition creates more problems than it solves.", "visual": "🏃" },
+        "climax": { "text": "Choose the simplest architecture that meets your current needs. Evolve it as your requirements and team grow.", "visual": "🌱" },
+        "punchline": { "text": "No architecture is universally best — context decides.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How should you choose between monolith and microservices?",
+        "options": ["Based on team size, domain complexity, and current needs", "Always choose microservices for modern apps", "Always start with microservices"],
+        "correct": 0
+      }
+    }
+  ]
+}

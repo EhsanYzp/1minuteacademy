@@ -1,0 +1,49 @@
+{
+  "id": "system-design--microservices-vs-monoliths--t-service-boundaries",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Microservices vs Monoliths",
+  "course_id": "system-design--microservices-vs-monoliths",
+  "chapter_id": "system-design--microservices-vs-monoliths--ch02-enter-microservices",
+  "title": "Service Boundaries",
+  "emoji": "🧩",
+  "color": "#BE185D",
+  "description": "A fast breakdown of Service Boundaries for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Where do you draw the line between services? Get it wrong, and you'll be refactoring for years.",
+      "visual": "✂️"
+    },
+    "buildup": {
+      "text": "Domain-Driven Design suggests splitting services along bounded contexts — natural business boundaries.",
+      "visual": "📐"
+    },
+    "discovery": {
+      "text": "An order service owns order logic and data. It doesn't know how payments work, only that it requests one.",
+      "visual": "📦"
+    },
+    "twist": {
+      "text": "Splitting too fine creates chatty services that need 10 network calls for one user action. Latency explodes.",
+      "visual": "🐌"
+    },
+    "climax": {
+      "text": "Good boundaries minimize cross-service communication. If two services always change together, they should merge.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Split along business boundaries, not technical layers.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What makes a good service boundary?",
+    "options": [
+      "It follows natural business boundaries and minimizes cross-service calls",
+      "It splits by technical layer (UI, logic, data)",
+      "It makes each service as small as possible"
+    ],
+    "correct": 0
+  }
+}

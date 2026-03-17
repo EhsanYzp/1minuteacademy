@@ -1,0 +1,49 @@
+{
+  "id": "system-design--distributed-systems--t-distributed-locks",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Distributed Systems Explained",
+  "course_id": "system-design--distributed-systems",
+  "chapter_id": "system-design--distributed-systems--ch02-consensus-and-coordination",
+  "title": "Distributed Locks",
+  "emoji": "🔗",
+  "color": "#D97706",
+  "description": "A tiny lesson with a big payoff: Distributed Locks.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Two workers process the same payment. Without a distributed lock, the customer is charged twice.",
+      "visual": "💳"
+    },
+    "buildup": {
+      "text": "A distributed lock ensures only one process can access a resource across multiple machines.",
+      "visual": "🔒"
+    },
+    "discovery": {
+      "text": "Redis and ZooKeeper provide lock primitives. Redlock uses multiple Redis instances for safer locking.",
+      "visual": "🔐"
+    },
+    "twist": {
+      "text": "Distributed locks can fail: clock skew, GC pauses, or network delays can cause two processes to hold the same lock.",
+      "visual": "⏱️"
+    },
+    "climax": {
+      "text": "Distributed locks are necessary but imperfect. Idempotent operations are safer than relying on locks alone.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Locks prevent double-processing — but are never perfect.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why can distributed locks fail?",
+    "options": [
+      "Clock skew, GC pauses, or network delays can invalidate locks",
+      "They only work on one machine",
+      "They require too much memory"
+    ],
+    "correct": 0
+  }
+}

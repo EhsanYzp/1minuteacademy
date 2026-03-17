@@ -1,0 +1,559 @@
+{
+  "categoryId": "system-design",
+  "subject": "System Design",
+  "courseId": "system-design--reliability-and-resilience",
+  "courseTitle": "Reliability and Resilience",
+  "emoji": "🛡️",
+  "color": "#0D9488",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "system-design--reliability-and-resilience--ch01-measuring-reliability", "title": "Measuring Reliability", "position": 1 },
+    { "id": "system-design--reliability-and-resilience--ch02-failure-is-inevitable", "title": "Failure Is Inevitable", "position": 2 },
+    { "id": "system-design--reliability-and-resilience--ch03-resilience-patterns", "title": "Resilience Patterns", "position": 3 },
+    { "id": "system-design--reliability-and-resilience--ch04-redundancy-and-replication", "title": "Redundancy and Replication", "position": 4 },
+    { "id": "system-design--reliability-and-resilience--ch05-incident-management", "title": "Incident Management", "position": 5 },
+    { "id": "system-design--reliability-and-resilience--ch06-chaos-engineering", "title": "Chaos Engineering", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch01-measuring-reliability",
+      "title": "The Nines of Availability",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "99% uptime sounds great until you realize that's 3.65 days of downtime per year. Five nines means 5 minutes.", "visual": "📊" },
+        "buildup": { "text": "Availability is measured in nines: 99% (two nines), 99.9% (three nines), 99.99% (four nines), 99.999% (five nines).", "visual": "🔢" },
+        "discovery": { "text": "Each additional nine is 10x harder to achieve. Going from 99.9% to 99.99% requires fundamentally different architecture.", "visual": "📈" },
+        "twist": { "text": "Not everything needs five nines. An internal admin panel at 99% is fine. A payment system at 99% would be a disaster.", "visual": "💳" },
+        "climax": { "text": "Availability targets should match business impact. Over-engineering wastes money; under-engineering loses customers.", "visual": "⚖️" },
+        "punchline": { "text": "Each additional nine is 10x harder and 10x more expensive.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How much downtime does 99.9% availability allow per year?",
+        "options": ["About 8.76 hours", "About 3.65 days", "About 5 minutes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch01-measuring-reliability",
+      "title": "SLAs, SLOs, and SLIs",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your cloud provider promises 99.99% uptime. What happens if they miss it? That's what an SLA defines.", "visual": "📜" },
+        "buildup": { "text": "SLI is the measured metric (actual uptime). SLO is the target (99.9%). SLA is the contract with consequences if missed.", "visual": "📐" },
+        "discovery": { "text": "SLOs should be stricter than SLAs. If your SLA promises 99.9%, set your SLO at 99.95% to have a safety margin.", "visual": "🎯" },
+        "twist": { "text": "SLAs often promise credits, not refunds. If AWS is down for a day, you get 10% off next month — not lost revenue back.", "visual": "💸" },
+        "climax": { "text": "SLIs measure reality, SLOs set internal goals, SLAs set external promises. All three must align.", "visual": "🔗" },
+        "punchline": { "text": "SLI measures it, SLO targets it, SLA promises it.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the relationship between SLO and SLA?",
+        "options": ["SLO is the internal target, SLA is the external contractual promise", "They're the same thing", "SLA is stricter than SLO"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch01-measuring-reliability",
+      "title": "Error Budgets",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your SLO is 99.9% uptime. That means you're allowed 43 minutes of downtime per month. That's your error budget.", "visual": "💰" },
+        "buildup": { "text": "An error budget is the acceptable amount of unreliability. It's calculated as 100% minus the SLO target.", "visual": "📊" },
+        "discovery": { "text": "When the error budget is full, ship features fast. When it's depleted, freeze features and focus on reliability.", "visual": "🚦" },
+        "twist": { "text": "Error budgets align incentives: product teams want speed, reliability teams want stability. The budget is shared.", "visual": "🤝" },
+        "climax": { "text": "Error budgets turn reliability from an abstract goal into a concrete, measurable resource that teams can spend.", "visual": "📐" },
+        "punchline": { "text": "Reliability is a budget — spend it wisely on velocity.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What happens when the error budget is depleted?",
+        "options": ["Feature releases freeze and the team focuses on reliability", "The SLA is renegotiated", "Nothing changes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch01-measuring-reliability",
+      "title": "MTTR and MTTF",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your system fails every 30 days but recovers in 5 minutes. Better than failing every 90 days with a 4-hour recovery?", "visual": "⏱️" },
+        "buildup": { "text": "MTTF measures how long until something breaks. MTTR measures how fast you recover. Together they define availability.", "visual": "📏" },
+        "discovery": { "text": "Low MTTR is often more valuable than high MTTF. You can't prevent all failures, but you can recover fast.", "visual": "⚡" },
+        "twist": { "text": "MTTR includes detection time. If nobody notices for 2 hours, your MTTR is already 2 hours before you start fixing.", "visual": "👀" },
+        "climax": { "text": "Investing in detection and recovery (lower MTTR) often gives better availability than preventing failures (higher MTTF).", "visual": "🎯" },
+        "punchline": { "text": "Recover fast beats fail rarely — invest in MTTR.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is MTTR often more important than MTTF?",
+        "options": ["You can't prevent all failures, but you can recover from them quickly", "MTTF is impossible to measure", "Failures never happen in production"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch01-measuring-reliability",
+      "title": "Percentile Latencies",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your average response time is 100ms. But 1% of users wait 5 seconds. The average hides the worst experiences.", "visual": "📊" },
+        "buildup": { "text": "P50 is the median: half of requests are faster, half are slower. P99 is the latency that 99% of requests beat.", "visual": "📈" },
+        "discovery": { "text": "Amazon found that every 100ms of latency costs 1% of sales. P99 matters because your worst experience defines trust.", "visual": "💰" },
+        "twist": { "text": "P99.9 can be 100x worse than P50. A GC pause, a cold cache, or a retry storm hits only a few users — hard.", "visual": "🎢" },
+        "climax": { "text": "Measure P50 for typical experience and P99 for worst-case. Optimizing averages ignores the users who suffer most.", "visual": "🎯" },
+        "punchline": { "text": "Averages lie — measure P99 to see the worst experience.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is P99 latency more important than average latency?",
+        "options": ["It reveals the worst experience that 1% of users suffer", "It's easier to calculate", "Average latency is always inaccurate"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch02-failure-is-inevitable",
+      "title": "Types of System Failures",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Hardware dies, software crashes, networks partition, and humans err. Failure isn't a bug — it's a feature of reality.", "visual": "💥" },
+        "buildup": { "text": "Hardware failures: disk dies, server loses power. Software failures: memory leak, infinite loop, null pointer.", "visual": "🔧" },
+        "discovery": { "text": "Network: packets lost, connections timeout, DNS dies. Human error: wrong config pushed, wrong database deleted.", "visual": "🌐" },
+        "twist": { "text": "The most common failure type is human error — misconfigured deployments cause more outages than hardware combined.", "visual": "🤦" },
+        "climax": { "text": "Reliable systems assume failure is normal and design to survive it, not prevent it.", "visual": "🛡️" },
+        "punchline": { "text": "Everything fails — design to survive, not to prevent.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the most common cause of system outages?",
+        "options": ["Human error such as misconfigurations", "Hardware failures", "Natural disasters"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch02-failure-is-inevitable",
+      "title": "Single Points of Failure",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "One database, one DNS server, one load balancer. If any single one dies, everything goes down.", "visual": "🎯" },
+        "buildup": { "text": "A single point of failure (SPOF) is any component whose failure brings down the entire system.", "visual": "🔗" },
+        "discovery": { "text": "Eliminate SPOFs by adding redundancy: multiple database replicas, multiple DNS providers, multiple load balancers.", "visual": "🔀" },
+        "twist": { "text": "Redundancy introduces complexity. Two databases must stay in sync. Failover logic must work correctly — and be tested.", "visual": "⚙️" },
+        "climax": { "text": "Map every component in your architecture. If any single one failing causes total outage, that's your SPOF to fix.", "visual": "🗺️" },
+        "punchline": { "text": "If one component dying takes everything down, it's a SPOF.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How do you eliminate a single point of failure?",
+        "options": ["Add redundancy so no single component's failure causes total outage", "Use more powerful hardware", "Reduce the number of components"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch02-failure-is-inevitable",
+      "title": "Cascading Failures",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "One server slows down. Traffic shifts to the rest. They overload and slow down too. Everything crashes.", "visual": "🌊" },
+        "buildup": { "text": "A cascading failure starts small and spreads as failing components put more load on healthy ones, which then also fail.", "visual": "📉" },
+        "discovery": { "text": "The 2003 Northeast blackout was a cascade: one power line failed, shifting load until the entire grid collapsed.", "visual": "⚡" },
+        "twist": { "text": "Retries accelerate cascades. A slow service gets retry storms — 3x the load from retries — making it even slower.", "visual": "🔄" },
+        "climax": { "text": "Preventing cascades requires circuit breakers, load shedding, and retry budgets to stop failures from spreading.", "visual": "🛡️" },
+        "punchline": { "text": "One failure overloads the rest — cascading failures take down everything.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What accelerates cascading failures?",
+        "options": ["Retry storms that add more load to already failing services", "Adding more servers", "Reducing traffic"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch02-failure-is-inevitable",
+      "title": "Gray Failures",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The server is running. Health checks pass. But 10% of requests fail silently. It's not up or down — it's gray.", "visual": "🌫️" },
+        "buildup": { "text": "Gray failures are partial: the system works for most requests but fails for some. Health checks don't catch them.", "visual": "⚠️" },
+        "discovery": { "text": "A disk with increasing read errors, a network dropping 5% of packets, or a process leaking memory — all gray failures.", "visual": "📉" },
+        "twist": { "text": "Gray failures are harder to detect than total ones. The system looks healthy by most metrics but users suffer.", "visual": "🔍" },
+        "climax": { "text": "Detecting gray failures requires deep health checks: test real user paths, not just that the process is running.", "visual": "🏥" },
+        "punchline": { "text": "Not fully down, not fully up — gray failures hide in plain sight.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why are gray failures hard to detect?",
+        "options": ["The system appears healthy by basic metrics but fails partially for some users", "They only happen at night", "Monitoring tools can't track them"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch02-failure-is-inevitable",
+      "title": "Blast Radius",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A bad deploy reaches all servers in 60 seconds. Every user is affected instantly. The blast radius is 100%.", "visual": "💥" },
+        "buildup": { "text": "Blast radius is the scope of impact when something goes wrong. Smaller blast radius means fewer affected users.", "visual": "🎯" },
+        "discovery": { "text": "Canary deployments limit blast radius: deploy to 1% of servers first. If it fails, only 1% of users are affected.", "visual": "🐦" },
+        "twist": { "text": "Cell-based architecture isolates users into independent cells. A failure in one cell doesn't affect other cells.", "visual": "🏗️" },
+        "climax": { "text": "Minimizing blast radius is the most effective way to limit the damage of inevitable failures.", "visual": "🛡️" },
+        "punchline": { "text": "Contain the explosion — limit how many users a failure affects.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How do canary deployments reduce blast radius?",
+        "options": ["By deploying to a small percentage of servers first before rolling out fully", "By testing in a staging environment", "By deploying faster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch03-resilience-patterns",
+      "title": "Circuit Breakers",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A downstream service is down. Your service keeps calling it, waiting for timeouts. Every request takes 30s and fails.", "visual": "⏳" },
+        "buildup": { "text": "A circuit breaker monitors failures. After a threshold of consecutive failures, it opens — blocking all calls instantly.", "visual": "🔌" },
+        "discovery": { "text": "When open, calls fail instantly without waiting. After a cooldown, one test request checks if the service recovered.", "visual": "🔄" },
+        "twist": { "text": "Without circuit breakers, a slow dependency slows your service too. With them, you fail fast and gracefully degrade.", "visual": "⚡" },
+        "climax": { "text": "Circuit breakers prevent cascading failures by isolating unhealthy dependencies and failing fast instead of waiting.", "visual": "🛡️" },
+        "punchline": { "text": "Fail fast when a dependency is down — don't wait and suffer.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does an open circuit breaker do?",
+        "options": ["Blocks all calls to the failing service and returns errors immediately", "Retries the call multiple times", "Routes traffic to a different service"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch03-resilience-patterns",
+      "title": "Retry with Exponential Backoff",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your request fails. You retry immediately. It fails again. You retry again. You're now hammering a struggling service.", "visual": "🔨" },
+        "buildup": { "text": "Exponential backoff adds increasing delays between retries: 1s, 2s, 4s, 8s. Each retry waits longer.", "visual": "📈" },
+        "discovery": { "text": "Adding jitter randomizes the delay so thousands of clients don't all retry at the same millisecond.", "visual": "🎲" },
+        "twist": { "text": "Retries without backoff create retry storms that worsen outages. The retries become the attack on the struggling server.", "visual": "🌊" },
+        "climax": { "text": "Exponential backoff with jitter is the standard retry strategy for every network call in distributed systems.", "visual": "✅" },
+        "punchline": { "text": "Wait longer between retries, add randomness — don't pile on.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why add jitter to exponential backoff?",
+        "options": ["To prevent thousands of clients from retrying at the exact same moment", "To make retries faster", "To reduce the number of retries"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch03-resilience-patterns",
+      "title": "Bulkheads",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A ship has bulkheads: sealed compartments. If one floods, the others stay dry. The ship survives.", "visual": "🚢" },
+        "buildup": { "text": "In software, bulkheads isolate components. If the image service fails, it shouldn't take down the checkout flow.", "visual": "🧱" },
+        "discovery": { "text": "Separate thread pools per dependency. If one pool is exhausted waiting on a slow service, others keep working.", "visual": "🏊" },
+        "twist": { "text": "Without bulkheads, one slow API consumes all available threads. Every other API endpoint becomes unresponsive too.", "visual": "💀" },
+        "climax": { "text": "Bulkheads contain failures to their compartment, preventing one bad component from sinking the entire system.", "visual": "🛡️" },
+        "punchline": { "text": "Isolate components — one failure shouldn't sink the whole ship.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a bulkhead pattern in software?",
+        "options": ["Isolating components so one failure doesn't affect the rest of the system", "A backup power supply", "A type of load balancer"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch03-resilience-patterns",
+      "title": "Graceful Degradation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The recommendation engine is down. Do you show an error page? Or show the page without recommendations?", "visual": "📉" },
+        "buildup": { "text": "Graceful degradation provides reduced functionality instead of total failure when a component is unavailable.", "visual": "🔄" },
+        "discovery": { "text": "Amazon shows generic bestsellers when its recommendation engine fails. Users get a worse experience, not no experience.", "visual": "📦" },
+        "twist": { "text": "Degradation must be designed in advance. You can't decide what to show during an outage — it must be planned and tested.", "visual": "📋" },
+        "climax": { "text": "The best systems degrade so gracefully that most users never notice something is broken behind the scenes.", "visual": "✨" },
+        "punchline": { "text": "When something breaks, do less — not nothing.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is graceful degradation?",
+        "options": ["Providing reduced functionality instead of total failure when a component breaks", "Shutting down the system safely", "Gradually reducing server capacity"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch03-resilience-patterns",
+      "title": "Timeouts",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your HTTP client has no timeout. The server hangs. Your request waits forever, holding a thread, connection, and memory.", "visual": "⏰" },
+        "buildup": { "text": "Timeouts set a maximum wait time. If the server doesn't respond in 5 seconds, the client gives up and moves on.", "visual": "✂️" },
+        "discovery": { "text": "Set two timeouts: a connection timeout (how long to establish contact) and a read timeout (how long to wait for data).", "visual": "🔧" },
+        "twist": { "text": "Timeouts that are too short cause false failures on slow but successful requests. Too long and threads pile up waiting.", "visual": "⚖️" },
+        "climax": { "text": "Every network call needs a timeout. A missing timeout is a bug — it's an implicit decision to wait forever.", "visual": "🐛" },
+        "punchline": { "text": "Always set timeouts — waiting forever is never acceptable.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why are missing timeouts considered a bug?",
+        "options": ["They allow requests to wait forever, consuming resources indefinitely", "They make responses faster", "They're required by HTTP specification"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch04-redundancy-and-replication",
+      "title": "Active-Passive Failover",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your primary database crashes. A replica that's been silently syncing every second takes over in 30 seconds.", "visual": "🔄" },
+        "buildup": { "text": "Active-passive: the primary handles all traffic. The passive replica stays in sync, ready to take over on failure.", "visual": "🏗️" },
+        "discovery": { "text": "Failover can be automatic (health check triggers it) or manual (a human decides). Automatic is faster but riskier.", "visual": "🤖" },
+        "twist": { "text": "The replica might be slightly behind. Promoting it means losing the last few seconds of writes. Data loss is possible.", "visual": "⚠️" },
+        "climax": { "text": "Active-passive is the simplest redundancy pattern. It's the foundation of high availability for databases.", "visual": "🏆" },
+        "punchline": { "text": "Primary handles traffic; passive is ready to take over on failure.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the risk of automatic failover?",
+        "options": ["The replica may be slightly behind, causing a few seconds of data loss", "It's too slow to be useful", "The passive replica can't handle traffic"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch04-redundancy-and-replication",
+      "title": "Active-Active Replication",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Both data centers handle traffic simultaneously. If one goes down, the other continues without any failover delay.", "visual": "⚡" },
+        "buildup": { "text": "Active-active: multiple replicas all serve read and write traffic. No single primary — all nodes are equal.", "visual": "🔀" },
+        "discovery": { "text": "Active-active eliminates failover delay. Users are already served by multiple locations — one disappearing is seamless.", "visual": "✅" },
+        "twist": { "text": "Write conflicts: two users update the same record in different data centers simultaneously. Which write wins?", "visual": "💥" },
+        "climax": { "text": "Active-active is powerful for availability but requires conflict resolution strategies for concurrent writes.", "visual": "⚖️" },
+        "punchline": { "text": "Both replicas serve traffic — no failover delay, but conflicts to manage.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the main challenge of active-active replication?",
+        "options": ["Resolving write conflicts when both replicas receive concurrent writes", "It's too slow", "Only one replica can serve reads"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch04-redundancy-and-replication",
+      "title": "Multi-Region Architecture",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An entire AWS region goes down. Your application keeps running because it's deployed in two regions.", "visual": "🌍" },
+        "buildup": { "text": "Multi-region deploys your app in geographically separate data centers. If one region fails, others serve traffic.", "visual": "🏗️" },
+        "discovery": { "text": "DNS-based routing directs users to the nearest healthy region. Latency is lower and availability is higher.", "visual": "📡" },
+        "twist": { "text": "Keeping data consistent across regions is the hard part. Cross-region replication has latency — typically 50-200ms.", "visual": "⏳" },
+        "climax": { "text": "Multi-region is the gold standard for high availability but adds significant complexity and cost.", "visual": "💰" },
+        "punchline": { "text": "Deploy in multiple regions — survive any single region failing.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the biggest challenge of multi-region architecture?",
+        "options": ["Keeping data consistent across regions with replication latency", "Deploying code to multiple servers", "Finding data center locations"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch04-redundancy-and-replication",
+      "title": "Backup Strategies",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your database is corrupted. Your last backup was 6 months ago. Six months of customer data — gone.", "visual": "💀" },
+        "buildup": { "text": "Full backups copy everything. Incremental backups copy only what changed since the last backup. Both are needed.", "visual": "📦" },
+        "discovery": { "text": "Point-in-time recovery uses transaction logs to restore the database to any specific second. Not just the last backup.", "visual": "⏰" },
+        "twist": { "text": "Backups are worthless if never tested. Many teams discover their backups are corrupt only during an actual crisis.", "visual": "😱" },
+        "climax": { "text": "The 3-2-1 rule: 3 copies, on 2 different media, with 1 offsite. Test restores regularly.", "visual": "📋" },
+        "punchline": { "text": "A backup that's never been tested is not a backup.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the 3-2-1 backup rule?",
+        "options": ["3 copies, on 2 different media, with 1 stored offsite", "Back up 3 times a day for 2 weeks", "Keep 3 databases in 2 regions"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch04-redundancy-and-replication",
+      "title": "Health Checks and Heartbeats",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A server crashes but the load balancer keeps sending it traffic. Users see errors for 5 minutes until someone notices.", "visual": "🚨" },
+        "buildup": { "text": "Health checks are periodic probes: the load balancer asks each server 'are you alive?' every few seconds.", "visual": "🏥" },
+        "discovery": { "text": "Shallow checks test if the process is running. Deep checks test if the database, cache, and dependencies are reachable.", "visual": "🔍" },
+        "twist": { "text": "If checks are too deep, a dependency outage makes all servers report unhealthy — the load balancer removes them all.", "visual": "💥" },
+        "climax": { "text": "Health checks should be deep enough to catch real problems but not so deep that they cause false negatives.", "visual": "⚖️" },
+        "punchline": { "text": "Check if services are truly healthy — not just running.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the risk of overly deep health checks?",
+        "options": ["A dependency outage makes all servers appear unhealthy, removing them all", "They consume too much CPU", "They slow down user requests"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch05-incident-management",
+      "title": "On-Call and Alerting",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "It's 3 AM. Your phone buzzes: 'Error rate above 5%.' You have 15 minutes to acknowledge before it escalates.", "visual": "📱" },
+        "buildup": { "text": "On-call engineers carry a pager (now a phone app) and respond to production alerts within minutes, day or night.", "visual": "⏰" },
+        "discovery": { "text": "Good alerts have clear severity: P1 (wake people up), P2 (fix today), P3 (fix this week). Not all alerts are urgent.", "visual": "🚦" },
+        "twist": { "text": "Alert fatigue is real. If 90% of alerts are noise, engineers start ignoring all alerts — including critical ones.", "visual": "😴" },
+        "climax": { "text": "Every alert should be actionable. If you can't do anything about it, it's a log entry, not an alert.", "visual": "📋" },
+        "punchline": { "text": "Alert on what's actionable — every page should mean something.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What causes alert fatigue?",
+        "options": ["Too many non-actionable alerts cause engineers to ignore all alerts", "Not enough alerts being sent", "Alerts that are too quiet"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch05-incident-management",
+      "title": "Incident Response Process",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Production is down. Everyone is panicking, talking over each other, and trying different fixes simultaneously. Chaos.", "visual": "🔥" },
+        "buildup": { "text": "Incident response assigns roles: commander (coordinates), communicator (updates stakeholders), and responders (fix).", "visual": "👷" },
+        "discovery": { "text": "The incident commander doesn't fix the problem — they coordinate. Keeping order during chaos is a full-time job.", "visual": "🎖️" },
+        "twist": { "text": "Communication matters as much as fixing. Stakeholders need updates every 15-30 minutes, even if nothing has changed.", "visual": "📢" },
+        "climax": { "text": "Structured incident response turns panicked chaos into coordinated recovery. Practice it before you need it.", "visual": "🛡️" },
+        "punchline": { "text": "Assign roles, communicate, coordinate — don't improvise during outages.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the incident commander's role?",
+        "options": ["Coordinating the response effort, not fixing the problem directly", "Writing code to fix the issue", "Communicating with customers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch05-incident-management",
+      "title": "Blameless Postmortems",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An engineer pushed a bad config and caused a 4-hour outage. Do you blame them? Or fix the system that allowed it?", "visual": "🤔" },
+        "buildup": { "text": "Blameless postmortems focus on systemic causes, not individual mistakes. The goal is learning, not punishment.", "visual": "📝" },
+        "discovery": { "text": "Why did the system allow this? Why didn't tests catch it? Why no rollback? Fix the process, not the person.", "visual": "🔍" },
+        "twist": { "text": "If people are punished for incidents, they hide information. Postmortems become incomplete and mistakes repeat.", "visual": "🤐" },
+        "climax": { "text": "Blameless culture creates psychological safety. Engineers report near-misses, share mistakes, and everyone learns.", "visual": "🌱" },
+        "punchline": { "text": "Blame the system, not the person — fix the process.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why are blameless postmortems more effective?",
+        "options": ["People share information openly when they won't be punished, enabling systemic fixes", "They're faster to write", "They don't require investigation"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch05-incident-management",
+      "title": "Runbooks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "It's 3 AM, you're half awake, and the database is down. Do you remember the exact recovery steps? Probably not.", "visual": "😴" },
+        "buildup": { "text": "A runbook is a step-by-step guide for handling specific incidents: database failover, service restart, cache flush.", "visual": "📖" },
+        "discovery": { "text": "Good runbooks include: symptoms, diagnosis steps, fix steps, rollback procedures, and who to escalate to.", "visual": "📋" },
+        "twist": { "text": "Runbooks rot. Systems change but runbooks don't. Outdated runbooks are worse than none — they give false confidence.", "visual": "📉" },
+        "climax": { "text": "Keep runbooks linked to alerts. When an alert fires, the runbook for that specific scenario should be one click away.", "visual": "🔗" },
+        "punchline": { "text": "Written steps for 3 AM — when your brain can't improvise.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why do runbooks need regular updates?",
+        "options": ["Systems change and outdated runbooks give false confidence", "They expire automatically", "New team members can't read old runbooks"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch05-incident-management",
+      "title": "Status Pages and Communication",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your service is down. Customers flood support with 'is it just me?' A status page answers that question for everyone.", "visual": "📊" },
+        "buildup": { "text": "A public status page shows real-time system health: which services are up, degraded, or experiencing outages.", "visual": "🚦" },
+        "discovery": { "text": "Proactive communication during outages reduces support tickets by up to 80%. Users just want to know you're aware.", "visual": "📉" },
+        "twist": { "text": "The status page must be hosted independently. If your servers are down, the status page must still be accessible.", "visual": "🏗️" },
+        "climax": { "text": "Transparent communication during incidents builds trust. Hiding outages destroys it faster than the outage itself.", "visual": "🤝" },
+        "punchline": { "text": "Tell customers before they ask — host the status page independently.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why must a status page be hosted independently?",
+        "options": ["If your main infrastructure is down, the status page must still be accessible", "It loads faster on a separate server", "It's required by law"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch06-chaos-engineering",
+      "title": "What Is Chaos Engineering",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Netflix deliberately kills production servers during business hours. And their system keeps running perfectly.", "visual": "🔥" },
+        "buildup": { "text": "Chaos engineering injects failures into production to verify the system handles them before real failures strike.", "visual": "🧪" },
+        "discovery": { "text": "Chaos Monkey randomly kills instances. If the system survives, it's resilient. If not, they fix it before a real outage.", "visual": "🐵" },
+        "twist": { "text": "Running experiments in staging isn't enough. Production has different traffic patterns, data volumes, and edge cases.", "visual": "🏭" },
+        "climax": { "text": "Chaos engineering shifts from hoping the system is resilient to proving it is — through controlled experiments.", "visual": "🔬" },
+        "punchline": { "text": "Break things on purpose — find weaknesses before real failures do.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why does Netflix run Chaos Monkey in production?",
+        "options": ["To verify resilience under real conditions before actual failures occur", "To test new features", "To reduce server costs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch06-chaos-engineering",
+      "title": "Game Days",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your team simulates a major outage. The primary database goes down. Can you recover in under 30 minutes? Let's find out.", "visual": "🎮" },
+        "buildup": { "text": "A game day is a scheduled exercise where teams practice responding to simulated failures in a controlled environment.", "visual": "🏋️" },
+        "discovery": { "text": "Game days test not just technical systems but also human processes: communication, escalation, and decision-making.", "visual": "👥" },
+        "twist": { "text": "Most teams discover their runbooks are outdated, backups don't work, or failover is slower than expected.", "visual": "😰" },
+        "climax": { "text": "Game days build muscle memory. When a real incident happens, the team has already practiced the response.", "visual": "💪" },
+        "punchline": { "text": "Practice disasters before they happen — discover gaps safely.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What do game days typically reveal?",
+        "options": ["Outdated runbooks, broken backups, and slower-than-expected failover", "That systems are always perfectly resilient", "That monitoring is unnecessary"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch06-chaos-engineering",
+      "title": "Fault Injection",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You add 500ms of latency to every database call. Suddenly, timeouts cascade through 4 services. The system crumbles.", "visual": "⏳" },
+        "buildup": { "text": "Fault injection deliberately introduces failures: latency, errors, packet loss, CPU exhaustion, or disk full.", "visual": "💉" },
+        "discovery": { "text": "AWS Fault Injection Simulator and Gremlin can inject failures into specific services without modifying application code.", "visual": "🧰" },
+        "twist": { "text": "Injecting faults without a hypothesis is just breaking things. You need a prediction: 'the system should survive this.'", "visual": "📝" },
+        "climax": { "text": "Fault injection turns theoretical resilience into tested resilience. What you've never tested, you can't trust.", "visual": "✅" },
+        "punchline": { "text": "Inject failures deliberately — test what you claim to handle.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why does fault injection require a hypothesis?",
+        "options": ["Without a prediction, you're just breaking things — not learning from the results", "Hypotheses make failures less damaging", "Regulatory requirements demand it"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch06-chaos-engineering",
+      "title": "Disaster Recovery Planning",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An entire AWS region goes offline. Your RTO is 4 hours. Can you actually recover in 4 hours? Have you ever tried?", "visual": "🌪️" },
+        "buildup": { "text": "RTO is how fast you must recover. RPO is how much data loss you can accept. Together they define your DR requirements.", "visual": "📐" },
+        "discovery": { "text": "A DR plan documents: what to recover, in what order, who is responsible, and where the backups are.", "visual": "📋" },
+        "twist": { "text": "Most DR plans have never been tested. In a real disaster, teams find recovery takes 3x longer than estimated.", "visual": "😱" },
+        "climax": { "text": "A disaster recovery plan that hasn't been tested is just a document. Regular DR drills turn it into a reliable process.", "visual": "🏋️" },
+        "punchline": { "text": "Plan for disaster, practice recovery — don't discover gaps during a crisis.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the difference between RTO and RPO?",
+        "options": ["RTO is how fast you recover; RPO is how much data loss you accept", "They measure the same thing", "RTO is for databases; RPO is for servers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--reliability-and-resilience--ch06-chaos-engineering",
+      "title": "Building a Culture of Reliability",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Tools don't make systems reliable. Culture does. If nobody cares about reliability, no tool will save you.", "visual": "🌱" },
+        "buildup": { "text": "A reliability culture means every engineer thinks about failure modes, writes runbooks, and monitors their services.", "visual": "👷" },
+        "discovery": { "text": "Google's SRE model embeds reliability engineers in product teams. Reliability isn't separate — it's everyone's job.", "visual": "🤝" },
+        "twist": { "text": "Reliability culture needs management support. If shipping features always beats fixing reliability, culture erodes.", "visual": "📉" },
+        "climax": { "text": "The most reliable systems are built by teams where reliability is valued as much as feature velocity.", "visual": "⚖️" },
+        "punchline": { "text": "Reliability is a culture, not a tool — everyone owns it.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does Google's SRE model do?",
+        "options": ["Embeds reliability engineers in product teams so reliability is everyone's concern", "Replaces developers with operations engineers", "Automates all deployments"],
+        "correct": 0
+      }
+    }
+  ]
+}

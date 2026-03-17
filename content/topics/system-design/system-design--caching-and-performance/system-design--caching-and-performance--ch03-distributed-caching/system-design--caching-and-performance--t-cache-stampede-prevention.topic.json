@@ -1,0 +1,49 @@
+{
+  "id": "system-design--caching-and-performance--t-cache-stampede-prevention",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Caching and Performance",
+  "course_id": "system-design--caching-and-performance",
+  "chapter_id": "system-design--caching-and-performance--ch03-distributed-caching",
+  "title": "Cache Stampede Prevention",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A quick, practical guide to Cache Stampede Prevention.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A popular cache key expires. 10,000 concurrent requests all miss and hit the database simultaneously.",
+      "visual": "🐎"
+    },
+    "buildup": {
+      "text": "A cache stampede (thundering herd) occurs when many requests for the same key arrive during a cache miss.",
+      "visual": "🌊"
+    },
+    "discovery": {
+      "text": "Lock-based prevention: one request fetches while others wait. Probabilistic refresh: refresh before expiry.",
+      "visual": "🔒"
+    },
+    "twist": {
+      "text": "Serving slightly stale data during refresh is often acceptable and avoids the stampede entirely.",
+      "visual": "⏳"
+    },
+    "climax": {
+      "text": "Stampede prevention is critical for high-traffic systems. Without it, a cache miss can cascade into a database outage.",
+      "visual": "💥"
+    },
+    "punchline": {
+      "text": "One request refreshes; the rest wait or get stale data.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "How can you prevent a cache stampede?",
+    "options": [
+      "Lock-based fetch where one request refreshes and others wait",
+      "Delete the cache entirely",
+      "Increase database capacity"
+    ],
+    "correct": 0
+  }
+}

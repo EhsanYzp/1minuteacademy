@@ -1,0 +1,49 @@
+{
+  "id": "system-design--scalability--t-database-sharding-strategies",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Scalability: From One to Millions",
+  "course_id": "system-design--scalability",
+  "chapter_id": "system-design--scalability--ch03-scaling-the-data-tier",
+  "title": "Database Sharding Strategies",
+  "emoji": "📈",
+  "color": "#059669",
+  "description": "A 60-second lesson on Database Sharding Strategies.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your database has 2 billion rows. Even indexed queries are slow. It's time to shard.",
+      "visual": "🔪"
+    },
+    "buildup": {
+      "text": "Range sharding splits by value ranges. Hash sharding distributes evenly using a hash function.",
+      "visual": "🎲"
+    },
+    "discovery": {
+      "text": "Hash sharding prevents hot spots but makes range queries expensive. Range sharding is the opposite.",
+      "visual": "⚖️"
+    },
+    "twist": {
+      "text": "Resharding — changing the number of shards — requires migrating billions of rows with zero downtime.",
+      "visual": "😰"
+    },
+    "climax": {
+      "text": "Choose your shard key carefully. Changing it later is one of the most painful operations in engineering.",
+      "visual": "🔑"
+    },
+    "punchline": {
+      "text": "The shard key is a one-way door — choose wisely.",
+      "visual": "🚪"
+    }
+  },
+  "quiz": {
+    "question": "What is the downside of hash sharding?",
+    "options": [
+      "Range queries become expensive",
+      "It creates hot spots",
+      "It doesn't distribute data evenly"
+    ],
+    "correct": 0
+  }
+}

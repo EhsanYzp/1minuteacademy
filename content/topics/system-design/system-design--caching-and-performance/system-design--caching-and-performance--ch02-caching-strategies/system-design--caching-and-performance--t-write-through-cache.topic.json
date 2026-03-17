@@ -1,0 +1,49 @@
+{
+  "id": "system-design--caching-and-performance--t-write-through-cache",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Caching and Performance",
+  "course_id": "system-design--caching-and-performance",
+  "chapter_id": "system-design--caching-and-performance--ch02-caching-strategies",
+  "title": "Write-Through Cache",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A quick win: understand Write-Through Cache.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Every write goes to the cache AND the database simultaneously. The cache is always in sync.",
+      "visual": "🔄"
+    },
+    "buildup": {
+      "text": "Write-through ensures the cache always has the latest data. No stale reads, ever.",
+      "visual": "✅"
+    },
+    "discovery": {
+      "text": "It pairs well with cache-aside: writes update both, reads always hit a fresh cache.",
+      "visual": "🤝"
+    },
+    "twist": {
+      "text": "Write-through adds latency to every write. Both the cache and database must confirm before returning.",
+      "visual": "⏱️"
+    },
+    "climax": {
+      "text": "Write-through is ideal when data consistency matters more than write speed.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Write to cache and database together — always consistent.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is the downside of write-through caching?",
+    "options": [
+      "Every write is slower because both cache and DB must confirm",
+      "Data can become stale",
+      "It uses too much memory"
+    ],
+    "correct": 0
+  }
+}

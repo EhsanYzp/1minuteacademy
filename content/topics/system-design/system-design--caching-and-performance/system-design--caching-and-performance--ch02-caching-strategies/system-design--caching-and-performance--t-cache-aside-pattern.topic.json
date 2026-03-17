@@ -1,0 +1,49 @@
+{
+  "id": "system-design--caching-and-performance--t-cache-aside-pattern",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Caching and Performance",
+  "course_id": "system-design--caching-and-performance",
+  "chapter_id": "system-design--caching-and-performance--ch02-caching-strategies",
+  "title": "Cache-Aside Pattern",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A fast breakdown of Cache-Aside Pattern for builders.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The application checks the cache first. On a miss, it queries the database and stores the result in cache.",
+      "visual": "🔍"
+    },
+    "buildup": {
+      "text": "Cache-aside (lazy loading) puts the application in control of what goes into the cache and when.",
+      "visual": "📋"
+    },
+    "discovery": {
+      "text": "Only requested data is cached. Unused data never wastes cache space. It's the most common caching strategy.",
+      "visual": "✅"
+    },
+    "twist": {
+      "text": "Cache-aside can serve stale data. The database might change, but the cache won't know until the TTL expires.",
+      "visual": "⏳"
+    },
+    "climax": {
+      "text": "Cache-aside is simple, flexible, and works for most read-heavy applications out of the box.",
+      "visual": "🏆"
+    },
+    "punchline": {
+      "text": "Check cache, miss, fetch, store — the simplest pattern.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "How does the cache-aside pattern work?",
+    "options": [
+      "App checks cache; on miss, queries DB and stores result in cache",
+      "DB automatically updates the cache",
+      "Cache writes directly to the database"
+    ],
+    "correct": 0
+  }
+}

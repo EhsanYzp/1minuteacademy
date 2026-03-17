@@ -1,0 +1,49 @@
+{
+  "id": "system-design--caching-and-performance--t-cdn-purging",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Caching and Performance",
+  "course_id": "system-design--caching-and-performance",
+  "chapter_id": "system-design--caching-and-performance--ch05-cache-invalidation",
+  "title": "CDN Purging",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "Learn CDN Purging in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You fix a typo on your website. The CDN still serves the old page from 200 edge servers worldwide.",
+      "visual": "🌐"
+    },
+    "buildup": {
+      "text": "CDN purging sends invalidation requests to all edge nodes to discard cached content.",
+      "visual": "🗑️"
+    },
+    "discovery": {
+      "text": "Cloudflare can purge globally in under 150ms. Others take minutes to propagate across all PoPs.",
+      "visual": "⏱️"
+    },
+    "twist": {
+      "text": "Purging by URL is precise but slow for bulk changes. Purging everything is fast but destroys your hit rate.",
+      "visual": "💥"
+    },
+    "climax": {
+      "text": "Cache tags let you purge all resources with a specific tag — like all product images — without purging everything.",
+      "visual": "🏷️"
+    },
+    "punchline": {
+      "text": "Purge precisely — don't nuke the entire CDN cache.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What are cache tags used for in CDN purging?",
+    "options": [
+      "Purging groups of related resources without clearing everything",
+      "Speeding up cache lookups",
+      "Encrypting cached content"
+    ],
+    "correct": 0
+  }
+}

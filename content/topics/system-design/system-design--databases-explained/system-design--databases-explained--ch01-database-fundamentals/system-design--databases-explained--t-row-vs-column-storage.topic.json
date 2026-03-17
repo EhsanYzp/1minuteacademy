@@ -1,0 +1,49 @@
+{
+  "id": "system-design--databases-explained--t-row-vs-column-storage",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Databases Explained",
+  "course_id": "system-design--databases-explained",
+  "chapter_id": "system-design--databases-explained--ch01-database-fundamentals",
+  "title": "Row vs Column Storage",
+  "emoji": "🗄️",
+  "color": "#7C3AED",
+  "description": "Learn Row vs Column Storage in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Query: average salary of 10 million employees. Row storage reads every column. Column storage reads just salaries.",
+      "visual": "📊"
+    },
+    "buildup": {
+      "text": "Row-oriented stores keep all columns of a row together. Column-oriented stores keep all values of one column together.",
+      "visual": "📋"
+    },
+    "discovery": {
+      "text": "Column stores compress data 10x better because values in a column are similar and highly compressible.",
+      "visual": "📦"
+    },
+    "twist": {
+      "text": "Column stores are terrible for inserting single rows — every column file must be updated separately.",
+      "visual": "🐌"
+    },
+    "climax": {
+      "text": "OLTP workloads use row stores. OLAP analytics use column stores. Each is optimized for its use case.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Row stores for transactions, column stores for analytics.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why are column stores better for analytics?",
+    "options": [
+      "They read only the needed columns and compress better",
+      "They're faster at inserting rows",
+      "They use less disk space overall"
+    ],
+    "correct": 0
+  }
+}

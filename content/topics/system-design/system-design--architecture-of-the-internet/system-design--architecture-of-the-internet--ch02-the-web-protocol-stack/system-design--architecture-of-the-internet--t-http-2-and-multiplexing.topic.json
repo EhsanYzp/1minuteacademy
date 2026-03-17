@@ -1,0 +1,49 @@
+{
+  "id": "system-design--architecture-of-the-internet--t-http-2-and-multiplexing",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Architecture of the Internet",
+  "course_id": "system-design--architecture-of-the-internet",
+  "chapter_id": "system-design--architecture-of-the-internet--ch02-the-web-protocol-stack",
+  "title": "HTTP/2 and Multiplexing",
+  "emoji": "🌐",
+  "color": "#0891B2",
+  "description": "A 60-second lesson on HTTP/2 and Multiplexing.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A web page loads 80 resources. With HTTP/1.1, the browser opens 6 connections and queues the rest.",
+      "visual": "🚦"
+    },
+    "buildup": {
+      "text": "HTTP/2 sends multiple requests over a single connection simultaneously using multiplexed streams.",
+      "visual": "🔀"
+    },
+    "discovery": {
+      "text": "Header compression and server push further reduce latency. Pages load noticeably faster.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "A single lost TCP packet blocks all streams — head-of-line blocking at the transport layer persists.",
+      "visual": "🚧"
+    },
+    "climax": {
+      "text": "HTTP/2 solved application-layer multiplexing but exposed TCP as the new bottleneck.",
+      "visual": "🔍"
+    },
+    "punchline": {
+      "text": "One connection, many streams — but TCP remains the limit.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What problem does HTTP/2 solve?",
+    "options": [
+      "Multiple requests over a single connection via multiplexing",
+      "Encryption of all web traffic",
+      "Replacing DNS"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "system-design--microservices-vs-monoliths--t-service-discovery",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Microservices vs Monoliths",
+  "course_id": "system-design--microservices-vs-monoliths",
+  "chapter_id": "system-design--microservices-vs-monoliths--ch02-enter-microservices",
+  "title": "Service Discovery",
+  "emoji": "🧩",
+  "color": "#BE185D",
+  "description": "A quick win: understand Service Discovery.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The orders service needs to call the payments service. But its IP address changed after a deploy. Where is it now?",
+      "visual": "🔍"
+    },
+    "buildup": {
+      "text": "Service discovery maintains a registry of all services and their network locations.",
+      "visual": "📖"
+    },
+    "discovery": {
+      "text": "Services register themselves on startup. Clients query the registry to find the current address of a service.",
+      "visual": "📡"
+    },
+    "twist": {
+      "text": "If the registry is down, no service can find any other service. The registry is now a critical dependency.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Kubernetes solves this with DNS-based service discovery. Each service gets a stable DNS name that routes automatically.",
+      "visual": "☸️"
+    },
+    "punchline": {
+      "text": "Services need to find each other — discovery makes it automatic.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What problem does service discovery solve?",
+    "options": [
+      "Finding the current network address of services that move between deploys",
+      "Debugging service errors",
+      "Encrypting service communication"
+    ],
+    "correct": 0
+  }
+}

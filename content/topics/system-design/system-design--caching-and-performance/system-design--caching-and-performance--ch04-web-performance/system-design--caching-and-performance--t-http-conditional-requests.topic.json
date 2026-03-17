@@ -1,0 +1,49 @@
+{
+  "id": "system-design--caching-and-performance--t-http-conditional-requests",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Caching and Performance",
+  "course_id": "system-design--caching-and-performance",
+  "chapter_id": "system-design--caching-and-performance--ch04-web-performance",
+  "title": "HTTP Conditional Requests",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "One-minute skill: HTTP Conditional Requests.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your browser has a cached page. Is it still fresh? Instead of downloading again, it asks: has this changed?",
+      "visual": "❓"
+    },
+    "buildup": {
+      "text": "Conditional requests use If-None-Match (ETag) or If-Modified-Since headers to check for changes.",
+      "visual": "📋"
+    },
+    "discovery": {
+      "text": "If unchanged, the server returns 304 Not Modified — no body, just a confirmation. Bandwidth saved.",
+      "visual": "✅"
+    },
+    "twist": {
+      "text": "Generating ETags for dynamic content adds server-side computation. For static files, the web server handles it.",
+      "visual": "⚙️"
+    },
+    "climax": {
+      "text": "Conditional requests save bandwidth and latency by transferring data only when it has actually changed.",
+      "visual": "📉"
+    },
+    "punchline": {
+      "text": "Ask if it changed — skip the download if it didn't.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What does a 304 Not Modified response mean?",
+    "options": [
+      "The cached version is still valid; no need to download again",
+      "The resource was deleted",
+      "The server had an error"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "system-design--distributed-systems--t-the-problem-with-physical-clocks",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Distributed Systems Explained",
+  "course_id": "system-design--distributed-systems",
+  "chapter_id": "system-design--distributed-systems--ch05-clocks-and-ordering",
+  "title": "The Problem with Physical Clocks",
+  "emoji": "🔗",
+  "color": "#D97706",
+  "description": "A fast breakdown of The Problem with Physical Clocks for builders.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Server A's clock says 10:00:00.000. Server B's clock says 10:00:00.032. Which write happened first?",
+      "visual": "🕐"
+    },
+    "buildup": {
+      "text": "Physical clocks on different machines drift apart. NTP synchronizes them but only to within milliseconds.",
+      "visual": "⏱️"
+    },
+    "discovery": {
+      "text": "Google's Spanner uses GPS and atomic clocks to keep servers within 7 microseconds of each other.",
+      "visual": "📡"
+    },
+    "twist": {
+      "text": "Most companies don't have GPS clocks. Clock drift of 100ms is common and can silently corrupt data ordering.",
+      "visual": "💀"
+    },
+    "climax": {
+      "text": "Using wall-clock timestamps for ordering in distributed systems is fundamentally unreliable.",
+      "visual": "⚠️"
+    },
+    "punchline": {
+      "text": "Distributed clocks drift — don't trust timestamps for ordering.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why are physical clocks unreliable for ordering events?",
+    "options": [
+      "Clocks on different machines drift apart by milliseconds",
+      "They're too precise",
+      "They stop during network partitions"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "system-design--caching-and-performance--t-stale-while-revalidate",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Caching and Performance",
+  "course_id": "system-design--caching-and-performance",
+  "chapter_id": "system-design--caching-and-performance--ch05-cache-invalidation",
+  "title": "Stale-While-Revalidate",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A 1-minute de-risking session on Stale-While-Revalidate.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The cache entry expired. Do you make the user wait while you fetch fresh data? Or serve stale data instantly?",
+      "visual": "⏰"
+    },
+    "buildup": {
+      "text": "Stale-while-revalidate serves the expired cached data immediately and refreshes in the background.",
+      "visual": "🔄"
+    },
+    "discovery": {
+      "text": "The user gets an instant response. The next request gets the fresh version. Perceived latency is zero.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "For rapidly changing data, the stale version might be significantly wrong. Not suitable for financial data.",
+      "visual": "💰"
+    },
+    "climax": {
+      "text": "Stale-while-revalidate is the best of both worlds for content where freshness is nice but speed is critical.",
+      "visual": "🏆"
+    },
+    "punchline": {
+      "text": "Serve stale instantly, refresh in the background.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What does stale-while-revalidate do?",
+    "options": [
+      "Serves expired cached data instantly while refreshing in the background",
+      "Deletes stale data immediately",
+      "Blocks until fresh data is ready"
+    ],
+    "correct": 0
+  }
+}

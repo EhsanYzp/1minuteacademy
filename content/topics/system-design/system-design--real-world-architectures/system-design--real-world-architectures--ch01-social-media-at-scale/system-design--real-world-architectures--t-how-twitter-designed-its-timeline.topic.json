@@ -1,0 +1,49 @@
+{
+  "id": "system-design--real-world-architectures--t-how-twitter-designed-its-timeline",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Real-World Architectures",
+  "course_id": "system-design--real-world-architectures",
+  "chapter_id": "system-design--real-world-architectures--ch01-social-media-at-scale",
+  "title": "How Twitter Designed Its Timeline",
+  "emoji": "🏛️",
+  "color": "#4338CA",
+  "description": "A 60-second lesson on How Twitter Designed Its Timeline.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You open Twitter and see tweets from 500 people you follow, sorted by time. Building that feed is surprisingly hard.",
+      "visual": "🐦"
+    },
+    "buildup": {
+      "text": "Early Twitter pulled tweets at read time: query every followed user, merge, sort. At scale, this was too slow.",
+      "visual": "🐌"
+    },
+    "discovery": {
+      "text": "Twitter switched to fan-out on write: when you tweet, it's pushed into every follower's pre-built timeline cache.",
+      "visual": "📬"
+    },
+    "twist": {
+      "text": "50M-follower celebrities make fan-out expensive. Twitter uses a hybrid: fan-out for most, pull for celebrities.",
+      "visual": "⚡"
+    },
+    "climax": {
+      "text": "The timeline is a classic example of how the same problem needs different solutions at different scales.",
+      "visual": "📈"
+    },
+    "punchline": {
+      "text": "Fan-out on write for most, pull on read for celebrities.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why does Twitter use a hybrid approach for timelines?",
+    "options": [
+      "Fan-out is too expensive for users with millions of followers",
+      "Pull on read is always faster",
+      "Caching doesn't work for social media"
+    ],
+    "correct": 0
+  }
+}

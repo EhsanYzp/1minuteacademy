@@ -1,0 +1,49 @@
+{
+  "id": "system-design--reliability-and-resilience--t-bulkheads",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Reliability and Resilience",
+  "course_id": "system-design--reliability-and-resilience",
+  "chapter_id": "system-design--reliability-and-resilience--ch03-resilience-patterns",
+  "title": "Bulkheads",
+  "emoji": "🛡️",
+  "color": "#0D9488",
+  "description": "A 1-minute de-risking session on Bulkheads.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A ship has bulkheads: sealed compartments. If one floods, the others stay dry. The ship survives.",
+      "visual": "🚢"
+    },
+    "buildup": {
+      "text": "In software, bulkheads isolate components. If the image service fails, it shouldn't take down the checkout flow.",
+      "visual": "🧱"
+    },
+    "discovery": {
+      "text": "Separate thread pools per dependency. If one pool is exhausted waiting on a slow service, others keep working.",
+      "visual": "🏊"
+    },
+    "twist": {
+      "text": "Without bulkheads, one slow API consumes all available threads. Every other API endpoint becomes unresponsive too.",
+      "visual": "💀"
+    },
+    "climax": {
+      "text": "Bulkheads contain failures to their compartment, preventing one bad component from sinking the entire system.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Isolate components — one failure shouldn't sink the whole ship.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is a bulkhead pattern in software?",
+    "options": [
+      "Isolating components so one failure doesn't affect the rest of the system",
+      "A backup power supply",
+      "A type of load balancer"
+    ],
+    "correct": 0
+  }
+}

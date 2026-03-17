@@ -1,0 +1,49 @@
+{
+  "id": "system-design--caching-and-performance--t-write-behind-cache",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Caching and Performance",
+  "course_id": "system-design--caching-and-performance",
+  "chapter_id": "system-design--caching-and-performance--ch02-caching-strategies",
+  "title": "Write-Behind Cache",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A micro-lesson that makes Write-Behind Cache usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Writes go to the cache only. The cache asynchronously flushes to the database in the background.",
+      "visual": "📤"
+    },
+    "buildup": {
+      "text": "Write-behind (write-back) makes writes blazing fast because only the cache is updated immediately.",
+      "visual": "⚡"
+    },
+    "discovery": {
+      "text": "The cache batches multiple writes into one database operation, reducing database load significantly.",
+      "visual": "📦"
+    },
+    "twist": {
+      "text": "If the cache crashes before flushing, recent writes are lost. Durability is sacrificed for speed.",
+      "visual": "💀"
+    },
+    "climax": {
+      "text": "Write-behind is powerful for write-heavy workloads but requires accepting the risk of data loss on crash.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "Write to cache now, flush to database later — fast but risky.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What risk does write-behind caching introduce?",
+    "options": [
+      "Data loss if the cache crashes before flushing to the database",
+      "Slower reads",
+      "Higher memory usage"
+    ],
+    "correct": 0
+  }
+}

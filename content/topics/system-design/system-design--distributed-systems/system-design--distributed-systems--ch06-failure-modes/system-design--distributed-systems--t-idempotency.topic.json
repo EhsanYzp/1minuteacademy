@@ -1,0 +1,49 @@
+{
+  "id": "system-design--distributed-systems--t-idempotency",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Distributed Systems Explained",
+  "course_id": "system-design--distributed-systems",
+  "chapter_id": "system-design--distributed-systems--ch06-failure-modes",
+  "title": "Idempotency",
+  "emoji": "🔗",
+  "color": "#D97706",
+  "description": "A micro-lesson that makes Idempotency usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A payment request times out. Did it go through? You retry. Now the customer might be charged twice.",
+      "visual": "💳"
+    },
+    "buildup": {
+      "text": "An idempotent operation produces the same result no matter how many times it's executed.",
+      "visual": "♻️"
+    },
+    "discovery": {
+      "text": "Assigning an idempotency key to each request lets the server detect retries and return the cached result.",
+      "visual": "🔑"
+    },
+    "twist": {
+      "text": "Not all operations are naturally idempotent. 'Add $100' is not idempotent. 'Set balance to $500' is.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "In distributed systems where retries are inevitable, idempotency is the only safe way to handle them.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Make every operation safe to retry — always.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What makes an operation idempotent?",
+    "options": [
+      "It produces the same result no matter how many times it runs",
+      "It runs faster each time",
+      "It never fails"
+    ],
+    "correct": 0
+  }
+}

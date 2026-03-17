@@ -1,0 +1,49 @@
+{
+  "id": "system-design--distributed-systems--t-rebalancing-partitions",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Distributed Systems Explained",
+  "course_id": "system-design--distributed-systems",
+  "chapter_id": "system-design--distributed-systems--ch04-partitioning",
+  "title": "Rebalancing Partitions",
+  "emoji": "🔗",
+  "color": "#D97706",
+  "description": "A fast breakdown of Rebalancing Partitions for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your cluster grows from 5 to 10 nodes. How do you redistribute data without taking the system down?",
+      "visual": "📦"
+    },
+    "buildup": {
+      "text": "Rebalancing moves partitions between nodes to distribute load evenly after cluster changes.",
+      "visual": "⚖️"
+    },
+    "discovery": {
+      "text": "Fixed partition count is simplest: create more partitions than nodes. New nodes take over whole partitions.",
+      "visual": "🧩"
+    },
+    "twist": {
+      "text": "Moving data between nodes uses network bandwidth. If done too aggressively, it saturates the network.",
+      "visual": "🌊"
+    },
+    "climax": {
+      "text": "Good rebalancing is invisible to users. Bad rebalancing causes outages during the migration.",
+      "visual": "🎭"
+    },
+    "punchline": {
+      "text": "Rebalance gradually — or crash under the load.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why should rebalancing be done gradually?",
+    "options": [
+      "Aggressive data movement saturates the network",
+      "It's cheaper",
+      "Users prefer slow changes"
+    ],
+    "correct": 0
+  }
+}

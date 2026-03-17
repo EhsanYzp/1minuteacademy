@@ -1,0 +1,49 @@
+{
+  "id": "system-design--distributed-systems--t-single-leader-replication",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Distributed Systems Explained",
+  "course_id": "system-design--distributed-systems",
+  "chapter_id": "system-design--distributed-systems--ch03-replication",
+  "title": "Single-Leader Replication",
+  "emoji": "🔗",
+  "color": "#D97706",
+  "description": "A 1-minute de-risking session on Single-Leader Replication.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "All writes go to one leader. The leader copies them to followers. Reads can go to any node.",
+      "visual": "👑"
+    },
+    "buildup": {
+      "text": "Single-leader replication is the simplest model. PostgreSQL, MySQL, and MongoDB all default to it.",
+      "visual": "📋"
+    },
+    "discovery": {
+      "text": "It's easy to reason about: the leader has the authoritative copy. Conflicts are impossible on writes.",
+      "visual": "✅"
+    },
+    "twist": {
+      "text": "The leader is a single point of failure. If it dies, a failover is needed — and failovers can lose recent writes.",
+      "visual": "💀"
+    },
+    "climax": {
+      "text": "Single-leader is the go-to for most systems. It's simple, battle-tested, and good enough for most workloads.",
+      "visual": "🏆"
+    },
+    "punchline": {
+      "text": "One writer, many readers — simple and proven.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is the main weakness of single-leader replication?",
+    "options": [
+      "The leader is a single point of failure",
+      "It can't handle any reads",
+      "It requires too many servers"
+    ],
+    "correct": 0
+  }
+}

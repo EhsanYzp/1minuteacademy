@@ -1,0 +1,49 @@
+{
+  "id": "system-design--reliability-and-resilience--t-circuit-breakers",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Reliability and Resilience",
+  "course_id": "system-design--reliability-and-resilience",
+  "chapter_id": "system-design--reliability-and-resilience--ch03-resilience-patterns",
+  "title": "Circuit Breakers",
+  "emoji": "🛡️",
+  "color": "#0D9488",
+  "description": "A 1-minute de-risking session on Circuit Breakers.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A downstream service is down. Your service keeps calling it, waiting for timeouts. Every request takes 30s and fails.",
+      "visual": "⏳"
+    },
+    "buildup": {
+      "text": "A circuit breaker monitors failures. After a threshold of consecutive failures, it opens — blocking all calls instantly.",
+      "visual": "🔌"
+    },
+    "discovery": {
+      "text": "When open, calls fail instantly without waiting. After a cooldown, one test request checks if the service recovered.",
+      "visual": "🔄"
+    },
+    "twist": {
+      "text": "Without circuit breakers, a slow dependency slows your service too. With them, you fail fast and gracefully degrade.",
+      "visual": "⚡"
+    },
+    "climax": {
+      "text": "Circuit breakers prevent cascading failures by isolating unhealthy dependencies and failing fast instead of waiting.",
+      "visual": "🛡️"
+    },
+    "punchline": {
+      "text": "Fail fast when a dependency is down — don't wait and suffer.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What does an open circuit breaker do?",
+    "options": [
+      "Blocks all calls to the failing service and returns errors immediately",
+      "Retries the call multiple times",
+      "Routes traffic to a different service"
+    ],
+    "correct": 0
+  }
+}

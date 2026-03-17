@@ -1,0 +1,49 @@
+{
+  "id": "system-design--scalability--t-write-ahead-logs",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Scalability: From One to Millions",
+  "course_id": "system-design--scalability",
+  "chapter_id": "system-design--scalability--ch03-scaling-the-data-tier",
+  "title": "Write-Ahead Logs",
+  "emoji": "📈",
+  "color": "#059669",
+  "description": "A quick win: understand Write-Ahead Logs.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A database crashes mid-write. The data was half-saved. How does it recover without corruption?",
+      "visual": "💥"
+    },
+    "buildup": {
+      "text": "A write-ahead log records every change before applying it. If a crash occurs, the log replays cleanly.",
+      "visual": "📝"
+    },
+    "discovery": {
+      "text": "WALs are sequential writes — much faster than random writes to disk. This speeds up commits too.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "WALs also power replication. Replicas read the primary's log and apply changes in the same order.",
+      "visual": "📋"
+    },
+    "climax": {
+      "text": "The write-ahead log is one of the most important data structures in all of database engineering.",
+      "visual": "🏆"
+    },
+    "punchline": {
+      "text": "Log the change first — then apply it safely.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What does a write-ahead log do?",
+    "options": [
+      "Records changes before applying them for crash recovery",
+      "Deletes old data",
+      "Compresses the database"
+    ],
+    "correct": 0
+  }
+}

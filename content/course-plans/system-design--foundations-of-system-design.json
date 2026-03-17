@@ -1,0 +1,559 @@
+{
+  "categoryId": "system-design",
+  "subject": "System Design",
+  "courseId": "system-design--foundations-of-system-design",
+  "courseTitle": "Foundations of System Design",
+  "emoji": "🏗️",
+  "color": "#2563EB",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "system-design--foundations-of-system-design--ch01-thinking-in-systems", "title": "Thinking in Systems", "position": 1 },
+    { "id": "system-design--foundations-of-system-design--ch02-core-building-blocks", "title": "Core Building Blocks", "position": 2 },
+    { "id": "system-design--foundations-of-system-design--ch03-trade-offs-everywhere", "title": "Trade-Offs Everywhere", "position": 3 },
+    { "id": "system-design--foundations-of-system-design--ch04-communication-patterns", "title": "Communication Patterns", "position": 4 },
+    { "id": "system-design--foundations-of-system-design--ch05-data-flow", "title": "Data Flow", "position": 5 },
+    { "id": "system-design--foundations-of-system-design--ch06-designing-for-change", "title": "Designing for Change", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch01-thinking-in-systems",
+      "title": "What Is System Design?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You open Instagram. In 200 milliseconds, dozens of services collaborate to show your feed.", "visual": "📱" },
+        "buildup": { "text": "System design is the art of deciding how software components connect and work together.", "visual": "🧩" },
+        "discovery": { "text": "It answers questions like: where does data live, how do parts communicate, what happens at scale?", "visual": "🤔" },
+        "twist": { "text": "There's no single correct design. Every choice involves trade-offs between competing goals.", "visual": "⚖️" },
+        "climax": { "text": "Great system design isn't about perfection — it's about making the right trade-offs for your context.", "visual": "🎯" },
+        "punchline": { "text": "Design is choosing which trade-offs you can live with.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is system design fundamentally about?",
+        "options": ["How software components connect and work together", "Writing the fastest code possible", "Choosing a programming language"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch01-thinking-in-systems",
+      "title": "Why System Design Matters",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A startup's prototype works for 100 users. At 100,000 users, everything collapses.", "visual": "💥" },
+        "buildup": { "text": "Code quality alone can't save you. Architecture determines whether a system survives growth.", "visual": "📈" },
+        "discovery": { "text": "System design decides cost, speed, reliability, and how fast your team can ship features.", "visual": "🚀" },
+        "twist": { "text": "The biggest tech companies spend more time on design than on writing code.", "visual": "📝" },
+        "climax": { "text": "Good design lets a small team serve millions. Bad design buries a large team in chaos.", "visual": "🏔️" },
+        "punchline": { "text": "Architecture decides if your system scales or breaks.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why do big tech companies spend more time on design than coding?",
+        "options": ["Architecture determines if a system survives growth", "They have too many engineers", "Code doesn't matter"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch01-thinking-in-systems",
+      "title": "Functional vs Non-Functional Requirements",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A chat app must send messages. That's functional. It must send them in under 100ms. That's non-functional.", "visual": "💬" },
+        "buildup": { "text": "Functional requirements define what the system does. Non-functional define how well it does it.", "visual": "📋" },
+        "discovery": { "text": "Latency, throughput, availability, and durability are the big four non-functional requirements.", "visual": "4️⃣" },
+        "twist": { "text": "Teams often nail the functional requirements but ignore the non-functional ones until production breaks.", "visual": "🔥" },
+        "climax": { "text": "Non-functional requirements are invisible until they fail — then they're the only thing anyone notices.", "visual": "👀" },
+        "punchline": { "text": "Users notice speed and uptime, not features.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a non-functional requirement?",
+        "options": ["How well the system performs, like latency and availability", "What features the system has", "The programming language used"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch01-thinking-in-systems",
+      "title": "Back-of-the-Envelope Estimation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "How much storage does YouTube need per day? A quick napkin calculation gives you the answer.", "visual": "📝" },
+        "buildup": { "text": "Back-of-the-envelope math estimates scale: users × actions × data size × time.", "visual": "🧮" },
+        "discovery": { "text": "500 hours of video uploaded per minute × 1 GB/hour ≈ 720 TB per day. That shapes the design.", "visual": "💾" },
+        "twist": { "text": "You don't need exact numbers. The goal is order of magnitude — megabytes vs terabytes vs petabytes.", "visual": "📊" },
+        "climax": { "text": "Estimation reveals whether your design is feasible before you write a single line of code.", "visual": "✅" },
+        "punchline": { "text": "Napkin math prevents million-dollar mistakes.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the goal of back-of-the-envelope estimation?",
+        "options": ["Determine order of magnitude to check feasibility", "Calculate exact server costs", "Write precise documentation"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch01-thinking-in-systems",
+      "title": "The Anatomy of a Web Request",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You type a URL and press Enter. In 300 milliseconds, a page appears. What happened in between?", "visual": "🌐" },
+        "buildup": { "text": "DNS resolves the domain. Your browser opens a TCP connection and sends an HTTP request.", "visual": "📡" },
+        "discovery": { "text": "A load balancer routes you to one of many servers. The server queries a database and returns HTML.", "visual": "🖥️" },
+        "twist": { "text": "CDN caches, TLS handshakes, and connection pooling all happen invisibly to make it feel instant.", "visual": "⚡" },
+        "climax": { "text": "A single web request touches DNS, load balancers, servers, databases, and caches — in milliseconds.", "visual": "🏎️" },
+        "punchline": { "text": "One click triggers a dozen systems in 300ms.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the first step when you type a URL?",
+        "options": ["DNS resolves the domain name to an IP address", "The server sends HTML immediately", "The database is queried first"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch02-core-building-blocks",
+      "title": "Servers and Clients",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Every time you use an app, your device is the client and a remote machine is the server.", "visual": "📱" },
+        "buildup": { "text": "Clients request data. Servers process requests and send responses. This is client-server architecture.", "visual": "🔄" },
+        "discovery": { "text": "A single server can handle thousands of clients simultaneously using connection multiplexing.", "visual": "🔌" },
+        "twist": { "text": "Modern apps blur the line. Peer-to-peer systems like BitTorrent make every device both client and server.", "visual": "🤝" },
+        "climax": { "text": "Client-server is the foundation of nearly every internet service, from email to streaming.", "visual": "🌍" },
+        "punchline": { "text": "One asks, one answers — the web's oldest pattern.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a server do in client-server architecture?",
+        "options": ["Processes requests and sends responses", "Only stores files", "Displays the user interface"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch02-core-building-blocks",
+      "title": "Load Balancers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "One server handles 1,000 requests per second. You need to handle 50,000. What do you do?", "visual": "🏋️" },
+        "buildup": { "text": "A load balancer sits in front of multiple servers and distributes incoming requests across them.", "visual": "⚖️" },
+        "discovery": { "text": "Round-robin, least connections, and weighted algorithms decide which server gets each request.", "visual": "🎯" },
+        "twist": { "text": "Load balancers also detect unhealthy servers and stop sending traffic to them automatically.", "visual": "🏥" },
+        "climax": { "text": "Without load balancers, scaling horizontally would be impossible. They're the traffic cops of the internet.", "visual": "🚦" },
+        "punchline": { "text": "Split the traffic, multiply the capacity.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a load balancer do?",
+        "options": ["Distributes requests across multiple servers", "Stores data permanently", "Encrypts network traffic"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch02-core-building-blocks",
+      "title": "Databases: The Persistence Layer",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Servers are stateless — they forget everything after each request. Databases remember.", "visual": "🧠" },
+        "buildup": { "text": "Databases store data durably so it survives server restarts, crashes, and deployments.", "visual": "💾" },
+        "discovery": { "text": "Relational databases use tables and SQL. NoSQL databases use documents, key-value pairs, or graphs.", "visual": "📊" },
+        "twist": { "text": "Choosing the wrong database for your workload is one of the hardest mistakes to fix later.", "visual": "😰" },
+        "climax": { "text": "The database is the heart of most systems. Everything else can be replaced more easily.", "visual": "❤️" },
+        "punchline": { "text": "Pick the right database — it's the hardest to change.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is the database choice so critical?",
+        "options": ["It's the hardest component to replace later", "It's the most expensive", "It determines the programming language"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch02-core-building-blocks",
+      "title": "Caches: Speed Through Memory",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Reading from a database takes 5 milliseconds. Reading from cache takes 0.1 milliseconds. That's 50x faster.", "visual": "⚡" },
+        "buildup": { "text": "A cache stores frequently accessed data in fast memory so the database isn't hit every time.", "visual": "🗄️" },
+        "discovery": { "text": "Redis and Memcached are popular caches. They sit between the application and the database.", "visual": "🔴" },
+        "twist": { "text": "Cache invalidation — knowing when cached data is stale — is famously one of the hardest problems in computing.", "visual": "🤯" },
+        "climax": { "text": "Caching is the single most effective way to make a slow system fast.", "visual": "🏎️" },
+        "punchline": { "text": "The fastest query is the one you don't make.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is cache invalidation?",
+        "options": ["Knowing when cached data is stale and needs refreshing", "Deleting the entire cache", "Adding more cache servers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch02-core-building-blocks",
+      "title": "Message Queues",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You upload a video to YouTube. It takes minutes to process, but the upload response is instant.", "visual": "📤" },
+        "buildup": { "text": "A message queue accepts the task, stores it, and a background worker processes it later.", "visual": "📬" },
+        "discovery": { "text": "Kafka, RabbitMQ, and SQS decouple producers from consumers so neither has to wait for the other.", "visual": "🔗" },
+        "twist": { "text": "If a worker crashes mid-task, the queue retries automatically. Messages survive failures.", "visual": "🛡️" },
+        "climax": { "text": "Message queues turn synchronous bottlenecks into asynchronous, resilient pipelines.", "visual": "🔄" },
+        "punchline": { "text": "Don't wait — queue it and process later.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why are message queues useful?",
+        "options": ["They decouple producers from consumers for async processing", "They make databases faster", "They replace load balancers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch03-trade-offs-everywhere",
+      "title": "Consistency vs Availability",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You post a photo. Your friend in Tokyo doesn't see it for 10 seconds. Is that a bug?", "visual": "📸" },
+        "buildup": { "text": "Consistency means everyone sees the same data at the same time. Availability means the system always responds.", "visual": "⚖️" },
+        "discovery": { "text": "The CAP theorem says during a network partition, you must choose consistency or availability — not both.", "visual": "🧩" },
+        "twist": { "text": "Banks choose consistency — your balance must be correct. Social media chooses availability — a slight delay is fine.", "visual": "🏦" },
+        "climax": { "text": "There's no universal answer. The right choice depends on what your users can tolerate.", "visual": "🤔" },
+        "punchline": { "text": "Correct or always-on — pick one during failures.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does the CAP theorem state?",
+        "options": ["During a partition, you must choose consistency or availability", "All three guarantees are always possible", "Databases can't scale"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch03-trade-offs-everywhere",
+      "title": "Latency vs Throughput",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A highway can move 10,000 cars per hour but each car takes 30 minutes. That's high throughput, high latency.", "visual": "🛣️" },
+        "buildup": { "text": "Latency is how long one request takes. Throughput is how many requests the system handles per second.", "visual": "⏱️" },
+        "discovery": { "text": "Batching improves throughput but increases latency. Processing one at a time is fast but low throughput.", "visual": "📦" },
+        "twist": { "text": "Optimizing for one often hurts the other. A system tuned for real-time chat differs from one for batch ETL.", "visual": "🔄" },
+        "climax": { "text": "Great system design balances latency and throughput based on what users actually need.", "visual": "🎯" },
+        "punchline": { "text": "Fast per request or fast in bulk — rarely both.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is throughput?",
+        "options": ["How many requests a system handles per second", "How long one request takes", "The size of the database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch03-trade-offs-everywhere",
+      "title": "Vertical vs Horizontal Scaling",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your server is maxed out. Do you buy a bigger machine or add more machines?", "visual": "📈" },
+        "buildup": { "text": "Vertical scaling means upgrading to a more powerful server. Horizontal scaling means adding more servers.", "visual": "🖥️" },
+        "discovery": { "text": "Vertical is simpler but has a ceiling — the biggest machine in the world still has limits.", "visual": "🏔️" },
+        "twist": { "text": "Horizontal scaling is theoretically unlimited but requires load balancing, data partitioning, and coordination.", "visual": "🧩" },
+        "climax": { "text": "Most large systems use both: scale up as far as practical, then scale out.", "visual": "🔀" },
+        "punchline": { "text": "Scale up until you can't, then scale out.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is horizontal scaling?",
+        "options": ["Adding more servers to handle load", "Upgrading to a more powerful server", "Adding more RAM to one machine"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch03-trade-offs-everywhere",
+      "title": "SQL vs NoSQL Trade-Offs",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "SQL databases enforce strict schemas. NoSQL databases let you store anything in any shape.", "visual": "📐" },
+        "buildup": { "text": "SQL excels at complex queries, joins, and transactions. NoSQL excels at scale and flexibility.", "visual": "🔍" },
+        "discovery": { "text": "SQL databases scale vertically well. NoSQL databases are designed to scale horizontally from day one.", "visual": "📊" },
+        "twist": { "text": "Modern SQL databases like CockroachDB scale horizontally. NoSQL databases like MongoDB added transactions.", "visual": "🔄" },
+        "climax": { "text": "The boundary between SQL and NoSQL is blurring. Choose based on your access patterns, not hype.", "visual": "🤝" },
+        "punchline": { "text": "Pick the database that fits your queries, not trends.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a key advantage of NoSQL databases?",
+        "options": ["Designed to scale horizontally from day one", "Always faster than SQL", "No data loss is possible"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch03-trade-offs-everywhere",
+      "title": "Monolith vs Distributed",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A monolith puts everything in one process. A distributed system spreads work across many machines.", "visual": "🏠" },
+        "buildup": { "text": "Monoliths are simple to build, test, and deploy. One codebase, one deployment, one database.", "visual": "📦" },
+        "discovery": { "text": "Distributed systems handle more load but add complexity: network failures, data sync, and debugging.", "visual": "🌐" },
+        "twist": { "text": "Many successful companies ran monoliths for years. Shopify still runs one serving billions in commerce.", "visual": "🛒" },
+        "climax": { "text": "Distribution is a tool, not a goal. Add complexity only when the monolith can no longer cope.", "visual": "🧰" },
+        "punchline": { "text": "Start simple. Distribute when you must.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "When should you move from a monolith to a distributed system?",
+        "options": ["When the monolith can no longer handle the load", "From the very start of every project", "Only after five years"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch04-communication-patterns",
+      "title": "REST APIs",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Almost every app you use talks to servers through REST APIs. They're the lingua franca of the web.", "visual": "🌐" },
+        "buildup": { "text": "REST uses HTTP verbs — GET, POST, PUT, DELETE — to perform operations on resources.", "visual": "📬" },
+        "discovery": { "text": "Each resource has a URL. GET /users/42 retrieves user 42. DELETE /users/42 removes them.", "visual": "🔗" },
+        "twist": { "text": "REST is simple but can be chatty. Fetching a complex page might require dozens of separate API calls.", "visual": "📞" },
+        "climax": { "text": "REST's simplicity made it the default. Its limitations spawned GraphQL and gRPC.", "visual": "📈" },
+        "punchline": { "text": "Simple, universal, and good enough for most systems.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What HTTP verb retrieves a resource in REST?",
+        "options": ["GET", "POST", "DELETE"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch04-communication-patterns",
+      "title": "Synchronous vs Asynchronous Communication",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A phone call is synchronous — both sides must be present. A text message is asynchronous.", "visual": "📞" },
+        "buildup": { "text": "Sync communication blocks the caller until the response arrives. Async lets the caller continue working.", "visual": "⏳" },
+        "discovery": { "text": "HTTP requests are synchronous. Message queues and event buses enable asynchronous communication.", "visual": "📬" },
+        "twist": { "text": "Async is faster but harder to debug. When something fails, tracing the chain of events is complex.", "visual": "🔍" },
+        "climax": { "text": "Most systems use both: sync for user-facing calls, async for background processing.", "visual": "🔀" },
+        "punchline": { "text": "Sync for answers now, async for work later.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is an example of asynchronous communication?",
+        "options": ["Message queues", "HTTP GET requests", "Database reads"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch04-communication-patterns",
+      "title": "WebSockets and Real-Time",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In a chat app, messages appear instantly without refreshing. That's WebSockets, not regular HTTP.", "visual": "💬" },
+        "buildup": { "text": "HTTP is request-response: the client asks, the server answers. WebSockets keep a persistent connection open.", "visual": "🔌" },
+        "discovery": { "text": "Once connected, either side can send data at any time. This enables real-time chat, gaming, and dashboards.", "visual": "🎮" },
+        "twist": { "text": "WebSocket connections consume server memory. At millions of connections, the cost adds up fast.", "visual": "💰" },
+        "climax": { "text": "WebSockets trade efficiency for immediacy — essential for real-time, overkill for everything else.", "visual": "⚡" },
+        "punchline": { "text": "A connection that stays open for instant data.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How do WebSockets differ from HTTP?",
+        "options": ["They keep a persistent two-way connection open", "They're faster for file downloads", "They don't use the internet"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch04-communication-patterns",
+      "title": "GraphQL: Ask for Exactly What You Need",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A REST API returns 50 fields when you only need 3. GraphQL lets you request exactly those 3.", "visual": "🎯" },
+        "buildup": { "text": "GraphQL uses a single endpoint where clients specify the exact shape of data they want.", "visual": "📋" },
+        "discovery": { "text": "Facebook created GraphQL in 2012 to solve the problem of mobile apps over-fetching data.", "visual": "📱" },
+        "twist": { "text": "GraphQL reduces over-fetching but adds complexity: caching is harder and queries can be expensive.", "visual": "🤔" },
+        "climax": { "text": "GraphQL shines when clients have diverse data needs. REST is simpler when they don't.", "visual": "⚖️" },
+        "punchline": { "text": "One query, exactly the data you need.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What problem did GraphQL originally solve?",
+        "options": ["Mobile apps over-fetching data from REST APIs", "Slow database queries", "Server crashes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch04-communication-patterns",
+      "title": "gRPC and Protocol Buffers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "REST sends data as human-readable JSON. gRPC sends compact binary — up to 10x smaller and faster.", "visual": "🏎️" },
+        "buildup": { "text": "gRPC uses Protocol Buffers to serialize data into tiny binary payloads with strict schemas.", "visual": "📦" },
+        "discovery": { "text": "It supports streaming, bidirectional communication, and auto-generated client libraries in any language.", "visual": "🔄" },
+        "twist": { "text": "gRPC isn't browser-friendly. It's dominant for service-to-service calls but rare for public APIs.", "visual": "🌐" },
+        "climax": { "text": "gRPC is the go-to for internal microservice communication where speed and type safety matter most.", "visual": "⚡" },
+        "punchline": { "text": "Binary beats JSON when machines talk to machines.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "When is gRPC most commonly used?",
+        "options": ["For internal service-to-service communication", "For browser-based websites", "For file storage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch05-data-flow",
+      "title": "Read-Heavy vs Write-Heavy Systems",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Twitter has 500 million tweet reads per second but only 6,000 new tweets per second. That's read-heavy.", "visual": "📖" },
+        "buildup": { "text": "Read-heavy systems optimize for fast retrieval: caching, replicas, and denormalized data.", "visual": "⚡" },
+        "discovery": { "text": "Write-heavy systems like logging platforms optimize for fast ingestion: append-only logs and batch writes.", "visual": "📝" },
+        "twist": { "text": "The same data can be in both: write-optimized for ingestion, then transformed into a read-optimized view.", "visual": "🔄" },
+        "climax": { "text": "Understanding your read/write ratio is the first step in designing the right data architecture.", "visual": "📊" },
+        "punchline": { "text": "Know your ratio — it shapes every decision.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What characterizes a read-heavy system?",
+        "options": ["Far more data reads than writes", "More writes than reads", "Equal reads and writes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch05-data-flow",
+      "title": "Replication: Copies for Safety",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "If your only database server dies, all your data is gone. Replication keeps copies on multiple machines.", "visual": "💾" },
+        "buildup": { "text": "A primary database handles writes and replicates changes to one or more read replicas.", "visual": "📋" },
+        "discovery": { "text": "Replicas serve read traffic, reducing load on the primary and surviving if one machine fails.", "visual": "🛡️" },
+        "twist": { "text": "Replication lag means replicas might serve slightly stale data. Seconds matter in financial systems.", "visual": "⏱️" },
+        "climax": { "text": "Replication trades perfect consistency for durability and read performance.", "visual": "⚖️" },
+        "punchline": { "text": "Copies protect data and speed up reads.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is replication lag?",
+        "options": ["Delay before replicas reflect the latest writes", "Time to create a new replica", "The speed of the network"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch05-data-flow",
+      "title": "Partitioning and Sharding",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "One database holds 10 TB. Queries are slow. Splitting it across 10 machines makes each one fast again.", "visual": "🔪" },
+        "buildup": { "text": "Sharding splits data into partitions. Each shard holds a subset, like users A-M on shard 1, N-Z on shard 2.", "visual": "📂" },
+        "discovery": { "text": "A good shard key distributes data evenly. A bad one creates hot spots that overload one shard.", "visual": "🔥" },
+        "twist": { "text": "Cross-shard queries are expensive. If user A's data needs user B's data on another shard, joins get complex.", "visual": "🧩" },
+        "climax": { "text": "Sharding enables massive scale but adds complexity in routing, rebalancing, and cross-shard operations.", "visual": "📈" },
+        "punchline": { "text": "Split data to scale — but choose the split wisely.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a hot spot in sharding?",
+        "options": ["One shard receiving disproportionately more traffic", "A shard that's physically warm", "The fastest shard in the cluster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch05-data-flow",
+      "title": "Event-Driven Architecture",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A user places an order. Instead of calling 5 services in sequence, one event triggers them all in parallel.", "visual": "📢" },
+        "buildup": { "text": "Event-driven systems publish events to a bus. Interested services subscribe and react independently.", "visual": "📬" },
+        "discovery": { "text": "This decouples services. The order service doesn't need to know about shipping, billing, or notifications.", "visual": "🔗" },
+        "twist": { "text": "Debugging is harder. When something fails, tracing across async events requires distributed tracing tools.", "visual": "🔍" },
+        "climax": { "text": "Event-driven architecture enables loose coupling and high scalability at the cost of observability.", "visual": "🔀" },
+        "punchline": { "text": "Events decouple services — at the cost of visibility.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the main benefit of event-driven architecture?",
+        "options": ["Services are decoupled and react independently", "It's simpler to debug", "It requires fewer servers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch05-data-flow",
+      "title": "CQRS: Separate Reads from Writes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "What if you used one database model for writing data and a completely different one for reading it?", "visual": "🔀" },
+        "buildup": { "text": "CQRS — Command Query Responsibility Segregation — splits the write model from the read model.", "visual": "📐" },
+        "discovery": { "text": "Writes go to a normalized, transactional store. Reads come from a denormalized, query-optimized view.", "visual": "⚡" },
+        "twist": { "text": "The two models must stay in sync, usually through events. Eventual consistency is inherent.", "visual": "⏳" },
+        "climax": { "text": "CQRS is powerful for systems with very different read and write patterns, but overkill for simple apps.", "visual": "🎯" },
+        "punchline": { "text": "Optimize reads and writes separately.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does CQRS stand for?",
+        "options": ["Command Query Responsibility Segregation", "Central Query Response System", "Cache Query Replication Service"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch06-designing-for-change",
+      "title": "API Versioning",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You update your API. Thousands of apps using the old version break overnight.", "visual": "💥" },
+        "buildup": { "text": "API versioning lets you evolve your interface without breaking existing clients.", "visual": "🔄" },
+        "discovery": { "text": "Common strategies: URL versioning (/v1/users), header versioning, or query parameter versioning.", "visual": "🏷️" },
+        "twist": { "text": "Supporting multiple versions means maintaining multiple codepaths. Technical debt grows with each version.", "visual": "📚" },
+        "climax": { "text": "Versioning buys backward compatibility but demands a clear deprecation strategy to stay manageable.", "visual": "📋" },
+        "punchline": { "text": "New features without breaking old clients.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is API versioning important?",
+        "options": ["It lets you evolve APIs without breaking existing clients", "It makes APIs faster", "It reduces server costs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch06-designing-for-change",
+      "title": "Database Migrations",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You need to add a column to a table with 500 million rows. One wrong move and the site goes down.", "visual": "😰" },
+        "buildup": { "text": "Database migrations are versioned scripts that evolve the schema over time, safely and repeatably.", "visual": "📜" },
+        "discovery": { "text": "Good migrations are backward-compatible: add before remove, never rename in one step.", "visual": "✅" },
+        "twist": { "text": "Large table migrations can lock the database for minutes. Online migration tools avoid downtime.", "visual": "🔒" },
+        "climax": { "text": "Schema evolution is inevitable. The discipline of safe migrations keeps systems alive during change.", "visual": "🛡️" },
+        "punchline": { "text": "Change the schema without stopping the system.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a backward-compatible migration?",
+        "options": ["A change that doesn't break existing code or queries", "Rolling back to a previous version", "Deleting old data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch06-designing-for-change",
+      "title": "Feature Flags",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Netflix deploys new code to production but only 1% of users see the new feature. That's a feature flag.", "visual": "🚩" },
+        "buildup": { "text": "Feature flags wrap new functionality in an if-statement controlled by a configuration, not code.", "visual": "🔘" },
+        "discovery": { "text": "Teams can deploy code daily and gradually roll out features, rolling back instantly if something breaks.", "visual": "🔄" },
+        "twist": { "text": "Stale feature flags accumulate as technical debt. Without cleanup, codebases become tangled with dead branches.", "visual": "🕸️" },
+        "climax": { "text": "Feature flags decouple deployment from release, giving teams speed and safety simultaneously.", "visual": "🏎️" },
+        "punchline": { "text": "Deploy daily, release when you're ready.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What do feature flags decouple?",
+        "options": ["Deployment from feature release", "Frontend from backend", "Database from application"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch06-designing-for-change",
+      "title": "Blue-Green Deployments",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You have two identical production environments: blue is live, green has the new version.", "visual": "🔵" },
+        "buildup": { "text": "You deploy the update to green, test it thoroughly, then switch the load balancer to point at green.", "visual": "🟢" },
+        "discovery": { "text": "If something goes wrong, switching back to blue is instant — no rollback required.", "visual": "⚡" },
+        "twist": { "text": "Running two full environments doubles infrastructure cost during the transition window.", "visual": "💰" },
+        "climax": { "text": "Blue-green deployments trade cost for confidence: zero-downtime releases with instant rollback.", "visual": "🛡️" },
+        "punchline": { "text": "Two environments, zero downtime, instant rollback.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the main advantage of blue-green deployments?",
+        "options": ["Zero downtime with instant rollback capability", "They're cheaper than regular deployments", "They require less testing"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--foundations-of-system-design--ch06-designing-for-change",
+      "title": "Designing for Failure",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Netflix intentionally kills random servers in production. They call it Chaos Monkey.", "visual": "🐒" },
+        "buildup": { "text": "In distributed systems, failures are inevitable. Designing for failure means assuming things will break.", "visual": "💔" },
+        "discovery": { "text": "Timeouts, retries, circuit breakers, and fallbacks keep the system running when parts fail.", "visual": "🔧" },
+        "twist": { "text": "Systems that never fail in testing fail catastrophically in production. Chaos engineering prevents surprises.", "visual": "😱" },
+        "climax": { "text": "Resilient systems don't prevent failures — they survive them gracefully and recover automatically.", "visual": "🌱" },
+        "punchline": { "text": "Don't prevent failure — survive it gracefully.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is Netflix's Chaos Monkey?",
+        "options": ["A tool that intentionally kills random servers in production", "A monitoring dashboard", "A deployment pipeline"],
+        "correct": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "id": "system-design--caching-and-performance--t-ttl-time-to-live",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Caching and Performance",
+  "course_id": "system-design--caching-and-performance",
+  "chapter_id": "system-design--caching-and-performance--ch01-caching-fundamentals",
+  "title": "TTL: Time to Live",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A quick, practical guide to TTL: Time to Live.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A cached product price is $29.99. The real price changed to $24.99 an hour ago. The cache is lying.",
+      "visual": "🤥"
+    },
+    "buildup": {
+      "text": "TTL sets an expiration time on cached data. After the TTL expires, the cache fetches fresh data.",
+      "visual": "⏰"
+    },
+    "discovery": {
+      "text": "Short TTLs keep data fresh but increase load on the origin. Long TTLs reduce load but risk staleness.",
+      "visual": "⚖️"
+    },
+    "twist": {
+      "text": "When millions of items expire at the same TTL, the origin gets hit with a stampede of simultaneous requests.",
+      "visual": "🐎"
+    },
+    "climax": {
+      "text": "Adding jitter — randomizing TTLs slightly — prevents cache stampedes and smooths out refresh load.",
+      "visual": "🎲"
+    },
+    "punchline": {
+      "text": "TTL balances freshness and load — add jitter to prevent stampedes.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why should TTLs include jitter?",
+    "options": [
+      "To prevent millions of cache entries from expiring simultaneously",
+      "To make data more accurate",
+      "To reduce memory usage"
+    ],
+    "correct": 0
+  }
+}

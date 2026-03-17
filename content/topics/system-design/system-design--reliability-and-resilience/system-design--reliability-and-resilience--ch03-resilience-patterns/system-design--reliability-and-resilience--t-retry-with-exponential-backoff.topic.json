@@ -1,0 +1,49 @@
+{
+  "id": "system-design--reliability-and-resilience--t-retry-with-exponential-backoff",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Reliability and Resilience",
+  "course_id": "system-design--reliability-and-resilience",
+  "chapter_id": "system-design--reliability-and-resilience--ch03-resilience-patterns",
+  "title": "Retry with Exponential Backoff",
+  "emoji": "🛡️",
+  "color": "#0D9488",
+  "description": "A tiny lesson with a big payoff: Retry with Exponential Backoff.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your request fails. You retry immediately. It fails again. You retry again. You're now hammering a struggling service.",
+      "visual": "🔨"
+    },
+    "buildup": {
+      "text": "Exponential backoff adds increasing delays between retries: 1s, 2s, 4s, 8s. Each retry waits longer.",
+      "visual": "📈"
+    },
+    "discovery": {
+      "text": "Adding jitter randomizes the delay so thousands of clients don't all retry at the same millisecond.",
+      "visual": "🎲"
+    },
+    "twist": {
+      "text": "Retries without backoff create retry storms that worsen outages. The retries become the attack on the struggling server.",
+      "visual": "🌊"
+    },
+    "climax": {
+      "text": "Exponential backoff with jitter is the standard retry strategy for every network call in distributed systems.",
+      "visual": "✅"
+    },
+    "punchline": {
+      "text": "Wait longer between retries, add randomness — don't pile on.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why add jitter to exponential backoff?",
+    "options": [
+      "To prevent thousands of clients from retrying at the exact same moment",
+      "To make retries faster",
+      "To reduce the number of retries"
+    ],
+    "correct": 0
+  }
+}

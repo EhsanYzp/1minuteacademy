@@ -1,0 +1,559 @@
+{
+  "categoryId": "system-design",
+  "subject": "System Design",
+  "courseId": "system-design--architecture-of-the-internet",
+  "courseTitle": "Architecture of the Internet",
+  "emoji": "🌐",
+  "color": "#0891B2",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "system-design--architecture-of-the-internet--ch01-how-the-internet-works", "title": "How the Internet Works", "position": 1 },
+    { "id": "system-design--architecture-of-the-internet--ch02-the-web-protocol-stack", "title": "The Web Protocol Stack", "position": 2 },
+    { "id": "system-design--architecture-of-the-internet--ch03-domain-name-system", "title": "The Domain Name System", "position": 3 },
+    { "id": "system-design--architecture-of-the-internet--ch04-security-on-the-wire", "title": "Security on the Wire", "position": 4 },
+    { "id": "system-design--architecture-of-the-internet--ch05-content-delivery", "title": "Content Delivery at Scale", "position": 5 },
+    { "id": "system-design--architecture-of-the-internet--ch06-the-modern-web-stack", "title": "The Modern Web Stack", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch01-how-the-internet-works",
+      "title": "Packets and Routers",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "When you send a message online, it doesn't travel as one piece. It's split into tiny packets.", "visual": "📦" },
+        "buildup": { "text": "Each packet carries a piece of data, a source address, and a destination address.", "visual": "📬" },
+        "discovery": { "text": "Routers read destination addresses and forward packets hop by hop across networks until they arrive.", "visual": "🔀" },
+        "twist": { "text": "Packets from the same message can take different routes and arrive out of order. The receiver reassembles them.", "visual": "🧩" },
+        "climax": { "text": "Packet switching is the internet's foundation. No single path is dedicated — networks share bandwidth.", "visual": "🌐" },
+        "punchline": { "text": "The internet splits data into packets and routes them independently.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How do packets travel across the internet?",
+        "options": ["Routers forward them hop by hop based on destination addresses", "They travel in a single dedicated path", "They're broadcast to all computers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch01-how-the-internet-works",
+      "title": "IP Addresses and Subnets",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every device on the internet has an IP address — a unique number like 192.168.1.1 that identifies it.", "visual": "🏠" },
+        "buildup": { "text": "IPv4 uses 32-bit addresses, giving about 4.3 billion unique addresses. The world has run out.", "visual": "😱" },
+        "discovery": { "text": "IPv6 uses 128 bits, providing 340 undecillion addresses — enough for every atom on Earth.", "visual": "🌍" },
+        "twist": { "text": "NAT allows thousands of devices to share one public IP. Your home router does this right now.", "visual": "🏘️" },
+        "climax": { "text": "IP addresses are the internet's postal system. Without them, packets wouldn't know where to go.", "visual": "📮" },
+        "punchline": { "text": "Every device needs an address to receive packets.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why was IPv6 created?",
+        "options": ["IPv4's 4.3 billion addresses ran out", "IPv4 was too slow", "IPv4 wasn't secure enough"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch01-how-the-internet-works",
+      "title": "TCP: Reliable Delivery",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You download a file. One packet gets lost. TCP detects the loss and resends it automatically.", "visual": "🔄" },
+        "buildup": { "text": "TCP ensures reliable, ordered delivery. It numbers packets and tracks acknowledgments.", "visual": "📋" },
+        "discovery": { "text": "The three-way handshake — SYN, SYN-ACK, ACK — establishes a connection before any data flows.", "visual": "🤝" },
+        "twist": { "text": "TCP's reliability adds latency. Every packet waits for acknowledgment before the next batch is sent.", "visual": "⏳" },
+        "climax": { "text": "TCP powers the web, email, and file transfers — anything where losing data is unacceptable.", "visual": "🌐" },
+        "punchline": { "text": "TCP guarantees every byte arrives, in order, or it retries.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does the TCP three-way handshake do?",
+        "options": ["Establishes a connection before data transfer begins", "Encrypts the connection", "Speeds up data delivery"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch01-how-the-internet-works",
+      "title": "UDP: Speed Over Reliability",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In a video call, a dropped frame is better than a delayed one. UDP delivers fast — even if packets are lost.", "visual": "📹" },
+        "buildup": { "text": "UDP sends packets without establishing a connection, tracking order, or waiting for acknowledgments.", "visual": "🏎️" },
+        "discovery": { "text": "It's used for video streaming, gaming, and DNS — where speed matters more than perfect delivery.", "visual": "🎮" },
+        "twist": { "text": "UDP has no congestion control. A badly behaved UDP sender can flood the network and overwhelm other traffic.", "visual": "🌊" },
+        "climax": { "text": "TCP is reliable but slow. UDP is fast but lossy. The choice depends on what your application tolerates.", "visual": "⚖️" },
+        "punchline": { "text": "UDP trades reliability for speed — perfect for real-time apps.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is UDP used for video streaming?",
+        "options": ["A dropped frame is better than a delayed one", "It's more reliable than TCP", "It encrypts data automatically"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch01-how-the-internet-works",
+      "title": "BGP: The Internet's Routing Map",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The internet is not one network. It's 70,000 autonomous networks agreeing on how to route traffic.", "visual": "🗺️" },
+        "buildup": { "text": "BGP — Border Gateway Protocol — is how these networks exchange routing information.", "visual": "📡" },
+        "discovery": { "text": "Each network announces which IP ranges it can reach. Neighboring networks propagate these announcements.", "visual": "📢" },
+        "twist": { "text": "BGP has no built-in security. A misconfigured announcement can hijack traffic for millions of users.", "visual": "⚠️" },
+        "climax": { "text": "BGP is the glue that holds the internet together — and one of its most fragile components.", "visual": "🧱" },
+        "punchline": { "text": "BGP is the internet's routing map — fragile and critical.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does BGP do?",
+        "options": ["Exchanges routing information between autonomous networks", "Encrypts internet traffic", "Resolves domain names to IP addresses"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch02-the-web-protocol-stack",
+      "title": "HTTP: The Language of the Web",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Every time you click a link, your browser sends an HTTP request. The server replies with an HTTP response.", "visual": "🔗" },
+        "buildup": { "text": "HTTP defines methods like GET, POST, PUT, and DELETE for requesting and modifying resources.", "visual": "📝" },
+        "discovery": { "text": "HTTP is stateless: each request is independent. The server doesn't remember previous requests.", "visual": "🧹" },
+        "twist": { "text": "Cookies and tokens were invented to add state on top of a stateless protocol. A clever workaround.", "visual": "🍪" },
+        "climax": { "text": "HTTP is the foundation of the web. Every API, website, and web app communicates through it.", "visual": "🌐" },
+        "punchline": { "text": "HTTP: request and response — the web's conversation.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is HTTP called stateless?",
+        "options": ["Each request is independent — the server doesn't remember previous ones", "It doesn't use encryption", "It can't send large files"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch02-the-web-protocol-stack",
+      "title": "HTTP/2 and Multiplexing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A web page loads 80 resources. With HTTP/1.1, the browser opens 6 connections and queues the rest.", "visual": "🚦" },
+        "buildup": { "text": "HTTP/2 sends multiple requests over a single connection simultaneously using multiplexed streams.", "visual": "🔀" },
+        "discovery": { "text": "Header compression and server push further reduce latency. Pages load noticeably faster.", "visual": "⚡" },
+        "twist": { "text": "A single lost TCP packet blocks all streams — head-of-line blocking at the transport layer persists.", "visual": "🚧" },
+        "climax": { "text": "HTTP/2 solved application-layer multiplexing but exposed TCP as the new bottleneck.", "visual": "🔍" },
+        "punchline": { "text": "One connection, many streams — but TCP remains the limit.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What problem does HTTP/2 solve?",
+        "options": ["Multiple requests over a single connection via multiplexing", "Encryption of all web traffic", "Replacing DNS"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch02-the-web-protocol-stack",
+      "title": "HTTP/3 and QUIC",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "HTTP/3 doesn't run on TCP. It runs on QUIC, a new transport protocol built on UDP.", "visual": "🚀" },
+        "buildup": { "text": "QUIC eliminates TCP's head-of-line blocking. Each stream is independently delivered.", "visual": "🔗" },
+        "discovery": { "text": "QUIC also builds in encryption (TLS 1.3) from the start and reduces connection setup to a single round trip.", "visual": "🔐" },
+        "twist": { "text": "QUIC was invented by Google and initially dismissed. Now it powers 25% of all web traffic.", "visual": "📈" },
+        "climax": { "text": "HTTP/3 over QUIC is the biggest change to web transport since TCP was invented in 1974.", "visual": "🏆" },
+        "punchline": { "text": "QUIC: faster, encrypted, and no head-of-line blocking.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What transport protocol does HTTP/3 use?",
+        "options": ["QUIC, built on UDP", "TCP", "WebSocket"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch02-the-web-protocol-stack",
+      "title": "WebSockets: Persistent Connections",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In a chat app, the server needs to push messages to you instantly. HTTP's request-response model can't do that.", "visual": "💬" },
+        "buildup": { "text": "WebSockets upgrade an HTTP connection into a full-duplex channel. Both sides can send data anytime.", "visual": "🔌" },
+        "discovery": { "text": "Chat apps, live sports scores, and collaborative editors all use WebSockets for real-time updates.", "visual": "📡" },
+        "twist": { "text": "WebSocket connections are stateful and long-lived. Load balancing them requires sticky sessions.", "visual": "🔗" },
+        "climax": { "text": "WebSockets add real-time capability at the cost of connection management complexity.", "visual": "⚖️" },
+        "punchline": { "text": "Two-way communication over a single persistent connection.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What makes WebSockets different from HTTP?",
+        "options": ["Both client and server can send data at any time", "They're faster for file downloads", "They don't need a server"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch02-the-web-protocol-stack",
+      "title": "REST vs GraphQL vs gRPC",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Three API styles dominate: REST for simplicity, GraphQL for flexibility, gRPC for speed.", "visual": "🆚" },
+        "buildup": { "text": "REST uses HTTP methods on resources. GraphQL lets clients request exactly the data they need.", "visual": "📋" },
+        "discovery": { "text": "gRPC uses Protocol Buffers and HTTP/2 for high-performance service-to-service communication.", "visual": "⚡" },
+        "twist": { "text": "GraphQL can accidentally expose the entire data model. Without limits, a single query can crash the server.", "visual": "💥" },
+        "climax": { "text": "REST for public APIs, GraphQL for client-driven UIs, gRPC for internal microservice calls.", "visual": "🎯" },
+        "punchline": { "text": "Each API style fits a different communication need.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "When is gRPC typically used?",
+        "options": ["High-performance service-to-service communication", "Public-facing web APIs", "Mobile app front-ends"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch03-domain-name-system",
+      "title": "How DNS Resolution Works",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You type google.com. But your browser needs an IP address. DNS translates the name in milliseconds.", "visual": "🔍" },
+        "buildup": { "text": "Your browser asks a recursive resolver, which queries root servers, TLD servers, and authoritative servers.", "visual": "🌳" },
+        "discovery": { "text": "Root servers direct to .com servers. The .com servers direct to Google's nameservers. They return the IP.", "visual": "📍" },
+        "twist": { "text": "This happens for every new domain you visit. DNS caching at each level prevents repeating the full lookup.", "visual": "📦" },
+        "climax": { "text": "DNS is the internet's phone book. Without it, you'd need to memorize IP addresses for every website.", "visual": "📞" },
+        "punchline": { "text": "DNS turns names into IP addresses in milliseconds.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the role of DNS?",
+        "options": ["Translating domain names into IP addresses", "Encrypting web traffic", "Routing packets between networks"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch03-domain-name-system",
+      "title": "DNS Record Types",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An A record maps a domain to an IP. A CNAME maps it to another domain. MX routes email. Each type serves a purpose.", "visual": "📋" },
+        "buildup": { "text": "DNS supports many record types: A for IPv4, AAAA for IPv6, CNAME for aliases, MX for mail, TXT for verification.", "visual": "🗂️" },
+        "discovery": { "text": "TXT records are used for email authentication (SPF, DKIM), domain verification, and service discovery.", "visual": "🔐" },
+        "twist": { "text": "CNAME records can't coexist with other records at the zone apex. Many providers use ALIAS records as a workaround.", "visual": "⚠️" },
+        "climax": { "text": "Understanding DNS records is essential for setting up websites, email, load balancing, and service discovery.", "visual": "🏗️" },
+        "punchline": { "text": "Each DNS record type serves a specific purpose.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does an MX record do?",
+        "options": ["Routes email to the correct mail server", "Maps a domain to an IP address", "Creates a domain alias"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch03-domain-name-system",
+      "title": "DNS Caching and TTL",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "If every DNS lookup queried root servers, the internet would collapse from the load.", "visual": "💥" },
+        "buildup": { "text": "DNS responses include a TTL — Time to Live — that tells resolvers how long to cache the result.", "visual": "⏰" },
+        "discovery": { "text": "A TTL of 3600 means the answer is cached for one hour. No queries needed during that time.", "visual": "📦" },
+        "twist": { "text": "Low TTLs allow fast changes but increase DNS load. High TTLs reduce load but delay propagation of changes.", "visual": "⚖️" },
+        "climax": { "text": "DNS TTL is a trade-off between freshness and efficiency that affects every domain on the internet.", "visual": "🌐" },
+        "punchline": { "text": "TTL balances fresh results with efficient caching.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does DNS TTL control?",
+        "options": ["How long a DNS result is cached before re-querying", "The speed of DNS resolution", "The security of DNS queries"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch03-domain-name-system",
+      "title": "DNS Attacks and DNSSEC",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You visit your bank's website, but a DNS spoofing attack redirects you to a fake one that steals your password.", "visual": "🎣" },
+        "buildup": { "text": "DNS was designed without security. Attackers can inject fake DNS responses to redirect traffic.", "visual": "💉" },
+        "discovery": { "text": "DNSSEC adds cryptographic signatures to DNS records, letting resolvers verify responses are authentic.", "visual": "🔐" },
+        "twist": { "text": "DNSSEC adoption is slow. Misconfigured DNSSEC can make legitimate domains unreachable.", "visual": "🚫" },
+        "climax": { "text": "DNS is a critical weakness in internet security. DNSSEC helps, but full adoption remains years away.", "visual": "📅" },
+        "punchline": { "text": "DNSSEC proves DNS answers haven't been tampered with.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does DNSSEC protect against?",
+        "options": ["Fake DNS responses that redirect traffic to malicious servers", "DDoS attacks", "Slow DNS resolution"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch03-domain-name-system",
+      "title": "DNS as a Load Balancer",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Google.com resolves to different IP addresses depending on where you are. DNS is doing load balancing.", "visual": "⚖️" },
+        "buildup": { "text": "DNS round-robin returns multiple IPs for a domain, distributing traffic across servers.", "visual": "🔄" },
+        "discovery": { "text": "GeoDNS goes further: it returns the IP of the nearest server based on the client's geographic location.", "visual": "🌍" },
+        "twist": { "text": "DNS load balancing is coarse. It can't detect if a server is overloaded — it just cycles through addresses.", "visual": "🤷" },
+        "climax": { "text": "DNS is the first layer of load balancing. Real health-aware balancing happens at the application layer.", "visual": "🏗️" },
+        "punchline": { "text": "DNS distributes traffic broadly; app load balancers do it precisely.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a limitation of DNS-based load balancing?",
+        "options": ["It can't detect if a server is overloaded or unhealthy", "It only works with HTTP", "It requires special hardware"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch04-security-on-the-wire",
+      "title": "TLS: Encrypting the Web",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Without TLS, anyone on your Wi-Fi can read your passwords, emails, and credit card numbers in plain text.", "visual": "👀" },
+        "buildup": { "text": "TLS encrypts the connection between your browser and the server so eavesdroppers see only gibberish.", "visual": "🔐" },
+        "discovery": { "text": "TLS 1.3 reduced the handshake to one round trip, making encrypted connections nearly as fast as unencrypted.", "visual": "⚡" },
+        "twist": { "text": "TLS encrypts data in transit but not at rest. Your data is decrypted on the server and could be exposed there.", "visual": "📦" },
+        "climax": { "text": "Over 95% of web traffic is now encrypted with TLS. The unencrypted web is effectively dead.", "visual": "🌐" },
+        "punchline": { "text": "TLS makes eavesdropping on web traffic impossible.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does TLS protect?",
+        "options": ["Data in transit between client and server", "Data stored on the server", "Data in the database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch04-security-on-the-wire",
+      "title": "Certificates and Certificate Authorities",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "How does your browser know it's really talking to google.com and not an impostor?", "visual": "🤔" },
+        "buildup": { "text": "TLS certificates prove a server's identity. They're issued by trusted Certificate Authorities.", "visual": "📜" },
+        "discovery": { "text": "Your browser has a built-in list of trusted CAs. If a certificate chains back to one, it's trusted.", "visual": "🔗" },
+        "twist": { "text": "A compromised CA can issue fake certificates for any domain. This has happened — DigiNotar was hacked in 2011.", "visual": "💀" },
+        "climax": { "text": "Certificate Transparency logs now publicly record every issued certificate, making rogue certificates detectable.", "visual": "📋" },
+        "punchline": { "text": "Certificates prove identity; CAs vouch for them.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What do TLS certificates prove?",
+        "options": ["The server's identity is authentic", "The data is compressed", "The connection is fast"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch04-security-on-the-wire",
+      "title": "CORS: Cross-Origin Security",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A malicious website tries to read your bank data by making an API call from your browser. CORS blocks it.", "visual": "🛑" },
+        "buildup": { "text": "CORS controls which origins can make requests to your API. Browsers enforce it automatically.", "visual": "🛡️" },
+        "discovery": { "text": "The server sends Access-Control-Allow-Origin headers. If the requesting origin isn't listed, the browser blocks it.", "visual": "📋" },
+        "twist": { "text": "CORS is a browser-only protection. Server-to-server requests bypass CORS entirely.", "visual": "🖥️" },
+        "climax": { "text": "CORS prevents unauthorized websites from accessing your APIs using your users' cookies and sessions.", "visual": "🔐" },
+        "punchline": { "text": "CORS stops other websites from abusing your API through users' browsers.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does CORS protect against?",
+        "options": ["Unauthorized cross-origin requests from browsers", "DDoS attacks", "SQL injection"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch04-security-on-the-wire",
+      "title": "DDoS Attacks Explained",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Millions of fake requests flood a server until it can't respond to real users. That's a DDoS attack.", "visual": "🌊" },
+        "buildup": { "text": "Distributed Denial of Service attacks use botnets — thousands of compromised devices — to overwhelm targets.", "visual": "🤖" },
+        "discovery": { "text": "Volumetric attacks flood bandwidth. Application-layer attacks target expensive operations like login or search.", "visual": "🎯" },
+        "twist": { "text": "The largest DDoS attacks now exceed 3 Tbps. No single server or network can absorb that much traffic.", "visual": "📈" },
+        "climax": { "text": "DDoS mitigation services like Cloudflare and Akamai absorb attack traffic across global networks.", "visual": "🛡️" },
+        "punchline": { "text": "DDoS overwhelms with fake traffic; mitigation absorbs it.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a DDoS attack?",
+        "options": ["Overwhelming a server with fake traffic from many sources", "Stealing data from a database", "Injecting malicious code into a website"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch04-security-on-the-wire",
+      "title": "Zero Trust Architecture",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A VPN gives access to the entire network. If an attacker gets VPN credentials, they can reach everything.", "visual": "🔓" },
+        "buildup": { "text": "Zero Trust assumes no user or device is trusted, even inside the network. Every request is verified.", "visual": "🔐" },
+        "discovery": { "text": "Access is granted per resource, per session, based on identity, device health, and context.", "visual": "🎯" },
+        "twist": { "text": "Google's BeyondCorp replaced VPNs with Zero Trust. Employees access internal tools from any network.", "visual": "🌐" },
+        "climax": { "text": "Zero Trust shifts security from the network perimeter to individual resource access.", "visual": "🏗️" },
+        "punchline": { "text": "Never trust, always verify — even on your own network.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the core principle of Zero Trust?",
+        "options": ["Never trust any user or device; always verify every request", "Trust users inside the network", "Block all external traffic"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch05-content-delivery",
+      "title": "How CDNs Cache Content",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A user in Mumbai requests an image hosted in Virginia. The CDN serves a cached copy from a server in Mumbai.", "visual": "🏎️" },
+        "buildup": { "text": "CDNs store copies of content on edge servers at hundreds of locations worldwide, called PoPs.", "visual": "🌍" },
+        "discovery": { "text": "On a cache hit, the edge server responds directly. On a miss, it fetches from the origin and caches the result.", "visual": "📦" },
+        "twist": { "text": "Cache invalidation is the hardest part. Stale content can be served for hours if TTLs are misconfigured.", "visual": "⏰" },
+        "climax": { "text": "CDNs turn a global latency problem into a local one by placing content near every user.", "visual": "📍" },
+        "punchline": { "text": "CDNs cache content at the edge, close to every user.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What happens on a CDN cache miss?",
+        "options": ["The edge fetches from the origin server and caches the result", "The request fails", "The user is redirected to the origin"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch05-content-delivery",
+      "title": "Anycast Routing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Cloudflare has one IP address for its entire network. Yet your traffic always reaches the nearest server. How?", "visual": "🤔" },
+        "buildup": { "text": "Anycast announces the same IP address from multiple locations. Routers direct traffic to the nearest one.", "visual": "📡" },
+        "discovery": { "text": "This means no DNS-level routing is needed. The network itself picks the closest server for every packet.", "visual": "🔀" },
+        "twist": { "text": "Anycast is tricky for TCP. If routing shifts mid-connection, packets hit a different server and the session breaks.", "visual": "💔" },
+        "climax": { "text": "Anycast is the backbone of modern CDNs and DNS providers, enabling instant global load balancing.", "visual": "🌐" },
+        "punchline": { "text": "One IP, many servers — the network picks the nearest.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How does anycast routing work?",
+        "options": ["Same IP announced from multiple locations; routers pick the nearest", "Different IPs for each server", "DNS resolves to the closest server"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch05-content-delivery",
+      "title": "Video Streaming Architecture",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Netflix streams 4K video to 230 million users worldwide. The architecture behind it is staggering.", "visual": "📺" },
+        "buildup": { "text": "Videos are split into small chunks, encoded in multiple bitrates, and distributed to CDN edge servers.", "visual": "🧩" },
+        "discovery": { "text": "Adaptive bitrate streaming detects your bandwidth and switches quality per chunk — seamlessly.", "visual": "📶" },
+        "twist": { "text": "Netflix built its own CDN called Open Connect, placing servers inside ISPs for even faster delivery.", "visual": "🏠" },
+        "climax": { "text": "Modern video streaming is a masterclass in distributed systems, caching, and adaptive algorithms.", "visual": "🎓" },
+        "punchline": { "text": "Chunk, encode, distribute, adapt — that's streaming at scale.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does adaptive bitrate streaming do?",
+        "options": ["Switches video quality per chunk based on bandwidth", "Plays only one quality level", "Downloads the entire video before playing"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch05-content-delivery",
+      "title": "Image Optimization on the Web",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Images make up 50% of a typical web page's size. Unoptimized images destroy load times.", "visual": "🖼️" },
+        "buildup": { "text": "WebP and AVIF formats compress images 30-50% smaller than JPEG while maintaining visual quality.", "visual": "📦" },
+        "discovery": { "text": "Responsive images serve different sizes based on the device. A phone gets a smaller image than a desktop.", "visual": "📱" },
+        "twist": { "text": "Lazy loading defers off-screen images until the user scrolls to them, reducing initial page load.", "visual": "⬇️" },
+        "climax": { "text": "Modern image optimization combines format selection, responsive sizing, lazy loading, and CDN delivery.", "visual": "🎯" },
+        "punchline": { "text": "Right format, right size, right time — images optimized.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why are WebP and AVIF better than JPEG?",
+        "options": ["They compress 30-50% smaller while maintaining quality", "They load without a browser", "They support animation only"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch05-content-delivery",
+      "title": "API Rate Limiting and Throttling",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An API serves 100,000 requests per second. A single rogue client sends 50,000 of them.", "visual": "🌊" },
+        "buildup": { "text": "Rate limiting caps requests per client per time window. Throttling slows down excess requests gracefully.", "visual": "🚦" },
+        "discovery": { "text": "HTTP 429 (Too Many Requests) tells clients to back off. Retry-After headers say when to try again.", "visual": "⏰" },
+        "twist": { "text": "Distributed rate limiting across multiple servers requires shared state, adding latency and complexity.", "visual": "🔗" },
+        "climax": { "text": "Rate limiting protects both the system and fair access for all clients.", "visual": "🛡️" },
+        "punchline": { "text": "Limit requests per client to protect everyone's access.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What HTTP status code indicates rate limiting?",
+        "options": ["429 Too Many Requests", "503 Service Unavailable", "401 Unauthorized"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch06-the-modern-web-stack",
+      "title": "Load Balancing Algorithms",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Ten servers handle traffic. Round-robin sends requests evenly. But server 3 is twice as powerful as server 7.", "visual": "⚖️" },
+        "buildup": { "text": "Load balancers distribute traffic across servers using algorithms: round-robin, least connections, or weighted.", "visual": "🔀" },
+        "discovery": { "text": "Least connections sends new requests to the server handling the fewest active connections.", "visual": "📊" },
+        "twist": { "text": "Health checks ensure sick servers don't receive traffic. Without them, users hit dead servers.", "visual": "🏥" },
+        "climax": { "text": "The right algorithm depends on whether requests are uniform or some are heavier than others.", "visual": "🤔" },
+        "punchline": { "text": "Route traffic to healthy servers using the right algorithm.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does the least-connections algorithm do?",
+        "options": ["Sends new requests to the server with the fewest active connections", "Sends all requests to the fastest server", "Distributes requests randomly"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch06-the-modern-web-stack",
+      "title": "Serverless Computing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You write a function. It runs when a request arrives. You pay only for the milliseconds it executes.", "visual": "⚡" },
+        "buildup": { "text": "Serverless platforms like AWS Lambda and Cloudflare Workers manage all infrastructure automatically.", "visual": "☁️" },
+        "discovery": { "text": "No provisioning, no patching, no scaling decisions. The platform handles everything from zero to millions.", "visual": "📈" },
+        "twist": { "text": "Cold starts add latency. The first request after idle time takes 100-500ms while the function boots up.", "visual": "🥶" },
+        "climax": { "text": "Serverless is ideal for event-driven, bursty workloads. It's costly for steady, high-throughput traffic.", "visual": "💰" },
+        "punchline": { "text": "No servers to manage — pay per millisecond of execution.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a cold start in serverless computing?",
+        "options": ["Extra latency when a function boots up after being idle", "The initial deployment of a function", "A server restart"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch06-the-modern-web-stack",
+      "title": "Containers and Kubernetes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "It works on my machine. With containers, your machine's setup ships alongside your code.", "visual": "📦" },
+        "buildup": { "text": "Docker packages an application with its dependencies into an isolated, portable container.", "visual": "🐳" },
+        "discovery": { "text": "Kubernetes orchestrates containers across a cluster: scheduling, scaling, healing, and networking.", "visual": "☸️" },
+        "twist": { "text": "Kubernetes is powerful but complex. Running it demands dedicated expertise. Many teams adopt it too early.", "visual": "⚠️" },
+        "climax": { "text": "Containers standardized deployment. Kubernetes standardized orchestration. Together they reshaped infrastructure.", "visual": "🏗️" },
+        "punchline": { "text": "Containers package apps; Kubernetes runs them at scale.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does Kubernetes do?",
+        "options": ["Orchestrates containers across a cluster for scaling and healing", "Creates Docker images", "Replaces the operating system"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch06-the-modern-web-stack",
+      "title": "Service Mesh",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "With 200 microservices, how do you manage TLS, retries, and traffic routing between all of them?", "visual": "🕸️" },
+        "buildup": { "text": "A service mesh adds a sidecar proxy next to each service, handling all network communication.", "visual": "🔗" },
+        "discovery": { "text": "Istio and Linkerd provide automatic TLS, load balancing, retries, and observability without code changes.", "visual": "🔐" },
+        "twist": { "text": "Each sidecar adds latency and memory. With hundreds of services, the overhead becomes significant.", "visual": "📈" },
+        "climax": { "text": "Service meshes extract networking logic from application code into infrastructure — powerful but heavy.", "visual": "⚖️" },
+        "punchline": { "text": "A proxy sidecar handles networking so your code doesn't have to.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a service mesh sidecar proxy do?",
+        "options": ["Handles TLS, retries, and routing between services automatically", "Stores application data", "Replaces the database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--architecture-of-the-internet--ch06-the-modern-web-stack",
+      "title": "Observability: Logs, Metrics, Traces",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your API is slow. Is it the database, the cache, or the network? Without observability, you're guessing.", "visual": "🔍" },
+        "buildup": { "text": "Logs record events. Metrics track numbers over time. Traces follow a request across services.", "visual": "📊" },
+        "discovery": { "text": "Together they form the three pillars of observability: what happened, how much, and where.", "visual": "🏛️" },
+        "twist": { "text": "Too much logging is as bad as too little. High-cardinality logs can cost more to store than the app itself.", "visual": "💰" },
+        "climax": { "text": "Observability isn't about collecting data — it's about asking new questions of your system when things go wrong.", "visual": "❓" },
+        "punchline": { "text": "Logs, metrics, and traces: see inside your system.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What are the three pillars of observability?",
+        "options": ["Logs, metrics, and traces", "CPU, memory, and disk", "Latency, throughput, and errors"],
+        "correct": 0
+      }
+    }
+  ]
+}

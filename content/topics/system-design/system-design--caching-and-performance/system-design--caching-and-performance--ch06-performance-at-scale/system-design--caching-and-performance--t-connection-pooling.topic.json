@@ -1,0 +1,49 @@
+{
+  "id": "system-design--caching-and-performance--t-connection-pooling",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Caching and Performance",
+  "course_id": "system-design--caching-and-performance",
+  "chapter_id": "system-design--caching-and-performance--ch06-performance-at-scale",
+  "title": "Connection Pooling",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A 1-minute de-risking session on Connection Pooling.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Each database connection costs 5-10 MB of RAM. A thousand connections consume 10 GB just for connections.",
+      "visual": "💾"
+    },
+    "buildup": {
+      "text": "Connection pooling maintains a pool of open connections. Requests borrow and return them instead of creating new ones.",
+      "visual": "🏊"
+    },
+    "discovery": {
+      "text": "PgBouncer pools PostgreSQL connections, allowing thousands of app instances to share a handful of DB connections.",
+      "visual": "🔗"
+    },
+    "twist": {
+      "text": "Setting the pool too small starves the application. Too large overwhelms the database. Tuning requires load testing.",
+      "visual": "🎚️"
+    },
+    "climax": {
+      "text": "Connection pooling is essential for any application that scales beyond a single server.",
+      "visual": "📈"
+    },
+    "punchline": {
+      "text": "Share connections — don't create one per request.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What does PgBouncer do?",
+    "options": [
+      "Pools PostgreSQL connections so many app instances share a few DB connections",
+      "Compresses PostgreSQL data",
+      "Backs up PostgreSQL databases"
+    ],
+    "correct": 0
+  }
+}

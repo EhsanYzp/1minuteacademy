@@ -1,0 +1,49 @@
+{
+  "id": "system-design--databases-explained--t-optimistic-vs-pessimistic-locking",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Databases Explained",
+  "course_id": "system-design--databases-explained",
+  "chapter_id": "system-design--databases-explained--ch05-transactions-and-consistency",
+  "title": "Optimistic vs Pessimistic Locking",
+  "emoji": "🗄️",
+  "color": "#7C3AED",
+  "description": "A tiny lesson with a big payoff: Optimistic vs Pessimistic Locking.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Two users edit the same document. Pessimistic locking blocks one. Optimistic locking lets both try.",
+      "visual": "🔒"
+    },
+    "buildup": {
+      "text": "Pessimistic locking acquires a lock before modifying data. Others wait until the lock is released.",
+      "visual": "⏳"
+    },
+    "discovery": {
+      "text": "Optimistic locking lets everyone read and write freely, then checks for conflicts at commit time.",
+      "visual": "🏃"
+    },
+    "twist": {
+      "text": "Optimistic locking fails when conflicts are frequent. Every retry wastes work, slowing the system down.",
+      "visual": "🔄"
+    },
+    "climax": {
+      "text": "Low contention? Use optimistic locking. High contention? Pessimistic locking prevents wasted retries.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Low conflict: be optimistic. High conflict: lock first.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "When does optimistic locking perform poorly?",
+    "options": [
+      "When conflicts are frequent, causing many retries",
+      "When there's no contention",
+      "When reads are dominant"
+    ],
+    "correct": 0
+  }
+}

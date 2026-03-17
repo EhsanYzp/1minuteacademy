@@ -1,0 +1,559 @@
+{
+  "categoryId": "system-design",
+  "subject": "System Design",
+  "courseId": "system-design--databases-explained",
+  "courseTitle": "Databases Explained",
+  "emoji": "🗄️",
+  "color": "#7C3AED",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "system-design--databases-explained--ch01-database-fundamentals", "title": "Database Fundamentals", "position": 1 },
+    { "id": "system-design--databases-explained--ch02-relational-databases", "title": "Relational Databases", "position": 2 },
+    { "id": "system-design--databases-explained--ch03-nosql-databases", "title": "NoSQL Databases", "position": 3 },
+    { "id": "system-design--databases-explained--ch04-indexing-and-queries", "title": "Indexing and Queries", "position": 4 },
+    { "id": "system-design--databases-explained--ch05-transactions-and-consistency", "title": "Transactions and Consistency", "position": 5 },
+    { "id": "system-design--databases-explained--ch06-choosing-the-right-database", "title": "Choosing the Right Database", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "system-design--databases-explained--ch01-database-fundamentals",
+      "title": "What Is a Database",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Every app you use — Instagram, Uber, Spotify — stores data somewhere. That somewhere is a database.", "visual": "💾" },
+        "buildup": { "text": "A database is an organized collection of data that can be efficiently stored, retrieved, and updated.", "visual": "🗄️" },
+        "discovery": { "text": "Databases use data structures like B-trees, hash tables, and LSM trees to make lookups fast.", "visual": "🌳" },
+        "twist": { "text": "Not all databases are equal. Some are fast at reads, others at writes. None is great at everything.", "visual": "⚖️" },
+        "climax": { "text": "Choosing the right database is one of the most consequential decisions in system design.", "visual": "🏗️" },
+        "punchline": { "text": "The database choice shapes your entire system.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a database?",
+        "options": ["An organized collection of data for efficient storage and retrieval", "A type of programming language", "A server that runs code"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch01-database-fundamentals",
+      "title": "Storage Engines Under the Hood",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You write data to a database. But how does it actually end up on disk? The storage engine decides.", "visual": "⚙️" },
+        "buildup": { "text": "A storage engine manages how data is written to and read from disk. It's the database's core.", "visual": "🧠" },
+        "discovery": { "text": "B-tree engines update data in place. LSM-tree engines write sequentially and merge later.", "visual": "🔄" },
+        "twist": { "text": "B-trees are better for reads. LSM-trees are better for writes. The engine defines the database's personality.", "visual": "🎭" },
+        "climax": { "text": "Understanding storage engines explains why PostgreSQL and Cassandra behave so differently.", "visual": "💡" },
+        "punchline": { "text": "The storage engine is the personality of the database.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the key difference between B-tree and LSM-tree engines?",
+        "options": ["B-trees update in place; LSM-trees write sequentially and merge", "B-trees are newer", "LSM-trees are always faster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch01-database-fundamentals",
+      "title": "Row vs Column Storage",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Query: average salary of 10 million employees. Row storage reads every column. Column storage reads just salaries.", "visual": "📊" },
+        "buildup": { "text": "Row-oriented stores keep all columns of a row together. Column-oriented stores keep all values of one column together.", "visual": "📋" },
+        "discovery": { "text": "Column stores compress data 10x better because values in a column are similar and highly compressible.", "visual": "📦" },
+        "twist": { "text": "Column stores are terrible for inserting single rows — every column file must be updated separately.", "visual": "🐌" },
+        "climax": { "text": "OLTP workloads use row stores. OLAP analytics use column stores. Each is optimized for its use case.", "visual": "🎯" },
+        "punchline": { "text": "Row stores for transactions, column stores for analytics.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why are column stores better for analytics?",
+        "options": ["They read only the needed columns and compress better", "They're faster at inserting rows", "They use less disk space overall"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch01-database-fundamentals",
+      "title": "In-Memory Databases",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Redis responds in under 1 millisecond. How? It keeps all data in RAM, not on disk.", "visual": "⚡" },
+        "buildup": { "text": "RAM is 1,000x faster than SSD. In-memory databases trade durability for extreme speed.", "visual": "🏎️" },
+        "discovery": { "text": "Redis, Memcached, and VoltDB all live in memory. They're used for caching, sessions, and leaderboards.", "visual": "🏆" },
+        "twist": { "text": "RAM is volatile — a crash erases everything. In-memory databases use snapshots and logs for persistence.", "visual": "💾" },
+        "climax": { "text": "In-memory databases aren't a replacement for disk databases — they complement them for speed-critical paths.", "visual": "🤝" },
+        "punchline": { "text": "Keep hot data in memory for sub-millisecond access.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why are in-memory databases so fast?",
+        "options": ["They keep all data in RAM which is 1,000x faster than SSD", "They use better algorithms", "They compress data more"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch01-database-fundamentals",
+      "title": "Embedded Databases",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "SQLite runs on every iPhone, every Android phone, and every web browser. It's the most deployed database ever.", "visual": "📱" },
+        "buildup": { "text": "An embedded database runs inside your application process. No separate server, no network calls.", "visual": "📦" },
+        "discovery": { "text": "SQLite stores an entire database in a single file. It's used in apps, browsers, and even aircraft systems.", "visual": "✈️" },
+        "twist": { "text": "Embedded databases don't handle concurrent writes from multiple processes. They're single-writer by design.", "visual": "✍️" },
+        "climax": { "text": "Not every database needs a server. For local storage, embedded databases are simpler, faster, and more reliable.", "visual": "💡" },
+        "punchline": { "text": "The most used database runs inside your phone.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is an embedded database?",
+        "options": ["A database that runs inside the application process without a separate server", "A database stored in the cloud", "A database only for mobile apps"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch02-relational-databases",
+      "title": "Tables, Rows, and Schemas",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A relational database organizes data into tables with rows and columns — like a spreadsheet with strict rules.", "visual": "📊" },
+        "buildup": { "text": "Each table has a schema defining column names, data types, and constraints like NOT NULL or UNIQUE.", "visual": "📐" },
+        "discovery": { "text": "The schema enforces data integrity: you can't store a string in an integer column or leave a required field empty.", "visual": "🛡️" },
+        "twist": { "text": "Schema changes on large tables can lock the database for hours. Evolving schemas at scale is a real challenge.", "visual": "🔒" },
+        "climax": { "text": "Relational schemas trade flexibility for correctness. Every row in a table follows the same structure.", "visual": "✅" },
+        "punchline": { "text": "Strict schemas prevent bad data from entering the system.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a database schema enforce?",
+        "options": ["Data types, constraints, and structure for every row", "Network security rules", "Query speed limits"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch02-relational-databases",
+      "title": "JOINs: Connecting Tables",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Users are in one table. Orders are in another. A JOIN connects them to answer: what did each user buy?", "visual": "🔗" },
+        "buildup": { "text": "JOINs combine rows from two or more tables based on a related column, usually a foreign key.", "visual": "🧩" },
+        "discovery": { "text": "INNER JOIN returns matching rows. LEFT JOIN includes unmatched rows from the left table too.", "visual": "📋" },
+        "twist": { "text": "JOINs across large tables are expensive. Joining million-row tables without indexes can take minutes.", "visual": "⏱️" },
+        "climax": { "text": "JOINs are the superpower of relational databases — and the reason NoSQL databases avoid them entirely.", "visual": "⚡" },
+        "punchline": { "text": "JOINs connect tables — powerful but expensive at scale.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does an INNER JOIN return?",
+        "options": ["Only rows that match in both tables", "All rows from both tables", "All rows from the left table"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch02-relational-databases",
+      "title": "Normalization",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A user's address is stored in 5 different tables. When they move, you update all 5 — or data becomes inconsistent.", "visual": "🏠" },
+        "buildup": { "text": "Normalization stores each fact in one place. Other tables reference it via foreign keys.", "visual": "📌" },
+        "discovery": { "text": "Third Normal Form ensures no column depends on another non-key column, eliminating redundancy.", "visual": "3️⃣" },
+        "twist": { "text": "Over-normalization splits data into too many tables, making queries complex and slow due to excessive JOINs.", "visual": "🔀" },
+        "climax": { "text": "Normalization reduces redundancy at the cost of query complexity. The right level depends on your workload.", "visual": "⚖️" },
+        "punchline": { "text": "Store each fact once — reference it everywhere.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the main goal of normalization?",
+        "options": ["Eliminate redundant data by storing each fact once", "Make queries faster", "Reduce the number of tables"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch02-relational-databases",
+      "title": "Foreign Keys and Referential Integrity",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An order references user ID 42, but user 42 doesn't exist. The order points to a ghost.", "visual": "👻" },
+        "buildup": { "text": "A foreign key constraint ensures that references between tables always point to valid rows.", "visual": "🔗" },
+        "discovery": { "text": "If you try to delete user 42 while orders reference them, the database blocks the delete.", "visual": "🛑" },
+        "twist": { "text": "NoSQL databases don't enforce foreign keys. Application code must handle referential integrity manually.", "visual": "🤷" },
+        "climax": { "text": "Foreign keys are the database's way of saying: no orphans allowed. Every reference must be valid.", "visual": "✅" },
+        "punchline": { "text": "Foreign keys prevent references to data that doesn't exist.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a foreign key constraint prevent?",
+        "options": ["References to rows that don't exist", "Duplicate primary keys", "Slow queries"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch02-relational-databases",
+      "title": "PostgreSQL vs MySQL",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "PostgreSQL and MySQL are both relational databases. But they have very different philosophies.", "visual": "🆚" },
+        "buildup": { "text": "MySQL prioritizes simplicity and speed for web apps. PostgreSQL prioritizes correctness and extensibility.", "visual": "🎯" },
+        "discovery": { "text": "PostgreSQL supports JSON, arrays, custom types, and advanced SQL features that MySQL lacks.", "visual": "🧰" },
+        "twist": { "text": "MySQL's replication ecosystem is more mature. Many large-scale systems still prefer MySQL for this reason.", "visual": "📡" },
+        "climax": { "text": "Neither is universally better. PostgreSQL leads in features; MySQL leads in operational simplicity.", "visual": "⚖️" },
+        "punchline": { "text": "PostgreSQL for features, MySQL for operational simplicity.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is PostgreSQL's main strength over MySQL?",
+        "options": ["Advanced features like JSON, arrays, and custom types", "Faster replication", "Simpler setup"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch03-nosql-databases",
+      "title": "Document Databases",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "In MongoDB, a user document contains their profile, addresses, and orders — all in one JSON object.", "visual": "📄" },
+        "buildup": { "text": "Document databases store data as flexible JSON-like documents instead of rigid rows in tables.", "visual": "📦" },
+        "discovery": { "text": "No schema migration needed. Each document can have different fields. Fast iteration for startups.", "visual": "🚀" },
+        "twist": { "text": "Without a schema, bad data creeps in silently. A typo in a field name goes undetected for months.", "visual": "🐛" },
+        "climax": { "text": "Document databases trade schema enforcement for flexibility. Great for evolving data models, risky for data quality.", "visual": "⚖️" },
+        "punchline": { "text": "Flexible documents, but you own the data quality.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a key advantage of document databases?",
+        "options": ["Flexible schemas that don't require migrations", "Faster JOINs", "Built-in encryption"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch03-nosql-databases",
+      "title": "Key-Value Stores",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Given a key, return its value. That's it. Key-value stores are the simplest databases possible.", "visual": "🔑" },
+        "buildup": { "text": "Redis and DynamoDB store data as key-value pairs. Lookups by key are O(1) — constant time.", "visual": "⚡" },
+        "discovery": { "text": "They excel at caching, session storage, and real-time counters where lookup speed is critical.", "visual": "🏎️" },
+        "twist": { "text": "You can only query by key. Need to search by value or range? A key-value store can't help you.", "visual": "🚫" },
+        "climax": { "text": "Key-value stores are powerful for simple access patterns but useless for complex queries.", "visual": "📊" },
+        "punchline": { "text": "Blazing fast if you know the key. Useless if you don't.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the main limitation of key-value stores?",
+        "options": ["You can only query by key, not by value or range", "They can't store large values", "They require a schema"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch03-nosql-databases",
+      "title": "Wide-Column Databases",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Cassandra stores billions of rows across hundreds of nodes. It was built for scale at Facebook.", "visual": "🏛️" },
+        "buildup": { "text": "Wide-column databases organize data by row key, then partition columns into column families.", "visual": "📊" },
+        "discovery": { "text": "They handle massive write throughput because writes are append-only and distributed across nodes.", "visual": "✍️" },
+        "twist": { "text": "You must design your schema around your query patterns. Changing queries later means redesigning tables.", "visual": "🔄" },
+        "climax": { "text": "Wide-column databases are the workhorses behind time-series data, IoT events, and messaging platforms.", "visual": "📈" },
+        "punchline": { "text": "Designed for massive writes and query-driven schemas.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What are wide-column databases best at?",
+        "options": ["High write throughput across distributed nodes", "Complex JOINs", "Schema flexibility"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch03-nosql-databases",
+      "title": "Graph Databases",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Finding friends-of-friends in a relational database requires expensive recursive JOINs. Graphs do it in milliseconds.", "visual": "🕸️" },
+        "buildup": { "text": "Graph databases like Neo4j store data as nodes and edges, optimized for relationship traversal.", "visual": "🔗" },
+        "discovery": { "text": "Querying 'friends who also like jazz' traverses edges directly instead of joining large tables.", "visual": "🎵" },
+        "twist": { "text": "Graphs struggle with simple aggregations like counting or summing. Not every query is a traversal.", "visual": "🧮" },
+        "climax": { "text": "Graph databases excel at social networks, recommendations, and fraud detection — anywhere relationships matter.", "visual": "🎯" },
+        "punchline": { "text": "When relationships are the data, use a graph database.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "When are graph databases most useful?",
+        "options": ["When queries involve traversing relationships between entities", "When storing time-series data", "When doing simple key-value lookups"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch03-nosql-databases",
+      "title": "Time-Series Databases",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A monitoring system ingests 10 million metrics per second. Traditional databases buckle under that write load.", "visual": "📈" },
+        "buildup": { "text": "Time-series databases like InfluxDB and TimescaleDB are optimized for timestamped, append-only data.", "visual": "⏰" },
+        "discovery": { "text": "They automatically compress old data and support downsampling: keeping hourly averages instead of per-second data.", "visual": "📦" },
+        "twist": { "text": "Time-series databases aren't general purpose. They're terrible at random updates or complex relational queries.", "visual": "🚫" },
+        "climax": { "text": "For IoT sensors, server metrics, and financial ticks, time-series databases outperform general databases by 100x.", "visual": "💯" },
+        "punchline": { "text": "Purpose-built for data that flows with time.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What makes time-series databases different?",
+        "options": ["Optimized for timestamped, append-only data with automatic compression", "They store data in graphs", "They use SQL exclusively"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch04-indexing-and-queries",
+      "title": "How B-Trees Work",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A B-tree finds any row among a billion in about 30 disk reads. It's the backbone of most database indexes.", "visual": "🌳" },
+        "buildup": { "text": "A B-tree is a balanced tree where each node holds multiple keys and pointers, organized for disk access.", "visual": "📐" },
+        "discovery": { "text": "Each level of the tree eliminates a branching factor of possibilities. With factor 500, 3 levels covers billions.", "visual": "🔢" },
+        "twist": { "text": "B-trees must rebalance on inserts and deletes. Random writes cause fragmentation that slows performance.", "visual": "🧩" },
+        "climax": { "text": "B-trees have been the dominant index structure since 1972. After 50 years, nothing has replaced them.", "visual": "🏆" },
+        "punchline": { "text": "50 years old and still the king of database indexes.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why are B-trees efficient for databases?",
+        "options": ["Each level eliminates many possibilities, requiring few disk reads", "They store data in memory only", "They don't need rebalancing"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch04-indexing-and-queries",
+      "title": "Composite Indexes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You have an index on last_name and another on city. But a query filtering by both is still slow.", "visual": "🐌" },
+        "buildup": { "text": "A composite index combines multiple columns into one index, ordered left to right.", "visual": "📊" },
+        "discovery": { "text": "An index on (last_name, city) efficiently filters by last_name, or last_name AND city — but not city alone.", "visual": "📋" },
+        "twist": { "text": "Column order matters enormously. (city, last_name) and (last_name, city) serve completely different queries.", "visual": "🔀" },
+        "climax": { "text": "Composite indexes are the most underused optimization. Most slow queries can be fixed by the right composite index.", "visual": "💡" },
+        "punchline": { "text": "Combine columns in one index — order matters.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why does column order matter in composite indexes?",
+        "options": ["The index is ordered left to right and can only filter by leftmost columns first", "It affects storage size", "It changes data types"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch04-indexing-and-queries",
+      "title": "The Query Planner",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You write a SQL query. But the database decides how to execute it. The query planner makes that choice.", "visual": "🧠" },
+        "buildup": { "text": "The planner evaluates multiple execution strategies: which indexes to use, which join algorithm, what order.", "visual": "🔀" },
+        "discovery": { "text": "EXPLAIN shows the planner's chosen strategy. It reveals table scans, index seeks, and estimated costs.", "visual": "📋" },
+        "twist": { "text": "The planner uses statistics about data distribution. Stale statistics can lead to terrible execution plans.", "visual": "📉" },
+        "climax": { "text": "Understanding EXPLAIN output is the single most valuable skill for database performance troubleshooting.", "visual": "🔍" },
+        "punchline": { "text": "EXPLAIN reveals how the database executes your query.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a query planner do?",
+        "options": ["Chooses the best execution strategy for a query", "Writes SQL automatically", "Deletes unused indexes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch04-indexing-and-queries",
+      "title": "Full-Text Search",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You search for 'running shoes' and the database returns results for 'run', 'runner', and 'shoes' too.", "visual": "🔍" },
+        "buildup": { "text": "Full-text search uses inverted indexes: a mapping from every word to the documents that contain it.", "visual": "📖" },
+        "discovery": { "text": "Elasticsearch and PostgreSQL's tsvector tokenize text, apply stemming, and rank results by relevance.", "visual": "📊" },
+        "twist": { "text": "Inverted indexes are huge and expensive to update. Real-time search on rapidly changing data is hard.", "visual": "💰" },
+        "climax": { "text": "LIKE '%shoes%' scans every row. Full-text search with an inverted index returns results in milliseconds.", "visual": "⚡" },
+        "punchline": { "text": "Inverted indexes make text search instant.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What data structure powers full-text search?",
+        "options": ["Inverted indexes mapping words to documents", "B-trees", "Hash tables"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch04-indexing-and-queries",
+      "title": "N+1 Query Problem",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You load 100 blog posts, then for each post, run a query to load the author. That's 101 queries.", "visual": "💥" },
+        "buildup": { "text": "The N+1 problem occurs when code fetches a list, then queries for related data one item at a time.", "visual": "🔄" },
+        "discovery": { "text": "The fix is eager loading: one query for posts, one query for all related authors. Two queries instead of 101.", "visual": "2️⃣" },
+        "twist": { "text": "ORMs often hide N+1 problems. The code looks clean, but the generated SQL is catastrophically inefficient.", "visual": "🙈" },
+        "climax": { "text": "N+1 queries are the most common performance bug in web applications. Always check your ORM's query log.", "visual": "🔍" },
+        "punchline": { "text": "One query for the list, one for the relations — not one per item.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What causes the N+1 query problem?",
+        "options": ["Querying for related data one item at a time instead of in batch", "Using too many indexes", "Having too few database connections"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch05-transactions-and-consistency",
+      "title": "ACID Properties",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You transfer $500 between accounts. The debit succeeds but the credit fails. Where did the money go?", "visual": "💸" },
+        "buildup": { "text": "ACID stands for Atomicity, Consistency, Isolation, Durability — the four guarantees of reliable transactions.", "visual": "🛡️" },
+        "discovery": { "text": "Atomicity ensures both debit and credit succeed or both fail. No partial transfers, ever.", "visual": "⚛️" },
+        "twist": { "text": "ACID transactions are expensive. They require locks and coordination that limit throughput.", "visual": "🔒" },
+        "climax": { "text": "Relational databases offer ACID by default. Most NoSQL databases sacrifice some of these guarantees for speed.", "visual": "⚖️" },
+        "punchline": { "text": "ACID ensures all-or-nothing: no partial failures.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does Atomicity in ACID guarantee?",
+        "options": ["All operations in a transaction succeed or all fail", "Data is always consistent", "Transactions are fast"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch05-transactions-and-consistency",
+      "title": "Isolation Levels",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Two users read the same bank balance at the same time. One withdraws $100. What does the other see?", "visual": "👀" },
+        "buildup": { "text": "Isolation levels control what concurrent transactions can see. Higher isolation means fewer anomalies.", "visual": "🎚️" },
+        "discovery": { "text": "Read Committed prevents dirty reads. Repeatable Read prevents phantom reads. Serializable prevents everything.", "visual": "🛡️" },
+        "twist": { "text": "Serializable is the safest but slowest. Most databases default to Read Committed for performance.", "visual": "🐌" },
+        "climax": { "text": "Choosing the right isolation level is a trade-off between correctness and concurrency.", "visual": "⚖️" },
+        "punchline": { "text": "Higher isolation, fewer bugs — but less throughput.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does the Serializable isolation level guarantee?",
+        "options": ["Transactions behave as if executed one at a time", "Maximum concurrent throughput", "No locks are needed"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch05-transactions-and-consistency",
+      "title": "Optimistic vs Pessimistic Locking",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Two users edit the same document. Pessimistic locking blocks one. Optimistic locking lets both try.", "visual": "🔒" },
+        "buildup": { "text": "Pessimistic locking acquires a lock before modifying data. Others wait until the lock is released.", "visual": "⏳" },
+        "discovery": { "text": "Optimistic locking lets everyone read and write freely, then checks for conflicts at commit time.", "visual": "🏃" },
+        "twist": { "text": "Optimistic locking fails when conflicts are frequent. Every retry wastes work, slowing the system down.", "visual": "🔄" },
+        "climax": { "text": "Low contention? Use optimistic locking. High contention? Pessimistic locking prevents wasted retries.", "visual": "🎯" },
+        "punchline": { "text": "Low conflict: be optimistic. High conflict: lock first.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "When does optimistic locking perform poorly?",
+        "options": ["When conflicts are frequent, causing many retries", "When there's no contention", "When reads are dominant"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch05-transactions-and-consistency",
+      "title": "Distributed Transactions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A payment service debits the wallet while an inventory service reserves the item. Both must succeed or both fail.", "visual": "🤝" },
+        "buildup": { "text": "Distributed transactions span multiple services or databases. Two-phase commit coordinates them.", "visual": "2️⃣" },
+        "discovery": { "text": "Phase 1: all participants vote yes or no. Phase 2: if all voted yes, commit. Otherwise, all roll back.", "visual": "🗳️" },
+        "twist": { "text": "If the coordinator crashes between phases, participants are blocked, holding locks indefinitely.", "visual": "💀" },
+        "climax": { "text": "Two-phase commit is correct but fragile. Modern systems prefer sagas — a sequence of compensating actions.", "visual": "🔄" },
+        "punchline": { "text": "Distributed transactions are correct but dangerously fragile.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What happens if the coordinator crashes in two-phase commit?",
+        "options": ["Participants are blocked holding locks indefinitely", "Everything rolls back automatically", "The transaction completes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch05-transactions-and-consistency",
+      "title": "Eventual Consistency",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You post a photo on Instagram. Your friend in London doesn't see it for 3 seconds. Is the database broken?", "visual": "📸" },
+        "buildup": { "text": "Eventual consistency means all replicas will converge to the same value — eventually, not instantly.", "visual": "⏳" },
+        "discovery": { "text": "For 3 seconds, different replicas may return different results. This is the trade-off for global availability.", "visual": "🌍" },
+        "twist": { "text": "For most social media features, eventual consistency is fine. For bank transfers, it's unacceptable.", "visual": "🏦" },
+        "climax": { "text": "Eventual consistency isn't a bug — it's a deliberate design choice to achieve availability at global scale.", "visual": "🎯" },
+        "punchline": { "text": "Not instant, but eventually correct everywhere.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does eventual consistency guarantee?",
+        "options": ["All replicas will converge to the same value over time", "Instant consistency across all nodes", "No data will ever be lost"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch06-choosing-the-right-database",
+      "title": "Read-Heavy vs Write-Heavy Workloads",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A blog has millions of reads per day but only 10 writes. An IoT platform has millions of writes but few reads.", "visual": "📊" },
+        "buildup": { "text": "Read-heavy systems benefit from caching, read replicas, and B-tree indexes optimized for lookups.", "visual": "📖" },
+        "discovery": { "text": "Write-heavy systems benefit from LSM-tree engines, append-only logs, and minimal indexing.", "visual": "✍️" },
+        "twist": { "text": "Optimizing for reads often makes writes slower, and vice versa. You can't optimize for both equally.", "visual": "⚖️" },
+        "climax": { "text": "Know your workload's read-to-write ratio before choosing a database. It determines everything.", "visual": "🔍" },
+        "punchline": { "text": "Know your read/write ratio — it drives every decision.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is best for write-heavy workloads?",
+        "options": ["LSM-tree engines with append-only logs", "B-tree indexes with many read replicas", "In-memory caching"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch06-choosing-the-right-database",
+      "title": "CAP Theorem in Practice",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A network split occurs between two data centers. Do you serve stale data or return errors?", "visual": "🔀" },
+        "buildup": { "text": "The CAP theorem says during a partition, you must choose between consistency and availability.", "visual": "⚖️" },
+        "discovery": { "text": "CP systems like ZooKeeper refuse requests during partitions. AP systems like Cassandra serve stale data.", "visual": "🔗" },
+        "twist": { "text": "In practice, partitions are rare. Most of the time you're choosing between consistency and latency, not availability.", "visual": "⏱️" },
+        "climax": { "text": "CAP is a framework for thinking about trade-offs, not a strict classification of databases.", "visual": "🧠" },
+        "punchline": { "text": "During a partition: choose consistency or availability.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does the CAP theorem say about network partitions?",
+        "options": ["You must choose between consistency and availability", "You can have all three guarantees", "Partitions never happen in practice"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch06-choosing-the-right-database",
+      "title": "Polyglot Persistence",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Netflix uses Cassandra for user data, Elasticsearch for search, and Redis for sessions. Three databases, one app.", "visual": "🧩" },
+        "buildup": { "text": "Polyglot persistence means using different databases for different parts of the same application.", "visual": "🗂️" },
+        "discovery": { "text": "Each database excels at its specific workload: caching, search, relationships, or time-series data.", "visual": "🎯" },
+        "twist": { "text": "More databases means more operational complexity: backups, monitoring, failover, and expertise for each.", "visual": "📈" },
+        "climax": { "text": "Polyglot persistence gives the best performance but the highest complexity. Start simple, specialize as needed.", "visual": "🔄" },
+        "punchline": { "text": "Use the best database for each job, not one for all.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is polyglot persistence?",
+        "options": ["Using different databases for different parts of an application", "Using one database for everything", "Storing data in multiple formats"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch06-choosing-the-right-database",
+      "title": "Database Migration Strategies",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your MySQL database can't scale anymore. You need to migrate to Cassandra. With zero downtime.", "visual": "🔄" },
+        "buildup": { "text": "The dual-write strategy writes to both old and new databases during migration, then switches reads.", "visual": "✍️" },
+        "discovery": { "text": "Shadow reads compare results from both databases to verify data consistency before the final switch.", "visual": "🔍" },
+        "twist": { "text": "Migrations fail when the new database models data differently. Schema translation is the hardest part.", "visual": "🧩" },
+        "climax": { "text": "Zero-downtime migration takes months of parallel running, careful validation, and a quick rollback plan.", "visual": "📅" },
+        "punchline": { "text": "Migrate in parallel, validate in shadow, switch with confidence.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does the dual-write migration strategy involve?",
+        "options": ["Writing to both old and new databases simultaneously during migration", "Stopping the old database and starting the new one", "Copying all data at once"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--databases-explained--ch06-choosing-the-right-database",
+      "title": "When to Use a Simple File",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A startup spends weeks setting up a database. Their data fits in a single CSV file.", "visual": "😅" },
+        "buildup": { "text": "Files, CSVs, and JSON are perfectly valid storage for small datasets, config, and static content.", "visual": "📄" },
+        "discovery": { "text": "SQLite handles millions of rows in a single file with full SQL support. No server required.", "visual": "💾" },
+        "twist": { "text": "Many successful products launched with flat files or SQLite and only moved to a database when they truly needed it.", "visual": "🚀" },
+        "climax": { "text": "The simplest storage that meets your requirements is the right choice. Don't over-engineer data storage.", "visual": "💡" },
+        "punchline": { "text": "Sometimes a file is the best database.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "When is a file or SQLite a good choice for data storage?",
+        "options": ["When the dataset is small and access patterns are simple", "When you have millions of concurrent users", "When you need distributed transactions"],
+        "correct": 0
+      }
+    }
+  ]
+}

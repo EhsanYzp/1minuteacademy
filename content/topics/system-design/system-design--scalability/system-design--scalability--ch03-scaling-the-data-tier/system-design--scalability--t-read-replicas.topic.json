@@ -1,0 +1,49 @@
+{
+  "id": "system-design--scalability--t-read-replicas",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Scalability: From One to Millions",
+  "course_id": "system-design--scalability",
+  "chapter_id": "system-design--scalability--ch03-scaling-the-data-tier",
+  "title": "Read Replicas",
+  "emoji": "📈",
+  "color": "#059669",
+  "description": "A quick, practical guide to Read Replicas.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your database handles 50,000 reads per second but only 500 writes. Most traffic is reads.",
+      "visual": "📖"
+    },
+    "buildup": {
+      "text": "Read replicas copy data from the primary database. Reads go to replicas; writes stay on the primary.",
+      "visual": "📋"
+    },
+    "discovery": {
+      "text": "Adding 4 replicas gives you 5x read capacity without changing your application logic.",
+      "visual": "5️⃣"
+    },
+    "twist": {
+      "text": "Replicas have lag. A user writes data, then reads from a replica that hasn't received the write yet.",
+      "visual": "⏳"
+    },
+    "climax": {
+      "text": "Read replicas are the simplest way to scale reads, but eventual consistency must be managed.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "More replicas, more reads — but watch the lag.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is the main benefit of read replicas?",
+    "options": [
+      "They multiply read capacity across multiple copies",
+      "They make writes faster",
+      "They eliminate data loss"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "system-design--scalability--t-denormalization-for-performance",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Scalability: From One to Millions",
+  "course_id": "system-design--scalability",
+  "chapter_id": "system-design--scalability--ch03-scaling-the-data-tier",
+  "title": "Denormalization for Performance",
+  "emoji": "📈",
+  "color": "#059669",
+  "description": "A tiny lesson with a big payoff: Denormalization for Performance.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your normalized database requires 5 JOINs to render a user profile. Each JOIN slows the query.",
+      "visual": "🐌"
+    },
+    "buildup": {
+      "text": "Denormalization duplicates data to reduce JOINs. The profile data is pre-computed into a single row.",
+      "visual": "📦"
+    },
+    "discovery": {
+      "text": "Reads become blazing fast — one row, one query, no joins. Response time drops from 200ms to 5ms.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "Writes become complex. Updating a user's name means updating it in every denormalized copy.",
+      "visual": "🔄"
+    },
+    "climax": {
+      "text": "Denormalization trades write complexity for read performance — ideal for read-heavy systems.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "Duplicate data to avoid slow JOINs.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is the trade-off of denormalization?",
+    "options": [
+      "Faster reads but more complex writes",
+      "Faster writes but slower reads",
+      "Less storage usage"
+    ],
+    "correct": 0
+  }
+}

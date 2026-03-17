@@ -1,0 +1,49 @@
+{
+  "id": "system-design--caching-and-performance--t-version-based-cache-keys",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Caching and Performance",
+  "course_id": "system-design--caching-and-performance",
+  "chapter_id": "system-design--caching-and-performance--ch05-cache-invalidation",
+  "title": "Version-Based Cache Keys",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A fast breakdown of Version-Based Cache Keys for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Instead of invalidating a cache key, change the key itself. Old key dies naturally; new key fetches fresh data.",
+      "visual": "🔄"
+    },
+    "buildup": {
+      "text": "Append a version or hash to cache keys: user:42:v3 instead of user:42. Bump the version on changes.",
+      "visual": "🔢"
+    },
+    "discovery": {
+      "text": "This avoids invalidation entirely. The old entry expires via TTL; the new version is a fresh cache miss.",
+      "visual": "💡"
+    },
+    "twist": {
+      "text": "You still need to store the current version somewhere. If that lookup is slow, you've moved the problem, not solved it.",
+      "visual": "🤔"
+    },
+    "climax": {
+      "text": "Version-based keys are elegant for cache layers where direct invalidation is impossible, like CDNs.",
+      "visual": "🌐"
+    },
+    "punchline": {
+      "text": "Don't delete old keys — just stop asking for them.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "How do version-based cache keys work?",
+    "options": [
+      "The key includes a version that changes on updates, making old keys unused",
+      "The cache auto-increments keys",
+      "Keys are encrypted with a version number"
+    ],
+    "correct": 0
+  }
+}

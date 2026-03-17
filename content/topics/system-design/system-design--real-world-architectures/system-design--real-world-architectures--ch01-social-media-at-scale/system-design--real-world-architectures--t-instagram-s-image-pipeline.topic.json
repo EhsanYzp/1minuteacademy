@@ -1,0 +1,49 @@
+{
+  "id": "system-design--real-world-architectures--t-instagram-s-image-pipeline",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Real-World Architectures",
+  "course_id": "system-design--real-world-architectures",
+  "chapter_id": "system-design--real-world-architectures--ch01-social-media-at-scale",
+  "title": "Instagram's Image Pipeline",
+  "emoji": "🏛️",
+  "color": "#4338CA",
+  "description": "A micro-lesson that makes Instagram's Image Pipeline usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Two billion users upload 100 million photos daily. Each photo needs 6 sizes. That's 600 million images per day.",
+      "visual": "📸"
+    },
+    "buildup": {
+      "text": "Instagram stores original images in object storage and generates thumbnails asynchronously after upload.",
+      "visual": "🗄️"
+    },
+    "discovery": {
+      "text": "A CDN serves images from the edge server nearest to the viewer, reducing latency from seconds to milliseconds.",
+      "visual": "🌐"
+    },
+    "twist": {
+      "text": "Storage costs grow forever. Stored photos never go away. Instagram uses tiered storage — hot, warm, cold.",
+      "visual": "💰"
+    },
+    "climax": {
+      "text": "Instagram's image pipeline is a masterclass in async processing, CDN distribution, and tiered storage.",
+      "visual": "🏗️"
+    },
+    "punchline": {
+      "text": "Upload once, resize async, serve from the edge.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why does Instagram generate thumbnails asynchronously?",
+    "options": [
+      "To avoid blocking the upload and making the user wait",
+      "Because thumbnails aren't needed",
+      "To save storage space"
+    ],
+    "correct": 0
+  }
+}

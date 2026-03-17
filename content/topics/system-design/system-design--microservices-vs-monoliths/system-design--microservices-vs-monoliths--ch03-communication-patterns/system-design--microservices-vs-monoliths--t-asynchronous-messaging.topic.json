@@ -1,0 +1,49 @@
+{
+  "id": "system-design--microservices-vs-monoliths--t-asynchronous-messaging",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Microservices vs Monoliths",
+  "course_id": "system-design--microservices-vs-monoliths",
+  "chapter_id": "system-design--microservices-vs-monoliths--ch03-communication-patterns",
+  "title": "Asynchronous Messaging",
+  "emoji": "🧩",
+  "color": "#BE185D",
+  "description": "A short lesson to help you apply Asynchronous Messaging.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Service A publishes a message and moves on. It doesn't wait. Service B processes the message whenever it's ready.",
+      "visual": "📬"
+    },
+    "buildup": {
+      "text": "Message queues like Kafka, RabbitMQ, and SQS decouple services in time. The producer doesn't wait for the consumer.",
+      "visual": "📨"
+    },
+    "discovery": {
+      "text": "If Service B is down, messages queue up and are processed when it recovers. No data is lost.",
+      "visual": "📥"
+    },
+    "twist": {
+      "text": "Async messaging makes debugging harder. Where did the message go? Why wasn't it processed? Tracing is essential.",
+      "visual": "🔍"
+    },
+    "climax": {
+      "text": "Asynchronous communication is more resilient and scalable but harder to reason about than synchronous calls.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "Fire and forget — the producer moves on, the consumer catches up.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What happens if a consumer is down in async messaging?",
+    "options": [
+      "Messages queue up and are processed when it recovers",
+      "Messages are lost permanently",
+      "The producer crashes too"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "system-design--caching-and-performance--t-back-pressure",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Caching and Performance",
+  "course_id": "system-design--caching-and-performance",
+  "chapter_id": "system-design--caching-and-performance--ch06-performance-at-scale",
+  "title": "Back Pressure",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A 1-minute de-risking session on Back Pressure.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A producer sends messages faster than the consumer can process. The queue grows until memory runs out.",
+      "visual": "📈"
+    },
+    "buildup": {
+      "text": "Back pressure is when a slow consumer signals the producer to slow down, preventing overload.",
+      "visual": "🛑"
+    },
+    "discovery": {
+      "text": "TCP does this naturally: if the receiver's buffer is full, the sender pauses until space frees up.",
+      "visual": "📬"
+    },
+    "twist": {
+      "text": "Unbounded queues mask the problem temporarily but eventually crash. Bounded queues enforce back pressure.",
+      "visual": "💥"
+    },
+    "climax": {
+      "text": "Systems without back pressure grow unstable under load. Back pressure is the safety valve that keeps them alive.",
+      "visual": "⚙️"
+    },
+    "punchline": {
+      "text": "Slow down the producer before the consumer drowns.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What does back pressure prevent?",
+    "options": [
+      "A fast producer overwhelming a slow consumer",
+      "Data encryption errors",
+      "Network partitions"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "system-design--famous-system-failures--t-gitlab-deletes-its-own-database",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Famous System Failures",
+  "course_id": "system-design--famous-system-failures",
+  "chapter_id": "system-design--famous-system-failures--ch02-data-disasters",
+  "title": "GitLab Deletes Its Own Database",
+  "emoji": "💥",
+  "color": "#DC2626",
+  "description": "A micro-lesson that makes GitLab Deletes Its Own Database usable.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "On January 31, 2017, a GitLab engineer accidentally ran a delete command on the production database.",
+      "visual": "🗑️"
+    },
+    "buildup": {
+      "text": "They were troubleshooting a replication issue and typed the command in the wrong terminal window.",
+      "visual": "💻"
+    },
+    "discovery": {
+      "text": "300 GB of production data was deleted. The team scrambled to restore from backups.",
+      "visual": "😱"
+    },
+    "twist": {
+      "text": "Five different backup methods had all failed silently. The only working backup was a 6-hour-old snapshot.",
+      "visual": "💀"
+    },
+    "climax": {
+      "text": "GitLab live-streamed the recovery on YouTube with full transparency. They lost 6 hours of user data.",
+      "visual": "📺"
+    },
+    "punchline": {
+      "text": "Untested backups are not backups at all.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What made GitLab's database deletion so damaging?",
+    "options": [
+      "Five backup methods had all failed silently",
+      "They didn't have any backup system",
+      "The delete was intentional"
+    ],
+    "correct": 0
+  }
+}

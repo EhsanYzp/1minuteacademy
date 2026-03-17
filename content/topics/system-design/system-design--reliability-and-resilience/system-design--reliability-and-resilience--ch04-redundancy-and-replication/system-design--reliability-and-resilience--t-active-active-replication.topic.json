@@ -1,0 +1,49 @@
+{
+  "id": "system-design--reliability-and-resilience--t-active-active-replication",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Reliability and Resilience",
+  "course_id": "system-design--reliability-and-resilience",
+  "chapter_id": "system-design--reliability-and-resilience--ch04-redundancy-and-replication",
+  "title": "Active-Active Replication",
+  "emoji": "🛡️",
+  "color": "#0D9488",
+  "description": "A tiny lesson with a big payoff: Active-Active Replication.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Both data centers handle traffic simultaneously. If one goes down, the other continues without any failover delay.",
+      "visual": "⚡"
+    },
+    "buildup": {
+      "text": "Active-active: multiple replicas all serve read and write traffic. No single primary — all nodes are equal.",
+      "visual": "🔀"
+    },
+    "discovery": {
+      "text": "Active-active eliminates failover delay. Users are already served by multiple locations — one disappearing is seamless.",
+      "visual": "✅"
+    },
+    "twist": {
+      "text": "Write conflicts: two users update the same record in different data centers simultaneously. Which write wins?",
+      "visual": "💥"
+    },
+    "climax": {
+      "text": "Active-active is powerful for availability but requires conflict resolution strategies for concurrent writes.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "Both replicas serve traffic — no failover delay, but conflicts to manage.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is the main challenge of active-active replication?",
+    "options": [
+      "Resolving write conflicts when both replicas receive concurrent writes",
+      "It's too slow",
+      "Only one replica can serve reads"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "system-design--microservices-vs-monoliths--t-cqrs-reads-vs-writes",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Microservices vs Monoliths",
+  "course_id": "system-design--microservices-vs-monoliths",
+  "chapter_id": "system-design--microservices-vs-monoliths--ch04-data-ownership",
+  "title": "CQRS: Reads vs Writes",
+  "emoji": "🧩",
+  "color": "#BE185D",
+  "description": "A quick win: understand CQRS: Reads vs Writes.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Reads and writes have completely different requirements. Why force them through the same data model?",
+      "visual": "🆚"
+    },
+    "buildup": {
+      "text": "CQRS separates the command (write) model from the query (read) model. Each is optimized independently.",
+      "visual": "✂️"
+    },
+    "discovery": {
+      "text": "Writes go to a normalized relational database. Reads go to a denormalized view optimized for fast lookups.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "The read model lags behind the write model. Eventual consistency means a user might not see their own writes.",
+      "visual": "⏳"
+    },
+    "climax": {
+      "text": "CQRS shines when read and write patterns are wildly different — heavy reads with complex queries, simple writes.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Separate reads from writes — optimize each independently.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What does CQRS stand for?",
+    "options": [
+      "Command Query Responsibility Segregation",
+      "Cache Query Routing System",
+      "Complex Query Response Service"
+    ],
+    "correct": 0
+  }
+}

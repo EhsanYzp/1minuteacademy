@@ -1,0 +1,49 @@
+{
+  "id": "system-design--caching-and-performance--t-cache-sharding",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Caching and Performance",
+  "course_id": "system-design--caching-and-performance",
+  "chapter_id": "system-design--caching-and-performance--ch03-distributed-caching",
+  "title": "Cache Sharding",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A short lesson to help you apply Cache Sharding.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your Redis instance holds 100 GB. You need 500 GB. One server can't hold it all.",
+      "visual": "📈"
+    },
+    "buildup": {
+      "text": "Cache sharding distributes keys across multiple cache nodes using consistent hashing.",
+      "visual": "🔀"
+    },
+    "discovery": {
+      "text": "Each node holds a subset of keys. The client hashes the key to determine which node to query.",
+      "visual": "🎲"
+    },
+    "twist": {
+      "text": "Multi-key operations like transactions or set intersections don't work across shards. Data locality matters.",
+      "visual": "🚫"
+    },
+    "climax": {
+      "text": "Redis Cluster handles sharding automatically with 16,384 hash slots distributed across nodes.",
+      "visual": "🏗️"
+    },
+    "punchline": {
+      "text": "Shard the cache to scale beyond one machine.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is the main limitation of cache sharding?",
+    "options": [
+      "Multi-key operations don't work across shards",
+      "It's slower than a single node",
+      "It requires more memory per node"
+    ],
+    "correct": 0
+  }
+}

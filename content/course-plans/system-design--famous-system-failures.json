@@ -1,0 +1,559 @@
+{
+  "categoryId": "system-design",
+  "subject": "System Design",
+  "courseId": "system-design--famous-system-failures",
+  "courseTitle": "Famous System Failures",
+  "emoji": "💥",
+  "color": "#DC2626",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "system-design--famous-system-failures--ch01-cascading-catastrophes", "title": "Cascading Catastrophes", "position": 1 },
+    { "id": "system-design--famous-system-failures--ch02-data-disasters", "title": "Data Disasters", "position": 2 },
+    { "id": "system-design--famous-system-failures--ch03-infrastructure-meltdowns", "title": "Infrastructure Meltdowns", "position": 3 },
+    { "id": "system-design--famous-system-failures--ch04-financial-glitches", "title": "Financial Glitches", "position": 4 },
+    { "id": "system-design--famous-system-failures--ch05-deployment-gone-wrong", "title": "Deployment Gone Wrong", "position": 5 },
+    { "id": "system-design--famous-system-failures--ch06-lessons-from-failure", "title": "Lessons from Failure", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "system-design--famous-system-failures--ch01-cascading-catastrophes",
+      "title": "The Facebook Outage of 2021",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "On October 4, 2021, Facebook, Instagram, and WhatsApp vanished from the internet for six hours.", "visual": "📵" },
+        "buildup": { "text": "A routine BGP configuration change accidentally withdrew all routes to Facebook's servers.", "visual": "🔧" },
+        "discovery": { "text": "Without BGP routes, DNS couldn't resolve facebook.com. The entire platform became unreachable worldwide.", "visual": "🌍" },
+        "twist": { "text": "Engineers couldn't fix it remotely — their own tools ran on Facebook's network. They drove to data centers.", "visual": "🚗" },
+        "climax": { "text": "One misconfigured command took down services used by 3.5 billion people. Cost: over $6 billion in revenue.", "visual": "💰" },
+        "punchline": { "text": "A single config change deleted Facebook from the internet.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What caused the 2021 Facebook outage?",
+        "options": ["A BGP configuration change that withdrew all routes", "A cyberattack", "A power failure"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch01-cascading-catastrophes",
+      "title": "The AWS US-East-1 Outage",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In December 2021, half the internet broke. Netflix, Disney+, Slack, and Ring doorbells all went down.", "visual": "🌐" },
+        "buildup": { "text": "AWS US-East-1, the oldest and most popular region, experienced a network disruption.", "visual": "☁️" },
+        "discovery": { "text": "An automated scaling activity overwhelmed internal network devices, cascading into widespread failures.", "visual": "🔗" },
+        "twist": { "text": "The AWS console itself was affected, so engineers couldn't monitor or fix the problem through normal tools.", "visual": "🔒" },
+        "climax": { "text": "Thousands of companies learned a painful lesson: depending on a single cloud region is a single point of failure.", "visual": "💡" },
+        "punchline": { "text": "When one region fails, the world notices.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What caused the AWS US-East-1 outage in 2021?",
+        "options": ["Automated scaling overwhelmed internal network devices", "A physical server fire", "A cyberattack on AWS"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch01-cascading-catastrophes",
+      "title": "The Cloudflare Outage of 2022",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On June 21, 2022, major websites worldwide returned errors. Cloudflare, serving 20% of the web, was down.", "visual": "🌐" },
+        "buildup": { "text": "A network configuration change was deployed to improve resilience in Cloudflare's busiest data centers.", "visual": "🔧" },
+        "discovery": { "text": "A bug in the change caused 19 data centers to go offline simultaneously during a staggered rollout.", "visual": "💥" },
+        "twist": { "text": "The change was supposed to improve resilience. Instead, it caused the exact type of failure it aimed to prevent.", "visual": "🔄" },
+        "climax": { "text": "Even infrastructure providers that protect others from failure are vulnerable to their own failures.", "visual": "🪞" },
+        "punchline": { "text": "Changes meant to improve reliability can cause outages.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What irony marked the 2022 Cloudflare outage?",
+        "options": ["A resilience improvement caused the outage", "They forgot to pay their bills", "A competitor attacked them"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch01-cascading-catastrophes",
+      "title": "Google's 47-Minute Global Outage",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On December 14, 2020, every Google service went dark: Gmail, YouTube, Google Docs — all of them.", "visual": "⬛" },
+        "buildup": { "text": "Google's internal identity management system ran out of storage quota for authentication tokens.", "visual": "🪪" },
+        "discovery": { "text": "Without tokens, no user could be authenticated. Every Google service that required login stopped working.", "visual": "🔐" },
+        "twist": { "text": "The storage quota was set years ago and never updated as usage grew. A ticking time bomb nobody noticed.", "visual": "💣" },
+        "climax": { "text": "A forgotten configuration limit brought down the most reliable tech company in the world for 47 minutes.", "visual": "⏱️" },
+        "punchline": { "text": "Even Google can be taken down by a storage limit.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What caused Google's 2020 global outage?",
+        "options": ["The identity system ran out of storage quota for tokens", "A power failure at a data center", "A DNS misconfiguration"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch01-cascading-catastrophes",
+      "title": "The Fastly CDN Outage",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On June 8, 2021, Reddit, Amazon, the BBC, and The New York Times all went down at the same time.", "visual": "📰" },
+        "buildup": { "text": "Fastly, a major CDN provider, experienced a worldwide outage affecting 85% of its network.", "visual": "🌐" },
+        "discovery": { "text": "A single customer configuration change triggered a dormant bug in Fastly's software, taking down the CDN.", "visual": "🐛" },
+        "twist": { "text": "The bug had existed for weeks. It only activated when a specific, rare configuration combination was hit.", "visual": "🎰" },
+        "climax": { "text": "The modern internet is fragile: a handful of CDN providers serve most of the world's web traffic.", "visual": "🕸️" },
+        "punchline": { "text": "One hidden bug took down half the web in seconds.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What triggered the Fastly outage?",
+        "options": ["A customer config change activated a dormant software bug", "A power outage", "A DDoS attack"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch02-data-disasters",
+      "title": "GitLab Deletes Its Own Database",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "On January 31, 2017, a GitLab engineer accidentally ran a delete command on the production database.", "visual": "🗑️" },
+        "buildup": { "text": "They were troubleshooting a replication issue and typed the command in the wrong terminal window.", "visual": "💻" },
+        "discovery": { "text": "300 GB of production data was deleted. The team scrambled to restore from backups.", "visual": "😱" },
+        "twist": { "text": "Five different backup methods had all failed silently. The only working backup was a 6-hour-old snapshot.", "visual": "💀" },
+        "climax": { "text": "GitLab live-streamed the recovery on YouTube with full transparency. They lost 6 hours of user data.", "visual": "📺" },
+        "punchline": { "text": "Untested backups are not backups at all.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What made GitLab's database deletion so damaging?",
+        "options": ["Five backup methods had all failed silently", "They didn't have any backup system", "The delete was intentional"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch02-data-disasters",
+      "title": "The Equifax Breach",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2017, personal data of 147 million Americans was stolen from Equifax. Names, SSNs, birthdates — all of it.", "visual": "🔓" },
+        "buildup": { "text": "A known vulnerability in Apache Struts had a patch available for two months before the breach.", "visual": "🩹" },
+        "discovery": { "text": "Equifax never applied the patch. Attackers exploited the unpatched vulnerability to access internal systems.", "visual": "🚪" },
+        "twist": { "text": "The attackers went undetected for 76 days because an SSL certificate for monitoring had expired.", "visual": "📜" },
+        "climax": { "text": "Two simple oversights — one unpatched server and one expired certificate — led to the largest data breach in history.", "visual": "💥" },
+        "punchline": { "text": "An unpatched server cost 147 million people their data.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What was the root cause of the Equifax breach?",
+        "options": ["An unpatched known vulnerability in Apache Struts", "A zero-day exploit", "An insider attack"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch02-data-disasters",
+      "title": "Amazon S3 Outage and the Typo",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On February 28, 2017, a large chunk of the internet went offline because of a typo.", "visual": "⌨️" },
+        "buildup": { "text": "An AWS engineer was debugging S3's billing system and needed to remove a few servers from service.", "visual": "🔧" },
+        "discovery": { "text": "A typo in the command removed far more servers than intended, taking down a core S3 subsystem.", "visual": "💥" },
+        "twist": { "text": "S3 hadn't been fully restarted in years. The restart took hours because the system was so large.", "visual": "⏳" },
+        "climax": { "text": "Thousands of websites and services that depended on S3 went down. One mistyped command, billions affected.", "visual": "🌐" },
+        "punchline": { "text": "A single typo brought down the internet's storage layer.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What caused the 2017 S3 outage?",
+        "options": ["A typo in a command removed too many servers", "A hardware failure", "A cyberattack"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch02-data-disasters",
+      "title": "MySpace Loses 12 Years of Music",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2019, MySpace admitted it had lost all music uploaded between 2003 and 2015. Over 50 million songs — gone.", "visual": "🎵" },
+        "buildup": { "text": "MySpace was migrating servers and the music files were stored without adequate redundancy.", "visual": "💾" },
+        "discovery": { "text": "During the migration, the files were corrupted or lost. No usable backups existed for the music library.", "visual": "😱" },
+        "twist": { "text": "MySpace initially claimed it was a glitch and would be fixed. Months later, they admitted the data was gone forever.", "visual": "🤥" },
+        "climax": { "text": "Twelve years of independent music history — demos, first recordings, rare tracks — erased by poor storage design.", "visual": "💔" },
+        "punchline": { "text": "50 million songs vanished from a failed migration.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why did MySpace lose 12 years of music?",
+        "options": ["A server migration without adequate backups or redundancy", "They deleted it intentionally", "A fire destroyed the servers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch02-data-disasters",
+      "title": "The British Airways Data Center Fire",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2017, a power surge at a British Airways data center caused a cascading failure across all systems.", "visual": "⚡" },
+        "buildup": { "text": "An engineer disconnected and reconnected a power supply, causing an uncontrolled power surge.", "visual": "🔌" },
+        "discovery": { "text": "The surge fried servers in the primary data center. The backup data center failed to take over cleanly.", "visual": "🔥" },
+        "twist": { "text": "BA had outsourced its IT operations years earlier. The institutional knowledge to recover quickly was gone.", "visual": "📤" },
+        "climax": { "text": "75,000 passengers were stranded. The outage cost BA over £80 million in compensation and lost revenue.", "visual": "✈️" },
+        "punchline": { "text": "A power surge grounded 75,000 passengers for three days.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What worsened the British Airways data center failure?",
+        "options": ["The backup data center failed to take over cleanly", "They had no backup at all", "The fire was arson"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch03-infrastructure-meltdowns",
+      "title": "The GitHub DDoS Attack of 2018",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "On February 28, 2018, GitHub was hit with 1.35 Tbps of traffic — the largest DDoS attack ever recorded at the time.", "visual": "🌊" },
+        "buildup": { "text": "Attackers used memcached amplification: small requests to open memcached servers returned massive responses.", "visual": "📡" },
+        "discovery": { "text": "Each 15-byte request was amplified into a 750 KB response — a 51,000x amplification factor.", "visual": "📈" },
+        "twist": { "text": "GitHub was back online in 10 minutes. Their DDoS mitigation partner, Akamai, absorbed the traffic.", "visual": "🛡️" },
+        "climax": { "text": "The attack was massive, but preparation and a strong mitigation partner made recovery remarkably fast.", "visual": "⚡" },
+        "punchline": { "text": "1.35 Tbps of attack traffic, 10 minutes to recover.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What amplification factor did the GitHub DDoS attack use?",
+        "options": ["51,000x through open memcached servers", "10x through DNS amplification", "100x through SYN flooding"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch03-infrastructure-meltdowns",
+      "title": "The Slack Connectivity Crisis",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On January 4, 2021, millions tried to log into Slack after New Year's. It couldn't handle the stampede.", "visual": "🐎" },
+        "buildup": { "text": "Everyone returned to work on the same Monday morning, creating a massive simultaneous login spike.", "visual": "📈" },
+        "discovery": { "text": "Slack's infrastructure wasn't provisioned for the thundering herd of post-holiday reconnections.", "visual": "⛈️" },
+        "twist": { "text": "The problem wasn't total load — it was the spike pattern. Gradual load would have been fine.", "visual": "📊" },
+        "climax": { "text": "Thundering herd problems occur when many clients retry at the same time, amplifying the original spike.", "visual": "🔄" },
+        "punchline": { "text": "Millions logging in at once can overwhelm any system.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a thundering herd problem?",
+        "options": ["Many clients retrying simultaneously amplify a spike", "Too many servers processing at once", "A database running out of storage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch03-infrastructure-meltdowns",
+      "title": "The Roblox 73-Hour Outage",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In October 2021, Roblox went offline for 73 hours. Millions of kids couldn't play for three days.", "visual": "🎮" },
+        "buildup": { "text": "A new monitoring system was deployed alongside a configuration change to their service mesh.", "visual": "🔧" },
+        "discovery": { "text": "The combination created an unexpected interaction: the monitoring system overloaded the service mesh.", "visual": "🕸️" },
+        "twist": { "text": "Each fix attempt created new cascading failures. The intertwined dependencies made diagnosis incredibly hard.", "visual": "🧩" },
+        "climax": { "text": "It took 73 hours because the root cause was an emergent interaction between two independent changes.", "visual": "🔍" },
+        "punchline": { "text": "Two safe changes combined into a 73-hour outage.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What caused the Roblox 73-hour outage?",
+        "options": ["Two independent changes interacted in an unexpected way", "A cyberattack", "A power failure at the data center"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch03-infrastructure-meltdowns",
+      "title": "The Heroku Security Incident",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In April 2022, Heroku discovered attackers had stolen OAuth tokens, compromising private GitHub repos.", "visual": "🔐" },
+        "buildup": { "text": "Attackers accessed a Heroku database containing OAuth tokens for GitHub integrations.", "visual": "🗄️" },
+        "discovery": { "text": "The stolen tokens gave access to private repositories of Heroku users, including npm's private repos.", "visual": "📦" },
+        "twist": { "text": "Heroku revoked all OAuth tokens, breaking CI/CD for thousands of developers without warning.", "visual": "💔" },
+        "climax": { "text": "Storing OAuth tokens in a database without additional encryption turned a breach into a supply chain risk.", "visual": "🔗" },
+        "punchline": { "text": "Stolen tokens turned one breach into thousands.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What made the Heroku breach widespread?",
+        "options": ["Stolen OAuth tokens gave access to thousands of GitHub repos", "They lost all customer data", "Their servers were destroyed"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch03-infrastructure-meltdowns",
+      "title": "The CrowdStrike Blue Screen Incident",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On July 19, 2024, 8.5 million Windows computers crashed worldwide with the blue screen of death.", "visual": "🟦" },
+        "buildup": { "text": "CrowdStrike pushed a faulty update to its Falcon sensor, a kernel-level security driver.", "visual": "🛡️" },
+        "discovery": { "text": "The update caused a null pointer exception in the kernel driver, crashing Windows immediately on boot.", "visual": "💀" },
+        "twist": { "text": "Because it crashed on boot, machines entered a reboot loop. Each required manual intervention to fix.", "visual": "🔄" },
+        "climax": { "text": "Airlines, hospitals, and banks were paralyzed. It was the largest IT outage in history.", "visual": "🏥" },
+        "punchline": { "text": "One bad update crashed 8.5 million computers at once.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why was the CrowdStrike incident so hard to fix?",
+        "options": ["Machines crashed on boot, requiring manual intervention", "The fix needed internet access", "There was no fix available"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch04-financial-glitches",
+      "title": "Knight Capital's $440 Million Bug",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "On August 1, 2012, Knight Capital lost $440 million in 45 minutes due to a software bug.", "visual": "💸" },
+        "buildup": { "text": "A new trading system was deployed, but old dead code from a previous feature was accidentally reactivated.", "visual": "🧟" },
+        "discovery": { "text": "The dead code started buying stocks at market price and selling at lower prices — millions of times per minute.", "visual": "📉" },
+        "twist": { "text": "The kill switch didn't work. It took 45 minutes to identify which server was running the rogue trades.", "visual": "🔍" },
+        "climax": { "text": "Knight Capital went bankrupt days later. Dead code that nobody removed destroyed a $1.4 billion company.", "visual": "☠️" },
+        "punchline": { "text": "Dead code came alive and killed the company.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What caused Knight Capital's $440 million loss?",
+        "options": ["Old dead code was accidentally reactivated during deployment", "A hacker attack", "A market crash"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch04-financial-glitches",
+      "title": "The Flash Crash of 2010",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On May 6, 2010, the US stock market dropped 1,000 points in 5 minutes and recovered 10 minutes later.", "visual": "📉" },
+        "buildup": { "text": "A single trader placed a massive automated sell order using an algorithm, triggering panic.", "visual": "🤖" },
+        "discovery": { "text": "High-frequency trading algorithms detected the sell pressure and amplified it by selling even faster.", "visual": "📡" },
+        "twist": { "text": "Some stocks briefly traded for $0.01. Others jumped to $100,000. Market prices became meaningless.", "visual": "🤯" },
+        "climax": { "text": "Automated systems without circuit breakers created a feedback loop that nearly collapsed the market.", "visual": "🔄" },
+        "punchline": { "text": "Algorithms panicking caused a trillion-dollar flash crash.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What amplified the 2010 Flash Crash?",
+        "options": ["High-frequency trading algorithms created a feedback loop", "Too many human traders selling", "A power outage at the exchange"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch04-financial-glitches",
+      "title": "The Robinhood GameStop Halt",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In January 2021, Robinhood blocked users from buying GameStop stock during a historic rally.", "visual": "🛑" },
+        "buildup": { "text": "GameStop's price surged 1,700% as retail investors coordinated purchases on Reddit's WallStreetBets.", "visual": "📈" },
+        "discovery": { "text": "Robinhood halted buying because it couldn't meet the collateral requirements at its clearinghouse.", "visual": "🏦" },
+        "twist": { "text": "Users thought it was market manipulation. It was actually a liquidity and system design problem.", "visual": "💧" },
+        "climax": { "text": "Robinhood's system wasn't designed for the scenario where millions of users buy the same volatile stock.", "visual": "🎢" },
+        "punchline": { "text": "Unprecedented demand exposed a design gap, not a conspiracy.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why did Robinhood halt GameStop purchases?",
+        "options": ["It couldn't meet clearinghouse collateral requirements", "It was market manipulation", "Their servers crashed"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch04-financial-glitches",
+      "title": "TSB Bank Migration Disaster",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2018, TSB Bank migrated 5.2 million customers to a new platform. It went catastrophically wrong.", "visual": "🏦" },
+        "buildup": { "text": "The migration moved decades of banking data from an old Lloyds system to a new Sabadell platform.", "visual": "📦" },
+        "discovery": { "text": "Customers saw other people's accounts. Some could access strangers' balances and transactions.", "visual": "😱" },
+        "twist": { "text": "The problems lasted weeks. 1.9 million customers were locked out. The CEO eventually resigned.", "visual": "🚪" },
+        "climax": { "text": "Rushed testing, poor migration planning, and no rollback strategy turned a migration into a crisis.", "visual": "💥" },
+        "punchline": { "text": "A botched migration showed customers other people's money.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What went wrong with the TSB Bank migration?",
+        "options": ["Customers could see other people's accounts and balances", "They lost all transaction records", "The new system was too slow"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch04-financial-glitches",
+      "title": "The Nasdaq Facebook IPO Glitch",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On May 18, 2012, Facebook's IPO was the most anticipated stock launch in history. Nasdaq couldn't handle it.", "visual": "📊" },
+        "buildup": { "text": "A flood of orders overwhelmed Nasdaq's system. The opening was delayed 30 minutes.", "visual": "⏰" },
+        "discovery": { "text": "A race condition in Nasdaq's matching engine caused orders to be lost or duplicated.", "visual": "🐛" },
+        "twist": { "text": "Traders didn't know if their orders had been executed. Some accidentally bought twice the shares they wanted.", "visual": "😰" },
+        "climax": { "text": "Nasdaq paid $10 million in fines and $62 million to affected firms. A race condition in the busiest IPO ever.", "visual": "💰" },
+        "punchline": { "text": "A race condition ruined the biggest IPO in history.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What bug caused the Nasdaq Facebook IPO failure?",
+        "options": ["A race condition in the order matching engine", "A buffer overflow", "A memory leak"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch05-deployment-gone-wrong",
+      "title": "The Healthcare.gov Launch Disaster",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "On October 1, 2013, Healthcare.gov launched to serve millions of Americans. It crashed within hours.", "visual": "🏥" },
+        "buildup": { "text": "The site was built by 55 contractors with no single technical owner. Integration testing was minimal.", "visual": "🧩" },
+        "discovery": { "text": "On launch day, the site could handle only 1,100 concurrent users. Millions showed up.", "visual": "🌊" },
+        "twist": { "text": "It took two months, a complete re-architecture, and a new tech team to get the site working.", "visual": "🔧" },
+        "climax": { "text": "Healthcare.gov taught the US government that software projects need a single technical authority and real testing.", "visual": "📋" },
+        "punchline": { "text": "55 contractors, no leader, no load testing — total failure.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What was a core problem with the Healthcare.gov launch?",
+        "options": ["55 contractors with no single technical owner", "The servers were too expensive", "The design was too complex"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch05-deployment-gone-wrong",
+      "title": "The Mars Climate Orbiter",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 1999, NASA's $125 million Mars Climate Orbiter burned up in the Martian atmosphere.", "visual": "🔥" },
+        "buildup": { "text": "The spacecraft approached Mars too closely and disintegrated due to a navigation error.", "visual": "🛰️" },
+        "discovery": { "text": "One team used metric units (newtons). Another used imperial units (pound-force). The values were never converted.", "visual": "📏" },
+        "twist": { "text": "The mismatch was flagged months before arrival. The warnings were dismissed as instrument noise.", "visual": "⚠️" },
+        "climax": { "text": "A $125 million mission was lost because two teams assumed the other was using the same unit system.", "visual": "💥" },
+        "punchline": { "text": "Metric vs imperial — a $125 million misunderstanding.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What caused the Mars Climate Orbiter failure?",
+        "options": ["One team used metric units while another used imperial", "A hardware malfunction", "A solar storm"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch05-deployment-gone-wrong",
+      "title": "The Ariane 5 Explosion",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On June 4, 1996, the Ariane 5 rocket exploded 37 seconds after launch, destroying $370 million in satellites.", "visual": "🚀" },
+        "buildup": { "text": "Software from the Ariane 4 was reused in the Ariane 5. It had worked flawlessly for years.", "visual": "♻️" },
+        "discovery": { "text": "A 64-bit floating point number was converted to a 16-bit integer. The Ariane 5's velocity exceeded the range.", "visual": "🔢" },
+        "twist": { "text": "The code that crashed wasn't even needed during flight. It was a pre-launch calibration routine left running.", "visual": "🤦" },
+        "climax": { "text": "An integer overflow in unnecessary code destroyed one of the most expensive rockets ever built.", "visual": "💥" },
+        "punchline": { "text": "An integer overflow blew up a $370 million rocket.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What caused the Ariane 5 explosion?",
+        "options": ["A 64-bit to 16-bit integer overflow in reused software", "A fuel leak", "Bad weather conditions"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch05-deployment-gone-wrong",
+      "title": "The Therac-25 Radiation Overdoses",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Between 1985 and 1987, a radiation therapy machine gave patients 100x the intended dose. Six were injured, three died.", "visual": "☢️" },
+        "buildup": { "text": "The Therac-25 removed hardware safety interlocks, relying solely on software for safety checks.", "visual": "💻" },
+        "discovery": { "text": "A race condition in the control software allowed the high-energy beam to fire without the safety filter.", "visual": "🐛" },
+        "twist": { "text": "The bug only triggered when a fast typist edited the treatment plan in a specific sequence — hard to reproduce.", "visual": "⌨️" },
+        "climax": { "text": "Life-critical software must be verified with extraordinary rigor. Therac-25 proved the cost of failure.", "visual": "⚖️" },
+        "punchline": { "text": "A race condition in medical software cost lives.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What design flaw made Therac-25 dangerous?",
+        "options": ["It removed hardware safety interlocks, relying only on software", "It used the wrong radiation type", "It was never tested"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch05-deployment-gone-wrong",
+      "title": "The Toyota Unintended Acceleration",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Toyotas accelerated on their own, causing crashes and deaths. Investigators found code with 10,000 global variables.", "visual": "🚗" },
+        "buildup": { "text": "The engine control software was a tangled mess of spaghetti code that had grown over decades.", "visual": "🍝" },
+        "discovery": { "text": "NASA's review found the code had no fail-safe for a stack overflow that could disable the throttle watchdog.", "visual": "💥" },
+        "twist": { "text": "Toyota blamed floor mats. It took external investigators to prove the software was fundamentally unsafe.", "visual": "🔍" },
+        "climax": { "text": "Toyota paid $1.2 billion in fines. Uncontrolled technical debt in safety-critical code had lethal consequences.", "visual": "💰" },
+        "punchline": { "text": "10,000 global variables in code that controls your throttle.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What did NASA find in Toyota's engine control software?",
+        "options": ["Spaghetti code with 10,000 global variables and no stack overflow protection", "A simple configuration error", "Perfectly clean code"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch06-lessons-from-failure",
+      "title": "The Blameless Postmortem",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "An engineer pushes a bad config and takes down production. Traditional response: punish the engineer.", "visual": "😰" },
+        "buildup": { "text": "Blameless postmortems focus on what happened and why, not who messed up.", "visual": "🔍" },
+        "discovery": { "text": "Google, Netflix, and Etsy pioneered this approach. It leads to more honest reporting and better fixes.", "visual": "💡" },
+        "twist": { "text": "Blaming individuals causes people to hide mistakes. Hiding mistakes prevents systemic improvements.", "visual": "🙈" },
+        "climax": { "text": "The goal isn't to find who failed — it's to find what allowed the failure and fix the system.", "visual": "🔧" },
+        "punchline": { "text": "Blame the system, not the person. Fix the process.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the goal of a blameless postmortem?",
+        "options": ["Finding systemic causes and fixing processes", "Punishing the responsible engineer", "Writing a report for management"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch06-lessons-from-failure",
+      "title": "Defense in Depth",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every major failure has one thing in common: multiple safety layers failed at the same time.", "visual": "🧀" },
+        "buildup": { "text": "Defense in depth means layering protections so no single failure can cause a catastrophe.", "visual": "🛡️" },
+        "discovery": { "text": "The Swiss Cheese Model shows that holes in each layer must align for an incident to occur.", "visual": "🧀" },
+        "twist": { "text": "Adding more layers helps, but each layer must be independently maintained. Correlated failures bypass them all.", "visual": "🔗" },
+        "climax": { "text": "Equifax had monitoring, but its certificate expired. GitLab had five backups, but none were tested.", "visual": "💥" },
+        "punchline": { "text": "Layer your defenses and verify each one independently.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does the Swiss Cheese Model illustrate?",
+        "options": ["Failures happen when holes in multiple safety layers align", "One strong layer is enough", "Failures are always unpredictable"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch06-lessons-from-failure",
+      "title": "Circuit Breakers in Software",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A downstream service goes down. Your service keeps retrying, flooding it with requests, making things worse.", "visual": "🌊" },
+        "buildup": { "text": "A circuit breaker detects failures and stops calling the broken service, letting it recover.", "visual": "⚡" },
+        "discovery": { "text": "After a cooldown period, it sends test requests. If they succeed, traffic resumes normally.", "visual": "🔄" },
+        "twist": { "text": "Without circuit breakers, cascading failures propagate across microservices like falling dominoes.", "visual": "🀫" },
+        "climax": { "text": "Netflix's Hystrix library popularized this pattern. It's now standard in all resilient architectures.", "visual": "🏗️" },
+        "punchline": { "text": "Stop calling broken services — let them heal.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a circuit breaker do in software?",
+        "options": ["Stops calling a failing service to prevent cascading failures", "Encrypts network traffic", "Speeds up database queries"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch06-lessons-from-failure",
+      "title": "Chaos Engineering",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Netflix intentionally kills its own servers in production. On purpose. Every day.", "visual": "🐒" },
+        "buildup": { "text": "Chaos Monkey randomly terminates production instances to ensure the system handles failures gracefully.", "visual": "💀" },
+        "discovery": { "text": "By breaking things on purpose, Netflix finds weaknesses before real outages expose them.", "visual": "🔍" },
+        "twist": { "text": "Most teams are afraid to test failure in production. But untested resilience is just hope disguised as engineering.", "visual": "🤞" },
+        "climax": { "text": "Chaos engineering isn't about causing damage — it's about building confidence in your system's resilience.", "visual": "💪" },
+        "punchline": { "text": "Break things on purpose to avoid breaking by surprise.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the purpose of Netflix's Chaos Monkey?",
+        "options": ["Randomly kill servers to test system resilience", "Monitor server performance", "Deploy new code automatically"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--famous-system-failures--ch06-lessons-from-failure",
+      "title": "Why Systems Will Always Fail",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Despite decades of engineering, outages keep happening. AWS, Google, Facebook — nobody is immune.", "visual": "🌐" },
+        "buildup": { "text": "Complex systems have emergent behaviors that no single person fully understands.", "visual": "🧩" },
+        "discovery": { "text": "Normal Accident Theory says failures in tightly coupled, complex systems are inevitable, not exceptional.", "visual": "📖" },
+        "twist": { "text": "The goal isn't to prevent all failures — it's to detect them fast, limit their blast radius, and recover quickly.", "visual": "🎯" },
+        "climax": { "text": "The best teams don't aim for zero failures. They aim for fast detection, small blast radius, and quick recovery.", "visual": "⚡" },
+        "punchline": { "text": "Failures are inevitable — recovery speed is the real metric.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does Normal Accident Theory say?",
+        "options": ["Failures in complex tightly coupled systems are inevitable", "All failures can be prevented", "Simple systems fail more often"],
+        "correct": 0
+      }
+    }
+  ]
+}

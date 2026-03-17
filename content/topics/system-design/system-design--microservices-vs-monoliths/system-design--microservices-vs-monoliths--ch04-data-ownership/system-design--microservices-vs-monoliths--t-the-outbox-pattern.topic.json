@@ -1,0 +1,49 @@
+{
+  "id": "system-design--microservices-vs-monoliths--t-the-outbox-pattern",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Microservices vs Monoliths",
+  "course_id": "system-design--microservices-vs-monoliths",
+  "chapter_id": "system-design--microservices-vs-monoliths--ch04-data-ownership",
+  "title": "The Outbox Pattern",
+  "emoji": "🧩",
+  "color": "#BE185D",
+  "description": "Learn The Outbox Pattern in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The service updates the database and publishes an event. The database write succeeds, but the event publish fails.",
+      "visual": "💥"
+    },
+    "buildup": {
+      "text": "The outbox pattern writes the event to a local outbox table in the same database transaction as the data change.",
+      "visual": "📬"
+    },
+    "discovery": {
+      "text": "A separate process reads the outbox table and publishes events. The database guarantees both writes succeed or fail.",
+      "visual": "✅"
+    },
+    "twist": {
+      "text": "The publisher might crash after sending but before marking the event as sent. Events can be delivered more than once.",
+      "visual": "🔁"
+    },
+    "climax": {
+      "text": "The outbox pattern ensures at-least-once event delivery without distributed transactions. Consumers must be idempotent.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Write data and event in one transaction — publish from the outbox.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What problem does the outbox pattern solve?",
+    "options": [
+      "Ensuring data changes and events are both committed or both rolled back",
+      "Reducing database size",
+      "Speeding up event delivery"
+    ],
+    "correct": 0
+  }
+}

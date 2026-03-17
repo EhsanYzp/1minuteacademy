@@ -1,0 +1,49 @@
+{
+  "id": "system-design--real-world-architectures--t-stripe-s-payment-flow",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Real-World Architectures",
+  "course_id": "system-design--real-world-architectures",
+  "chapter_id": "system-design--real-world-architectures--ch06-payment-systems",
+  "title": "Stripe's Payment Flow",
+  "emoji": "🏛️",
+  "color": "#4338CA",
+  "description": "A 60-second lesson on Stripe's Payment Flow.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You enter your card on a website and click pay. Seven different systems coordinate to move money — in under 3 seconds.",
+      "visual": "💳"
+    },
+    "buildup": {
+      "text": "The merchant's server sends card details to Stripe. Stripe contacts the card network which contacts your bank.",
+      "visual": "🔗"
+    },
+    "discovery": {
+      "text": "Authorization, capture, and settlement are separate steps. The money isn't moved instantly — it settles days later.",
+      "visual": "⏳"
+    },
+    "twist": {
+      "text": "A payment can be authorized (funds held) but never captured. The hold expires after days. No money actually moved.",
+      "visual": "🔄"
+    },
+    "climax": {
+      "text": "Payments are multi-party distributed transactions with eventual settlement — not instant money transfers.",
+      "visual": "🏦"
+    },
+    "punchline": {
+      "text": "Authorize now, capture later, settle in days — payments aren't instant.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is the difference between authorization and settlement?",
+    "options": [
+      "Authorization holds funds; settlement actually moves the money days later",
+      "They're the same thing",
+      "Authorization is faster than settlement"
+    ],
+    "correct": 0
+  }
+}

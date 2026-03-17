@@ -1,0 +1,49 @@
+{
+  "id": "system-design--reliability-and-resilience--t-active-passive-failover",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Reliability and Resilience",
+  "course_id": "system-design--reliability-and-resilience",
+  "chapter_id": "system-design--reliability-and-resilience--ch04-redundancy-and-replication",
+  "title": "Active-Passive Failover",
+  "emoji": "🛡️",
+  "color": "#0D9488",
+  "description": "A quick, practical guide to Active-Passive Failover.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your primary database crashes. A replica that's been silently syncing every second takes over in 30 seconds.",
+      "visual": "🔄"
+    },
+    "buildup": {
+      "text": "Active-passive: the primary handles all traffic. The passive replica stays in sync, ready to take over on failure.",
+      "visual": "🏗️"
+    },
+    "discovery": {
+      "text": "Failover can be automatic (health check triggers it) or manual (a human decides). Automatic is faster but riskier.",
+      "visual": "🤖"
+    },
+    "twist": {
+      "text": "The replica might be slightly behind. Promoting it means losing the last few seconds of writes. Data loss is possible.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Active-passive is the simplest redundancy pattern. It's the foundation of high availability for databases.",
+      "visual": "🏆"
+    },
+    "punchline": {
+      "text": "Primary handles traffic; passive is ready to take over on failure.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is the risk of automatic failover?",
+    "options": [
+      "The replica may be slightly behind, causing a few seconds of data loss",
+      "It's too slow to be useful",
+      "The passive replica can't handle traffic"
+    ],
+    "correct": 0
+  }
+}

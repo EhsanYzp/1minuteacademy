@@ -1,0 +1,49 @@
+{
+  "id": "system-design--real-world-architectures--t-slack-s-real-time-messaging",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Real-World Architectures",
+  "course_id": "system-design--real-world-architectures",
+  "chapter_id": "system-design--real-world-architectures--ch04-messaging-systems",
+  "title": "Slack's Real-Time Messaging",
+  "emoji": "🏛️",
+  "color": "#4338CA",
+  "description": "A tiny lesson with a big payoff: Slack's Real-Time Messaging.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You type a message in Slack and your coworker sees it instantly. WebSocket connections keep the channel open.",
+      "visual": "⚡"
+    },
+    "buildup": {
+      "text": "Slack maintains a persistent WebSocket connection between your client and the server for real-time message delivery.",
+      "visual": "🔌"
+    },
+    "discovery": {
+      "text": "When you send a message, the server stores it and fans it out to all WebSocket connections in the channel.",
+      "visual": "📬"
+    },
+    "twist": {
+      "text": "A company with 100,000 employees means 100,000 WebSocket connections. Each connection consumes memory on the server.",
+      "visual": "💾"
+    },
+    "climax": {
+      "text": "Slack uses a gateway layer to multiplex connections and a pub/sub system to route messages to the right gateways.",
+      "visual": "🏗️"
+    },
+    "punchline": {
+      "text": "WebSockets for real time, pub/sub for routing at scale.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "How does Slack deliver messages in real time?",
+    "options": [
+      "Persistent WebSocket connections deliver messages instantly to connected clients",
+      "Clients poll the server every second",
+      "Email notifications alert users"
+    ],
+    "correct": 0
+  }
+}

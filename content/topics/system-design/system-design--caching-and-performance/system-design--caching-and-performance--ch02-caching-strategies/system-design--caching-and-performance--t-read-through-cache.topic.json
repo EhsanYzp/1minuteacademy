@@ -1,0 +1,49 @@
+{
+  "id": "system-design--caching-and-performance--t-read-through-cache",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Caching and Performance",
+  "course_id": "system-design--caching-and-performance",
+  "chapter_id": "system-design--caching-and-performance--ch02-caching-strategies",
+  "title": "Read-Through Cache",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A 60-second lesson on Read-Through Cache.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The application asks the cache for data. If missing, the cache itself fetches from the database. Not the app.",
+      "visual": "🤖"
+    },
+    "buildup": {
+      "text": "Read-through abstracts the data source away. The application only talks to the cache, never the database directly.",
+      "visual": "🔗"
+    },
+    "discovery": {
+      "text": "This simplifies application code. The cache layer handles all the miss-fetch-store logic internally.",
+      "visual": "📦"
+    },
+    "twist": {
+      "text": "Read-through caches need configuration for each data type. They're less flexible than cache-aside.",
+      "visual": "🔧"
+    },
+    "climax": {
+      "text": "Read-through is ideal when you want the cache to manage its own data lifecycle automatically.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "The cache fetches data on miss — the app doesn't need to know.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "How does read-through differ from cache-aside?",
+    "options": [
+      "The cache itself fetches from the database on a miss, not the app",
+      "The app always queries the database",
+      "Data is never cached"
+    ],
+    "correct": 0
+  }
+}

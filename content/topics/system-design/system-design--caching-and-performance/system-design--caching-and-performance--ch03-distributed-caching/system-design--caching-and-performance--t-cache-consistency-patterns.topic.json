@@ -1,0 +1,49 @@
+{
+  "id": "system-design--caching-and-performance--t-cache-consistency-patterns",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Caching and Performance",
+  "course_id": "system-design--caching-and-performance",
+  "chapter_id": "system-design--caching-and-performance--ch03-distributed-caching",
+  "title": "Cache Consistency Patterns",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A 1-minute de-risking session on Cache Consistency Patterns.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "You update a user's name in the database. The cache still shows the old name. Which is correct?",
+      "visual": "🤔"
+    },
+    "buildup": {
+      "text": "Cache inconsistency occurs when the cache and database disagree about the current state of data.",
+      "visual": "🔀"
+    },
+    "discovery": {
+      "text": "Delete-on-write: delete the cache key on write, forcing the next read to fetch fresh data from the database.",
+      "visual": "🗑️"
+    },
+    "twist": {
+      "text": "Race conditions still exist: a read between the DB write and cache delete can re-cache stale data.",
+      "visual": "🏃"
+    },
+    "climax": {
+      "text": "Perfect cache consistency is impossible without distributed transactions. Acceptable staleness is the practical goal.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Delete on write, accept brief staleness.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is the delete-on-write pattern?",
+    "options": [
+      "Delete the cache key on write so the next read fetches fresh data",
+      "Delete old database records",
+      "Remove expired cache entries automatically"
+    ],
+    "correct": 0
+  }
+}

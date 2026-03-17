@@ -1,0 +1,49 @@
+{
+  "id": "system-design--architecture-of-the-internet--t-anycast-routing",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Architecture of the Internet",
+  "course_id": "system-design--architecture-of-the-internet",
+  "chapter_id": "system-design--architecture-of-the-internet--ch05-content-delivery",
+  "title": "Anycast Routing",
+  "emoji": "🌐",
+  "color": "#0891B2",
+  "description": "A 1-minute de-risking session on Anycast Routing.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Cloudflare has one IP address for its entire network. Yet your traffic always reaches the nearest server. How?",
+      "visual": "🤔"
+    },
+    "buildup": {
+      "text": "Anycast announces the same IP address from multiple locations. Routers direct traffic to the nearest one.",
+      "visual": "📡"
+    },
+    "discovery": {
+      "text": "This means no DNS-level routing is needed. The network itself picks the closest server for every packet.",
+      "visual": "🔀"
+    },
+    "twist": {
+      "text": "Anycast is tricky for TCP. If routing shifts mid-connection, packets hit a different server and the session breaks.",
+      "visual": "💔"
+    },
+    "climax": {
+      "text": "Anycast is the backbone of modern CDNs and DNS providers, enabling instant global load balancing.",
+      "visual": "🌐"
+    },
+    "punchline": {
+      "text": "One IP, many servers — the network picks the nearest.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "How does anycast routing work?",
+    "options": [
+      "Same IP announced from multiple locations; routers pick the nearest",
+      "Different IPs for each server",
+      "DNS resolves to the closest server"
+    ],
+    "correct": 0
+  }
+}

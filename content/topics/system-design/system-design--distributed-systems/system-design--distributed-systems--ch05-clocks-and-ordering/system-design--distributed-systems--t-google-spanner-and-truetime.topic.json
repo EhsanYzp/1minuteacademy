@@ -1,0 +1,49 @@
+{
+  "id": "system-design--distributed-systems--t-google-spanner-and-truetime",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Distributed Systems Explained",
+  "course_id": "system-design--distributed-systems",
+  "chapter_id": "system-design--distributed-systems--ch05-clocks-and-ordering",
+  "title": "Google Spanner and TrueTime",
+  "emoji": "🔗",
+  "color": "#D97706",
+  "description": "A micro-lesson that makes Google Spanner and TrueTime usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Google Spanner is the only database that provides global strong consistency with external consistency.",
+      "visual": "🌍"
+    },
+    "buildup": {
+      "text": "TrueTime uses GPS receivers and atomic clocks in every data center to bound clock uncertainty.",
+      "visual": "📡"
+    },
+    "discovery": {
+      "text": "TrueTime returns an interval: earliest and latest possible time. Spanner waits out the uncertainty window.",
+      "visual": "⏳"
+    },
+    "twist": {
+      "text": "Waiting out uncertainty adds latency to every commit — typically 7ms. Google accepts this for correctness.",
+      "visual": "⚖️"
+    },
+    "climax": {
+      "text": "Spanner proves that with precise enough clocks, global strong consistency is achievable at scale.",
+      "visual": "🏆"
+    },
+    "punchline": {
+      "text": "GPS and atomic clocks make global consistency possible.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "How does Google Spanner achieve global consistency?",
+    "options": [
+      "Using GPS and atomic clocks to bound clock uncertainty",
+      "By using a single leader",
+      "By avoiding distributed transactions"
+    ],
+    "correct": 0
+  }
+}

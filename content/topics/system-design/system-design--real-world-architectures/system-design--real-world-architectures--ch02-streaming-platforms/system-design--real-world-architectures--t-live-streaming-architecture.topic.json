@@ -1,0 +1,49 @@
+{
+  "id": "system-design--real-world-architectures--t-live-streaming-architecture",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Real-World Architectures",
+  "course_id": "system-design--real-world-architectures",
+  "chapter_id": "system-design--real-world-architectures--ch02-streaming-platforms",
+  "title": "Live Streaming Architecture",
+  "emoji": "🏛️",
+  "color": "#4338CA",
+  "description": "A quick, practical guide to Live Streaming Architecture.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A million viewers watch a live concert simultaneously. The video must reach everyone within 5 seconds of real time.",
+      "visual": "📡"
+    },
+    "buildup": {
+      "text": "Live streams use segmented delivery: the video is chopped into 2-6 second segments and distributed via CDN.",
+      "visual": "✂️"
+    },
+    "discovery": {
+      "text": "HLS and DASH protocols deliver segments over standard HTTP. No special streaming servers needed — just web servers.",
+      "visual": "🌐"
+    },
+    "twist": {
+      "text": "True real-time (under 1 second) uses WebRTC, not HLS. But WebRTC doesn't scale to millions without a media server layer.",
+      "visual": "⏰"
+    },
+    "climax": {
+      "text": "Live streaming trades latency for scalability: 5-30 second delay lets CDNs distribute segments efficiently.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "Chop live video into segments, deliver over HTTP via CDN.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why do live streams have a delay?",
+    "options": [
+      "Segmented delivery via CDN needs time to chop, distribute, and buffer video",
+      "The camera introduces lag",
+      "Internet speed is too slow"
+    ],
+    "correct": 0
+  }
+}

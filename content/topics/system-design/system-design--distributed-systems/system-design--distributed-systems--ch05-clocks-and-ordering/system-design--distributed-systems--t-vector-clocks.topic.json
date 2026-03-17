@@ -1,0 +1,49 @@
+{
+  "id": "system-design--distributed-systems--t-vector-clocks",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Distributed Systems Explained",
+  "course_id": "system-design--distributed-systems",
+  "chapter_id": "system-design--distributed-systems--ch05-clocks-and-ordering",
+  "title": "Vector Clocks",
+  "emoji": "🔗",
+  "color": "#D97706",
+  "description": "A 60-second lesson on Vector Clocks.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Lamport clocks say A < B, but can't tell if A caused B or if they were concurrent. Vector clocks can.",
+      "visual": "🔬"
+    },
+    "buildup": {
+      "text": "A vector clock tracks a counter per node. Each node increments its own counter and merges received vectors.",
+      "visual": "📊"
+    },
+    "discovery": {
+      "text": "If A's vector is element-wise less than B's, A happened before B. Otherwise, they're concurrent.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "Vector clocks grow linearly with the number of nodes. In a 1,000-node cluster, each vector has 1,000 entries.",
+      "visual": "📈"
+    },
+    "climax": {
+      "text": "Vector clocks detect concurrency precisely — the key to correct conflict detection in distributed databases.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Vector clocks detect if events are causally related or concurrent.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What can vector clocks do that Lamport clocks cannot?",
+    "options": [
+      "Distinguish between causally related and concurrent events",
+      "Synchronize physical clocks",
+      "Order events faster"
+    ],
+    "correct": 0
+  }
+}

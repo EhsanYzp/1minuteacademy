@@ -1,0 +1,49 @@
+{
+  "id": "system-design--distributed-systems--t-conflict-resolution-strategies",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Distributed Systems Explained",
+  "course_id": "system-design--distributed-systems",
+  "chapter_id": "system-design--distributed-systems--ch03-replication",
+  "title": "Conflict Resolution Strategies",
+  "emoji": "🔗",
+  "color": "#D97706",
+  "description": "A micro-lesson that makes Conflict Resolution Strategies usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Two users edit the same document on different continents. Both changes arrive at the server. Which wins?",
+      "visual": "🤺"
+    },
+    "buildup": {
+      "text": "Last Write Wins (LWW) picks the most recent write by timestamp. Simple, but it silently drops the other.",
+      "visual": "⏰"
+    },
+    "discovery": {
+      "text": "Application-level resolution lets the app merge both changes — like Git's merge for user data.",
+      "visual": "🔀"
+    },
+    "twist": {
+      "text": "LWW with clock skew can discard the truly latest write. Timestamps across machines are never perfectly synced.",
+      "visual": "🕰️"
+    },
+    "climax": {
+      "text": "There's no universal conflict resolution. The right strategy depends on your data model and user expectations.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Conflicts are inevitable — the resolution strategy defines correctness.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is the problem with Last Write Wins?",
+    "options": [
+      "Clock skew can cause the wrong write to be kept",
+      "It's too slow",
+      "It requires too much storage"
+    ],
+    "correct": 0
+  }
+}

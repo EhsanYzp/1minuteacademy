@@ -1,0 +1,49 @@
+{
+  "id": "system-design--distributed-systems--t-why-partition-data",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Distributed Systems Explained",
+  "course_id": "system-design--distributed-systems",
+  "chapter_id": "system-design--distributed-systems--ch04-partitioning",
+  "title": "Why Partition Data",
+  "emoji": "🔗",
+  "color": "#D97706",
+  "description": "One-minute skill: Why Partition Data.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Your database has 10 terabytes. No single disk can hold it. No single CPU can query it fast enough.",
+      "visual": "🧱"
+    },
+    "buildup": {
+      "text": "Partitioning splits data across multiple nodes. Each node holds and processes a subset of the data.",
+      "visual": "🔪"
+    },
+    "discovery": {
+      "text": "Queries that hit one partition are fast. The node processes only its own data, not the entire dataset.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "Queries that span all partitions are slow. A scatter-gather across 100 nodes adds latency from the slowest one.",
+      "visual": "🐌"
+    },
+    "climax": {
+      "text": "Good partitioning ensures most queries hit one or few partitions. Bad partitioning defeats the purpose.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Split data so queries stay local to one partition.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why is partitioning important?",
+    "options": [
+      "No single machine can store or process the entire dataset",
+      "It makes backups easier",
+      "It improves network security"
+    ],
+    "correct": 0
+  }
+}

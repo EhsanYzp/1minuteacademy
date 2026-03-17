@@ -1,0 +1,49 @@
+{
+  "id": "system-design--microservices-vs-monoliths--t-synchronous-communication",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Microservices vs Monoliths",
+  "course_id": "system-design--microservices-vs-monoliths",
+  "chapter_id": "system-design--microservices-vs-monoliths--ch03-communication-patterns",
+  "title": "Synchronous Communication",
+  "emoji": "🧩",
+  "color": "#BE185D",
+  "description": "A quick win: understand Synchronous Communication.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Service A calls Service B and waits for a response. If B is slow, A is slow too. They're coupled by time.",
+      "visual": "⏳"
+    },
+    "buildup": {
+      "text": "REST and gRPC are synchronous: the caller blocks until the callee responds or a timeout is reached.",
+      "visual": "🔗"
+    },
+    "discovery": {
+      "text": "Synchronous calls are simple to reason about. Request in, response out. The flow is linear and predictable.",
+      "visual": "📏"
+    },
+    "twist": {
+      "text": "A chain of synchronous calls amplifies latency and failure. If any link in the chain fails, the whole request fails.",
+      "visual": "💥"
+    },
+    "climax": {
+      "text": "Synchronous communication works for simple request-response. Avoid deep synchronous chains across many services.",
+      "visual": "⚠️"
+    },
+    "punchline": {
+      "text": "Call and wait — simple but every service in the chain must be fast.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is the risk of synchronous service chains?",
+    "options": [
+      "If any service in the chain fails or is slow, the entire request fails",
+      "They use too much memory",
+      "They can't handle read requests"
+    ],
+    "correct": 0
+  }
+}

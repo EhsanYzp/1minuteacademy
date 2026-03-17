@@ -1,0 +1,49 @@
+{
+  "id": "system-design--real-world-architectures--t-whatsapp-s-message-delivery",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Real-World Architectures",
+  "course_id": "system-design--real-world-architectures",
+  "chapter_id": "system-design--real-world-architectures--ch04-messaging-systems",
+  "title": "WhatsApp's Message Delivery",
+  "emoji": "🏛️",
+  "color": "#4338CA",
+  "description": "A 1-minute de-risking session on WhatsApp's Message Delivery.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "WhatsApp delivers 100 billion messages per day to 2 billion users. With a team of just 50 engineers at its peak.",
+      "visual": "💬"
+    },
+    "buildup": {
+      "text": "WhatsApp uses Erlang — a language designed for telecom. It handles millions of concurrent connections per server.",
+      "visual": "📡"
+    },
+    "discovery": {
+      "text": "Messages are stored temporarily until delivered. Once both blue check marks appear, the server deletes the message.",
+      "visual": "✅"
+    },
+    "twist": {
+      "text": "End-to-end encryption means WhatsApp can't read your messages. The server is just a relay — it never sees the content.",
+      "visual": "🔐"
+    },
+    "climax": {
+      "text": "WhatsApp's design philosophy: minimal server state, maximum efficiency. Fewer servers means less to manage.",
+      "visual": "📉"
+    },
+    "punchline": {
+      "text": "Store nothing, relay everything — minimal state, maximum scale.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "Why does WhatsApp delete messages after delivery?",
+    "options": [
+      "To minimize server state and storage requirements",
+      "To protect user privacy by law",
+      "Because storage is too expensive"
+    ],
+    "correct": 0
+  }
+}

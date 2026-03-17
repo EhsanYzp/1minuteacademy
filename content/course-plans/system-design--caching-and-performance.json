@@ -1,0 +1,559 @@
+{
+  "categoryId": "system-design",
+  "subject": "System Design",
+  "courseId": "system-design--caching-and-performance",
+  "courseTitle": "Caching and Performance",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "system-design--caching-and-performance--ch01-caching-fundamentals", "title": "Caching Fundamentals", "position": 1 },
+    { "id": "system-design--caching-and-performance--ch02-caching-strategies", "title": "Caching Strategies", "position": 2 },
+    { "id": "system-design--caching-and-performance--ch03-distributed-caching", "title": "Distributed Caching", "position": 3 },
+    { "id": "system-design--caching-and-performance--ch04-web-performance", "title": "Web Performance", "position": 4 },
+    { "id": "system-design--caching-and-performance--ch05-cache-invalidation", "title": "Cache Invalidation", "position": 5 },
+    { "id": "system-design--caching-and-performance--ch06-performance-at-scale", "title": "Performance at Scale", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "system-design--caching-and-performance--ch01-caching-fundamentals",
+      "title": "What Is a Cache",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A database query takes 200ms. The same query cached in memory returns in 1ms. That's the power of caching.", "visual": "⚡" },
+        "buildup": { "text": "A cache stores frequently accessed data in a faster storage layer, reducing the need to fetch from the source.", "visual": "📦" },
+        "discovery": { "text": "CPU caches, browser caches, CDN caches, and Redis all apply the same principle at different layers.", "visual": "🏗️" },
+        "twist": { "text": "Caches introduce stale data. The cached version might not match the source. Consistency is the trade-off.", "visual": "⚠️" },
+        "climax": { "text": "Caching is the single most impactful performance optimization in system design.", "visual": "🏆" },
+        "punchline": { "text": "Store it closer, serve it faster.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the main trade-off of caching?",
+        "options": ["Speed versus data freshness", "Cost versus storage", "Security versus accessibility"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch01-caching-fundamentals",
+      "title": "Cache Hit and Cache Miss",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A cache hit returns data instantly. A cache miss forces a slow trip to the database. Hits are gold.", "visual": "🎯" },
+        "buildup": { "text": "Hit rate is the percentage of requests served from cache. A 95% hit rate means only 5% hit the database.", "visual": "📊" },
+        "discovery": { "text": "Even a 1% improvement in hit rate can dramatically reduce database load at scale.", "visual": "📈" },
+        "twist": { "text": "A cold cache has 0% hit rate. After a restart, all requests hit the database simultaneously — a cold start storm.", "visual": "🥶" },
+        "climax": { "text": "Monitoring hit rate is the most important metric for any caching layer.", "visual": "🔍" },
+        "punchline": { "text": "High hit rate means the cache is doing its job.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a cache cold start storm?",
+        "options": ["All requests hit the database after a cache restart", "The cache overheats", "Too many items are stored in cache"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch01-caching-fundamentals",
+      "title": "Eviction Policies",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your cache holds 10,000 items but an 11th arrives. Which item gets kicked out to make room?", "visual": "🚪" },
+        "buildup": { "text": "Eviction policies decide which items to remove: LRU (Least Recently Used), LFU (Least Frequently Used), or FIFO.", "visual": "📋" },
+        "discovery": { "text": "LRU evicts the item that hasn't been accessed longest. It works well for most workloads.", "visual": "⏰" },
+        "twist": { "text": "LRU fails for scan-heavy workloads: one full table scan evicts all your hot data and pollutes the cache.", "visual": "💥" },
+        "climax": { "text": "No eviction policy is universal. The right one depends on your data's access patterns.", "visual": "🎯" },
+        "punchline": { "text": "Eviction decides what stays in cache and what leaves.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does LRU eviction do?",
+        "options": ["Removes the item that hasn't been accessed for the longest time", "Removes the most recently used item", "Removes the largest item"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch01-caching-fundamentals",
+      "title": "The Memory Hierarchy",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A CPU register responds in 1 nanosecond. RAM takes 100ns. Disk takes 10 million ns. A 10 million-fold gap.", "visual": "📊" },
+        "buildup": { "text": "The memory hierarchy arranges storage by speed and cost: registers, L1-L3 cache, RAM, SSD, and HDD.", "visual": "🏔️" },
+        "discovery": { "text": "Each level is bigger but slower. L1 cache is 64 KB at 1ns. RAM is 64 GB at 100ns. The trade-off is universal.", "visual": "⚖️" },
+        "twist": { "text": "Programs that access memory sequentially are fast because CPUs prefetch adjacent cache lines automatically.", "visual": "🏎️" },
+        "climax": { "text": "Understanding the memory hierarchy explains why caching works at every level of system design.", "visual": "💡" },
+        "punchline": { "text": "Faster storage is smaller. Bigger storage is slower.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is the memory hierarchy important?",
+        "options": ["Each level trades speed for capacity — caching exploits this", "All storage types are equally fast", "It only matters for hardware design"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch01-caching-fundamentals",
+      "title": "TTL: Time to Live",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A cached product price is $29.99. The real price changed to $24.99 an hour ago. The cache is lying.", "visual": "🤥" },
+        "buildup": { "text": "TTL sets an expiration time on cached data. After the TTL expires, the cache fetches fresh data.", "visual": "⏰" },
+        "discovery": { "text": "Short TTLs keep data fresh but increase load on the origin. Long TTLs reduce load but risk staleness.", "visual": "⚖️" },
+        "twist": { "text": "When millions of items expire at the same TTL, the origin gets hit with a stampede of simultaneous requests.", "visual": "🐎" },
+        "climax": { "text": "Adding jitter — randomizing TTLs slightly — prevents cache stampedes and smooths out refresh load.", "visual": "🎲" },
+        "punchline": { "text": "TTL balances freshness and load — add jitter to prevent stampedes.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why should TTLs include jitter?",
+        "options": ["To prevent millions of cache entries from expiring simultaneously", "To make data more accurate", "To reduce memory usage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch02-caching-strategies",
+      "title": "Cache-Aside Pattern",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "The application checks the cache first. On a miss, it queries the database and stores the result in cache.", "visual": "🔍" },
+        "buildup": { "text": "Cache-aside (lazy loading) puts the application in control of what goes into the cache and when.", "visual": "📋" },
+        "discovery": { "text": "Only requested data is cached. Unused data never wastes cache space. It's the most common caching strategy.", "visual": "✅" },
+        "twist": { "text": "Cache-aside can serve stale data. The database might change, but the cache won't know until the TTL expires.", "visual": "⏳" },
+        "climax": { "text": "Cache-aside is simple, flexible, and works for most read-heavy applications out of the box.", "visual": "🏆" },
+        "punchline": { "text": "Check cache, miss, fetch, store — the simplest pattern.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How does the cache-aside pattern work?",
+        "options": ["App checks cache; on miss, queries DB and stores result in cache", "DB automatically updates the cache", "Cache writes directly to the database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch02-caching-strategies",
+      "title": "Write-Through Cache",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every write goes to the cache AND the database simultaneously. The cache is always in sync.", "visual": "🔄" },
+        "buildup": { "text": "Write-through ensures the cache always has the latest data. No stale reads, ever.", "visual": "✅" },
+        "discovery": { "text": "It pairs well with cache-aside: writes update both, reads always hit a fresh cache.", "visual": "🤝" },
+        "twist": { "text": "Write-through adds latency to every write. Both the cache and database must confirm before returning.", "visual": "⏱️" },
+        "climax": { "text": "Write-through is ideal when data consistency matters more than write speed.", "visual": "🎯" },
+        "punchline": { "text": "Write to cache and database together — always consistent.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the downside of write-through caching?",
+        "options": ["Every write is slower because both cache and DB must confirm", "Data can become stale", "It uses too much memory"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch02-caching-strategies",
+      "title": "Write-Behind Cache",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Writes go to the cache only. The cache asynchronously flushes to the database in the background.", "visual": "📤" },
+        "buildup": { "text": "Write-behind (write-back) makes writes blazing fast because only the cache is updated immediately.", "visual": "⚡" },
+        "discovery": { "text": "The cache batches multiple writes into one database operation, reducing database load significantly.", "visual": "📦" },
+        "twist": { "text": "If the cache crashes before flushing, recent writes are lost. Durability is sacrificed for speed.", "visual": "💀" },
+        "climax": { "text": "Write-behind is powerful for write-heavy workloads but requires accepting the risk of data loss on crash.", "visual": "⚖️" },
+        "punchline": { "text": "Write to cache now, flush to database later — fast but risky.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What risk does write-behind caching introduce?",
+        "options": ["Data loss if the cache crashes before flushing to the database", "Slower reads", "Higher memory usage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch02-caching-strategies",
+      "title": "Read-Through Cache",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The application asks the cache for data. If missing, the cache itself fetches from the database. Not the app.", "visual": "🤖" },
+        "buildup": { "text": "Read-through abstracts the data source away. The application only talks to the cache, never the database directly.", "visual": "🔗" },
+        "discovery": { "text": "This simplifies application code. The cache layer handles all the miss-fetch-store logic internally.", "visual": "📦" },
+        "twist": { "text": "Read-through caches need configuration for each data type. They're less flexible than cache-aside.", "visual": "🔧" },
+        "climax": { "text": "Read-through is ideal when you want the cache to manage its own data lifecycle automatically.", "visual": "🎯" },
+        "punchline": { "text": "The cache fetches data on miss — the app doesn't need to know.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How does read-through differ from cache-aside?",
+        "options": ["The cache itself fetches from the database on a miss, not the app", "The app always queries the database", "Data is never cached"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch02-caching-strategies",
+      "title": "Cache Warming",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You deploy a new cache. For the first 10 minutes, every request is a miss. Response times are terrible.", "visual": "🥶" },
+        "buildup": { "text": "Cache warming preloads popular data into the cache before it starts serving traffic.", "visual": "🔥" },
+        "discovery": { "text": "Warm from access logs: load the most frequently requested keys based on recent traffic patterns.", "visual": "📊" },
+        "twist": { "text": "Warming too aggressively wastes memory on data that may not be requested. Warm only the hot subset.", "visual": "🎯" },
+        "climax": { "text": "Cache warming turns a cold start from a disaster into a smooth transition.", "visual": "✅" },
+        "punchline": { "text": "Preload hot data before traffic arrives.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is cache warming?",
+        "options": ["Preloading popular data into the cache before serving traffic", "Increasing cache memory", "Deleting old cache entries"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch03-distributed-caching",
+      "title": "Redis: The Swiss Army Knife",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Redis does caching, message queues, leaderboards, sessions, and rate limiting — all in under 1 millisecond.", "visual": "🔧" },
+        "buildup": { "text": "Redis is an in-memory data store supporting strings, hashes, lists, sets, sorted sets, and streams.", "visual": "🗄️" },
+        "discovery": { "text": "Its single-threaded event loop avoids lock contention, handling 100,000+ operations per second per core.", "visual": "⚡" },
+        "twist": { "text": "Redis is single-threaded. CPU-heavy operations like KEYS * block the entire server during execution.", "visual": "🚫" },
+        "climax": { "text": "Redis is the most popular caching layer in the world, used by Twitter, GitHub, and Stack Overflow.", "visual": "🌐" },
+        "punchline": { "text": "In-memory, blazing fast, endlessly versatile.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is Redis single-threaded?",
+        "options": ["To avoid lock contention and simplify the event loop", "Because it can't handle concurrency", "To save memory"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch03-distributed-caching",
+      "title": "Memcached vs Redis",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Memcached is pure key-value caching. Redis is a full data structure server. Same category, different tools.", "visual": "🆚" },
+        "buildup": { "text": "Memcached is multi-threaded and excels at simple string caching with predictable performance.", "visual": "🏎️" },
+        "discovery": { "text": "Redis supports complex data types, persistence, replication, and Lua scripting — far beyond simple caching.", "visual": "🧰" },
+        "twist": { "text": "For pure string caching at massive scale, Memcached can outperform Redis due to its multi-threaded architecture.", "visual": "💪" },
+        "climax": { "text": "Most teams choose Redis for its versatility. Memcached wins only when pure cache throughput is the sole concern.", "visual": "⚖️" },
+        "punchline": { "text": "Memcached for simplicity, Redis for versatility.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "When might Memcached outperform Redis?",
+        "options": ["Pure string caching at massive scale due to multi-threading", "Complex data structure operations", "Persistence workloads"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch03-distributed-caching",
+      "title": "Cache Sharding",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your Redis instance holds 100 GB. You need 500 GB. One server can't hold it all.", "visual": "📈" },
+        "buildup": { "text": "Cache sharding distributes keys across multiple cache nodes using consistent hashing.", "visual": "🔀" },
+        "discovery": { "text": "Each node holds a subset of keys. The client hashes the key to determine which node to query.", "visual": "🎲" },
+        "twist": { "text": "Multi-key operations like transactions or set intersections don't work across shards. Data locality matters.", "visual": "🚫" },
+        "climax": { "text": "Redis Cluster handles sharding automatically with 16,384 hash slots distributed across nodes.", "visual": "🏗️" },
+        "punchline": { "text": "Shard the cache to scale beyond one machine.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the main limitation of cache sharding?",
+        "options": ["Multi-key operations don't work across shards", "It's slower than a single node", "It requires more memory per node"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch03-distributed-caching",
+      "title": "Cache Stampede Prevention",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A popular cache key expires. 10,000 concurrent requests all miss and hit the database simultaneously.", "visual": "🐎" },
+        "buildup": { "text": "A cache stampede (thundering herd) occurs when many requests for the same key arrive during a cache miss.", "visual": "🌊" },
+        "discovery": { "text": "Lock-based prevention: one request fetches while others wait. Probabilistic refresh: refresh before expiry.", "visual": "🔒" },
+        "twist": { "text": "Serving slightly stale data during refresh is often acceptable and avoids the stampede entirely.", "visual": "⏳" },
+        "climax": { "text": "Stampede prevention is critical for high-traffic systems. Without it, a cache miss can cascade into a database outage.", "visual": "💥" },
+        "punchline": { "text": "One request refreshes; the rest wait or get stale data.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How can you prevent a cache stampede?",
+        "options": ["Lock-based fetch where one request refreshes and others wait", "Delete the cache entirely", "Increase database capacity"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch03-distributed-caching",
+      "title": "Cache Consistency Patterns",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You update a user's name in the database. The cache still shows the old name. Which is correct?", "visual": "🤔" },
+        "buildup": { "text": "Cache inconsistency occurs when the cache and database disagree about the current state of data.", "visual": "🔀" },
+        "discovery": { "text": "Delete-on-write: delete the cache key on write, forcing the next read to fetch fresh data from the database.", "visual": "🗑️" },
+        "twist": { "text": "Race conditions still exist: a read between the DB write and cache delete can re-cache stale data.", "visual": "🏃" },
+        "climax": { "text": "Perfect cache consistency is impossible without distributed transactions. Acceptable staleness is the practical goal.", "visual": "🎯" },
+        "punchline": { "text": "Delete on write, accept brief staleness.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the delete-on-write pattern?",
+        "options": ["Delete the cache key on write so the next read fetches fresh data", "Delete old database records", "Remove expired cache entries automatically"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch04-web-performance",
+      "title": "Browser Caching",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You visit a website twice. The second time, images load instantly. Your browser cached them locally.", "visual": "🖥️" },
+        "buildup": { "text": "Cache-Control headers tell browsers what to cache and for how long: max-age, no-cache, immutable.", "visual": "📋" },
+        "discovery": { "text": "Immutable assets with content hashes (app.abc123.js) can be cached forever — the hash changes on updates.", "visual": "♾️" },
+        "twist": { "text": "Over-caching HTML pages can serve stale content for hours. HTML should use no-cache with ETags for revalidation.", "visual": "⚠️" },
+        "climax": { "text": "Browser caching is free performance. Proper Cache-Control headers can eliminate most repeat network requests.", "visual": "🎁" },
+        "punchline": { "text": "Cache assets forever; revalidate HTML on every visit.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why should immutable assets have long cache times?",
+        "options": ["Their content hash changes on updates, so stale versions are never served", "They never change", "Browsers can't cache them otherwise"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch04-web-performance",
+      "title": "HTTP Conditional Requests",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your browser has a cached page. Is it still fresh? Instead of downloading again, it asks: has this changed?", "visual": "❓" },
+        "buildup": { "text": "Conditional requests use If-None-Match (ETag) or If-Modified-Since headers to check for changes.", "visual": "📋" },
+        "discovery": { "text": "If unchanged, the server returns 304 Not Modified — no body, just a confirmation. Bandwidth saved.", "visual": "✅" },
+        "twist": { "text": "Generating ETags for dynamic content adds server-side computation. For static files, the web server handles it.", "visual": "⚙️" },
+        "climax": { "text": "Conditional requests save bandwidth and latency by transferring data only when it has actually changed.", "visual": "📉" },
+        "punchline": { "text": "Ask if it changed — skip the download if it didn't.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a 304 Not Modified response mean?",
+        "options": ["The cached version is still valid; no need to download again", "The resource was deleted", "The server had an error"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch04-web-performance",
+      "title": "Prefetching and Preloading",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A user hovers over a link. The browser quietly starts loading that page before they even click.", "visual": "🖱️" },
+        "buildup": { "text": "Prefetching loads resources that are likely needed next. Preloading loads critical resources earlier.", "visual": "📥" },
+        "discovery": { "text": "Preload fonts and hero images to prevent layout shifts. Prefetch the next page for instant navigation.", "visual": "🏎️" },
+        "twist": { "text": "Aggressive prefetching wastes bandwidth and server resources if users don't visit the predicted pages.", "visual": "💸" },
+        "climax": { "text": "Preload what's certain, prefetch what's likely. Don't waste resources on the unlikely.", "visual": "🎯" },
+        "punchline": { "text": "Load resources before the user asks for them.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the difference between preloading and prefetching?",
+        "options": ["Preloading is for critical current resources; prefetching is for likely future ones", "They're the same thing", "Prefetching is faster"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch04-web-performance",
+      "title": "Core Web Vitals",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Google ranks websites partly on three metrics: LCP, INP, and CLS. They measure real user experience.", "visual": "📊" },
+        "buildup": { "text": "LCP measures how fast the largest visible element loads. INP measures responsiveness to interactions.", "visual": "⏱️" },
+        "discovery": { "text": "CLS measures visual stability — how much the page shifts while loading. Nobody likes clicking a moving button.", "visual": "🔀" },
+        "twist": { "text": "Lab scores can be perfect while real user metrics are poor. Field data from real devices is what matters.", "visual": "📱" },
+        "climax": { "text": "Core Web Vitals quantify user experience. Optimizing them means optimizing what users actually feel.", "visual": "🎯" },
+        "punchline": { "text": "Fast, responsive, stable — the three pillars of web UX.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does CLS measure?",
+        "options": ["How much the page layout shifts while loading", "How fast the page loads", "How quickly the page responds to clicks"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch04-web-performance",
+      "title": "Code Splitting and Lazy Loading",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A user visits the homepage but downloads JavaScript for all 50 pages. 90% of that code is wasted.", "visual": "📦" },
+        "buildup": { "text": "Code splitting breaks the JavaScript bundle into smaller chunks. Only the needed chunk is loaded per page.", "visual": "✂️" },
+        "discovery": { "text": "Dynamic imports — import('./module') — let the browser load code only when a feature is actually used.", "visual": "📥" },
+        "twist": { "text": "Too many small chunks create waterfall loading: each chunk triggers another fetch. Balance chunk count and size.", "visual": "🌊" },
+        "climax": { "text": "Code splitting reduces initial load time by delivering only what the user needs right now.", "visual": "🏎️" },
+        "punchline": { "text": "Load only the code the user needs right now.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does code splitting do?",
+        "options": ["Breaks JavaScript into smaller chunks loaded on demand", "Removes unused code permanently", "Compresses JavaScript files"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch05-cache-invalidation",
+      "title": "Why Invalidation Is Hard",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "There are two hard things in computer science: cache invalidation and naming things.", "visual": "😅" },
+        "buildup": { "text": "Invalidation means telling the cache that data has changed and the old version should be discarded.", "visual": "🗑️" },
+        "discovery": { "text": "With one cache, it's simple. With CDN edges in 200 cities, database caches, and browser caches — it's a nightmare.", "visual": "🌍" },
+        "twist": { "text": "Invalidating too aggressively tanks hit rates. Invalidating too slowly serves stale data. Both are wrong.", "visual": "⚖️" },
+        "climax": { "text": "Cache invalidation is hard because it requires coordinating state changes across distributed caching layers.", "visual": "🏗️" },
+        "punchline": { "text": "Knowing when to discard cached data is the hardest problem.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is cache invalidation difficult?",
+        "options": ["It requires coordinating across multiple distributed caching layers", "Caches don't support deletion", "It's too expensive"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch05-cache-invalidation",
+      "title": "Event-Driven Invalidation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A product price changes. Instead of waiting for the TTL, the database publishes a change event to invalidate the cache.", "visual": "📢" },
+        "buildup": { "text": "Event-driven invalidation uses message queues or change data capture to notify caches of data changes.", "visual": "📬" },
+        "discovery": { "text": "PostgreSQL's LISTEN/NOTIFY or Debezium can stream database changes to cache invalidation consumers.", "visual": "📡" },
+        "twist": { "text": "Events can be delayed, duplicated, or lost. The cache might still serve stale data for a brief window.", "visual": "⏳" },
+        "climax": { "text": "Event-driven invalidation is faster than TTL but adds infrastructure complexity and delivery guarantees to manage.", "visual": "🏗️" },
+        "punchline": { "text": "Database changes trigger cache invalidation in near real time.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How does event-driven cache invalidation work?",
+        "options": ["Database changes publish events that trigger cache deletion", "The cache checks the database periodically", "Users manually clear the cache"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch05-cache-invalidation",
+      "title": "Version-Based Cache Keys",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Instead of invalidating a cache key, change the key itself. Old key dies naturally; new key fetches fresh data.", "visual": "🔄" },
+        "buildup": { "text": "Append a version or hash to cache keys: user:42:v3 instead of user:42. Bump the version on changes.", "visual": "🔢" },
+        "discovery": { "text": "This avoids invalidation entirely. The old entry expires via TTL; the new version is a fresh cache miss.", "visual": "💡" },
+        "twist": { "text": "You still need to store the current version somewhere. If that lookup is slow, you've moved the problem, not solved it.", "visual": "🤔" },
+        "climax": { "text": "Version-based keys are elegant for cache layers where direct invalidation is impossible, like CDNs.", "visual": "🌐" },
+        "punchline": { "text": "Don't delete old keys — just stop asking for them.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How do version-based cache keys work?",
+        "options": ["The key includes a version that changes on updates, making old keys unused", "The cache auto-increments keys", "Keys are encrypted with a version number"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch05-cache-invalidation",
+      "title": "CDN Purging",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You fix a typo on your website. The CDN still serves the old page from 200 edge servers worldwide.", "visual": "🌐" },
+        "buildup": { "text": "CDN purging sends invalidation requests to all edge nodes to discard cached content.", "visual": "🗑️" },
+        "discovery": { "text": "Cloudflare can purge globally in under 150ms. Others take minutes to propagate across all PoPs.", "visual": "⏱️" },
+        "twist": { "text": "Purging by URL is precise but slow for bulk changes. Purging everything is fast but destroys your hit rate.", "visual": "💥" },
+        "climax": { "text": "Cache tags let you purge all resources with a specific tag — like all product images — without purging everything.", "visual": "🏷️" },
+        "punchline": { "text": "Purge precisely — don't nuke the entire CDN cache.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What are cache tags used for in CDN purging?",
+        "options": ["Purging groups of related resources without clearing everything", "Speeding up cache lookups", "Encrypting cached content"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch05-cache-invalidation",
+      "title": "Stale-While-Revalidate",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The cache entry expired. Do you make the user wait while you fetch fresh data? Or serve stale data instantly?", "visual": "⏰" },
+        "buildup": { "text": "Stale-while-revalidate serves the expired cached data immediately and refreshes in the background.", "visual": "🔄" },
+        "discovery": { "text": "The user gets an instant response. The next request gets the fresh version. Perceived latency is zero.", "visual": "⚡" },
+        "twist": { "text": "For rapidly changing data, the stale version might be significantly wrong. Not suitable for financial data.", "visual": "💰" },
+        "climax": { "text": "Stale-while-revalidate is the best of both worlds for content where freshness is nice but speed is critical.", "visual": "🏆" },
+        "punchline": { "text": "Serve stale instantly, refresh in the background.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does stale-while-revalidate do?",
+        "options": ["Serves expired cached data instantly while refreshing in the background", "Deletes stale data immediately", "Blocks until fresh data is ready"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch06-performance-at-scale",
+      "title": "Database Query Optimization",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A single slow query runs 10,000 times per hour. Optimizing it from 500ms to 5ms saves 1,375 hours of compute per day.", "visual": "📊" },
+        "buildup": { "text": "EXPLAIN ANALYZE shows exactly where time is spent: sequential scans, nested loops, sorts, or hash joins.", "visual": "🔍" },
+        "discovery": { "text": "Adding the right index, rewriting a subquery as a JOIN, or limiting result sets can speed queries 100x.", "visual": "⚡" },
+        "twist": { "text": "The fastest query is the one you don't run. Caching query results eliminates database load entirely.", "visual": "📦" },
+        "climax": { "text": "Query optimization is the highest-leverage performance work. One fix can improve the entire application.", "visual": "🏆" },
+        "punchline": { "text": "Find the slowest query and fix it — biggest bang for the buck.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What tool shows where a database query spends time?",
+        "options": ["EXPLAIN ANALYZE", "SELECT *", "DROP TABLE"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch06-performance-at-scale",
+      "title": "Connection Pooling",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Each database connection costs 5-10 MB of RAM. A thousand connections consume 10 GB just for connections.", "visual": "💾" },
+        "buildup": { "text": "Connection pooling maintains a pool of open connections. Requests borrow and return them instead of creating new ones.", "visual": "🏊" },
+        "discovery": { "text": "PgBouncer pools PostgreSQL connections, allowing thousands of app instances to share a handful of DB connections.", "visual": "🔗" },
+        "twist": { "text": "Setting the pool too small starves the application. Too large overwhelms the database. Tuning requires load testing.", "visual": "🎚️" },
+        "climax": { "text": "Connection pooling is essential for any application that scales beyond a single server.", "visual": "📈" },
+        "punchline": { "text": "Share connections — don't create one per request.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does PgBouncer do?",
+        "options": ["Pools PostgreSQL connections so many app instances share a few DB connections", "Compresses PostgreSQL data", "Backs up PostgreSQL databases"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch06-performance-at-scale",
+      "title": "Load Shedding",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your server can handle 10,000 requests per second. At 15,000, all requests slow to a crawl. Everyone suffers.", "visual": "🌊" },
+        "buildup": { "text": "Load shedding deliberately drops excess requests to protect the capacity for the remaining ones.", "visual": "🚦" },
+        "discovery": { "text": "Returning HTTP 503 to 5,000 users is better than giving all 15,000 users a terrible 30-second response.", "visual": "⏱️" },
+        "twist": { "text": "Smart load shedding prioritizes: serve paying customers, drop health checks, shed low-priority background tasks.", "visual": "👑" },
+        "climax": { "text": "Load shedding is the controlled sacrifice of some traffic to save the experience for the rest.", "visual": "⚖️" },
+        "punchline": { "text": "Drop some requests to serve the rest well.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is load shedding?",
+        "options": ["Deliberately dropping excess requests to protect remaining capacity", "Adding more servers", "Compressing responses"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch06-performance-at-scale",
+      "title": "Back Pressure",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A producer sends messages faster than the consumer can process. The queue grows until memory runs out.", "visual": "📈" },
+        "buildup": { "text": "Back pressure is when a slow consumer signals the producer to slow down, preventing overload.", "visual": "🛑" },
+        "discovery": { "text": "TCP does this naturally: if the receiver's buffer is full, the sender pauses until space frees up.", "visual": "📬" },
+        "twist": { "text": "Unbounded queues mask the problem temporarily but eventually crash. Bounded queues enforce back pressure.", "visual": "💥" },
+        "climax": { "text": "Systems without back pressure grow unstable under load. Back pressure is the safety valve that keeps them alive.", "visual": "⚙️" },
+        "punchline": { "text": "Slow down the producer before the consumer drowns.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does back pressure prevent?",
+        "options": ["A fast producer overwhelming a slow consumer", "Data encryption errors", "Network partitions"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--caching-and-performance--ch06-performance-at-scale",
+      "title": "Profiling and Bottleneck Analysis",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You optimize a function from 10ms to 1ms. But it's called once per request and the database takes 400ms. Wasted effort.", "visual": "🤦" },
+        "buildup": { "text": "Profiling reveals where time is actually spent. Flame graphs show the call stack and time per function.", "visual": "🔥" },
+        "discovery": { "text": "Amdahl's Law: optimizing something that's 1% of total time can never improve total performance by more than 1%.", "visual": "📐" },
+        "twist": { "text": "The bottleneck shifts. Fix the database and now the network is slow. Performance is a moving target.", "visual": "🎯" },
+        "climax": { "text": "Always profile first. Optimize the actual bottleneck, not the part you think is slow.", "visual": "🔍" },
+        "punchline": { "text": "Measure first, optimize the real bottleneck.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why should you always profile before optimizing?",
+        "options": ["To find the real bottleneck instead of guessing", "Profiling makes code faster automatically", "It's required by most frameworks"],
+        "correct": 0
+      }
+    }
+  ]
+}

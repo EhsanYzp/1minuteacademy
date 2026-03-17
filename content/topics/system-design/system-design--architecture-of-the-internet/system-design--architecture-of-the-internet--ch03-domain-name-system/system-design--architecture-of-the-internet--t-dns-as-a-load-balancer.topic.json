@@ -1,0 +1,49 @@
+{
+  "id": "system-design--architecture-of-the-internet--t-dns-as-a-load-balancer",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Architecture of the Internet",
+  "course_id": "system-design--architecture-of-the-internet",
+  "chapter_id": "system-design--architecture-of-the-internet--ch03-domain-name-system",
+  "title": "DNS as a Load Balancer",
+  "emoji": "🌐",
+  "color": "#0891B2",
+  "description": "A 1-minute de-risking session on DNS as a Load Balancer.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Google.com resolves to different IP addresses depending on where you are. DNS is doing load balancing.",
+      "visual": "⚖️"
+    },
+    "buildup": {
+      "text": "DNS round-robin returns multiple IPs for a domain, distributing traffic across servers.",
+      "visual": "🔄"
+    },
+    "discovery": {
+      "text": "GeoDNS goes further: it returns the IP of the nearest server based on the client's geographic location.",
+      "visual": "🌍"
+    },
+    "twist": {
+      "text": "DNS load balancing is coarse. It can't detect if a server is overloaded — it just cycles through addresses.",
+      "visual": "🤷"
+    },
+    "climax": {
+      "text": "DNS is the first layer of load balancing. Real health-aware balancing happens at the application layer.",
+      "visual": "🏗️"
+    },
+    "punchline": {
+      "text": "DNS distributes traffic broadly; app load balancers do it precisely.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is a limitation of DNS-based load balancing?",
+    "options": [
+      "It can't detect if a server is overloaded or unhealthy",
+      "It only works with HTTP",
+      "It requires special hardware"
+    ],
+    "correct": 0
+  }
+}

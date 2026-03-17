@@ -1,0 +1,49 @@
+{
+  "id": "system-design--microservices-vs-monoliths--t-the-saga-pattern",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Microservices vs Monoliths",
+  "course_id": "system-design--microservices-vs-monoliths",
+  "chapter_id": "system-design--microservices-vs-monoliths--ch03-communication-patterns",
+  "title": "The Saga Pattern",
+  "emoji": "🧩",
+  "color": "#BE185D",
+  "description": "A quick, practical guide to The Saga Pattern.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "An order needs payment, inventory, and shipping. If payment succeeds but inventory fails, how do you roll back?",
+      "visual": "🔄"
+    },
+    "buildup": {
+      "text": "A saga is a sequence of local transactions. Each service executes its step and triggers the next.",
+      "visual": "🔗"
+    },
+    "discovery": {
+      "text": "If a step fails, compensating transactions undo previous steps: refund the payment, restore the inventory.",
+      "visual": "↩️"
+    },
+    "twist": {
+      "text": "Compensating transactions are tricky. You can't un-send an email. Some actions have no perfect undo.",
+      "visual": "📧"
+    },
+    "climax": {
+      "text": "Sagas replace distributed transactions in microservices. They're complex but necessary for multi-service workflows.",
+      "visual": "🏗️"
+    },
+    "punchline": {
+      "text": "Chain local transactions with compensating undo steps.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is a compensating transaction in a saga?",
+    "options": [
+      "An action that undoes a previous step when a later step fails",
+      "A faster version of the original transaction",
+      "A backup of the database"
+    ],
+    "correct": 0
+  }
+}

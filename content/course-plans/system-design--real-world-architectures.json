@@ -1,0 +1,559 @@
+{
+  "categoryId": "system-design",
+  "subject": "System Design",
+  "courseId": "system-design--real-world-architectures",
+  "courseTitle": "Real-World Architectures",
+  "emoji": "🏛️",
+  "color": "#4338CA",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "system-design--real-world-architectures--ch01-social-media-at-scale", "title": "Social Media at Scale", "position": 1 },
+    { "id": "system-design--real-world-architectures--ch02-streaming-platforms", "title": "Streaming Platforms", "position": 2 },
+    { "id": "system-design--real-world-architectures--ch03-ride-sharing-and-delivery", "title": "Ride-Sharing and Delivery", "position": 3 },
+    { "id": "system-design--real-world-architectures--ch04-messaging-systems", "title": "Messaging Systems", "position": 4 },
+    { "id": "system-design--real-world-architectures--ch05-search-engines", "title": "Search Engines", "position": 5 },
+    { "id": "system-design--real-world-architectures--ch06-payment-systems", "title": "Payment Systems", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "system-design--real-world-architectures--ch01-social-media-at-scale",
+      "title": "How Twitter Designed Its Timeline",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You open Twitter and see tweets from 500 people you follow, sorted by time. Building that feed is surprisingly hard.", "visual": "🐦" },
+        "buildup": { "text": "Early Twitter pulled tweets at read time: query every followed user, merge, sort. At scale, this was too slow.", "visual": "🐌" },
+        "discovery": { "text": "Twitter switched to fan-out on write: when you tweet, it's pushed into every follower's pre-built timeline cache.", "visual": "📬" },
+        "twist": { "text": "50M-follower celebrities make fan-out expensive. Twitter uses a hybrid: fan-out for most, pull for celebrities.", "visual": "⚡" },
+        "climax": { "text": "The timeline is a classic example of how the same problem needs different solutions at different scales.", "visual": "📈" },
+        "punchline": { "text": "Fan-out on write for most, pull on read for celebrities.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why does Twitter use a hybrid approach for timelines?",
+        "options": ["Fan-out is too expensive for users with millions of followers", "Pull on read is always faster", "Caching doesn't work for social media"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch01-social-media-at-scale",
+      "title": "Facebook's News Feed Ranking",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You have 1,000 friends and follow 200 pages. 1,500 new posts since your last visit. Which 50 do you see first?", "visual": "📰" },
+        "buildup": { "text": "Facebook's news feed is not chronological. A ranking algorithm scores every candidate post by predicted engagement.", "visual": "🤖" },
+        "discovery": { "text": "Signals include who posted it, post type, recency, and your history of interacting with that person's content.", "visual": "📊" },
+        "twist": { "text": "Optimizing for engagement creates filter bubbles. Users see more of what they agree with. Controversy gets clicks.", "visual": "🫧" },
+        "climax": { "text": "News feed ranking balances engagement, diversity, and content quality — a constantly evolving algorithmic challenge.", "visual": "⚖️" },
+        "punchline": { "text": "Rank posts by predicted engagement — not just time.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why isn't Facebook's news feed chronological?",
+        "options": ["A ranking algorithm shows the most engaging posts first", "There are too many posts to show all of them", "Chronological order is slower to compute"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch01-social-media-at-scale",
+      "title": "Instagram's Image Pipeline",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Two billion users upload 100 million photos daily. Each photo needs 6 sizes. That's 600 million images per day.", "visual": "📸" },
+        "buildup": { "text": "Instagram stores original images in object storage and generates thumbnails asynchronously after upload.", "visual": "🗄️" },
+        "discovery": { "text": "A CDN serves images from the edge server nearest to the viewer, reducing latency from seconds to milliseconds.", "visual": "🌐" },
+        "twist": { "text": "Storage costs grow forever. Stored photos never go away. Instagram uses tiered storage — hot, warm, cold.", "visual": "💰" },
+        "climax": { "text": "Instagram's image pipeline is a masterclass in async processing, CDN distribution, and tiered storage.", "visual": "🏗️" },
+        "punchline": { "text": "Upload once, resize async, serve from the edge.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why does Instagram generate thumbnails asynchronously?",
+        "options": ["To avoid blocking the upload and making the user wait", "Because thumbnails aren't needed", "To save storage space"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch01-social-media-at-scale",
+      "title": "TikTok's Recommendation Engine",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "TikTok shows you videos you'll love from creators you've never heard of. The algorithm knows you better than you do.", "visual": "🎵" },
+        "buildup": { "text": "TikTok's For You page uses collaborative filtering and content signals: watch time, replays, shares, and skips.", "visual": "📊" },
+        "discovery": { "text": "Watch time is the strongest signal. If you watch 95% of a video, TikTok shows you more like it immediately.", "visual": "⏱️" },
+        "twist": { "text": "New users get diverse content. The algorithm narrows as it learns. Within 30 minutes of use, it knows your taste.", "visual": "🎯" },
+        "climax": { "text": "TikTok proved that recommendations drive engagement more than the social graph. Content matters more than followers.", "visual": "💡" },
+        "punchline": { "text": "Watch time tells the algorithm what you really like.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is TikTok's strongest recommendation signal?",
+        "options": ["Watch time — how much of a video you actually watch", "Number of followers the creator has", "When the video was posted"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch01-social-media-at-scale",
+      "title": "Reddit's Voting and Ranking",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A post with 100 upvotes in 1 hour ranks higher than one with 1,000 upvotes in 24 hours. Freshness matters.", "visual": "⬆️" },
+        "buildup": { "text": "Reddit uses a time-decay algorithm: older posts need exponentially more votes to maintain their ranking.", "visual": "📉" },
+        "discovery": { "text": "Hot ranking combines score (upvotes minus downvotes) with age. The formula penalizes older posts logarithmically.", "visual": "📐" },
+        "twist": { "text": "Controversial posts with equal upvotes and downvotes surface differently. Reddit has a separate controversial sort.", "visual": "🔥" },
+        "climax": { "text": "Reddit's ranking system creates urgency: early votes matter far more than late ones, driving fast engagement.", "visual": "⚡" },
+        "punchline": { "text": "Early votes count more — time-decay keeps content fresh.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why do early votes matter more on Reddit?",
+        "options": ["Time-decay penalizes older posts, so early votes have more ranking impact", "Reddit counts early votes double", "Older posts are deleted"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch02-streaming-platforms",
+      "title": "How Netflix Streams Video",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Netflix uses 15% of all internet bandwidth. Streaming 4K to 230 million users without buffering is an engineering feat.", "visual": "🎬" },
+        "buildup": { "text": "Netflix encodes each video into hundreds of versions: different resolutions, bitrates, codecs, and device formats.", "visual": "🔄" },
+        "discovery": { "text": "Open Connect is Netflix's own CDN. ISPs host Netflix servers in their data centers, serving content locally.", "visual": "🏗️" },
+        "twist": { "text": "Adaptive bitrate streaming adjusts quality in real time. Your connection drops — the video downgrades, not buffers.", "visual": "📶" },
+        "climax": { "text": "Netflix's architecture combines custom CDN, adaptive streaming, and predictive caching to deliver seamless playback.", "visual": "✅" },
+        "punchline": { "text": "Encode once into hundreds of formats, serve from the nearest edge.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is Netflix's Open Connect?",
+        "options": ["Netflix's own CDN with servers inside ISP data centers", "A video encoding algorithm", "Netflix's recommendation engine"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch02-streaming-platforms",
+      "title": "Spotify's Audio Delivery",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You press play on Spotify and music starts instantly. The secret: it started downloading before you pressed play.", "visual": "🎵" },
+        "buildup": { "text": "Spotify uses predictive prefetching. It predicts the next song you'll play and downloads it in the background.", "visual": "🔮" },
+        "discovery": { "text": "Audio files are split into chunks. Playback starts as soon as the first chunk arrives, not the whole file.", "visual": "📦" },
+        "twist": { "text": "Spotify originally used peer-to-peer delivery. Users' devices shared audio with each other to reduce server load.", "visual": "🤝" },
+        "climax": { "text": "Spotify's instant playback comes from predictive caching, chunked streaming, and aggressive edge distribution.", "visual": "⚡" },
+        "punchline": { "text": "Predict the next song and start downloading it early.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How does Spotify achieve instant playback?",
+        "options": ["Predictive prefetching downloads the likely next song before you press play", "Songs are stored entirely on your device", "Spotify uses only local files"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch02-streaming-platforms",
+      "title": "YouTube's Video Processing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "500 hours of video are uploaded to YouTube every minute. Processing that volume is a scale problem few companies face.", "visual": "📹" },
+        "buildup": { "text": "Each upload is transcoded into dozens of formats: 144p to 8K, VP9 and AV1 codecs, HDR and SDR versions.", "visual": "🔄" },
+        "discovery": { "text": "YouTube uses a massive distributed pipeline. Transcoding jobs are parallelized across thousands of machines.", "visual": "🏭" },
+        "twist": { "text": "Processing isn't instant. Popular videos get priority. A viral video may be transcoded to 4K faster than a cat video.", "visual": "🐱" },
+        "climax": { "text": "YouTube's pipeline handles more video in one day than all TV networks produced in decades — fully automated.", "visual": "🤖" },
+        "punchline": { "text": "Upload once, transcode to dozens of formats in parallel.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why does YouTube transcode videos into multiple formats?",
+        "options": ["Different devices and connections need different resolutions and codecs", "To increase storage costs", "Because users request specific formats"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch02-streaming-platforms",
+      "title": "Live Streaming Architecture",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A million viewers watch a live concert simultaneously. The video must reach everyone within 5 seconds of real time.", "visual": "📡" },
+        "buildup": { "text": "Live streams use segmented delivery: the video is chopped into 2-6 second segments and distributed via CDN.", "visual": "✂️" },
+        "discovery": { "text": "HLS and DASH protocols deliver segments over standard HTTP. No special streaming servers needed — just web servers.", "visual": "🌐" },
+        "twist": { "text": "True real-time (under 1 second) uses WebRTC, not HLS. But WebRTC doesn't scale to millions without a media server layer.", "visual": "⏰" },
+        "climax": { "text": "Live streaming trades latency for scalability: 5-30 second delay lets CDNs distribute segments efficiently.", "visual": "⚖️" },
+        "punchline": { "text": "Chop live video into segments, deliver over HTTP via CDN.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why do live streams have a delay?",
+        "options": ["Segmented delivery via CDN needs time to chop, distribute, and buffer video", "The camera introduces lag", "Internet speed is too slow"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch02-streaming-platforms",
+      "title": "Content Recommendation Systems",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Netflix claims 80% of watch time comes from recommendations, not search. The algorithm drives engagement.", "visual": "🤖" },
+        "buildup": { "text": "Collaborative filtering: users who liked A and B also liked C. If you liked A and B, you'll probably like C too.", "visual": "🔗" },
+        "discovery": { "text": "Netflix combines collaborative filtering with content-based features: genre, actors, director, and mood tags.", "visual": "🏷️" },
+        "twist": { "text": "Even thumbnails are personalized. You and your friend see different images for the same movie based on preferences.", "visual": "🖼️" },
+        "climax": { "text": "Recommendation engines are machine learning at scale: millions of users, millions of items, real-time predictions.", "visual": "📊" },
+        "punchline": { "text": "People who watched this also watched that — at massive scale.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is collaborative filtering?",
+        "options": ["Recommending items based on what similar users liked", "Filtering out inappropriate content", "Compressing video for streaming"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch03-ride-sharing-and-delivery",
+      "title": "Uber's Matching System",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You request a ride. In seconds, a driver 3 minutes away accepts. Matching riders to drivers is a real-time optimization.", "visual": "🚗" },
+        "buildup": { "text": "Uber's matching considers distance, ETA, driver rating, ride type, and current demand in real time.", "visual": "📊" },
+        "discovery": { "text": "Geospatial indexing divides the map into cells. Only drivers in nearby cells are considered, reducing the search space.", "visual": "🗺️" },
+        "twist": { "text": "Uber moved from first-dispatch (nearest driver) to batched matching — waiting seconds finds better global matches.", "visual": "⏱️" },
+        "climax": { "text": "Uber's matching runs millions of optimizations per second across hundreds of cities simultaneously.", "visual": "🌍" },
+        "punchline": { "text": "Wait a few seconds, match globally — better than instant greedy matching.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why did Uber switch to batched matching?",
+        "options": ["Waiting a few seconds finds better overall matches than picking the nearest driver instantly", "It's cheaper to process batches", "Drivers prefer batch assignments"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch03-ride-sharing-and-delivery",
+      "title": "Surge Pricing Explained",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "It's raining. Everyone wants a ride. Not enough drivers. Prices surge 3x. Suddenly, more drivers appear.", "visual": "🌧️" },
+        "buildup": { "text": "Surge pricing is dynamic: prices increase when demand exceeds supply to incentivize more drivers to get on the road.", "visual": "📈" },
+        "discovery": { "text": "Uber divides cities into hexagonal zones. Each zone calculates its own surge multiplier from local supply and demand.", "visual": "🔷" },
+        "twist": { "text": "Surge also reduces demand: some riders choose to wait, take transit, or walk — balancing the market from both sides.", "visual": "⚖️" },
+        "climax": { "text": "Surge pricing is a real-time market mechanism that uses price to balance supply and demand dynamically.", "visual": "💡" },
+        "punchline": { "text": "Higher prices attract drivers and reduce riders — balance restored.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How does surge pricing balance supply and demand?",
+        "options": ["Higher prices attract more drivers while discouraging some riders", "It forces all drivers to work", "It reduces ride distances"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch03-ride-sharing-and-delivery",
+      "title": "Real-Time Location Tracking",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your Uber driver's car moves on the map in real time. Millions of drivers send GPS updates every 4 seconds.", "visual": "📍" },
+        "buildup": { "text": "Each driver sends latitude, longitude, speed, and heading. The system ingests millions of location events per second.", "visual": "📡" },
+        "discovery": { "text": "Uber uses Apache Kafka to ingest location streams and stores them in a geospatial database for fast proximity queries.", "visual": "🗄️" },
+        "twist": { "text": "GPS is noisy. A driver appears to jump between buildings. Snap-to-road algorithms correct position to the actual road.", "visual": "🛤️" },
+        "climax": { "text": "Real-time location tracking needs high-throughput ingestion, geospatial indexing, and noise correction at scale.", "visual": "🏗️" },
+        "punchline": { "text": "Millions of GPS pings per second — ingest, index, and correct.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why do ride-sharing apps need snap-to-road algorithms?",
+        "options": ["GPS is noisy and shows cars in wrong locations that need correcting", "Roads change frequently", "To calculate fares accurately"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch03-ride-sharing-and-delivery",
+      "title": "DoorDash's Delivery Optimization",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A driver picks up orders from 3 restaurants and delivers to 3 customers. The route order matters enormously.", "visual": "🛵" },
+        "buildup": { "text": "DoorDash batches nearby orders to maximize driver efficiency. One trip, multiple pickups and drop-offs.", "visual": "📦" },
+        "discovery": { "text": "Route optimization uses variations of the Traveling Salesman Problem — find the shortest route through all stops.", "visual": "🗺️" },
+        "twist": { "text": "Food gets cold. A perfect route that delivers the last order 45 minutes late is a terrible customer experience.", "visual": "🥶" },
+        "climax": { "text": "Delivery optimization balances driver efficiency, food freshness, and customer wait time — three competing goals.", "visual": "⚖️" },
+        "punchline": { "text": "Batch orders, optimize routes — but the food can't get cold.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why can't delivery routes be purely optimized for distance?",
+        "options": ["Food freshness and customer wait time are competing constraints", "Drivers prefer longer routes", "Short routes cost more"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch03-ride-sharing-and-delivery",
+      "title": "ETA Prediction",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Uber says your driver arrives in 4 minutes. You wait exactly 4 minutes. How did it predict so accurately?", "visual": "⏱️" },
+        "buildup": { "text": "ETA prediction uses historical trip data, current traffic conditions, road type, and time of day as features.", "visual": "📊" },
+        "discovery": { "text": "Machine learning models trained on billions of past trips learn that this road at 5pm on Friday always has traffic.", "visual": "🤖" },
+        "twist": { "text": "ETAs must update in real time. An accident ahead that didn't exist 30 seconds ago changes the prediction entirely.", "visual": "🚧" },
+        "climax": { "text": "Accurate ETAs build user trust. Being off by 2 minutes feels fine; off by 10 feels like a broken product.", "visual": "🎯" },
+        "punchline": { "text": "Billions of past trips train models to predict your wait.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What makes ETA prediction challenging?",
+        "options": ["Real-time events like accidents can change predictions instantly", "GPS signals are always accurate", "Traffic patterns never change"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch04-messaging-systems",
+      "title": "WhatsApp's Message Delivery",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "WhatsApp delivers 100 billion messages per day to 2 billion users. With a team of just 50 engineers at its peak.", "visual": "💬" },
+        "buildup": { "text": "WhatsApp uses Erlang — a language designed for telecom. It handles millions of concurrent connections per server.", "visual": "📡" },
+        "discovery": { "text": "Messages are stored temporarily until delivered. Once both blue check marks appear, the server deletes the message.", "visual": "✅" },
+        "twist": { "text": "End-to-end encryption means WhatsApp can't read your messages. The server is just a relay — it never sees the content.", "visual": "🔐" },
+        "climax": { "text": "WhatsApp's design philosophy: minimal server state, maximum efficiency. Fewer servers means less to manage.", "visual": "📉" },
+        "punchline": { "text": "Store nothing, relay everything — minimal state, maximum scale.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why does WhatsApp delete messages after delivery?",
+        "options": ["To minimize server state and storage requirements", "To protect user privacy by law", "Because storage is too expensive"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch04-messaging-systems",
+      "title": "Slack's Real-Time Messaging",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You type a message in Slack and your coworker sees it instantly. WebSocket connections keep the channel open.", "visual": "⚡" },
+        "buildup": { "text": "Slack maintains a persistent WebSocket connection between your client and the server for real-time message delivery.", "visual": "🔌" },
+        "discovery": { "text": "When you send a message, the server stores it and fans it out to all WebSocket connections in the channel.", "visual": "📬" },
+        "twist": { "text": "A company with 100,000 employees means 100,000 WebSocket connections. Each connection consumes memory on the server.", "visual": "💾" },
+        "climax": { "text": "Slack uses a gateway layer to multiplex connections and a pub/sub system to route messages to the right gateways.", "visual": "🏗️" },
+        "punchline": { "text": "WebSockets for real time, pub/sub for routing at scale.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How does Slack deliver messages in real time?",
+        "options": ["Persistent WebSocket connections deliver messages instantly to connected clients", "Clients poll the server every second", "Email notifications alert users"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch04-messaging-systems",
+      "title": "Discord's Voice Architecture",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "200 people in a Discord voice channel, all talking and listening simultaneously. That's 200 audio streams to mix.", "visual": "🎙️" },
+        "buildup": { "text": "Discord uses selective forwarding: instead of mixing audio on the server, it sends individual streams to each client.", "visual": "📡" },
+        "discovery": { "text": "Clients decide which streams to prioritize. Active speakers get full quality; silent users get minimal bandwidth.", "visual": "🔊" },
+        "twist": { "text": "Voice data uses UDP, not TCP. Lost packets are acceptable — a tiny glitch is better than waiting for a retransmission.", "visual": "📦" },
+        "climax": { "text": "Discord's voice system prioritizes low latency over perfection: fast and slightly imperfect beats slow and perfect.", "visual": "⚡" },
+        "punchline": { "text": "Forward audio selectively — low latency beats perfect quality.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why does Discord voice use UDP instead of TCP?",
+        "options": ["Lost packets cause tiny glitches, which is better than retransmission delays", "UDP is more secure", "TCP can't carry audio data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch04-messaging-systems",
+      "title": "Email Delivery Infrastructure",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You click send. Your email bounces through 4 servers, gets spam-checked, and arrives in 2 seconds. Or lands in spam.", "visual": "📧" },
+        "buildup": { "text": "Email uses SMTP to relay messages between mail servers. Each hop checks DNS MX records to find the next server.", "visual": "🔀" },
+        "discovery": { "text": "SPF, DKIM, and DMARC authenticate senders. Without them, your email looks like spam to receiving servers.", "visual": "🔐" },
+        "twist": { "text": "Spam filters use ML. A single bad word, a suspicious link, or even the wrong font color can trigger filtering.", "visual": "🚫" },
+        "climax": { "text": "Email delivery is best-effort. Reputation, authentication, and content all affect whether your message arrives.", "visual": "📬" },
+        "punchline": { "text": "Email is best-effort — authenticate, build reputation, avoid spam triggers.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What do SPF, DKIM, and DMARC do?",
+        "options": ["Authenticate email senders to prevent spoofing and improve delivery", "Encrypt email content", "Speed up email delivery"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch04-messaging-systems",
+      "title": "Push Notification Systems",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your phone buzzes with a notification. That message traveled from an app server through Apple or Google to your device.", "visual": "📲" },
+        "buildup": { "text": "Push notifications go through platform gateways: APNs for Apple, FCM for Android. Apps can't push directly to devices.", "visual": "🚪" },
+        "discovery": { "text": "Each device registers a unique token. The app server sends the message with the token to the platform gateway.", "visual": "🔑" },
+        "twist": { "text": "Tokens change. Users reinstall apps, get new phones. Invalid tokens must be cleaned up or you waste gateway quota.", "visual": "🗑️" },
+        "climax": { "text": "Push systems batch millions of messages, handle token rotation, and manage delivery across two platform gateways.", "visual": "🏗️" },
+        "punchline": { "text": "Send to the gateway with a device token — the platform delivers it.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why can't apps push notifications directly to devices?",
+        "options": ["Notifications must go through Apple (APNs) or Google (FCM) gateways", "Devices don't have IP addresses", "Direct push is too slow"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch05-search-engines",
+      "title": "How Google Indexes the Web",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Google searches billions of pages in under 0.5 seconds. The secret: it doesn't search the web — it searches an index.", "visual": "🔍" },
+        "buildup": { "text": "Googlebot crawls the web, following links from page to page. It downloads and parses each page's content.", "visual": "🕷️" },
+        "discovery": { "text": "The index is an inverted index: for each word, a list of pages containing it, plus positions and context.", "visual": "📖" },
+        "twist": { "text": "The web is mostly junk. Google must decide what to crawl and how often. News sites: every minute. Blogs: weekly.", "visual": "📰" },
+        "climax": { "text": "Google's index is one of the largest data structures ever built — hundreds of petabytes of structured web data.", "visual": "🗄️" },
+        "punchline": { "text": "Crawl the web, build an inverted index, search the index — not the web.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is an inverted index?",
+        "options": ["A data structure mapping each word to the list of pages containing it", "A list of all URLs on the internet", "A backup copy of the web"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch05-search-engines",
+      "title": "PageRank: The Algorithm That Built Google",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Two pages mention 'climate change.' Which ranks higher? The one that more trusted pages link to. That's PageRank.", "visual": "🔗" },
+        "buildup": { "text": "PageRank treats links as votes. A link from a high-PageRank page is worth more than a link from an obscure one.", "visual": "🗳️" },
+        "discovery": { "text": "PageRank is recursive: a page's score depends on the scores of pages linking to it, which depend on their linkers.", "visual": "🔄" },
+        "twist": { "text": "PageRank alone isn't enough. Google now uses hundreds of ranking signals including content quality and user behavior.", "visual": "📊" },
+        "climax": { "text": "PageRank revolutionized search by using the web's link structure as a quality signal — the web votes for itself.", "visual": "💡" },
+        "punchline": { "text": "Links are votes — a link from a trusted page counts more.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How does PageRank determine page importance?",
+        "options": ["By counting and weighting incoming links from other pages", "By measuring page load speed", "By counting the number of words on the page"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch05-search-engines",
+      "title": "Elasticsearch and Full-Text Search",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You search for 'running shoes' and results include 'jogging sneakers.' The search understands meaning, not just words.", "visual": "👟" },
+        "buildup": { "text": "Elasticsearch uses inverted indices with analyzers that tokenize, stem, and normalize text for matching.", "visual": "📖" },
+        "discovery": { "text": "Stemming reduces 'running' to 'run.' Synonyms map 'shoes' to 'sneakers.' The index matches concepts, not exact strings.", "visual": "🔤" },
+        "twist": { "text": "Elasticsearch clusters can grow to petabytes but require careful shard management. Too many shards degrade performance.", "visual": "⚠️" },
+        "climax": { "text": "Elasticsearch powers search at GitHub, Wikipedia, and Stack Overflow — anywhere full-text search at scale is needed.", "visual": "🌐" },
+        "punchline": { "text": "Tokenize, stem, and index — search meaning, not exact words.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does stemming do in search?",
+        "options": ["Reduces words to their root form so 'running' matches 'run'", "Removes stop words", "Encrypts search queries"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch05-search-engines",
+      "title": "Autocomplete at Scale",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You type 'how to' and instantly see 10 suggestions. Google processes your keystrokes faster than you can type them.", "visual": "⌨️" },
+        "buildup": { "text": "Autocomplete uses a trie data structure that stores all common queries as a tree of characters for fast prefix lookups.", "visual": "🌳" },
+        "discovery": { "text": "Suggestions are ranked by popularity, recency, and personalization. The most-searched completions appear first.", "visual": "📊" },
+        "twist": { "text": "Autocomplete must respond in under 100ms or it feels laggy. The data is pre-computed and served from edge caches.", "visual": "⚡" },
+        "climax": { "text": "Autocomplete is a search engine within the search engine — optimized for speed above all else.", "visual": "🏎️" },
+        "punchline": { "text": "Pre-computed trie, served from the edge — under 100ms.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is autocomplete data pre-computed?",
+        "options": ["To respond in under 100ms as the user types", "To save database queries", "Because queries don't change often"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch05-search-engines",
+      "title": "Typeahead vs Fuzzy Search",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You type 'javscript' — a typo. Smart search still returns results for 'JavaScript.' That's fuzzy matching at work.", "visual": "🔍" },
+        "buildup": { "text": "Typeahead matches exact prefixes: type 'jav' to see 'JavaScript.' Fuzzy search tolerates errors and misspellings.", "visual": "📝" },
+        "discovery": { "text": "Fuzzy search uses edit distance: how many changes turn the query into a known word. 'javscript' is 1 edit away.", "visual": "📏" },
+        "twist": { "text": "Fuzzy matching is expensive. Checking edit distance against millions of words requires clever indexing like n-grams.", "visual": "💰" },
+        "climax": { "text": "Great search combines both: typeahead for fast prefix matching, fuzzy for typo tolerance. Users don't even notice.", "visual": "✅" },
+        "punchline": { "text": "Prefix match for speed, fuzzy match for typo tolerance.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is edit distance in fuzzy search?",
+        "options": ["The number of character changes needed to transform one word into another", "The distance between search results", "The time to process a search query"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch06-payment-systems",
+      "title": "Stripe's Payment Flow",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You enter your card on a website and click pay. Seven different systems coordinate to move money — in under 3 seconds.", "visual": "💳" },
+        "buildup": { "text": "The merchant's server sends card details to Stripe. Stripe contacts the card network which contacts your bank.", "visual": "🔗" },
+        "discovery": { "text": "Authorization, capture, and settlement are separate steps. The money isn't moved instantly — it settles days later.", "visual": "⏳" },
+        "twist": { "text": "A payment can be authorized (funds held) but never captured. The hold expires after days. No money actually moved.", "visual": "🔄" },
+        "climax": { "text": "Payments are multi-party distributed transactions with eventual settlement — not instant money transfers.", "visual": "🏦" },
+        "punchline": { "text": "Authorize now, capture later, settle in days — payments aren't instant.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the difference between authorization and settlement?",
+        "options": ["Authorization holds funds; settlement actually moves the money days later", "They're the same thing", "Authorization is faster than settlement"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch06-payment-systems",
+      "title": "Idempotency in Payments",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The network times out after you click pay. Did it go through? You click again. You're now charged twice. Disaster.", "visual": "😱" },
+        "buildup": { "text": "Idempotency means running the same operation twice produces the same result. Charge $10 twice? Still $10.", "visual": "🔒" },
+        "discovery": { "text": "An idempotency key is sent with each request. If the server sees the same key again, it returns the original result.", "visual": "🔑" },
+        "twist": { "text": "Without idempotency, retries cause duplicate operations. Networks are unreliable — retries are inevitable.", "visual": "🔄" },
+        "climax": { "text": "Idempotency is not optional in payment systems. It's the difference between charging once and charging repeatedly.", "visual": "🛡️" },
+        "punchline": { "text": "Same key, same result — no matter how many retries.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does an idempotency key prevent?",
+        "options": ["Duplicate charges when a payment request is retried", "Unauthorized access to payment data", "Slow payment processing"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch06-payment-systems",
+      "title": "Double-Entry Bookkeeping",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A $100 payment moves money from one account to another. Record it wrong and your books won't balance. Ever.", "visual": "📒" },
+        "buildup": { "text": "Double-entry bookkeeping records every transaction as two entries: a debit and a credit. They must always balance.", "visual": "⚖️" },
+        "discovery": { "text": "When you pay $100, one account is debited $100 and another is credited $100. The total always sums to zero.", "visual": "🔢" },
+        "twist": { "text": "Modern payment systems use this 700-year-old accounting method in their databases — it's still the gold standard.", "visual": "🏦" },
+        "climax": { "text": "Double-entry bookkeeping catches errors instantly. If debits don't equal credits, something went wrong.", "visual": "🚨" },
+        "punchline": { "text": "Every debit has a credit — books must always balance.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is double-entry bookkeeping used in payment systems?",
+        "options": ["It catches errors instantly because debits and credits must balance", "It's faster than single-entry", "It reduces storage costs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch06-payment-systems",
+      "title": "Fraud Detection Systems",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You buy coffee in New York. Five minutes later, a charge appears from Lagos. Your bank blocks it instantly.", "visual": "🚫" },
+        "buildup": { "text": "Fraud detection systems analyze every transaction in real time: location, amount, merchant type, and spending patterns.", "visual": "🔍" },
+        "discovery": { "text": "Machine learning models trained on billions of transactions score each payment's fraud probability in milliseconds.", "visual": "🤖" },
+        "twist": { "text": "False positives block legitimate purchases. Too strict and customers leave. Too lenient and fraud losses mount.", "visual": "⚖️" },
+        "climax": { "text": "Fraud detection balances security and user experience. The best systems block fraud without bothering honest customers.", "visual": "🎯" },
+        "punchline": { "text": "Score every transaction in milliseconds — block fraud, not customers.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the main challenge of fraud detection?",
+        "options": ["Balancing blocking fraud without rejecting legitimate transactions", "Processing transactions fast enough", "Storing transaction data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "system-design--real-world-architectures--ch06-payment-systems",
+      "title": "Reconciliation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your system says you collected $1 million today. The bank says $999,950. Where did the $50 go?", "visual": "🔍" },
+        "buildup": { "text": "Reconciliation compares records from different systems — your database, the payment processor, and the bank.", "visual": "📋" },
+        "discovery": { "text": "Mismatches happen: network timeouts, partial failures, race conditions. Reconciliation finds and fixes discrepancies.", "visual": "🔧" },
+        "twist": { "text": "At scale, reconciliation runs as a daily batch job comparing millions of records. Some mismatches require manual review.", "visual": "👀" },
+        "climax": { "text": "Reconciliation is the safety net of payment systems. Without it, errors accumulate silently until they become crises.", "visual": "🛡️" },
+        "punchline": { "text": "Compare all records daily — find discrepancies before they grow.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does reconciliation do in payment systems?",
+        "options": ["Compares records across systems to find and fix discrepancies", "Speeds up payment processing", "Encrypts payment data"],
+        "correct": 0
+      }
+    }
+  ]
+}

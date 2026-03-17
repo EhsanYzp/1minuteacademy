@@ -1,0 +1,49 @@
+{
+  "id": "system-design--microservices-vs-monoliths--t-event-sourcing",
+  "version": 1,
+  "subject": "System Design",
+  "subcategory": "Microservices vs Monoliths",
+  "course_id": "system-design--microservices-vs-monoliths",
+  "chapter_id": "system-design--microservices-vs-monoliths--ch04-data-ownership",
+  "title": "Event Sourcing",
+  "emoji": "🧩",
+  "color": "#BE185D",
+  "description": "A micro-lesson that makes Event Sourcing usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Instead of storing the current state, store every event that led to it. Replay the events to rebuild state.",
+      "visual": "📜"
+    },
+    "buildup": {
+      "text": "Event sourcing stores events: OrderPlaced, ItemAdded, PaymentReceived. The current state is derived from them.",
+      "visual": "📋"
+    },
+    "discovery": {
+      "text": "You get a complete audit trail for free. Time-travel debugging becomes possible: replay events up to any point.",
+      "visual": "⏰"
+    },
+    "twist": {
+      "text": "Schema evolution is brutal. Changing the structure of past events requires careful versioning and migration.",
+      "visual": "😰"
+    },
+    "climax": {
+      "text": "Event sourcing is powerful for audit-heavy domains like banking but overkill for simple CRUD applications.",
+      "visual": "🏦"
+    },
+    "punchline": {
+      "text": "Store what happened, not what is — replay to rebuild.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What does event sourcing store?",
+    "options": [
+      "Every event that led to the current state",
+      "Only the current state",
+      "Database snapshots at intervals"
+    ],
+    "correct": 0
+  }
+}
