@@ -1053,7 +1053,21 @@ export default function useVideoExport() {
 
         // Store the blob so the UI can present a user-gesture-driven
         // save/share button (required on iOS Safari).
-        setReadyBlob({ blob, fileName });
+        // On desktop, auto-download immediately (programmatic a.click works fine).
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+          setReadyBlob({ blob, fileName });
+        } else {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = fileName;
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(() => URL.revokeObjectURL(url), 30_000);
+        }
       }
     } catch (err) {
       console.error('[useVideoExport] export failed:', err);
