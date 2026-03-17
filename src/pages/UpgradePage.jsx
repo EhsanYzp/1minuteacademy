@@ -189,7 +189,7 @@ export default function UpgradePage() {
     <motion.div className="upgrade-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <Seo
         title="Pricing"
-        description="Start free. Pro unlocks the full library: all topics, certificates, Minute Expert + badges, and review mode."
+        description="Start free. Pro unlocks the full library: all topics, certificates, Minute Expert + badges, review mode, and video export."
         path={location?.pathname || '/pricing'}
         canonicalPath="/pricing"
       />
@@ -321,6 +321,7 @@ export default function UpgradePage() {
                   <li><span className="pricing-check" aria-hidden="true">✓</span>Certificates (60 topics per category)</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>Minute Expert + badges</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>Review mode (no timer)</li>
+                  <li><span className="pricing-check" aria-hidden="true">✓</span>Video export (download any lesson as a 60 s video)</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>Surprise shuffle across all modules</li>
                   <li><span className="pricing-check" aria-hidden="true">✓</span>{proLessonStyleCount} lesson styles</li>
                 </ul>
@@ -366,6 +367,10 @@ export default function UpgradePage() {
                 <div className="pricing-glossary-item">
                   <div className="pricing-glossary-term">Surprise shuffle</div>
                   <div className="pricing-glossary-def">The "Surprise me" button that picks a topic for you. Free shuffles free topics only; Pro shuffles everything.</div>
+                </div>
+                <div className="pricing-glossary-item">
+                  <div className="pricing-glossary-term">Video export</div>
+                  <div className="pricing-glossary-def">Download any completed lesson as a 60-second .webm video — great for sharing on social media or keeping offline. Pro only.</div>
                 </div>
                 <div className="pricing-glossary-item">
                   <div className="pricing-glossary-term">Lesson styles</div>
@@ -460,6 +465,13 @@ export default function UpgradePage() {
 
                     <tr>
                       <th scope="row" className="compare-feature">Review mode (no timer)</th>
+                      <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                      <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
+                      <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
+                    </tr>
+
+                    <tr>
+                      <th scope="row" className="compare-feature">Video export</th>
                       <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
                       <td className="compare-cell"><span className="mark no" aria-label="Locked" title="Locked">✕</span></td>
                       <td className="compare-cell"><span className="mark yes" aria-label="Available" title="Available">✓</span></td>
