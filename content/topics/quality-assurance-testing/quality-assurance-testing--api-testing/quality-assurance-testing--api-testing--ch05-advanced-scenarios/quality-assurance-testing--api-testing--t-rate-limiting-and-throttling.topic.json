@@ -1,0 +1,49 @@
+{
+  "id": "quality-assurance-testing--api-testing--t-rate-limiting-and-throttling",
+  "version": 1,
+  "subject": "Quality Assurance & Testing",
+  "subcategory": "API Testing",
+  "course_id": "quality-assurance-testing--api-testing",
+  "chapter_id": "quality-assurance-testing--api-testing--ch05-advanced-scenarios",
+  "title": "Rate Limiting and Throttling",
+  "emoji": "🔌",
+  "color": "#7C3AED",
+  "description": "A 60-second lesson on Rate Limiting and Throttling.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A bot sends 10,000 requests per second to your API. Without rate limiting, it takes down the whole service.",
+      "visual": "🤖"
+    },
+    "buildup": {
+      "text": "Rate limiting caps how many requests a client can make in a time window to protect server resources.",
+      "visual": "🚦"
+    },
+    "discovery": {
+      "text": "Testing confirms limits are enforced: the 101st request in a 100/minute window should return 429.",
+      "visual": "📊"
+    },
+    "twist": {
+      "text": "Rate limits must apply per client, not globally. Blocking everyone because one client is aggressive is wrong.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Tests verify that exceeding the limit returns 429 with a Retry-After header showing when to try again.",
+      "visual": "⏱️"
+    },
+    "punchline": {
+      "text": "Protect your API from abuse. Rate limit and test the limits.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "What HTTP status code indicates rate limiting?",
+    "options": [
+      "403 Forbidden",
+      "429 Too Many Requests",
+      "503 Service Unavailable"
+    ],
+    "correct": 1
+  }
+}

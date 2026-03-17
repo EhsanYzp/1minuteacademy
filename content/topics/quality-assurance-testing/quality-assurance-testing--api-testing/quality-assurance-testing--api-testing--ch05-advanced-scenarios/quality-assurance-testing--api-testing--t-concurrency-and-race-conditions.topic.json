@@ -1,0 +1,49 @@
+{
+  "id": "quality-assurance-testing--api-testing--t-concurrency-and-race-conditions",
+  "version": 1,
+  "subject": "Quality Assurance & Testing",
+  "subcategory": "API Testing",
+  "course_id": "quality-assurance-testing--api-testing",
+  "chapter_id": "quality-assurance-testing--api-testing--ch05-advanced-scenarios",
+  "title": "Concurrency and Race Conditions",
+  "emoji": "🔌",
+  "color": "#7C3AED",
+  "description": "A 1-minute de-risking session on Concurrency and Race Conditions.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Two users buy the last item simultaneously. Both get a success response. Only one item existed.",
+      "visual": "🏷️"
+    },
+    "buildup": {
+      "text": "Race conditions occur when multiple requests modify shared data at the same time without proper locking.",
+      "visual": "🏎️"
+    },
+    "discovery": {
+      "text": "Concurrency tests send parallel requests to the same resource and check that the outcome is consistent.",
+      "visual": "🔀"
+    },
+    "twist": {
+      "text": "Race conditions appear intermittently. Running the test once may pass. Running it 100 times reveals the bug.",
+      "visual": "🎰"
+    },
+    "climax": {
+      "text": "A hundred parallel purchase requests reveal the oversell bug. Database-level locking prevents it.",
+      "visual": "🔒"
+    },
+    "punchline": {
+      "text": "Test with many hands reaching for the same thing at once.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "How are race conditions tested in APIs?",
+    "options": [
+      "By sending one request at a time",
+      "By sending parallel requests to the same resource",
+      "By testing in a different timezone"
+    ],
+    "correct": 1
+  }
+}

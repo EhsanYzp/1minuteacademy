@@ -1,0 +1,49 @@
+{
+  "id": "quality-assurance-testing--security-testing--t-session-management-flaws",
+  "version": 1,
+  "subject": "Quality Assurance & Testing",
+  "subcategory": "Security Testing",
+  "course_id": "quality-assurance-testing--security-testing",
+  "chapter_id": "quality-assurance-testing--security-testing--ch03-authentication-and-access",
+  "title": "Session Management Flaws",
+  "emoji": "🔐",
+  "color": "#7C3AED",
+  "description": "A quick, practical guide to Session Management Flaws.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A user logs out. Their session token still works. Anyone with it can impersonate them for hours.",
+      "visual": "🎫"
+    },
+    "buildup": {
+      "text": "Sessions track who's logged in. Poor management lets attackers hijack or reuse expired sessions.",
+      "visual": "🔓"
+    },
+    "discovery": {
+      "text": "Secure sessions expire on logout, rotate tokens after login, and bind to client fingerprints.",
+      "visual": "🔄"
+    },
+    "twist": {
+      "text": "Sessions stored only in cookies without server validation can be forged if the secret key leaks.",
+      "visual": "🍪"
+    },
+    "climax": {
+      "text": "Testing finds sessions surviving logout. A server-side invalidation fix kills them immediately.",
+      "visual": "✅"
+    },
+    "punchline": {
+      "text": "Logout must destroy the session. Not just the cookie.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "What should happen to a session on logout?",
+    "options": [
+      "Nothing special",
+      "It should be destroyed server-side",
+      "It should be renamed"
+    ],
+    "correct": 1
+  }
+}

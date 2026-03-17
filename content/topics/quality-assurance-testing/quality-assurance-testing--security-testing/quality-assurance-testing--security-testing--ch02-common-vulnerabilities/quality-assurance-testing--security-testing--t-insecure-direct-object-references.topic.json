@@ -1,0 +1,49 @@
+{
+  "id": "quality-assurance-testing--security-testing--t-insecure-direct-object-references",
+  "version": 1,
+  "subject": "Quality Assurance & Testing",
+  "subcategory": "Security Testing",
+  "course_id": "quality-assurance-testing--security-testing",
+  "chapter_id": "quality-assurance-testing--security-testing--ch02-common-vulnerabilities",
+  "title": "Insecure Direct Object References",
+  "emoji": "🔐",
+  "color": "#7C3AED",
+  "description": "A fast breakdown of Insecure Direct Object References for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A URL shows /invoice/1042. A curious user changes it to /invoice/1043. They see someone else's invoice.",
+      "visual": "📄"
+    },
+    "buildup": {
+      "text": "IDOR occurs when internal object IDs are exposed and the server doesn't check access permissions.",
+      "visual": "🔓"
+    },
+    "discovery": {
+      "text": "Authorization checks must verify that the requesting user actually owns or can access the resource.",
+      "visual": "✅"
+    },
+    "twist": {
+      "text": "Sequential IDs make IDOR trivially exploitable. Random UUIDs add a layer of obscurity but aren't enough alone.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Adding a simple ownership check to the query prevents any user from accessing another's data.",
+      "visual": "🔒"
+    },
+    "punchline": {
+      "text": "Always check: does this user own this resource? Always.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "What does IDOR exploit?",
+    "options": [
+      "Weak passwords",
+      "Missing authorization checks on object access",
+      "Outdated software"
+    ],
+    "correct": 1
+  }
+}

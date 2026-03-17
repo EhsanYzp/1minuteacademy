@@ -1,0 +1,49 @@
+{
+  "id": "quality-assurance-testing--api-testing--t-idempotency-testing",
+  "version": 1,
+  "subject": "Quality Assurance & Testing",
+  "subcategory": "API Testing",
+  "course_id": "quality-assurance-testing--api-testing",
+  "chapter_id": "quality-assurance-testing--api-testing--ch04-validation-strategies",
+  "title": "Idempotency Testing",
+  "emoji": "🔌",
+  "color": "#7C3AED",
+  "description": "A short lesson to help you apply Idempotency Testing.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A network glitch causes a payment request to send twice. The customer is charged double. No idempotency.",
+      "visual": "💸"
+    },
+    "buildup": {
+      "text": "Idempotent operations produce the same result whether called once or multiple times.",
+      "visual": "🔄"
+    },
+    "discovery": {
+      "text": "GET, PUT, and DELETE should be idempotent. POST typically is not, but can be made so with idempotency keys.",
+      "visual": "🔑"
+    },
+    "twist": {
+      "text": "Testing idempotency means sending the same request twice and verifying the state doesn't change the second time.",
+      "visual": "💡"
+    },
+    "climax": {
+      "text": "A duplicate POST test creates two orders. Adding an idempotency key header prevents the double charge.",
+      "visual": "✅"
+    },
+    "punchline": {
+      "text": "Networks retry. Clients retry. The API must handle it safely.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "What does idempotency ensure?",
+    "options": [
+      "Faster responses",
+      "Repeated requests produce the same result without side effects",
+      "Smaller payloads"
+    ],
+    "correct": 1
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "quality-assurance-testing--performance-testing--t-connection-pooling",
+  "version": 1,
+  "subject": "Quality Assurance & Testing",
+  "subcategory": "Performance Testing",
+  "course_id": "quality-assurance-testing--performance-testing",
+  "chapter_id": "quality-assurance-testing--performance-testing--ch05-bottlenecks-and-tuning",
+  "title": "Connection Pooling",
+  "emoji": "⚡",
+  "color": "#7C3AED",
+  "description": "A quick win: understand Connection Pooling.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Each request opens a new database connection. At 1,000 requests per second, the database runs out.",
+      "visual": "🔌"
+    },
+    "buildup": {
+      "text": "Opening a connection is expensive—authentication, handshake, and memory allocation every time.",
+      "visual": "⏳"
+    },
+    "discovery": {
+      "text": "Connection pooling reuses a fixed set of connections, eliminating the cost of opening new ones.",
+      "visual": "♻️"
+    },
+    "twist": {
+      "text": "Pool size matters. Too small means requests queue. Too large overwhelms the database server.",
+      "visual": "⚖️"
+    },
+    "climax": {
+      "text": "Tuning the pool from 10 to 50 connections eliminates queuing. Going beyond 50 gives no benefit.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "Don't open doors you never close. Pool and reuse connections.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "What does connection pooling eliminate?",
+    "options": [
+      "Network latency",
+      "The cost of opening new connections repeatedly",
+      "The need for a database"
+    ],
+    "correct": 1
+  }
+}
