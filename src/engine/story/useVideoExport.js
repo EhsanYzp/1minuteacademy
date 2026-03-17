@@ -528,7 +528,13 @@ function drawWatermark(ctx, s) {
 
 /* ── Layout constants (match story.css at 1920 × 1080) ───── */
 
-const TOPBAR_H = 76;
+// When exporting at 720p (mobile), the canvas is scaled down via ctx.scale().
+// Fonts/metrics would shrink proportionally and become unreadable on social.
+// Counteract that by scaling UI metrics up so the final pixel sizes are similar
+// across 1080p and 720p exports.
+const EXPORT_READABILITY_SCALE = IS_MOBILE ? (1 / EXPORT_SCALE) : 1;
+
+const TOPBAR_H = Math.round(90 * EXPORT_READABILITY_SCALE);
 const CONTENT_MAX_W = 920;          // .story-beat-inner { max-width: 920px }
 const CONTENT_TOP = TOPBAR_H + 16;  // padding-top: calc(topbar + 16px)
 const CONTENT_CENTER_Y = CONTENT_TOP + (H - CONTENT_TOP) / 2;
@@ -552,6 +558,8 @@ const QUIZ_INNER_GAP = 32;         // gap: 2rem
 function drawTopbar(ctx, s, topicTitle, topicEmoji, timeRemaining) {
   ctx.save();
 
+  const ui = EXPORT_READABILITY_SCALE;
+
   // Background bar
   ctx.fillStyle = s.topbarBg;
   ctx.fillRect(0, 0, W, TOPBAR_H);
@@ -571,35 +579,38 @@ function drawTopbar(ctx, s, topicTitle, topicEmoji, timeRemaining) {
   const nameStr = topicTitle || 'Learning...';
   ctx.textBaseline = 'middle';
 
-  ctx.font = `24px ${s.displayFont}`;
+  const emojiSize = Math.round(30 * ui);
+  const nameSize = Math.round(22 * ui);
+
+  ctx.font = `${emojiSize}px ${s.displayFont}`;
   const emojiW = emojiStr ? ctx.measureText(emojiStr).width : 0;
-  ctx.font = `700 18px ${s.displayFont}`;
+  ctx.font = `700 ${nameSize}px ${s.displayFont}`;
   const nameW = ctx.measureText(nameStr).width;
-  const titleGap = emojiStr ? 10 : 0;
+  const titleGap = emojiStr ? Math.round(12 * ui) : 0;
   const totalTitleW = emojiW + titleGap + nameW;
   const titleStartX = (W - totalTitleW) / 2;
 
   if (emojiStr) {
-    ctx.font = `24px ${s.displayFont}`;
+    ctx.font = `${emojiSize}px ${s.displayFont}`;
     ctx.textAlign = 'left';
     ctx.fillStyle = s.topicColor;
     ctx.fillText(emojiStr, titleStartX, midY);
   }
-  ctx.font = `700 18px ${s.displayFont}`;
+  ctx.font = `700 ${nameSize}px ${s.displayFont}`;
   ctx.textAlign = 'left';
   ctx.fillStyle = s.topicColor;
   ctx.fillText(nameStr, titleStartX + emojiW + titleGap, midY);
 
   // Timer pill (right side — gradient matches .story-timer-large)
-  const pillW = 90;
-  const pillH = 44;
-  const pillX = W - pillW - 24;
+  const pillW = Math.round(112 * ui);
+  const pillH = Math.round(54 * ui);
+  const pillX = W - pillW - Math.round(24 * ui);
   const pillY = midY - pillH / 2;
 
   ctx.shadowColor = 'rgba(214,48,49,0.30)';
   ctx.shadowBlur = 15;
   ctx.shadowOffsetY = 4;
-  rrPath(ctx, pillX, pillY, pillW, pillH, 12);
+  rrPath(ctx, pillX, pillY, pillW, pillH, Math.round(14 * ui));
   const tg = ctx.createLinearGradient(pillX, pillY, pillX + pillW, pillY + pillH);
   tg.addColorStop(0, '#e17055');
   tg.addColorStop(1, '#d63031');
@@ -609,7 +620,7 @@ function drawTopbar(ctx, s, topicTitle, topicEmoji, timeRemaining) {
 
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.font = `800 22px ${s.displayFont}`;
+  ctx.font = `800 ${Math.round(28 * ui)}px ${s.displayFont}`;
   ctx.fillStyle = '#ffffff';
   const mins = Math.floor(timeRemaining / 60);
   const secs = String(timeRemaining % 60).padStart(2, '0');
@@ -858,6 +869,8 @@ function drawQuizFrame(ctx, { s, question, options, correct, topicTitle, topicEm
 function drawIntroFrame(ctx, { s, topicTitle, topicEmoji, category, course, elapsed, logoImg }) {
   drawBg(ctx, s);
 
+  const ui = EXPORT_READABILITY_SCALE;
+
   const cx = W / 2;
   const fade = Math.min(1, elapsed / 0.4); // fade in over 0.4s
   ctx.save();
@@ -867,58 +880,60 @@ function drawIntroFrame(ctx, { s, topicTitle, topicEmoji, category, course, elap
 
   // Logo icon at top
   if (logoImg) {
-    const logoSize = 72;
-    ctx.drawImage(logoImg, cx - logoSize / 2, 80, logoSize, logoSize);
+    const logoSize = Math.round(92 * ui);
+    ctx.drawImage(logoImg, cx - logoSize / 2, Math.round(70 * ui), logoSize, logoSize);
   }
 
   // Category (small caps style) — display font
-  ctx.font = `600 24px ${s.displayFont}`;
+  ctx.font = `700 ${Math.round(32 * ui)}px ${s.displayFont}`;
   ctx.fillStyle = s.subtext;
-  ctx.fillText((category || '').toUpperCase(), cx, H / 2 - 120);
+  ctx.fillText((category || '').toUpperCase(), cx, H / 2 - Math.round(170 * ui));
 
   // Course name — display font (heading)
-  ctx.font = `700 40px ${s.displayFont}`;
+  ctx.font = `800 ${Math.round(56 * ui)}px ${s.displayFont}`;
   ctx.fillStyle = s.text;
   ctx.globalAlpha = fade;
   const courseLines = wrapText(ctx, course || '', BEAT_TEXT_MAX_W);
-  const courseLH = 52;
-  const courseStartY = H / 2 - 60;
+  const courseLH = Math.round(72 * ui);
+  const courseStartY = H / 2 - Math.round(105 * ui);
   for (let i = 0; i < courseLines.length; i++) {
     ctx.fillText(courseLines[i], cx, courseStartY + i * courseLH, BEAT_TEXT_MAX_W);
   }
 
   // Divider line
-  const divY = courseStartY + courseLines.length * courseLH + 24;
+  const divY = courseStartY + courseLines.length * courseLH + Math.round(26 * ui);
   ctx.strokeStyle = s.subtext;
   ctx.globalAlpha = fade * 0.3;
-  ctx.lineWidth = 2;
+  ctx.lineWidth = Math.max(2, Math.round(3 * ui));
   ctx.beginPath();
-  ctx.moveTo(cx - 80, divY);
-  ctx.lineTo(cx + 80, divY);
+  ctx.moveTo(cx - Math.round(110 * ui), divY);
+  ctx.lineTo(cx + Math.round(110 * ui), divY);
   ctx.stroke();
   ctx.globalAlpha = fade;
 
   // Topic emoji + title
-  const topicY = divY + 48;
+  const topicY = divY + Math.round(62 * ui);
   const emojiStr = topicEmoji || '';
-  ctx.font = `${BEAT_EMOJI_SIZE}px ${s.displayFont}`;
+  const introEmojiSize = Math.round(96 * ui);
+  ctx.font = `${introEmojiSize}px ${s.displayFont}`;
   ctx.fillStyle = s.text;
   ctx.fillText(emojiStr, cx, topicY);
 
-  ctx.font = `700 ${BEAT_FONT_SIZE}px ${s.displayFont}`;
+  const introTitleSize = Math.round(72 * ui);
+  ctx.font = `900 ${introTitleSize}px ${s.displayFont}`;
   ctx.fillStyle = s.text;
   const titleLines = wrapText(ctx, topicTitle || '', BEAT_TEXT_MAX_W);
-  const titleLH = BEAT_FONT_SIZE * BEAT_LINE_H;
-  const titleStartY = topicY + BEAT_EMOJI_SIZE / 2 + 32;
+  const titleLH = introTitleSize * BEAT_LINE_H;
+  const titleStartY = topicY + introEmojiSize / 2 + Math.round(34 * ui);
   for (let i = 0; i < titleLines.length; i++) {
     ctx.fillText(titleLines[i], cx, titleStartY + i * titleLH, BEAT_TEXT_MAX_W);
   }
 
   // Watermark at bottom — display font
-  ctx.font = `600 24px ${s.displayFont}`;
+  ctx.font = `600 ${Math.round(28 * ui)}px ${s.displayFont}`;
   ctx.fillStyle = s.subtext;
   ctx.globalAlpha = fade * 0.45;
-  ctx.fillText('1minute.academy', cx, H - 60);
+  ctx.fillText('1minute.academy', cx, H - Math.round(60 * ui));
 
   ctx.restore();
 }
@@ -929,6 +944,8 @@ function drawIntroFrame(ctx, { s, topicTitle, topicEmoji, category, course, elap
 function drawOutroFrame(ctx, { s, elapsed, logoImg }) {
   drawBg(ctx, s);
 
+  const ui = EXPORT_READABILITY_SCALE;
+
   const cx = W / 2;
   const fade = Math.min(1, elapsed / 0.4);
   ctx.save();
@@ -938,30 +955,30 @@ function drawOutroFrame(ctx, { s, elapsed, logoImg }) {
 
   // Official logo
   if (logoImg) {
-    const logoSize = 120;
-    ctx.drawImage(logoImg, cx - logoSize / 2, H / 2 - 190, logoSize, logoSize);
+    const logoSize = Math.round(150 * ui);
+    ctx.drawImage(logoImg, cx - logoSize / 2, H / 2 - Math.round(230 * ui), logoSize, logoSize);
   }
 
   // Tagline — display font
-  ctx.font = `700 52px ${s.displayFont}`;
+  ctx.font = `900 ${Math.round(64 * ui)}px ${s.displayFont}`;
   ctx.fillStyle = s.text;
-  ctx.fillText('One Minute. One Idea.', cx, H / 2 - 20);
+  ctx.fillText('One Minute. One Idea.', cx, H / 2 - Math.round(22 * ui));
 
   // Sub-tagline — body font
-  ctx.font = `600 30px ${s.font}`;
+  ctx.font = `700 ${Math.round(38 * ui)}px ${s.font}`;
   ctx.fillStyle = s.subtext;
-  ctx.fillText('Micro-lessons that stick.', cx, H / 2 + 40);
+  ctx.fillText('Micro-lessons that stick.', cx, H / 2 + Math.round(44 * ui));
 
   // URL — display font, accent color
-  ctx.font = `700 36px ${s.displayFont}`;
+  ctx.font = `900 ${Math.round(46 * ui)}px ${s.displayFont}`;
   ctx.fillStyle = s.timerBg;
-  ctx.fillText('1minute.academy', cx, H / 2 + 120);
+  ctx.fillText('1minute.academy', cx, H / 2 + Math.round(138 * ui));
 
   // Bottom credit — display font
-  ctx.font = `500 22px ${s.displayFont}`;
+  ctx.font = `600 ${Math.round(26 * ui)}px ${s.displayFont}`;
   ctx.fillStyle = s.subtext;
   ctx.globalAlpha = fade * 0.55;
-  ctx.fillText('© One Minute Academy', cx, H - 60);
+  ctx.fillText('© One Minute Academy', cx, H - Math.round(60 * ui));
 
   ctx.restore();
 }
