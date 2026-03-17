@@ -16,6 +16,7 @@ const OUTRO_START_S = QUIZ_START_S + QUIZ_S;             // 58 s
 const W = 1920;
 const H = 1080;
 const IS_MOBILE = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+const IS_IOS = typeof navigator !== 'undefined' && /iPhone|iPad|iPod/i.test(navigator.userAgent);
 // Mobile uses 720p to avoid iOS Safari killing the tab for memory pressure
 const EXPORT_W = IS_MOBILE ? 1280 : W;
 const EXPORT_H = IS_MOBILE ? 720 : H;
@@ -111,12 +112,13 @@ function _buildAVCDescription(sps, pps) {
 }
 
 /** Split a length-prefixed AVC bitstream (4-byte big-endian lengths) into NAL units. */
-function _splitNALUsAVC(data) {
+function _splitNALUsAVCWithSize(data, lenSize) {
   const nalus = [];
   let o = 0;
-  while (o + 4 <= data.length) {
-    const nLen = (data[o] << 24) | (data[o + 1] << 16) | (data[o + 2] << 8) | data[o + 3];
-    o += 4;
+  while (o + lenSize <= data.length) {
+    let nLen = 0;
+    for (let i = 0; i < lenSize; i++) nLen = (nLen << 8) | data[o + i];
+    o += lenSize;
     if (nLen <= 0 || o + nLen > data.length) return null;
     nalus.push(data.subarray(o, o + nLen));
     o += nLen;
@@ -124,14 +126,39 @@ function _splitNALUsAVC(data) {
   return nalus;
 }
 
+function _detectAVCLengthSize(data) {
+  // Try common sizes in order. We only need a consistent parse, not perfection.
+  for (const lenSize of [4, 2, 1]) {
+    const nalus = _splitNALUsAVCWithSize(data, lenSize);
+    if (!nalus || !nalus.length) continue;
+    const naluType = nalus[0][0] & 0x1F;
+    if (naluType >= 1 && naluType <= 31) return lenSize;
+  }
+  return null;
+}
+
 function _looksLikeAVC(data) {
-  // Very lightweight sniff: first 4 bytes is a plausible length and we can parse at least one NAL.
-  if (!data || data.length < 8) return false;
-  const nLen = (data[0] << 24) | (data[1] << 16) | (data[2] << 8) | data[3];
-  if (nLen <= 0 || 4 + nLen > data.length) return false;
-  const firstNalu = data.subarray(4, 4 + nLen);
-  const naluType = firstNalu[0] & 0x1F;
-  return naluType >= 1 && naluType <= 31;
+  if (!data || data.length < 6) return false;
+  return _detectAVCLengthSize(data) !== null;
+}
+
+function _normalizeAVCToLen4(data, lenSize) {
+  if (lenSize === 4) return data;
+  const nalus = _splitNALUsAVCWithSize(data, lenSize);
+  if (!nalus) return data;
+  let total = 0;
+  for (const n of nalus) total += 4 + n.length;
+  const out = new Uint8Array(total);
+  let o = 0;
+  for (const n of nalus) {
+    out[o++] = (n.length >>> 24) & 0xFF;
+    out[o++] = (n.length >>> 16) & 0xFF;
+    out[o++] = (n.length >>> 8) & 0xFF;
+    out[o++] = n.length & 0xFF;
+    out.set(n, o);
+    o += n.length;
+  }
+  return out;
 }
 
 /** Convert Annex B data → AVC (4-byte length-prefixed NALUs, SPS/PPS stripped). */
@@ -1064,6 +1091,7 @@ export default function useVideoExport() {
       let _gotDescription = false;
       let _pendingSps = null;
       let _pendingPps = null;
+      let _avcLengthSize = 4;
 
       const encoder = new VideoEncoder({
         output: (chunk, meta) => {
@@ -1090,7 +1118,8 @@ export default function useVideoExport() {
               nalus = _splitNALUs(raw);
             } else if (_looksLikeAVC(raw)) {
               _outputFormat = 'avc';
-              nalus = _splitNALUsAVC(raw);
+              _avcLengthSize = _detectAVCLengthSize(raw) ?? 4;
+              nalus = _splitNALUsAVCWithSize(raw, _avcLengthSize);
             }
 
             if (nalus && nalus.length) {
@@ -1114,7 +1143,9 @@ export default function useVideoExport() {
                   },
                 };
 
-                const dataOut = _outputFormat === 'annexb' ? _annexBToAVC(raw) : raw;
+                const dataOut = _outputFormat === 'annexb'
+                  ? _annexBToAVC(raw)
+                  : _normalizeAVCToLen4(raw, _avcLengthSize);
                 muxer.addVideoChunkRaw(
                   dataOut,
                   chunk.type,
@@ -1136,7 +1167,8 @@ export default function useVideoExport() {
           }
 
           if (_outputFormat === 'avc') {
-            muxer.addVideoChunkRaw(raw, chunk.type, chunk.timestamp, chunk.duration);
+            const dataOut = _normalizeAVCToLen4(raw, _avcLengthSize);
+            muxer.addVideoChunkRaw(dataOut, chunk.type, chunk.timestamp, chunk.duration);
             return;
           }
 
@@ -1161,7 +1193,9 @@ export default function useVideoExport() {
         // Without this, some browsers (iOS Safari) default to Annex B,
         // which does NOT provide decoderConfig.description in output
         // metadata — mp4-muxer needs that for the avcC box.
-        avc: { format: 'avc' },
+        // iOS Safari is inconsistent here; asking for Annex B increases
+        // the odds that SPS/PPS appear in-band so we can build avcC.
+        avc: { format: IS_IOS ? 'annexb' : 'avc' },
       });
 
       const usPerFrame = Math.round(1_000_000 / FPS);
@@ -1265,7 +1299,9 @@ export default function useVideoExport() {
       // SPS/PPS in the bitstream, finalize would crash; surface a clean error.
       if (!_gotDescription) {
         throw new Error(
-          'Video export failed on this iOS browser (missing H.264 decoder config). Please update iOS/Safari, or try Chrome on desktop.'
+          `Video export failed on this iOS browser (missing H.264 decoder config). ` +
+          `format=${_outputFormat || 'unknown'} sps=${_pendingSps ? 1 : 0} pps=${_pendingPps ? 1 : 0}. ` +
+          `Please update iOS/Safari, or try Chrome on desktop.`
         );
       }
       muxer.finalize();
