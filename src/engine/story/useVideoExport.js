@@ -1075,6 +1075,7 @@ export default function useVideoExport() {
 
       const FPS = 30;
       const totalFrames = TOTAL_SECONDS * FPS; // 1800 frames
+      const usPerFrame = Math.round(1_000_000 / FPS);
 
       // H.264 Baseline profile, level 4.0 (1080p30) / 3.1 (720p30)
       const codec = EXPORT_W > 1280 ? 'avc1.42002A' : 'avc1.42001F';
@@ -1095,12 +1096,35 @@ export default function useVideoExport() {
 
       const encoder = new VideoEncoder({
         output: (chunk, meta) => {
+          const durationUs = (Number.isFinite(chunk.duration) && chunk.duration >= 0)
+            ? chunk.duration
+            : usPerFrame;
+
+          const safeAddVideoChunkRaw = (data, metaArg) => {
+            // mp4-muxer requires a finite duration; Safari WebCodecs often omits it.
+            try {
+              if (metaArg !== undefined) {
+                muxer.addVideoChunkRaw(data, chunk.type, chunk.timestamp, durationUs, metaArg);
+              } else {
+                muxer.addVideoChunkRaw(data, chunk.type, chunk.timestamp, durationUs);
+              }
+            } catch (e) {
+              encoderError = e;
+              throw e;
+            }
+          };
+
           // ── Happy path: encoder provided real decoderConfig ──
           // (Chrome, desktop Safari with avc format support)
           if (meta?.decoderConfig?.description) {
-            muxer.addVideoChunk(chunk, meta);
-            _gotDescription = true;
-            return;
+            try {
+              muxer.addVideoChunk(chunk, meta);
+              _gotDescription = true;
+              return;
+            } catch (e) {
+              encoderError = e;
+              throw e;
+            }
           }
 
           // ── iOS Safari fallback: Annex B without decoderConfig ──
@@ -1146,13 +1170,7 @@ export default function useVideoExport() {
                 const dataOut = _outputFormat === 'annexb'
                   ? _annexBToAVC(raw)
                   : _normalizeAVCToLen4(raw, _avcLengthSize);
-                muxer.addVideoChunkRaw(
-                  dataOut,
-                  chunk.type,
-                  chunk.timestamp,
-                  chunk.duration,
-                  syntheticMeta,
-                );
+                safeAddVideoChunkRaw(dataOut, syntheticMeta);
                 _gotDescription = true;
                 return;
               }
@@ -1162,22 +1180,32 @@ export default function useVideoExport() {
           // Once format is known, ensure we feed mp4-muxer AVC length-prefixed data.
           if (_outputFormat === 'annexb') {
             const avcData = _annexBToAVC(raw);
-            muxer.addVideoChunkRaw(avcData, chunk.type, chunk.timestamp, chunk.duration);
+            safeAddVideoChunkRaw(avcData);
             return;
           }
 
           if (_outputFormat === 'avc') {
             const dataOut = _normalizeAVCToLen4(raw, _avcLengthSize);
-            muxer.addVideoChunkRaw(dataOut, chunk.type, chunk.timestamp, chunk.duration);
+            safeAddVideoChunkRaw(dataOut);
             return;
           }
 
           // Unknown format: avoid passing decoderConfig:null through.
           if (meta && meta.decoderConfig === null) {
             const { decoderConfig: _ignored, ...safeMeta } = meta;
-            muxer.addVideoChunk(chunk, safeMeta);
+            try {
+              muxer.addVideoChunk(chunk, safeMeta);
+            } catch (e) {
+              encoderError = e;
+              throw e;
+            }
           } else {
-            muxer.addVideoChunk(chunk, meta ?? undefined);
+            try {
+              muxer.addVideoChunk(chunk, meta ?? undefined);
+            } catch (e) {
+              encoderError = e;
+              throw e;
+            }
           }
         },
         error: (e) => { encoderError = e; },
@@ -1198,7 +1226,6 @@ export default function useVideoExport() {
         avc: { format: IS_IOS ? 'annexb' : 'avc' },
       });
 
-      const usPerFrame = Math.round(1_000_000 / FPS);
       // On mobile yield every 5 frames (~167ms of video) to let GC breathe;
       // on desktop yield every 30 frames (1 second of video).
       const yieldInterval = IS_MOBILE ? 5 : FPS;
