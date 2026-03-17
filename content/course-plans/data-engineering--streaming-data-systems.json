@@ -1,0 +1,559 @@
+{
+  "categoryId": "data-engineering",
+  "subject": "Data Engineering",
+  "courseId": "data-engineering--streaming-data-systems",
+  "courseTitle": "Streaming Data Systems",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "data-engineering--streaming-data-systems--ch01-why-streaming-matters", "title": "Why Streaming Matters", "position": 1 },
+    { "id": "data-engineering--streaming-data-systems--ch02-message-brokers", "title": "Message Brokers", "position": 2 },
+    { "id": "data-engineering--streaming-data-systems--ch03-stream-processing", "title": "Stream Processing", "position": 3 },
+    { "id": "data-engineering--streaming-data-systems--ch04-event-driven-architecture", "title": "Event-Driven Architecture", "position": 4 },
+    { "id": "data-engineering--streaming-data-systems--ch05-delivery-guarantees", "title": "Delivery Guarantees", "position": 5 },
+    { "id": "data-engineering--streaming-data-systems--ch06-streaming-at-scale", "title": "Streaming at Scale", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch01-why-streaming-matters",
+      "title": "Batch Is Not Enough",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A fraud alert arrives 12 hours after the transaction. The money is already gone.", "visual": "💸" },
+        "buildup": { "text": "Batch processing runs on a schedule — hourly, daily, or weekly. It's always looking at the past.", "visual": "⏰" },
+        "discovery": { "text": "Streaming processes data as it arrives, enabling reactions in seconds instead of hours.", "visual": "⚡" },
+        "twist": { "text": "Batch is still perfect for reports and analytics. Streaming shines when freshness saves money or lives.", "visual": "💡" },
+        "climax": { "text": "Modern architectures use both: batch for historical depth, streaming for real-time responsiveness.", "visual": "🤝" },
+        "punchline": { "text": "Batch looks back. Streaming looks now.", "visual": "👁️" }
+      },
+      "quiz": {
+        "question": "When does streaming processing have the biggest advantage over batch?",
+        "options": ["When freshness of data directly impacts outcomes", "When generating monthly reports", "When data volume is very small"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch01-why-streaming-matters",
+      "title": "The Rise of Real-Time",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Netflix personalizes your homepage in real time. Uber prices update every few seconds.", "visual": "📱" },
+        "buildup": { "text": "Users now expect instant feedback. Waiting hours for data to refresh feels broken.", "visual": "⏳" },
+        "discovery": { "text": "Streaming grew because businesses discovered that faster data means faster decisions and happier users.", "visual": "🚀" },
+        "twist": { "text": "Real-time doesn't always mean milliseconds. For many use cases, 'within a minute' is fast enough.", "visual": "⏱️" },
+        "climax": { "text": "The real-time revolution isn't about speed for its own sake — it's about matching data to the decision window.", "visual": "🎯" },
+        "punchline": { "text": "Fast enough depends on the business question.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "What drives the adoption of real-time data processing?",
+        "options": ["Faster data enables faster decisions and better user experiences", "Real-time is always cheaper than batch", "Batch processing has been discontinued"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch01-why-streaming-matters",
+      "title": "Producers and Consumers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A sensor emits a temperature reading every second. Three different systems need that reading.", "visual": "🌡️" },
+        "buildup": { "text": "In streaming, producers generate data events and consumers read and process those events.", "visual": "📤" },
+        "discovery": { "text": "Decoupling producers from consumers means adding a new consumer requires zero changes to the producer.", "visual": "🔗" },
+        "twist": { "text": "Producers don't know — or care — who reads their events. This independence is what makes streaming flexible.", "visual": "🧩" },
+        "climax": { "text": "The producer-consumer model lets systems evolve independently while sharing the same data stream.", "visual": "🌊" },
+        "punchline": { "text": "Produce once. Consume many times.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "Why is decoupling producers from consumers important in streaming?",
+        "options": ["New consumers can be added without changing the producer", "It makes producers faster", "It reduces data volume"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch01-why-streaming-matters",
+      "title": "Events vs Messages",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Is a 'user clicked buy' notification an event or a message? The distinction matters more than you'd think.", "visual": "🤔" },
+        "buildup": { "text": "A message is a command sent to a specific receiver. An event is a fact broadcast to anyone who cares.", "visual": "📬" },
+        "discovery": { "text": "Messages say 'do this.' Events say 'this happened.' Events are immutable records of what occurred.", "visual": "📜" },
+        "twist": { "text": "Conflating the two leads to tangled architectures where nobody knows if a system is commanding or informing.", "visual": "🌪️" },
+        "climax": { "text": "Clean streaming designs clearly separate commands from events in different topics or channels.", "visual": "🧹" },
+        "punchline": { "text": "Events record the past. Messages request the future.", "visual": "⏳" }
+      },
+      "quiz": {
+        "question": "What is the key difference between an event and a message?",
+        "options": ["An event records what happened; a message requests an action", "Events are faster than messages", "Messages are always larger than events"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch01-why-streaming-matters",
+      "title": "Streaming Use Cases",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Fraud detection, live dashboards, IoT monitoring, and ride-share pricing all depend on streaming data.", "visual": "🌐" },
+        "buildup": { "text": "Any scenario where acting on stale data means lost value is a candidate for streaming.", "visual": "💰" },
+        "discovery": { "text": "Common patterns: real-time alerts, event-driven triggers, live aggregations, and continuous ETL.", "visual": "📊" },
+        "twist": { "text": "Not everything needs streaming. A monthly compliance report gains nothing from real-time ingestion.", "visual": "📋" },
+        "climax": { "text": "Choosing streaming vs batch depends on the cost of latency, not the trendiness of the technology.", "visual": "⚖️" },
+        "punchline": { "text": "Stream what must be fresh. Batch what can wait.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Which use case benefits most from streaming data?",
+        "options": ["Real-time fraud detection", "Monthly financial reports", "Annual employee reviews"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch02-message-brokers",
+      "title": "What Is a Message Broker?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Two services need to share data without talking directly to each other. A broker sits in the middle.", "visual": "🏢" },
+        "buildup": { "text": "A message broker receives events from producers, stores them temporarily, and delivers them to consumers.", "visual": "📬" },
+        "discovery": { "text": "Brokers decouple senders from receivers, buffer traffic spikes, and enable reliable async communication.", "visual": "🔗" },
+        "twist": { "text": "Without a broker, every service must know every other service's address. That creates a fragile web.", "visual": "🕸️" },
+        "climax": { "text": "Brokers are the postal service of streaming — they route events so services don't have to.", "visual": "📮" },
+        "punchline": { "text": "Don't connect everything to everything. Use a broker.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "What is the primary role of a message broker?",
+        "options": ["Decoupling producers and consumers with reliable delivery", "Encrypting data at rest", "Running machine learning models"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch02-message-brokers",
+      "title": "Apache Kafka Explained",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "LinkedIn built Kafka because no existing tool could handle their trillion-message-per-day pipeline.", "visual": "🔥" },
+        "buildup": { "text": "Kafka is a distributed log. Producers append events to topics. Consumers read at their own pace.", "visual": "📜" },
+        "discovery": { "text": "Unlike traditional queues, Kafka retains events for days or weeks. Consumers can replay old messages.", "visual": "⏪" },
+        "twist": { "text": "Kafka's durability turned it from a message bus into a data platform — the source of truth for events.", "visual": "🏛️" },
+        "climax": { "text": "Today Kafka powers streaming at Netflix, Uber, Airbnb, and most large-scale data platforms.", "visual": "🌐" },
+        "punchline": { "text": "Kafka doesn't just move data. It remembers it.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "What makes Kafka different from traditional message queues?",
+        "options": ["It retains events so consumers can replay old messages", "It deletes events immediately after delivery", "It only supports one consumer per topic"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch02-message-brokers",
+      "title": "Topics and Partitions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "One Kafka topic handles a million events per second. How? It splits the work across partitions.", "visual": "📊" },
+        "buildup": { "text": "A topic is a named stream of events. Partitions divide that stream into parallel segments.", "visual": "🔀" },
+        "discovery": { "text": "Each partition is an ordered, immutable log. More partitions mean more parallel consumers.", "visual": "📈" },
+        "twist": { "text": "Order is guaranteed only within a partition. Events across partitions may arrive in any order.", "visual": "⚠️" },
+        "climax": { "text": "Choosing the right partition key ensures related events stay ordered while spreading load evenly.", "visual": "🔑" },
+        "punchline": { "text": "Partitions trade global order for parallel speed.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "What do partitions in Kafka enable?",
+        "options": ["Parallel consumption for higher throughput", "Encryption of events", "Automatic schema validation"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch02-message-brokers",
+      "title": "Consumer Groups",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Three instances of the same service all read from one topic. But each event should be processed only once.", "visual": "👯" },
+        "buildup": { "text": "A consumer group ensures each partition is read by exactly one consumer in the group.", "visual": "🤝" },
+        "discovery": { "text": "If a consumer crashes, Kafka reassigns its partitions to surviving members automatically.", "visual": "🔄" },
+        "twist": { "text": "Multiple groups can read the same topic independently. Analytics and billing can each get every event.", "visual": "📬" },
+        "climax": { "text": "Consumer groups give you scalable, fault-tolerant consumption without duplicate processing.", "visual": "🛡️" },
+        "punchline": { "text": "One group, one copy. Many groups, many copies.", "visual": "📦" }
+      },
+      "quiz": {
+        "question": "What happens when a consumer in a group crashes?",
+        "options": ["Its partitions are reassigned to surviving group members", "All events are lost", "The entire topic pauses"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch02-message-brokers",
+      "title": "Alternatives to Kafka",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Kafka is the most famous broker, but it's not the only game in town.", "visual": "🎯" },
+        "buildup": { "text": "RabbitMQ excels at task queues. Amazon Kinesis offers managed streaming. Pulsar combines queuing and streaming.", "visual": "🔀" },
+        "discovery": { "text": "Cloud-native options like Google Pub/Sub and Azure Event Hubs remove operational overhead entirely.", "visual": "☁️" },
+        "twist": { "text": "Kafka's power comes with complexity. For small teams, a managed service may deliver 90% of the value.", "visual": "💡" },
+        "climax": { "text": "The right broker depends on your scale, team size, and whether you want to manage infrastructure.", "visual": "⚖️" },
+        "punchline": { "text": "Choose the broker that fits your team, not your ego.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "When might a managed streaming service be preferred over self-hosted Kafka?",
+        "options": ["When the team is small and wants to avoid operational overhead", "When the data volume is extremely high", "When you need exactly-once delivery"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch03-stream-processing",
+      "title": "What Is Stream Processing?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "An event arrives. Within milliseconds, it's filtered, enriched, aggregated, and routed. That's stream processing.", "visual": "⚡" },
+        "buildup": { "text": "Stream processing applies transformations to data in motion — as it flows, not after it lands.", "visual": "🌊" },
+        "discovery": { "text": "Unlike batch, stream processing never finishes. It runs continuously, processing an unbounded input.", "visual": "♾️" },
+        "twist": { "text": "The challenge is that you can't go back. If the logic is wrong, corrupted results are already downstream.", "visual": "⚠️" },
+        "climax": { "text": "Stream processing trades the simplicity of batch for the immediacy of real-time insights.", "visual": "🎯" },
+        "punchline": { "text": "Process on arrival. Don't wait to be asked.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "How does stream processing differ from batch processing?",
+        "options": ["It processes data continuously as it arrives", "It waits for all data before processing", "It only handles small datasets"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch03-stream-processing",
+      "title": "Windowing Strategies",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "How do you compute 'average orders per hour' on an infinite stream that never ends?", "visual": "🤔" },
+        "buildup": { "text": "Windowing groups unbounded data into finite chunks based on time or count.", "visual": "🪟" },
+        "discovery": { "text": "Tumbling windows are fixed and non-overlapping. Sliding windows overlap. Session windows group by activity.", "visual": "📊" },
+        "twist": { "text": "Late-arriving data can miss its window. Handling late events is one of streaming's hardest problems.", "visual": "⏰" },
+        "climax": { "text": "Choosing the right window type depends on whether you need snapshots, rolling averages, or user sessions.", "visual": "🎯" },
+        "punchline": { "text": "Windows turn infinity into something you can count.", "visual": "🔢" }
+      },
+      "quiz": {
+        "question": "What is the purpose of windowing in stream processing?",
+        "options": ["To group unbounded data into finite time-based chunks", "To encrypt events in transit", "To delete old data automatically"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch03-stream-processing",
+      "title": "Watermarks and Late Data",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An event with a 2 PM timestamp arrives at 2:15 PM. The 2 PM window already closed. What now?", "visual": "⏰" },
+        "buildup": { "text": "Watermarks estimate how far behind the slowest event might be, defining when a window can safely close.", "visual": "💧" },
+        "discovery": { "text": "A watermark of 5 minutes means: we believe all events older than 5 minutes have already arrived.", "visual": "📏" },
+        "twist": { "text": "Set the watermark too low and you drop valid late events. Too high and your results are delayed.", "visual": "⚖️" },
+        "climax": { "text": "Watermarks are a trade-off between completeness and latency — and the right setting depends on the use case.", "visual": "🎯" },
+        "punchline": { "text": "Watermarks answer: how long should we wait?", "visual": "⏳" }
+      },
+      "quiz": {
+        "question": "What do watermarks define in stream processing?",
+        "options": ["When a time window can safely close based on expected event delay", "The maximum event size", "The number of partitions to use"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch03-stream-processing",
+      "title": "Stateful vs Stateless Processing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Filtering events is easy — check a condition, pass or drop. But computing a running average? That needs memory.", "visual": "🧠" },
+        "buildup": { "text": "Stateless processing handles each event independently. Stateful processing remembers past events.", "visual": "📝" },
+        "discovery": { "text": "Aggregations, joins, and deduplication all require state — stored counters, buffers, or lookup tables.", "visual": "📊" },
+        "twist": { "text": "State must survive crashes. If a node fails, its in-memory counters are lost unless checkpointed.", "visual": "💥" },
+        "climax": { "text": "Frameworks like Flink checkpoint state to durable storage, enabling recovery without data loss.", "visual": "🛡️" },
+        "punchline": { "text": "Stateless is simple. Stateful is powerful. Choose wisely.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "Why is stateful stream processing more complex than stateless?",
+        "options": ["It must remember past events and survive crashes", "It processes more events per second", "It only works with Kafka"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch03-stream-processing",
+      "title": "Apache Flink and Friends",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Alibaba processes billions of events per day with Flink. It handles Singles' Day traffic without breaking a sweat.", "visual": "🎉" },
+        "buildup": { "text": "Apache Flink is a distributed stream processor known for low latency, exactly-once semantics, and stateful logic.", "visual": "⚡" },
+        "discovery": { "text": "Spark Structured Streaming uses micro-batches. Kafka Streams runs inside your app. Each has trade-offs.", "visual": "🔀" },
+        "twist": { "text": "Flink is powerful but complex. Kafka Streams is simpler but limited. Spark bridges batch and stream.", "visual": "🌉" },
+        "climax": { "text": "The best framework depends on latency needs, team expertise, and existing infrastructure.", "visual": "🎯" },
+        "punchline": { "text": "Pick the tool that matches your team, not just your traffic.", "visual": "🧰" }
+      },
+      "quiz": {
+        "question": "What is Apache Flink known for in stream processing?",
+        "options": ["Low latency, exactly-once semantics, and stateful processing", "Only batch processing", "Schema registry management"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch04-event-driven-architecture",
+      "title": "What Is Event-Driven Architecture?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Instead of service A calling service B directly, A publishes an event. B reacts if it cares.", "visual": "📢" },
+        "buildup": { "text": "Event-driven architecture decouples services by having them communicate through published events.", "visual": "🔗" },
+        "discovery": { "text": "Services become independent. Adding new reactions to an event requires no changes to the event producer.", "visual": "🧩" },
+        "twist": { "text": "The downside: debugging is harder. When something goes wrong, there's no single call stack to trace.", "visual": "🔍" },
+        "climax": { "text": "Event-driven systems are more flexible but demand strong observability to remain understandable.", "visual": "📊" },
+        "punchline": { "text": "Decouple the services. Invest in observability.", "visual": "👁️" }
+      },
+      "quiz": {
+        "question": "What is the main benefit of event-driven architecture?",
+        "options": ["Services are decoupled and can evolve independently", "It eliminates all debugging", "It requires fewer servers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch04-event-driven-architecture",
+      "title": "Event Sourcing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A bank doesn't store your balance. It stores every deposit and withdrawal, then computes the balance.", "visual": "🏦" },
+        "buildup": { "text": "Event sourcing records every state change as an immutable event instead of overwriting the current state.", "visual": "📜" },
+        "discovery": { "text": "The full history lets you reconstruct any past state, audit changes, and replay events for debugging.", "visual": "⏪" },
+        "twist": { "text": "The event log grows forever. Querying current state from thousands of events requires snapshots or projections.", "visual": "📈" },
+        "climax": { "text": "Event sourcing is powerful for audit trails and time-travel but overkill for simple CRUD applications.", "visual": "⚖️" },
+        "punchline": { "text": "Don't store the answer. Store the math.", "visual": "🧮" }
+      },
+      "quiz": {
+        "question": "What does event sourcing store instead of current state?",
+        "options": ["Every state change as an immutable event", "Only the latest snapshot", "Aggregated daily summaries"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch04-event-driven-architecture",
+      "title": "CQRS Pattern",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your write model is optimized for fast inserts. Your read model needs complex joins. Can one model serve both?", "visual": "🤔" },
+        "buildup": { "text": "CQRS — Command Query Responsibility Segregation — separates write operations from read operations.", "visual": "✂️" },
+        "discovery": { "text": "Writes go to an event store optimized for inserts. Reads come from materialized views optimized for queries.", "visual": "📊" },
+        "twist": { "text": "The write side and read side can use completely different databases, schemas, and scaling strategies.", "visual": "🔀" },
+        "climax": { "text": "CQRS adds complexity but unlocks independent optimization of reads and writes for demanding workloads.", "visual": "⚡" },
+        "punchline": { "text": "Write fast. Read smart. Don't force one model to do both.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does CQRS separate?",
+        "options": ["Write operations from read operations", "Fast data from slow data", "Cloud data from on-premise data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch04-event-driven-architecture",
+      "title": "Saga Pattern for Distributed Transactions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A customer orders a product. Inventory, payment, and shipping are three separate services. How do you coordinate?", "visual": "📦" },
+        "buildup": { "text": "Distributed transactions across services are fragile. Two-phase commit locks resources and doesn't scale.", "visual": "🔒" },
+        "discovery": { "text": "The saga pattern chains local transactions with compensating actions that undo previous steps on failure.", "visual": "🔗" },
+        "twist": { "text": "If payment fails after inventory is reserved, a compensating event releases the reservation automatically.", "visual": "↩️" },
+        "climax": { "text": "Sagas replace global locks with eventual consistency, trading simplicity for scalability.", "visual": "⚖️" },
+        "punchline": { "text": "No global lock. Just forward and undo steps.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "How does the saga pattern handle failures in distributed transactions?",
+        "options": ["By running compensating actions that undo previous steps", "By locking all services until completion", "By ignoring the failure"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch04-event-driven-architecture",
+      "title": "Dead Letter Queues",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A malformed event crashes the consumer on every retry. The entire stream stalls.", "visual": "💀" },
+        "buildup": { "text": "Some events can't be processed no matter how many times you retry. They're poison pills.", "visual": "☠️" },
+        "discovery": { "text": "A dead letter queue catches unprocessable events, routing them aside so the main stream keeps flowing.", "visual": "📬" },
+        "twist": { "text": "Dead letters aren't trash. They're evidence. Reviewing them reveals bugs, schema issues, and edge cases.", "visual": "🔍" },
+        "climax": { "text": "Every production streaming system needs a dead letter queue. It's insurance against the unknown.", "visual": "🛡️" },
+        "punchline": { "text": "Don't let one bad event block the whole stream.", "visual": "🚦" }
+      },
+      "quiz": {
+        "question": "What is the purpose of a dead letter queue?",
+        "options": ["To capture unprocessable events so the main stream keeps flowing", "To permanently delete bad data", "To speed up event processing"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch05-delivery-guarantees",
+      "title": "At-Most-Once Delivery",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Send the event and forget it. If it gets lost, oh well. That's at-most-once delivery.", "visual": "🤷" },
+        "buildup": { "text": "The producer sends an event without waiting for acknowledgment. It's fast but unreliable.", "visual": "⚡" },
+        "discovery": { "text": "At-most-once is acceptable when losing an occasional event is fine — like metrics sampling.", "visual": "📊" },
+        "twist": { "text": "For payments or orders, losing even one event means lost revenue or broken state. At-most-once fails.", "visual": "💸" },
+        "climax": { "text": "At-most-once is the simplest guarantee. It's cheap and fast but unsuitable for critical data flows.", "visual": "⚖️" },
+        "punchline": { "text": "Fast and simple. But what you lose is gone forever.", "visual": "💨" }
+      },
+      "quiz": {
+        "question": "When is at-most-once delivery acceptable?",
+        "options": ["When occasional data loss is tolerable", "When processing financial transactions", "When every event must be processed"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch05-delivery-guarantees",
+      "title": "At-Least-Once Delivery",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The consumer crashed before confirming it processed the event. The broker resends it. Now it's processed twice.", "visual": "👯" },
+        "buildup": { "text": "At-least-once ensures no event is lost by retrying until the consumer acknowledges receipt.", "visual": "🔄" },
+        "discovery": { "text": "The trade-off is duplicates. If the acknowledgment is lost, the broker resends what was already processed.", "visual": "📬" },
+        "twist": { "text": "Consumers must be idempotent — processing the same event twice should produce the same result.", "visual": "🎯" },
+        "climax": { "text": "At-least-once is the most common guarantee because it's reliable and achievable without extreme complexity.", "visual": "✅" },
+        "punchline": { "text": "Better twice than never. Just handle the duplicates.", "visual": "🔁" }
+      },
+      "quiz": {
+        "question": "What must consumers handle with at-least-once delivery?",
+        "options": ["Duplicate events caused by retries", "Missing events", "Events arriving in reverse order"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch05-delivery-guarantees",
+      "title": "Exactly-Once Semantics",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every event processed exactly once — no duplicates, no losses. Sounds perfect. But is it possible?", "visual": "🎯" },
+        "buildup": { "text": "True exactly-once delivery is impossible in distributed systems. Network failures make it so.", "visual": "🌐" },
+        "discovery": { "text": "What's achievable is exactly-once semantics: the system behaves as if each event was processed once.", "visual": "✨" },
+        "twist": { "text": "It works by combining idempotent writes, transactional commits, and deduplication — not magic.", "visual": "🔧" },
+        "climax": { "text": "Kafka and Flink achieve exactly-once semantics through careful coordination of offsets and checkpoints.", "visual": "🤝" },
+        "punchline": { "text": "Not truly once. But indistinguishable from once.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "Why is true exactly-once delivery impossible in distributed systems?",
+        "options": ["Network failures prevent guaranteeing single delivery", "Computers can only process events in pairs", "Exactly-once requires quantum computing"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch05-delivery-guarantees",
+      "title": "Idempotency in Practice",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A payment service processes a charge twice because of a retry. The customer is billed double.", "visual": "💸" },
+        "buildup": { "text": "An idempotent operation produces the same result no matter how many times it's executed.", "visual": "🔁" },
+        "discovery": { "text": "Idempotency keys — unique IDs per event — let consumers detect and skip duplicate processing.", "visual": "🔑" },
+        "twist": { "text": "Making operations idempotent isn't always trivial. Appending to a log or sending an email is not naturally idempotent.", "visual": "⚠️" },
+        "climax": { "text": "Designing for idempotency from the start is far easier than retrofitting it after duplicate bugs appear.", "visual": "🛠️" },
+        "punchline": { "text": "Same input, same result. Every time.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "How do idempotency keys help with duplicate events?",
+        "options": ["They let consumers detect and skip duplicates", "They encrypt the event payload", "They speed up event processing"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch05-delivery-guarantees",
+      "title": "Offset Management",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A consumer restarts after a crash. Where does it resume? From the beginning? The end? The last checkpoint?", "visual": "🔖" },
+        "buildup": { "text": "Offsets track the consumer's position in a stream — which events have been read and processed.", "visual": "📍" },
+        "discovery": { "text": "Committing offsets after processing means a crash replays only unprocessed events, not the entire stream.", "visual": "✅" },
+        "twist": { "text": "If offsets commit before processing finishes, a crash means events are skipped. After? Duplicates on replay.", "visual": "⚖️" },
+        "climax": { "text": "Offset management is the mechanism behind delivery guarantees. Get it wrong and data is lost or duplicated.", "visual": "🎯" },
+        "punchline": { "text": "Your place in the stream is everything. Track it carefully.", "visual": "📌" }
+      },
+      "quiz": {
+        "question": "What happens if offsets are committed before event processing completes?",
+        "options": ["A crash can cause events to be skipped", "Events are automatically replayed", "The stream pauses until processing finishes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch06-streaming-at-scale",
+      "title": "Scaling Consumers",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "One consumer handles 10K events per second. The producer just hit 100K. You need ten times the throughput.", "visual": "📈" },
+        "buildup": { "text": "Adding more consumers to a group distributes partitions across them, multiplying processing capacity.", "visual": "👥" },
+        "discovery": { "text": "The maximum parallelism equals the number of partitions. More consumers than partitions means idle workers.", "visual": "⚖️" },
+        "twist": { "text": "Rebalancing — redistributing partitions when consumers join or leave — causes brief processing pauses.", "visual": "⏸️" },
+        "climax": { "text": "Planning partition counts at topic creation time sets the ceiling for future consumer scalability.", "visual": "📐" },
+        "punchline": { "text": "Scale the consumers. But plan the partitions first.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What limits the maximum consumer parallelism in Kafka?",
+        "options": ["The number of partitions in the topic", "The number of brokers in the cluster", "The size of each event"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch06-streaming-at-scale",
+      "title": "Backpressure",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The producer emits events 10x faster than the consumer can process them. The buffer fills. What happens next?", "visual": "🌊" },
+        "buildup": { "text": "Without backpressure, the system crashes — out of memory, dropped events, or cascading failures.", "visual": "💥" },
+        "discovery": { "text": "Backpressure signals the producer to slow down when the consumer can't keep up.", "visual": "🛑" },
+        "twist": { "text": "Kafka handles this implicitly: slow consumers just fall behind. But lag can grow into a permanent backlog.", "visual": "📈" },
+        "climax": { "text": "Monitoring consumer lag is essential. If it only grows, you need more consumers or slower producers.", "visual": "📊" },
+        "punchline": { "text": "If you can't keep up, say so. That's backpressure.", "visual": "✋" }
+      },
+      "quiz": {
+        "question": "What is backpressure in a streaming system?",
+        "options": ["A signal for the producer to slow down when the consumer can't keep up", "A method to compress events", "A way to speed up consumers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch06-streaming-at-scale",
+      "title": "Schema Evolution in Streams",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Version 1 events have 5 fields. Version 2 adds a sixth. Old consumers can't parse it. The stream breaks.", "visual": "💥" },
+        "buildup": { "text": "In long-lived streams, event schemas must evolve without breaking existing consumers.", "visual": "🔄" },
+        "discovery": { "text": "Backward compatible changes add optional fields. Forward compatible changes ignore unknown fields.", "visual": "📐" },
+        "twist": { "text": "Formats like Avro and Protobuf support schema evolution natively. JSON does not enforce it.", "visual": "⚠️" },
+        "climax": { "text": "A schema registry combined with compatibility checks prevents breaking changes from reaching production.", "visual": "🛡️" },
+        "punchline": { "text": "Evolve the schema. Don't break the consumers.", "visual": "🔧" }
+      },
+      "quiz": {
+        "question": "What makes a schema change backward compatible?",
+        "options": ["Adding optional fields that old consumers can ignore", "Removing required fields", "Renaming all existing fields"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch06-streaming-at-scale",
+      "title": "Monitoring Streaming Pipelines",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The pipeline looks healthy. Throughput is normal. But consumer lag has been growing silently for hours.", "visual": "📉" },
+        "buildup": { "text": "Key streaming metrics: throughput, consumer lag, error rate, processing latency, and checkpoint duration.", "visual": "📊" },
+        "discovery": { "text": "Consumer lag — the gap between produced and consumed offsets — is the single most important health signal.", "visual": "📏" },
+        "twist": { "text": "Low lag with high latency means events process quickly but arrive late. The bottleneck is upstream.", "visual": "🔍" },
+        "climax": { "text": "Dashboards and alerts on these metrics catch problems before they become incidents.", "visual": "🚨" },
+        "punchline": { "text": "Watch the lag. It tells you the truth.", "visual": "👁️" }
+      },
+      "quiz": {
+        "question": "What is the most important health metric for a streaming pipeline?",
+        "options": ["Consumer lag between produced and consumed offsets", "Total number of topics", "Average event size in bytes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--streaming-data-systems--ch06-streaming-at-scale",
+      "title": "The Future of Streaming",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Streaming was once reserved for tech giants. Now serverless streaming runs on a credit card.", "visual": "💳" },
+        "buildup": { "text": "Managed services, low-code platforms, and embedded streaming are making real-time accessible to all.", "visual": "🌐" },
+        "discovery": { "text": "Streaming databases let you write SQL queries that update results continuously as new events arrive.", "visual": "📊" },
+        "twist": { "text": "The line between batch and streaming is blurring. Unified engines process both with the same code.", "visual": "🌉" },
+        "climax": { "text": "The future isn't choosing batch or stream. It's a single engine that handles both transparently.", "visual": "🔮" },
+        "punchline": { "text": "Batch and streaming are converging. The winner is simplicity.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What trend is reshaping streaming data systems?",
+        "options": ["Unified engines that handle both batch and streaming", "Abandoning real-time processing entirely", "Replacing all databases with message brokers"],
+        "correct": 0
+      }
+    }
+  ]
+}

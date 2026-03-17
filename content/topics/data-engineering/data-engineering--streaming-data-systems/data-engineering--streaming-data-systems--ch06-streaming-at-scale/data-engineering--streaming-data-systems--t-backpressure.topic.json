@@ -1,0 +1,49 @@
+{
+  "id": "data-engineering--streaming-data-systems--t-backpressure",
+  "version": 1,
+  "subject": "Data Engineering",
+  "subcategory": "Streaming Data Systems",
+  "course_id": "data-engineering--streaming-data-systems",
+  "chapter_id": "data-engineering--streaming-data-systems--ch06-streaming-at-scale",
+  "title": "Backpressure",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A quick win: understand Backpressure.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The producer emits events 10x faster than the consumer can process them. The buffer fills. What happens next?",
+      "visual": "🌊"
+    },
+    "buildup": {
+      "text": "Without backpressure, the system crashes — out of memory, dropped events, or cascading failures.",
+      "visual": "💥"
+    },
+    "discovery": {
+      "text": "Backpressure signals the producer to slow down when the consumer can't keep up.",
+      "visual": "🛑"
+    },
+    "twist": {
+      "text": "Kafka handles this implicitly: slow consumers just fall behind. But lag can grow into a permanent backlog.",
+      "visual": "📈"
+    },
+    "climax": {
+      "text": "Monitoring consumer lag is essential. If it only grows, you need more consumers or slower producers.",
+      "visual": "📊"
+    },
+    "punchline": {
+      "text": "If you can't keep up, say so. That's backpressure.",
+      "visual": "✋"
+    }
+  },
+  "quiz": {
+    "question": "What is backpressure in a streaming system?",
+    "options": [
+      "A signal for the producer to slow down when the consumer can't keep up",
+      "A method to compress events",
+      "A way to speed up consumers"
+    ],
+    "correct": 0
+  }
+}

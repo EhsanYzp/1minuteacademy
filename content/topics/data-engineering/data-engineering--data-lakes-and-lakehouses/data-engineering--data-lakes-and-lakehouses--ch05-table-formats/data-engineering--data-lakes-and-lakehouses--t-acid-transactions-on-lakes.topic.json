@@ -1,0 +1,49 @@
+{
+  "id": "data-engineering--data-lakes-and-lakehouses--t-acid-transactions-on-lakes",
+  "version": 1,
+  "subject": "Data Engineering",
+  "subcategory": "Data Lakes and Lakehouses",
+  "course_id": "data-engineering--data-lakes-and-lakehouses",
+  "chapter_id": "data-engineering--data-lakes-and-lakehouses--ch05-table-formats",
+  "title": "ACID Transactions on Lakes",
+  "emoji": "🏞️",
+  "color": "#0D9488",
+  "description": "Learn ACID Transactions on Lakes in one minute.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Two Spark jobs update the same table simultaneously. With ACID, both succeed safely. Without it, data corruption.",
+      "visual": "🛡️"
+    },
+    "buildup": {
+      "text": "ACID stands for Atomicity, Consistency, Isolation, and Durability — the guarantees every database provides.",
+      "visual": "📋"
+    },
+    "discovery": {
+      "text": "Table formats bring ACID to files by writing new files and atomically updating a metadata pointer.",
+      "visual": "🔄"
+    },
+    "twist": {
+      "text": "Writes never modify existing files. They create new ones and swap the metadata. The old files remain for time travel.",
+      "visual": "📸"
+    },
+    "climax": {
+      "text": "ACID on lakes means you can run concurrent jobs, handle failures, and guarantee consistent reads.",
+      "visual": "✅"
+    },
+    "punchline": {
+      "text": "New files, atomic swaps. That's ACID for the lake.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "How do table formats achieve ACID transactions on object storage?",
+    "options": [
+      "By writing new files and atomically updating metadata pointers",
+      "By locking the entire bucket during writes",
+      "By using a traditional relational database underneath"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "data-engineering--foundations-of-data-engineering--t-compression-trade-offs",
+  "version": 1,
+  "subject": "Data Engineering",
+  "subcategory": "Foundations of Data Engineering",
+  "course_id": "data-engineering--foundations-of-data-engineering",
+  "chapter_id": "data-engineering--foundations-of-data-engineering--ch04-storage-foundations",
+  "title": "Compression Trade-Offs",
+  "emoji": "🔧",
+  "color": "#2563EB",
+  "description": "A 60-second lesson on Compression Trade-Offs.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A dataset that takes 1 TB uncompressed shrinks to 200 GB with Snappy. Storage costs drop 80%.",
+      "visual": "🗜️"
+    },
+    "buildup": {
+      "text": "Compression saves storage and network bandwidth, but decompression costs CPU time.",
+      "visual": "⚖️"
+    },
+    "discovery": {
+      "text": "Snappy is fast but compresses less. Gzip compresses more but is slower. Zstd balances both.",
+      "visual": "📉"
+    },
+    "twist": {
+      "text": "Over-compressing can make queries slower if the CPU can't decompress fast enough.",
+      "visual": "🐌"
+    },
+    "climax": {
+      "text": "The best choice depends on whether you're bottlenecked by storage cost or query speed.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Compress for the bottleneck, not the benchmark.",
+      "visual": "🔑"
+    }
+  },
+  "quiz": {
+    "question": "What is the main trade-off of data compression?",
+    "options": [
+      "Smaller storage but higher CPU cost to decompress",
+      "Faster queries but larger files",
+      "Better security but slower writes"
+    ],
+    "correct": 0
+  }
+}

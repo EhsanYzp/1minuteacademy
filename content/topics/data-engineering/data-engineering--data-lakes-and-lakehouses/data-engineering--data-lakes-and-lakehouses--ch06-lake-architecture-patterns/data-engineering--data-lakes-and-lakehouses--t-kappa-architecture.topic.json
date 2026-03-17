@@ -1,0 +1,49 @@
+{
+  "id": "data-engineering--data-lakes-and-lakehouses--t-kappa-architecture",
+  "version": 1,
+  "subject": "Data Engineering",
+  "subcategory": "Data Lakes and Lakehouses",
+  "course_id": "data-engineering--data-lakes-and-lakehouses",
+  "chapter_id": "data-engineering--data-lakes-and-lakehouses--ch06-lake-architecture-patterns",
+  "title": "Kappa Architecture",
+  "emoji": "🏞️",
+  "color": "#0D9488",
+  "description": "A short lesson to help you apply Kappa Architecture.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Why maintain two codebases when streaming can handle everything? Kappa architecture uses one path for all data.",
+      "visual": "🎯"
+    },
+    "buildup": {
+      "text": "Kappa processes all data through a single streaming pipeline. Historical reprocessing replays the stream.",
+      "visual": "⏪"
+    },
+    "discovery": {
+      "text": "By treating batch as a special case of streaming, Kappa eliminates the duplicate logic problem of Lambda.",
+      "visual": "✂️"
+    },
+    "twist": {
+      "text": "Kappa struggles when batch reprocessing is genuinely cheaper or when streaming tools can't handle the volume.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "Kappa works best when your streaming framework is mature enough to replay and reprocess at batch-like scale.",
+      "visual": "🔧"
+    },
+    "punchline": {
+      "text": "One pipeline for everything. Simpler when it fits.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "How does Kappa architecture simplify Lambda?",
+    "options": [
+      "By using a single streaming pipeline for all processing",
+      "By removing the serving layer",
+      "By only processing historical data"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,559 @@
+{
+  "categoryId": "data-engineering",
+  "subject": "Data Engineering",
+  "courseId": "data-engineering--famous-data-disasters",
+  "courseTitle": "Famous Data Disasters",
+  "emoji": "🚨",
+  "color": "#B91C1C",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "data-engineering--famous-data-disasters--ch01-when-data-goes-wrong", "title": "When Data Goes Wrong", "position": 1 },
+    { "id": "data-engineering--famous-data-disasters--ch02-privacy-breaches", "title": "Privacy Breaches", "position": 2 },
+    { "id": "data-engineering--famous-data-disasters--ch03-analytics-gone-bad", "title": "Analytics Gone Bad", "position": 3 },
+    { "id": "data-engineering--famous-data-disasters--ch04-infrastructure-failures", "title": "Infrastructure Failures", "position": 4 },
+    { "id": "data-engineering--famous-data-disasters--ch05-bias-in-data", "title": "Bias in Data", "position": 5 },
+    { "id": "data-engineering--famous-data-disasters--ch06-lessons-that-changed-the-industry", "title": "Lessons That Changed the Industry", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch01-when-data-goes-wrong",
+      "title": "Why Data Disasters Happen",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Bad data has crashed stock markets, exposed millions of records, and sent innocent people to jail.", "visual": "💥" },
+        "buildup": { "text": "Data disasters aren't random. They follow patterns: missing validation, unclear ownership, and silent failures.", "visual": "🔍" },
+        "discovery": { "text": "Most disasters come from human error amplified by automation. Bad logic at scale causes damage at scale.", "visual": "📈" },
+        "twist": { "text": "The scariest disasters aren't the loud crashes. They're the quiet ones — wrong data trusted for months.", "visual": "🤫" },
+        "climax": { "text": "Studying past failures is the fastest way to build systems that resist the same mistakes.", "visual": "📚" },
+        "punchline": { "text": "Learn from others' disasters. They're cheaper.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "What causes most data disasters?",
+        "options": ["Human error amplified by automation at scale", "Natural disasters destroying servers", "Using open-source software"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch01-when-data-goes-wrong",
+      "title": "The Knight Capital Catastrophe",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 45 minutes, Knight Capital lost $440 million. A software deployment gone wrong bankrupted a trading firm.", "visual": "📉" },
+        "buildup": { "text": "A technician forgot to deploy new code to one of eight servers. The old code activated a retired trading strategy.", "visual": "💻" },
+        "discovery": { "text": "The old code bought high and sold low — millions of times per minute — before anyone noticed.", "visual": "🔄" },
+        "twist": { "text": "There were no automated checks to verify all servers ran the same version. One mismatch caused total ruin.", "visual": "⚠️" },
+        "climax": { "text": "Knight Capital was rescued by investors but lost its independence. All because of one missed deployment.", "visual": "🏚️" },
+        "punchline": { "text": "One server. One missed deploy. $440 million gone.", "visual": "💸" }
+      },
+      "quiz": {
+        "question": "What caused Knight Capital's $440 million loss?",
+        "options": ["A missed code deployment on one of eight servers", "A hacker breaking into their systems", "A natural disaster taking servers offline"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch01-when-data-goes-wrong",
+      "title": "The Mars Climate Orbiter",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "NASA lost a $125 million Mars spacecraft because one team used metric units and the other used imperial.", "visual": "🚀" },
+        "buildup": { "text": "The Mars Climate Orbiter was supposed to orbit Mars and study its atmosphere in 1999.", "visual": "🔴" },
+        "discovery": { "text": "Lockheed Martin sent thrust data in pound-force seconds. NASA's software expected newton-seconds.", "visual": "📐" },
+        "twist": { "text": "The mismatch went undetected for months. The orbiter flew too close to Mars and disintegrated.", "visual": "💥" },
+        "climax": { "text": "A simple unit conversion error destroyed a mission. No data validation caught the mismatch.", "visual": "❌" },
+        "punchline": { "text": "Validate your units. Or lose your spacecraft.", "visual": "📏" }
+      },
+      "quiz": {
+        "question": "What caused the Mars Climate Orbiter to fail?",
+        "options": ["A unit conversion mismatch between metric and imperial", "A software virus", "Insufficient fuel for the journey"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch01-when-data-goes-wrong",
+      "title": "The London Whale Trade",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "JPMorgan lost $6.2 billion because a risk spreadsheet had a formula error nobody caught.", "visual": "📊" },
+        "buildup": { "text": "In 2012, a trader nicknamed the London Whale built massive credit derivative positions.", "visual": "🐋" },
+        "discovery": { "text": "The Value at Risk model was implemented in a spreadsheet that divided by a sum instead of an average.", "visual": "🔢" },
+        "twist": { "text": "The error made risk look half as large as it really was. Management approved positions they would have rejected.", "visual": "😱" },
+        "climax": { "text": "A single formula error in one cell of one spreadsheet led to billions in losses and regulatory fines.", "visual": "💸" },
+        "punchline": { "text": "One wrong formula. Six billion dollars. Spreadsheets lie quietly.", "visual": "📋" }
+      },
+      "quiz": {
+        "question": "What type of error caused JPMorgan's $6.2 billion London Whale loss?",
+        "options": ["A formula error in a risk calculation spreadsheet", "A database server crash", "An incorrect stock price feed"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch01-when-data-goes-wrong",
+      "title": "Healthcare.gov Launch Failure",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On launch day, healthcare.gov could handle 1,100 users. Six million tried to log in.", "visual": "💻" },
+        "buildup": { "text": "The 2013 launch of the Affordable Care Act's website was a national embarrassment.", "visual": "📰" },
+        "discovery": { "text": "The site wasn't load-tested at scale. Data integrations with dozens of government agencies failed under pressure.", "visual": "🔗" },
+        "twist": { "text": "The data problems ran deeper: identity verification services timed out, and enrollment data was lost or corrupted.", "visual": "💥" },
+        "climax": { "text": "A rescue team rebuilt the infrastructure in weeks. Load testing and data validation became non-negotiable.", "visual": "🛠️" },
+        "punchline": { "text": "Test at scale before launch. Not during.", "visual": "🧪" }
+      },
+      "quiz": {
+        "question": "What was a key technical failure of the healthcare.gov launch?",
+        "options": ["The system was never load-tested at the expected scale", "The site used the wrong programming language", "All data was stored in spreadsheets"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch02-privacy-breaches",
+      "title": "The Equifax Breach",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "In 2017, hackers stole personal data of 147 million Americans from Equifax. Names, SSNs, birth dates — everything.", "visual": "🔓" },
+        "buildup": { "text": "Equifax had a known vulnerability in their Apache Struts web framework. A patch existed but wasn't applied.", "visual": "⚠️" },
+        "discovery": { "text": "Attackers exploited the unpatched server for 76 days, extracting data from databases that lacked encryption.", "visual": "📤" },
+        "twist": { "text": "Equifax's breach detection systems had expired SSL certificates, so alerts weren't generated for months.", "visual": "📭" },
+        "climax": { "text": "The breach cost Equifax over $1.4 billion and led to the CEO's resignation. Patching is not optional.", "visual": "💸" },
+        "punchline": { "text": "One unpatched server. 147 million victims.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What allowed attackers to breach Equifax?",
+        "options": ["An unpatched known vulnerability in their web framework", "A phishing email to the CEO", "A physical break-in at a data center"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch02-privacy-breaches",
+      "title": "Facebook and Cambridge Analytica",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A quiz app harvested data from 87 million Facebook users. They never consented to political profiling.", "visual": "📱" },
+        "buildup": { "text": "Cambridge Analytica used Facebook's API to collect not just quiz-takers' data, but all their friends' data too.", "visual": "🕸️" },
+        "discovery": { "text": "The data was used to build psychological profiles for targeted political advertising in the 2016 election.", "visual": "🗳️" },
+        "twist": { "text": "Facebook's API policies allowed this data collection. The rules, not a hack, enabled the scandal.", "visual": "📜" },
+        "climax": { "text": "The fallout reshaped privacy regulations worldwide and led to Facebook's $5 billion FTC fine.", "visual": "💸" },
+        "punchline": { "text": "The data wasn't stolen. It was given away by design.", "visual": "🎁" }
+      },
+      "quiz": {
+        "question": "How did Cambridge Analytica obtain data from 87 million Facebook users?",
+        "options": ["Through Facebook's API, which allowed collecting friends' data", "By hacking Facebook's servers", "By purchasing data directly from Facebook"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch02-privacy-breaches",
+      "title": "The Yahoo Mega-Breach",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Three billion accounts compromised. Every single Yahoo account. The largest data breach in history.", "visual": "🌐" },
+        "buildup": { "text": "In 2013, attackers breached Yahoo and stole names, emails, phone numbers, and hashed passwords.", "visual": "🔓" },
+        "discovery": { "text": "Yahoo didn't discover the breach until 2016 — three years later — during its acquisition by Verizon.", "visual": "🔍" },
+        "twist": { "text": "The passwords were hashed with MD5, a broken algorithm. Attackers could crack most of them easily.", "visual": "💔" },
+        "climax": { "text": "Verizon lowered its acquisition price by $350 million. Late detection made a bad breach catastrophic.", "visual": "💸" },
+        "punchline": { "text": "Three billion accounts. Three years undetected.", "visual": "😱" }
+      },
+      "quiz": {
+        "question": "How long did the Yahoo breach go undetected?",
+        "options": ["Approximately three years", "Three days", "Three months"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch02-privacy-breaches",
+      "title": "The Target Credit Card Hack",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Hackers stole 40 million credit card numbers from Target during the 2013 holiday shopping season.", "visual": "🎄" },
+        "buildup": { "text": "The attackers entered through a third-party HVAC vendor that had network access to Target's systems.", "visual": "🔧" },
+        "discovery": { "text": "Malware on point-of-sale terminals captured card data in real time as customers swiped their cards.", "visual": "💳" },
+        "twist": { "text": "Target's security tools actually flagged the malware. The alerts were ignored by the security team.", "visual": "🔕" },
+        "climax": { "text": "The breach cost Target $292 million and its CEO resigned. Third-party access became a top security concern.", "visual": "🚪" },
+        "punchline": { "text": "The alert fired. Nobody listened.", "visual": "🔔" }
+      },
+      "quiz": {
+        "question": "How did attackers initially access Target's network?",
+        "options": ["Through a third-party HVAC vendor with network access", "By guessing the admin password", "Through an unpatched web application"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch02-privacy-breaches",
+      "title": "Lessons from Privacy Disasters",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every privacy breach follows a pattern: access too broad, detection too slow, response too late.", "visual": "📋" },
+        "buildup": { "text": "Common causes: unpatched software, excessive permissions, unencrypted data, and poor monitoring.", "visual": "🔓" },
+        "discovery": { "text": "Prevention requires defense in depth: encryption, least-privilege access, patching, and active monitoring.", "visual": "🛡️" },
+        "twist": { "text": "Breaches can't always be prevented. But detection in hours instead of years dramatically limits damage.", "visual": "⏰" },
+        "climax": { "text": "The companies that survive breaches are those that detect fast, respond transparently, and fix root causes.", "visual": "🏗️" },
+        "punchline": { "text": "You can't prevent every breach. You can detect it fast.", "visual": "🔍" }
+      },
+      "quiz": {
+        "question": "What is the most critical factor in limiting breach damage?",
+        "options": ["Speed of detection and response", "Using the newest database", "Having the largest security team"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch03-analytics-gone-bad",
+      "title": "Google Flu Trends Failure",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Google predicted flu outbreaks from search queries. It worked brilliantly — until it didn't.", "visual": "🤒" },
+        "buildup": { "text": "Google Flu Trends launched in 2008, predicting CDC flu data two weeks faster using search volume.", "visual": "📈" },
+        "discovery": { "text": "By 2013, it overestimated flu prevalence by 140%. The model confused media hype searches with actual illness.", "visual": "📰" },
+        "twist": { "text": "The model was never updated as search behavior changed. People's googling habits shifted but the model didn't.", "visual": "📉" },
+        "climax": { "text": "Google shut it down in 2015. Big data without domain knowledge and model maintenance leads to big mistakes.", "visual": "🔌" },
+        "punchline": { "text": "Big data predicted flu. Until it predicted fear instead.", "visual": "😷" }
+      },
+      "quiz": {
+        "question": "Why did Google Flu Trends fail?",
+        "options": ["It confused media-driven searches with actual flu cases", "The CDC stopped sharing data", "Google's servers were too slow"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch03-analytics-gone-bad",
+      "title": "The Reinhart-Rogoff Spreadsheet Error",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A Harvard study said high debt kills economic growth. Governments cut spending based on it. The study had a bug.", "visual": "📊" },
+        "buildup": { "text": "Reinhart and Rogoff published a 2010 paper claiming GDP growth drops sharply when debt exceeds 90%.", "visual": "📉" },
+        "discovery": { "text": "A graduate student found that their Excel spreadsheet accidentally excluded five countries from the average.", "visual": "🔍" },
+        "twist": { "text": "With the correct data, the growth decline was much smaller. Austerity policies were partly based on a coding error.", "visual": "😱" },
+        "climax": { "text": "The incident proved that peer review must include data and code review, not just the written paper.", "visual": "📋" },
+        "punchline": { "text": "One missed row in Excel. Austerity for millions.", "visual": "📉" }
+      },
+      "quiz": {
+        "question": "What error did the Reinhart-Rogoff study contain?",
+        "options": ["An Excel formula excluded five countries from the calculation", "They used fictional GDP data", "The paper was written by AI"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch03-analytics-gone-bad",
+      "title": "Survivorship Bias in World War II",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The military wanted to armor the parts of planes that had the most bullet holes. A statistician said no.", "visual": "✈️" },
+        "buildup": { "text": "Returning bombers had bullet holes in the fuselage and wings. The obvious fix: add armor there.", "visual": "🔫" },
+        "discovery": { "text": "Abraham Wald realized the holes showed where planes could take damage and survive. The missing holes were fatal.", "visual": "💡" },
+        "twist": { "text": "The planes that didn't return were hit in engines and cockpits. The survivors were misleading the analysis.", "visual": "🎯" },
+        "climax": { "text": "Survivorship bias means studying only successes — or survivors — and missing the critical failures.", "visual": "📊" },
+        "punchline": { "text": "The data you don't have matters more than the data you do.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is survivorship bias?",
+        "options": ["Drawing conclusions only from survivors while ignoring failures", "Having too much data to analyze", "Data that expires over time"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch03-analytics-gone-bad",
+      "title": "The Zillow Home-Buying Disaster",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Zillow used AI to buy homes at predicted prices. It lost $881 million and laid off 2,000 people.", "visual": "🏠" },
+        "buildup": { "text": "Zillow Offers used machine learning to estimate home values and make instant purchase offers.", "visual": "🤖" },
+        "discovery": { "text": "The model overestimated home values in volatile markets. Zillow bought thousands of homes above market price.", "visual": "📈" },
+        "twist": { "text": "The algorithm couldn't adapt to a cooling market fast enough. By the time data showed the shift, it had overpaid.", "visual": "📉" },
+        "climax": { "text": "Zillow shut down the program, proving that ML models need human oversight when stakes are measured in billions.", "visual": "🔌" },
+        "punchline": { "text": "The algorithm was confident. The market disagreed.", "visual": "💸" }
+      },
+      "quiz": {
+        "question": "Why did Zillow Offers fail?",
+        "options": ["The model overestimated home values in a changing market", "Zillow ran out of storage space", "Buyers refused to sell to Zillow"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch03-analytics-gone-bad",
+      "title": "When Correlation Fools You",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Ice cream sales and drowning deaths are highly correlated. Should we ban ice cream?", "visual": "🍦" },
+        "buildup": { "text": "Correlation measures how two variables move together. It says nothing about whether one causes the other.", "visual": "📊" },
+        "discovery": { "text": "Both ice cream and drowning increase in summer. The hidden variable — temperature — drives both.", "visual": "☀️" },
+        "twist": { "text": "Data systems make it easy to find correlations at scale. Most of them are spurious and misleading.", "visual": "⚠️" },
+        "climax": { "text": "Acting on correlation without understanding causation leads to wrong decisions dressed up as data-driven.", "visual": "🎭" },
+        "punchline": { "text": "Correlation is a clue, not a conclusion.", "visual": "🔍" }
+      },
+      "quiz": {
+        "question": "Why is acting on correlation alone dangerous?",
+        "options": ["Correlation doesn't prove that one variable causes the other", "Correlations are always wrong", "Only large datasets have correlations"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch04-infrastructure-failures",
+      "title": "The Amazon S3 Outage of 2017",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "On February 28, 2017, a large chunk of the internet went down. The cause? A typo in an AWS command.", "visual": "💻" },
+        "buildup": { "text": "An Amazon engineer ran a debugging command that accidentally removed more S3 servers than intended.", "visual": "🔧" },
+        "discovery": { "text": "Thousands of websites and services depending on S3 went offline, including Slack, Trello, and Quora.", "visual": "🌐" },
+        "twist": { "text": "The outage revealed that half the internet quietly depended on one cloud region in Virginia.", "visual": "😱" },
+        "climax": { "text": "Amazon added safeguards: rate limits on server removals and mandatory confirmation for large-scale changes.", "visual": "🛡️" },
+        "punchline": { "text": "One typo. Half the internet. Gone for hours.", "visual": "⌨️" }
+      },
+      "quiz": {
+        "question": "What caused the 2017 Amazon S3 outage?",
+        "options": ["An engineer's typo in a debugging command", "A hacker attack on AWS", "A power outage in the data center"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch04-infrastructure-failures",
+      "title": "GitLab's Database Deletion",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A tired GitLab engineer ran a database delete command on the production server instead of the staging one.", "visual": "💀" },
+        "buildup": { "text": "In 2017, during a late-night incident, a GitLab admin deleted the production PostgreSQL database.", "visual": "🗑️" },
+        "discovery": { "text": "Five backup methods were in place. None of them worked — they were either stale, misconfigured, or untested.", "visual": "😱" },
+        "twist": { "text": "The only working backup was a 6-hour-old staging snapshot. GitLab lost 6 hours of user data permanently.", "visual": "⏰" },
+        "climax": { "text": "GitLab live-streamed the recovery and published a full post-mortem. Transparency turned disaster into trust.", "visual": "📺" },
+        "punchline": { "text": "Five backup methods. Zero that worked. Test your backups.", "visual": "🧪" }
+      },
+      "quiz": {
+        "question": "What lesson did the GitLab database deletion teach?",
+        "options": ["Backups must be regularly tested to confirm they work", "Production databases should never have backups", "Engineers should never work at night"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch04-infrastructure-failures",
+      "title": "The Cloudflare Memory Leak",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Cloudflare accidentally leaked sensitive user data into random web pages for months. They called it Cloudbleed.", "visual": "🩸" },
+        "buildup": { "text": "In 2017, a bug in Cloudflare's HTML parser caused uninitialized memory to leak into HTTP responses.", "visual": "💻" },
+        "discovery": { "text": "Passwords, API keys, and private messages from millions of sites appeared in cached search results.", "visual": "🔓" },
+        "twist": { "text": "Search engines cached the leaked data. Even after the fix, sensitive information was still findable on Google.", "visual": "🔍" },
+        "climax": { "text": "Cloudflare worked with search engines to purge cached data and disclosed the bug within hours of discovery.", "visual": "⚡" },
+        "punchline": { "text": "Memory leaks don't just crash programs. They expose secrets.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What was unusual about the Cloudbleed data leak?",
+        "options": ["Leaked data appeared in search engine caches", "It only affected one website", "It was caused by a physical hardware failure"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch04-infrastructure-failures",
+      "title": "The Facebook Six-Hour Outage",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On October 4, 2021, Facebook, Instagram, and WhatsApp went offline for six hours. Globally.", "visual": "📴" },
+        "buildup": { "text": "A routine BGP configuration change accidentally withdrew Facebook's routes from the internet.", "visual": "🌐" },
+        "discovery": { "text": "Without BGP routes, no DNS queries could reach Facebook's servers. The entire platform became unreachable.", "visual": "🔇" },
+        "twist": { "text": "Engineers couldn't fix it remotely because their own internal tools ran on the same infrastructure.", "visual": "🔒" },
+        "climax": { "text": "Someone had to physically enter a data center to reset the routers. Badge access systems were also down.", "visual": "🚪" },
+        "punchline": { "text": "Facebook deleted itself from the internet. By accident.", "visual": "😵" }
+      },
+      "quiz": {
+        "question": "Why couldn't Facebook engineers fix the outage remotely?",
+        "options": ["Their internal tools depended on the same infrastructure that failed", "They didn't have the right passwords", "It was a hardware problem at every data center"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch04-infrastructure-failures",
+      "title": "OVH Data Center Fire",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In March 2021, an OVH data center in Strasbourg caught fire. Millions of websites vanished overnight.", "visual": "🔥" },
+        "buildup": { "text": "OVH is one of Europe's largest cloud providers. The fire destroyed one building and damaged another.", "visual": "🏢" },
+        "discovery": { "text": "Customers who relied solely on OVH's single-region storage lost data permanently. No off-site backups existed.", "visual": "💔" },
+        "twist": { "text": "OVH offered backup services, but many customers assumed their data was replicated. Assumptions aren't backups.", "visual": "⚠️" },
+        "climax": { "text": "The fire proved that cloud doesn't mean invincible. Physical disasters still destroy digital data.", "visual": "🌍" },
+        "punchline": { "text": "The cloud is someone else's computer. And computers can burn.", "visual": "🔥" }
+      },
+      "quiz": {
+        "question": "What did the OVH fire reveal about cloud storage assumptions?",
+        "options": ["Cloud data is not automatically backed up across regions", "Cloud providers never have fires", "All cloud data is always replicated"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch05-bias-in-data",
+      "title": "Biased Training Data",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "An AI hiring tool at Amazon penalized resumes containing the word 'women.' It learned bias from historical data.", "visual": "🤖" },
+        "buildup": { "text": "The model was trained on 10 years of resumes. Since most hires were men, it learned to prefer male candidates.", "visual": "📊" },
+        "discovery": { "text": "Training data reflects the world as it was, including all its historical biases and inequalities.", "visual": "📚" },
+        "twist": { "text": "Amazon scrapped the tool, but the lesson remains: unbiased algorithms trained on biased data produce biased results.", "visual": "⚠️" },
+        "climax": { "text": "Auditing training data for representation and fairness is now a critical step before any model deployment.", "visual": "🔍" },
+        "punchline": { "text": "The data was accurate. It was also deeply unfair.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "Why did Amazon's AI hiring tool penalize female candidates?",
+        "options": ["It was trained on historical data that reflected gender imbalance", "A programmer intentionally added the bias", "The tool only processed male names"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch05-bias-in-data",
+      "title": "Racial Bias in Healthcare Algorithms",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A widely used healthcare algorithm gave white patients priority over sicker Black patients. It was trained on cost data.", "visual": "🏥" },
+        "buildup": { "text": "The algorithm predicted which patients needed extra care. It used healthcare spending as a proxy for illness.", "visual": "💊" },
+        "discovery": { "text": "Black patients historically had less access to healthcare and therefore spent less — even when sicker.", "visual": "📉" },
+        "twist": { "text": "The algorithm wasn't explicitly racist. But using spending as a proxy for need encoded systemic inequality.", "visual": "🔗" },
+        "climax": { "text": "Fixing the proxy — using actual health conditions instead of spending — reduced the bias by 84%.", "visual": "📊" },
+        "punchline": { "text": "The proxy was wrong. The consequences were real.", "visual": "💔" }
+      },
+      "quiz": {
+        "question": "What caused racial bias in the healthcare algorithm?",
+        "options": ["Using spending as a proxy for illness, which reflected access inequality", "Intentional racial discrimination in the code", "Using too small a dataset"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch05-bias-in-data",
+      "title": "Facial Recognition Failures",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A study found facial recognition misidentified dark-skinned women 35% of the time. Light-skinned men? Under 1%.", "visual": "📸" },
+        "buildup": { "text": "Facial recognition models were trained mostly on light-skinned faces, creating massive accuracy gaps.", "visual": "🤖" },
+        "discovery": { "text": "MIT researcher Joy Buolamwini proved the disparity across Amazon, Microsoft, and IBM systems.", "visual": "📊" },
+        "twist": { "text": "These systems were already deployed by police. Wrongful arrests based on faulty matches had already occurred.", "visual": "👮" },
+        "climax": { "text": "The research led IBM to exit facial recognition and cities to ban police use of the technology.", "visual": "🚫" },
+        "punchline": { "text": "If the training data isn't diverse, the model isn't fair.", "visual": "🌍" }
+      },
+      "quiz": {
+        "question": "Why did facial recognition systems perform poorly on dark-skinned women?",
+        "options": ["Training data was mostly composed of light-skinned faces", "The cameras were broken", "Dark-skinned faces have fewer features to detect"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch05-bias-in-data",
+      "title": "Feedback Loops in Predictive Policing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Police send more officers to high-crime areas. More officers find more crime. The data says send even more.", "visual": "🔄" },
+        "buildup": { "text": "Predictive policing uses historical crime data to forecast where crime will occur next.", "visual": "📊" },
+        "discovery": { "text": "The model doesn't predict crime. It predicts where police have previously made arrests.", "visual": "🔍" },
+        "twist": { "text": "More policing in an area generates more arrest data, which trains the model to recommend more policing there.", "visual": "♾️" },
+        "climax": { "text": "Feedback loops amplify existing biases. The algorithm doesn't create fairness — it automates the status quo.", "visual": "⚖️" },
+        "punchline": { "text": "The loop confirms its own bias. That's not prediction.", "visual": "🔁" }
+      },
+      "quiz": {
+        "question": "What is the feedback loop problem in predictive policing?",
+        "options": ["More policing generates more data that recommends even more policing", "Officers ignore the predictions entirely", "The algorithm only works in rural areas"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch05-bias-in-data",
+      "title": "How to Audit for Bias",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You built a model. It scores 95% accuracy. But for one demographic group, it's only 60%. Is it fair?", "visual": "📐" },
+        "buildup": { "text": "Bias auditing tests model performance across demographic groups: age, gender, race, and geography.", "visual": "📊" },
+        "discovery": { "text": "Fairness metrics include equal accuracy rates, equal false positive rates, and calibration across groups.", "visual": "⚖️" },
+        "twist": { "text": "There's no single definition of fairness. Different metrics can conflict — you can't satisfy them all at once.", "visual": "🤔" },
+        "climax": { "text": "The goal isn't a perfect score. It's transparency about trade-offs and intentional choices about fairness.", "visual": "🎯" },
+        "punchline": { "text": "Audit the model. Document the trade-offs. Decide openly.", "visual": "📋" }
+      },
+      "quiz": {
+        "question": "Why is bias auditing challenging?",
+        "options": ["Different fairness metrics can conflict with each other", "All models are equally fair", "Auditing is too expensive to perform"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch06-lessons-that-changed-the-industry",
+      "title": "The Power of Post-Mortems",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Google publishes detailed post-mortems for every major outage. The goal: make sure nobody repeats the mistake.", "visual": "📝" },
+        "buildup": { "text": "A post-mortem documents what happened, why it happened, what was done, and what will be changed.", "visual": "📋" },
+        "discovery": { "text": "Blameless post-mortems focus on systemic causes, not individual fault. People admit mistakes freely.", "visual": "🤝" },
+        "twist": { "text": "Organizations that punish individuals for incidents get fewer incident reports — not fewer incidents.", "visual": "🤫" },
+        "climax": { "text": "Post-mortems turn failures into institutional knowledge. Each disaster makes the next one less likely.", "visual": "📚" },
+        "punchline": { "text": "Blame the system, not the person. Then fix the system.", "visual": "🔧" }
+      },
+      "quiz": {
+        "question": "What is the key principle of a blameless post-mortem?",
+        "options": ["Focus on systemic causes rather than individual fault", "Identify who made the mistake and penalize them", "Only document what went right"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch06-lessons-that-changed-the-industry",
+      "title": "Defense in Depth",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A castle doesn't rely on one wall. It has a moat, outer walls, inner walls, and a keep. Data systems need the same.", "visual": "🏰" },
+        "buildup": { "text": "Defense in depth layers multiple safeguards so that no single failure causes a disaster.", "visual": "🛡️" },
+        "discovery": { "text": "Layers include access control, encryption, validation, monitoring, alerting, backups, and incident response.", "visual": "📋" },
+        "twist": { "text": "Every disaster in this course broke through because one layer was the only layer. Depth requires redundancy.", "visual": "⚠️" },
+        "climax": { "text": "No single safeguard is enough. The question is: when this one fails, what catches the problem next?", "visual": "🤔" },
+        "punchline": { "text": "One wall falls. The next one holds. That's defense in depth.", "visual": "🏰" }
+      },
+      "quiz": {
+        "question": "What is the principle of defense in depth?",
+        "options": ["Layering multiple safeguards so no single failure causes disaster", "Using the strongest possible single defense", "Only defending the most valuable data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch06-lessons-that-changed-the-industry",
+      "title": "Chaos Engineering for Data",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Netflix intentionally kills its own servers in production. They call it Chaos Monkey. It makes them stronger.", "visual": "🐒" },
+        "buildup": { "text": "Chaos engineering deliberately injects failures to test whether systems recover gracefully.", "visual": "💥" },
+        "discovery": { "text": "For data pipelines: what if a source table disappears? What if schema changes? What if a load spikes 10x?", "visual": "🤔" },
+        "twist": { "text": "Most teams discover their pipeline's weaknesses from production incidents. Chaos testing finds them first.", "visual": "🔍" },
+        "climax": { "text": "Controlled chaos in staging builds confidence that production will survive real chaos.", "visual": "🛡️" },
+        "punchline": { "text": "Break it on purpose. Fix it before it breaks for real.", "visual": "🔧" }
+      },
+      "quiz": {
+        "question": "What is the purpose of chaos engineering?",
+        "options": ["To discover system weaknesses by deliberately injecting failures", "To destroy production systems permanently", "To test user interface designs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch06-lessons-that-changed-the-industry",
+      "title": "Regulation Born from Failure",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "GDPR, CCPA, and SOX didn't appear from nowhere. Each was a response to data disasters that demanded change.", "visual": "📜" },
+        "buildup": { "text": "Enron's accounting fraud led to Sarbanes-Oxley. Equifax and Cambridge Analytica led to GDPR and CCPA.", "visual": "⚖️" },
+        "discovery": { "text": "Regulations force companies to implement controls they should have built voluntarily: auditing, consent, and deletion.", "visual": "📋" },
+        "twist": { "text": "Compliance isn't just legal overhead. The controls it mandates actually prevent the next disaster.", "visual": "🛡️" },
+        "climax": { "text": "Smart companies treat regulation as a floor, not a ceiling — exceeding requirements to build genuine trust.", "visual": "🏗️" },
+        "punchline": { "text": "Every regulation was once a disaster that could have been prevented.", "visual": "📚" }
+      },
+      "quiz": {
+        "question": "What event directly contributed to the creation of GDPR?",
+        "options": ["High-profile data breaches and privacy scandals in Europe", "A decline in cloud computing usage", "The invention of blockchain"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--famous-data-disasters--ch06-lessons-that-changed-the-industry",
+      "title": "Building Resilient Data Systems",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Disasters will happen. The question isn't 'if' but 'how fast can you recover?'", "visual": "⏱️" },
+        "buildup": { "text": "Resilient systems combine prevention, detection, and recovery into a continuous cycle.", "visual": "🔄" },
+        "discovery": { "text": "Key practices: tested backups, automated monitoring, runbooks, on-call rotations, and regular fire drills.", "visual": "📋" },
+        "twist": { "text": "The biggest resilience gains come from culture, not technology. Teams that practice recovery recover faster.", "visual": "🏃" },
+        "climax": { "text": "Every disaster in this course was survivable with the right combination of preparation and rapid response.", "visual": "🛡️" },
+        "punchline": { "text": "You can't prevent every failure. But you can survive all of them.", "visual": "💪" }
+      },
+      "quiz": {
+        "question": "What contributes most to building resilient data systems?",
+        "options": ["A culture of preparation, practice, and rapid response", "Using only the newest technology", "Having the largest engineering team possible"],
+        "correct": 0
+      }
+    }
+  ]
+}

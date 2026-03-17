@@ -1,0 +1,49 @@
+{
+  "id": "data-engineering--the-modern-data-stack--t-materializations-in-dbt",
+  "version": 1,
+  "subject": "Data Engineering",
+  "subcategory": "The Modern Data Stack",
+  "course_id": "data-engineering--the-modern-data-stack",
+  "chapter_id": "data-engineering--the-modern-data-stack--ch02-the-transformation-layer",
+  "title": "Materializations in dbt",
+  "emoji": "📊",
+  "color": "#D97706",
+  "description": "Learn Materializations in dbt in one minute.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Should this model be a view or a table? An incremental load or a full rebuild? The choice affects cost and speed.",
+      "visual": "⚡"
+    },
+    "buildup": {
+      "text": "dbt materializations define how a model is stored: as a view, table, incremental table, or ephemeral CTE.",
+      "visual": "📦"
+    },
+    "discovery": {
+      "text": "Views are cheap but slow for heavy queries. Tables are fast but expensive to rebuild. Incremental adds only new rows.",
+      "visual": "📊"
+    },
+    "twist": {
+      "text": "Choosing the wrong materialization wastes money or creates stale data. One size does not fit all models.",
+      "visual": "⚠️"
+    },
+    "climax": {
+      "text": "A well-tuned dbt project uses views for light models, tables for heavy ones, and incremental for large datasets.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "View, table, or incremental. Choose per model, not globally.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "When should you use an incremental materialization in dbt?",
+    "options": [
+      "For large tables where rebuilding from scratch is too expensive",
+      "For every model in the project",
+      "Only for models with fewer than 100 rows"
+    ],
+    "correct": 0
+  }
+}

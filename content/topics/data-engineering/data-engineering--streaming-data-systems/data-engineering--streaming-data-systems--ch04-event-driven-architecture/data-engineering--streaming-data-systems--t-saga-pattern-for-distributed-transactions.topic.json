@@ -1,0 +1,49 @@
+{
+  "id": "data-engineering--streaming-data-systems--t-saga-pattern-for-distributed-transactions",
+  "version": 1,
+  "subject": "Data Engineering",
+  "subcategory": "Streaming Data Systems",
+  "course_id": "data-engineering--streaming-data-systems",
+  "chapter_id": "data-engineering--streaming-data-systems--ch04-event-driven-architecture",
+  "title": "Saga Pattern for Distributed Transactions",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A quick, practical guide to Saga Pattern for Distributed Transactions.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A customer orders a product. Inventory, payment, and shipping are three separate services. How do you coordinate?",
+      "visual": "📦"
+    },
+    "buildup": {
+      "text": "Distributed transactions across services are fragile. Two-phase commit locks resources and doesn't scale.",
+      "visual": "🔒"
+    },
+    "discovery": {
+      "text": "The saga pattern chains local transactions with compensating actions that undo previous steps on failure.",
+      "visual": "🔗"
+    },
+    "twist": {
+      "text": "If payment fails after inventory is reserved, a compensating event releases the reservation automatically.",
+      "visual": "↩️"
+    },
+    "climax": {
+      "text": "Sagas replace global locks with eventual consistency, trading simplicity for scalability.",
+      "visual": "⚖️"
+    },
+    "punchline": {
+      "text": "No global lock. Just forward and undo steps.",
+      "visual": "🔄"
+    }
+  },
+  "quiz": {
+    "question": "How does the saga pattern handle failures in distributed transactions?",
+    "options": [
+      "By running compensating actions that undo previous steps",
+      "By locking all services until completion",
+      "By ignoring the failure"
+    ],
+    "correct": 0
+  }
+}

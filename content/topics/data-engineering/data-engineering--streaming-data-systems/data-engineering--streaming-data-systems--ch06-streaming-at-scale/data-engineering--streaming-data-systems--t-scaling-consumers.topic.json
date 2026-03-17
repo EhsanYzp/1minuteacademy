@@ -1,0 +1,49 @@
+{
+  "id": "data-engineering--streaming-data-systems--t-scaling-consumers",
+  "version": 1,
+  "subject": "Data Engineering",
+  "subcategory": "Streaming Data Systems",
+  "course_id": "data-engineering--streaming-data-systems",
+  "chapter_id": "data-engineering--streaming-data-systems--ch06-streaming-at-scale",
+  "title": "Scaling Consumers",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A 60-second lesson on Scaling Consumers.",
+  "is_free": true,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "One consumer handles 10K events per second. The producer just hit 100K. You need ten times the throughput.",
+      "visual": "📈"
+    },
+    "buildup": {
+      "text": "Adding more consumers to a group distributes partitions across them, multiplying processing capacity.",
+      "visual": "👥"
+    },
+    "discovery": {
+      "text": "The maximum parallelism equals the number of partitions. More consumers than partitions means idle workers.",
+      "visual": "⚖️"
+    },
+    "twist": {
+      "text": "Rebalancing — redistributing partitions when consumers join or leave — causes brief processing pauses.",
+      "visual": "⏸️"
+    },
+    "climax": {
+      "text": "Planning partition counts at topic creation time sets the ceiling for future consumer scalability.",
+      "visual": "📐"
+    },
+    "punchline": {
+      "text": "Scale the consumers. But plan the partitions first.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "What limits the maximum consumer parallelism in Kafka?",
+    "options": [
+      "The number of partitions in the topic",
+      "The number of brokers in the cluster",
+      "The size of each event"
+    ],
+    "correct": 0
+  }
+}

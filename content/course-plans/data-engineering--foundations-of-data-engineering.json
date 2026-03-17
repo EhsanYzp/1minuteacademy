@@ -1,0 +1,559 @@
+{
+  "categoryId": "data-engineering",
+  "subject": "Data Engineering",
+  "courseId": "data-engineering--foundations-of-data-engineering",
+  "courseTitle": "Foundations of Data Engineering",
+  "emoji": "🔧",
+  "color": "#2563EB",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "data-engineering--foundations-of-data-engineering--ch01-what-is-data-engineering", "title": "What Is Data Engineering?", "position": 1 },
+    { "id": "data-engineering--foundations-of-data-engineering--ch02-the-data-lifecycle", "title": "The Data Lifecycle", "position": 2 },
+    { "id": "data-engineering--foundations-of-data-engineering--ch03-batch-vs-real-time", "title": "Batch vs Real-Time", "position": 3 },
+    { "id": "data-engineering--foundations-of-data-engineering--ch04-storage-foundations", "title": "Storage Foundations", "position": 4 },
+    { "id": "data-engineering--foundations-of-data-engineering--ch05-orchestration-basics", "title": "Orchestration Basics", "position": 5 },
+    { "id": "data-engineering--foundations-of-data-engineering--ch06-the-data-engineers-toolkit", "title": "The Data Engineer's Toolkit", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch01-what-is-data-engineering",
+      "title": "What Is Data Engineering?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Every time you search the web, terabytes move through invisible pipelines in milliseconds.", "visual": "🔍" },
+        "buildup": { "text": "Someone builds those pipelines. That someone is a data engineer.", "visual": "🔧" },
+        "discovery": { "text": "Data engineering designs systems that collect, store, and transform raw data at scale.", "visual": "⚙️" },
+        "twist": { "text": "Without data engineers, analysts would spend all their time cleaning messy data.", "visual": "🧹" },
+        "climax": { "text": "They turn chaotic raw information into reliable, query-ready datasets.", "visual": "✨" },
+        "punchline": { "text": "Data engineers build the roads. Others drive on them.", "visual": "🛣️" }
+      },
+      "quiz": {
+        "question": "What is the primary role of a data engineer?",
+        "options": ["Building systems to collect, store, and transform data", "Creating machine learning models", "Writing business reports"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch01-what-is-data-engineering",
+      "title": "Data Engineers vs Data Scientists",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Job postings mix them up constantly. But data engineers and data scientists do very different work.", "visual": "🤷" },
+        "buildup": { "text": "Data scientists analyze data to find patterns and build predictive models.", "visual": "📊" },
+        "discovery": { "text": "Data engineers build the infrastructure that delivers clean data to those scientists.", "visual": "🏗️" },
+        "twist": { "text": "A scientist without an engineer is like a chef without a kitchen — talent with nowhere to cook.", "visual": "👨‍🍳" },
+        "climax": { "text": "The best teams pair engineers who build pipelines with scientists who extract insights.", "visual": "🤝" },
+        "punchline": { "text": "Engineers build the kitchen. Scientists cook.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does a data engineer do that a data scientist typically does not?",
+        "options": ["Build data pipeline infrastructure", "Analyze data for business insights", "Create data visualizations"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch01-what-is-data-engineering",
+      "title": "The Rise of the Data Engineer",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2012, almost nobody had the title 'data engineer.' By 2020 it was a top-ten tech role.", "visual": "📈" },
+        "buildup": { "text": "Companies realized collecting data was easy, but making it usable was the real challenge.", "visual": "🤔" },
+        "discovery": { "text": "Cloud computing and open-source tools created massive demand for pipeline builders.", "visual": "☁️" },
+        "twist": { "text": "Data scientist was called the sexiest job. Data engineer quietly became the most needed.", "visual": "🤫" },
+        "climax": { "text": "Today, data engineering roles outnumber data science roles at most large tech companies.", "visual": "🏢" },
+        "punchline": { "text": "The unsexy job became the indispensable one.", "visual": "💎" }
+      },
+      "quiz": {
+        "question": "Why did data engineering grow so rapidly after 2015?",
+        "options": ["Companies needed help making collected data usable", "Machine learning replaced data engineers", "Data storage became impossible"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch01-what-is-data-engineering",
+      "title": "Skills Every Data Engineer Needs",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A data engineer's toolbox looks nothing like a web developer's. The problems differ fundamentally.", "visual": "🧰" },
+        "buildup": { "text": "SQL is non-negotiable. Most data still lives in relational databases or SQL-queryable warehouses.", "visual": "💾" },
+        "discovery": { "text": "Python handles pipeline logic. Cloud platforms host the infrastructure that runs it all.", "visual": "🐍" },
+        "twist": { "text": "The hardest skill isn't technical — it's understanding messy business data well enough to clean it.", "visual": "🧩" },
+        "climax": { "text": "Great data engineers combine coding, infrastructure knowledge, and deep domain understanding.", "visual": "🎯" },
+        "punchline": { "text": "The best skill is understanding the mess.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is considered the most universally required skill for data engineers?",
+        "options": ["SQL", "Machine learning", "Frontend development"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch01-what-is-data-engineering",
+      "title": "A Day in a Data Engineer's Life",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The morning starts with alerts. A pipeline that ran overnight failed at 3 AM.", "visual": "🚨" },
+        "buildup": { "text": "After fixing the failure, there's a meeting about a new data source the analytics team needs.", "visual": "📋" },
+        "discovery": { "text": "Afternoons involve writing transforms, optimizing slow queries, and reviewing pull requests.", "visual": "💻" },
+        "twist": { "text": "Most of the job isn't building new things — it's keeping existing pipelines healthy.", "visual": "🔧" },
+        "climax": { "text": "Data engineers are part plumber, part architect, and part firefighter — often on the same day.", "visual": "🧑‍🚒" },
+        "punchline": { "text": "Build it, fix it, keep it running. Repeat.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "What do data engineers spend most of their time doing?",
+        "options": ["Maintaining and fixing existing pipelines", "Training machine learning models", "Designing user interfaces"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch02-the-data-lifecycle",
+      "title": "Where Data Is Born",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Every click, swipe, and purchase creates a tiny piece of data. Billions are born every second.", "visual": "✨" },
+        "buildup": { "text": "Data originates from apps, sensors, logs, databases, APIs, and even handwritten forms.", "visual": "📱" },
+        "discovery": { "text": "Understanding where data comes from is the first step to building any reliable pipeline.", "visual": "🗺️" },
+        "twist": { "text": "The messiest data often comes from the most important sources — legacy systems nobody dares touch.", "visual": "🏚️" },
+        "climax": { "text": "Know your origins, or your pipeline inherits their chaos.", "visual": "🎯" },
+        "punchline": { "text": "Bad inputs guarantee bad outputs. Always.", "visual": "🚫" }
+      },
+      "quiz": {
+        "question": "Why is understanding data sources critical for data engineers?",
+        "options": ["Pipeline quality depends on knowing where data originates", "It makes SQL queries faster", "Data sources never change"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch02-the-data-lifecycle",
+      "title": "Ingestion: Getting Data In",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Data sitting in a source system is useless until someone pulls it into a pipeline.", "visual": "📥" },
+        "buildup": { "text": "You can ingest via batch loads, streaming feeds, change data capture, or API calls.", "visual": "🔄" },
+        "discovery": { "text": "Change data capture reads database transaction logs to detect every insert, update, and delete.", "visual": "📝" },
+        "twist": { "text": "Ingestion looks simple until schemas change upstream without warning and break everything.", "visual": "💥" },
+        "climax": { "text": "Robust ingestion means expecting schema drift, late arrivals, duplicates, and outages.", "visual": "🛡️" },
+        "punchline": { "text": "Getting data in is easy. Doing it reliably is hard.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is change data capture (CDC)?",
+        "options": ["Reading database logs to detect data changes", "Manually copying data between systems", "Deleting old data from storage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch02-the-data-lifecycle",
+      "title": "Transformation: Shaping Data",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Raw data is like crude oil — valuable, but useless until it's refined.", "visual": "🛢️" },
+        "buildup": { "text": "Transformation cleans, enriches, aggregates, and reshapes data for downstream consumers.", "visual": "🔨" },
+        "discovery": { "text": "Common transforms include deduplication, joining tables, computing metrics, and applying rules.", "visual": "📐" },
+        "twist": { "text": "The same raw data might need ten different transformations for ten different teams.", "visual": "🔀" },
+        "climax": { "text": "Good transformation logic is testable, versioned, and documented — just like application code.", "visual": "✅" },
+        "punchline": { "text": "Transform once, serve many. That's the goal.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why is data transformation necessary?",
+        "options": ["Raw data must be cleaned and reshaped for downstream use", "It makes databases run faster", "Regulations require it"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch02-the-data-lifecycle",
+      "title": "Serving: Delivering Insights",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Data that nobody can query is data that doesn't exist. Serving makes it accessible.", "visual": "🍽️" },
+        "buildup": { "text": "Serving layers include dashboards, APIs, data warehouses, and reverse ETL into SaaS tools.", "visual": "📊" },
+        "discovery": { "text": "The serving layer must match the consumer: analysts want SQL, apps want APIs, ML wants feature stores.", "visual": "🎯" },
+        "twist": { "text": "Building a perfect pipeline is pointless if the last mile — serving — is slow or confusing.", "visual": "🐌" },
+        "climax": { "text": "The best data teams obsess over how consumers access data, not just how it's stored.", "visual": "👥" },
+        "punchline": { "text": "Data has value only when someone can use it.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "What is the 'serving layer' in a data pipeline?",
+        "options": ["Where processed data is made accessible to consumers", "Where raw data is first collected", "A type of database backup"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch02-the-data-lifecycle",
+      "title": "Archival and Retention",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Not all data deserves to live forever. Storage costs money, and regulations set time limits.", "visual": "📦" },
+        "buildup": { "text": "Archival moves old data to cheaper, slower storage tiers like glacier or cold object stores.", "visual": "🧊" },
+        "discovery": { "text": "Retention policies define how long each data type must be kept — and when it must be deleted.", "visual": "📅" },
+        "twist": { "text": "GDPR and CCPA mean keeping data too long can be as dangerous as losing it.", "visual": "⚖️" },
+        "climax": { "text": "Smart teams automate archival and deletion so compliance happens by default, not by accident.", "visual": "🤖" },
+        "punchline": { "text": "Knowing when to delete is as important as knowing what to keep.", "visual": "🗑️" }
+      },
+      "quiz": {
+        "question": "Why are retention policies important in data engineering?",
+        "options": ["Regulations limit how long certain data can be stored", "Older data is always more valuable", "Archival eliminates the need for backups"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch03-batch-vs-real-time",
+      "title": "What Is Batch Processing?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Every night at midnight, a job kicks off and crunches the entire day's data in one massive run.", "visual": "🌙" },
+        "buildup": { "text": "Batch processing collects data over a period, then processes it all at once on a schedule.", "visual": "📦" },
+        "discovery": { "text": "MapReduce, Spark jobs, and nightly SQL transforms are all classic batch patterns.", "visual": "⚙️" },
+        "twist": { "text": "Batch is simple and reliable, but users see yesterday's data — never what's happening right now.", "visual": "⏳" },
+        "climax": { "text": "For reports, analytics, and training ML models, batch processing is still king.", "visual": "👑" },
+        "punchline": { "text": "Batch trades freshness for simplicity. Often worth it.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What is the main trade-off of batch processing?",
+        "options": ["Data freshness — results are delayed", "It cannot handle large datasets", "It requires expensive hardware"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch03-batch-vs-real-time",
+      "title": "What Is Real-Time Processing?",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A fraudulent credit card transaction must be caught in milliseconds, not tomorrow morning.", "visual": "🚨" },
+        "buildup": { "text": "Real-time processing handles events as they arrive, one by one or in micro-batches.", "visual": "⚡" },
+        "discovery": { "text": "Tools like Kafka Streams, Flink, and Spark Streaming enable continuous data processing.", "visual": "🔄" },
+        "twist": { "text": "Real-time is harder to build, debug, and maintain than batch. Failures cascade instantly.", "visual": "💥" },
+        "climax": { "text": "When freshness matters more than simplicity, real-time processing is the only answer.", "visual": "🎯" },
+        "punchline": { "text": "Real-time costs more but catches fraud at the door.", "visual": "🚪" }
+      },
+      "quiz": {
+        "question": "When is real-time processing essential?",
+        "options": ["When data must be acted on immediately, like fraud detection", "For monthly business reports", "When storage is limited"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch03-batch-vs-real-time",
+      "title": "When Batch Beats Real-Time",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A company rebuilt their batch pipeline in real-time. It cost five times more and nobody noticed.", "visual": "💸" },
+        "buildup": { "text": "Most analytics queries don't need data fresher than a few hours or even a day.", "visual": "📊" },
+        "discovery": { "text": "Batch pipelines are cheaper, simpler to test, and easier to rerun when something goes wrong.", "visual": "🔁" },
+        "twist": { "text": "Choosing real-time when batch suffices is one of the most common over-engineering mistakes.", "visual": "🤦" },
+        "climax": { "text": "The right question isn't 'Can we do real-time?' but 'Does anyone actually need it?'", "visual": "🤔" },
+        "punchline": { "text": "The best pipeline is the simplest one that works.", "visual": "✨" }
+      },
+      "quiz": {
+        "question": "What is a common mistake when choosing between batch and real-time?",
+        "options": ["Using real-time when batch would suffice", "Always choosing batch processing", "Ignoring data quality"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch03-batch-vs-real-time",
+      "title": "When Real-Time Is Essential",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Uber can't match you with a driver using yesterday's location data. Freshness is survival.", "visual": "🚗" },
+        "buildup": { "text": "Fraud detection, live pricing, IoT monitoring, and alerting all demand real-time data.", "visual": "📡" },
+        "discovery": { "text": "The common thread: delayed action means lost money, missed danger, or broken user experience.", "visual": "⏱️" },
+        "twist": { "text": "Even 'real-time' systems have latency. The goal is low-enough latency, not zero.", "visual": "📉" },
+        "climax": { "text": "Real-time is essential when the cost of stale data exceeds the cost of building the pipeline.", "visual": "⚖️" },
+        "punchline": { "text": "If delay costs more than complexity, go real-time.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What makes real-time processing essential for a use case?",
+        "options": ["Delayed data causes lost money or missed danger", "The dataset is very large", "The company has a big engineering team"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch03-batch-vs-real-time",
+      "title": "Lambda and Kappa Architectures",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "What if you need both batch accuracy and real-time speed? Two famous architectures try to solve this.", "visual": "🏛️" },
+        "buildup": { "text": "Lambda architecture runs a batch layer for accuracy and a speed layer for freshness, then merges results.", "visual": "🔀" },
+        "discovery": { "text": "Kappa architecture simplifies by using only a streaming layer. Reprocess by replaying the stream.", "visual": "♻️" },
+        "twist": { "text": "Lambda gives you the best of both worlds but doubles your maintenance burden.", "visual": "😓" },
+        "climax": { "text": "Most modern teams pick one approach and accept its trade-offs rather than maintaining both.", "visual": "✅" },
+        "punchline": { "text": "Two paths or one — pick what you can maintain.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How does Kappa architecture differ from Lambda?",
+        "options": ["Kappa uses only a streaming layer instead of batch plus stream", "Kappa uses only batch processing", "Kappa requires more infrastructure"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch04-storage-foundations",
+      "title": "Rows vs Columns",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your database stores data in rows. Your analytics warehouse stores it in columns. Why the difference?", "visual": "📋" },
+        "buildup": { "text": "Row-oriented storage keeps all fields of a record together — great for reading whole records fast.", "visual": "📄" },
+        "discovery": { "text": "Column-oriented storage groups values of the same field — perfect for scanning a single metric across millions of rows.", "visual": "📊" },
+        "twist": { "text": "Using row storage for analytics is like reading an entire book to find one word per page.", "visual": "📖" },
+        "climax": { "text": "Choosing the right orientation can make queries 100x faster without changing any code.", "visual": "🚀" },
+        "punchline": { "text": "Rows for transactions. Columns for analytics.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "Why is columnar storage preferred for analytics?",
+        "options": ["It scans only the needed columns, making aggregations faster", "It stores data more securely", "It uses less disk space for all workloads"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch04-storage-foundations",
+      "title": "File Formats: Parquet, Avro, ORC",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "CSV files are everywhere, but data engineers abandoned them years ago. The reason? Performance.", "visual": "📁" },
+        "buildup": { "text": "Parquet stores data in columns with built-in compression. It's the default for analytics workloads.", "visual": "📊" },
+        "discovery": { "text": "Avro stores data in rows with a schema header — ideal for streaming and data exchange.", "visual": "🔄" },
+        "twist": { "text": "ORC is Hive's format, optimized for heavy read queries. The format war still hasn't ended.", "visual": "⚔️" },
+        "climax": { "text": "The right format depends on your workload: analytics favors Parquet, streaming favors Avro.", "visual": "🎯" },
+        "punchline": { "text": "CSV is for humans. Parquet is for machines.", "visual": "🤖" }
+      },
+      "quiz": {
+        "question": "Which file format is most commonly used for analytics workloads?",
+        "options": ["Parquet", "CSV", "JSON"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch04-storage-foundations",
+      "title": "Compression Trade-Offs",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A dataset that takes 1 TB uncompressed shrinks to 200 GB with Snappy. Storage costs drop 80%.", "visual": "🗜️" },
+        "buildup": { "text": "Compression saves storage and network bandwidth, but decompression costs CPU time.", "visual": "⚖️" },
+        "discovery": { "text": "Snappy is fast but compresses less. Gzip compresses more but is slower. Zstd balances both.", "visual": "📉" },
+        "twist": { "text": "Over-compressing can make queries slower if the CPU can't decompress fast enough.", "visual": "🐌" },
+        "climax": { "text": "The best choice depends on whether you're bottlenecked by storage cost or query speed.", "visual": "🎯" },
+        "punchline": { "text": "Compress for the bottleneck, not the benchmark.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the main trade-off of data compression?",
+        "options": ["Smaller storage but higher CPU cost to decompress", "Faster queries but larger files", "Better security but slower writes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch04-storage-foundations",
+      "title": "Partitioning for Performance",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Scanning a billion rows to find last Tuesday's sales is wasteful. Partitioning skips the irrelevant data.", "visual": "📂" },
+        "buildup": { "text": "Partitioning divides data into folders by a key like date, region, or customer ID.", "visual": "🗂️" },
+        "discovery": { "text": "When you query by partition key, the engine reads only matching folders and skips everything else.", "visual": "⚡" },
+        "twist": { "text": "Too many small partitions create overhead. Too few large ones defeat the purpose.", "visual": "🤔" },
+        "climax": { "text": "The ideal partition key matches your most common query filter and produces evenly sized chunks.", "visual": "✅" },
+        "punchline": { "text": "Partition by how you query, not how you ingest.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is the purpose of data partitioning?",
+        "options": ["Skip irrelevant data so queries read less", "Encrypt sensitive information", "Duplicate data for redundancy"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch04-storage-foundations",
+      "title": "Object Storage Revolution",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Amazon S3 launched in 2006 with a wild idea: store unlimited data for pennies per gigabyte.", "visual": "☁️" },
+        "buildup": { "text": "Object storage treats every file as a blob with metadata. No file system hierarchy needed.", "visual": "📦" },
+        "discovery": { "text": "S3, GCS, and Azure Blob became the default storage for data lakes, backups, and analytics.", "visual": "🌊" },
+        "twist": { "text": "Object storage is cheap and durable, but high-latency — bad for transactional workloads.", "visual": "🐢" },
+        "climax": { "text": "Today, most data engineering architectures start with object storage as the foundation.", "visual": "🏗️" },
+        "punchline": { "text": "Cheap, durable, infinite. Object storage changed everything.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "What is a key advantage of object storage like S3?",
+        "options": ["Very low cost per gigabyte with high durability", "Fastest possible read latency", "Built-in SQL query support"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch05-orchestration-basics",
+      "title": "Why Pipelines Need Orchestration",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Job A extracts data. Job B transforms it. Job C loads it. What if B runs before A finishes?", "visual": "🔗" },
+        "buildup": { "text": "Orchestration ensures tasks run in the right order, at the right time, with the right dependencies.", "visual": "🎼" },
+        "discovery": { "text": "Without orchestration, teams rely on cron jobs and hope — a recipe for silent failures.", "visual": "🤞" },
+        "twist": { "text": "One missed dependency can cascade into hours of wrong data served to decision-makers.", "visual": "💥" },
+        "climax": { "text": "Orchestrators are the conductors that turn individual jobs into a reliable data symphony.", "visual": "🎵" },
+        "punchline": { "text": "Without a conductor, every instrument plays alone.", "visual": "🎻" }
+      },
+      "quiz": {
+        "question": "What problem does pipeline orchestration solve?",
+        "options": ["Ensuring tasks run in the correct order with proper dependencies", "Making queries faster", "Reducing storage costs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch05-orchestration-basics",
+      "title": "DAGs: Directed Acyclic Graphs",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every modern orchestrator organizes work as a DAG. The name sounds complex, but the idea isn't.", "visual": "📐" },
+        "buildup": { "text": "A DAG is a graph where tasks flow in one direction and never loop back on themselves.", "visual": "➡️" },
+        "discovery": { "text": "Each node is a task. Each edge is a dependency. The structure guarantees tasks run in valid order.", "visual": "🔗" },
+        "twist": { "text": "If task C depends on A and B, both can run in parallel — the DAG knows C must wait for both.", "visual": "⏳" },
+        "climax": { "text": "DAGs make complex workflows visible, debuggable, and automatically parallelizable.", "visual": "👁️" },
+        "punchline": { "text": "No cycles, no confusion. That's a DAG.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What does 'acyclic' mean in a Directed Acyclic Graph?",
+        "options": ["Tasks never loop back to a previous step", "Tasks run in random order", "The graph has no edges"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch05-orchestration-basics",
+      "title": "Apache Airflow's Rise",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Airbnb built a tool to manage their own data pipelines. Then the entire industry adopted it.", "visual": "🏠" },
+        "buildup": { "text": "Apache Airflow lets you define pipelines as Python code, schedule them, and monitor progress.", "visual": "🐍" },
+        "discovery": { "text": "Its DAG-based model, rich UI, and plugin ecosystem made it the de facto orchestrator by 2020.", "visual": "🏆" },
+        "twist": { "text": "Airflow was designed for batch. Teams that force real-time use cases into it often struggle.", "visual": "😤" },
+        "climax": { "text": "Competitors like Dagster and Prefect fix Airflow's rough edges, but Airflow's ecosystem remains vast.", "visual": "🌐" },
+        "punchline": { "text": "Airflow didn't win by being perfect. It won by being first.", "visual": "🥇" }
+      },
+      "quiz": {
+        "question": "Which company originally created Apache Airflow?",
+        "options": ["Airbnb", "Google", "Netflix"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch05-orchestration-basics",
+      "title": "Scheduling and Dependencies",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A daily pipeline runs at midnight. But the source data doesn't arrive until 2 AM. Disaster.", "visual": "⏰" },
+        "buildup": { "text": "Scheduling defines when a pipeline runs. Dependencies define what must finish first.", "visual": "📅" },
+        "discovery": { "text": "Sensor tasks can wait for a file to appear or an API to respond before triggering downstream work.", "visual": "📡" },
+        "twist": { "text": "Time-based scheduling is fragile. Event-based triggers are more reliable but harder to set up.", "visual": "🔧" },
+        "climax": { "text": "The best pipelines combine time schedules with dependency checks so nothing runs on missing data.", "visual": "🛡️" },
+        "punchline": { "text": "Schedule the clock. Trust the dependency.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is pure time-based scheduling risky for data pipelines?",
+        "options": ["Source data may not have arrived when the job starts", "It uses too much CPU", "It cannot handle multiple tasks"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch05-orchestration-basics",
+      "title": "Handling Failures Gracefully",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A pipeline fails at step 47 of 50. Do you rerun all 50 steps? That would waste hours.", "visual": "❌" },
+        "buildup": { "text": "Good orchestrators support retries, partial reruns, and idempotent tasks.", "visual": "🔁" },
+        "discovery": { "text": "Idempotent means running a task twice produces the same result — critical for safe retries.", "visual": "🔐" },
+        "twist": { "text": "Non-idempotent tasks can double-count revenue or duplicate customer records on retry.", "visual": "💰" },
+        "climax": { "text": "Design every task to be safely rerunnable, and pipeline failures become minor inconveniences.", "visual": "😌" },
+        "punchline": { "text": "Failures are inevitable. Safe reruns are a choice.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does 'idempotent' mean in the context of data pipelines?",
+        "options": ["Running a task multiple times produces the same result", "The task never fails", "The task runs only once"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch06-the-data-engineers-toolkit",
+      "title": "SQL: The Lingua Franca",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "SQL was invented in 1974. Fifty years later, it's still the most important language for data.", "visual": "👑" },
+        "buildup": { "text": "Every database, warehouse, and lake query engine speaks SQL or a dialect of it.", "visual": "🗣️" },
+        "discovery": { "text": "Data engineers use SQL for transforms, quality checks, pipeline logic, and ad-hoc debugging.", "visual": "🔧" },
+        "twist": { "text": "New tools keep trying to replace SQL. They all end up adding SQL support instead.", "visual": "😂" },
+        "climax": { "text": "Learning SQL deeply — window functions, CTEs, optimization — is the highest-ROI skill in data.", "visual": "📈" },
+        "punchline": { "text": "Languages come and go. SQL just keeps winning.", "visual": "🏆" }
+      },
+      "quiz": {
+        "question": "Why has SQL remained dominant in data engineering for decades?",
+        "options": ["Nearly every data system supports it", "It is the fastest programming language", "It was created by Google"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch06-the-data-engineers-toolkit",
+      "title": "Python in Data Engineering",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "SQL can't call an API, parse JSON, or orchestrate a workflow. That's where Python steps in.", "visual": "🐍" },
+        "buildup": { "text": "Python dominates data engineering for glue code, scripting, and pipeline orchestration.", "visual": "🧩" },
+        "discovery": { "text": "Libraries like Pandas, PySpark, and SQLAlchemy make Python the Swiss Army knife of data work.", "visual": "🔪" },
+        "twist": { "text": "Python is slow for heavy computation. Engineers use it to coordinate fast engines, not replace them.", "visual": "🏎️" },
+        "climax": { "text": "Python is rarely the compute engine itself — it's the conductor that tells faster tools what to do.", "visual": "🎼" },
+        "punchline": { "text": "Python doesn't crunch the data. It tells others to.", "visual": "📣" }
+      },
+      "quiz": {
+        "question": "How is Python primarily used in data engineering?",
+        "options": ["As glue code and orchestration logic", "As the main computation engine", "For building user interfaces"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch06-the-data-engineers-toolkit",
+      "title": "Containers and Data Pipelines",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The pipeline works on your laptop but crashes in production. 'Works on my machine' strikes again.", "visual": "💻" },
+        "buildup": { "text": "Containers package code, dependencies, and config into an isolated, reproducible environment.", "visual": "📦" },
+        "discovery": { "text": "Docker lets engineers ship a pipeline that runs identically everywhere — local, staging, production.", "visual": "🐳" },
+        "twist": { "text": "Kubernetes orchestrates thousands of containers, but its complexity can overwhelm small teams.", "visual": "😵" },
+        "climax": { "text": "Containers solved the 'works on my machine' problem and became standard in data infrastructure.", "visual": "✅" },
+        "punchline": { "text": "Same container, same result. Everywhere.", "visual": "🌍" }
+      },
+      "quiz": {
+        "question": "What problem do containers solve for data pipelines?",
+        "options": ["Ensuring pipelines run identically across environments", "Making queries faster", "Reducing data storage costs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch06-the-data-engineers-toolkit",
+      "title": "Version Control for Data",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Code has Git. But who tracks which version of a dataset a dashboard was built on?", "visual": "🔖" },
+        "buildup": { "text": "Version control for data tracks schema changes, data snapshots, and pipeline lineage over time.", "visual": "📜" },
+        "discovery": { "text": "Tools like lakeFS and Delta Lake add Git-like branching and time travel to data lakes.", "visual": "⏪" },
+        "twist": { "text": "Without versioning, a bug fix can silently rewrite history and break every downstream report.", "visual": "💥" },
+        "climax": { "text": "Data versioning lets teams audit, roll back, and reproduce any past state of their data.", "visual": "🔍" },
+        "punchline": { "text": "If you can't roll it back, you don't control it.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does data version control enable?",
+        "options": ["Rolling back to a previous state of the data", "Faster query execution", "Automatic data compression"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--foundations-of-data-engineering--ch06-the-data-engineers-toolkit",
+      "title": "Testing Data Pipelines",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Software engineers test their code religiously. Data engineers often ship untested pipelines.", "visual": "🧪" },
+        "buildup": { "text": "Data tests verify row counts, null rates, value ranges, and schema consistency after each run.", "visual": "✅" },
+        "discovery": { "text": "Tools like Great Expectations and dbt tests let engineers define data contracts as automated checks.", "visual": "📝" },
+        "twist": { "text": "A pipeline that passes code review but produces wrong numbers is worse than one that crashes.", "visual": "😱" },
+        "climax": { "text": "The best teams treat data quality tests as first-class citizens, right alongside unit tests.", "visual": "🏅" },
+        "punchline": { "text": "Untested data is untrustworthy data.", "visual": "🚫" }
+      },
+      "quiz": {
+        "question": "What do data pipeline tests typically verify?",
+        "options": ["Row counts, null rates, value ranges, and schema consistency", "That the code compiles successfully", "Network connection speed"],
+        "correct": 0
+      }
+    }
+  ]
+}

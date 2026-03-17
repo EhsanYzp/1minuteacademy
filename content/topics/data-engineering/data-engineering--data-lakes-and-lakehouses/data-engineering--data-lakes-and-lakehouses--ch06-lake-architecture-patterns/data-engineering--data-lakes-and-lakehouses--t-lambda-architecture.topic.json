@@ -1,0 +1,49 @@
+{
+  "id": "data-engineering--data-lakes-and-lakehouses--t-lambda-architecture",
+  "version": 1,
+  "subject": "Data Engineering",
+  "subcategory": "Data Lakes and Lakehouses",
+  "course_id": "data-engineering--data-lakes-and-lakehouses",
+  "chapter_id": "data-engineering--data-lakes-and-lakehouses--ch06-lake-architecture-patterns",
+  "title": "Lambda Architecture",
+  "emoji": "🏞️",
+  "color": "#0D9488",
+  "description": "A short lesson to help you apply Lambda Architecture.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Some data needs real-time processing. Some needs batch reprocessing. Lambda architecture does both simultaneously.",
+      "visual": "🔀"
+    },
+    "buildup": {
+      "text": "Lambda has three layers: batch reprocesses all historical data, speed processes real-time streams, serving merges both.",
+      "visual": "🏗️"
+    },
+    "discovery": {
+      "text": "The batch layer ensures correctness with full recomputation. The speed layer provides low-latency approximate results.",
+      "visual": "⚡"
+    },
+    "twist": {
+      "text": "Maintaining two separate codebases — batch and streaming — for the same logic is a maintenance nightmare.",
+      "visual": "😵"
+    },
+    "climax": {
+      "text": "Lambda was influential but its complexity led to the simpler Kappa architecture as an alternative.",
+      "visual": "📉"
+    },
+    "punchline": {
+      "text": "Two paths for one result. Powerful but complex.",
+      "visual": "⚖️"
+    }
+  },
+  "quiz": {
+    "question": "What is the main criticism of Lambda architecture?",
+    "options": [
+      "Maintaining duplicate logic in batch and streaming codebases",
+      "It's too simple for production use",
+      "It only works with data lakes"
+    ],
+    "correct": 0
+  }
+}

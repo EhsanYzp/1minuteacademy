@@ -1,0 +1,49 @@
+{
+  "id": "data-engineering--streaming-data-systems--t-offset-management",
+  "version": 1,
+  "subject": "Data Engineering",
+  "subcategory": "Streaming Data Systems",
+  "course_id": "data-engineering--streaming-data-systems",
+  "chapter_id": "data-engineering--streaming-data-systems--ch05-delivery-guarantees",
+  "title": "Offset Management",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A short lesson to help you apply Offset Management.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "A consumer restarts after a crash. Where does it resume? From the beginning? The end? The last checkpoint?",
+      "visual": "🔖"
+    },
+    "buildup": {
+      "text": "Offsets track the consumer's position in a stream — which events have been read and processed.",
+      "visual": "📍"
+    },
+    "discovery": {
+      "text": "Committing offsets after processing means a crash replays only unprocessed events, not the entire stream.",
+      "visual": "✅"
+    },
+    "twist": {
+      "text": "If offsets commit before processing finishes, a crash means events are skipped. After? Duplicates on replay.",
+      "visual": "⚖️"
+    },
+    "climax": {
+      "text": "Offset management is the mechanism behind delivery guarantees. Get it wrong and data is lost or duplicated.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Your place in the stream is everything. Track it carefully.",
+      "visual": "📌"
+    }
+  },
+  "quiz": {
+    "question": "What happens if offsets are committed before event processing completes?",
+    "options": [
+      "A crash can cause events to be skipped",
+      "Events are automatically replayed",
+      "The stream pauses until processing finishes"
+    ],
+    "correct": 0
+  }
+}

@@ -1,0 +1,559 @@
+{
+  "categoryId": "data-engineering",
+  "subject": "Data Engineering",
+  "courseId": "data-engineering--data-warehousing",
+  "courseTitle": "Data Warehousing",
+  "emoji": "🏢",
+  "color": "#7C3AED",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "data-engineering--data-warehousing--ch01-birth-of-the-warehouse", "title": "Birth of the Warehouse", "position": 1 },
+    { "id": "data-engineering--data-warehousing--ch02-dimensional-modeling", "title": "Dimensional Modeling", "position": 2 },
+    { "id": "data-engineering--data-warehousing--ch03-schemas-and-structures", "title": "Schemas and Structures", "position": 3 },
+    { "id": "data-engineering--data-warehousing--ch04-olap-vs-oltp", "title": "OLAP vs OLTP", "position": 4 },
+    { "id": "data-engineering--data-warehousing--ch05-modern-cloud-warehouses", "title": "Modern Cloud Warehouses", "position": 5 },
+    { "id": "data-engineering--data-warehousing--ch06-warehouse-optimization", "title": "Warehouse Optimization", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch01-birth-of-the-warehouse",
+      "title": "Why Warehouses Exist",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Production databases serve apps. But running analytics on them slows down the app for everyone.", "visual": "🐌" },
+        "buildup": { "text": "In the 1980s, companies started copying data into a separate system optimized for analysis.", "visual": "📦" },
+        "discovery": { "text": "That separate system became the data warehouse — a central store designed for fast, complex queries.", "visual": "🏢" },
+        "twist": { "text": "Warehouses don't replace databases. They exist so databases can do their job without interruption.", "visual": "🤝" },
+        "climax": { "text": "Every major company now runs analytics on a warehouse, not on their production database.", "visual": "📊" },
+        "punchline": { "text": "One system for apps. Another for answers.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "Why were data warehouses invented?",
+        "options": ["To run analytics without slowing down production databases", "To replace all databases", "To store backup data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch01-birth-of-the-warehouse",
+      "title": "Bill Inmon's Vision",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 1992, Bill Inmon published the book that defined data warehousing. He's called the father of it.", "visual": "📖" },
+        "buildup": { "text": "Inmon proposed a centralized, subject-oriented, time-variant, non-volatile data store.", "visual": "🏛️" },
+        "discovery": { "text": "His approach: normalize the warehouse first, then build department-specific data marts on top.", "visual": "🔺" },
+        "twist": { "text": "Normalization avoids duplication but makes queries complex. Analysts need to join many tables.", "visual": "🔗" },
+        "climax": { "text": "Inmon's top-down approach works best for large enterprises with strong governance.", "visual": "🏢" },
+        "punchline": { "text": "Inmon said: build the truth first, then serve it.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is Bill Inmon's approach to data warehousing?",
+        "options": ["Normalize first, then build department data marts", "Skip the warehouse and use data lakes", "Store data in spreadsheets"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch01-birth-of-the-warehouse",
+      "title": "Ralph Kimball's Alternative",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Ralph Kimball looked at Inmon's approach and said: too slow, too complex, analysts can't wait.", "visual": "⏳" },
+        "buildup": { "text": "Kimball proposed building dimensional data marts first, then combining them into a warehouse.", "visual": "🧱" },
+        "discovery": { "text": "His bottom-up approach used star schemas — fast to query and intuitive for business users.", "visual": "⭐" },
+        "twist": { "text": "Kimball's approach delivers value faster, but without governance, marts become inconsistent islands.", "visual": "🏝️" },
+        "climax": { "text": "The Inmon vs Kimball debate shaped data warehousing for decades. Most teams now blend both ideas.", "visual": "🤝" },
+        "punchline": { "text": "Kimball said: serve the users first, govern later.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What schema type did Ralph Kimball champion?",
+        "options": ["Star schema", "Fully normalized third normal form", "Flat CSV files"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch01-birth-of-the-warehouse",
+      "title": "What Makes a Warehouse Different",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A warehouse looks like a database. It speaks SQL. But under the hood, everything is different.", "visual": "🔍" },
+        "buildup": { "text": "Warehouses use columnar storage, massive parallelism, and query optimizers tuned for aggregation.", "visual": "⚡" },
+        "discovery": { "text": "They trade write speed for read speed — slow to load, blazing fast to query.", "visual": "🏎️" },
+        "twist": { "text": "Running a transactional app on a warehouse would be painfully slow. They're not general-purpose.", "visual": "🚫" },
+        "climax": { "text": "Warehouses are purpose-built machines: designed for one thing and exceptional at it.", "visual": "🎯" },
+        "punchline": { "text": "Warehouses read fast because they sacrifice everything else.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What do warehouses optimize for compared to regular databases?",
+        "options": ["Read and query speed for analytics", "Fast transactional writes", "Real-time event processing"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch01-birth-of-the-warehouse",
+      "title": "The Data Mart",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Marketing wants their own data. Finance wants theirs. Neither wants to query the whole warehouse.", "visual": "🏬" },
+        "buildup": { "text": "A data mart is a subset of the warehouse focused on one department or business function.", "visual": "📊" },
+        "discovery": { "text": "Marts are smaller, faster, and tailored to specific teams — like a boutique inside a shopping mall.", "visual": "🛍️" },
+        "twist": { "text": "Independent marts with no shared warehouse become siloed islands with conflicting numbers.", "visual": "🏝️" },
+        "climax": { "text": "The best approach: a centralized warehouse as the source of truth, with curated marts on top.", "visual": "🏗️" },
+        "punchline": { "text": "One truth, many views. That's a well-run mart.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a data mart?",
+        "options": ["A subset of a warehouse focused on one team or function", "A replacement for the data warehouse", "A type of data lake"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch02-dimensional-modeling",
+      "title": "Facts and Dimensions",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "How much revenue did we make in Europe last quarter? Answering that requires two types of tables.", "visual": "💰" },
+        "buildup": { "text": "Fact tables store measurable events: sales amounts, click counts, order quantities.", "visual": "📏" },
+        "discovery": { "text": "Dimension tables store context: who bought it, when, where, and what product it was.", "visual": "🗂️" },
+        "twist": { "text": "Facts without dimensions are meaningless numbers. Dimensions without facts are just labels.", "visual": "🤷" },
+        "climax": { "text": "Dimensional modeling pairs facts with dimensions so any business question can be sliced and diced.", "visual": "🎯" },
+        "punchline": { "text": "Facts measure. Dimensions describe. Together, they answer.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What do fact tables store in dimensional modeling?",
+        "options": ["Measurable events like sales amounts and counts", "Descriptive attributes like customer names", "Database configuration settings"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch02-dimensional-modeling",
+      "title": "Grain: The Foundation of a Fact Table",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A sales table shows $1M in revenue. But is that per order, per line item, or per day? Grain matters.", "visual": "🔬" },
+        "buildup": { "text": "Grain defines the level of detail in a fact table — one row per what, exactly?", "visual": "📐" },
+        "discovery": { "text": "A grain of 'one row per order line item per day' tells you exactly what each number represents.", "visual": "✅" },
+        "twist": { "text": "Mixing grains in one table — daily and monthly rows together — produces nonsensical aggregations.", "visual": "💥" },
+        "climax": { "text": "Declaring the grain first is the most important decision in dimensional modeling.", "visual": "🏗️" },
+        "punchline": { "text": "Define the grain wrong and every number lies.", "visual": "🚫" }
+      },
+      "quiz": {
+        "question": "What does 'grain' define in a fact table?",
+        "options": ["The level of detail each row represents", "The color of the dashboard", "The number of columns in the table"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch02-dimensional-modeling",
+      "title": "Additive, Semi-Additive, and Non-Additive Facts",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You can sum daily revenue to get monthly revenue. But can you sum daily bank balances? No.", "visual": "🏦" },
+        "buildup": { "text": "Additive facts like revenue can be summed across all dimensions. They're the easiest to work with.", "visual": "➕" },
+        "discovery": { "text": "Semi-additive facts like account balances can be summed across some dimensions but not time.", "visual": "⚠️" },
+        "twist": { "text": "Non-additive facts like unit price or temperature can't be meaningfully summed at all.", "visual": "🌡️" },
+        "climax": { "text": "Knowing a fact's additivity prevents bogus calculations that look correct but aren't.", "visual": "🛡️" },
+        "punchline": { "text": "Not every number should be summed. Know which ones.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why can't you sum bank account balances across time?",
+        "options": ["Balances are semi-additive and only valid at a point in time", "Banks don't allow it", "The numbers are too large"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch02-dimensional-modeling",
+      "title": "Conformed Dimensions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Marketing says there are 50K customers. Sales says 48K. Same company, different numbers.", "visual": "😤" },
+        "buildup": { "text": "The mismatch happens when each team defines 'customer' differently in their own data mart.", "visual": "🏝️" },
+        "discovery": { "text": "A conformed dimension is a shared, agreed-upon definition used identically across all marts.", "visual": "🤝" },
+        "twist": { "text": "Building conformed dimensions requires cross-team agreement — the hardest part is politics, not code.", "visual": "🗣️" },
+        "climax": { "text": "Conformed dimensions let you compare facts across departments with confidence in the numbers.", "visual": "✅" },
+        "punchline": { "text": "Same word, same meaning, everywhere. That's conformity.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What problem do conformed dimensions solve?",
+        "options": ["Inconsistent definitions of shared entities across teams", "Slow query performance", "Excessive storage costs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch02-dimensional-modeling",
+      "title": "Degenerate Dimensions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An order number doesn't belong in a dimension table. It has no attributes. But you still need it.", "visual": "🔢" },
+        "buildup": { "text": "A degenerate dimension is a dimension key stored directly in the fact table with no separate table.", "visual": "📋" },
+        "discovery": { "text": "Invoice numbers, transaction IDs, and ticket numbers are classic degenerate dimensions.", "visual": "🎫" },
+        "twist": { "text": "They carry no descriptive attributes, yet they're essential for grouping and tracing transactions.", "visual": "🔗" },
+        "climax": { "text": "Degenerate dimensions keep the model clean by avoiding unnecessary single-column lookup tables.", "visual": "✨" },
+        "punchline": { "text": "No attributes, no separate table. Just the key.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a degenerate dimension?",
+        "options": ["A dimension key stored in the fact table with no separate dimension table", "A dimension that is no longer used", "A dimension with many attributes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch03-schemas-and-structures",
+      "title": "The Star Schema",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Draw a fact table in the center with dimension tables around it. It looks like a star.", "visual": "⭐" },
+        "buildup": { "text": "Star schemas have one fact table joined directly to denormalized dimension tables.", "visual": "📐" },
+        "discovery": { "text": "Queries are fast because each question needs at most one join per dimension — simple and predictable.", "visual": "⚡" },
+        "twist": { "text": "Denormalized dimensions duplicate data. A country name might appear in a million rows.", "visual": "📈" },
+        "climax": { "text": "Star schemas trade storage for speed and simplicity — the right trade-off for analytics.", "visual": "⚖️" },
+        "punchline": { "text": "One fact, many dimensions, zero complexity. That's a star.", "visual": "🌟" }
+      },
+      "quiz": {
+        "question": "What is the main advantage of a star schema?",
+        "options": ["Simple, fast queries with minimal joins", "Minimum storage usage", "Support for real-time transactions"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch03-schemas-and-structures",
+      "title": "The Snowflake Schema",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A star schema's dimension tables are flat. What if you normalize them into sub-tables?", "visual": "❄️" },
+        "buildup": { "text": "A snowflake schema breaks dimensions into multiple related tables — like a star with branches.", "visual": "🌿" },
+        "discovery": { "text": "Instead of one wide 'product' dimension, you get product, category, and brand as separate tables.", "visual": "🔗" },
+        "twist": { "text": "Snowflakes save storage but add join complexity. Every query touches more tables.", "visual": "🤔" },
+        "climax": { "text": "Modern warehouses are so fast that the storage savings rarely justify the added query complexity.", "visual": "💸" },
+        "punchline": { "text": "Snowflakes look elegant. Stars perform better.", "visual": "⭐" }
+      },
+      "quiz": {
+        "question": "How does a snowflake schema differ from a star schema?",
+        "options": ["Dimensions are normalized into multiple related tables", "It has no fact tables", "It stores data in a single flat file"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch03-schemas-and-structures",
+      "title": "Wide Tables and One Big Table",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Some teams skip star schemas entirely and flatten everything into one massive wide table.", "visual": "📏" },
+        "buildup": { "text": "A wide table pre-joins all dimensions into the fact table. Every column lives in one place.", "visual": "🗄️" },
+        "discovery": { "text": "No joins at query time means faster dashboards and simpler SQL for analysts.", "visual": "⚡" },
+        "twist": { "text": "Wide tables duplicate enormous amounts of data and make updates painful across millions of rows.", "visual": "😓" },
+        "climax": { "text": "With cheap cloud storage, many teams accept the duplication trade-off for query simplicity.", "visual": "☁️" },
+        "punchline": { "text": "One big table. Zero joins. Maximum speed.", "visual": "🏎️" }
+      },
+      "quiz": {
+        "question": "What is the trade-off of using a single wide table?",
+        "options": ["Faster queries but massive data duplication", "Less storage but slower queries", "Better security but harder maintenance"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch03-schemas-and-structures",
+      "title": "Data Vault Modeling",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Star schemas are great for querying. But what about auditing every change to every relationship?", "visual": "🔍" },
+        "buildup": { "text": "Data Vault separates business keys, descriptive data, and relationships into hubs, satellites, and links.", "visual": "🧩" },
+        "discovery": { "text": "Hubs store entity keys. Satellites store attributes over time. Links store relationships.", "visual": "🔗" },
+        "twist": { "text": "Data Vault is extremely auditable and flexible, but querying it directly is painful for analysts.", "visual": "😵" },
+        "climax": { "text": "Most Data Vault teams build star schema views on top for consumption. It's a storage model, not a query one.", "visual": "📊" },
+        "punchline": { "text": "Vault for storage. Stars for queries. Both can coexist.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "What is a 'hub' in Data Vault modeling?",
+        "options": ["A table storing unique business keys for an entity", "A backup storage system", "A type of data pipeline"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch03-schemas-and-structures",
+      "title": "Normalization vs Denormalization",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Database textbooks say: normalize everything. Warehouse practitioners say: denormalize aggressively.", "visual": "📚" },
+        "buildup": { "text": "Normalization eliminates redundancy. Every fact is stored exactly once, saving space and consistency.", "visual": "📐" },
+        "discovery": { "text": "Denormalization copies data into fewer, wider tables — trading redundancy for faster read performance.", "visual": "⚡" },
+        "twist": { "text": "In transactional systems, normalization prevents update anomalies. In warehouses, reads dominate.", "visual": "📊" },
+        "climax": { "text": "The right level of normalization depends on whether the workload is write-heavy or read-heavy.", "visual": "⚖️" },
+        "punchline": { "text": "Normalize for writes. Denormalize for reads.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why do data warehouses favor denormalization?",
+        "options": ["Fewer joins make analytical queries faster", "It uses less storage", "It prevents data corruption"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch04-olap-vs-oltp",
+      "title": "What Is OLTP?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You tap 'Buy Now' and a database records your order in five milliseconds. That's OLTP.", "visual": "🛒" },
+        "buildup": { "text": "OLTP stands for Online Transaction Processing — fast, small operations on individual records.", "visual": "⚡" },
+        "discovery": { "text": "Banks, e-commerce sites, and booking systems all run on OLTP databases optimized for writes.", "visual": "🏦" },
+        "twist": { "text": "OLTP systems handle millions of tiny operations per second, but struggle with complex analytics.", "visual": "📊" },
+        "climax": { "text": "OLTP databases are row-oriented, normalized, and built for low-latency single-record access.", "visual": "📋" },
+        "punchline": { "text": "OLTP keeps the business running, one transaction at a time.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is OLTP optimized for?",
+        "options": ["Fast, small operations on individual records", "Complex analytical queries", "Long-running batch jobs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch04-olap-vs-oltp",
+      "title": "What Is OLAP?",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Show me total sales by region, product, and quarter. That's not a transaction — that's OLAP.", "visual": "📊" },
+        "buildup": { "text": "OLAP stands for Online Analytical Processing — complex queries that scan millions of rows.", "visual": "🔍" },
+        "discovery": { "text": "OLAP systems use columnar storage and parallel processing to crunch large datasets fast.", "visual": "⚡" },
+        "twist": { "text": "OLAP queries read a lot but write rarely. The opposite pattern of OLTP.", "visual": "🔄" },
+        "climax": { "text": "Data warehouses are OLAP systems. They exist to answer the big questions, not process transactions.", "visual": "🏢" },
+        "punchline": { "text": "OLTP records the facts. OLAP finds the meaning.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "What does OLAP stand for?",
+        "options": ["Online Analytical Processing", "Online Application Programming", "Optimized Load and Process"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch04-olap-vs-oltp",
+      "title": "OLAP Cubes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Imagine slicing data by time, region, and product simultaneously — like rotating a 3D cube of data.", "visual": "🧊" },
+        "buildup": { "text": "OLAP cubes pre-compute aggregations across multiple dimensions so drill-downs are instant.", "visual": "📐" },
+        "discovery": { "text": "Slice shows one dimension. Dice shows a subcube. Drill-down goes from year to quarter to month.", "visual": "🔬" },
+        "twist": { "text": "Cubes were essential when hardware was slow. Modern warehouses can compute on the fly just as fast.", "visual": "🏎️" },
+        "climax": { "text": "OLAP cubes taught us how to think about multi-dimensional analysis, even if the tech has moved on.", "visual": "📚" },
+        "punchline": { "text": "The cube is dead. Its ideas live on in every dashboard.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "What did OLAP cubes pre-compute?",
+        "options": ["Aggregations across multiple dimensions", "Individual transaction records", "Machine learning predictions"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch04-olap-vs-oltp",
+      "title": "HTAP: The Hybrid Approach",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "What if one database could handle both transactions and analytics? HTAP promises exactly that.", "visual": "🔀" },
+        "buildup": { "text": "HTAP stands for Hybrid Transactional/Analytical Processing — one engine for both workloads.", "visual": "⚙️" },
+        "discovery": { "text": "Databases like TiDB and SingleStore use row storage for writes and columnar replicas for reads.", "visual": "🧩" },
+        "twist": { "text": "In practice, HTAP adds complexity and rarely matches the performance of dedicated OLTP or OLAP systems.", "visual": "⚖️" },
+        "climax": { "text": "HTAP works for mid-scale workloads, but the largest companies still separate transactions from analytics.", "visual": "🏢" },
+        "punchline": { "text": "One system for both sounds ideal. Reality is messier.", "visual": "🤷" }
+      },
+      "quiz": {
+        "question": "What does HTAP attempt to combine?",
+        "options": ["Transactional and analytical processing in one system", "Multiple programming languages", "Cloud and on-premise storage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch04-olap-vs-oltp",
+      "title": "Choosing OLTP or OLAP",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An engineer asks: 'Should I use Postgres or Snowflake?' The real question is: what's the workload?", "visual": "🤔" },
+        "buildup": { "text": "If the workload is many small reads and writes — like an app backend — choose OLTP.", "visual": "⚡" },
+        "discovery": { "text": "If the workload is few complex queries scanning large datasets — like a dashboard — choose OLAP.", "visual": "📊" },
+        "twist": { "text": "Using OLAP for transactions is slow. Using OLTP for analytics is expensive. Both are common mistakes.", "visual": "💸" },
+        "climax": { "text": "Most architectures use both: OLTP for the app, OLAP for the warehouse, and a pipeline connecting them.", "visual": "🔗" },
+        "punchline": { "text": "Match the engine to the workload. Never the reverse.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "When should you choose an OLAP system over OLTP?",
+        "options": ["When the workload involves complex queries on large datasets", "When you need fast single-record writes", "When building a mobile app backend"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch05-modern-cloud-warehouses",
+      "title": "The Cloud Warehouse Revolution",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "On-premise warehouses cost millions to buy, months to set up, and years to outgrow.", "visual": "💸" },
+        "buildup": { "text": "Cloud warehouses eliminated hardware. You provision compute in minutes and pay only for what you use.", "visual": "☁️" },
+        "discovery": { "text": "Snowflake, BigQuery, and Redshift made warehouse power accessible to startups and enterprises alike.", "visual": "🚀" },
+        "twist": { "text": "Cloud warehouses are cheaper to start but can surprise you with massive bills if usage isn't monitored.", "visual": "😱" },
+        "climax": { "text": "The cloud shifted warehousing from a capital expense to an operational one — and changed the industry.", "visual": "🔄" },
+        "punchline": { "text": "No hardware. No limits. Just a credit card.", "visual": "💳" }
+      },
+      "quiz": {
+        "question": "What major shift did cloud warehouses introduce?",
+        "options": ["Pay-per-use pricing with no upfront hardware", "Slower query performance", "Mandatory on-premise installation"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch05-modern-cloud-warehouses",
+      "title": "Snowflake's Architecture",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Snowflake launched in 2014 with a radical idea: completely separate storage from compute.", "visual": "❄️" },
+        "buildup": { "text": "Data lives in cheap cloud storage. Compute clusters spin up on demand, query the data, then shut down.", "visual": "⚙️" },
+        "discovery": { "text": "This separation lets different teams run their own warehouses on the same data without interference.", "visual": "👥" },
+        "twist": { "text": "Snowflake's simplicity made it beloved by analysts but created a new problem: runaway compute costs.", "visual": "📈" },
+        "climax": { "text": "Snowflake proved that separating storage and compute is the future of warehouse architecture.", "visual": "🏗️" },
+        "punchline": { "text": "Store once. Compute anywhere. Scale independently.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is Snowflake's key architectural innovation?",
+        "options": ["Separating storage from compute", "Using only row-based storage", "Requiring on-premise hardware"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch05-modern-cloud-warehouses",
+      "title": "Google BigQuery's Approach",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "BigQuery is serverless. There's no cluster to configure, no infrastructure to manage. Just SQL.", "visual": "🌐" },
+        "buildup": { "text": "Google built BigQuery on Dremel, their internal engine for querying petabytes interactively.", "visual": "🔍" },
+        "discovery": { "text": "BigQuery charges per query based on data scanned, not compute time — a unique pricing model.", "visual": "💰" },
+        "twist": { "text": "A poorly written query that scans everything can cost hundreds of dollars in seconds.", "visual": "😬" },
+        "climax": { "text": "BigQuery's serverless model is ideal for unpredictable workloads where you can't size clusters ahead.", "visual": "☁️" },
+        "punchline": { "text": "No servers. Just SQL and a bill per query.", "visual": "📝" }
+      },
+      "quiz": {
+        "question": "How does BigQuery primarily charge for queries?",
+        "options": ["Based on the amount of data scanned", "Based on compute time used", "A flat monthly fee"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch05-modern-cloud-warehouses",
+      "title": "Amazon Redshift's Evolution",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Redshift was the first major cloud warehouse, launched by AWS in 2012. It changed the game.", "visual": "🏁" },
+        "buildup": { "text": "Early Redshift used fixed clusters — you chose a size and paid whether you used it or not.", "visual": "📦" },
+        "discovery": { "text": "Redshift Serverless and RA3 nodes later added storage-compute separation, catching up to Snowflake.", "visual": "🔄" },
+        "twist": { "text": "Redshift's tight AWS integration is a strength for AWS shops but creates lock-in for multi-cloud teams.", "visual": "🔒" },
+        "climax": { "text": "Redshift proved the cloud warehouse market existed, then had to evolve as competitors leapfrogged it.", "visual": "🏃" },
+        "punchline": { "text": "First to market doesn't mean first to finish.", "visual": "🏁" }
+      },
+      "quiz": {
+        "question": "What was a limitation of early Amazon Redshift?",
+        "options": ["Fixed clusters that you paid for regardless of usage", "No SQL support", "No cloud availability"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch05-modern-cloud-warehouses",
+      "title": "Warehouse Cost Management",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A startup's Snowflake bill jumped from $2K to $40K in one month. One runaway query caused it.", "visual": "🔥" },
+        "buildup": { "text": "Cloud warehouses make it easy to spend because scaling is invisible — no purchase order required.", "visual": "💳" },
+        "discovery": { "text": "Cost controls include auto-suspend, query timeouts, resource monitors, and usage dashboards.", "visual": "📊" },
+        "twist": { "text": "The biggest cost driver is often not the data size but badly optimized queries scanning too much.", "visual": "🔍" },
+        "climax": { "text": "Treating warehouse cost as an engineering metric — not just a finance problem — keeps bills sane.", "visual": "🛡️" },
+        "punchline": { "text": "Cloud makes scaling easy. Too easy, sometimes.", "visual": "⚠️" }
+      },
+      "quiz": {
+        "question": "What is the most common cause of unexpected cloud warehouse costs?",
+        "options": ["Poorly optimized queries scanning too much data", "Storing too many small files", "Having too many users"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch06-warehouse-optimization",
+      "title": "Clustering and Sort Keys",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A query filters by date, but the warehouse scans every file. Sorting the data by date fixes this.", "visual": "📅" },
+        "buildup": { "text": "Clustering physically organizes data by a key so the engine skips irrelevant file segments.", "visual": "🗂️" },
+        "discovery": { "text": "Sort keys in Redshift and cluster keys in Snowflake tell the warehouse how to arrange data on disk.", "visual": "⚙️" },
+        "twist": { "text": "Choosing a bad cluster key — or too many — can make writes slower without helping reads.", "visual": "🐌" },
+        "climax": { "text": "Pick the column that appears most often in WHERE clauses. That's usually your best cluster key.", "visual": "🎯" },
+        "punchline": { "text": "Sort your data the way you query it.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does clustering data in a warehouse achieve?",
+        "options": ["Organizes data so queries skip irrelevant segments", "Compresses data to save storage", "Encrypts data for security"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch06-warehouse-optimization",
+      "title": "Materialized Views",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The same expensive query runs every time the dashboard loads. Why not store the result?", "visual": "💾" },
+        "buildup": { "text": "A materialized view pre-computes and stores query results, serving future requests instantly.", "visual": "⚡" },
+        "discovery": { "text": "Unlike regular views, materialized views have physical storage and need periodic refreshing.", "visual": "🔄" },
+        "twist": { "text": "Stale materialized views serve outdated data. Auto-refresh schedules add cost and complexity.", "visual": "⏰" },
+        "climax": { "text": "Use materialized views for stable, frequently queried aggregations — not for rapidly changing data.", "visual": "📊" },
+        "punchline": { "text": "Compute once, serve many. But refresh wisely.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "What is the key benefit of a materialized view?",
+        "options": ["Pre-computed results that serve queries instantly", "Real-time data streaming", "Automatic data backup"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch06-warehouse-optimization",
+      "title": "Query Optimization Basics",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A query that takes 30 minutes can often be rewritten to finish in 30 seconds. The data hasn't changed.", "visual": "⏱️" },
+        "buildup": { "text": "Common wins: avoid SELECT *, filter early, use partition pruning, and limit expensive joins.", "visual": "🔧" },
+        "discovery": { "text": "The EXPLAIN plan shows exactly how the warehouse executes your query — reads, joins, sorts, costs.", "visual": "🔍" },
+        "twist": { "text": "The fastest query is the one that reads the least data. Reducing scan volume beats hardware every time.", "visual": "🏎️" },
+        "climax": { "text": "Query optimization is a skill that compounds. Small improvements across thousands of queries save fortunes.", "visual": "💰" },
+        "punchline": { "text": "Optimize the query before you scale the warehouse.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is the fastest way to improve warehouse query performance?",
+        "options": ["Reduce the amount of data the query scans", "Add more compute resources", "Use longer column names for clarity"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch06-warehouse-optimization",
+      "title": "Caching in Warehouses",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Run a query. It takes 10 seconds. Run the same query again. It returns in 100 milliseconds.", "visual": "⚡" },
+        "buildup": { "text": "Warehouses cache query results so identical subsequent queries skip all computation.", "visual": "💾" },
+        "discovery": { "text": "Result caching, metadata caching, and local SSD caching are all layers that speed up repeated work.", "visual": "🧱" },
+        "twist": { "text": "Cache invalidation happens when underlying data changes. Stale caches serve wrong answers.", "visual": "⚠️" },
+        "climax": { "text": "Understanding your warehouse's caching behavior explains why the same query has wildly different speeds.", "visual": "🎰" },
+        "punchline": { "text": "The fastest query is the one already answered.", "visual": "🏆" }
+      },
+      "quiz": {
+        "question": "Why might the same query return faster on a second run?",
+        "options": ["The warehouse cached the result from the first run", "The data shrank between runs", "The warehouse upgraded its hardware"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-warehousing--ch06-warehouse-optimization",
+      "title": "Monitoring Warehouse Health",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Users complain the dashboard is slow. Is it the query, the data pipeline, or the warehouse itself?", "visual": "🤔" },
+        "buildup": { "text": "Warehouse health metrics include query queue time, spill to disk, scan efficiency, and credit usage.", "visual": "📊" },
+        "discovery": { "text": "Long queue times mean not enough compute. Spill to disk means queries need more memory.", "visual": "💡" },
+        "twist": { "text": "Monitoring dashboards consume warehouse resources too. A badly built monitor can be the cause of slowness.", "visual": "😂" },
+        "climax": { "text": "Proactive monitoring catches performance issues before users notice — and before costs spiral.", "visual": "🚨" },
+        "punchline": { "text": "Healthy warehouse, happy analysts. Monitor early.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What does long queue time in a warehouse indicate?",
+        "options": ["Not enough compute resources are available", "Data is corrupted", "The warehouse is being backed up"],
+        "correct": 0
+      }
+    }
+  ]
+}

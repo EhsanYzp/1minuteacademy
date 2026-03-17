@@ -1,0 +1,559 @@
+{
+  "categoryId": "data-engineering",
+  "subject": "Data Engineering",
+  "courseId": "data-engineering--data-pipelines-explained",
+  "courseTitle": "Data Pipelines Explained",
+  "emoji": "🔄",
+  "color": "#059669",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "data-engineering--data-pipelines-explained--ch01-anatomy-of-a-pipeline", "title": "Anatomy of a Pipeline", "position": 1 },
+    { "id": "data-engineering--data-pipelines-explained--ch02-extract-patterns", "title": "Extract Patterns", "position": 2 },
+    { "id": "data-engineering--data-pipelines-explained--ch03-transform-strategies", "title": "Transform Strategies", "position": 3 },
+    { "id": "data-engineering--data-pipelines-explained--ch04-load-and-delivery", "title": "Load and Delivery", "position": 4 },
+    { "id": "data-engineering--data-pipelines-explained--ch05-pipeline-failures", "title": "Pipeline Failures", "position": 5 },
+    { "id": "data-engineering--data-pipelines-explained--ch06-pipeline-architecture", "title": "Pipeline Architecture", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch01-anatomy-of-a-pipeline",
+      "title": "What Is a Data Pipeline?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Every morning, a dashboard shows yesterday's revenue. Behind it, a pipeline ran all night.", "visual": "📊" },
+        "buildup": { "text": "A data pipeline moves data from a source to a destination, transforming it along the way.", "visual": "🔄" },
+        "discovery": { "text": "Pipelines have three core stages: extract data out, transform it, and load it somewhere useful.", "visual": "📦" },
+        "twist": { "text": "The concept is simple, but real pipelines handle messy schemas, late data, and constant change.", "visual": "🌪️" },
+        "climax": { "text": "Behind every clean dataset sits a pipeline that quietly handled the chaos for you.", "visual": "✨" },
+        "punchline": { "text": "Pipelines turn chaos into clean tables.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What are the three core stages of a data pipeline?",
+        "options": ["Extract, Transform, Load", "Read, Write, Delete", "Collect, Analyze, Report"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch01-anatomy-of-a-pipeline",
+      "title": "ETL vs ELT",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "For decades, data was transformed before loading. Then cloud warehouses flipped the order.", "visual": "🔀" },
+        "buildup": { "text": "ETL transforms data in a staging area, then loads the clean result into the warehouse.", "visual": "🧹" },
+        "discovery": { "text": "ELT loads raw data first, then uses the warehouse's own compute power to transform it in place.", "visual": "⚡" },
+        "twist": { "text": "ELT became dominant because cloud warehouses are so powerful that transforming inside is cheaper.", "visual": "💰" },
+        "climax": { "text": "ELT also preserves raw data, letting analysts rewrite transforms without re-extracting.", "visual": "🔁" },
+        "punchline": { "text": "Load first, ask questions later. That's ELT.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is the key difference between ETL and ELT?",
+        "options": ["ELT transforms data after loading; ETL transforms before", "ETL is newer than ELT", "ELT does not require a warehouse"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch01-anatomy-of-a-pipeline",
+      "title": "Sources, Sinks, and Stages",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Data flows like water — from a source, through processing stages, into a sink.", "visual": "🚰" },
+        "buildup": { "text": "Sources include databases, APIs, files, and event streams. Sinks are warehouses, lakes, or apps.", "visual": "📥" },
+        "discovery": { "text": "Between source and sink sit stages: validation, deduplication, enrichment, and aggregation.", "visual": "⚙️" },
+        "twist": { "text": "A single source often feeds multiple sinks, each requiring different transformations.", "visual": "🔀" },
+        "climax": { "text": "Mapping every source, stage, and sink is the first step to understanding any pipeline.", "visual": "🗺️" },
+        "punchline": { "text": "Know your sources and sinks. Everything else is plumbing.", "visual": "🔧" }
+      },
+      "quiz": {
+        "question": "What is a 'sink' in data pipeline terminology?",
+        "options": ["The destination where processed data is stored", "The original data source", "A data validation step"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch01-anatomy-of-a-pipeline",
+      "title": "Pipeline Metadata",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The pipeline ran successfully. But which rows were new? Which were updated? How long did it take?", "visual": "🤔" },
+        "buildup": { "text": "Metadata is data about data — run timestamps, row counts, error logs, and schema versions.", "visual": "📋" },
+        "discovery": { "text": "Good pipelines emit metadata at every stage so engineers can audit, debug, and monitor health.", "visual": "🔍" },
+        "twist": { "text": "Teams that skip metadata save time upfront but spend ten times more debugging production issues.", "visual": "💸" },
+        "climax": { "text": "Metadata turns a black-box pipeline into a transparent, observable system.", "visual": "👁️" },
+        "punchline": { "text": "If you can't observe it, you can't fix it.", "visual": "🛠️" }
+      },
+      "quiz": {
+        "question": "Why is pipeline metadata important?",
+        "options": ["It enables auditing, debugging, and monitoring", "It speeds up data processing", "It reduces storage costs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch01-anatomy-of-a-pipeline",
+      "title": "Idempotency in Pipelines",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A pipeline crashes mid-run. You restart it. Now every row is duplicated. Revenue doubles overnight.", "visual": "💥" },
+        "buildup": { "text": "Idempotency means running a pipeline twice produces exactly the same result as running it once.", "visual": "🔁" },
+        "discovery": { "text": "Common techniques: upserts, partition overwrites, and deduplication keys ensure safe reruns.", "visual": "🔐" },
+        "twist": { "text": "Append-only pipelines are the worst offenders — every rerun adds duplicate rows.", "visual": "📈" },
+        "climax": { "text": "Idempotent design costs a little extra upfront but saves hours of firefighting later.", "visual": "🧯" },
+        "punchline": { "text": "If rerunning it breaks it, it's not production-ready.", "visual": "🚫" }
+      },
+      "quiz": {
+        "question": "What does idempotency guarantee in a data pipeline?",
+        "options": ["Running the pipeline multiple times gives the same result", "The pipeline never fails", "Data is always encrypted"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch02-extract-patterns",
+      "title": "Full Extraction",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "The simplest extract pattern: copy everything from the source every single time.", "visual": "📋" },
+        "buildup": { "text": "Full extraction grabs the entire dataset — every row, every field — regardless of what changed.", "visual": "📦" },
+        "discovery": { "text": "It's easy to implement and guarantees you never miss a change. Zero bookkeeping required.", "visual": "✅" },
+        "twist": { "text": "As data grows, full extraction becomes painfully slow and expensive. Copying a billion rows nightly adds up.", "visual": "🐌" },
+        "climax": { "text": "Full extraction works for small, slow-changing datasets. Beyond that, incremental is the way.", "visual": "📐" },
+        "punchline": { "text": "Copy everything — simple until it's not.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What is the main drawback of full extraction?",
+        "options": ["It becomes slow and expensive as data grows", "It misses data changes", "It requires complex configuration"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch02-extract-patterns",
+      "title": "Incremental Extraction",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Why copy a million rows when only a hundred changed? Incremental extraction copies just the delta.", "visual": "📐" },
+        "buildup": { "text": "It tracks a high-water mark — a timestamp or ID — and pulls only rows newer than the last run.", "visual": "📏" },
+        "discovery": { "text": "This slashes data volume, reduces costs, and makes pipelines finish in minutes instead of hours.", "visual": "⚡" },
+        "twist": { "text": "If the source deletes a row, the high-water mark misses it. Deletes are incremental's blind spot.", "visual": "👻" },
+        "climax": { "text": "Incremental extraction needs careful bookkeeping, but the performance gains are enormous.", "visual": "🚀" },
+        "punchline": { "text": "Only move what changed. Save time and money.", "visual": "💰" }
+      },
+      "quiz": {
+        "question": "What is a 'high-water mark' in incremental extraction?",
+        "options": ["A bookmark tracking the last extracted position", "A maximum row count limit", "A data compression threshold"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch02-extract-patterns",
+      "title": "Change Data Capture",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A database knows every insert, update, and delete. Change data capture taps into that knowledge.", "visual": "📝" },
+        "buildup": { "text": "CDC reads the database's transaction log — the same log used for replication and crash recovery.", "visual": "📜" },
+        "discovery": { "text": "Tools like Debezium stream every change as an event, giving pipelines a real-time data feed.", "visual": "🔄" },
+        "twist": { "text": "CDC captures deletes that incremental extraction misses, making it the most complete method.", "visual": "🎯" },
+        "climax": { "text": "The trade-off: CDC requires database-level access and careful schema evolution handling.", "visual": "🔧" },
+        "punchline": { "text": "Read the log. Catch every change. Miss nothing.", "visual": "👁️" }
+      },
+      "quiz": {
+        "question": "What does Change Data Capture (CDC) read to detect changes?",
+        "options": ["The database's transaction log", "A daily data export file", "The application's API endpoints"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch02-extract-patterns",
+      "title": "API-Based Extraction",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Salesforce, Stripe, and GitHub don't give you database access. You extract via their APIs.", "visual": "🔌" },
+        "buildup": { "text": "API extraction calls endpoints, paginates through results, and handles rate limits and auth tokens.", "visual": "📡" },
+        "discovery": { "text": "Tools like Fivetran and Airbyte automate API extraction for hundreds of popular SaaS platforms.", "visual": "🤖" },
+        "twist": { "text": "APIs change without warning. A vendor tweaks a field name and your pipeline silently drops data.", "visual": "😱" },
+        "climax": { "text": "Robust API extraction needs retries, schema validation, and monitoring for breaking changes.", "visual": "🛡️" },
+        "punchline": { "text": "APIs are doors. They open and close without asking.", "visual": "🚪" }
+      },
+      "quiz": {
+        "question": "What is a common challenge with API-based data extraction?",
+        "options": ["APIs can change without warning and break pipelines", "APIs are always faster than database access", "APIs never have rate limits"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch02-extract-patterns",
+      "title": "File-Based Extraction",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Banks, governments, and legacy systems still share data the old way: dropping files into folders.", "visual": "📁" },
+        "buildup": { "text": "CSV, XML, and fixed-width files land on SFTP servers or cloud storage buckets at scheduled times.", "visual": "📂" },
+        "discovery": { "text": "File-based extraction watches a directory, picks up new files, validates them, and ingests the data.", "visual": "👀" },
+        "twist": { "text": "Files arrive late, out of order, with wrong encodings, or in duplicate. Every edge case will happen.", "visual": "🎲" },
+        "climax": { "text": "Despite being old-fashioned, file drops remain one of the most common integration patterns.", "visual": "📊" },
+        "punchline": { "text": "Old-school file drops still power half the world.", "visual": "🌍" }
+      },
+      "quiz": {
+        "question": "Why is file-based extraction still widely used?",
+        "options": ["Many legacy systems only support file-based data sharing", "It is faster than APIs", "Modern databases cannot export data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch03-transform-strategies",
+      "title": "Cleaning Dirty Data",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A customer name field contains 'N/A', '0', a phone number, and an emoji. Welcome to real data.", "visual": "🗑️" },
+        "buildup": { "text": "Data cleaning fixes nulls, trims whitespace, standardizes formats, and removes invalid entries.", "visual": "🧹" },
+        "discovery": { "text": "The 80/20 rule hits hard: engineers spend 80% of their time cleaning and only 20% analyzing.", "visual": "⏳" },
+        "twist": { "text": "You can never clean all the dirt. The goal is to catch enough to make downstream results trustworthy.", "visual": "🎯" },
+        "climax": { "text": "Automated cleaning rules plus manual review of edge cases is the practical middle ground.", "visual": "⚖️" },
+        "punchline": { "text": "Clean enough beats perfect. Perfect never ships.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "What is the '80/20 rule' often cited in data engineering?",
+        "options": ["80% of time is spent cleaning data, 20% analyzing", "80% of data is useful, 20% is noise", "80% of pipelines fail within 20 days"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch03-transform-strategies",
+      "title": "Joins and Enrichment",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An order table has a customer ID but no customer name. A join connects the dots.", "visual": "🔗" },
+        "buildup": { "text": "Joins combine rows from different tables using a shared key, creating richer datasets.", "visual": "🧩" },
+        "discovery": { "text": "Enrichment adds context: appending geo data to IP addresses or currency rates to transactions.", "visual": "🌍" },
+        "twist": { "text": "Bad join keys create duplicates or drop rows. A many-to-many join can explode your row count.", "visual": "💥" },
+        "climax": { "text": "Always validate row counts before and after joins to catch unexpected fan-outs early.", "visual": "🔢" },
+        "punchline": { "text": "Joins connect data. Bad joins destroy it.", "visual": "⚠️" }
+      },
+      "quiz": {
+        "question": "What can happen if a join key is not unique on both sides?",
+        "options": ["Row counts can explode from many-to-many matches", "The query will not execute", "All rows are deleted"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch03-transform-strategies",
+      "title": "Aggregations and Rollups",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A billion transaction rows won't fit in a dashboard. Aggregation boils them down to useful summaries.", "visual": "📊" },
+        "buildup": { "text": "Aggregations compute sums, averages, counts, and percentiles grouped by dimensions like date or region.", "visual": "📈" },
+        "discovery": { "text": "Pre-computed rollup tables make dashboards instant because the heavy math is already done.", "visual": "⚡" },
+        "twist": { "text": "Over-aggregating loses detail. If a VP asks 'why did revenue drop?', a SUM won't tell you.", "visual": "🤔" },
+        "climax": { "text": "The trick is keeping raw data for drill-down and rollups for speed — two layers, one truth.", "visual": "🎯" },
+        "punchline": { "text": "Aggregate for speed. Keep raw data for answers.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why do data teams create pre-computed rollup tables?",
+        "options": ["To make dashboard queries faster", "To save storage space", "To encrypt sensitive data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch03-transform-strategies",
+      "title": "Slowly Changing Dimensions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A customer moves from New York to London. Should last month's sales show New York or London?", "visual": "🏠" },
+        "buildup": { "text": "Slowly changing dimensions track how reference data evolves over time.", "visual": "📅" },
+        "discovery": { "text": "Type 1 overwrites the old value. Type 2 adds a new row with start and end dates to keep history.", "visual": "📝" },
+        "twist": { "text": "Type 2 is more accurate but doubles your dimension table size and complicates every join.", "visual": "📐" },
+        "climax": { "text": "Choosing the right SCD type depends on whether your business needs historical accuracy or simplicity.", "visual": "⚖️" },
+        "punchline": { "text": "Data changes slowly. Tracking it correctly is the hard part.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does a Type 2 Slowly Changing Dimension do?",
+        "options": ["Keeps history by adding new rows with date ranges", "Overwrites old values in place", "Deletes outdated records"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch03-transform-strategies",
+      "title": "Data Deduplication",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A retry produced duplicate events. Now your analytics show double the real purchases.", "visual": "👯" },
+        "buildup": { "text": "Deduplication removes exact or near-exact copies so each record appears exactly once.", "visual": "🧹" },
+        "discovery": { "text": "Dedup keys like transaction ID plus timestamp let you identify and discard duplicates reliably.", "visual": "🔑" },
+        "twist": { "text": "Exact dedup is easy. Fuzzy dedup — 'John Smith' vs 'Jon Smyth' — requires matching algorithms.", "visual": "🤯" },
+        "climax": { "text": "Deduplication at ingestion prevents duplicates from ever reaching downstream systems.", "visual": "🛡️" },
+        "punchline": { "text": "Deduplicate early. Every duplicate compounds downstream.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "When should deduplication ideally happen in a pipeline?",
+        "options": ["At ingestion, before data reaches downstream systems", "Only when reports are generated", "After data is archived"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch04-load-and-delivery",
+      "title": "Loading Into Warehouses",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "The data is clean and transformed. Now it needs a home where analysts can query it fast.", "visual": "🏠" },
+        "buildup": { "text": "Data warehouses like Snowflake, BigQuery, and Redshift are optimized for analytical queries.", "visual": "🏢" },
+        "discovery": { "text": "Loading strategies include full refresh, incremental append, and merge-upsert patterns.", "visual": "📥" },
+        "twist": { "text": "A bad load strategy can lock tables, slow queries, and frustrate every analyst in the company.", "visual": "😤" },
+        "climax": { "text": "Merge-upsert is often the sweet spot: insert new rows, update changed ones, skip duplicates.", "visual": "✅" },
+        "punchline": { "text": "Load smart. Analysts will thank you with fewer tickets.", "visual": "🎫" }
+      },
+      "quiz": {
+        "question": "What does a merge-upsert load strategy do?",
+        "options": ["Inserts new rows and updates existing ones", "Deletes all data and reloads from scratch", "Only inserts new rows"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch04-load-and-delivery",
+      "title": "Reverse ETL",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your warehouse has a perfect customer score. But the sales team needs it inside Salesforce.", "visual": "🔄" },
+        "buildup": { "text": "Reverse ETL pushes data from the warehouse back into operational tools like CRMs and ad platforms.", "visual": "📤" },
+        "discovery": { "text": "Tools like Census and Hightouch sync warehouse tables to SaaS apps on a schedule.", "visual": "🔌" },
+        "twist": { "text": "Reverse ETL turns the warehouse into a source of truth that powers actions, not just reports.", "visual": "💡" },
+        "climax": { "text": "Data that stays in the warehouse only creates charts. Data that moves back out creates revenue.", "visual": "💰" },
+        "punchline": { "text": "The warehouse isn't the end. It's the beginning.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "What does Reverse ETL do?",
+        "options": ["Pushes warehouse data back into operational tools", "Extracts data from APIs", "Backs up the data warehouse"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch04-load-and-delivery",
+      "title": "Data Contracts",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A backend team renames a column. Downstream pipelines break. Nobody told the data team.", "visual": "💥" },
+        "buildup": { "text": "Data contracts are agreements between producers and consumers about schema, quality, and SLAs.", "visual": "📝" },
+        "discovery": { "text": "Contracts specify column names, types, freshness guarantees, and who to contact when things break.", "visual": "🤝" },
+        "twist": { "text": "Without contracts, every team blames the other. With contracts, accountability is clear.", "visual": "⚖️" },
+        "climax": { "text": "Data contracts turn tribal knowledge into enforceable agreements that survive team turnover.", "visual": "📜" },
+        "punchline": { "text": "No contract, no accountability. It's that simple.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What do data contracts define?",
+        "options": ["Schema, quality, and SLA agreements between data producers and consumers", "Database encryption policies", "Pricing for cloud storage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch04-load-and-delivery",
+      "title": "Schema Evolution",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A new feature adds a 'middle_name' column to the users table. Every downstream pipeline now has a choice.", "visual": "🔀" },
+        "buildup": { "text": "Schema evolution is the process of adapting data schemas as requirements change over time.", "visual": "📐" },
+        "discovery": { "text": "Backward-compatible changes like adding columns are safe. Renaming or removing columns breaks things.", "visual": "⚠️" },
+        "twist": { "text": "Avro and Parquet support schema evolution natively. CSV and JSON silently swallow incompatible changes.", "visual": "😬" },
+        "climax": { "text": "Schema registries track all versions and block incompatible changes before they reach production.", "visual": "🛡️" },
+        "punchline": { "text": "Schemas will change. Plan for it or pay for it.", "visual": "💸" }
+      },
+      "quiz": {
+        "question": "Which schema change is generally safe and backward-compatible?",
+        "options": ["Adding a new nullable column", "Renaming an existing column", "Changing a column's data type"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch04-load-and-delivery",
+      "title": "Data Freshness and SLAs",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The CEO opens the dashboard at 9 AM and the data is from two days ago. Trust evaporates instantly.", "visual": "😤" },
+        "buildup": { "text": "Data freshness measures how recently the data was updated. SLAs promise a maximum delay.", "visual": "⏰" },
+        "discovery": { "text": "A common SLA: 'Daily tables refreshed by 6 AM UTC with data through midnight.' Clear and measurable.", "visual": "📏" },
+        "twist": { "text": "Promising freshness you can't deliver is worse than no promise. Broken SLAs destroy credibility.", "visual": "💔" },
+        "climax": { "text": "Set SLAs based on real pipeline performance, then monitor and alert before breaches happen.", "visual": "🚨" },
+        "punchline": { "text": "Stale data kills trust. Fresh data earns it.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "What does a data freshness SLA define?",
+        "options": ["The maximum acceptable delay between source changes and availability", "The total size of the database", "How many users can query simultaneously"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch05-pipeline-failures",
+      "title": "Why Pipelines Fail",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A production pipeline that ran flawlessly for six months suddenly fails at 3 AM. Why now?", "visual": "🌙" },
+        "buildup": { "text": "Common causes: upstream schema changes, source outages, expired credentials, and resource exhaustion.", "visual": "📋" },
+        "discovery": { "text": "Data volume spikes on Black Friday or month-end can overwhelm pipelines tuned for average loads.", "visual": "📈" },
+        "twist": { "text": "The most insidious failures don't crash — they produce wrong data silently.", "visual": "🤫" },
+        "climax": { "text": "Pipelines fail in predictable patterns. Knowing the patterns lets you prevent most failures.", "visual": "🛡️" },
+        "punchline": { "text": "Crash failures are easy. Silent wrong data is deadly.", "visual": "☠️" }
+      },
+      "quiz": {
+        "question": "What is the most dangerous type of pipeline failure?",
+        "options": ["Silent failures that produce wrong data", "Crashes that halt the pipeline", "Slow processing times"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch05-pipeline-failures",
+      "title": "Schema Drift",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A vendor adds a new column to their API response. Your pipeline ignores it. Months of data, lost.", "visual": "😱" },
+        "buildup": { "text": "Schema drift happens when a data source changes structure without coordinating with consumers.", "visual": "🌊" },
+        "discovery": { "text": "Drift can add columns, rename fields, change types, or remove columns entirely.", "visual": "🔀" },
+        "twist": { "text": "Unlike crashes, schema drift often goes unnoticed until someone queries the missing data.", "visual": "👻" },
+        "climax": { "text": "Schema validation checks at ingestion catch drift immediately, before damage spreads.", "visual": "🚨" },
+        "punchline": { "text": "Detect drift at the door, not at the dashboard.", "visual": "🚪" }
+      },
+      "quiz": {
+        "question": "What is schema drift?",
+        "options": ["When a data source changes structure without warning", "When a pipeline runs too slowly", "When data is intentionally archived"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch05-pipeline-failures",
+      "title": "Data Pipeline Observability",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You get an alert: row count dropped 90%. Is the source broken, or did customers just have a quiet day?", "visual": "📉" },
+        "buildup": { "text": "Pipeline observability tracks metrics like row counts, freshness, schema changes, and error rates.", "visual": "📊" },
+        "discovery": { "text": "Tools like Monte Carlo and Elementary detect anomalies before they become business incidents.", "visual": "🔍" },
+        "twist": { "text": "Observability without context floods you with alerts. The trick is separating signal from noise.", "visual": "📢" },
+        "climax": { "text": "Great observability answers three questions: Is it running? Is the data right? Is it on time?", "visual": "✅" },
+        "punchline": { "text": "You can't fix what you can't see.", "visual": "👁️" }
+      },
+      "quiz": {
+        "question": "What does pipeline observability primarily monitor?",
+        "options": ["Row counts, freshness, schema changes, and error rates", "Only processing speed", "Database storage capacity"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch05-pipeline-failures",
+      "title": "Backfills and Replays",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You found a bug in last month's transform logic. The fix is easy. Correcting 30 days of data is not.", "visual": "🐛" },
+        "buildup": { "text": "A backfill reruns a pipeline for a historical range, overwriting bad data with corrected results.", "visual": "🔁" },
+        "discovery": { "text": "Idempotent pipelines make backfills safe because reprocessing won't create duplicates.", "visual": "🛡️" },
+        "twist": { "text": "Backfilling a year of data can take days and compete with production workloads for resources.", "visual": "🏋️" },
+        "climax": { "text": "Teams that design for backfills from day one save themselves enormous pain when bugs inevitably appear.", "visual": "🎯" },
+        "punchline": { "text": "Every pipeline will need a backfill eventually. Plan for it.", "visual": "📅" }
+      },
+      "quiz": {
+        "question": "What is a data pipeline backfill?",
+        "options": ["Rerunning a pipeline for historical data to correct errors", "Backing up the pipeline code", "Adding new data sources to a pipeline"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch05-pipeline-failures",
+      "title": "Dead Letter Queues",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "One malformed event crashes your streaming pipeline. Millions of valid events pile up behind it.", "visual": "🚧" },
+        "buildup": { "text": "A dead letter queue catches failed events and sets them aside so the pipeline keeps flowing.", "visual": "📬" },
+        "discovery": { "text": "Engineers review the dead letter queue later to fix, replay, or discard the problematic events.", "visual": "🔧" },
+        "twist": { "text": "Without a dead letter queue, one poison pill event can halt an entire real-time system.", "visual": "☠️" },
+        "climax": { "text": "Dead letter queues separate error handling from data flow, keeping pipelines resilient.", "visual": "✅" },
+        "punchline": { "text": "Don't let one bad event hold the rest hostage.", "visual": "🔓" }
+      },
+      "quiz": {
+        "question": "What is the purpose of a dead letter queue?",
+        "options": ["Isolate failed events so the pipeline continues processing", "Store all processed events permanently", "Speed up event processing"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch06-pipeline-architecture",
+      "title": "Monolith vs Modular Pipelines",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "One giant script does extraction, transformation, and loading. Changing anything risks breaking all of it.", "visual": "🗿" },
+        "buildup": { "text": "Monolithic pipelines are fast to build but become nightmares as complexity grows.", "visual": "😰" },
+        "discovery": { "text": "Modular pipelines split each stage into independent, testable, reusable components.", "visual": "🧱" },
+        "twist": { "text": "Modular design adds overhead. For a simple pipeline, a monolith might actually be the right call.", "visual": "🤔" },
+        "climax": { "text": "Start simple. Split into modules when a single change starts requiring coordination across stages.", "visual": "📐" },
+        "punchline": { "text": "Simple until it hurts. Modular when it must.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "When should a monolithic pipeline be split into modules?",
+        "options": ["When a single change requires coordination across stages", "Immediately when the project starts", "Only when the pipeline fails"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch06-pipeline-architecture",
+      "title": "Event-Driven Pipelines",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Instead of running on a schedule, this pipeline fires the instant new data lands in the bucket.", "visual": "⚡" },
+        "buildup": { "text": "Event-driven pipelines trigger on signals: a new file, a database change, or a message on a queue.", "visual": "📡" },
+        "discovery": { "text": "They process data sooner and waste zero compute waiting during quiet periods.", "visual": "💰" },
+        "twist": { "text": "Event storms — thousands of triggers per second — can overwhelm downstream systems without throttling.", "visual": "🌊" },
+        "climax": { "text": "Event-driven is powerful but needs backpressure, retries, and dead letter queues to be safe.", "visual": "🛡️" },
+        "punchline": { "text": "React to data, don't poll for it.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What triggers an event-driven pipeline?",
+        "options": ["A signal like a new file or database change", "A fixed schedule like every hour", "A manual button press"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch06-pipeline-architecture",
+      "title": "Micro-Batch Processing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "True real-time is hard. What if you processed data every 30 seconds instead of once a day?", "visual": "⏱️" },
+        "buildup": { "text": "Micro-batch collects events into tiny windows and processes each window as a small batch.", "visual": "📦" },
+        "discovery": { "text": "Spark Structured Streaming uses micro-batching to give near-real-time results with batch simplicity.", "visual": "⚡" },
+        "twist": { "text": "The 30-second delay is invisible to most dashboards but avoids the complexity of true streaming.", "visual": "😌" },
+        "climax": { "text": "Micro-batch is the pragmatic middle ground that satisfies 90% of 'we need real-time' requests.", "visual": "🎯" },
+        "punchline": { "text": "Near-real-time is usually real enough.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "How does micro-batch processing differ from true streaming?",
+        "options": ["It processes events in small time windows rather than one at a time", "It only works with batch data", "It is slower than daily batch"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch06-pipeline-architecture",
+      "title": "Pipeline as Code",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Someone configured a pipeline by clicking through a UI. They left the company. Nobody knows how it works.", "visual": "😵" },
+        "buildup": { "text": "Pipeline as code defines every step — sources, transforms, schedules — in version-controlled files.", "visual": "📝" },
+        "discovery": { "text": "Code-defined pipelines can be reviewed, tested, rolled back, and reproduced by any team member.", "visual": "🔍" },
+        "twist": { "text": "UI-built pipelines feel faster upfront but create undocumented, fragile systems over time.", "visual": "🕸️" },
+        "climax": { "text": "Pipeline as code treats data infrastructure with the same rigor as application development.", "visual": "🏗️" },
+        "punchline": { "text": "If it's not in code, it's not reproducible.", "visual": "💻" }
+      },
+      "quiz": {
+        "question": "What is the main advantage of 'pipeline as code'?",
+        "options": ["Pipelines are version-controlled, testable, and reproducible", "Pipelines run faster", "No coding skills are needed"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-pipelines-explained--ch06-pipeline-architecture",
+      "title": "Choosing Your Pipeline Pattern",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Batch, streaming, micro-batch, event-driven — with so many patterns, how do you choose?", "visual": "🤔" },
+        "buildup": { "text": "Start with the business question: how fresh does the data need to be for the consumer?", "visual": "📋" },
+        "discovery": { "text": "Match the pattern to the SLA. Daily reports need batch. Fraud alerts need streaming.", "visual": "⚖️" },
+        "twist": { "text": "Most teams over-engineer by choosing streaming when hourly micro-batch would suffice.", "visual": "🏗️" },
+        "climax": { "text": "The best pipeline is the simplest one that meets the freshness, cost, and reliability requirements.", "visual": "✨" },
+        "punchline": { "text": "Complexity is a cost. Choose the simplest pattern that works.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What should primarily guide the choice of pipeline pattern?",
+        "options": ["The data freshness requirement of the consumer", "The popularity of the technology", "The size of the engineering team"],
+        "correct": 0
+      }
+    }
+  ]
+}

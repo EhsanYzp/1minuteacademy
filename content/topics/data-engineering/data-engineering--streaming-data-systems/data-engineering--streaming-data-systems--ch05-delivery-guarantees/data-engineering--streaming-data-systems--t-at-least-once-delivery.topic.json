@@ -1,0 +1,49 @@
+{
+  "id": "data-engineering--streaming-data-systems--t-at-least-once-delivery",
+  "version": 1,
+  "subject": "Data Engineering",
+  "subcategory": "Streaming Data Systems",
+  "course_id": "data-engineering--streaming-data-systems",
+  "chapter_id": "data-engineering--streaming-data-systems--ch05-delivery-guarantees",
+  "title": "At-Least-Once Delivery",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A quick win: understand At-Least-Once Delivery.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The consumer crashed before confirming it processed the event. The broker resends it. Now it's processed twice.",
+      "visual": "👯"
+    },
+    "buildup": {
+      "text": "At-least-once ensures no event is lost by retrying until the consumer acknowledges receipt.",
+      "visual": "🔄"
+    },
+    "discovery": {
+      "text": "The trade-off is duplicates. If the acknowledgment is lost, the broker resends what was already processed.",
+      "visual": "📬"
+    },
+    "twist": {
+      "text": "Consumers must be idempotent — processing the same event twice should produce the same result.",
+      "visual": "🎯"
+    },
+    "climax": {
+      "text": "At-least-once is the most common guarantee because it's reliable and achievable without extreme complexity.",
+      "visual": "✅"
+    },
+    "punchline": {
+      "text": "Better twice than never. Just handle the duplicates.",
+      "visual": "🔁"
+    }
+  },
+  "quiz": {
+    "question": "What must consumers handle with at-least-once delivery?",
+    "options": [
+      "Duplicate events caused by retries",
+      "Missing events",
+      "Events arriving in reverse order"
+    ],
+    "correct": 0
+  }
+}

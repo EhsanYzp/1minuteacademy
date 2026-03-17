@@ -1,0 +1,49 @@
+{
+  "id": "data-engineering--data-warehousing--t-choosing-oltp-or-olap",
+  "version": 1,
+  "subject": "Data Engineering",
+  "subcategory": "Data Warehousing",
+  "course_id": "data-engineering--data-warehousing",
+  "chapter_id": "data-engineering--data-warehousing--ch04-olap-vs-oltp",
+  "title": "Choosing OLTP or OLAP",
+  "emoji": "🏢",
+  "color": "#7C3AED",
+  "description": "A fast breakdown of Choosing OLTP or OLAP for builders.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "An engineer asks: 'Should I use Postgres or Snowflake?' The real question is: what's the workload?",
+      "visual": "🤔"
+    },
+    "buildup": {
+      "text": "If the workload is many small reads and writes — like an app backend — choose OLTP.",
+      "visual": "⚡"
+    },
+    "discovery": {
+      "text": "If the workload is few complex queries scanning large datasets — like a dashboard — choose OLAP.",
+      "visual": "📊"
+    },
+    "twist": {
+      "text": "Using OLAP for transactions is slow. Using OLTP for analytics is expensive. Both are common mistakes.",
+      "visual": "💸"
+    },
+    "climax": {
+      "text": "Most architectures use both: OLTP for the app, OLAP for the warehouse, and a pipeline connecting them.",
+      "visual": "🔗"
+    },
+    "punchline": {
+      "text": "Match the engine to the workload. Never the reverse.",
+      "visual": "🎯"
+    }
+  },
+  "quiz": {
+    "question": "When should you choose an OLAP system over OLTP?",
+    "options": [
+      "When the workload involves complex queries on large datasets",
+      "When you need fast single-record writes",
+      "When building a mobile app backend"
+    ],
+    "correct": 0
+  }
+}

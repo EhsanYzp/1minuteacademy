@@ -1,0 +1,559 @@
+{
+  "categoryId": "data-engineering",
+  "subject": "Data Engineering",
+  "courseId": "data-engineering--data-quality-and-governance",
+  "courseTitle": "Data Quality and Governance",
+  "emoji": "✅",
+  "color": "#0891B2",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "data-engineering--data-quality-and-governance--ch01-why-data-quality-matters", "title": "Why Data Quality Matters", "position": 1 },
+    { "id": "data-engineering--data-quality-and-governance--ch02-types-of-data-problems", "title": "Types of Data Problems", "position": 2 },
+    { "id": "data-engineering--data-quality-and-governance--ch03-measuring-data-quality", "title": "Measuring Data Quality", "position": 3 },
+    { "id": "data-engineering--data-quality-and-governance--ch04-governance-frameworks", "title": "Governance Frameworks", "position": 4 },
+    { "id": "data-engineering--data-quality-and-governance--ch05-metadata-and-lineage", "title": "Metadata and Lineage", "position": 5 },
+    { "id": "data-engineering--data-quality-and-governance--ch06-building-a-data-culture", "title": "Building a Data Culture", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch01-why-data-quality-matters",
+      "title": "The Cost of Bad Data",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "IBM estimated that bad data costs the US economy $3.1 trillion per year. That's not a typo.", "visual": "💸" },
+        "buildup": { "text": "Wrong addresses, duplicate records, and stale data waste marketing budgets and frustrate customers.", "visual": "😤" },
+        "discovery": { "text": "Poor data quality leads to bad decisions, compliance violations, and lost revenue across every industry.", "visual": "📉" },
+        "twist": { "text": "Most companies don't know their data is bad until a high-profile decision blows up because of it.", "visual": "💥" },
+        "climax": { "text": "Investing in data quality upfront is always cheaper than fixing the damage bad data causes.", "visual": "🛡️" },
+        "punchline": { "text": "Bad data is expensive. You just don't get the bill upfront.", "visual": "🧾" }
+      },
+      "quiz": {
+        "question": "How much does bad data cost the US economy annually according to IBM?",
+        "options": ["$3.1 trillion", "$3.1 million", "$3.1 billion"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch01-why-data-quality-matters",
+      "title": "Garbage In, Garbage Out",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A model predicts next quarter's sales perfectly — until you realize the training data had duplicates.", "visual": "🤖" },
+        "buildup": { "text": "Garbage in, garbage out is the oldest rule in computing. No algorithm can fix wrong inputs.", "visual": "🗑️" },
+        "discovery": { "text": "Data quality affects every downstream consumer: dashboards, models, reports, and automated systems.", "visual": "🔗" },
+        "twist": { "text": "AI amplifies bad data. A biased training set doesn't just produce wrong answers — it scales wrong answers.", "visual": "📢" },
+        "climax": { "text": "Quality at the source is the only defense against cascading errors through the entire pipeline.", "visual": "🛡️" },
+        "punchline": { "text": "Fix the input. The output fixes itself.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does 'garbage in, garbage out' mean for data systems?",
+        "options": ["Bad input data produces unreliable output", "Deleted data cannot be recovered", "Old data should always be archived"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch01-why-data-quality-matters",
+      "title": "Data Quality Dimensions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Saying 'the data is bad' isn't specific enough. Bad how? Data quality has six measurable dimensions.", "visual": "📐" },
+        "buildup": { "text": "Accuracy: is it correct? Completeness: are values missing? Timeliness: is it up to date?", "visual": "✅" },
+        "discovery": { "text": "Consistency: do sources agree? Uniqueness: are there duplicates? Validity: does it follow the rules?", "visual": "📏" },
+        "twist": { "text": "Data can be accurate but stale, complete but inconsistent. Each dimension fails independently.", "visual": "⚠️" },
+        "climax": { "text": "Naming the dimension lets you measure, track, and fix the specific problem instead of guessing.", "visual": "🎯" },
+        "punchline": { "text": "You can't fix 'bad.' You can fix 'stale' or 'incomplete.'", "visual": "🔧" }
+      },
+      "quiz": {
+        "question": "Which is NOT one of the six data quality dimensions?",
+        "options": ["Profitability", "Accuracy", "Completeness"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch01-why-data-quality-matters",
+      "title": "Who Owns Data Quality?",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The dashboard shows wrong numbers. Analytics blames engineering. Engineering blames the source team.", "visual": "🤦" },
+        "buildup": { "text": "Data quality fails when nobody owns it. Everyone assumes someone else will catch the errors.", "visual": "🫥" },
+        "discovery": { "text": "Ownership means a named person or team is accountable for each dataset's quality and freshness.", "visual": "📋" },
+        "twist": { "text": "Producers should own quality at the source. Consumers should own validation at the point of use.", "visual": "🤝" },
+        "climax": { "text": "Shared responsibility works only when the handoff is explicit — documented in a data contract.", "visual": "📝" },
+        "punchline": { "text": "If everyone owns it, nobody owns it.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the biggest cause of data quality failures in organizations?",
+        "options": ["No clear ownership of data quality", "Too many data engineers", "Using cloud storage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch01-why-data-quality-matters",
+      "title": "Trust as a Data Product",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Analysts stop using the warehouse and build their own spreadsheets. Trust in the data is gone.", "visual": "📉" },
+        "buildup": { "text": "When data is unreliable, users create workarounds. Shadow spreadsheets multiply across the company.", "visual": "📋" },
+        "discovery": { "text": "Rebuilding trust requires consistent quality, transparent lineage, and fast incident response.", "visual": "🏗️" },
+        "twist": { "text": "Trust takes months to build and one bad incident to destroy. Quality must be a continuous practice.", "visual": "💔" },
+        "climax": { "text": "Treating data as a product means measuring user satisfaction, not just pipeline uptime.", "visual": "📊" },
+        "punchline": { "text": "Data nobody trusts is data nobody uses.", "visual": "🚫" }
+      },
+      "quiz": {
+        "question": "What happens when users lose trust in centralized data?",
+        "options": ["They create their own shadow spreadsheets", "They stop making decisions", "They ask for more data engineers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch02-types-of-data-problems",
+      "title": "Missing Data",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A customer table has 20% null email addresses. Are they missing or do those customers have no email?", "visual": "❓" },
+        "buildup": { "text": "Missing data comes in many forms: nulls, empty strings, placeholder values like 'N/A' or '0'.", "visual": "🕳️" },
+        "discovery": { "text": "The cause matters: is the field optional, was it lost in transit, or did a bug prevent collection?", "visual": "🔍" },
+        "twist": { "text": "Imputing missing values can be worse than leaving them null if the imputation logic is wrong.", "visual": "⚠️" },
+        "climax": { "text": "The best fix is preventing data loss at the source. The second best is documenting what's missing and why.", "visual": "📝" },
+        "punchline": { "text": "Missing data isn't nothing. It's a problem in disguise.", "visual": "🎭" }
+      },
+      "quiz": {
+        "question": "What is the best approach to handling missing data?",
+        "options": ["Prevent data loss at the source when possible", "Always fill nulls with zero", "Delete all rows with missing values"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch02-types-of-data-problems",
+      "title": "Duplicate Records",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A customer receives the same marketing email three times. The CRM has three copies of their record.", "visual": "👯" },
+        "buildup": { "text": "Duplicates arise from retries, multiple ingestion paths, merging systems, or human data entry.", "visual": "🔄" },
+        "discovery": { "text": "Exact duplicates are easy to catch. Near-duplicates — 'Jon Smith' vs 'John Smith' — are harder.", "visual": "🔍" },
+        "twist": { "text": "Dedup after the fact is expensive. Preventing duplicates at ingestion is orders of magnitude cheaper.", "visual": "💰" },
+        "climax": { "text": "Natural keys, upsert patterns, and dedup stages at ingestion stop duplicates before they spread.", "visual": "🛡️" },
+        "punchline": { "text": "One record per entity. Simple rule, hard practice.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why are near-duplicate records harder to fix than exact duplicates?",
+        "options": ["They require fuzzy matching algorithms to detect", "They are always intentional", "Databases automatically remove them"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch02-types-of-data-problems",
+      "title": "Schema Violations",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An age field contains the value 'thirty-two.' The database expected an integer. The pipeline crashes.", "visual": "💥" },
+        "buildup": { "text": "Schema violations happen when data doesn't match the expected types, formats, or constraints.", "visual": "📋" },
+        "discovery": { "text": "Common violations: strings in numeric fields, dates in wrong formats, and values outside valid ranges.", "visual": "🚫" },
+        "twist": { "text": "Schemaless systems like JSON APIs delay the crash. The violation still exists — it just surfaces later.", "visual": "⏰" },
+        "climax": { "text": "Schema validation at ingestion catches violations immediately, before they pollute downstream data.", "visual": "🚨" },
+        "punchline": { "text": "Validate the schema at the door, not at the dashboard.", "visual": "🚪" }
+      },
+      "quiz": {
+        "question": "When should schema validation ideally happen?",
+        "options": ["At data ingestion", "When reports are generated", "During annual audits"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch02-types-of-data-problems",
+      "title": "Stale Data",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The inventory dashboard says 500 units in stock. The warehouse shipped the last one yesterday.", "visual": "📦" },
+        "buildup": { "text": "Stale data occurs when the pipeline lag exceeds the business's tolerance for outdated information.", "visual": "⏳" },
+        "discovery": { "text": "Freshness SLAs define the maximum acceptable lag. Breaking them means decisions are based on the past.", "visual": "📅" },
+        "twist": { "text": "Some staleness is acceptable. A weekly HR report doesn't need real-time data. A fraud alert does.", "visual": "⚖️" },
+        "climax": { "text": "Monitoring freshness and alerting on breaches prevents stale data from causing real-world harm.", "visual": "🚨" },
+        "punchline": { "text": "Old data isn't wrong. It's just no longer true.", "visual": "🕰️" }
+      },
+      "quiz": {
+        "question": "What defines whether data staleness is a problem?",
+        "options": ["Whether the lag exceeds the business's freshness tolerance", "The size of the dataset", "The number of columns in the table"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch02-types-of-data-problems",
+      "title": "Inconsistent Data Across Systems",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The CRM says 10K active users. The billing system says 9.5K. The CEO asks: which one is right?", "visual": "🤷" },
+        "buildup": { "text": "Inconsistency happens when multiple systems store the same entity with different definitions or timing.", "visual": "🔀" },
+        "discovery": { "text": "Root causes include different update schedules, varying business logic, and siloed data ownership.", "visual": "🏝️" },
+        "twist": { "text": "Declaring one system the 'source of truth' sounds easy until two teams each claim theirs is correct.", "visual": "⚔️" },
+        "climax": { "text": "Conformed definitions, shared keys, and a single authoritative source per entity resolve conflicts.", "visual": "🤝" },
+        "punchline": { "text": "One entity, one truth. Everything else is a copy.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is the primary cause of data inconsistency across systems?",
+        "options": ["Different definitions and update schedules for the same entity", "Using the same database for everything", "Having too few data engineers"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch03-measuring-data-quality",
+      "title": "Data Quality Metrics",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "If you can't measure data quality, you can't improve it. Metrics make quality visible.", "visual": "📏" },
+        "buildup": { "text": "Common metrics: null rate, duplicate rate, freshness lag, schema violation count, and referential integrity.", "visual": "📊" },
+        "discovery": { "text": "Track metrics per table, per pipeline, and over time. Trends reveal whether quality is improving or decaying.", "visual": "📈" },
+        "twist": { "text": "A single metric can mislead. A table with zero nulls but 50% duplicates looks clean on one dimension.", "visual": "🎭" },
+        "climax": { "text": "A quality scorecard combining multiple metrics gives a holistic view of each dataset's health.", "visual": "📋" },
+        "punchline": { "text": "Measure it to manage it. Track it to trust it.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "Why should data quality metrics be tracked over time?",
+        "options": ["Trends reveal whether quality is improving or decaying", "Metrics never change", "Historical data is always inaccurate"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch03-measuring-data-quality",
+      "title": "Data Profiling",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You inherit a table with 200 columns and no documentation. Where do you even start?", "visual": "😵" },
+        "buildup": { "text": "Data profiling scans a dataset to compute statistics: min, max, null count, distinct values, and distributions.", "visual": "🔍" },
+        "discovery": { "text": "Profiling reveals surprises: a 'country' column with 300 distinct values, or an 'age' column with negatives.", "visual": "😱" },
+        "twist": { "text": "Profiling isn't a one-time task. Data drifts over time, and yesterday's profile may not match today's data.", "visual": "🌊" },
+        "climax": { "text": "Automated profiling on every pipeline run catches anomalies as soon as they appear.", "visual": "🚨" },
+        "punchline": { "text": "Profile first. Assume nothing about the data.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does data profiling do?",
+        "options": ["Computes statistics about a dataset to reveal its characteristics", "Deletes bad records automatically", "Encrypts sensitive columns"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch03-measuring-data-quality",
+      "title": "Automated Data Testing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A pipeline passes but the output table has zero rows. Nobody notices for three days.", "visual": "😬" },
+        "buildup": { "text": "Automated tests check expectations: row counts above zero, no nulls in key columns, valid ranges.", "visual": "🧪" },
+        "discovery": { "text": "Tools like Great Expectations and dbt tests define quality rules as code, checked every run.", "visual": "💻" },
+        "twist": { "text": "Tests don't guarantee perfect data. They guarantee you'll know when expected conditions are violated.", "visual": "🔔" },
+        "climax": { "text": "A pipeline without data tests is like code without unit tests — it works until it silently doesn't.", "visual": "🤫" },
+        "punchline": { "text": "Test the data, not just the code.", "visual": "🧪" }
+      },
+      "quiz": {
+        "question": "What do automated data tests verify?",
+        "options": ["That data meets expected conditions like row counts and valid ranges", "That the code compiles", "That users are logged in"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch03-measuring-data-quality",
+      "title": "Anomaly Detection for Data",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Revenue usually grows 2% monthly. This month it jumped 40%. Is that a win or a bug?", "visual": "📈" },
+        "buildup": { "text": "Anomaly detection applies statistical models to data metrics, flagging values outside normal ranges.", "visual": "🔔" },
+        "discovery": { "text": "Time-series models learn seasonal patterns and detect when today's data deviates from expectations.", "visual": "📊" },
+        "twist": { "text": "Not every anomaly is a bug. Black Friday spikes are real. The hard part is separating signal from noise.", "visual": "🎯" },
+        "climax": { "text": "Good anomaly detection reduces alert fatigue by learning what's normal for each specific dataset.", "visual": "🧠" },
+        "punchline": { "text": "Catch the unexpected. Ignore the explainable.", "visual": "👁️" }
+      },
+      "quiz": {
+        "question": "What is the main challenge of anomaly detection for data quality?",
+        "options": ["Distinguishing real problems from legitimate unusual events", "Anomaly detection is too slow to use", "All anomalies are bugs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch03-measuring-data-quality",
+      "title": "Data Quality SLAs",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The CEO expects the revenue dashboard to be accurate to within 1% by 8 AM. That's a data quality SLA.", "visual": "📏" },
+        "buildup": { "text": "Quality SLAs define measurable thresholds: freshness, accuracy, completeness, and availability.", "visual": "📋" },
+        "discovery": { "text": "SLAs create accountability. When breached, someone is responsible for investigating and fixing the issue.", "visual": "🤝" },
+        "twist": { "text": "Setting SLAs too tight causes alert fatigue. Too loose renders them meaningless. Calibration is key.", "visual": "⚖️" },
+        "climax": { "text": "Start with generous SLAs, measure actual performance, then tighten as your pipelines stabilize.", "visual": "📈" },
+        "punchline": { "text": "Promise what you can deliver. Then deliver more.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What should data quality SLAs define?",
+        "options": ["Measurable thresholds for freshness, accuracy, and completeness", "How many engineers are needed", "Which programming language to use"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch04-governance-frameworks",
+      "title": "What Is Data Governance?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Who can access the salary table? Who approved the schema change? Who deleted last week's data?", "visual": "🔒" },
+        "buildup": { "text": "Data governance is the set of policies, roles, and processes that manage data availability and security.", "visual": "📜" },
+        "discovery": { "text": "It answers three questions: who can access what data, how should it be handled, and who is accountable?", "visual": "📋" },
+        "twist": { "text": "Governance without tooling is just a document nobody reads. It must be enforced in pipelines and systems.", "visual": "⚙️" },
+        "climax": { "text": "Effective governance balances access with control — enabling data use without enabling data abuse.", "visual": "⚖️" },
+        "punchline": { "text": "Governance isn't red tape. It's the rules that build trust.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "What is the primary purpose of data governance?",
+        "options": ["Managing data availability, security, and accountability", "Making queries run faster", "Reducing storage costs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch04-governance-frameworks",
+      "title": "Data Catalogs",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An analyst asks: 'Where is the revenue data?' Nobody knows which of 500 tables is the right one.", "visual": "🤔" },
+        "buildup": { "text": "A data catalog is a searchable inventory of all datasets, their schemas, owners, and descriptions.", "visual": "📚" },
+        "discovery": { "text": "Tools like DataHub, Atlan, and Alation let teams search, discover, and understand available data.", "visual": "🔍" },
+        "twist": { "text": "A catalog is only as good as its metadata. If nobody updates the descriptions, it becomes a graveyard.", "visual": "🪦" },
+        "climax": { "text": "The best catalogs auto-populate metadata from pipelines and let users annotate on top.", "visual": "🤖" },
+        "punchline": { "text": "If you can't find the data, it doesn't exist.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What is a data catalog?",
+        "options": ["A searchable inventory of datasets with schemas and owners", "A backup storage system", "A type of data pipeline"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch04-governance-frameworks",
+      "title": "Access Control and Security",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An intern accidentally downloaded the entire customer PII table. No access policy had blocked them.", "visual": "😱" },
+        "buildup": { "text": "Access control defines who can read, write, or delete each dataset based on roles and policies.", "visual": "🔐" },
+        "discovery": { "text": "Role-based access control grants permissions by job function: analysts read, engineers write, admins manage.", "visual": "👥" },
+        "twist": { "text": "Column-level security is often needed. An analyst might need the orders table but not the credit card column.", "visual": "🔒" },
+        "climax": { "text": "Access control must be enforced in the system, not just in policy documents that nobody checks.", "visual": "⚙️" },
+        "punchline": { "text": "Default to deny. Grant only what's needed.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What principle should access control follow by default?",
+        "options": ["Deny access and grant only what's needed", "Allow everything and audit later", "Give all employees full access"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch04-governance-frameworks",
+      "title": "GDPR and Data Privacy",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2018, GDPR gave Europeans the right to have their personal data deleted. Data teams scrambled.", "visual": "🇪🇺" },
+        "buildup": { "text": "GDPR requires consent for data collection, purpose limitation, data minimization, and the right to erasure.", "visual": "📋" },
+        "discovery": { "text": "Engineers must track where personal data lives, how it flows, and how to delete it on request.", "visual": "🗺️" },
+        "twist": { "text": "Deleting one user's data from a distributed pipeline that spans 20 systems is an engineering nightmare.", "visual": "😵" },
+        "climax": { "text": "GDPR forced data engineering to evolve. Privacy is now an infrastructure concern, not just a legal one.", "visual": "⚖️" },
+        "punchline": { "text": "Privacy isn't a feature. It's a system design requirement.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What right does GDPR grant individuals regarding their data?",
+        "options": ["The right to have their personal data deleted", "The right to sell their data", "The right to access any company's database"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch04-governance-frameworks",
+      "title": "Data Classification",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Not all data is equal. A public blog post and a customer's Social Security number need very different handling.", "visual": "🏷️" },
+        "buildup": { "text": "Data classification labels datasets by sensitivity: public, internal, confidential, or restricted.", "visual": "📋" },
+        "discovery": { "text": "Classification drives access policies: restricted data gets encryption, audit logging, and limited access.", "visual": "🔒" },
+        "twist": { "text": "Most companies never classify their data. When a breach happens, they can't tell what was exposed.", "visual": "😬" },
+        "climax": { "text": "Automated classification tools scan datasets and tag sensitive columns like emails, names, and SSNs.", "visual": "🤖" },
+        "punchline": { "text": "Label it to protect it. Unlabeled data is unprotected data.", "visual": "🏷️" }
+      },
+      "quiz": {
+        "question": "Why is data classification important?",
+        "options": ["It determines the security controls each dataset needs", "It makes queries faster", "It reduces storage costs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch05-metadata-and-lineage",
+      "title": "What Is Metadata?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A table called 'tbl_rev_q3_final_v2_fixed' exists. What does it contain? When was it updated? Who owns it?", "visual": "🤷" },
+        "buildup": { "text": "Metadata is data about data — column types, update timestamps, row counts, owners, and descriptions.", "visual": "📋" },
+        "discovery": { "text": "Without metadata, every table is a mystery box. With it, teams can discover, trust, and use data quickly.", "visual": "🔍" },
+        "twist": { "text": "Metadata is often an afterthought. Teams build pipelines first and document later — or never.", "visual": "🤫" },
+        "climax": { "text": "Treating metadata as a first-class output of every pipeline makes documentation automatic.", "visual": "🤖" },
+        "punchline": { "text": "Without metadata, data is just unknown numbers.", "visual": "🔢" }
+      },
+      "quiz": {
+        "question": "What is metadata in the context of data engineering?",
+        "options": ["Data about data, like schemas, owners, and update timestamps", "The most important rows in a table", "A backup copy of the data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch05-metadata-and-lineage",
+      "title": "Data Lineage",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The revenue number on the dashboard is wrong. But which of 30 upstream transformations introduced the bug?", "visual": "🐛" },
+        "buildup": { "text": "Data lineage tracks how data flows from source to destination through every transformation step.", "visual": "🗺️" },
+        "discovery": { "text": "With lineage, you can trace any output back to its source tables, transforms, and original inputs.", "visual": "🔍" },
+        "twist": { "text": "Lineage also goes forward: when a source changes, you can see every downstream table it will affect.", "visual": "🔗" },
+        "climax": { "text": "Lineage turns debugging from guesswork into a traceable path. It's the data equivalent of a stack trace.", "visual": "📋" },
+        "punchline": { "text": "Know where data came from. Know where it goes.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does data lineage track?",
+        "options": ["How data flows from source through transformations to destinations", "How much storage data uses", "How many users access the data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch05-metadata-and-lineage",
+      "title": "Column-Level Lineage",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The 'total_revenue' column is wrong. Table-level lineage shows 30 upstream tables. Which column matters?", "visual": "🔍" },
+        "buildup": { "text": "Column-level lineage traces individual columns through joins, aggregations, and calculated fields.", "visual": "📊" },
+        "discovery": { "text": "It tells you exactly which source columns feed into each output column, narrowing debug scope dramatically.", "visual": "🎯" },
+        "twist": { "text": "Column lineage is hard to track automatically. Complex SQL with CTEs and subqueries challenges parsers.", "visual": "😤" },
+        "climax": { "text": "Tools like Marquez and OpenLineage are making column-level lineage achievable at scale.", "visual": "🔧" },
+        "punchline": { "text": "Table lineage finds the room. Column lineage finds the wire.", "visual": "🔌" }
+      },
+      "quiz": {
+        "question": "How does column-level lineage differ from table-level lineage?",
+        "options": ["It traces individual columns through transformations", "It only tracks table names", "It tracks database storage usage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch05-metadata-and-lineage",
+      "title": "Schema Registries",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A producer changes a field from integer to string. Every consumer breaks. Nobody was warned.", "visual": "💥" },
+        "buildup": { "text": "A schema registry stores and versions schemas, enforcing compatibility rules for every change.", "visual": "📝" },
+        "discovery": { "text": "Before a schema change is deployed, the registry checks if it's backward or forward compatible.", "visual": "✅" },
+        "twist": { "text": "Incompatible changes are rejected automatically, preventing silent breakage across the pipeline.", "visual": "🚫" },
+        "climax": { "text": "Schema registries turn schema management from a handshake agreement into an automated guardrail.", "visual": "🛡️" },
+        "punchline": { "text": "Register the schema. Reject the breaking change.", "visual": "🔐" }
+      },
+      "quiz": {
+        "question": "What does a schema registry enforce?",
+        "options": ["Compatibility rules for schema changes", "Query performance limits", "Data retention policies"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch05-metadata-and-lineage",
+      "title": "The Business Glossary",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Marketing defines 'active user' as logged in this month. Product defines it as completed an action this week.", "visual": "🤷" },
+        "buildup": { "text": "A business glossary defines standard terms so every team uses the same language for the same concept.", "visual": "📖" },
+        "discovery": { "text": "Glossary entries include the term, its definition, the owner, and which datasets use it.", "visual": "📋" },
+        "twist": { "text": "Building the glossary is easy. Getting teams to actually agree on definitions is the political challenge.", "visual": "🗣️" },
+        "climax": { "text": "A shared glossary linked to the data catalog ensures definitions and data stay connected.", "visual": "🔗" },
+        "punchline": { "text": "Same word, same meaning. Across every team.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "What problem does a business glossary solve?",
+        "options": ["Different teams using different definitions for the same term", "Slow query performance", "Excessive data storage"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch06-building-a-data-culture",
+      "title": "Data Literacy Across Teams",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A marketing manager reads a dashboard and concludes sales are up 50%. The chart was filtered to one region.", "visual": "📊" },
+        "buildup": { "text": "Data literacy means everyone in the company can read, interpret, and question data correctly.", "visual": "📚" },
+        "discovery": { "text": "Training non-technical teams on basic stats, chart reading, and data limitations improves decisions.", "visual": "🎓" },
+        "twist": { "text": "The bottleneck isn't tools — it's people who don't know what questions to ask or how to spot misleading data.", "visual": "🤔" },
+        "climax": { "text": "A data-literate organization makes fewer costly mistakes and gets more value from its data investments.", "visual": "💰" },
+        "punchline": { "text": "Tools don't make decisions. Data-literate people do.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "What is data literacy?",
+        "options": ["The ability to read, interpret, and question data correctly", "Knowing how to write SQL", "Having access to a data warehouse"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch06-building-a-data-culture",
+      "title": "Data Stewardship",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A dataset has no owner, no documentation, and no tests. When it breaks, nobody fixes it for days.", "visual": "😵" },
+        "buildup": { "text": "Data stewards are named individuals responsible for a dataset's quality, documentation, and lifecycle.", "visual": "🧑‍💼" },
+        "discovery": { "text": "Stewards don't build pipelines. They ensure data is accurate, well-described, and properly governed.", "visual": "📋" },
+        "twist": { "text": "Stewardship works only when it's part of someone's actual job, not a volunteer side project.", "visual": "⚠️" },
+        "climax": { "text": "Organizations with active data stewards resolve quality issues 3x faster than those without.", "visual": "⚡" },
+        "punchline": { "text": "Every dataset needs a name on the door.", "visual": "🚪" }
+      },
+      "quiz": {
+        "question": "What is a data steward responsible for?",
+        "options": ["A dataset's quality, documentation, and lifecycle", "Writing all SQL queries", "Managing server hardware"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch06-building-a-data-culture",
+      "title": "Self-Service Analytics",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every data question requires a ticket to the data team. The queue is three weeks long.", "visual": "📋" },
+        "buildup": { "text": "Self-service analytics gives business users tools to explore data without engineering help.", "visual": "🔓" },
+        "discovery": { "text": "Curated datasets, semantic layers, and BI tools let analysts answer their own questions.", "visual": "📊" },
+        "twist": { "text": "Self-service without guardrails leads to wrong answers. Users need clean, documented, governed data.", "visual": "⚠️" },
+        "climax": { "text": "The goal is autonomy with trust: users explore freely on data the team has validated.", "visual": "🤝" },
+        "punchline": { "text": "Empower users. Don't become a bottleneck.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "What is required for self-service analytics to be effective?",
+        "options": ["Clean, documented, governed data that users can explore", "Giving everyone admin database access", "Eliminating the data engineering team"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch06-building-a-data-culture",
+      "title": "Data Democratization",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Only three people in the company can access the data. Decisions wait weeks for their availability.", "visual": "🔒" },
+        "buildup": { "text": "Data democratization makes data accessible to everyone who needs it, not just technical specialists.", "visual": "🌐" },
+        "discovery": { "text": "Broad access combined with proper governance lets more people make data-informed decisions faster.", "visual": "⚡" },
+        "twist": { "text": "Democratization without governance is chaos. Everyone has access, nobody knows what's trustworthy.", "visual": "🌪️" },
+        "climax": { "text": "The balance is wide access plus strong guardrails — like a library open to all with a good catalog.", "visual": "📚" },
+        "punchline": { "text": "Open the doors. But label the shelves.", "visual": "🏷️" }
+      },
+      "quiz": {
+        "question": "What must accompany data democratization to be effective?",
+        "options": ["Strong governance and quality guardrails", "Unlimited admin access for all employees", "Removing all data security"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--data-quality-and-governance--ch06-building-a-data-culture",
+      "title": "Continuous Improvement",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Data quality isn't a project with a finish line. It's a practice that never ends.", "visual": "🔄" },
+        "buildup": { "text": "New data sources, changing requirements, and team turnover constantly introduce new quality risks.", "visual": "🌊" },
+        "discovery": { "text": "Regular quality reviews, incident retrospectives, and metric tracking create a feedback loop.", "visual": "📈" },
+        "twist": { "text": "The biggest threat to data quality isn't technology — it's complacency after the first win.", "visual": "😴" },
+        "climax": { "text": "Teams that treat quality as a culture — not a feature — consistently outperform those that don't.", "visual": "🏆" },
+        "punchline": { "text": "Quality isn't a destination. It's a daily habit.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why is data quality a continuous practice rather than a one-time project?",
+        "options": ["New sources and changing requirements constantly introduce new risks", "Data never changes once stored", "Quality tools fix everything automatically"],
+        "correct": 0
+      }
+    }
+  ]
+}

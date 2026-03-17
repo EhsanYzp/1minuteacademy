@@ -1,0 +1,49 @@
+{
+  "id": "data-engineering--data-lakes-and-lakehouses--t-lack-of-acid-in-lakes",
+  "version": 1,
+  "subject": "Data Engineering",
+  "subcategory": "Data Lakes and Lakehouses",
+  "course_id": "data-engineering--data-lakes-and-lakehouses",
+  "chapter_id": "data-engineering--data-lakes-and-lakehouses--ch03-the-data-swamp-problem",
+  "title": "Lack of ACID in Lakes",
+  "emoji": "🏞️",
+  "color": "#0D9488",
+  "description": "A quick win: understand Lack of ACID in Lakes.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "Two jobs write to the same lake folder at the same time. One overwrites the other. Data is lost.",
+      "visual": "💥"
+    },
+    "buildup": {
+      "text": "Traditional data lakes are just files on object storage. They have no transaction support.",
+      "visual": "📁"
+    },
+    "discovery": {
+      "text": "Without ACID properties, concurrent writes can corrupt data, and failed writes leave partial results.",
+      "visual": "⚠️"
+    },
+    "twist": {
+      "text": "Readers might see half-written data mid-update. There's no isolation between reads and writes.",
+      "visual": "👀"
+    },
+    "climax": {
+      "text": "The lack of ACID was the data lake's biggest weakness — and the reason lakehouses were invented.",
+      "visual": "🏠"
+    },
+    "punchline": {
+      "text": "No transactions means no safety. Lakes needed an upgrade.",
+      "visual": "🔧"
+    }
+  },
+  "quiz": {
+    "question": "What does the lack of ACID properties mean for data lakes?",
+    "options": [
+      "Concurrent writes can corrupt data and readers may see partial results",
+      "Data is always consistent",
+      "Queries are faster without transactions"
+    ],
+    "correct": 0
+  }
+}

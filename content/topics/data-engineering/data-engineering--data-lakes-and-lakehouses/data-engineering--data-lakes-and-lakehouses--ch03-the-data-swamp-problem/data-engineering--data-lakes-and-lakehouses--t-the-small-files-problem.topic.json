@@ -1,0 +1,49 @@
+{
+  "id": "data-engineering--data-lakes-and-lakehouses--t-the-small-files-problem",
+  "version": 1,
+  "subject": "Data Engineering",
+  "subcategory": "Data Lakes and Lakehouses",
+  "course_id": "data-engineering--data-lakes-and-lakehouses",
+  "chapter_id": "data-engineering--data-lakes-and-lakehouses--ch03-the-data-swamp-problem",
+  "title": "The Small Files Problem",
+  "emoji": "🏞️",
+  "color": "#0D9488",
+  "description": "A quick, practical guide to The Small Files Problem.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "The lake has one million files, each 1 KB. A query that should take seconds takes ten minutes.",
+      "visual": "🐌"
+    },
+    "buildup": {
+      "text": "Each file requires a metadata lookup. A million tiny files means a million lookups before data is even read.",
+      "visual": "📂"
+    },
+    "discovery": {
+      "text": "Small files kill lake performance. Query engines spend more time listing files than reading data.",
+      "visual": "📉"
+    },
+    "twist": {
+      "text": "Streaming ingestion is the usual culprit. Each micro-batch writes a tiny file, and they accumulate fast.",
+      "visual": "🔄"
+    },
+    "climax": {
+      "text": "Compaction jobs merge small files into larger ones periodically, restoring query performance.",
+      "visual": "🔧"
+    },
+    "punchline": {
+      "text": "Small files, big problem. Compact them regularly.",
+      "visual": "📦"
+    }
+  },
+  "quiz": {
+    "question": "Why do small files hurt data lake query performance?",
+    "options": [
+      "Each file requires a metadata lookup, creating massive overhead",
+      "Small files use more storage space",
+      "Query engines can only read large files"
+    ],
+    "correct": 0
+  }
+}

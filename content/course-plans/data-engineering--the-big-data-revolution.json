@@ -1,0 +1,559 @@
+{
+  "categoryId": "data-engineering",
+  "subject": "Data Engineering",
+  "courseId": "data-engineering--the-big-data-revolution",
+  "courseTitle": "The Big Data Revolution",
+  "emoji": "🌊",
+  "color": "#DC2626",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "data-engineering--the-big-data-revolution--ch01-the-data-explosion", "title": "The Data Explosion", "position": 1 },
+    { "id": "data-engineering--the-big-data-revolution--ch02-hadoop-and-mapreduce", "title": "Hadoop and MapReduce", "position": 2 },
+    { "id": "data-engineering--the-big-data-revolution--ch03-the-spark-era", "title": "The Spark Era", "position": 3 },
+    { "id": "data-engineering--the-big-data-revolution--ch04-nosql-for-big-data", "title": "NoSQL for Big Data", "position": 4 },
+    { "id": "data-engineering--the-big-data-revolution--ch05-big-data-in-practice", "title": "Big Data in Practice", "position": 5 },
+    { "id": "data-engineering--the-big-data-revolution--ch06-beyond-the-hype", "title": "Beyond the Hype", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch01-the-data-explosion",
+      "title": "How Much Data Exists?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "In 2010, humanity had created 2 zettabytes of data. By 2025, that number passed 180 zettabytes.", "visual": "📈" },
+        "buildup": { "text": "Smartphones, IoT sensors, social media, and video streaming generate data at an accelerating pace.", "visual": "📱" },
+        "discovery": { "text": "One zettabyte equals a trillion gigabytes. Most of it is unstructured: images, video, and text.", "visual": "🌐" },
+        "twist": { "text": "Over 90% of the world's data was created in the last two years. The rate never slows down.", "visual": "🚀" },
+        "climax": { "text": "The challenge shifted from collecting data to figuring out what to do with the flood.", "visual": "🌊" },
+        "punchline": { "text": "Data grows faster than our ability to process it.", "visual": "⏩" }
+      },
+      "quiz": {
+        "question": "Approximately how much data did humanity generate by 2025?",
+        "options": ["Over 180 zettabytes", "10 terabytes", "500 megabytes"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch01-the-data-explosion",
+      "title": "The Three Vs of Big Data",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Big data isn't just big. Three dimensions define whether data qualifies as 'big data.'", "visual": "3️⃣" },
+        "buildup": { "text": "Volume is the sheer amount. Velocity is how fast it arrives. Variety is how many formats it comes in.", "visual": "📊" },
+        "discovery": { "text": "A social media platform hits all three: petabytes of data, arriving in real-time, as text, images, and video.", "visual": "📱" },
+        "twist": { "text": "Later, people added Veracity and Value — but the original three remain the useful framework.", "visual": "🤔" },
+        "climax": { "text": "If your data is high on volume, velocity, or variety, you need big data tools. Otherwise, you don't.", "visual": "⚖️" },
+        "punchline": { "text": "Volume, Velocity, Variety. The three tests of big data.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What are the original Three Vs of big data?",
+        "options": ["Volume, Velocity, Variety", "Volume, Value, Verification", "Velocity, Veracity, Volume"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch01-the-data-explosion",
+      "title": "Structured vs Unstructured Data",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A database row is structured. A customer support email is not. Most of the world's data is unstructured.", "visual": "📧" },
+        "buildup": { "text": "Structured data fits neatly in rows and columns — think spreadsheets and relational databases.", "visual": "📋" },
+        "discovery": { "text": "Unstructured data includes images, videos, PDFs, chat logs, and sensor readings.", "visual": "🗂️" },
+        "twist": { "text": "Over 80% of enterprise data is unstructured, yet most analytics tools only handle structured data.", "visual": "😬" },
+        "climax": { "text": "Big data tools emerged partly to process unstructured data that traditional databases couldn't handle.", "visual": "⚙️" },
+        "punchline": { "text": "Most data has no columns. That's the real challenge.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What percentage of enterprise data is estimated to be unstructured?",
+        "options": ["Over 80%", "About 20%", "Less than 5%"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch01-the-data-explosion",
+      "title": "When Traditional Tools Break",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A company's PostgreSQL database took 14 hours to run a daily report. The data outgrew the tool.", "visual": "🐌" },
+        "buildup": { "text": "Traditional databases scale vertically — buy a bigger server. Eventually, no server is big enough.", "visual": "📦" },
+        "discovery": { "text": "Big data tools scale horizontally — spread the work across hundreds of cheap commodity machines.", "visual": "🖥️" },
+        "twist": { "text": "Horizontal scaling isn't free. It introduces network overhead, coordination complexity, and new failures.", "visual": "🕸️" },
+        "climax": { "text": "The moment your data doesn't fit on one machine, you've entered big data territory.", "visual": "🚪" },
+        "punchline": { "text": "When one machine isn't enough, you distribute.", "visual": "🔗" }
+      },
+      "quiz": {
+        "question": "How do big data tools scale differently from traditional databases?",
+        "options": ["Horizontally across many machines instead of one bigger machine", "By compressing all data into one file", "By deleting old data automatically"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch01-the-data-explosion",
+      "title": "The Birth of Google's Big Data Papers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2003, Google published a paper about their file system. It sparked a revolution outside Google.", "visual": "📄" },
+        "buildup": { "text": "Google needed to process the entire web. No existing tool could handle that scale.", "visual": "🌐" },
+        "discovery": { "text": "They invented GFS for distributed storage and MapReduce for distributed processing — then published both.", "visual": "📝" },
+        "twist": { "text": "Google never open-sourced their tools. The open-source community built Hadoop by reading the papers.", "visual": "📖" },
+        "climax": { "text": "Two academic papers from Google launched an entire industry worth billions of dollars.", "visual": "💰" },
+        "punchline": { "text": "Google wrote the blueprint. The world built the tools.", "visual": "🏗️" }
+      },
+      "quiz": {
+        "question": "What did Google's 2003 and 2004 papers describe?",
+        "options": ["A distributed file system and MapReduce processing model", "A new programming language", "A social media platform architecture"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch02-hadoop-and-mapreduce",
+      "title": "What Is Hadoop?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "In 2006, a Yahoo engineer named Doug Cutting released an open-source project named after his son's toy elephant.", "visual": "🐘" },
+        "buildup": { "text": "Hadoop implemented Google's ideas: a distributed file system plus a MapReduce processing engine.", "visual": "⚙️" },
+        "discovery": { "text": "For the first time, anyone could process petabytes of data on clusters of cheap commodity hardware.", "visual": "🖥️" },
+        "twist": { "text": "Hadoop was powerful but painful — low-level Java code, slow batch jobs, and no interactive queries.", "visual": "😤" },
+        "climax": { "text": "Despite its flaws, Hadoop proved that distributed processing at massive scale was achievable by anyone.", "visual": "🌍" },
+        "punchline": { "text": "A toy elephant's name changed data forever.", "visual": "🐘" }
+      },
+      "quiz": {
+        "question": "Who created Hadoop?",
+        "options": ["Doug Cutting at Yahoo", "Sergey Brin at Google", "Jeff Bezos at Amazon"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch02-hadoop-and-mapreduce",
+      "title": "MapReduce Explained",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Count every word in a billion documents. One computer would take months. MapReduce finishes in hours.", "visual": "📚" },
+        "buildup": { "text": "Map splits the work: each machine processes its chunk and emits key-value pairs.", "visual": "🔀" },
+        "discovery": { "text": "Reduce combines the results: all values for the same key are merged into a final answer.", "visual": "🔗" },
+        "twist": { "text": "MapReduce is brilliantly simple but writes intermediate data to disk, making it slow for iterative tasks.", "visual": "🐌" },
+        "climax": { "text": "Despite being replaced by faster engines, MapReduce introduced the mental model that all successors follow.", "visual": "🧠" },
+        "punchline": { "text": "Split the work. Combine the results. That's MapReduce.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What do the 'Map' and 'Reduce' steps do?",
+        "options": ["Map splits work across machines; Reduce combines results", "Map deletes data; Reduce restores it", "Map reads files; Reduce writes them"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch02-hadoop-and-mapreduce",
+      "title": "HDFS: The Distributed File System",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You can't process a petabyte on one disk. HDFS spreads data across thousands of machines.", "visual": "💾" },
+        "buildup": { "text": "HDFS splits files into 128 MB blocks and replicates each block across three machines for safety.", "visual": "🔢" },
+        "discovery": { "text": "If a machine dies, HDFS automatically re-replicates the lost blocks from surviving copies.", "visual": "🛡️" },
+        "twist": { "text": "HDFS is optimized for large sequential reads. Small random reads — like database lookups — are slow.", "visual": "🐢" },
+        "climax": { "text": "HDFS proved that cheap hardware plus smart software could replace expensive enterprise storage.", "visual": "💡" },
+        "punchline": { "text": "Cheap disks, smart replication. That's HDFS.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How does HDFS protect against hardware failure?",
+        "options": ["By replicating each data block across multiple machines", "By backing up to tape drives", "By using expensive enterprise disks"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch02-hadoop-and-mapreduce",
+      "title": "YARN: Hadoop's Resource Manager",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Early Hadoop could only run MapReduce. YARN opened the cluster to any processing framework.", "visual": "🔓" },
+        "buildup": { "text": "YARN separates resource management from job scheduling, letting multiple engines share the cluster.", "visual": "🧩" },
+        "discovery": { "text": "With YARN, Spark, Tez, and Flink could all run on the same Hadoop cluster alongside MapReduce.", "visual": "🤝" },
+        "twist": { "text": "YARN made Hadoop a platform, not just a processing engine — extending its life by years.", "visual": "⏳" },
+        "climax": { "text": "By decoupling compute from the framework, YARN paved the way for the diverse ecosystem we have today.", "visual": "🌐" },
+        "punchline": { "text": "YARN turned one engine into a platform for many.", "visual": "🏗️" }
+      },
+      "quiz": {
+        "question": "What did YARN enable on Hadoop clusters?",
+        "options": ["Running multiple processing frameworks on the same cluster", "Faster MapReduce jobs", "Direct SQL queries on HDFS"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch02-hadoop-and-mapreduce",
+      "title": "The Hadoop Ecosystem",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Hadoop alone was painful. So the community built dozens of tools to fill the gaps.", "visual": "🧰" },
+        "buildup": { "text": "Hive added SQL. Pig added scripting. HBase added real-time lookups. Sqoop moved data in and out.", "visual": "🔧" },
+        "discovery": { "text": "ZooKeeper handled coordination. Oozie handled workflow orchestration. Each tool solved one problem.", "visual": "🐝" },
+        "twist": { "text": "The ecosystem grew so complex that managing it became a job in itself — the 'Hadoop admin.'", "visual": "😵" },
+        "climax": { "text": "Cloudera and Hortonworks packaged the ecosystem into distributions, selling simplicity to enterprises.", "visual": "📦" },
+        "punchline": { "text": "One elephant spawned an entire zoo of tools.", "visual": "🦁" }
+      },
+      "quiz": {
+        "question": "What did Apache Hive add to the Hadoop ecosystem?",
+        "options": ["SQL query capability on top of Hadoop data", "A graphical user interface", "Real-time streaming support"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch03-the-spark-era",
+      "title": "Why Spark Was Born",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "MapReduce wrote results to disk after every step. For iterative algorithms, this was unbearably slow.", "visual": "🐌" },
+        "buildup": { "text": "Matei Zaharia at UC Berkeley asked: what if intermediate data stayed in memory instead?", "visual": "🧠" },
+        "discovery": { "text": "Apache Spark was born — an in-memory distributed processing engine up to 100x faster than MapReduce.", "visual": "⚡" },
+        "twist": { "text": "Spark didn't replace Hadoop's storage. It replaced its compute engine while still reading from HDFS.", "visual": "🔄" },
+        "climax": { "text": "Spark became the default big data engine within five years of its release.", "visual": "👑" },
+        "punchline": { "text": "Keep data in memory. Skip the disk. Go 100x faster.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "What made Spark much faster than MapReduce?",
+        "options": ["In-memory processing instead of writing to disk between steps", "Using a different programming language", "Running on faster hardware"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch03-the-spark-era",
+      "title": "RDDs and DataFrames",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Spark's original API used RDDs — Resilient Distributed Datasets. Powerful, but hard to optimize.", "visual": "📦" },
+        "buildup": { "text": "RDDs gave programmers full control but required manual optimization of every operation.", "visual": "🔧" },
+        "discovery": { "text": "DataFrames added structure: named columns, types, and a query optimizer called Catalyst.", "visual": "📊" },
+        "twist": { "text": "Catalyst optimizes DataFrame queries automatically, often outperforming hand-tuned RDD code.", "visual": "🤯" },
+        "climax": { "text": "DataFrames made Spark accessible to SQL-fluent analysts, not just JVM programmers.", "visual": "🌍" },
+        "punchline": { "text": "Structure enables optimization. That's why DataFrames won.", "visual": "🏆" }
+      },
+      "quiz": {
+        "question": "What advantage do Spark DataFrames have over RDDs?",
+        "options": ["Automatic query optimization via the Catalyst engine", "Lower memory usage", "Support for more programming languages"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch03-the-spark-era",
+      "title": "Spark SQL",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Data analysts don't want to learn Scala or Java. They want to write SQL and get results.", "visual": "🗣️" },
+        "buildup": { "text": "Spark SQL lets you run SQL queries directly on DataFrames and distributed datasets.", "visual": "📝" },
+        "discovery": { "text": "Under the hood, Spark SQL compiles queries through Catalyst into optimized execution plans.", "visual": "⚙️" },
+        "twist": { "text": "Spark SQL is so good that many teams use Spark purely as a SQL engine without writing any code.", "visual": "😮" },
+        "climax": { "text": "By speaking SQL, Spark bridged the gap between big data infrastructure and business analysis.", "visual": "🌉" },
+        "punchline": { "text": "SQL on big data. Simple interface, massive power.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "What does Spark SQL allow users to do?",
+        "options": ["Run SQL queries on distributed datasets", "Replace the database entirely", "Write data to spreadsheets"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch03-the-spark-era",
+      "title": "Spark Streaming",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Spark was built for batch. But real-time use cases kept asking: can Spark handle streams too?", "visual": "🌊" },
+        "buildup": { "text": "Spark Streaming broke continuous data into micro-batches and processed each with the Spark engine.", "visual": "📦" },
+        "discovery": { "text": "Structured Streaming later unified batch and streaming APIs, letting one codebase handle both.", "visual": "🤝" },
+        "twist": { "text": "Micro-batching adds seconds of latency. For sub-second needs, purpose-built tools like Flink win.", "visual": "⏱️" },
+        "climax": { "text": "Spark Streaming is good enough for 90% of streaming use cases — and that's why it's so popular.", "visual": "📊" },
+        "punchline": { "text": "Good enough for most. That's Spark Streaming's superpower.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "How does Spark Streaming process continuous data?",
+        "options": ["By breaking it into micro-batches", "By processing one event at a time", "By storing it all before processing"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch03-the-spark-era",
+      "title": "PySpark and the Python Takeover",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Spark was written in Scala. But most data engineers and scientists use Python. Enter PySpark.", "visual": "🐍" },
+        "buildup": { "text": "PySpark wraps Spark's JVM engine with a Python API, letting Python users harness distributed power.", "visual": "🔌" },
+        "discovery": { "text": "By 2020, PySpark surpassed Scala as the most popular way to use Spark, by a wide margin.", "visual": "📈" },
+        "twist": { "text": "PySpark adds overhead for custom Python functions, since data must cross between Python and the JVM.", "visual": "🐌" },
+        "climax": { "text": "Pandas API on Spark later eliminated most of that overhead by keeping operations on the JVM side.", "visual": "⚡" },
+        "punchline": { "text": "Python won. Even in Spark's Scala-built world.", "visual": "🐍" }
+      },
+      "quiz": {
+        "question": "What is PySpark?",
+        "options": ["A Python API for Apache Spark", "A standalone Python database", "A Python web framework"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch04-nosql-for-big-data",
+      "title": "Why NoSQL Emerged",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Facebook needed to store billions of messages. Relational databases couldn't keep up.", "visual": "💬" },
+        "buildup": { "text": "Relational databases enforce schemas, joins, and ACID transactions — great for consistency, bad for scale.", "visual": "📦" },
+        "discovery": { "text": "NoSQL databases relaxed those constraints, trading consistency for horizontal scalability.", "visual": "📈" },
+        "twist": { "text": "NoSQL doesn't mean 'no SQL.' It means 'not only SQL' — different tools for different problems.", "visual": "🔧" },
+        "climax": { "text": "NoSQL filled a gap that relational databases couldn't: massive-scale, low-latency reads and writes.", "visual": "⚡" },
+        "punchline": { "text": "When relational can't scale, NoSQL steps in.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "Why were NoSQL databases created?",
+        "options": ["Relational databases couldn't scale horizontally for massive workloads", "SQL was too difficult to learn", "Relational databases were too expensive"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch04-nosql-for-big-data",
+      "title": "Key-Value Stores",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Look up a value by its key. That's it. The simplest database model possible — and the fastest.", "visual": "🔑" },
+        "buildup": { "text": "Key-value stores like Redis and DynamoDB map keys to values with O(1) lookup time.", "visual": "⚡" },
+        "discovery": { "text": "They power caching layers, session storage, and shopping carts where speed matters most.", "visual": "🛒" },
+        "twist": { "text": "No joins, no complex queries. If you need to search by anything other than the key, you're stuck.", "visual": "🚫" },
+        "climax": { "text": "Key-value stores do one thing and do it at extraordinary speed. Simplicity is their strength.", "visual": "🏎️" },
+        "punchline": { "text": "One key. One value. Blazing fast.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "What is the primary advantage of key-value stores?",
+        "options": ["Extremely fast lookups by key", "Complex query support", "Built-in SQL compatibility"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch04-nosql-for-big-data",
+      "title": "Document Databases",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A user profile has a name, an address, three emails, and a list of hobbies. That's a document.", "visual": "📄" },
+        "buildup": { "text": "Document databases like MongoDB store data as JSON-like documents with flexible, nested schemas.", "visual": "🗂️" },
+        "discovery": { "text": "No migrations needed. You can add fields to one document without affecting any others.", "visual": "🔓" },
+        "twist": { "text": "Schema flexibility is a double-edged sword. Without discipline, the same field means different things.", "visual": "⚔️" },
+        "climax": { "text": "Document databases excel when data is naturally hierarchical and schemas change frequently.", "visual": "🌳" },
+        "punchline": { "text": "Flexible schema. Powerful — if you stay disciplined.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What format do document databases typically use to store data?",
+        "options": ["JSON-like documents with nested fields", "Fixed rows and columns", "Binary-only blobs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch04-nosql-for-big-data",
+      "title": "Column-Family Stores",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Cassandra handles 400,000 writes per second across the globe. How? Column-family architecture.", "visual": "🌍" },
+        "buildup": { "text": "Column-family stores like Cassandra and HBase group columns into families optimized for specific queries.", "visual": "📊" },
+        "discovery": { "text": "Data is partitioned across nodes by a row key, enabling massive horizontal write throughput.", "visual": "📈" },
+        "twist": { "text": "Reads by non-key columns are slow. You must design your table around your query patterns.", "visual": "🤔" },
+        "climax": { "text": "Column-family stores power time-series data, IoT telemetry, and messaging at planet-scale.", "visual": "🌐" },
+        "punchline": { "text": "Design the table for the query, not the data.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What are column-family stores optimized for?",
+        "options": ["High write throughput with queries by row key", "Complex joins across tables", "Small single-record transactions"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch04-nosql-for-big-data",
+      "title": "Graph Databases",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Who are your friends' friends who also like jazz? In a graph database, that's a simple traversal.", "visual": "🕸️" },
+        "buildup": { "text": "Graph databases like Neo4j store data as nodes and edges — entities and the relationships between them.", "visual": "🔗" },
+        "discovery": { "text": "Relationship queries that take dozens of joins in SQL take a single hop in a graph.", "visual": "⚡" },
+        "twist": { "text": "Graph databases struggle with aggregations and scans. They're fast at traversal but slow at counting.", "visual": "🐌" },
+        "climax": { "text": "Fraud detection, social networks, and recommendation engines are where graph databases shine.", "visual": "✨" },
+        "punchline": { "text": "When relationships are the data, use a graph.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What type of queries are graph databases best at?",
+        "options": ["Traversing relationships between entities", "Summing large numeric columns", "Full-text search"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch05-big-data-in-practice",
+      "title": "Big Data at Netflix",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Netflix serves 230 million subscribers and knows exactly what you'll want to watch next.", "visual": "🎬" },
+        "buildup": { "text": "Every play, pause, rewind, and abandon is logged and processed through massive data pipelines.", "visual": "📊" },
+        "discovery": { "text": "Netflix processes over a petabyte of data daily to power recommendations, A/B tests, and encoding.", "visual": "📈" },
+        "twist": { "text": "Netflix open-sourced many of their data tools — including the scheduler that manages their pipelines.", "visual": "🎁" },
+        "climax": { "text": "Big data doesn't just suggest shows. It decides which shows get made in the first place.", "visual": "🎥" },
+        "punchline": { "text": "Netflix doesn't guess what you like. The data knows.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "How does Netflix use big data beyond recommendations?",
+        "options": ["Deciding which new shows to produce", "Only for billing purposes", "Managing employee schedules"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch05-big-data-in-practice",
+      "title": "Big Data in Healthcare",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A hospital's EHR system generates 80 GB of data per patient per year. Multiply by millions.", "visual": "🏥" },
+        "buildup": { "text": "Healthcare data includes records, imaging, genomics, wearable sensors, and insurance claims.", "visual": "📋" },
+        "discovery": { "text": "Big data analytics can spot disease outbreaks, predict readmissions, and personalize treatments.", "visual": "🔬" },
+        "twist": { "text": "Privacy regulations like HIPAA make healthcare data the hardest to process. Security trumps speed.", "visual": "🔒" },
+        "climax": { "text": "The potential is enormous, but healthcare data engineering remains one of the most complex domains.", "visual": "🧩" },
+        "punchline": { "text": "Healthcare has the data. Privacy has the lock.", "visual": "🔐" }
+      },
+      "quiz": {
+        "question": "What makes healthcare data engineering especially challenging?",
+        "options": ["Strict privacy regulations like HIPAA", "The data is too small to analyze", "Hospitals don't generate digital data"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch05-big-data-in-practice",
+      "title": "Big Data in Finance",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A hedge fund processes satellite images of parking lots to predict retail earnings before they're released.", "visual": "🛰️" },
+        "buildup": { "text": "Financial firms use big data for fraud detection, algorithmic trading, and risk modeling.", "visual": "📈" },
+        "discovery": { "text": "Real-time streams of market data, news feeds, and social sentiment all feed trading algorithms.", "visual": "⚡" },
+        "twist": { "text": "Milliseconds matter. A one-millisecond advantage in data processing can mean millions in profit.", "visual": "💰" },
+        "climax": { "text": "Finance was one of the first industries to invest in big data — and remains the most demanding.", "visual": "🏆" },
+        "punchline": { "text": "In finance, faster data means faster money.", "visual": "⏱️" }
+      },
+      "quiz": {
+        "question": "Why is processing speed critical in financial big data?",
+        "options": ["Millisecond advantages translate to significant profit", "Regulations require fast processing", "Financial data is always small"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch05-big-data-in-practice",
+      "title": "Big Data and Machine Learning",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "GPT-4 was trained on trillions of tokens. Without big data infrastructure, it couldn't exist.", "visual": "🤖" },
+        "buildup": { "text": "Machine learning models are only as good as the data they train on — and the biggest models need the most data.", "visual": "📊" },
+        "discovery": { "text": "Data engineers build the pipelines that clean, label, and deliver training data to ML platforms.", "visual": "🔄" },
+        "twist": { "text": "The ML model gets the glory. The data pipeline that feeds it rarely gets mentioned.", "visual": "🤫" },
+        "climax": { "text": "Behind every breakthrough AI model is a data engineering team that made the training data possible.", "visual": "🏗️" },
+        "punchline": { "text": "AI runs on data. Data engineers build the supply chain.", "visual": "🔗" }
+      },
+      "quiz": {
+        "question": "What role do data engineers play in machine learning?",
+        "options": ["Building pipelines that prepare and deliver training data", "Designing the neural network architecture", "Writing the final prediction code"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch05-big-data-in-practice",
+      "title": "Big Data for City Planning",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Barcelona used sensor data from millions of IoT devices to redesign its traffic grid and cut emissions.", "visual": "🏙️" },
+        "buildup": { "text": "Cities generate enormous data from transit systems, utilities, cameras, and citizen apps.", "visual": "📡" },
+        "discovery": { "text": "Analyzing traffic patterns, energy usage, and waste collection routes optimizes city operations.", "visual": "📊" },
+        "twist": { "text": "Urban data raises surveillance concerns. Citizens benefit from optimization but fear the watching.", "visual": "👁️" },
+        "climax": { "text": "Smart cities balance data-driven efficiency with privacy protections — the defining challenge ahead.", "visual": "⚖️" },
+        "punchline": { "text": "Data can build better cities — if we build better rules.", "visual": "🏗️" }
+      },
+      "quiz": {
+        "question": "What is a key concern with big data use in city planning?",
+        "options": ["Balancing optimization with citizen privacy", "Cities generate too little data", "Data analytics slows down traffic"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch06-beyond-the-hype",
+      "title": "The Hadoop Decline",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "By 2020, Cloudera's stock had dropped 70% from its IPO. The Hadoop era was ending.", "visual": "📉" },
+        "buildup": { "text": "Cloud storage replaced HDFS. Spark replaced MapReduce. Kubernetes replaced YARN.", "visual": "🔄" },
+        "discovery": { "text": "Companies realized they could process big data on cloud-managed services without managing clusters.", "visual": "☁️" },
+        "twist": { "text": "Hadoop didn't die because it was wrong. It died because the cloud did everything it did, but easier.", "visual": "💡" },
+        "climax": { "text": "Hadoop's ideas — distributed storage and compute — live on in every modern data platform.", "visual": "🌱" },
+        "punchline": { "text": "Hadoop lost the market. Its ideas won the war.", "visual": "🏆" }
+      },
+      "quiz": {
+        "question": "Why did Hadoop decline in popularity?",
+        "options": ["Cloud services offered the same capabilities with less operational overhead", "Data volumes decreased", "Spark was harder to use"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch06-beyond-the-hype",
+      "title": "When Big Data Is Overkill",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A startup with 10,000 rows set up a Spark cluster. Their data fit in a single spreadsheet.", "visual": "📋" },
+        "buildup": { "text": "Big data tools add complexity: distributed systems, cluster management, and debugging nightmares.", "visual": "🕸️" },
+        "discovery": { "text": "If your data fits in memory — and most companies' does — a single PostgreSQL instance is enough.", "visual": "💻" },
+        "twist": { "text": "The 'big data' label was used to sell tools to companies that never had big data problems.", "visual": "💸" },
+        "climax": { "text": "Before choosing big data tools, ask: does my data actually require distributed processing?", "visual": "🤔" },
+        "punchline": { "text": "Most data isn't big. Most tools shouldn't be either.", "visual": "📐" }
+      },
+      "quiz": {
+        "question": "When are big data tools likely overkill?",
+        "options": ["When the data fits in memory on a single machine", "When the data changes frequently", "When you use a cloud provider"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch06-beyond-the-hype",
+      "title": "The Rise of DuckDB",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "DuckDB lets you query billions of rows on a laptop. No cluster, no cloud, no configuration.", "visual": "🦆" },
+        "buildup": { "text": "It's an embedded columnar database that runs inside your Python script or notebook.", "visual": "📓" },
+        "discovery": { "text": "DuckDB processes Parquet files, CSVs, and even remote S3 data with impressive speed on one machine.", "visual": "⚡" },
+        "twist": { "text": "For many analytics workloads, DuckDB on a laptop outperforms a distributed Spark cluster.", "visual": "🤯" },
+        "climax": { "text": "DuckDB represents a counter-revolution: powerful single-node tools that make clusters unnecessary.", "visual": "🔄" },
+        "punchline": { "text": "Sometimes the best cluster is no cluster at all.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What makes DuckDB notable in the data engineering world?",
+        "options": ["It handles large analytical queries on a single machine", "It requires a 100-node cluster", "It only works with CSV files"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch06-beyond-the-hype",
+      "title": "Data Gravity",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Moving a petabyte of data to a new cloud takes weeks and costs a fortune. Data has gravity.", "visual": "🪨" },
+        "buildup": { "text": "Data gravity means large datasets attract services and apps to them, not the other way around.", "visual": "🧲" },
+        "discovery": { "text": "It's cheaper to move compute to the data than to move the data to the compute.", "visual": "💡" },
+        "twist": { "text": "Cloud providers know this. Free ingress, expensive egress — once your data is in, it stays.", "visual": "🔒" },
+        "climax": { "text": "Data gravity is why cloud migrations are one-way trips for most companies.", "visual": "🚀" },
+        "punchline": { "text": "Data sits still. Everything else moves to it.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does 'data gravity' mean?",
+        "options": ["Large datasets attract services to them rather than being moved", "Data gets heavier over time", "Databases slow down as they grow"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "data-engineering--the-big-data-revolution--ch06-beyond-the-hype",
+      "title": "The Future of Scale",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Data volumes will keep growing. But the tools to process them keep getting simpler and cheaper.", "visual": "📉" },
+        "buildup": { "text": "Serverless query engines, auto-scaling clusters, and embedded databases lower the barrier every year.", "visual": "🔧" },
+        "discovery": { "text": "The trend is clear: the same power that once required a Hadoop cluster now fits on a laptop.", "visual": "💻" },
+        "twist": { "text": "AI-generated data may explode volumes even further — synthetic data, embeddings, and model outputs.", "visual": "🤖" },
+        "climax": { "text": "The future isn't about bigger tools. It's about smarter tools that handle scale invisibly.", "visual": "✨" },
+        "punchline": { "text": "Scale grows. Complexity should shrink.", "visual": "📐" }
+      },
+      "quiz": {
+        "question": "What is the trend in big data tooling?",
+        "options": ["Tools are getting simpler while handling more data", "Tools are getting more complex", "Big data is shrinking"],
+        "correct": 0
+      }
+    }
+  ]
+}

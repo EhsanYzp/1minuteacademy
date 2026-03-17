@@ -1,0 +1,49 @@
+{
+  "id": "data-engineering--streaming-data-systems--t-watermarks-and-late-data",
+  "version": 1,
+  "subject": "Data Engineering",
+  "subcategory": "Streaming Data Systems",
+  "course_id": "data-engineering--streaming-data-systems",
+  "chapter_id": "data-engineering--streaming-data-systems--ch03-stream-processing",
+  "title": "Watermarks and Late Data",
+  "emoji": "⚡",
+  "color": "#EA580C",
+  "description": "A micro-lesson that makes Watermarks and Late Data usable.",
+  "is_free": false,
+  "published": true,
+  "story": {
+    "hook": {
+      "text": "An event with a 2 PM timestamp arrives at 2:15 PM. The 2 PM window already closed. What now?",
+      "visual": "⏰"
+    },
+    "buildup": {
+      "text": "Watermarks estimate how far behind the slowest event might be, defining when a window can safely close.",
+      "visual": "💧"
+    },
+    "discovery": {
+      "text": "A watermark of 5 minutes means: we believe all events older than 5 minutes have already arrived.",
+      "visual": "📏"
+    },
+    "twist": {
+      "text": "Set the watermark too low and you drop valid late events. Too high and your results are delayed.",
+      "visual": "⚖️"
+    },
+    "climax": {
+      "text": "Watermarks are a trade-off between completeness and latency — and the right setting depends on the use case.",
+      "visual": "🎯"
+    },
+    "punchline": {
+      "text": "Watermarks answer: how long should we wait?",
+      "visual": "⏳"
+    }
+  },
+  "quiz": {
+    "question": "What do watermarks define in stream processing?",
+    "options": [
+      "When a time window can safely close based on expected event delay",
+      "The maximum event size",
+      "The number of partitions to use"
+    ],
+    "correct": 0
+  }
+}
