@@ -955,15 +955,16 @@ export default function useVideoExport() {
       let encoderError = null;
       const encoder = new VideoEncoder({
         output: (chunk, meta) => {
-          // iOS Safari may pass meta with decoderConfig = null which
-          // crashes mp4-muxer when it reads decoderConfig.colorSpace.
-          // Strip the null so the muxer falls back to safe defaults.
+          // iOS Safari may emit meta.decoderConfig as null.  mp4-muxer
+          // then stores null in track.info.decoderConfig and crashes at
+          // finalization when it reads .colorSpace on null.
+          // Fix: replace null with undefined so the muxer skips the
+          // assignment entirely and only uses a real decoderConfig if
+          // the encoder eventually provides one.
           if (meta && meta.decoderConfig === null) {
-            const { decoderConfig: _, ...safeMeta } = meta;
-            muxer.addVideoChunk(chunk, safeMeta);
-          } else {
-            muxer.addVideoChunk(chunk, meta);
+            meta = { ...meta, decoderConfig: undefined };
           }
+          muxer.addVideoChunk(chunk, meta);
         },
         error: (e) => { encoderError = e; },
       });
@@ -974,6 +975,11 @@ export default function useVideoExport() {
         height: EXPORT_H,
         bitrate: EXPORT_W > 1280 ? 2_500_000 : 1_800_000,
         framerate: FPS,
+        // Request AVC (length-prefixed NALU) output format.
+        // Without this, some browsers (iOS Safari) default to Annex B,
+        // which does NOT provide decoderConfig.description in output
+        // metadata — mp4-muxer needs that for the avcC box.
+        avc: { format: 'avc' },
       });
 
       const usPerFrame = Math.round(1_000_000 / FPS);
