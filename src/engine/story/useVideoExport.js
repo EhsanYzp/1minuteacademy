@@ -954,7 +954,17 @@ export default function useVideoExport() {
 
       let encoderError = null;
       const encoder = new VideoEncoder({
-        output: (chunk, meta) => muxer.addVideoChunk(chunk, meta),
+        output: (chunk, meta) => {
+          // iOS Safari may pass meta with decoderConfig = null which
+          // crashes mp4-muxer when it reads decoderConfig.colorSpace.
+          // Strip the null so the muxer falls back to safe defaults.
+          if (meta && meta.decoderConfig === null) {
+            const { decoderConfig: _, ...safeMeta } = meta;
+            muxer.addVideoChunk(chunk, safeMeta);
+          } else {
+            muxer.addVideoChunk(chunk, meta);
+          }
+        },
         error: (e) => { encoderError = e; },
       });
 
