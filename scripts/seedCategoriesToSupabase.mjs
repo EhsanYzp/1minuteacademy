@@ -153,6 +153,7 @@ const CATEGORY_TITLES = [
   'Fashion',
   'Film & Cinema',
   'Television & Streaming',
+  'Animation',
   'Technology',
   'Programming',
   'Data',
