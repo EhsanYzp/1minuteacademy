@@ -151,6 +151,7 @@ const CATEGORY_TITLES = [
   'Photography',
   'Design',
   'Fashion',
+  'Film & Cinema',
   'Technology',
   'Programming',
   'Data',
