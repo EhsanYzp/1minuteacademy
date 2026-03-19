@@ -148,6 +148,7 @@ const CATEGORY_TITLES = [
 
   'Art',
   'Music',
+  'Music Production',
   'Photography',
   'Design',
   'Fashion',
