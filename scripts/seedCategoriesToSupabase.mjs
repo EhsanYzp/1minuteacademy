@@ -158,6 +158,7 @@ const CATEGORY_TITLES = [
   'Literature',
   'Mythology',
   'Archaeology',
+  'Architecture',
   'Technology',
   'Programming',
   'Data',
