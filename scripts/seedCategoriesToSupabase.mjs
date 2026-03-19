@@ -155,6 +155,7 @@ const CATEGORY_TITLES = [
   'Film & Cinema',
   'Television & Streaming',
   'Animation',
+  'Literature',
   'Technology',
   'Programming',
   'Data',
