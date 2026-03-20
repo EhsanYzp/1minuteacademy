@@ -7,6 +7,15 @@ import { toDisplaySubject } from '../lib/subjectAliases';
 import './ProTopicGate.css';
 import '../pages/CategoriesFlow.css';
 
+function humanizeChapterId(raw) {
+  const s = String(raw ?? '');
+  const last = s.includes('--') ? s.split('--').pop() : s;
+  const stripped = last.replace(/^ch\d+-/, '');
+  return stripped
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
 /**
  * Shown when a free / guest user tries to view a Pro-only topic or lesson.
  *
@@ -137,6 +146,8 @@ export default function ProTopicGate({
             {freeTopics.map((ft) => {
               const subject = String(ft.subject ?? '').trim();
               const subcategory = String(ft.subcategory ?? '').trim();
+              const chapterId = String(ft.chapter_id ?? '').trim();
+              const chapterTitle = chapterId ? humanizeChapterId(chapterId) : '';
               const topicPath = `/topic/${encodeURIComponent(String(ft.id))}`;
               const lessonPath = `/lesson/${encodeURIComponent(String(ft.id))}`;
 
@@ -158,10 +169,6 @@ export default function ProTopicGate({
                       {ft.emoji ?? '🎯'} {ft.title ?? ft.id}
                     </h3>
 
-                    {ft.description ? (
-                      <p className="catflow-resultDesc">{ft.description}</p>
-                    ) : null}
-
                     <div className="catflow-metaChips catflow-metaChips--compact">
                       {subject ? (
                         <span className="catflow-metaChip catflow-metaChip--category">
@@ -173,6 +180,12 @@ export default function ProTopicGate({
                         <span className="catflow-metaChip catflow-metaChip--course">
                           <span className="catflow-metaChipLabel">Course</span>
                           <span className="catflow-metaChipValue">{subcategory}</span>
+                        </span>
+                      ) : null}
+                      {chapterTitle ? (
+                        <span className="catflow-metaChip catflow-metaChip--chapter">
+                          <span className="catflow-metaChipLabel">Chapter</span>
+                          <span className="catflow-metaChipValue">{chapterTitle}</span>
                         </span>
                       ) : null}
                     </div>

@@ -164,7 +164,7 @@ export async function listFreeRelatedTopics({
   if (!isSupabaseConfigured) return [];
 
   const supabase = requireSupabase();
-  const columns = 'id, subject, subcategory, title, emoji, color, description, is_free';
+  const columns = 'id, subject, subcategory, chapter_id, title, emoji, color, description, is_free';
 
   const run = async ({ includeSubcategory }) => {
     let q = supabase

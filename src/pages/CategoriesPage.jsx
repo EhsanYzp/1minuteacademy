@@ -574,12 +574,6 @@ export default function CategoriesPage() {
                             <HighlightTokens text={title} tokens={queryTokens} />
                           </h3>
 
-                          {t?.description ? (
-                            <p className="catflow-resultDesc">
-                              <HighlightTokens text={String(t.description)} tokens={queryTokens} />
-                            </p>
-                          ) : null}
-
                           <div className="catflow-metaChips catflow-metaChips--compact" aria-label="Topic metadata">
                             {subject ? (
                               <span className="catflow-metaChip catflow-metaChip--category">
