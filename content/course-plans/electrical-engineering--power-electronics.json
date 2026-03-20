@@ -1,0 +1,1238 @@
+{
+  "categoryId": "electrical-engineering",
+  "subject": "Electrical Engineering",
+  "courseId": "electrical-engineering--power-electronics",
+  "courseTitle": "Power Electronics",
+  "emoji": "🔋",
+  "color": "#33691E",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "electrical-engineering--power-electronics--ch01-switching-fundamentals",
+      "title": "Switching Fundamentals",
+      "position": 1
+    },
+    {
+      "id": "electrical-engineering--power-electronics--ch02-rectifiers-and-converters",
+      "title": "Rectifiers and Converters",
+      "position": 2
+    },
+    {
+      "id": "electrical-engineering--power-electronics--ch03-inverters",
+      "title": "Inverters",
+      "position": 3
+    },
+    {
+      "id": "electrical-engineering--power-electronics--ch04-power-supplies",
+      "title": "Power Supplies",
+      "position": 4
+    },
+    {
+      "id": "electrical-engineering--power-electronics--ch05-applications",
+      "title": "Applications",
+      "position": 5
+    }
+  ],
+  "topics": [
+    {
+      "title": "What Is Power Electronics?",
+      "chapter_id": "electrical-engineering--power-electronics--ch01-switching-fundamentals",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "Power electronics converts electrical power from one form to another — AC to DC, low to high voltage.",
+          "visual": "⚡"
+        },
+        "buildup": {
+          "text": "Unlike signal electronics, power electronics handles watts, kilowatts, and megawatts.",
+          "visual": "🔌"
+        },
+        "discovery": {
+          "text": "Semiconductor switches turn on and off rapidly, reshaping voltage and current waveforms efficiently.",
+          "visual": "🔀"
+        },
+        "twist": {
+          "text": "Efficiency matters enormously — even 1% loss in a megawatt converter is 10 kilowatts of wasted heat.",
+          "visual": "🌡️"
+        },
+        "climax": {
+          "text": "Phone chargers, solar inverters, electric cars, and data centers all depend on power electronics.",
+          "visual": "📱"
+        },
+        "punchline": {
+          "text": "Convert, regulate, reshape — power electronics controls energy flow.",
+          "visual": "🔋"
+        }
+      },
+      "quiz": {
+        "question": "What makes power electronics different from signal electronics?",
+        "options": [
+          "Power electronics uses only analog components",
+          "Power electronics handles high-power conversion, not small-signal processing",
+          "Power electronics operates only with DC voltages"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "The Power Diode",
+      "chapter_id": "electrical-engineering--power-electronics--ch01-switching-fundamentals",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A power diode is a one-way valve for electricity — current flows forward, never backward.",
+          "visual": "➡️"
+        },
+        "buildup": {
+          "text": "When forward-biased, the diode conducts with a small voltage drop — about 0.7 V for silicon.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Reverse biased, it blocks voltage up to its rated breakdown — hundreds or thousands of volts.",
+          "visual": "🛡️"
+        },
+        "twist": {
+          "text": "Recovery time matters — when switching from on to off, a reverse current pulse flows briefly. Fast diodes minimize this.",
+          "visual": "⏱️"
+        },
+        "climax": {
+          "text": "Power diodes are the building blocks of rectifiers — converting AC mains into usable DC.",
+          "visual": "🔌"
+        },
+        "punchline": {
+          "text": "Forward: conduct. Reverse: block. The diode is the simplest power semiconductor.",
+          "visual": "💡"
+        }
+      },
+      "quiz": {
+        "question": "What is reverse recovery in a power diode?",
+        "options": [
+          "The diode increases its forward voltage drop after long use",
+          "A brief reverse current pulse when the diode switches from conducting to blocking",
+          "The diode permanently breaks down under reverse voltage"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "The MOSFET: Fast Switching",
+      "chapter_id": "electrical-engineering--power-electronics--ch01-switching-fundamentals",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "The power MOSFET switches on and off millions of times per second with almost no loss.",
+          "visual": "⚡"
+        },
+        "buildup": {
+          "text": "A voltage on the gate controls a channel between drain and source. No gate current flows — pure voltage control.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "On-resistance (Rds_on) determines conduction loss. Lower resistance means less heat when current flows.",
+          "visual": "🌡️"
+        },
+        "twist": {
+          "text": "At high voltages, Rds_on rises steeply. Above 600 V, IGBTs become more practical than MOSFETs.",
+          "visual": "📈"
+        },
+        "climax": {
+          "text": "DC-DC converters, motor drives under 600 V, and LED drivers all use power MOSFETs.",
+          "visual": "💡"
+        },
+        "punchline": {
+          "text": "Fast, efficient, voltage-controlled — the MOSFET dominates switching.",
+          "visual": "🏆"
+        }
+      },
+      "quiz": {
+        "question": "Why are IGBTs preferred over MOSFETs at voltages above 600 V?",
+        "options": [
+          "IGBTs switch faster than MOSFETs at all voltages",
+          "MOSFET on-resistance rises steeply at high voltages, making IGBTs more efficient there",
+          "IGBTs don't require a gate driver circuit"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "The IGBT: High-Voltage Workhorse",
+      "chapter_id": "electrical-engineering--power-electronics--ch01-switching-fundamentals",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "The IGBT combines a MOSFET's easy gate drive with a bipolar transistor's high-voltage capability.",
+          "visual": "🔧"
+        },
+        "buildup": {
+          "text": "It handles thousands of volts and hundreds of amps — the standard for high-power converters.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "The voltage-controlled gate means simple drive circuits. No base current needed like a BJT.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "IGBTs have a tail current at turn-off — stored charge takes time to clear, limiting switching speed.",
+          "visual": "⏱️"
+        },
+        "climax": {
+          "text": "Electric trains, wind turbines, industrial motor drives, and grid converters all use IGBTs.",
+          "visual": "🚄"
+        },
+        "punchline": {
+          "text": "High voltage, easy to drive — the IGBT is power's heavy lifter.",
+          "visual": "💪"
+        }
+      },
+      "quiz": {
+        "question": "What causes the tail current in an IGBT at turn-off?",
+        "options": [
+          "The gate driver cannot discharge the gate fast enough",
+          "Stored minority carriers in the bipolar section take time to recombine",
+          "External circuit inductance forces current to continue flowing"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Switching Losses: The Heat Tax",
+      "chapter_id": "electrical-engineering--power-electronics--ch01-switching-fundamentals",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A perfect switch goes from off to on instantly. Real switches take time — and waste energy during transition.",
+          "visual": "🌡️"
+        },
+        "buildup": {
+          "text": "During the transition, both voltage across and current through the device are nonzero. Power = V × I.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Total switching loss = losses per transition × switching frequency. Higher frequency means more heat.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "Soft switching techniques make the voltage or current reach zero before the switch toggles — slashing losses.",
+          "visual": "📉"
+        },
+        "climax": {
+          "text": "Efficient thermal management — heatsinks, fans, and liquid cooling — keeps power devices alive.",
+          "visual": "❄️"
+        },
+        "punchline": {
+          "text": "Every switch cycle costs energy. Managing losses is the real art.",
+          "visual": "🎨"
+        }
+      },
+      "quiz": {
+        "question": "How do soft switching techniques reduce losses?",
+        "options": [
+          "They slow down the switching frequency to reduce heat",
+          "They ensure voltage or current is zero at the moment of switching, minimizing overlap loss",
+          "They use larger transistors to handle more power"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Gate Drivers: Commanding the Switch",
+      "chapter_id": "electrical-engineering--power-electronics--ch01-switching-fundamentals",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A power switch needs a gate driver — a circuit that charges and discharges the gate fast enough.",
+          "visual": "🔧"
+        },
+        "buildup": {
+          "text": "The gate is a capacitor. Charging it slowly means the switch lingers in the linear region — wasting power.",
+          "visual": "⏱️"
+        },
+        "discovery": {
+          "text": "High-side drivers need level shifting or isolation — the source terminal floats at high voltage.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Bootstrap circuits charge a capacitor when the low-side switch is on, then use that charge to drive the high side.",
+          "visual": "🔄"
+        },
+        "climax": {
+          "text": "Integrated gate driver ICs handle timing, dead-time, and protection — simplifying design enormously.",
+          "visual": "💻"
+        },
+        "punchline": {
+          "text": "Charge the gate fast, protect the switch — the driver is the unsung hero.",
+          "visual": "🦸"
+        }
+      },
+      "quiz": {
+        "question": "Why is driving a high-side switch more challenging than a low-side switch?",
+        "options": [
+          "High-side switches require more current to operate",
+          "The source terminal floats at high voltage, requiring level shifting or isolation",
+          "High-side switches are physically larger and harder to mount"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Half-Wave Rectifier: The Simplest Converter",
+      "chapter_id": "electrical-engineering--power-electronics--ch02-rectifiers-and-converters",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "One diode, one miracle — a half-wave rectifier blocks the negative half of AC and passes only the positive.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "The output is pulsating DC — positive humps separated by gaps where the negative half was removed.",
+          "visual": "📈"
+        },
+        "discovery": {
+          "text": "A capacitor smooths the pulses. It charges during the peak and discharges during the gap.",
+          "visual": "🔋"
+        },
+        "twist": {
+          "text": "Half-wave wastes half the input energy. It's simple but terribly inefficient for serious power conversion.",
+          "visual": "📉"
+        },
+        "climax": {
+          "text": "It's used only in low-power applications — battery chargers, signal detectors, and simple circuits.",
+          "visual": "🔌"
+        },
+        "punchline": {
+          "text": "Block the negative, keep the positive — lesson one in power conversion.",
+          "visual": "📐"
+        }
+      },
+      "quiz": {
+        "question": "Why is a half-wave rectifier considered inefficient?",
+        "options": [
+          "It requires too many components to build",
+          "It uses only the positive half-cycle, wasting the energy in the negative half",
+          "It generates too much electromagnetic interference"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Full-Wave Rectifier: Using Both Halves",
+      "chapter_id": "electrical-engineering--power-electronics--ch02-rectifiers-and-converters",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Four diodes in a bridge flip the negative half-cycle positive. Both halves contribute power.",
+          "visual": "🌉"
+        },
+        "buildup": {
+          "text": "The output ripple frequency doubles — easier to smooth with a smaller capacitor.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Two diodes conduct at any moment. Each drops about 0.7 V — total loss is 1.4 V across the bridge.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Schottky diode bridges cut the voltage drop to 0.6 V total — better efficiency for low-voltage supplies.",
+          "visual": "📉"
+        },
+        "climax": {
+          "text": "Almost every AC-to-DC power supply starts with a full-wave bridge rectifier at its input.",
+          "visual": "🔌"
+        },
+        "punchline": {
+          "text": "Four diodes, both halves — the bridge rectifier converts AC to DC.",
+          "visual": "⚡"
+        }
+      },
+      "quiz": {
+        "question": "Why does a full-wave rectifier have lower output ripple than a half-wave?",
+        "options": [
+          "It uses a larger capacitor to filter the output",
+          "Both half-cycles contribute, doubling the ripple frequency and reducing gaps",
+          "It operates at a higher input voltage"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Buck Converter: Stepping Down",
+      "chapter_id": "electrical-engineering--power-electronics--ch02-rectifiers-and-converters",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A buck converter steps voltage down efficiently — 12 V in, 5 V out, with over 90% efficiency.",
+          "visual": "📉"
+        },
+        "buildup": {
+          "text": "A switch chops the input voltage. An inductor and capacitor smooth the result into steady DC.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Duty cycle controls the output: Vout = Vin × D. A 50% duty cycle halves the voltage.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "A linear regulator would burn the 7 V difference as heat. The buck converter recirculates energy through the inductor.",
+          "visual": "🔄"
+        },
+        "climax": {
+          "text": "Every laptop, phone, and server motherboard has buck converters stepping voltage down for each chip.",
+          "visual": "💻"
+        },
+        "punchline": {
+          "text": "Chop, smooth, regulate — the buck converter steps down efficiently.",
+          "visual": "✅"
+        }
+      },
+      "quiz": {
+        "question": "How does a buck converter control its output voltage?",
+        "options": [
+          "By varying the load resistance",
+          "By adjusting the duty cycle of the switching transistor",
+          "By changing the input voltage frequency"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Boost Converter: Stepping Up",
+      "chapter_id": "electrical-engineering--power-electronics--ch02-rectifiers-and-converters",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A boost converter raises voltage — 3.7 V from a battery becomes 5 V for USB output.",
+          "visual": "📈"
+        },
+        "buildup": {
+          "text": "The switch stores energy in the inductor. When the switch opens, the inductor pushes voltage higher.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Output voltage: Vout = Vin / (1 − D). Higher duty cycle means higher output voltage.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "At very high duty cycles, losses pile up and efficiency drops. Practical boost ratios stay below 5:1.",
+          "visual": "📉"
+        },
+        "climax": {
+          "text": "LED backlights, solar maximizers, and battery-powered USB ports all use boost converters.",
+          "visual": "💡"
+        },
+        "punchline": {
+          "text": "Store in the inductor, release higher — the boost pumps uphill.",
+          "visual": "⛰️"
+        }
+      },
+      "quiz": {
+        "question": "Why are practical boost converter ratios limited to about 5:1?",
+        "options": [
+          "The inductor saturates at higher ratios",
+          "Parasitic losses increase at high duty cycles, reducing efficiency significantly",
+          "The output capacitor cannot hold enough charge for higher ratios"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Buck-Boost: Up or Down",
+      "chapter_id": "electrical-engineering--power-electronics--ch02-rectifiers-and-converters",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "What if the input voltage could be above or below the output? A buck-boost handles both cases.",
+          "visual": "🔀"
+        },
+        "buildup": {
+          "text": "When the switch is on, the inductor charges. When off, it discharges into the output at a different voltage.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "The basic buck-boost inverts polarity. A four-switch topology avoids inversion and handles both directions.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "SEPIC and Ćuk converters are buck-boost variants that maintain the same polarity without four switches.",
+          "visual": "🔧"
+        },
+        "climax": {
+          "text": "Battery systems where voltage sags below and rises above the target use buck-boost regulation.",
+          "visual": "🔋"
+        },
+        "punchline": {
+          "text": "Too high or too low — the buck-boost handles both, output stays steady.",
+          "visual": "⚖️"
+        }
+      },
+      "quiz": {
+        "question": "When is a buck-boost converter needed instead of a simple buck or boost?",
+        "options": [
+          "When the load draws constant current",
+          "When the input voltage can swing above or below the desired output voltage",
+          "When the output must be isolated from the input"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Flyback Converter: Isolated Power",
+      "chapter_id": "electrical-engineering--power-electronics--ch02-rectifiers-and-converters",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A flyback converter uses a transformer to isolate input from output — safety for mains-powered devices.",
+          "visual": "🔌"
+        },
+        "buildup": {
+          "text": "When the switch is on, energy stores in the transformer's magnetizing inductance. When off, it transfers to the output.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "The turns ratio sets the voltage conversion. Feedback through an optocoupler maintains isolation.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Leakage inductance causes voltage spikes at turn-off — snubber circuits or clamp circuits absorb them.",
+          "visual": "⚡"
+        },
+        "climax": {
+          "text": "Phone chargers, set-top boxes, and standby power supplies almost all use flyback topology.",
+          "visual": "📱"
+        },
+        "punchline": {
+          "text": "Store, isolate, transfer — the flyback powers billions of gadgets.",
+          "visual": "🌍"
+        }
+      },
+      "quiz": {
+        "question": "Why does a flyback converter use a transformer?",
+        "options": [
+          "To step up the switching frequency for better efficiency",
+          "To provide galvanic isolation between the mains input and the low-voltage output",
+          "To eliminate the need for output capacitors"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "How an Inverter Works",
+      "chapter_id": "electrical-engineering--power-electronics--ch03-inverters",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "An inverter converts DC into AC — the reverse of a rectifier. Solar panels need this to feed the grid.",
+          "visual": "☀️"
+        },
+        "buildup": {
+          "text": "Four switches in an H-bridge alternately connect the load to positive and negative DC, creating AC.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Simple on-off switching produces a square wave. Not ideal — appliances expect smooth sinusoidal AC.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "PWM switching at high frequency synthesizes a sine wave — a filter smooths the high-frequency chop.",
+          "visual": "📈"
+        },
+        "climax": {
+          "text": "Grid-tied solar inverters, UPS systems, and electric vehicle drives all use PWM inverters.",
+          "visual": "🔋"
+        },
+        "punchline": {
+          "text": "DC in, AC out — the inverter makes solar and battery power grid-compatible.",
+          "visual": "🔄"
+        }
+      },
+      "quiz": {
+        "question": "How does a PWM inverter create a smooth sine wave from DC?",
+        "options": [
+          "It uses a rotating generator inside the inverter",
+          "It switches at high frequency with varying duty cycles to approximate a sine wave",
+          "It passes DC through a large transformer to create AC directly"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "PWM: Pulse Width Modulation",
+      "chapter_id": "electrical-engineering--power-electronics--ch03-inverters",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "PWM is the language of power electronics — vary the pulse width and you control the average output.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "A narrow pulse delivers less average power. A wide pulse delivers more. The frequency stays constant.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Compare a sine reference with a triangle carrier — the intersections define the switching instants.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "Higher PWM frequency pushes harmonics further from the fundamental — easier to filter but more switching loss.",
+          "visual": "⚖️"
+        },
+        "climax": {
+          "text": "Motor drives, LED dimmers, audio amplifiers, and inverters all rely on PWM control.",
+          "visual": "💡"
+        },
+        "punchline": {
+          "text": "Wide pulse or narrow — PWM controls power by on-time adjustment.",
+          "visual": "🎛️"
+        }
+      },
+      "quiz": {
+        "question": "What is the trade-off of using a higher PWM frequency?",
+        "options": [
+          "Higher frequency reduces output voltage range",
+          "Harmonics are easier to filter but switching losses increase",
+          "The switch becomes harder to turn on at higher frequencies"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Three-Phase Inverters",
+      "chapter_id": "electrical-engineering--power-electronics--ch03-inverters",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Industrial motors run on three-phase AC. A three-phase inverter creates three sine waves, 120° apart.",
+          "visual": "⚙️"
+        },
+        "buildup": {
+          "text": "Six switches in three half-bridge legs — each leg produces one phase using PWM.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Space vector modulation (SVM) optimizes switching patterns for lower harmonics and higher DC bus utilization.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Dead time between upper and lower switches prevents shoot-through — but distorts the output slightly.",
+          "visual": "⏱️"
+        },
+        "climax": {
+          "text": "Variable-frequency drives (VFDs) use three-phase inverters to control motor speed precisely.",
+          "visual": "🏭"
+        },
+        "punchline": {
+          "text": "Six switches, three phases — the inverter gives motors any speed or torque.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "What is the purpose of dead time in a three-phase inverter?",
+        "options": [
+          "To reduce the output voltage for low-speed operation",
+          "To prevent simultaneous conduction of upper and lower switches in the same leg (shoot-through)",
+          "To synchronize the inverter with the grid frequency"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Grid-Tied Inverters: Feeding the Grid",
+      "chapter_id": "electrical-engineering--power-electronics--ch03-inverters",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A grid-tied inverter synchronizes its AC output with the utility grid — matching voltage, frequency, and phase.",
+          "visual": "🔌"
+        },
+        "buildup": {
+          "text": "A phase-locked loop (PLL) tracks the grid's voltage waveform and locks the inverter's output to it.",
+          "visual": "🔗"
+        },
+        "discovery": {
+          "text": "Current control ensures power flows from the inverter to the grid — not the other way around.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "Anti-islanding protection disconnects the inverter if the grid goes down — preventing electrocution of line workers.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Every rooftop solar panel system uses a grid-tied inverter to sell excess energy back to the utility.",
+          "visual": "☀️"
+        },
+        "punchline": {
+          "text": "Sync, inject, protect — grid-tied inverters turn rooftops into power plants.",
+          "visual": "🏠"
+        }
+      },
+      "quiz": {
+        "question": "Why is anti-islanding protection required in grid-tied inverters?",
+        "options": [
+          "To prevent the inverter from drawing power from the grid at night",
+          "To disconnect during grid outages so line workers aren't exposed to live voltage",
+          "To reduce power output during peak demand hours"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Multilevel Inverters: Staircase to Sine",
+      "chapter_id": "electrical-engineering--power-electronics--ch03-inverters",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A two-level inverter jumps between +V and −V. A multilevel inverter creates intermediate steps — a staircase.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "More levels mean the output is closer to a sine wave. Less filtering is needed and harmonics drop.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Each switch handles only a fraction of the total DC voltage — enabling higher total voltage with lower-rated switches.",
+          "visual": "🔧"
+        },
+        "twist": {
+          "text": "Balancing capacitor voltages across levels requires sophisticated control algorithms.",
+          "visual": "⚖️"
+        },
+        "climax": {
+          "text": "Medium-voltage drives, HVDC converters, and utility-scale solar inverters use multilevel topologies.",
+          "visual": "🏭"
+        },
+        "punchline": {
+          "text": "More steps, cleaner output — multilevel inverters approximate a perfect sine.",
+          "visual": "🎵"
+        }
+      },
+      "quiz": {
+        "question": "What is a key advantage of multilevel inverters over two-level inverters?",
+        "options": [
+          "They use fewer total switches",
+          "Each switch handles only a fraction of the total voltage, and the output has lower harmonics",
+          "They don't need any control circuitry"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "UPS: Uninterruptible Power",
+      "chapter_id": "electrical-engineering--power-electronics--ch03-inverters",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A UPS keeps critical loads running when the grid fails — zero-gap power from an inverter and battery.",
+          "visual": "🔋"
+        },
+        "buildup": {
+          "text": "Online UPS: the inverter always feeds the load. The battery charges from AC and discharges during outages.",
+          "visual": "🔌"
+        },
+        "discovery": {
+          "text": "Transfer time in offline UPS is 5-10 ms. Online UPS has zero transfer time — the load never notices.",
+          "visual": "⏱️"
+        },
+        "twist": {
+          "text": "A double-conversion UPS also cleans the power — eliminating surges, sags, and harmonic distortion.",
+          "visual": "✨"
+        },
+        "climax": {
+          "text": "Data centers, hospitals, and air traffic control rely on UPS systems with diesel backup.",
+          "visual": "🏥"
+        },
+        "punchline": {
+          "text": "Grid fails, inverter takes over — uninterrupted power when it matters.",
+          "visual": "🛡️"
+        }
+      },
+      "quiz": {
+        "question": "What advantage does an online (double-conversion) UPS have over an offline UPS?",
+        "options": [
+          "It uses less battery capacity for the same runtime",
+          "The inverter always powers the load, providing zero transfer time and clean power",
+          "It doesn't need a battery to operate"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Linear vs Switching Power Supplies",
+      "chapter_id": "electrical-engineering--power-electronics--ch04-power-supplies",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "Linear regulators drop excess voltage as heat. Switching supplies chop and regulate — far less waste.",
+          "visual": "🌡️"
+        },
+        "buildup": {
+          "text": "A linear regulator acts like a variable resistor. Simple, quiet, but efficiency can be as low as 30%.",
+          "visual": "📉"
+        },
+        "discovery": {
+          "text": "A switching supply runs at 80-95% efficiency by rapidly toggling between on and off states.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "Switching supplies generate electromagnetic noise. Sensitive circuits like audio DACs still prefer linear regulators.",
+          "visual": "🎵"
+        },
+        "climax": {
+          "text": "Laptops, servers, and phone chargers all use switching supplies. Lab instruments often use linear.",
+          "visual": "💻"
+        },
+        "punchline": {
+          "text": "Switch for efficiency, linear for silence — each excels where the other can't.",
+          "visual": "⚖️"
+        }
+      },
+      "quiz": {
+        "question": "Why do some sensitive circuits still use linear regulators despite lower efficiency?",
+        "options": [
+          "Linear regulators are cheaper to manufacture",
+          "They produce extremely low noise, critical for sensitive analog circuits",
+          "Linear regulators can handle higher input voltages"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Voltage Regulators: Holding Steady",
+      "chapter_id": "electrical-engineering--power-electronics--ch04-power-supplies",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A regulator keeps output voltage constant despite input changes and load variations.",
+          "visual": "📏"
+        },
+        "buildup": {
+          "text": "A feedback loop samples the output, compares to a reference, and adjusts the pass element.",
+          "visual": "🔄"
+        },
+        "discovery": {
+          "text": "Line regulation handles input variation. Load regulation handles current changes.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Transient response matters — a sudden load step can cause a voltage dip before the regulator catches up.",
+          "visual": "📉"
+        },
+        "climax": {
+          "text": "CPU power regulators must respond in microseconds — processors change current demand in nanoseconds.",
+          "visual": "💻"
+        },
+        "punchline": {
+          "text": "Sense the drift, correct instantly — a good regulator holds solid.",
+          "visual": "🪨"
+        }
+      },
+      "quiz": {
+        "question": "What is load regulation in a voltage regulator?",
+        "options": [
+          "How well the regulator maintains output voltage when the load current changes",
+          "The maximum load the regulator can power before shutting down",
+          "How quickly the regulator starts up under full load"
+        ],
+        "correct": 0
+      }
+    },
+    {
+      "title": "Power Factor Correction",
+      "chapter_id": "electrical-engineering--power-electronics--ch04-power-supplies",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A simple rectifier draws current in sharp spikes — wasting grid capacity and creating harmonics.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "Power factor measures how well current follows voltage. A power factor of 1 means perfect alignment.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Active PFC uses a boost converter to shape input current into a smooth sine wave matching the voltage.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "Regulations like IEC 61000-3-2 mandate PFC for most power supplies above 75 W sold in Europe.",
+          "visual": "📋"
+        },
+        "climax": {
+          "text": "Laptop chargers, server supplies, and LED drivers all include active PFC stages.",
+          "visual": "💻"
+        },
+        "punchline": {
+          "text": "Shape the current to match the voltage — PFC makes power supplies grid-friendly.",
+          "visual": "✅"
+        }
+      },
+      "quiz": {
+        "question": "What does active power factor correction do?",
+        "options": [
+          "It increases the output voltage of the power supply",
+          "It shapes the input current into a smooth sine wave that follows the voltage waveform",
+          "It converts AC directly to DC without a rectifier"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Thermal Management: Keeping Cool",
+      "chapter_id": "electrical-engineering--power-electronics--ch04-power-supplies",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Power semiconductors generate heat. If the junction temperature exceeds the limit, the device fails.",
+          "visual": "🌡️"
+        },
+        "buildup": {
+          "text": "Thermal resistance from junction to ambient determines how hot the device gets. Lower is better.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Heatsinks increase surface area. Thermal paste fills microscopic gaps between the device and heatsink.",
+          "visual": "🔧"
+        },
+        "twist": {
+          "text": "Liquid cooling handles extreme power densities — data center power supplies circulate coolant through cold plates.",
+          "visual": "💧"
+        },
+        "climax": {
+          "text": "Derating curves show maximum power versus temperature. Hot environments demand larger heatsinks.",
+          "visual": "📈"
+        },
+        "punchline": {
+          "text": "Heat is the enemy — managing it decides whether power electronics lives or dies.",
+          "visual": "❄️"
+        }
+      },
+      "quiz": {
+        "question": "What does thermal resistance measure in power electronics?",
+        "options": [
+          "The maximum temperature the device can withstand",
+          "How effectively heat flows from the semiconductor junction to the ambient environment",
+          "The rate at which a heatsink absorbs solar radiation"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Protection Circuits: Surviving Faults",
+      "chapter_id": "electrical-engineering--power-electronics--ch04-power-supplies",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Short circuits, overvoltage, and overtemperature can destroy power circuits in microseconds.",
+          "visual": "💥"
+        },
+        "buildup": {
+          "text": "Overcurrent protection senses current and shuts down the switch before it overheats.",
+          "visual": "📏"
+        },
+        "discovery": {
+          "text": "Overvoltage clamps (TVS diodes or MOVs) absorb transient spikes before they reach sensitive components.",
+          "visual": "🛡️"
+        },
+        "twist": {
+          "text": "Soft start circuits ramp up voltage gradually — preventing inrush currents that trip breakers.",
+          "visual": "📈"
+        },
+        "climax": {
+          "text": "Industrial drives include fault logging — recording what went wrong to prevent the next failure.",
+          "visual": "📋"
+        },
+        "punchline": {
+          "text": "Sense danger, shut down fast — protection circuits are the safety net.",
+          "visual": "🪢"
+        }
+      },
+      "quiz": {
+        "question": "What does a soft start circuit prevent?",
+        "options": [
+          "Electromagnetic interference during normal operation",
+          "Large inrush currents at startup that could trip breakers or damage components",
+          "Voltage drop during heavy load conditions"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "GaN and SiC: New Materials",
+      "chapter_id": "electrical-engineering--power-electronics--ch04-power-supplies",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Silicon has dominated power electronics for decades. Gallium nitride (GaN) and silicon carbide (SiC) are faster.",
+          "visual": "🔬"
+        },
+        "buildup": {
+          "text": "Wide bandgap materials handle higher voltages, higher temperatures, and switch faster than silicon.",
+          "visual": "📈"
+        },
+        "discovery": {
+          "text": "GaN chargers are half the size of silicon ones — higher switching frequency means smaller inductors.",
+          "visual": "📱"
+        },
+        "twist": {
+          "text": "SiC excels at 1,200 V and above — perfect for EV traction inverters and solar converters.",
+          "visual": "🚗"
+        },
+        "climax": {
+          "text": "Tesla's Model 3 switched from silicon IGBTs to SiC MOSFETs — gaining 5-10% more driving range.",
+          "visual": "🏆"
+        },
+        "punchline": {
+          "text": "Wider bandgap, faster switching, less heat — GaN and SiC rewrite the rules.",
+          "visual": "⚡"
+        }
+      },
+      "quiz": {
+        "question": "Why did Tesla switch from silicon IGBTs to SiC MOSFETs in the Model 3?",
+        "options": [
+          "SiC MOSFETs are significantly cheaper than silicon IGBTs",
+          "SiC MOSFETs have lower switching losses, improving efficiency and adding 5-10% more range",
+          "SiC MOSFETs are easier to manufacture than silicon devices"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Electric Vehicle Drives",
+      "chapter_id": "electrical-engineering--power-electronics--ch05-applications",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "An electric car's motor is controlled by a power electronics inverter — no gearbox, no clutch needed.",
+          "visual": "🚗"
+        },
+        "buildup": {
+          "text": "The battery provides DC. The inverter converts it to variable-frequency three-phase AC for the motor.",
+          "visual": "🔋"
+        },
+        "discovery": {
+          "text": "Regenerative braking reverses the inverter — the motor becomes a generator, recharging the battery.",
+          "visual": "🔄"
+        },
+        "twist": {
+          "text": "An EV drivetrain has fewer than 20 moving parts. A combustion drivetrain has over 2,000.",
+          "visual": "⚙️"
+        },
+        "climax": {
+          "text": "From the Nissan Leaf to the Tesla Semi, power electronics defines every EV's performance.",
+          "visual": "🏎️"
+        },
+        "punchline": {
+          "text": "Battery to inverter to motor — three parts replace engine and transmission.",
+          "visual": "💡"
+        }
+      },
+      "quiz": {
+        "question": "How does regenerative braking work in an electric vehicle?",
+        "options": [
+          "Traditional brake pads are used more aggressively to slow the car",
+          "The motor acts as a generator, converting kinetic energy back to electricity for the battery",
+          "A separate generator attached to the wheels charges the battery"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Solar Inverters: Harvesting Sunlight",
+      "chapter_id": "electrical-engineering--power-electronics--ch05-applications",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Solar panels produce DC. The grid runs on AC. A solar inverter bridges the two.",
+          "visual": "☀️"
+        },
+        "buildup": {
+          "text": "Maximum power point tracking (MPPT) adjusts the operating voltage to extract peak power from the panel.",
+          "visual": "📈"
+        },
+        "discovery": {
+          "text": "The panel's maximum power point shifts with temperature and sunlight. MPPT tracks it continuously.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Microinverters attach to each panel individually — one shaded panel doesn't drag down the whole array.",
+          "visual": "🔧"
+        },
+        "climax": {
+          "text": "Utility-scale solar farms use central inverters handling megawatts with over 98% efficiency.",
+          "visual": "🏭"
+        },
+        "punchline": {
+          "text": "Track the peak, invert to AC, feed the grid — harvesting every watt.",
+          "visual": "🌞"
+        }
+      },
+      "quiz": {
+        "question": "What is the advantage of microinverters over a single central inverter?",
+        "options": [
+          "They are significantly cheaper per watt of capacity",
+          "One shaded panel doesn't reduce the output of the entire array",
+          "They eliminate the need for MPPT tracking entirely"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Battery Charging: Fast and Safe",
+      "chapter_id": "electrical-engineering--power-electronics--ch05-applications",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Charging a lithium battery too fast or too full can cause swelling, fires, or explosions.",
+          "visual": "🔋"
+        },
+        "buildup": {
+          "text": "CC-CV charging: constant current fills the battery fast, then constant voltage tops it off gently.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "The charger monitors voltage, current, and temperature. It adjusts power in real time to stay safe.",
+          "visual": "🌡️"
+        },
+        "twist": {
+          "text": "Fast chargers like Tesla Superchargers deliver 250 kW — but taper sharply above 80% to protect the battery.",
+          "visual": "📉"
+        },
+        "climax": {
+          "text": "Wireless charging uses inductive power transfer — an air-gap transformer between pad and device.",
+          "visual": "📱"
+        },
+        "punchline": {
+          "text": "Fast, full, and safe — balancing charge speed against battery life.",
+          "visual": "⚖️"
+        }
+      },
+      "quiz": {
+        "question": "Why do fast chargers reduce power above 80% state of charge?",
+        "options": [
+          "The charger's electronics overheat at sustained high power",
+          "Higher charge levels require gentler current to prevent battery damage and degradation",
+          "Grid regulations limit charging speed above 80%"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Motor Drives: Precise Speed Control",
+      "chapter_id": "electrical-engineering--power-electronics--ch05-applications",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A variable-frequency drive (VFD) controls a motor's speed by adjusting the frequency of the AC supply.",
+          "visual": "⚙️"
+        },
+        "buildup": {
+          "text": "Lower frequency means lower speed. Higher frequency means higher speed. The motor follows the inverter.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "V/f control keeps the voltage-to-frequency ratio constant — maintaining motor torque across the speed range.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Vector control (FOC) decouples torque and flux — giving precise, instant torque response like a DC motor.",
+          "visual": "🎯"
+        },
+        "climax": {
+          "text": "HVAC fans, conveyor belts, elevators, and pumps all save 20-50% energy with VFD speed control.",
+          "visual": "🏢"
+        },
+        "punchline": {
+          "text": "Set the frequency, set the speed — VFDs replace throttles with precision.",
+          "visual": "🎛️"
+        }
+      },
+      "quiz": {
+        "question": "How do variable-frequency drives save energy in HVAC systems?",
+        "options": [
+          "They increase the motor's voltage to run more efficiently",
+          "They reduce motor speed to match actual demand instead of running at full speed always",
+          "They convert AC motors to DC motors for better efficiency"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Wireless Power Transfer",
+      "chapter_id": "electrical-engineering--power-electronics--ch05-applications",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Wireless charging sends power through air using magnetic fields — no plugs, no wear, no sparks.",
+          "visual": "📱"
+        },
+        "buildup": {
+          "text": "A transmitter coil creates an alternating magnetic field. A receiver coil captures it and converts to DC.",
+          "visual": "🔄"
+        },
+        "discovery": {
+          "text": "Resonant coupling boosts efficiency — both coils tuned to the same frequency transfer energy more effectively.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Distance kills efficiency. At 10 cm gap, efficiency drops below 80%. Metal objects in between absorb energy as heat.",
+          "visual": "🌡️"
+        },
+        "climax": {
+          "text": "Phone pads, electric toothbrushes, and even electric bus charging systems use wireless power.",
+          "visual": "🚌"
+        },
+        "punchline": {
+          "text": "Magnetic field across the gap — wireless trades efficiency for convenience.",
+          "visual": "⚡"
+        }
+      },
+      "quiz": {
+        "question": "Why does resonant coupling improve wireless power transfer efficiency?",
+        "options": [
+          "It increases the transmitted power level",
+          "Tuning both coils to the same frequency maximizes energy transfer between them",
+          "It eliminates the need for a receiver coil"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "HVDC: Power Across Continents",
+      "chapter_id": "electrical-engineering--power-electronics--ch05-applications",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "High-voltage DC (HVDC) transmission sends gigawatts over thousands of kilometers with less loss than AC.",
+          "visual": "🗼"
+        },
+        "buildup": {
+          "text": "AC loses energy to reactive power and skin effect. DC avoids both — pure resistive loss only.",
+          "visual": "📉"
+        },
+        "discovery": {
+          "text": "Thyristor-based converters at each end convert AC to DC for transmission and back to AC for distribution.",
+          "visual": "🔄"
+        },
+        "twist": {
+          "text": "VSC-HVDC uses IGBTs instead of thyristors — enabling independent control of active and reactive power.",
+          "visual": "🔧"
+        },
+        "climax": {
+          "text": "China's UHVDC links carry 12 GW over 3,000 km — powering eastern cities from western hydropower.",
+          "visual": "🏗️"
+        },
+        "punchline": {
+          "text": "Convert to DC, transmit far, convert back — HVDC links distant cities.",
+          "visual": "🌍"
+        }
+      },
+      "quiz": {
+        "question": "Why is HVDC more efficient than AC for very long distance transmission?",
+        "options": [
+          "HVDC uses thinner cables than AC transmission",
+          "DC avoids reactive power losses and skin effect, suffering only resistive losses",
+          "HVDC doesn't require any converter stations"
+        ],
+        "correct": 1
+      }
+    }
+  ]
+}

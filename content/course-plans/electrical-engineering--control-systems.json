@@ -1,0 +1,1238 @@
+{
+  "categoryId": "electrical-engineering",
+  "subject": "Electrical Engineering",
+  "courseId": "electrical-engineering--control-systems",
+  "courseTitle": "Control Systems",
+  "emoji": "🎛️",
+  "color": "#4E342E",
+  "requireAuthoredStory": true,
+  "chapters": [
+    {
+      "id": "electrical-engineering--control-systems--ch01-feedback-fundamentals",
+      "title": "Feedback Fundamentals",
+      "position": 1
+    },
+    {
+      "id": "electrical-engineering--control-systems--ch02-pid-control",
+      "title": "PID Control",
+      "position": 2
+    },
+    {
+      "id": "electrical-engineering--control-systems--ch03-stability-analysis",
+      "title": "Stability Analysis",
+      "position": 3
+    },
+    {
+      "id": "electrical-engineering--control-systems--ch04-system-modeling",
+      "title": "System Modeling",
+      "position": 4
+    },
+    {
+      "id": "electrical-engineering--control-systems--ch05-modern-control",
+      "title": "Modern Control",
+      "position": 5
+    }
+  ],
+  "topics": [
+    {
+      "title": "Open-Loop vs Closed-Loop",
+      "chapter_id": "electrical-engineering--control-systems--ch01-feedback-fundamentals",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "A toaster runs for a set time regardless of how brown the bread is. That's open-loop control.",
+          "visual": "🍞"
+        },
+        "buildup": {
+          "text": "Open-loop systems follow instructions blindly. No sensor, no correction, no adaptation.",
+          "visual": "🔧"
+        },
+        "discovery": {
+          "text": "Closed-loop systems measure the output and adjust. A thermostat reads temperature and acts.",
+          "visual": "🌡️"
+        },
+        "twist": {
+          "text": "Closed-loop control can overshoot — cranking too hard when the error is large, then oscillating.",
+          "visual": "📈"
+        },
+        "climax": {
+          "text": "Nearly all modern engineering uses closed-loop control — cars, robots, power grids, and factories.",
+          "visual": "🏭"
+        },
+        "punchline": {
+          "text": "Measure, compare, correct — closed-loop control adapts to reality in real time.",
+          "visual": "🔄"
+        }
+      },
+      "quiz": {
+        "question": "What is the key difference between open-loop and closed-loop control?",
+        "options": [
+          "Open-loop uses digital signals; closed-loop uses analog",
+          "Closed-loop measures output and adjusts; open-loop does not",
+          "Open-loop is faster than closed-loop in all cases"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "The Feedback Loop",
+      "chapter_id": "electrical-engineering--control-systems--ch01-feedback-fundamentals",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A feedback loop connects a system's output back to its input — creating a self-correcting cycle.",
+          "visual": "🔄"
+        },
+        "buildup": {
+          "text": "The sensor measures output. The comparator finds the error. The controller decides the action.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Negative feedback reduces error and stabilizes. Positive feedback amplifies it and can cause runaway.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Microphone feedback squeal is positive feedback — sound loops through speaker and mic, growing louder.",
+          "visual": "🎤"
+        },
+        "climax": {
+          "text": "Biology uses feedback too — body temperature, blood sugar, and heart rate are all regulated by loops.",
+          "visual": "🫀"
+        },
+        "punchline": {
+          "text": "Negative feedback stabilizes. Positive feedback explodes.",
+          "visual": "⚖️"
+        }
+      },
+      "quiz": {
+        "question": "What does negative feedback do in a control system?",
+        "options": [
+          "It amplifies the output until it saturates",
+          "It reduces error by counteracting deviations from the setpoint",
+          "It shuts down the system when an error is detected"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Setpoint and Error Signal",
+      "chapter_id": "electrical-engineering--control-systems--ch01-feedback-fundamentals",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Set your thermostat to 22°C. That target is the setpoint — the goal the system chases.",
+          "visual": "🎯"
+        },
+        "buildup": {
+          "text": "The error signal is the difference between setpoint and actual output: error = setpoint − measured.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "The controller's only job is to drive the error toward zero as quickly and smoothly as possible.",
+          "visual": "📉"
+        },
+        "twist": {
+          "text": "A step change in setpoint creates a sudden large error — the controller must respond without overshooting.",
+          "visual": "📈"
+        },
+        "climax": {
+          "text": "Cruise control, industrial ovens, and water treatment all continuously chase their setpoints.",
+          "visual": "🚗"
+        },
+        "punchline": {
+          "text": "Know the goal, measure the gap, close it — every controller chases its setpoint.",
+          "visual": "🏁"
+        }
+      },
+      "quiz": {
+        "question": "How is the error signal calculated in a feedback control system?",
+        "options": [
+          "Error = measured output × setpoint",
+          "Error = setpoint − measured output",
+          "Error = measured output ÷ setpoint"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "On-Off Control: The Simplest Strategy",
+      "chapter_id": "electrical-engineering--control-systems--ch01-feedback-fundamentals",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Too cold? Heater on. Warm enough? Heater off. On-off control is dead simple.",
+          "visual": "🌡️"
+        },
+        "buildup": {
+          "text": "The controller has only two states — full power or zero. No in-between.",
+          "visual": "🔘"
+        },
+        "discovery": {
+          "text": "This causes oscillation around the setpoint. The output constantly overshoots and undershoots.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Hysteresis adds a dead band — don't switch off until 23°C, don't switch on until 21°C. Reduces chatter.",
+          "visual": "📏"
+        },
+        "climax": {
+          "text": "Refrigerators, room heaters, and basic thermostats use on-off control with hysteresis.",
+          "visual": "❄️"
+        },
+        "punchline": {
+          "text": "On or off — crude but effective. Add hysteresis and it works surprisingly well.",
+          "visual": "💡"
+        }
+      },
+      "quiz": {
+        "question": "Why is hysteresis added to on-off controllers?",
+        "options": [
+          "To increase the controller's switching speed",
+          "To create a dead band that prevents rapid toggling around the setpoint",
+          "To eliminate all overshoot from the system"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Disturbances: Fighting the Unexpected",
+      "chapter_id": "electrical-engineering--control-systems--ch01-feedback-fundamentals",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "You open a window on a cold day. The room temperature drops. The heater must compensate.",
+          "visual": "🪟"
+        },
+        "buildup": {
+          "text": "A disturbance is any external change that pushes the output away from the setpoint.",
+          "visual": "🌬️"
+        },
+        "discovery": {
+          "text": "Feedback control handles disturbances automatically — the error signal grows, and the controller reacts.",
+          "visual": "🔄"
+        },
+        "twist": {
+          "text": "Feedforward control anticipates disturbances. If a sensor detects the open window, it boosts heating immediately.",
+          "visual": "🔮"
+        },
+        "climax": {
+          "text": "Industrial processes combine feedback and feedforward — react to the known, correct the unknown.",
+          "visual": "🏭"
+        },
+        "punchline": {
+          "text": "Disturbances push systems off target. Good control pushes back faster.",
+          "visual": "💪"
+        }
+      },
+      "quiz": {
+        "question": "How does feedforward control differ from feedback control?",
+        "options": [
+          "Feedforward measures the output; feedback measures the input",
+          "Feedforward anticipates disturbances before they affect the output; feedback reacts after",
+          "Feedforward is always more accurate than feedback control"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Transfer Functions: Input to Output",
+      "chapter_id": "electrical-engineering--control-systems--ch01-feedback-fundamentals",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A transfer function is a mathematical recipe: what output do you get for a given input?",
+          "visual": "📐"
+        },
+        "buildup": {
+          "text": "In the Laplace domain, a transfer function is a ratio of polynomials: G(s) = Y(s)/X(s).",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "The denominator's roots are poles — they determine whether the system is stable or not.",
+          "visual": "📌"
+        },
+        "twist": {
+          "text": "Zeros in the numerator shape the response — they can speed things up or create unexpected dips.",
+          "visual": "⭕"
+        },
+        "climax": {
+          "text": "Engineers design controllers by reshaping the closed-loop transfer function's poles and zeros.",
+          "visual": "🔧"
+        },
+        "punchline": {
+          "text": "Poles for stability, zeros for shape — the transfer function tells all.",
+          "visual": "📖"
+        }
+      },
+      "quiz": {
+        "question": "What do the poles of a transfer function determine?",
+        "options": [
+          "The gain of the system at DC",
+          "Whether the system is stable and how it responds dynamically",
+          "The physical dimensions of the system"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Proportional Control: The P in PID",
+      "chapter_id": "electrical-engineering--control-systems--ch02-pid-control",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "Big error? Big correction. Small error? Small correction. That's proportional control.",
+          "visual": "📏"
+        },
+        "buildup": {
+          "text": "The output is simply the error multiplied by a gain constant Kp. Higher Kp means stronger response.",
+          "visual": "📈"
+        },
+        "discovery": {
+          "text": "Too much gain and the system overshoots and oscillates. Too little and it responds sluggishly.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Proportional control alone leaves a steady-state error — the output settles close to but not exactly at the setpoint.",
+          "visual": "📉"
+        },
+        "climax": {
+          "text": "Simple proportional controllers run basic motor speed regulation and simple heating systems.",
+          "visual": "⚙️"
+        },
+        "punchline": {
+          "text": "Multiply the error by a gain — proportional control is intuitive but imperfect.",
+          "visual": "⚖️"
+        }
+      },
+      "quiz": {
+        "question": "What limitation does proportional-only control typically have?",
+        "options": [
+          "It cannot respond to changes in setpoint",
+          "It leaves a steady-state error — the output never quite reaches the setpoint",
+          "It always causes the system to become unstable"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Integral Control: Eliminating Steady-State Error",
+      "chapter_id": "electrical-engineering--control-systems--ch02-pid-control",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Proportional control gets close but not exact. Integral control accumulates the remaining error and fixes it.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "The integral term sums all past errors over time. Even a tiny persistent error grows until corrected.",
+          "visual": "📈"
+        },
+        "discovery": {
+          "text": "This drives steady-state error to zero — the integral action doesn't stop until the error is gone.",
+          "visual": "🎯"
+        },
+        "twist": {
+          "text": "Integral windup occurs if the actuator saturates — the integral keeps growing, causing massive overshoot later.",
+          "visual": "💥"
+        },
+        "climax": {
+          "text": "Anti-windup techniques clamp the integral term when the actuator is maxed out.",
+          "visual": "🛡️"
+        },
+        "punchline": {
+          "text": "Sum the error over time — integral control never settles for close enough.",
+          "visual": "⏳"
+        }
+      },
+      "quiz": {
+        "question": "What is integral windup?",
+        "options": [
+          "The integral term oscillates at high frequency",
+          "The integral accumulates excessively during actuator saturation, causing later overshoot",
+          "The integral term decreases over time due to friction"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Derivative Control: Predicting the Future",
+      "chapter_id": "electrical-engineering--control-systems--ch02-pid-control",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "If the error is shrinking fast, ease off early. The derivative term predicts where the error is heading.",
+          "visual": "🔮"
+        },
+        "buildup": {
+          "text": "The derivative term responds to the rate of change of the error, not the error itself.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "It acts as a brake — damping oscillations and reducing overshoot before they happen.",
+          "visual": "🛑"
+        },
+        "twist": {
+          "text": "Noisy signals make the derivative spike wildly. A low-pass filter on the derivative term tames this.",
+          "visual": "📻"
+        },
+        "climax": {
+          "text": "Robotic arms, drone stabilizers, and precision positioning stages rely on derivative action.",
+          "visual": "🤖"
+        },
+        "punchline": {
+          "text": "React to the trend, not the gap — derivative anticipates and dampens.",
+          "visual": "📉"
+        }
+      },
+      "quiz": {
+        "question": "Why is derivative control sensitive to noise?",
+        "options": [
+          "Noise has zero average value",
+          "Noise causes rapid changes in the error signal, which the derivative amplifies",
+          "Derivative control only works with analog signals"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "PID Tuning: Finding the Right Gains",
+      "chapter_id": "electrical-engineering--control-systems--ch02-pid-control",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A PID controller has three knobs: Kp, Ki, Kd. Setting them right is an art and a science.",
+          "visual": "🎛️"
+        },
+        "buildup": {
+          "text": "The Ziegler-Nichols method: increase Kp until oscillation, then set Ki and Kd from formulas.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "This gives a starting point — engineers then fine-tune by observing the step response.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Auto-tuning algorithms now measure the system response and compute PID gains automatically.",
+          "visual": "🤖"
+        },
+        "climax": {
+          "text": "Well-tuned PID reaches the setpoint fast, with minimal overshoot and no oscillation.",
+          "visual": "🏆"
+        },
+        "punchline": {
+          "text": "Three gains, one goal — balance speed, accuracy, and stability.",
+          "visual": "⚖️"
+        }
+      },
+      "quiz": {
+        "question": "What does the Ziegler-Nichols tuning method start with?",
+        "options": [
+          "Setting all three gains to maximum and reducing gradually",
+          "Increasing proportional gain until the system oscillates steadily",
+          "Running the system in open-loop and measuring the output"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "PID in the Real World",
+      "chapter_id": "electrical-engineering--control-systems--ch02-pid-control",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Over 90% of industrial controllers use PID. It's the most successful control algorithm ever.",
+          "visual": "🏭"
+        },
+        "buildup": {
+          "text": "Temperature control in chemical plants: PID adjusts heater power to hold exact temperatures.",
+          "visual": "🌡️"
+        },
+        "discovery": {
+          "text": "Cruise control in cars: PID adjusts throttle to maintain the set speed on varying terrain.",
+          "visual": "🚗"
+        },
+        "twist": {
+          "text": "Some systems cascade multiple PID loops — an inner loop for fast response, an outer loop for precision.",
+          "visual": "🔗"
+        },
+        "climax": {
+          "text": "From quadcopter stabilization to steel mill rollers, PID runs the physical world quietly.",
+          "visual": "🚁"
+        },
+        "punchline": {
+          "text": "Simple, robust, everywhere — PID control is engineering's quiet workhorse.",
+          "visual": "🐴"
+        }
+      },
+      "quiz": {
+        "question": "What is cascade control?",
+        "options": [
+          "Using one PID controller for many different systems simultaneously",
+          "Nesting multiple PID loops where the outer loop's output sets the inner loop's setpoint",
+          "Running PID at two different clock speeds alternately"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Step Response: The First Test",
+      "chapter_id": "electrical-engineering--control-systems--ch02-pid-control",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Apply a sudden step input and watch how the system responds. Rise time, overshoot, settling time.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "Rise time: how fast the output reaches the setpoint. Faster isn't always better if it overshoots.",
+          "visual": "📈"
+        },
+        "discovery": {
+          "text": "Overshoot: how far the output goes past the target before settling back down.",
+          "visual": "📉"
+        },
+        "twist": {
+          "text": "Settling time: how long until oscillations die out and the output stays within a tolerance band.",
+          "visual": "⏱️"
+        },
+        "climax": {
+          "text": "A good step response is fast, has minimal overshoot, and settles quickly — a delicate balance.",
+          "visual": "⚖️"
+        },
+        "punchline": {
+          "text": "Step input in, response out — three metrics reveal the tune.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "What is settling time in a step response?",
+        "options": [
+          "The time it takes for the output to first reach the setpoint",
+          "The time until the output remains within a specified tolerance band around the setpoint",
+          "The time between the step input and the peak overshoot"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "BIBO Stability: Bounded Input, Bounded Output",
+      "chapter_id": "electrical-engineering--control-systems--ch03-stability-analysis",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "A stable system produces a bounded output for every bounded input. Unstable systems blow up.",
+          "visual": "💥"
+        },
+        "buildup": {
+          "text": "Push a spring and it returns to rest — stable. Push a ball off a hilltop and it rolls away — unstable.",
+          "visual": "⚖️"
+        },
+        "discovery": {
+          "text": "For linear systems, stability depends on pole locations. Left-half-plane poles mean stability.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "A pole exactly on the imaginary axis means marginal stability — the output oscillates forever without growing.",
+          "visual": "📊"
+        },
+        "climax": {
+          "text": "Aircraft, power grids, and nuclear reactors are designed with large stability margins — no risks allowed.",
+          "visual": "✈️"
+        },
+        "punchline": {
+          "text": "Bounded in, bounded out — stability is the non-negotiable minimum.",
+          "visual": "🛡️"
+        }
+      },
+      "quiz": {
+        "question": "Where must the poles of a stable linear system be located?",
+        "options": [
+          "On the imaginary axis of the s-plane",
+          "In the left-half of the s-plane (negative real parts)",
+          "In the right-half of the s-plane (positive real parts)"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Bode Plots: Frequency Response Made Visual",
+      "chapter_id": "electrical-engineering--control-systems--ch03-stability-analysis",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A Bode plot shows how a system responds across all frequencies — two graphs, one full picture.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "The magnitude plot shows gain in dB. The phase plot shows the phase shift in degrees.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Where the gain crosses 0 dB is the gain crossover. Where phase crosses -180° is the phase crossover.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "Gain margin and phase margin — the safety buffers between operation and instability — are read directly.",
+          "visual": "📏"
+        },
+        "climax": {
+          "text": "Amplifier designers, control engineers, and filter designers all think in Bode plots daily.",
+          "visual": "🔧"
+        },
+        "punchline": {
+          "text": "Gain and phase versus frequency — Bode plots reveal stability at a glance.",
+          "visual": "👁️"
+        }
+      },
+      "quiz": {
+        "question": "What do gain margin and phase margin indicate on a Bode plot?",
+        "options": [
+          "The maximum frequency the system can operate at",
+          "How much gain or phase change the system can tolerate before becoming unstable",
+          "The peak amplitude and frequency of the system"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Root Locus: Mapping Pole Movement",
+      "chapter_id": "electrical-engineering--control-systems--ch03-stability-analysis",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "As you increase a controller's gain, the system's poles move in the s-plane. Root locus tracks them.",
+          "visual": "🗺️"
+        },
+        "buildup": {
+          "text": "Each pole traces a path. If any path crosses into the right-half plane, the system goes unstable.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Root locus shows exactly which gain values keep the system stable and which cause instability.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Adding zeros to the controller reshapes the root locus — pulling poles toward stability.",
+          "visual": "🔧"
+        },
+        "climax": {
+          "text": "Control engineers use root locus to design compensators that give desired pole positions.",
+          "visual": "🎯"
+        },
+        "punchline": {
+          "text": "Watch the poles move as gain changes — root locus is a roadmap to stability.",
+          "visual": "🛤️"
+        }
+      },
+      "quiz": {
+        "question": "What does it mean when a root locus branch crosses into the right-half s-plane?",
+        "options": [
+          "The system gain has reached its optimal value",
+          "The system becomes unstable at that gain value",
+          "The system response becomes faster and more efficient"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Nyquist Criterion: Encirclement and Stability",
+      "chapter_id": "electrical-engineering--control-systems--ch03-stability-analysis",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "The Nyquist plot traces the open-loop transfer function in the complex plane as frequency sweeps.",
+          "visual": "📊"
+        },
+        "buildup": {
+          "text": "The Nyquist stability criterion counts how many times the plot encircles the critical point (-1, 0).",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Zero encirclements mean stability for a system with no open-loop right-half-plane poles.",
+          "visual": "✅"
+        },
+        "twist": {
+          "text": "Time delay adds phase lag that spirals the plot — making instability more likely at high frequencies.",
+          "visual": "🌀"
+        },
+        "climax": {
+          "text": "The Nyquist criterion handles cases Bode plots struggle with, like non-minimum-phase systems.",
+          "visual": "🔬"
+        },
+        "punchline": {
+          "text": "Count encirclements of minus one — Nyquist answers definitively.",
+          "visual": "🔢"
+        }
+      },
+      "quiz": {
+        "question": "In the Nyquist stability criterion, what point must not be encircled for a stable system?",
+        "options": [
+          "The origin (0, 0)",
+          "The critical point (-1, 0)",
+          "The point (1, 0)"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Gain and Phase Margins: Safety Buffers",
+      "chapter_id": "electrical-engineering--control-systems--ch03-stability-analysis",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A system right at the edge of instability works in theory but fails in practice. Margins provide safety.",
+          "visual": "🛡️"
+        },
+        "buildup": {
+          "text": "Gain margin: how much you can increase gain before instability. Typically 6 dB or more is safe.",
+          "visual": "📈"
+        },
+        "discovery": {
+          "text": "Phase margin: how much extra phase lag the system can tolerate. 45° to 60° is a common target.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "Component aging, temperature changes, and manufacturing tolerances all eat into margins — plan for it.",
+          "visual": "⏳"
+        },
+        "climax": {
+          "text": "Aerospace control systems demand large margins because failure means catastrophe.",
+          "visual": "🚀"
+        },
+        "punchline": {
+          "text": "Stability margins are engineering's insurance — never design to the edge.",
+          "visual": "💼"
+        }
+      },
+      "quiz": {
+        "question": "What is a typical target for phase margin in control design?",
+        "options": [
+          "5° to 10°",
+          "45° to 60°",
+          "90° to 120°"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Delay: The Silent Destabilizer",
+      "chapter_id": "electrical-engineering--control-systems--ch03-stability-analysis",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Turn the shower knob and wait — the temperature changes seconds later. That delay causes oscillation.",
+          "visual": "🚿"
+        },
+        "buildup": {
+          "text": "Time delay (dead time) adds phase lag proportional to frequency. It erodes phase margin steadily.",
+          "visual": "📉"
+        },
+        "discovery": {
+          "text": "Long delays force lower controller gains. React too aggressively and the system oscillates wildly.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Smith predictors model the delay internally, allowing higher gains despite the real delay.",
+          "visual": "🔮"
+        },
+        "climax": {
+          "text": "Network-controlled systems, chemical processes, and space probes all battle time delays.",
+          "visual": "🛰️"
+        },
+        "punchline": {
+          "text": "Delay robs phase margin — the longer the wait, the gentler you steer.",
+          "visual": "⏳"
+        }
+      },
+      "quiz": {
+        "question": "How does a Smith predictor help control systems with time delay?",
+        "options": [
+          "It eliminates the physical delay in the system",
+          "It models the delay internally, allowing the controller to use higher gains",
+          "It slows down the controller to match the delay"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Block Diagrams: System Architecture",
+      "chapter_id": "electrical-engineering--control-systems--ch04-system-modeling",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "A block diagram maps a control system visually — blocks for functions, arrows for signal flow.",
+          "visual": "📦"
+        },
+        "buildup": {
+          "text": "Each block has a transfer function. Summing junctions add or subtract signals. Simple and clear.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "Series blocks multiply. Parallel blocks add. Feedback loops use the formula G/(1+GH).",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Complex systems with multiple loops are reduced step by step using block algebra rules.",
+          "visual": "🧮"
+        },
+        "climax": {
+          "text": "Every control textbook and industrial spec sheet uses block diagrams as the universal language.",
+          "visual": "🌍"
+        },
+        "punchline": {
+          "text": "Blocks and arrows — the universal blueprint of control systems.",
+          "visual": "🔗"
+        }
+      },
+      "quiz": {
+        "question": "What is the closed-loop transfer function for a system with forward path G and feedback H?",
+        "options": [
+          "G × H",
+          "G / (1 + GH)",
+          "G + H"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "First-Order Systems: Exponential Response",
+      "chapter_id": "electrical-engineering--control-systems--ch04-system-modeling",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Fill a cup with hot water and watch it cool. Temperature drops in a smooth exponential curve.",
+          "visual": "☕"
+        },
+        "buildup": {
+          "text": "A first-order system has one pole. Its step response is a rising exponential toward the new setpoint.",
+          "visual": "📈"
+        },
+        "discovery": {
+          "text": "The time constant τ sets the speed: after one τ, the output reaches 63% of the final value.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "After five time constants, the output is within 1% of the final value — practically settled.",
+          "visual": "🎯"
+        },
+        "climax": {
+          "text": "RC circuits, thermal systems, and first-order chemical reactions all follow this pattern.",
+          "visual": "🔌"
+        },
+        "punchline": {
+          "text": "One pole, one time constant — the simplest dynamic model.",
+          "visual": "📏"
+        }
+      },
+      "quiz": {
+        "question": "After one time constant τ, what percentage of the final value has a first-order system reached?",
+        "options": [
+          "50%",
+          "63%",
+          "95%"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Second-Order Systems: Oscillation and Damping",
+      "chapter_id": "electrical-engineering--control-systems--ch04-system-modeling",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A car hits a bump and the suspension bounces. How many bounces depends on the damping ratio.",
+          "visual": "🚗"
+        },
+        "buildup": {
+          "text": "A second-order system has two poles. The damping ratio ζ determines the shape of the response.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "ζ < 1 is underdamped — oscillation. ζ = 1 is critically damped — fastest without oscillation. ζ > 1 is overdamped.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Most control systems target ζ around 0.7 — fast response with only a small overshoot.",
+          "visual": "📈"
+        },
+        "climax": {
+          "text": "Speakers, bridges, and servo motors are all modeled as second-order systems for design.",
+          "visual": "🔊"
+        },
+        "punchline": {
+          "text": "Two poles, one damping ratio — ring, creep, or land perfectly.",
+          "visual": "🎯"
+        }
+      },
+      "quiz": {
+        "question": "What damping ratio gives the fastest response without oscillation?",
+        "options": [
+          "ζ = 0",
+          "ζ = 0.5",
+          "ζ = 1 (critically damped)"
+        ],
+        "correct": 2
+      }
+    },
+    {
+      "title": "State-Space: The Matrix Approach",
+      "chapter_id": "electrical-engineering--control-systems--ch04-system-modeling",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Transfer functions describe input-output. State-space describes everything happening inside the system.",
+          "visual": "🔬"
+        },
+        "buildup": {
+          "text": "State variables capture the system's internal condition — positions, velocities, temperatures, currents.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "The state equation: ẋ = Ax + Bu. The output equation: y = Cx + Du. Four matrices define the system.",
+          "visual": "📐"
+        },
+        "twist": {
+          "text": "State-space handles multi-input multi-output (MIMO) systems easily — transfer functions can't.",
+          "visual": "🔗"
+        },
+        "climax": {
+          "text": "Aerospace, robotics, and modern control design all prefer state-space representation.",
+          "visual": "🚀"
+        },
+        "punchline": {
+          "text": "Four matrices, full picture — state-space reveals the internals.",
+          "visual": "🧩"
+        }
+      },
+      "quiz": {
+        "question": "What advantage does state-space have over transfer functions?",
+        "options": [
+          "It uses simpler math with no matrices",
+          "It naturally handles multi-input multi-output (MIMO) systems",
+          "It works only with digital systems"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Linearization: Simplifying the Complex",
+      "chapter_id": "electrical-engineering--control-systems--ch04-system-modeling",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Real systems are nonlinear — but control math works best with linear models. Linearization bridges the gap.",
+          "visual": "📐"
+        },
+        "buildup": {
+          "text": "Around an operating point, a nonlinear function can be approximated by its tangent line — a Taylor expansion.",
+          "visual": "📈"
+        },
+        "discovery": {
+          "text": "The linearized model is valid only for small deviations from that operating point.",
+          "visual": "📏"
+        },
+        "twist": {
+          "text": "If the system drifts far from the operating point, the linear model breaks down and predictions fail.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Aircraft autopilots linearize around trim conditions — separate linear models for climb, cruise, and descent.",
+          "visual": "✈️"
+        },
+        "punchline": {
+          "text": "Zoom in enough and curves become lines — linearization works.",
+          "visual": "🔍"
+        }
+      },
+      "quiz": {
+        "question": "When does a linearized model become inaccurate?",
+        "options": [
+          "At very low frequencies",
+          "When the system deviates far from the operating point used for linearization",
+          "When the system has fewer than two inputs"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Simulation: Testing Before Building",
+      "chapter_id": "electrical-engineering--control-systems--ch04-system-modeling",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Before building a physical system, engineers simulate the control loop on a computer.",
+          "visual": "💻"
+        },
+        "buildup": {
+          "text": "Simulink and similar tools let you wire up blocks, set parameters, and run virtual experiments.",
+          "visual": "🔧"
+        },
+        "discovery": {
+          "text": "Simulation reveals overshoot, oscillation, and instability — all without risking real hardware.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Hardware-in-the-loop (HIL) testing runs the real controller against a simulated plant in real time.",
+          "visual": "🔗"
+        },
+        "climax": {
+          "text": "Automotive ECUs, aircraft autopilots, and satellite controllers are all validated through simulation first.",
+          "visual": "🚗"
+        },
+        "punchline": {
+          "text": "Crash the simulation, not the prototype — modeling saves time, money, and lives.",
+          "visual": "🛡️"
+        }
+      },
+      "quiz": {
+        "question": "What is hardware-in-the-loop (HIL) testing?",
+        "options": [
+          "Testing hardware components individually on a bench",
+          "Running a real controller against a simulated plant in real time",
+          "Simulating both the controller and the plant entirely in software"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Optimal Control: Minimizing Cost",
+      "chapter_id": "electrical-engineering--control-systems--ch05-modern-control",
+      "is_free": true,
+      "story": {
+        "hook": {
+          "text": "PID works well, but is it the best possible controller? Optimal control asks: what minimizes a cost function?",
+          "visual": "📐"
+        },
+        "buildup": {
+          "text": "The cost function balances tracking error against control effort — reach the goal without burning too much energy.",
+          "visual": "⚖️"
+        },
+        "discovery": {
+          "text": "The Linear Quadratic Regulator (LQR) finds the optimal gain matrix by solving a matrix equation.",
+          "visual": "🧮"
+        },
+        "twist": {
+          "text": "LQR assumes perfect state knowledge. In reality, sensors are noisy — you need an observer too.",
+          "visual": "👁️"
+        },
+        "climax": {
+          "text": "Spacecraft attitude control, robotic manipulators, and power system stabilizers use LQR.",
+          "visual": "🛰️"
+        },
+        "punchline": {
+          "text": "Define the cost, solve the math — optimal control finds the best law.",
+          "visual": "🏆"
+        }
+      },
+      "quiz": {
+        "question": "What does the LQR cost function balance?",
+        "options": [
+          "Speed and weight of the system",
+          "Tracking error and control effort",
+          "Sensor cost and actuator cost"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Observers: Estimating What You Can't Measure",
+      "chapter_id": "electrical-engineering--control-systems--ch05-modern-control",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Some states can't be measured directly. An observer estimates them from available sensor data.",
+          "visual": "🔮"
+        },
+        "buildup": {
+          "text": "A Luenberger observer runs a model of the system in parallel and corrects it using measured outputs.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "The observer's correction gain determines how fast its estimates converge to the true states.",
+          "visual": "📈"
+        },
+        "twist": {
+          "text": "The Kalman filter is the optimal observer for noisy measurements — it minimizes estimation error variance.",
+          "visual": "🧮"
+        },
+        "climax": {
+          "text": "GPS navigation, drone flight, and spacecraft docking all rely on Kalman filter state estimation.",
+          "visual": "🛰️"
+        },
+        "punchline": {
+          "text": "Can't measure it? Estimate it — observers fill the gaps sensors leave behind.",
+          "visual": "🔍"
+        }
+      },
+      "quiz": {
+        "question": "What makes the Kalman filter 'optimal' as an observer?",
+        "options": [
+          "It uses the least number of calculations",
+          "It minimizes the variance of the estimation error given noisy measurements",
+          "It requires no model of the system to operate"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Adaptive Control: Learning on the Fly",
+      "chapter_id": "electrical-engineering--control-systems--ch05-modern-control",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "A fixed controller works when the system stays the same. What if the system changes while running?",
+          "visual": "🔄"
+        },
+        "buildup": {
+          "text": "Adaptive control adjusts its parameters in real time based on observed system behavior.",
+          "visual": "📊"
+        },
+        "discovery": {
+          "text": "Model Reference Adaptive Control (MRAC) forces the system to behave like a desired reference model.",
+          "visual": "🎯"
+        },
+        "twist": {
+          "text": "Adaptation can go wrong if the excitation signal is too weak — the estimator loses track of the true parameters.",
+          "visual": "⚠️"
+        },
+        "climax": {
+          "text": "Fighter jet autopilots adapt to battle damage. Industrial processes adapt to raw material changes.",
+          "visual": "✈️"
+        },
+        "punchline": {
+          "text": "System shifts, controller follows — adaptation keeps control alive.",
+          "visual": "🧬"
+        }
+      },
+      "quiz": {
+        "question": "What is a key risk in adaptive control systems?",
+        "options": [
+          "They always use too much energy",
+          "Insufficient excitation can cause the parameter estimator to lose track",
+          "They cannot work with digital controllers"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Robust Control: Handling Uncertainty",
+      "chapter_id": "electrical-engineering--control-systems--ch05-modern-control",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "No model is perfect. Robust control guarantees performance even when the model is somewhat wrong.",
+          "visual": "🛡️"
+        },
+        "buildup": {
+          "text": "H-infinity (H∞) control minimizes the worst-case gain from disturbance to error. It designs for the worst.",
+          "visual": "📐"
+        },
+        "discovery": {
+          "text": "The designer specifies uncertainty bounds. The controller guarantees stability across all possible plants within.",
+          "visual": "📊"
+        },
+        "twist": {
+          "text": "Robustness costs performance — a controller safe for all conditions is never optimal for any single one.",
+          "visual": "⚖️"
+        },
+        "climax": {
+          "text": "Hard disk read heads, jet engine fuel controls, and automotive stability systems use robust designs.",
+          "visual": "💿"
+        },
+        "punchline": {
+          "text": "Plan for the worst, perform through anything — robust control endures.",
+          "visual": "🏰"
+        }
+      },
+      "quiz": {
+        "question": "What trade-off does robust control introduce?",
+        "options": [
+          "Higher energy consumption for faster response",
+          "Guaranteed stability across uncertainties at the cost of optimal performance for any single condition",
+          "Simpler design at the cost of more sensors"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Model Predictive Control: Planning Ahead",
+      "chapter_id": "electrical-engineering--control-systems--ch05-modern-control",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "MPC looks into the future — it simulates many possible actions and picks the best sequence.",
+          "visual": "🔮"
+        },
+        "buildup": {
+          "text": "At each step, MPC solves an optimization problem over a prediction horizon — then applies only the first action.",
+          "visual": "🧮"
+        },
+        "discovery": {
+          "text": "It naturally handles constraints — valve limits, speed limits, temperature bounds — in the optimization.",
+          "visual": "🚧"
+        },
+        "twist": {
+          "text": "MPC needs significant computation. Faster processors and better algorithms now make it real-time capable.",
+          "visual": "💻"
+        },
+        "climax": {
+          "text": "Chemical plants, autonomous vehicles, and building energy management all run on MPC.",
+          "visual": "🏭"
+        },
+        "punchline": {
+          "text": "Look ahead, optimize, act, repeat — MPC decides optimally each step.",
+          "visual": "🧠"
+        }
+      },
+      "quiz": {
+        "question": "What is a unique advantage of MPC over PID control?",
+        "options": [
+          "MPC requires no mathematical model of the system",
+          "MPC can directly incorporate constraints like actuator limits into its optimization",
+          "MPC uses simpler calculations than PID"
+        ],
+        "correct": 1
+      }
+    },
+    {
+      "title": "Control in Everyday Life",
+      "chapter_id": "electrical-engineering--control-systems--ch05-modern-control",
+      "is_free": false,
+      "story": {
+        "hook": {
+          "text": "Your body is a control system — temperature, blood pressure, and balance are all regulated by feedback.",
+          "visual": "🫀"
+        },
+        "buildup": {
+          "text": "Anti-lock brakes pulse 15 times per second, controlling wheel slip to maximize stopping force.",
+          "visual": "🚗"
+        },
+        "discovery": {
+          "text": "Building HVAC systems use predictive control — adjusting for weather forecasts and occupancy schedules.",
+          "visual": "🏢"
+        },
+        "twist": {
+          "text": "Drone swarms use distributed control — no central brain, yet they fly in perfect formation.",
+          "visual": "🤖"
+        },
+        "climax": {
+          "text": "From insulin pumps to power grids, control theory quietly runs the infrastructure of modern life.",
+          "visual": "🌍"
+        },
+        "punchline": {
+          "text": "Measure, decide, act — control systems keep the world running.",
+          "visual": "⚙️"
+        }
+      },
+      "quiz": {
+        "question": "How do anti-lock braking systems (ABS) use feedback control?",
+        "options": [
+          "They lock the wheels completely to maximize friction",
+          "They pulse brake pressure rapidly to control wheel slip and maximize stopping force",
+          "They apply brakes only to the front wheels"
+        ],
+        "correct": 1
+      }
+    }
+  ]
+}

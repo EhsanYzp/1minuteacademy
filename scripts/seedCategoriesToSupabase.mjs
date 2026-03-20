@@ -162,6 +162,7 @@ const CATEGORY_TITLES = [
   'Urban Planning',
   'Engineering Fundamentals',
   'Mechanical Engineering',
+  'Electrical Engineering',
   'Technology',
   'Programming',
   'Data',
