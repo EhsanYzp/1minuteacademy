@@ -165,6 +165,7 @@ const CATEGORY_TITLES = [
   'Electrical Engineering',
   'Civil Engineering',
   'Materials Science',
+  'Nanotechnology',
   'Technology',
   'Programming',
   'Data',
