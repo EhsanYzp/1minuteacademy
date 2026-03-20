@@ -145,6 +145,56 @@ export async function listTopics({ pageSize = 500 } = {}) {
   return out;
 }
 
+/**
+ * Fetch a few free topics from the same subject / subcategory.
+ * Tries subcategory first; falls back to subject-wide.
+ */
+export async function listFreeRelatedTopics({
+  topicId,
+  subject,
+  subcategory = null,
+  limit = 3,
+} = {}) {
+  const safeLimit = Math.min(12, Math.max(1, Number(limit) || 3));
+  const subjectFilter = typeof subject === 'string' && subject.trim() ? subject.trim() : null;
+  const subcategoryFilter = typeof subcategory === 'string' && subcategory.trim() ? subcategory.trim() : null;
+  const excludeId = topicId != null ? String(topicId) : null;
+
+  if (!subjectFilter) return [];
+  if (!isSupabaseConfigured) return [];
+
+  const supabase = requireSupabase();
+  const columns = 'id, subject, subcategory, title, emoji, color, description, is_free';
+
+  const run = async ({ includeSubcategory }) => {
+    let q = supabase
+      .from('topics')
+      .select(columns)
+      .eq('published', true)
+      .eq('is_free', true)
+      .eq('subject', subjectFilter)
+      .order('title', { ascending: true })
+      .limit(safeLimit);
+
+    if (excludeId) q = q.neq('id', excludeId);
+    if (includeSubcategory && subcategoryFilter) q = q.eq('subcategory', subcategoryFilter);
+
+    const { data, error } = await q;
+    if (error) throw error;
+    return data ?? [];
+  };
+
+  try {
+    if (subcategoryFilter) {
+      const same = await run({ includeSubcategory: true });
+      if (same.length > 0) return same;
+    }
+    return await run({ includeSubcategory: false });
+  } catch {
+    return [];
+  }
+}
+
 export async function listRelatedTopics({
   topicId,
   subject,

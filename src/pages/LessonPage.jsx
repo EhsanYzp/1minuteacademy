@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import * as ReactRouterDom from 'react-router-dom';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
+import ProTopicGate from '../components/ProTopicGate';
 import Timer from '../components/Timer';
 import { StoryRenderer, StoryReview } from '../engine/story';
 import { getTopic, listRelatedTopics } from '../services/topics';
@@ -762,46 +763,14 @@ function LessonPage() {
       <div className="lesson-page">
         <Seo title="Pro-only lesson" description="Upgrade to Pro to start this lesson." path={location?.pathname} canonicalPath={`/topic/${topicId}`} noindex />
         <Header />
-        <main className="lesson-gate">
-          <div className="lesson-gate-card" style={{ '--topic-color': topicRow?.color ?? '#4ECDC4' }}>
-            <div className="lesson-gate-emoji">🔒</div>
-            <h1 className="lesson-gate-title">Pro-only lesson</h1>
-            <p className="lesson-gate-desc">
-              Your plan: <strong>{formatTierLabel(tier)}</strong>. Upgrade to Pro to start
-              {topicRow?.title ? (
-                <> <strong>{String(topicRow.title)}</strong></>
-              ) : (
-                ' this lesson'
-              )}.
-            </p>
-            <div className="lesson-gate-meta">
-              <span className="lesson-gate-badge">1 minute</span>
-            </div>
-            <div className="lesson-gate-actions">
-              <button
-                type="button"
-                className="lesson-gate-btn primary"
-                onClick={() => navigate('/upgrade', { state: location?.state })}
-              >
-                Upgrade to Pro
-              </button>
-              <button
-                type="button"
-                className="lesson-gate-btn secondary"
-                onClick={() => navigate(backToChapterTo || `/topic/${topicId}`, { state: location?.state })}
-              >
-                {backToChapterTo ? 'Back to chapter' : 'Back to topic'}
-              </button>
-              <button
-                type="button"
-                className="lesson-gate-btn tertiary"
-                onClick={() => navigate('/categories')}
-              >
-                Browse free topics
-              </button>
-            </div>
-          </div>
-        </main>
+        <ProTopicGate
+          topic={topicRow ? { id: topicRow.id, title: topicRow.title, emoji: topicRow.emoji, color: topicRow.color, description: topicRow.description } : null}
+          topicRow={topicRow}
+          tier={tier}
+          backTo={backToChapterTo || `/topic/${topicId}`}
+          backLabel={backToChapterTo ? 'Back to chapter' : 'Back to topic'}
+          context="lesson"
+        />
       </div>
     );
   }

@@ -3,6 +3,7 @@ import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
 import Header from '../components/Header';
 import Seo from '../components/Seo';
+import ProTopicGate from '../components/ProTopicGate';
 import { TopicHeaderSkeleton } from '../components/SkeletonBlocks';
 import { getTopic } from '../services/topics';
 import { listUserTopicProgress } from '../services/progress';
@@ -221,54 +222,8 @@ function TopicPage() {
     [tier, topicRow, topicId]
   );
 
-  if (!loading && topic && topicGate?.locked && topicGate?.reason === 'pro') {
-    return (
-      <motion.div className="topic-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-        <Seo
-          title={topic?.title ? `${topic.title} (Pro)` : 'Pro-only topic'}
-          description={topic?.description || 'Upgrade to Pro to unlock this topic.'}
-          path={location?.pathname}
-          canonicalPath={`/topic/${topicId}`}
-          image={`/og/topics/${encodeURIComponent(String(topicId))}.svg`}
-          twitterImage="/og/og-image.png"
-          jsonLd={topicJsonLd}
-          noindex
-        />
-        <Header />
-        <main className="topic-main">
-          <div className="topic-header">
-            <div className="topic-nav">
-              <Link to="/" className="back-button">← Home</Link>
-              {backToChapterTo ? (
-                <Link to={backToChapterTo} className="back-button">← Back to chapter</Link>
-              ) : null}
-              <Link to="/categories" className="back-button">← Categories</Link>
-            </div>
-          </div>
-
-          <div className="topic-content">
-            <div className="topic-card" style={{ '--topic-color': topic?.color ?? '#4ECDC4' }}>
-              <div className="topic-emoji">🔒</div>
-              <h1 className="topic-title">Pro-only topic</h1>
-              <p className="topic-description">
-                Your plan: <strong>{formatTierLabel(tier)}</strong>. Upgrade to Pro to unlock <strong>{topic?.title}</strong>.
-              </p>
-              <div className="topic-meta">
-                <span className="meta-badge" style={{ background: 'rgba(245, 158, 11, 0.12)', color: 'rgba(120, 53, 15, 0.95)' }}>
-                  Pro only
-                </span>
-              </div>
-              <div style={{ display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap' }}>
-                <button type="button" onClick={() => navigate('/upgrade')}>Upgrade</button>
-                <button type="button" onClick={() => navigate('/categories')}>Browse free topics</button>
-              </div>
-            </div>
-          </div>
-        </main>
-      </motion.div>
-    );
-  }
-
+  // ── These hooks MUST stay above every early-return so React always sees
+  //    the same hook count regardless of the render path. ──
   const journey = useMemo(() => compileJourneyFromTopic(topicRow ?? fallbackTopics[topicId]), [topicRow, topicId]);
   const journeyCtx = useMemo(() => {
     const normalizedTier = normalizeTierForJourney(tier);
@@ -312,6 +267,33 @@ function TopicPage() {
       },
     };
   }, [tier, isCompleted, canStart, canUseReview, user, topic?.title, navigate, topicId, lessonTo, location?.state]);
+
+  // ── Pro gate (rendered after all hooks are registered) ──
+  if (!loading && topic && topicGate?.locked && topicGate?.reason === 'pro') {
+    return (
+      <motion.div className="topic-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+        <Seo
+          title={topic?.title ? `${topic.title} (Pro)` : 'Pro-only topic'}
+          description={topic?.description || 'Upgrade to Pro to unlock this topic.'}
+          path={location?.pathname}
+          canonicalPath={`/topic/${topicId}`}
+          image={`/og/topics/${encodeURIComponent(String(topicId))}.svg`}
+          twitterImage="/og/og-image.png"
+          jsonLd={topicJsonLd}
+          noindex
+        />
+        <Header />
+        <ProTopicGate
+          topic={topic}
+          topicRow={topicRow}
+          tier={tier}
+          backTo={backToChapterTo}
+          backLabel="Back to chapter"
+          context="topic"
+        />
+      </motion.div>
+    );
+  }
 
   if (!topic && loading) {
     return (

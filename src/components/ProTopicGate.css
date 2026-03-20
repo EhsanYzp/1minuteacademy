@@ -1,0 +1,179 @@
+/* ─── Pro Topic Gate ──────────────────────────────────────────── */
+
+.pro-gate {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 18px 54px;
+}
+
+.pro-gate__card {
+  width: min(640px, 100%);
+  border-radius: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.80) 100%);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.10);
+  padding: 28px 22px 22px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.pro-gate__card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.7;
+  background:
+    radial-gradient(900px 260px at 0% 0%, color-mix(in srgb, var(--gate-color, #4ECDC4) 18%, transparent), transparent 60%),
+    radial-gradient(700px 220px at 100% 0%, rgba(245, 158, 11, 0.10), transparent 58%);
+}
+
+.pro-gate__lock {
+  position: relative;
+  font-size: 44px;
+  height: 74px;
+  width: 74px;
+  margin: 0 auto 10px;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  background: rgba(245, 158, 11, 0.10);
+  border: 1px solid rgba(245, 158, 11, 0.22);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.08);
+}
+
+.pro-gate__badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.26);
+  font-size: 13px;
+  font-weight: 950;
+  color: rgba(120, 53, 15, 0.95);
+  margin-bottom: 8px;
+}
+
+.pro-gate__title {
+  position: relative;
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.pro-gate__desc {
+  position: relative;
+  margin: 10px auto 0;
+  max-width: 520px;
+  color: rgba(45, 52, 54, 0.78);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.pro-gate__plan {
+  position: relative;
+  margin-top: 14px;
+  font-size: 14px;
+  color: rgba(45, 52, 54, 0.68);
+}
+
+.pro-gate__plan strong {
+  color: rgba(45, 52, 54, 0.92);
+}
+
+.pro-gate__actions {
+  position: relative;
+  margin-top: 18px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pro-gate__btn {
+  height: 44px;
+  padding: 0 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.85);
+  color: rgba(45, 52, 54, 0.94);
+  font-weight: 950;
+  font-size: 15px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: filter 0.15s, transform 0.15s;
+}
+
+.pro-gate__btn:hover {
+  filter: brightness(0.97);
+  transform: translateY(-1px);
+}
+
+.pro-gate__btn--upgrade {
+  border-color: rgba(37, 99, 235, 0.34);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.22) 0%, rgba(96, 165, 250, 0.14) 100%);
+  color: rgba(30, 64, 175, 0.98);
+}
+
+.pro-gate__btn--home {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+/* ─── Suggested Free Topics ─────────────────────────────────── */
+
+.pro-gate__suggestions {
+  position: relative;
+  width: min(640px, 100%);
+  margin-top: 28px;
+}
+
+.pro-gate__suggestions-title {
+  font-size: 17px;
+  font-weight: 950;
+  margin: 0 0 12px;
+  color: rgba(45, 52, 54, 0.88);
+}
+
+
+
+/* loading shimmer for suggestions */
+.pro-gate__suggestions-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0;
+  color: rgba(45, 52, 54, 0.5);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .pro-gate {
+    padding: 18px 12px 36px;
+  }
+
+  .pro-gate__card {
+    padding: 22px 16px 18px;
+  }
+
+  .pro-gate__title {
+    font-size: 20px;
+  }
+
+  .pro-gate__btn {
+    height: 40px;
+    padding: 0 16px;
+    font-size: 14px;
+  }
+}
