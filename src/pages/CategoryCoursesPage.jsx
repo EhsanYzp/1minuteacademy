@@ -23,6 +23,7 @@ export default function CategoryCoursesPage() {
         ['home-and-diy', 'home-diy'],
         ['religion-and-spirituality', 'religion'],
         ['religion-spirituality', 'religion'],
+        ['automotive-evs', 'automotive-and-evs'],
       ]),
     []
   );

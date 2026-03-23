@@ -21,6 +21,9 @@ export async function listCategories() {
     // Religion & Spirituality: keep canonical `religion`.
     ['religion-and-spirituality', 'religion'],
     ['religion-spirituality', 'religion'],
+
+    // Automotive & EVs: keep canonical `automotive-and-evs`.
+    ['automotive-evs', 'automotive-and-evs'],
   ]);
 
   const DUPLICATE_CATEGORY_TITLES = new Map([
