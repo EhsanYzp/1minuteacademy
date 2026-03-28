@@ -1,0 +1,559 @@
+{
+  "categoryId": "game-theory",
+  "subject": "Game Theory",
+  "courseId": "game-theory--mechanism-design",
+  "courseTitle": "Mechanism Design",
+  "emoji": "⚙️",
+  "color": "#1976D2",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "game-theory--mechanism-design--ch01-what-is-mechanism-design", "title": "What Is Mechanism Design?", "position": 1 },
+    { "id": "game-theory--mechanism-design--ch02-auction-mechanisms", "title": "Auction Mechanisms", "position": 2 },
+    { "id": "game-theory--mechanism-design--ch03-matching-markets", "title": "Matching Markets", "position": 3 },
+    { "id": "game-theory--mechanism-design--ch04-voting-mechanisms", "title": "Voting Mechanisms", "position": 4 },
+    { "id": "game-theory--mechanism-design--ch05-market-design-in-practice", "title": "Market Design in Practice", "position": 5 },
+    { "id": "game-theory--mechanism-design--ch06-limits-and-frontiers", "title": "Limits and Frontiers", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "game-theory--mechanism-design--ch01-what-is-mechanism-design",
+      "title": "Reverse Game Theory",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Game theory predicts behavior given rules. Mechanism design flips it: what rules produce the behavior you want?", "visual": "🔄" },
+        "buildup": { "text": "It's engineering for incentives. You design the game so rational players produce the desired outcome.", "visual": "⚙️" },
+        "discovery": { "text": "Leonid Hurwicz pioneered this field, asking: can we build systems where self-interest serves the common good?", "visual": "🧠" },
+        "twist": { "text": "The trick: make honesty the best strategy. If lying hurts the liar, truth flows naturally through the system.", "visual": "✨" },
+        "climax": { "text": "Hurwicz, Maskin, and Myerson shared the 2007 Nobel Prize for laying the foundations of mechanism design.", "visual": "🏆" },
+        "punchline": { "text": "Don't change people. Change the game.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "How does mechanism design differ from game theory?",
+        "options": ["It predicts behavior", "It designs rules to produce desired outcomes", "It studies evolution"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch01-what-is-mechanism-design",
+      "title": "Incentive Compatibility",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A clever tax system where lying about income costs you more than paying honestly. People report truthfully—voluntarily.", "visual": "💰" },
+        "buildup": { "text": "A mechanism is incentive-compatible when telling the truth is every player's best strategy. No tricks beat honesty.", "visual": "✅" },
+        "discovery": { "text": "The revelation principle: any outcome from any mechanism can be achieved by one where truth-telling is optimal.", "visual": "📐" },
+        "twist": { "text": "This simplifies design enormously: just consider truth-telling mechanisms and ignore all complex strategic play.", "visual": "🎯" },
+        "climax": { "text": "Real-world systems like second-price auctions achieve incentive compatibility. Bidding your true value always wins.", "visual": "🔨" },
+        "punchline": { "text": "The best mechanism makes honesty easy.", "visual": "🕊️" }
+      },
+      "quiz": {
+        "question": "What does incentive compatibility mean?",
+        "options": ["Everyone gets paid", "Truth-telling is every player's best strategy", "The mechanism is complex"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch01-what-is-mechanism-design",
+      "title": "The Revelation Principle",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Imagine testing every possible auction format to find the best one. There are infinitely many. Seems impossible.", "visual": "♾️" },
+        "buildup": { "text": "The revelation principle: if any mechanism achieves a goal, there's a direct one where players just report truthfully.", "visual": "📋" },
+        "discovery": { "text": "This collapses the design problem: instead of exploring all possible games, just find the best truth-telling one.", "visual": "🔍" },
+        "twist": { "text": "It doesn't mean truth-telling mechanisms are simple to build. It means you only need to search among them.", "visual": "🧩" },
+        "climax": { "text": "Roger Myerson proved this theorem, transforming mechanism design from art into systematic engineering.", "visual": "🏗️" },
+        "punchline": { "text": "Truth-telling isn't naive—it's optimal by design.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "What does the revelation principle simplify?",
+        "options": ["Player strategies", "The search space for mechanism designers", "Auction prices"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch01-what-is-mechanism-design",
+      "title": "Individual Rationality",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You design a perfect mechanism, but nobody participates. Why? Because players can do better staying home.", "visual": "🏠" },
+        "buildup": { "text": "Individual rationality means every player must be at least as well off participating as not. No one joins to lose.", "visual": "⚖️" },
+        "discovery": { "text": "This constraint limits what mechanisms can achieve: you can't extract too much from players or they'll refuse to play.", "visual": "🚫" },
+        "twist": { "text": "Governments bypass this with mandatory participation: taxes, jury duty, and the draft ignore individual rationality.", "visual": "🏛️" },
+        "climax": { "text": "The best mechanisms make participation obviously beneficial. Players join eagerly, not reluctantly.", "visual": "🎉" },
+        "punchline": { "text": "A game nobody joins is a game nobody wins.", "visual": "🚪" }
+      },
+      "quiz": {
+        "question": "What does individual rationality require?",
+        "options": ["Players must be smart", "Participation must be at least as good as opting out", "Everyone must win"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch01-what-is-mechanism-design",
+      "title": "Social Choice Theory",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Three friends want pizza, sushi, or tacos. Each ranks them differently. What's the 'group preference'?", "visual": "🍕" },
+        "buildup": { "text": "Social choice theory asks: how do you aggregate individual preferences into a collective decision fairly?", "visual": "📊" },
+        "discovery": { "text": "Arrow's theorem proved no voting system satisfies all fairness criteria at once. Perfection is impossible.", "visual": "❌" },
+        "twist": { "text": "This doesn't mean all systems are equal. Some fail less badly. Mechanism design finds the least-bad option.", "visual": "🎯" },
+        "climax": { "text": "Kenneth Arrow won the 1972 Nobel Prize. His theorem set boundaries for what any mechanism can achieve.", "visual": "🏆" },
+        "punchline": { "text": "Perfect fairness is impossible. Good enough isn't.", "visual": "🤷" }
+      },
+      "quiz": {
+        "question": "What did Arrow's impossibility theorem show?",
+        "options": ["Democracy is pointless", "No voting system satisfies all fairness criteria at once", "Majority rule is always fair"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch02-auction-mechanisms",
+      "title": "The Vickrey Auction",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You win a painting at auction for $1,000—but you only pay $800, the second-highest bid. Why does this work?", "visual": "🎨" },
+        "buildup": { "text": "The Vickrey auction (sealed-bid, second-price): highest bidder wins but pays the second-highest bid amount.", "visual": "📝" },
+        "discovery": { "text": "This makes truth-telling dominant: bid your true value, because you'll never pay what you bid—only the next bid down.", "visual": "✅" },
+        "twist": { "text": "Bidding higher than your value risks overpaying. Bidding lower risks losing. Your true value is always safest.", "visual": "⚖️" },
+        "climax": { "text": "William Vickrey won the 1996 Nobel Prize. Google's ad system uses his second-price logic billions of times daily.", "visual": "🏆" },
+        "punchline": { "text": "Pay what the runner-up would have paid.", "visual": "🥈" }
+      },
+      "quiz": {
+        "question": "Why is bidding your true value optimal in a Vickrey auction?",
+        "options": ["You always win", "You pay your true value", "You pay the second-highest bid, so overbidding risks loss"],
+        "correct": 2
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch02-auction-mechanisms",
+      "title": "Revenue Equivalence",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "English, Dutch, sealed-bid, Vickrey—all different auction formats. Surprisingly, they all earn identical revenue.", "visual": "💰" },
+        "buildup": { "text": "Revenue equivalence: under standard conditions, all auction formats allocating to the highest bidder earn the same.", "visual": "📐" },
+        "discovery": { "text": "Roger Myerson proved this in his foundational 1981 paper. The format doesn't matter—only the allocation rule does.", "visual": "📄" },
+        "twist": { "text": "But real auctions violate the assumptions: bidders are risk-averse, values are correlated, budgets are limited.", "visual": "⚠️" },
+        "climax": { "text": "These violations matter. Spectrum auctions raised billions more by choosing formats that fit real bidder behavior.", "visual": "📡" },
+        "punchline": { "text": "In theory, format doesn't matter. In practice, it's everything.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does revenue equivalence state?",
+        "options": ["All auctions are equally fair", "Standard auction formats yield the same expected revenue", "Dutch auctions earn the most"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch02-auction-mechanisms",
+      "title": "Optimal Auction Design",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You're selling a house. Should you set a minimum price? How high? Myerson found the exact answer mathematically.", "visual": "🏠" },
+        "buildup": { "text": "Optimal auction design maximizes the seller's revenue by choosing the right rules, reserve prices, and structure.", "visual": "📈" },
+        "discovery": { "text": "Myerson showed the optimal auction sets a reserve price that excludes low-value bidders, even if it means no sale.", "visual": "🚫" },
+        "twist": { "text": "This feels wasteful: sometimes the item goes unsold. But the higher prices from remaining bidders more than compensate.", "visual": "💎" },
+        "climax": { "text": "eBay's reserve prices, airline minimum fares, and real estate listing prices all apply Myerson's optimal auction logic.", "visual": "🛒" },
+        "punchline": { "text": "Sometimes saying 'no sale' earns more.", "visual": "🙅" }
+      },
+      "quiz": {
+        "question": "Why set a reserve price in an optimal auction?",
+        "options": ["To sell faster", "To exclude low-value bidders and raise average revenue", "To be fair"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch02-auction-mechanisms",
+      "title": "Combinatorial Auctions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An airline needs landing slots at both LAX and JFK. Winning one without the other is useless. How do you bid?", "visual": "✈️" },
+        "buildup": { "text": "Combinatorial auctions let bidders bid on bundles of items, not just individual ones. Packages capture synergies.", "visual": "📦" },
+        "discovery": { "text": "The FCC used combinatorial spectrum auctions: carriers need adjacent frequencies, so bundling prevents fragmentation.", "visual": "📡" },
+        "twist": { "text": "Combinatorial auctions are NP-hard. Finding the revenue-maximizing allocation is a computational nightmare.", "visual": "🧮" },
+        "climax": { "text": "Despite complexity, these auctions allocated $200+ billion in spectrum worldwide. Approximate solutions work well.", "visual": "🌍" },
+        "punchline": { "text": "When items are complements, sell them together.", "visual": "🧩" }
+      },
+      "quiz": {
+        "question": "Why are combinatorial auctions useful?",
+        "options": ["They're simpler", "They let bidders express value for bundles of items", "They guarantee highest revenue"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch02-auction-mechanisms",
+      "title": "Ad Auctions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every Google search triggers an auction among advertisers in milliseconds. Billions of auctions run daily, invisibly.", "visual": "🔍" },
+        "buildup": { "text": "Google's ad auction ranks ads by bid × quality score. The highest rank wins the top spot and pays per click.", "visual": "📊" },
+        "discovery": { "text": "It uses a generalized second-price model: each advertiser pays just enough to beat the next one's effective bid.", "visual": "💵" },
+        "twist": { "text": "Quality score rewards relevance: a lower bid with a better ad can beat a higher bid. This improves user experience.", "visual": "⭐" },
+        "climax": { "text": "Hal Varian, Google's chief economist, designed this system. It generates over $200 billion yearly in ad revenue.", "visual": "🏦" },
+        "punchline": { "text": "Every search funds the internet via auctions.", "visual": "🌐" }
+      },
+      "quiz": {
+        "question": "What determines ad ranking in Google's auction?",
+        "options": ["Bid amount only", "Bid times quality score", "First come, first served"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch03-matching-markets",
+      "title": "The Stable Marriage Problem",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Ten men and ten women each rank each other. Can we match them so nobody prefers someone else's partner over theirs?", "visual": "💑" },
+        "buildup": { "text": "An unstable match has a 'blocking pair': two people who'd rather be with each other than their assigned partners.", "visual": "💔" },
+        "discovery": { "text": "Gale and Shapley proved stable matchings always exist. Their algorithm: one side proposes, the other accepts or rejects.", "visual": "💡" },
+        "twist": { "text": "The proposing side gets their best stable partner. The accepting side gets their worst. Who proposes matters enormously.", "visual": "⚖️" },
+        "climax": { "text": "Lloyd Shapley won the 2012 Nobel Prize for this work. The algorithm now matches doctors, students, and organ donors.", "visual": "🏆" },
+        "punchline": { "text": "The right match needs the right process.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What makes a matching 'stable'?",
+        "options": ["Everyone gets their first choice", "No pair prefers each other over assigned partners", "The match never changes"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch03-matching-markets",
+      "title": "The Medical Residency Match",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Before 1952, hospitals poached med students earlier each year—some got offers as first-years. Chaos ensued.", "visual": "🏥" },
+        "buildup": { "text": "The system collapsed: hospitals and students both gamed timing, breaking commitments and creating mismatches.", "visual": "📉" },
+        "discovery": { "text": "The National Resident Matching Program uses a centralized algorithm. Students rank hospitals, hospitals rank students.", "visual": "📋" },
+        "twist": { "text": "Roth redesigned it in the 1990s for couples wanting nearby placements. The updated algorithm finds stable matches.", "visual": "🔧" },
+        "climax": { "text": "Over 40,000 doctors are matched yearly. It's considered the most successful application of mechanism design.", "visual": "🎯" },
+        "punchline": { "text": "A centralized match beat decades of chaos.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What problem did the medical residency match solve?",
+        "options": ["Doctor shortages", "Hospitals poaching students earlier each year", "Low salaries"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch03-matching-markets",
+      "title": "School Choice",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Boston gave students their top school choice or nothing. Parents gamed the system by ranking 'safe' schools first.", "visual": "🏫" },
+        "buildup": { "text": "Boston's old mechanism punished honesty: listing your true top choice and getting rejected left you with worst schools.", "visual": "😰" },
+        "discovery": { "text": "Roth and Abdulkadiroğlu proposed deferred acceptance: rank truthfully and the algorithm finds your best stable match.", "visual": "📊" },
+        "twist": { "text": "New York City adopted it in 2003 for 90,000 students. Unmatched students dropped from 30,000 to about 3,000.", "visual": "📈" },
+        "climax": { "text": "The mechanism works because honesty is the best strategy. Parents no longer need to game; they just rank truthfully.", "visual": "✅" },
+        "punchline": { "text": "Fair systems don't punish honest choices.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What was wrong with Boston's old school choice system?",
+        "options": ["Too few schools", "Honesty was punished, so parents gamed rankings", "Teachers chose students"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch03-matching-markets",
+      "title": "Kidney Exchange",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your spouse needs a kidney. You'd donate but you're not a match. Another couple has the exact same problem—reversed.", "visual": "🫀" },
+        "buildup": { "text": "Selling kidneys is illegal. But swapping donations is allowed: you give to their patient, they give to yours.", "visual": "🔄" },
+        "discovery": { "text": "Al Roth built kidney exchange algorithms that find chains of compatible donors across dozens of hospitals nationwide.", "visual": "🔗" },
+        "twist": { "text": "Altruistic donors start chains: one stranger's gift triggers a cascade that can save 10+ lives in a single chain.", "visual": "🌊" },
+        "climax": { "text": "Roth shared the 2012 Nobel Prize. Kidney exchange saves thousands of lives yearly by redesigning who gives to whom.", "visual": "🏆" },
+        "punchline": { "text": "The right swap saves a life no donation could.", "visual": "💝" }
+      },
+      "quiz": {
+        "question": "How does kidney exchange work?",
+        "options": ["Selling kidneys online", "Algorithms match incompatible donor-patient pairs for swaps", "Random assignment"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch03-matching-markets",
+      "title": "Two-Sided Markets",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A dating app with no women is useless to men and vice versa. Both sides must show up for the market to work.", "visual": "📱" },
+        "buildup": { "text": "Two-sided markets connect distinct groups: buyers and sellers, riders and drivers, employers and workers.", "visual": "🔗" },
+        "discovery": { "text": "The chicken-and-egg problem: you need sellers to attract buyers and buyers to attract sellers. Who comes first?", "visual": "🐔" },
+        "twist": { "text": "Platforms subsidize one side to solve this. Credit cards charge merchants, not users. Uber subsidized early riders.", "visual": "💸" },
+        "climax": { "text": "Jean Tirole won the 2014 Nobel Prize for analyzing platform markets. Getting the cross-side pricing right is everything.", "visual": "🏆" },
+        "punchline": { "text": "Platforms profit by solving both sides' needs.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "What is the chicken-and-egg problem in two-sided markets?",
+        "options": ["Products are expensive", "Each side needs the other to come first", "There are too many competitors"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch04-voting-mechanisms",
+      "title": "Majority Rule Problems",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A town votes: 40% want a park, 35% want a pool, 25% want a library. The park wins. But 60% didn't want it.", "visual": "🗳️" },
+        "buildup": { "text": "Simple majority rule with three or more options can elect choices most voters oppose. Plurality isn't majority.", "visual": "📊" },
+        "discovery": { "text": "Condorcet's paradox: voters can prefer A to B, B to C, and C to A simultaneously. No clear winner exists.", "visual": "🔄" },
+        "twist": { "text": "This isn't rare. Studies estimate 5-10% of real elections have Condorcet cycles lurking in the data.", "visual": "📉" },
+        "climax": { "text": "Arrow proved no ranked voting system avoids all paradoxes. Every system trades off some fairness criterion.", "visual": "⚖️" },
+        "punchline": { "text": "Democracy is hard math, not just counting hands.", "visual": "🧮" }
+      },
+      "quiz": {
+        "question": "What is Condorcet's paradox?",
+        "options": ["Nobody votes", "Group preferences can cycle with no clear winner", "The majority is always right"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch04-voting-mechanisms",
+      "title": "The Gibbard-Satterthwaite Theorem",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You prefer candidate A but vote for B to prevent C from winning. This strategic voting plagues every election.", "visual": "🗳️" },
+        "buildup": { "text": "Tactical voting means reporting false preferences to manipulate the outcome. It's rational but undermines democracy.", "visual": "🎭" },
+        "discovery": { "text": "Gibbard and Satterthwaite proved: every non-dictatorial voting system with 3+ options is vulnerable to manipulation.", "visual": "🔒" },
+        "twist": { "text": "No system design, however clever, can make honest voting always optimal. Strategic manipulation can't be designed away.", "visual": "⚠️" },
+        "climax": { "text": "This doesn't mean all systems are equal. Some resist manipulation better. Mechanism design seeks the most robust ones.", "visual": "🛡️" },
+        "punchline": { "text": "Perfect honesty in voting is mathematically impossible.", "visual": "📐" }
+      },
+      "quiz": {
+        "question": "What does the Gibbard-Satterthwaite theorem prove?",
+        "options": ["All voting is fair", "Every voting system with 3+ options can be strategically manipulated", "Dictators are optimal"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch04-voting-mechanisms",
+      "title": "Quadratic Voting",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You care deeply about education but not about traffic policy. Standard voting gives you one vote on each. That's wrong.", "visual": "❓" },
+        "buildup": { "text": "Quadratic voting lets you buy extra votes, but costs rise quadratically: 1 vote costs 1, 2 cost 4, 3 cost 9.", "visual": "📈" },
+        "discovery": { "text": "Glen Weyl showed this optimally balances intensity and equality: passionate voters invest more, but at rising cost.", "visual": "⚖️" },
+        "twist": { "text": "Colorado used quadratic voting in its legislature. Lawmakers allocated budgets across bills based on real priorities.", "visual": "🏛️" },
+        "climax": { "text": "Crypto governance adopted it: Gitcoin uses quadratic funding to allocate millions to public goods projects.", "visual": "💰" },
+        "punchline": { "text": "Vote harder on what matters most to you.", "visual": "💪" }
+      },
+      "quiz": {
+        "question": "How does quadratic voting measure preference intensity?",
+        "options": ["Everyone gets equal votes", "Extra votes cost quadratically more", "The loudest person wins"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch04-voting-mechanisms",
+      "title": "Veto Power and Agenda Control",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The UN Security Council: one 'no' from any permanent member blocks action. Five countries can veto the world.", "visual": "🇺🇳" },
+        "buildup": { "text": "Veto power gives a single player the ability to block outcomes, shifting enormous power to the minority.", "visual": "✋" },
+        "discovery": { "text": "Agenda control is subtler: whoever decides the order of votes controls the outcome even without a veto.", "visual": "📋" },
+        "twist": { "text": "A clever agenda-setter can ensure their preferred option wins every time by pairing alternatives strategically.", "visual": "♟️" },
+        "climax": { "text": "Congressional committee chairs have used agenda power for decades: bills that can't get a floor vote effectively die.", "visual": "🪦" },
+        "punchline": { "text": "Who sets the agenda often decides the outcome.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why is agenda control powerful?",
+        "options": ["It gives veto power", "The order of votes can determine the winner", "It speeds up decisions"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch04-voting-mechanisms",
+      "title": "Liquid Democracy",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You know nothing about energy policy but your friend is an expert. What if you could delegate your vote to her?", "visual": "🔄" },
+        "buildup": { "text": "Liquid democracy lets voters either vote directly or delegate their vote to a trusted proxy on each issue.", "visual": "🌊" },
+        "discovery": { "text": "Proxies can delegate further, creating chains. An energy expert might accumulate thousands of delegated votes.", "visual": "🔗" },
+        "twist": { "text": "The risk: delegation chains concentrate power. A few super-delegates could control most votes on popular topics.", "visual": "⚠️" },
+        "climax": { "text": "Germany's Pirate Party tested liquid democracy. It improved participation but struggled with power concentration.", "visual": "🏴‍☠️" },
+        "punchline": { "text": "Delegate your vote, not your judgment.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "What is the main risk of liquid democracy?",
+        "options": ["Low participation", "Power concentrates in a few super-delegates", "Votes are lost"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch05-market-design-in-practice",
+      "title": "Spectrum Auctions",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "In the 1990s, the FCC auctioned radio spectrum instead of giving it away. The result: $60 billion in revenue.", "visual": "📡" },
+        "buildup": { "text": "Before auctions, spectrum was allocated by 'beauty contests'—lobbying and luck. Auctions introduced market efficiency.", "visual": "📊" },
+        "discovery": { "text": "Paul Milgrom and Robert Wilson designed the simultaneous ascending auction: bidders bid on all licenses at once.", "visual": "🔨" },
+        "twist": { "text": "They had to fight collusion: bidders used trailing digits in bids to signal. New rules blocked these coded messages.", "visual": "🕵️" },
+        "climax": { "text": "Milgrom and Wilson won the 2020 Nobel Prize. Their auction designs allocated spectrum worldwide.", "visual": "🏆" },
+        "punchline": { "text": "The right auction turns airwaves into billions.", "visual": "💰" }
+      },
+      "quiz": {
+        "question": "Why were spectrum beauty contests replaced by auctions?",
+        "options": ["Auctions were faster", "Auctions allocated spectrum more efficiently and transparently", "Beauty contests were illegal"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch05-market-design-in-practice",
+      "title": "Carbon Markets",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Pollution has no price tag. A factory dumps CO2 for free. What if you made companies buy the right to pollute?", "visual": "🏭" },
+        "buildup": { "text": "Cap-and-trade caps total emissions, then auctions permits. Companies that cut pollution cheaply sell permits to others.", "visual": "📉" },
+        "discovery": { "text": "The US acid rain program used this in 1990: SO2 emissions dropped 50% at one-tenth the predicted cost.", "visual": "✅" },
+        "twist": { "text": "Europe's carbon market struggled: too many free permits crashed the price to zero. The mechanism needs scarcity to work.", "visual": "📈" },
+        "climax": { "text": "After reforms tightened supply, EU carbon prices rose from €5 to over €80. Mechanism design details determine success.", "visual": "💶" },
+        "punchline": { "text": "Price the pollution and the market cuts it.", "visual": "💰" }
+      },
+      "quiz": {
+        "question": "Why did Europe's early carbon market fail?",
+        "options": ["Nobody traded", "Too many free permits destroyed the price signal", "Carbon is too hard to measure"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch05-market-design-in-practice",
+      "title": "Congestion Pricing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every driver on a highway ignores their cost to others: one more car slows everyone. Roads are a commons.", "visual": "🚗" },
+        "buildup": { "text": "Congestion pricing charges drivers more during peak hours, aligning individual costs with social costs.", "visual": "💵" },
+        "discovery": { "text": "London's congestion charge cut traffic 30% and raised £2.6B for transit. Stockholm's trial became permanent by vote.", "visual": "🚌" },
+        "twist": { "text": "People hated it before it launched and loved it after. Experience changed minds. Stockholm voted 53% to keep it.", "visual": "🗳️" },
+        "climax": { "text": "Dynamic pricing via GPS could charge by exact route and time. Every road gets its own market-clearing price.", "visual": "📱" },
+        "punchline": { "text": "Price the road and traffic solves itself.", "visual": "🚦" }
+      },
+      "quiz": {
+        "question": "Why does congestion pricing work?",
+        "options": ["It bans cars", "It makes drivers internalize the cost they impose on others", "It funds new roads"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch05-market-design-in-practice",
+      "title": "Prediction Markets",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Bet real money on whether a drug trial succeeds. Suddenly people reveal what they really believe, not what they say.", "visual": "🔮" },
+        "buildup": { "text": "Prediction markets aggregate private information through prices. Each trade updates the probability of an event.", "visual": "📈" },
+        "discovery": { "text": "Iowa Electronic Markets beat polls in predicting elections 74% of the time. Money sharpens honest forecasting.", "visual": "🗳️" },
+        "twist": { "text": "Companies use internal prediction markets: Google and HP found employees bet more accurately than official forecasts.", "visual": "🏢" },
+        "climax": { "text": "Polymarket hit $1 billion in 2024 election trading volume. Markets now compete with polls as forecasting tools.", "visual": "💰" },
+        "punchline": { "text": "Put money on it and watch honesty emerge.", "visual": "💵" }
+      },
+      "quiz": {
+        "question": "Why do prediction markets outperform polls?",
+        "options": ["More participants", "Money motivates honest probability assessment", "They use AI"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch05-market-design-in-practice",
+      "title": "Refugee Matching",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A Syrian family arrives in Europe. Which city should host them? Families have needs; cities have capacities.", "visual": "🌍" },
+        "buildup": { "text": "Random assignment ignores preferences: a family needing Arabic schools lands in a town without them.", "visual": "📋" },
+        "discovery": { "text": "Economists designed matching algorithms: families rank cities, and cities specify quotas and priorities.", "visual": "🔄" },
+        "twist": { "text": "Sweden and Switzerland piloted algorithm-based placement. Employment outcomes improved 40-70% versus random assignment.", "visual": "📈" },
+        "climax": { "text": "The mechanism respects both refugee preferences and community constraints. Design beats luck for life outcomes.", "visual": "🎯" },
+        "punchline": { "text": "The right match changes a life's trajectory.", "visual": "🌟" }
+      },
+      "quiz": {
+        "question": "How do matching algorithms improve refugee placement?",
+        "options": ["They place refugees randomly", "They match family needs with city capacities", "They reduce immigration"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch06-limits-and-frontiers",
+      "title": "The Myerson-Satterthwaite Theorem",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A buyer and seller each know their own valuation but not the other's. Can any mechanism guarantee efficient trade?", "visual": "🤝" },
+        "buildup": { "text": "Efficient trade means: if the buyer values the item more than the seller, a deal always happens. Seems simple.", "visual": "📊" },
+        "discovery": { "text": "Myerson and Satterthwaite proved it: no mechanism achieves efficiency, honesty, and voluntary participation together.", "visual": "❌" },
+        "twist": { "text": "This explains why negotiations fail even when deals should happen. Private information destroys guaranteed efficiency.", "visual": "💔" },
+        "climax": { "text": "Middlemen, brokers, and platforms exist to overcome this impossibility—adding value by reducing information gaps.", "visual": "🏪" },
+        "punchline": { "text": "Some deals that should happen can't—by math.", "visual": "📐" }
+      },
+      "quiz": {
+        "question": "What does the Myerson-Satterthwaite theorem prove?",
+        "options": ["All trades are efficient", "No mechanism guarantees efficient trade with private information", "Middlemen are unnecessary"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch06-limits-and-frontiers",
+      "title": "Robust Mechanism Design",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Classical mechanisms assume the designer knows everything about players' beliefs. In reality, that's absurd.", "visual": "🤔" },
+        "buildup": { "text": "Robust mechanism design asks: can we build mechanisms that work even when we're wrong about player knowledge?", "visual": "🛡️" },
+        "discovery": { "text": "Bergemann and Morris showed robust mechanisms exist but are more conservative—they sacrifice some efficiency.", "visual": "📐" },
+        "twist": { "text": "It's a tradeoff: the less you assume about players, the less optimal your mechanism. Ignorance has a cost.", "visual": "⚖️" },
+        "climax": { "text": "Real-world systems need robustness. Spectrum auctions must work regardless of what bidders privately believe.", "visual": "📡" },
+        "punchline": { "text": "Assume less, and the design still works.", "visual": "💪" }
+      },
+      "quiz": {
+        "question": "What does robust mechanism design sacrifice?",
+        "options": ["Participation", "Some efficiency, in exchange for working under uncertainty", "Honesty"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch06-limits-and-frontiers",
+      "title": "Algorithmic Mechanism Design",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A city needs to route internet traffic across networks owned by selfish companies. Each lies about their costs.", "visual": "🌐" },
+        "buildup": { "text": "Algorithmic mechanism design merges computer science and economics: build algorithms that work despite strategic play.", "visual": "💻" },
+        "discovery": { "text": "Nisan and Ronen founded this field: compute optimal outcomes even when inputs come from self-interested agents.", "visual": "📄" },
+        "twist": { "text": "Sometimes the optimal solution is computationally too hard. You need mechanisms that approximate well and resist gaming.", "visual": "🧮" },
+        "climax": { "text": "Ad auctions, cloud computing pricing, and rideshare matching all use algorithmic mechanism design in practice.", "visual": "🚕" },
+        "punchline": { "text": "Code that outsmart lies at scale.", "visual": "🤖" }
+      },
+      "quiz": {
+        "question": "What does algorithmic mechanism design combine?",
+        "options": ["Biology and math", "Computer science and economics", "Physics and game theory"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch06-limits-and-frontiers",
+      "title": "Dynamic Mechanism Design",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You bid for ad space every day. Your value changes daily. Yesterday's optimal price is today's outdated guess.", "visual": "📅" },
+        "buildup": { "text": "Dynamic mechanism design handles situations where players interact repeatedly and private information changes over time.", "visual": "🔄" },
+        "discovery": { "text": "These mechanisms must prevent players from hiding information today to get better deals tomorrow.", "visual": "🕵️" },
+        "twist": { "text": "The key: link today's payments to tomorrow's reports. Make concealment costly across periods, not just one round.", "visual": "⛓️" },
+        "climax": { "text": "Electricity markets, ride pricing, and cloud computing face dynamic design challenges—prices must adapt in real time.", "visual": "⚡" },
+        "punchline": { "text": "When the game changes daily, so must the rules.", "visual": "📆" }
+      },
+      "quiz": {
+        "question": "What is the challenge in dynamic mechanism design?",
+        "options": ["Speed of computation", "Players can hide information today to benefit tomorrow", "Static prices are fine"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "game-theory--mechanism-design--ch06-limits-and-frontiers",
+      "title": "The Ethics of Design",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A kidney matching algorithm maximizes total lives saved. But it gives fewer matches to rare blood types. Is that fair?", "visual": "⚖️" },
+        "buildup": { "text": "Mechanism design optimizes objectives. But who chooses the objective? Efficiency, equity, and fairness often conflict.", "visual": "🤔" },
+        "discovery": { "text": "Designers embed values in algorithms: prioritizing efficiency helps more people but can exclude minorities.", "visual": "📊" },
+        "twist": { "text": "School choice algorithms had to add fairness constraints after minority communities were systematically disadvantaged.", "visual": "🏫" },
+        "climax": { "text": "The frontier of mechanism design now includes ethics by design: building fairness into the math, not patching it later.", "visual": "🔧" },
+        "punchline": { "text": "Every algorithm encodes someone's values.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "Why does mechanism design raise ethical questions?",
+        "options": ["Algorithms are always biased", "Designers must choose between competing values like efficiency and fairness", "Ethics can't be modeled"],
+        "correct": 1
+      }
+    }
+  ]
+}
