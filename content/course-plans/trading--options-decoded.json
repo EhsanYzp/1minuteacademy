@@ -1,0 +1,559 @@
+{
+  "categoryId": "trading",
+  "subject": "Trading",
+  "courseId": "trading--options-decoded",
+  "courseTitle": "Options Decoded",
+  "emoji": "🎯",
+  "color": "#2E7D32",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "trading--options-decoded--ch01-what-are-options", "title": "What Are Options?", "position": 1 },
+    { "id": "trading--options-decoded--ch02-calls-and-puts", "title": "Calls and Puts", "position": 2 },
+    { "id": "trading--options-decoded--ch03-pricing-and-greeks", "title": "Pricing and Greeks", "position": 3 },
+    { "id": "trading--options-decoded--ch04-basic-strategies", "title": "Basic Strategies", "position": 4 },
+    { "id": "trading--options-decoded--ch05-options-in-action", "title": "Options in Action", "position": 5 },
+    { "id": "trading--options-decoded--ch06-options-pitfalls", "title": "Options Pitfalls", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "trading--options-decoded--ch01-what-are-options",
+      "title": "The Right, Not the Obligation",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "An option gives you the right to buy or sell a stock at a specific price—but you never have to. That's the magic.", "visual": "🔑" },
+        "buildup": { "text": "Unlike buying stock, where you own the asset, an option is a contract that grants a choice for a limited time.", "visual": "📄" },
+        "discovery": { "text": "You pay a premium—the price of the option—for this right. If the trade works, you exercise. If not, you walk away.", "visual": "💰" },
+        "twist": { "text": "Your maximum loss with a long option is the premium you paid. But the potential gain can be many times larger.", "visual": "📈" },
+        "climax": { "text": "Options create asymmetry: limited risk with unlimited upside. That's why they appeal to traders worldwide.", "visual": "⚖️" },
+        "punchline": { "text": "Pay a small fee for a big opportunity.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does buying an option give you?",
+        "options": ["An obligation to buy or sell", "The right, but not obligation, to buy or sell at a specific price", "Ownership of the stock immediately"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch01-what-are-options",
+      "title": "A Brief History of Options",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Options aren't modern inventions. Thales of Miletus used them in ancient Greece to corner the olive press market.", "visual": "🫒" },
+        "buildup": { "text": "Thales paid a deposit for the right to rent presses at harvest. When olives boomed, he profited handsomely.", "visual": "💰" },
+        "discovery": { "text": "Formal options markets began in 1973 when the Chicago Board Options Exchange opened—with standardized contracts.", "visual": "🏛️" },
+        "twist": { "text": "That same year, Black, Scholes, and Merton published their pricing formula. It won them a Nobel Prize.", "visual": "🏆" },
+        "climax": { "text": "Today, options trade trillions in daily notional value. They evolved from olive press bets into sophisticated tools.", "visual": "📊" },
+        "punchline": { "text": "From olive presses to Wall Street in 2,500 years.", "visual": "🫒" }
+      },
+      "quiz": {
+        "question": "When did the first formal options exchange open?",
+        "options": ["1929", "1973", "2001"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch01-what-are-options",
+      "title": "Strike Price and Expiration",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every option has two key terms: the price you can buy or sell at (strike) and the deadline (expiration).", "visual": "📋" },
+        "buildup": { "text": "The strike price is your set price. A $100 strike call lets you buy shares at $100, no matter the market price.", "visual": "💲" },
+        "discovery": { "text": "Expiration is the deadline. After that date, the option ceases to exist—it either has value or it's worthless.", "visual": "⏰" },
+        "twist": { "text": "Options lose value as expiration approaches—time decay. An out-of-the-money option near expiry is nearly worthless.", "visual": "📉" },
+        "climax": { "text": "Strike and expiration together define the option's character. The same stock trades thousands of different options.", "visual": "📊" },
+        "punchline": { "text": "Price, deadline, decision. That's an option.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What happens to an option at expiration?",
+        "options": ["It automatically renews", "It either has value and is exercised, or expires worthless", "It converts to stock shares"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch01-what-are-options",
+      "title": "In, At, and Out of the Money",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A call option with a $100 strike while the stock trades at $120 is 'in the money'—it has $20 of built-in value.", "visual": "💰" },
+        "buildup": { "text": "In the money (ITM) means the option has immediate value if exercised. It's already profitable.", "visual": "✅" },
+        "discovery": { "text": "At the money (ATM) means the strike equals the current price. Out of the money (OTM) means it has no immediate value.", "visual": "⚖️" },
+        "twist": { "text": "OTM options are cheap but have the lowest probability of success. They're lottery tickets—cheap and usually worthless.", "visual": "🎰" },
+        "climax": { "text": "Each moneyness level carries different risk and reward. ITM is safer but costly. OTM is cheap but usually loses.", "visual": "📊" },
+        "punchline": { "text": "Cheap options are cheap for a reason.", "visual": "⚠️" }
+      },
+      "quiz": {
+        "question": "What does 'out of the money' mean for a call option?",
+        "options": ["The stock price is above the strike", "The stock price is below the strike—no immediate value", "The option has expired"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch01-what-are-options",
+      "title": "Options vs. Stocks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Buying 100 shares of a $100 stock costs $10,000. A call option on that stock might cost $300. Same upside, less capital.", "visual": "💵" },
+        "buildup": { "text": "Options provide leverage—controlling large positions with small amounts of money. That's both advantage and risk.", "visual": "📈" },
+        "discovery": { "text": "Stocks don't expire. Options do. A stock can recover from a dip; an option that expires worthless is gone forever.", "visual": "⏰" },
+        "twist": { "text": "About 60-80% of options expire worthless. The leverage that makes them attractive is what makes most buyers lose.", "visual": "📉" },
+        "climax": { "text": "Options are tools, not replacements for stocks. They're best used strategically—for hedging, income, or speculation.", "visual": "🔧" },
+        "punchline": { "text": "Leverage amplifies. Expiration eliminates.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What percentage of options expire worthless?",
+        "options": ["10-20%", "30-40%", "60-80%"],
+        "correct": 2
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch02-calls-and-puts",
+      "title": "How Calls Work",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You think Apple will rise. Instead of buying at $180, you buy a $180 call for $5. Apple hits $200, you profit $15.", "visual": "📱" },
+        "buildup": { "text": "A call option gives you the right to buy 100 shares at the strike price before expiration.", "visual": "📈" },
+        "discovery": { "text": "If the stock rises above the strike plus your premium, you profit. Below, you lose only the premium—nothing more.", "visual": "💰" },
+        "twist": { "text": "Your $5 investment returned $15—a 300% gain. The stock only moved 11%. That's the leverage of options.", "visual": "🚀" },
+        "climax": { "text": "Calls are bullish bets with defined risk. You know your maximum loss the moment you buy.", "visual": "🛡️" },
+        "punchline": { "text": "Bullish? Buy a call. Know your max loss upfront.", "visual": "📈" }
+      },
+      "quiz": {
+        "question": "What is the maximum loss when buying a call option?",
+        "options": ["Unlimited", "The premium paid for the option", "The full stock price"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch02-calls-and-puts",
+      "title": "How Puts Work",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You own shares at $100 and fear a drop. A $95 put costs $3 and guarantees you can sell at $95 no matter what happens.", "visual": "🛡️" },
+        "buildup": { "text": "A put option gives you the right to sell 100 shares at the strike price before expiration.", "visual": "📉" },
+        "discovery": { "text": "Puts increase in value when the stock falls. If the stock drops to $80, your $95 put is worth at least $15.", "visual": "💰" },
+        "twist": { "text": "Puts work like insurance. You pay a small premium to protect against large downside moves.", "visual": "🏥" },
+        "climax": { "text": "Traders use puts to hedge existing positions or to profit from expected declines—without shorting stock.", "visual": "🎯" },
+        "punchline": { "text": "Bearish or protective? Puts are your tool.", "visual": "📉" }
+      },
+      "quiz": {
+        "question": "When does a put option increase in value?",
+        "options": ["When the stock price rises", "When the stock price falls below the strike", "When interest rates change"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch02-calls-and-puts",
+      "title": "Buying vs. Selling Options",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Buyers pay premiums for rights. Sellers collect premiums for obligations. The seller is the casino; the buyer plays.", "visual": "🎰" },
+        "buildup": { "text": "Option sellers (writers) receive premium upfront but take on the obligation to buy or sell if the buyer exercises.", "visual": "💰" },
+        "discovery": { "text": "Sellers profit when options expire worthless—which happens 60-80% of the time. Time decay works in their favor.", "visual": "⏰" },
+        "twist": { "text": "But when sellers lose, losses can be enormous—potentially unlimited for naked call sellers. The risk is asymmetric.", "visual": "📉" },
+        "climax": { "text": "Most successful options traders sell premium more than they buy it—but with strict risk management.", "visual": "⚖️" },
+        "punchline": { "text": "Buyers bet on moves. Sellers bet on time.", "visual": "⏳" }
+      },
+      "quiz": {
+        "question": "Why do many professionals prefer selling options?",
+        "options": ["It's risk-free", "Time decay favors sellers—most options expire worthless", "Selling is simpler than buying"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch02-calls-and-puts",
+      "title": "Intrinsic vs. Extrinsic Value",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A $100 call on a stock at $110 is worth at least $10. But it trades for $14. That extra $4 is time value.", "visual": "⏰" },
+        "buildup": { "text": "Intrinsic value is the option's built-in profit: the amount it's in the money. It's real and tangible.", "visual": "💎" },
+        "discovery": { "text": "Extrinsic value—time value—reflects the possibility of further movement before expiration. More time, more value.", "visual": "📈" },
+        "twist": { "text": "At expiration, extrinsic value is always zero. Only intrinsic value remains. Time literally eats option premiums.", "visual": "🕐" },
+        "climax": { "text": "Understanding this split is crucial: buyers pay for time they're losing daily. Sellers profit from that decay.", "visual": "⚖️" },
+        "punchline": { "text": "Time is money—literally, in options.", "visual": "💰" }
+      },
+      "quiz": {
+        "question": "What is extrinsic value in an option?",
+        "options": ["The option's built-in profit", "The additional value from time remaining and volatility expectations", "The commission cost"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch02-calls-and-puts",
+      "title": "American vs. European Options",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "American options can be exercised any day before expiration. European options only on the final date. Big difference.", "visual": "🌍" },
+        "buildup": { "text": "Most stock options in the U.S. are American-style, giving maximum flexibility to the holder.", "visual": "🇺🇸" },
+        "discovery": { "text": "Index options (like SPX) are typically European-style—no early exercise. This affects pricing and strategy.", "visual": "📊" },
+        "twist": { "text": "Despite the names, both styles trade everywhere globally. The terms are historical, not geographical.", "visual": "🗺️" },
+        "climax": { "text": "Early exercise is rare for calls but common for deep ITM puts—the ability matters more than it's used.", "visual": "🤔" },
+        "punchline": { "text": "Style names mislead. Exercise rules matter.", "visual": "📋" }
+      },
+      "quiz": {
+        "question": "What is the key difference between American and European options?",
+        "options": ["Where they're traded", "American can be exercised anytime; European only at expiration", "American are for stocks; European for bonds"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch03-pricing-and-greeks",
+      "title": "What Moves Option Prices?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "The stock didn't move, but your option lost 5% today. Why? Because options are affected by more than just price.", "visual": "🤔" },
+        "buildup": { "text": "Option prices depend on six factors: stock price, strike, time to expiry, volatility, interest rates, and dividends.", "visual": "📊" },
+        "discovery": { "text": "Stock price and volatility usually dominate. Time decay is a constant drain. Interest rates and dividends matter less.", "visual": "📉" },
+        "twist": { "text": "You can be right about direction and still lose money on an option if volatility drops or time passes too quickly.", "visual": "⏰" },
+        "climax": { "text": "Options are multi-dimensional. Stock trading is binary (up/down). Options add time, volatility, and more.", "visual": "🎲" },
+        "punchline": { "text": "Direction alone doesn't guarantee an options profit.", "visual": "⚠️" }
+      },
+      "quiz": {
+        "question": "Can you lose money on an option even if the stock moves in your direction?",
+        "options": ["No—correct direction always profits", "Yes—if volatility drops or time decay outweighs the move", "Only with European options"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch03-pricing-and-greeks",
+      "title": "Delta: Direction Sensitivity",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your option has a delta of 0.50. The stock rises $1. Your option gains $0.50. Delta measures directional sensitivity.", "visual": "📈" },
+        "buildup": { "text": "Delta ranges from 0 to 1 for calls and 0 to -1 for puts. Higher delta means more sensitivity to price changes.", "visual": "📊" },
+        "discovery": { "text": "ATM options have about 0.50 delta. Deep ITM options approach 1.0—they move almost dollar-for-dollar with stock.", "visual": "🎯" },
+        "twist": { "text": "Delta also approximates the probability of expiring in the money. A 0.30 delta option has roughly 30% chance.", "visual": "🎲" },
+        "climax": { "text": "Traders use delta to gauge how many shares of exposure an option position represents.", "visual": "⚖️" },
+        "punchline": { "text": "Delta tells you how much your option cares about price.", "visual": "📏" }
+      },
+      "quiz": {
+        "question": "What does a delta of 0.50 mean?",
+        "options": ["The option expires in 50 days", "The option gains about $0.50 for every $1 move in the stock", "The option is 50% overpriced"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch03-pricing-and-greeks",
+      "title": "Theta: Time Decay",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your option loses $10 a day just by existing. Theta is the daily cost of holding an option—time's relentless tax.", "visual": "⏰" },
+        "buildup": { "text": "Theta measures how much value an option loses per day, all else equal. It's always working against buyers.", "visual": "📉" },
+        "discovery": { "text": "Time decay accelerates near expiration. An option loses more value in its last week than in its first month.", "visual": "🏎️" },
+        "twist": { "text": "Option sellers love theta. Every day that passes with no big move, the seller's position gains value—for free.", "visual": "💰" },
+        "climax": { "text": "Theta is why timing matters in options. Being right eventually isn't enough—you need to be right in time.", "visual": "⏳" },
+        "punchline": { "text": "In options, the clock is always ticking against buyers.", "visual": "⏱️" }
+      },
+      "quiz": {
+        "question": "When does theta decay accelerate the most?",
+        "options": ["At the beginning of the option's life", "In the final weeks before expiration", "Theta stays constant throughout"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch03-pricing-and-greeks",
+      "title": "Vega: Volatility Sensitivity",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Earnings announcement tonight. Option prices surge—not because the stock moved, but because expected volatility spiked.", "visual": "📊" },
+        "buildup": { "text": "Vega measures how much an option's price changes when implied volatility moves by 1 percentage point.", "visual": "📈" },
+        "discovery": { "text": "High vega means the option is very sensitive to volatility. ATM, longer-dated options have the highest vega.", "visual": "🎯" },
+        "twist": { "text": "After earnings, implied volatility crashes—'IV crush.' Options lose value even if the stock moves in your direction.", "visual": "💥" },
+        "climax": { "text": "Understanding vega prevents the common mistake of buying expensive options before events and getting crushed.", "visual": "🛡️" },
+        "punchline": { "text": "Volatility giveth and taketh away. Vega measures how much.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What is IV crush?",
+        "options": ["When implied volatility increases before an event", "When implied volatility drops sharply after an event, reducing option values", "A type of option strategy"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch03-pricing-and-greeks",
+      "title": "Gamma: The Accelerator",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your option's delta just changed. As the stock moved, your sensitivity to further moves increased. That's gamma at work.", "visual": "🏎️" },
+        "buildup": { "text": "Gamma measures how fast delta changes for each $1 move in the stock. It's the rate of change of the rate of change.", "visual": "📈" },
+        "discovery": { "text": "ATM options near expiration have the highest gamma. Their delta can swing from 0.50 to 0.90 on a small move.", "visual": "⚡" },
+        "twist": { "text": "High gamma is a double-edged sword: positions gain value fast when right but lose value fast when wrong.", "visual": "⚔️" },
+        "climax": { "text": "Market makers hedge gamma constantly. Their buying and selling to stay neutral actually influences stock prices.", "visual": "🔄" },
+        "punchline": { "text": "Gamma makes options non-linear. That's their power and peril.", "visual": "📐" }
+      },
+      "quiz": {
+        "question": "When is gamma highest?",
+        "options": ["For deep in-the-money options", "For at-the-money options near expiration", "For long-dated options far from the money"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch04-basic-strategies",
+      "title": "Covered Calls",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You own 100 shares of a stock. You sell a call against it and collect $200 in premium. That's a covered call.", "visual": "💰" },
+        "buildup": { "text": "A covered call sells upside potential in exchange for immediate income. You get paid to wait.", "visual": "⏳" },
+        "discovery": { "text": "If the stock stays below the strike at expiry, you keep both the shares and the premium. Free income.", "visual": "🎁" },
+        "twist": { "text": "If the stock rockets above the strike, you miss the big move. Your shares get 'called away' at the strike price.", "visual": "📈" },
+        "climax": { "text": "Covered calls are the most popular options strategy—conservative, income-generating, and easy to understand.", "visual": "🏆" },
+        "punchline": { "text": "Give up some upside. Get paid today.", "visual": "💵" }
+      },
+      "quiz": {
+        "question": "What is the trade-off of a covered call?",
+        "options": ["No trade-off—it's free money", "You receive income but cap your upside if the stock rises sharply", "You must sell the stock immediately"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch04-basic-strategies",
+      "title": "Protective Puts",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You own $50,000 in stock and worry about a crash. A protective put costs $1,000 and guarantees a minimum sale price.", "visual": "🛡️" },
+        "buildup": { "text": "A protective put is buying a put on stock you already own. It works exactly like insurance—pay a premium, limit loss.", "visual": "📄" },
+        "discovery": { "text": "If the stock drops 30%, your put offsets most of the loss. If it rises, you keep the gains minus the premium cost.", "visual": "📊" },
+        "twist": { "text": "Most of the time, protective puts expire worthless—just like insurance claims. That's the cost of protection.", "visual": "💸" },
+        "climax": { "text": "Portfolio protection isn't free. The question is whether the peace of mind justifies the ongoing premium cost.", "visual": "🤔" },
+        "punchline": { "text": "Insurance costs money. Not having it costs more.", "visual": "💰" }
+      },
+      "quiz": {
+        "question": "What is a protective put?",
+        "options": ["Selling a put for income", "Buying a put on stock you own to insure against downside", "A put with government protection"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch04-basic-strategies",
+      "title": "Vertical Spreads",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Buy the $100 call, sell the $110 call. You've created a bull call spread—defined risk and capped reward.", "visual": "📊" },
+        "buildup": { "text": "A vertical spread involves buying and selling options of the same type and expiration but different strikes.", "visual": "📐" },
+        "discovery": { "text": "The spread reduces cost (the sold option offsets the bought one) but limits maximum profit to the strike difference.", "visual": "⚖️" },
+        "twist": { "text": "Both risk and reward are defined. You know your max gain and max loss before entering. No surprises.", "visual": "📋" },
+        "climax": { "text": "Spreads are the foundation of professional options trading. They balance cost, risk, and probability efficiently.", "visual": "🏗️" },
+        "punchline": { "text": "Less risk, less reward, more control.", "visual": "🎛️" }
+      },
+      "quiz": {
+        "question": "What defines a vertical spread?",
+        "options": ["Same strike, different expirations", "Same type and expiration, different strikes", "Buying and selling different assets"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch04-basic-strategies",
+      "title": "Straddles: Betting on Volatility",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Earnings tonight. You don't know which direction—but you know it will move big. Buy a call AND a put. That's a straddle.", "visual": "📊" },
+        "buildup": { "text": "A straddle buys both a call and a put at the same strike and expiration. You profit if the stock moves far enough.", "visual": "↔️" },
+        "discovery": { "text": "The break-even points are the strike minus total premium paid (downside) and strike plus premium (upside).", "visual": "📏" },
+        "twist": { "text": "Straddles are expensive because you buy two options. The stock must move more than the combined premiums to profit.", "visual": "💰" },
+        "climax": { "text": "Professional traders often sell straddles—betting that the move won't be as big as the market expects.", "visual": "🎯" },
+        "punchline": { "text": "Straddles bet on size of move, not direction.", "visual": "📐" }
+      },
+      "quiz": {
+        "question": "When is a straddle profitable?",
+        "options": ["Only when the stock goes up", "When the stock moves enough in either direction to cover the premiums", "When volatility drops"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch04-basic-strategies",
+      "title": "Iron Condors",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Sell a call spread above the market. Sell a put spread below it. Collect premium from both. That's an iron condor.", "visual": "🦅" },
+        "buildup": { "text": "An iron condor profits when the stock stays within a range. It's a bet on low volatility—the market going nowhere.", "visual": "↔️" },
+        "discovery": { "text": "Maximum profit is the total premium collected. Max loss is the spread width minus premium—both defined upfront.", "visual": "📋" },
+        "twist": { "text": "Iron condors have high win rates but small gains and large maximum losses. One big move can erase many small wins.", "visual": "⚠️" },
+        "climax": { "text": "They're popular among income-focused traders who accept frequent small wins with occasional larger losses.", "visual": "📊" },
+        "punchline": { "text": "Profit from boredom. Lose when the market wakes up.", "visual": "😴" }
+      },
+      "quiz": {
+        "question": "When does an iron condor profit?",
+        "options": ["When the stock trends strongly", "When the stock stays within a defined range", "Only when volatility increases"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch05-options-in-action",
+      "title": "Earnings Plays",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Tesla reports earnings after the bell. Options premiums are sky-high. Everyone's betting on a big move. Is it worth it?", "visual": "📊" },
+        "buildup": { "text": "Before earnings, implied volatility spikes as traders price in expected movement. Options become expensive.", "visual": "📈" },
+        "discovery": { "text": "After the announcement, IV crashes—the uncertainty is resolved. This 'IV crush' can destroy option buyers.", "visual": "💥" },
+        "twist": { "text": "Even if Tesla moves 5%, your options might lose money if the market was pricing in a 10% move.", "visual": "📉" },
+        "climax": { "text": "Many pros sell premium before earnings, betting the actual move will be smaller than what options imply.", "visual": "🎯" },
+        "punchline": { "text": "Earnings plays are fights against implied volatility, not just direction.", "visual": "⚔️" }
+      },
+      "quiz": {
+        "question": "What is the biggest risk of buying options before earnings?",
+        "options": ["The stock might not report", "IV crush—post-earnings volatility drop destroying option value", "Commissions are higher"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch05-options-in-action",
+      "title": "Hedging a Portfolio",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You're bullish long-term but worried about the next three months. Buying SPX puts hedges your portfolio without selling.", "visual": "🛡️" },
+        "buildup": { "text": "Index puts protect broad portfolios. A $500 put on SPX can insure hundreds of thousands in equity exposure.", "visual": "📊" },
+        "discovery": { "text": "The cost of hedging is typically 1-3% of portfolio value per year—similar to insurance premiums on a house.", "visual": "🏠" },
+        "twist": { "text": "Continuous hedging is expensive and drags returns if markets keep rising. Most investors hedge tactically, not always.", "visual": "💸" },
+        "climax": { "text": "In 2020, investors with portfolio hedges in place were calm during the crash—and had cash to buy the dip.", "visual": "😌" },
+        "punchline": { "text": "Hedges cost during good times. They save you during bad.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "How can index puts hedge a portfolio?",
+        "options": ["They guarantee profits", "They offset losses in a broad portfolio when the market falls", "They increase portfolio leverage"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch05-options-in-action",
+      "title": "Generating Income with Options",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Some retirees sell covered calls every month, generating 1-2% income on their portfolios. Options as a paycheck.", "visual": "💵" },
+        "buildup": { "text": "Selling premium—covered calls, cash-secured puts—creates regular income from stocks you already own or want to own.", "visual": "📊" },
+        "discovery": { "text": "A cash-secured put means you sell a put and set aside cash to buy the stock if assigned. You get paid to wait for a dip.", "visual": "⏳" },
+        "twist": { "text": "Income strategies work consistently until a crash. Then the sold puts get assigned at painfully high prices.", "visual": "📉" },
+        "climax": { "text": "Options income isn't free money—it's compensation for accepting risk. The premium is your payment for being the insurer.", "visual": "🏥" },
+        "punchline": { "text": "You get paid for risk. Make sure the pay is worth it.", "visual": "💰" }
+      },
+      "quiz": {
+        "question": "What is a cash-secured put?",
+        "options": ["Buying a put with only cash accounts", "Selling a put while holding cash to buy the stock if assigned", "Putting cash in a savings account"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch05-options-in-action",
+      "title": "LEAPS: Long-Term Options",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A call option that expires in two years costs more but gives the stock time to work. That's a LEAP.", "visual": "📅" },
+        "buildup": { "text": "LEAPS (Long-term Equity AnticiPation Securities) are options with expirations over one year—often one to three years.", "visual": "📆" },
+        "discovery": { "text": "Because they have so much time, LEAPS experience slower theta decay—making them friendlier to option buyers.", "visual": "⏰" },
+        "twist": { "text": "LEAPS let you control stock exposure for a fraction of the capital. A two-year call might cost 20% of the stock price.", "visual": "💰" },
+        "climax": { "text": "Deep ITM LEAPS calls behave almost like stock ownership but require much less capital—a form of strategic leverage.", "visual": "📈" },
+        "punchline": { "text": "LEAPS give options the one thing they usually lack: time.", "visual": "⏳" }
+      },
+      "quiz": {
+        "question": "What makes LEAPS different from regular options?",
+        "options": ["They never expire", "They have expirations over one year, reducing time decay pressure", "They don't have strike prices"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch05-options-in-action",
+      "title": "Options on Indexes vs. Stocks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "SPX options settle in cash. Stock options deliver shares. This difference changes everything about how they're traded.", "visual": "📊" },
+        "buildup": { "text": "Index options (SPX, NDX) are European-style and cash-settled. Stock options (AAPL, TSLA) are American-style.", "visual": "📋" },
+        "discovery": { "text": "Cash settlement means no shares change hands—just the profit or loss amount. Simpler for big portfolio hedges.", "visual": "💵" },
+        "twist": { "text": "SPX options have tax advantages in the U.S.: 60% of gains are taxed as long-term, regardless of holding period.", "visual": "📝" },
+        "climax": { "text": "Institutions overwhelmingly trade index options for hedging. Retail traders favor stock options for speculation.", "visual": "🏛️" },
+        "punchline": { "text": "Different settlement, different uses, different taxes.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What does cash settlement mean for index options?",
+        "options": ["You must pay in cash upfront", "No shares change hands—only the profit or loss is settled", "They trade only during cash hours"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch06-options-pitfalls",
+      "title": "The Allure of Cheap Options",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A $0.10 option costs only $10 for a contract. If the stock jumps, it could be worth $5. But it almost never will.", "visual": "🎰" },
+        "buildup": { "text": "Cheap OTM options are cheap because their probability of profit is very low—often under 10%.", "visual": "📉" },
+        "discovery": { "text": "Buying cheap options feels like buying lottery tickets. The math is similar too—small cost, rare payoff.", "visual": "🎟️" },
+        "twist": { "text": "Over time, consistently buying cheap options slowly bleeds an account dry through repeated small losses.", "visual": "💸" },
+        "climax": { "text": "The perceived low cost hides the true cost: probability of total loss. $10 lost 90% of the time is $9 per trade.", "visual": "🧮" },
+        "punchline": { "text": "The cheapest options are often the most expensive.", "visual": "💰" }
+      },
+      "quiz": {
+        "question": "Why are cheap out-of-the-money options risky?",
+        "options": ["They expire in one day", "They have very low probability of profit and usually expire worthless", "Brokers charge extra fees for them"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch06-options-pitfalls",
+      "title": "Naked Short Selling Options",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A trader sells a naked call on GameStop. The stock triples overnight. The loss: $200,000—from a trade that earned $500.", "visual": "💥" },
+        "buildup": { "text": "Naked selling means writing options without owning the underlying stock or having an offsetting position.", "visual": "📄" },
+        "discovery": { "text": "Naked calls have theoretically unlimited loss potential. Naked puts can lose up to the entire strike price.", "visual": "📉" },
+        "twist": { "text": "Despite the risk, some traders sell naked options for the high probability of profit. Until one event wipes them out.", "visual": "🌊" },
+        "climax": { "text": "Every year, accounts blow up from naked short options. The strategy works until it doesn't—and then it's catastrophic.", "visual": "☠️" },
+        "punchline": { "text": "Unlimited risk for limited reward. The math is cruel.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What is the risk of selling naked call options?",
+        "options": ["Limited to the premium received", "Theoretically unlimited—losses grow with no cap", "Only the brokerage commission"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch06-options-pitfalls",
+      "title": "Overcomplicating Strategies",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Iron butterflies, jade lizards, broken-wing condors—options strategies can get absurdly complex. Complexity isn't edge.", "visual": "🦎" },
+        "buildup": { "text": "Multi-leg strategies involve 3, 4, or more options contracts. Each leg adds commission costs and execution risk.", "visual": "📊" },
+        "discovery": { "text": "More legs mean more bid-ask spreads to cross. The entry cost alone can eat into the already-thin profit margins.", "visual": "💸" },
+        "twist": { "text": "Studies show that simple strategies (covered calls, spreads) perform as well as complex ones after transaction costs.", "visual": "📈" },
+        "climax": { "text": "The best options traders use a few well-understood strategies repeatedly. Mastery beats variety every time.", "visual": "🏆" },
+        "punchline": { "text": "Simple strategies, deeply understood, consistently win.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why do complex multi-leg strategies often underperform?",
+        "options": ["Brokers block complex orders", "Transaction costs, bid-ask spreads, and execution risk erode thin margins", "They require insider data"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch06-options-pitfalls",
+      "title": "Ignoring Assignment Risk",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You sold a put expecting it to expire worthless. But the stock just fell 20%. You're now forced to buy 100 shares.", "visual": "😱" },
+        "buildup": { "text": "When you sell options, you have an obligation. If the buyer exercises, you must deliver shares or cash.", "visual": "📋" },
+        "discovery": { "text": "Assignment can happen any time with American-style options—especially deep ITM options near ex-dividend dates.", "visual": "⚠️" },
+        "twist": { "text": "Early assignment catches sellers off guard. Suddenly you own shares you didn't plan for, or owe shares you don't have.", "visual": "😰" },
+        "climax": { "text": "Always have a plan for assignment. If you're not prepared to own the stock, don't sell the put.", "visual": "📋" },
+        "punchline": { "text": "When you sell options, you accept an obligation. Take it seriously.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "What happens when a sold put is assigned?",
+        "options": ["You receive more premium", "You are obligated to buy 100 shares at the strike price", "The option expires worthless"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "trading--options-decoded--ch06-options-pitfalls",
+      "title": "Options Are Tools, Not Magic",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Options can hedge, speculate, generate income, and leverage. What they can't do is eliminate risk or guarantee profit.", "visual": "🔧" },
+        "buildup": { "text": "Marketing and social media portray options as get-rich-quick tools. Reality is far more nuanced and demanding.", "visual": "📱" },
+        "discovery": { "text": "Options require understanding of time, volatility, probability, and Greeks—more dimensions than stock trading.", "visual": "📊" },
+        "twist": { "text": "Most retail options traders lose money. Those who succeed treat options as serious instruments requiring education.", "visual": "📚" },
+        "climax": { "text": "Like any powerful tool, options reward expertise and punish ignorance. The learning curve is real.", "visual": "📈" },
+        "punchline": { "text": "Learn the tool before you use it.", "visual": "🎓" }
+      },
+      "quiz": {
+        "question": "Why do most retail options traders lose money?",
+        "options": ["Options are designed to lose", "Options require understanding of multiple factors beyond just price direction", "Brokers rig options prices"],
+        "correct": 1
+      }
+    }
+  ]
+}
