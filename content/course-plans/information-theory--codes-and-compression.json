@@ -1,0 +1,559 @@
+{
+  "categoryId": "information-theory",
+  "subject": "Information Theory",
+  "courseId": "information-theory--codes-and-compression",
+  "courseTitle": "Codes and Compression",
+  "emoji": "🗜️",
+  "color": "#0288D1",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "information-theory--codes-and-compression--ch01-what-are-codes", "title": "What Are Codes?", "position": 1 },
+    { "id": "information-theory--codes-and-compression--ch02-lossless-compression", "title": "Lossless Compression", "position": 2 },
+    { "id": "information-theory--codes-and-compression--ch03-lossy-compression", "title": "Lossy Compression", "position": 3 },
+    { "id": "information-theory--codes-and-compression--ch04-famous-codes", "title": "Famous Codes", "position": 4 },
+    { "id": "information-theory--codes-and-compression--ch05-limits-of-compression", "title": "Limits of Compression", "position": 5 },
+    { "id": "information-theory--codes-and-compression--ch06-compression-in-the-wild", "title": "Compression in the Wild", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch01-what-are-codes",
+      "title": "Why We Encode",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Morse code gives 'E' a single dot but 'Q' four symbols. That's not random—it's brilliant engineering.", "visual": "📡" },
+        "buildup": { "text": "Encoding maps symbols to codewords. The goal: represent information efficiently and reliably.", "visual": "🔤" },
+        "discovery": { "text": "Short codes for common symbols, long codes for rare ones. Morse figured this out by counting newspaper letters.", "visual": "📰" },
+        "twist": { "text": "Encoding isn't just about saving space. It can add structure that protects against noise too.", "visual": "🛡️" },
+        "climax": { "text": "Every file on your computer is encoded—text, images, video. Without codes, digital life wouldn't exist.", "visual": "💻" },
+        "punchline": { "text": "Codes turn information into something transmittable.", "visual": "📡" }
+      },
+      "quiz": {
+        "question": "Why did Morse code assign shorter codes to common letters?",
+        "options": ["Aesthetics", "To minimize average transmission time", "Random assignment"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch01-what-are-codes",
+      "title": "Prefix Codes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Imagine a code where 'A' is 0 and 'B' is 01. You receive 01. Is it 'AB' or 'B'? Ambiguity is a disaster.", "visual": "❓" },
+        "buildup": { "text": "A prefix code ensures no codeword is the start of another. You can decode without waiting for a separator.", "visual": "🔤" },
+        "discovery": { "text": "Huffman and Shannon-Fano codes are both prefix codes. They guarantee instant, unambiguous decoding.", "visual": "✅" },
+        "twist": { "text": "The Kraft inequality sets the rule: codeword lengths must satisfy Σ 2^(-lᵢ) ≤ 1 for a valid prefix code.", "visual": "📐" },
+        "climax": { "text": "Prefix codes sacrifice a tiny bit of efficiency for the massive gain of unambiguous, streamable decoding.", "visual": "🎯" },
+        "punchline": { "text": "No codeword starts another. That's the rule.", "visual": "🚫" }
+      },
+      "quiz": {
+        "question": "What property defines a prefix code?",
+        "options": ["All codewords have equal length", "No codeword is a prefix of another codeword", "Codes are sorted alphabetically"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch01-what-are-codes",
+      "title": "Fixed vs Variable Length",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "ASCII uses exactly 7 bits per character. Simple but wasteful—'E' uses the same space as 'Z'.", "visual": "🔡" },
+        "buildup": { "text": "Fixed-length codes are easy to parse. Variable-length codes can be shorter on average.", "visual": "📏" },
+        "discovery": { "text": "Variable-length codes match codeword length to symbol probability. Frequent symbols get shorter codes.", "visual": "⚖️" },
+        "twist": { "text": "The tradeoff: variable-length codes need careful design to remain unambiguous (prefix-free or delimited).", "visual": "🔧" },
+        "climax": { "text": "Shannon proved the ideal average code length equals the source entropy. Variable codes approach this limit.", "visual": "📐" },
+        "punchline": { "text": "Variable length saves bits. Fixed length saves headaches.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "What is the advantage of variable-length codes?",
+        "options": ["Simpler to decode", "Shorter average code length", "Always faster to transmit"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch01-what-are-codes",
+      "title": "Source Coding Theorem",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "How much can you compress a file? Shannon proved there's an exact floor—and no code can ever beat it.", "visual": "🏗️" },
+        "buildup": { "text": "The source coding theorem: the average code length can't be less than the entropy of the source.", "visual": "📐" },
+        "discovery": { "text": "But it can get arbitrarily close. Shannon showed codes exist that approach entropy from above.", "visual": "📉" },
+        "twist": { "text": "Shannon proved the limit constructively but not practically. Building real codes that approach it took decades.", "visual": "⏳" },
+        "climax": { "text": "Today Huffman, arithmetic, and ANS codes all approach Shannon's bound in practice.", "visual": "🎯" },
+        "punchline": { "text": "Entropy is the compression floor. Proven in 1948.", "visual": "🧱" }
+      },
+      "quiz": {
+        "question": "What does the source coding theorem guarantee?",
+        "options": ["Perfect compression is always possible", "Average code length cannot be less than entropy", "All codes are equally efficient"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch01-what-are-codes",
+      "title": "Kraft's Inequality",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Can you just assign any lengths to codewords? No. Kraft's inequality tells you which combinations are possible.", "visual": "📏" },
+        "buildup": { "text": "For a prefix code with codeword lengths l₁, l₂, …, Kraft says: Σ 2^(-lᵢ) ≤ 1.", "visual": "📐" },
+        "discovery": { "text": "If the sum exceeds 1, no prefix code with those lengths can exist. The tree runs out of leaves.", "visual": "🌳" },
+        "twist": { "text": "Kraft works in reverse too: any set of lengths satisfying the inequality can form a valid prefix code.", "visual": "🔄" },
+        "climax": { "text": "Together with Shannon's bound, Kraft sets both the floor and the feasibility of code design.", "visual": "🧩" },
+        "punchline": { "text": "Not all length combinations work. Kraft says which do.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What does Kraft's inequality determine?",
+        "options": ["The entropy of a source", "Whether a set of codeword lengths can form a valid prefix code", "The maximum file size"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch02-lossless-compression",
+      "title": "Huffman Coding",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "In 1952, a student named David Huffman solved a homework problem his professor couldn't. He invented optimal coding.", "visual": "📝" },
+        "buildup": { "text": "Huffman coding builds a binary tree bottom-up: merge the two least probable symbols, repeat.", "visual": "🌳" },
+        "discovery": { "text": "The result is a prefix code where common symbols get short codewords and rare ones get long ones.", "visual": "📊" },
+        "twist": { "text": "Huffman codes are provably optimal among symbol-by-symbol prefix codes. No other method beats them.", "visual": "🏆" },
+        "climax": { "text": "JPEG, MP3, and ZIP all use Huffman coding as one of their compression stages.", "visual": "🗂️" },
+        "punchline": { "text": "A homework assignment that changed computing forever.", "visual": "🎓" }
+      },
+      "quiz": {
+        "question": "How does Huffman coding build its code tree?",
+        "options": ["Top-down by alphabet order", "Bottom-up by merging least probable symbols", "Randomly"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch02-lossless-compression",
+      "title": "Arithmetic Coding",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Huffman assigns whole bits per symbol. What if one deserves 0.3 bits? Arithmetic coding handles fractions.", "visual": "🔢" },
+        "buildup": { "text": "Instead of coding one symbol at a time, arithmetic coding encodes the entire message as one number.", "visual": "🔗" },
+        "discovery": { "text": "It subdivides the interval [0,1) based on symbol probabilities. The final number encodes the full message.", "visual": "📐" },
+        "twist": { "text": "Arithmetic coding can beat Huffman by approaching entropy more closely—especially for skewed distributions.", "visual": "📉" },
+        "climax": { "text": "It's used in H.264 video, JPEG 2000, and modern file compressors where every fraction of a bit matters.", "visual": "🎬" },
+        "punchline": { "text": "One number encodes the whole message.", "visual": "1️⃣" }
+      },
+      "quiz": {
+        "question": "What advantage does arithmetic coding have over Huffman?",
+        "options": ["It's simpler to implement", "It can approach entropy more closely using fractional bits", "It doesn't need probability estimates"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch02-lossless-compression",
+      "title": "Run-Length Encoding",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A fax machine transmits a white page. Sending each pixel is absurd—just say '8,000 white pixels' once.", "visual": "📠" },
+        "buildup": { "text": "Run-length encoding replaces sequences of identical symbols with one symbol and a count.", "visual": "🔁" },
+        "discovery": { "text": "'AAABBBCC' becomes '3A3B2C'. Simple, fast, and very effective on data with long runs.", "visual": "✂️" },
+        "twist": { "text": "On random data with no runs, RLE can actually make files larger—adding counts to every single symbol.", "visual": "📈" },
+        "climax": { "text": "RLE shines in specific domains: fax, simple graphics, and as a preprocessing step for other compressors.", "visual": "🧩" },
+        "punchline": { "text": "Long runs? Just count them. Done.", "visual": "🔢" }
+      },
+      "quiz": {
+        "question": "When does run-length encoding work best?",
+        "options": ["On random data", "On data with long sequences of repeated values", "On encrypted data"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch02-lossless-compression",
+      "title": "Dictionary Compression",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The word 'the' appears 69,000 times in Moby Dick. Dictionary compression stores it once, references it everywhere.", "visual": "📖" },
+        "buildup": { "text": "LZ77 and LZ78 (Lempel-Ziv) build dictionaries of repeated patterns during compression.", "visual": "📚" },
+        "discovery": { "text": "When a pattern recurs, the compressor outputs a pointer instead of the data. Pointers are shorter.", "visual": "👉" },
+        "twist": { "text": "The dictionary builds itself adaptively—no prior knowledge of the data needed. It learns as it compresses.", "visual": "🧠" },
+        "climax": { "text": "ZIP, gzip, and PNG all use LZ variants. They dominate general-purpose lossless compression.", "visual": "🗂️" },
+        "punchline": { "text": "Store the pattern once. Point to it forever.", "visual": "🔁" }
+      },
+      "quiz": {
+        "question": "How does LZ compression reduce file size?",
+        "options": ["By removing all vowels", "By replacing repeated patterns with short references", "By converting to binary"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch02-lossless-compression",
+      "title": "Burrows-Wheeler Transform",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Scramble all characters in a text using a reversible trick, and suddenly it compresses much better. That's BWT.", "visual": "🔀" },
+        "buildup": { "text": "BWT sorts all rotations of the input and takes the last column. It groups similar contexts together.", "visual": "📊" },
+        "discovery": { "text": "After BWT, runs of identical characters appear. Simple methods like RLE or move-to-front then crush the size.", "visual": "🗜️" },
+        "twist": { "text": "The transform is perfectly reversible—no information is lost, despite the scrambling. Pure cleverness.", "visual": "🎩" },
+        "climax": { "text": "Bzip2 uses BWT as its core. It often beats gzip on text by exploiting this context-grouping trick.", "visual": "📄" },
+        "punchline": { "text": "Scramble intelligently, then compress easily.", "visual": "✨" }
+      },
+      "quiz": {
+        "question": "What does the Burrows-Wheeler Transform do?",
+        "options": ["Encrypts the data", "Rearranges data to group similar contexts for better compression", "Removes duplicate files"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch03-lossy-compression",
+      "title": "Why Lossy Works",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your MP3 file is 1/10 the size of the original recording. You can't hear the difference. Something was thrown away.", "visual": "🎵" },
+        "buildup": { "text": "Lossy compression discards information that humans can't perceive—and saves enormous space.", "visual": "🗑️" },
+        "discovery": { "text": "Human hearing can't detect sounds masked by louder nearby frequencies. MP3 removes those masked sounds.", "visual": "👂" },
+        "twist": { "text": "The loss is irreversible. Once compressed, the original detail is gone forever. No undoing it.", "visual": "🚫" },
+        "climax": { "text": "Lossy compression powers streaming, video calls, and digital photography. Without it, bandwidth would collapse.", "visual": "📱" },
+        "punchline": { "text": "Throw away what you can't perceive. Save 90%.", "visual": "✂️" }
+      },
+      "quiz": {
+        "question": "What does lossy compression discard?",
+        "options": ["Random data", "Information humans can't perceive", "Metadata only"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch03-lossy-compression",
+      "title": "Rate-Distortion Theory",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "How much can you compress a photo before it looks bad? Shannon proved there's a precise tradeoff curve.", "visual": "📸" },
+        "buildup": { "text": "Rate-distortion theory: for any acceptable distortion level, there's a minimum bit rate—and vice versa.", "visual": "📐" },
+        "discovery": { "text": "Shannon's rate-distortion function R(D) maps each distortion D to the minimum bits per symbol needed.", "visual": "📈" },
+        "twist": { "text": "You can't compress below R(D) without exceeding distortion D. It's a fundamental limit, like channel capacity.", "visual": "🚫" },
+        "climax": { "text": "Modern codecs like H.265 and AV1 are engineered to ride as close to this curve as possible.", "visual": "🎯" },
+        "punchline": { "text": "Less bits means more distortion. Shannon drew the curve.", "visual": "📉" }
+      },
+      "quiz": {
+        "question": "What does rate-distortion theory describe?",
+        "options": ["How fast data travels", "The tradeoff between compression rate and acceptable distortion", "The speed of encoding"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch03-lossy-compression",
+      "title": "Perceptual Coding",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A quiet flute note vanishes when a trumpet blasts beside it. Your ear masks the flute. MP3 exploits this.", "visual": "🎺" },
+        "buildup": { "text": "Perceptual coding models human senses to decide what data to discard without perceptible quality loss.", "visual": "🧠" },
+        "discovery": { "text": "Psychoacoustic models predict masking thresholds: below this loudness, a sound is inaudible in context.", "visual": "👂" },
+        "twist": { "text": "Visual perception is similar. JPEG discards fine color details because human eyes are less sensitive to them.", "visual": "👁️" },
+        "climax": { "text": "The compressor becomes a model of the human perceiver. It keeps what you notice and drops what you don't.", "visual": "🔍" },
+        "punchline": { "text": "Compressed for your brain, not for truth.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "What does perceptual coding model?",
+        "options": ["Computer processor speed", "Human sensory limitations", "Network bandwidth"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch03-lossy-compression",
+      "title": "Quantization",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A microphone records sound with 16-bit precision. Reduce it to 8 bits and you hear hiss. That loss is quantization.", "visual": "🎙️" },
+        "buildup": { "text": "Quantization maps a range of values to a smaller set of discrete levels. Detail is permanently lost.", "visual": "📊" },
+        "discovery": { "text": "Uniform quantization divides the range evenly. Companders like µ-law allocate more levels where they matter.", "visual": "📐" },
+        "twist": { "text": "Vector quantization groups multiple samples and quantizes them together—often finding better representations.", "visual": "🧩" },
+        "climax": { "text": "Every lossy codec uses quantization as the step where information is actually discarded. It's the lossy moment.", "visual": "✂️" },
+        "punchline": { "text": "Round the numbers. Lose the details. Save the space.", "visual": "🔢" }
+      },
+      "quiz": {
+        "question": "What is quantization in lossy compression?",
+        "options": ["Adding noise to data", "Mapping values to a smaller set of discrete levels", "Encrypting the data"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch03-lossy-compression",
+      "title": "Transform Coding",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "JPEG doesn't compress pixels directly. It transforms them into frequencies first—then compresses those.", "visual": "🖼️" },
+        "buildup": { "text": "Transform coding converts data into a domain where energy is concentrated in fewer coefficients.", "visual": "🔄" },
+        "discovery": { "text": "The DCT turns an 8×8 pixel block into frequency components. Most energy sits in the low frequencies.", "visual": "📐" },
+        "twist": { "text": "High-frequency coefficients carry fine detail. Zeroing them out barely changes the image but saves lots of data.", "visual": "✂️" },
+        "climax": { "text": "DCT, wavelet, and Fourier transforms all share this idea: compress in the domain where things are sparse.", "visual": "🌊" },
+        "punchline": { "text": "Change the domain. Make compression easy.", "visual": "🔀" }
+      },
+      "quiz": {
+        "question": "Why does JPEG use the discrete cosine transform?",
+        "options": ["To encrypt the image", "To concentrate energy into fewer coefficients for easier compression", "To increase resolution"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch04-famous-codes",
+      "title": "Morse Code",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "SOS: three dots, three dashes, three dots. Morse code survived from 1838 to the age of satellites.", "visual": "📡" },
+        "buildup": { "text": "Samuel Morse and Alfred Vail designed a code where common letters get shorter symbols. Intuitive optimization.", "visual": "⚡" },
+        "discovery": { "text": "E is a single dot. T is a single dash. Q is dash-dash-dot-dash. Frequency drives the design.", "visual": "📊" },
+        "twist": { "text": "Morse code isn't a prefix code—it needs pauses between letters. Without gaps, it's ambiguous.", "visual": "⏸️" },
+        "climax": { "text": "Despite its limitations, Morse was brilliantly efficient for its era and saved countless lives at sea.", "visual": "🚢" },
+        "punchline": { "text": "Dots and dashes. The first variable-length code.", "visual": "➖" }
+      },
+      "quiz": {
+        "question": "Why is Morse code not a true prefix code?",
+        "options": ["It uses only two symbols", "It requires pauses between characters for disambiguation", "It has fixed-length codewords"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch04-famous-codes",
+      "title": "ASCII and Unicode",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "ASCII fit every English character into 7 bits. Then the rest of the world's languages needed a seat at the table.", "visual": "🌍" },
+        "buildup": { "text": "ASCII assigned numbers 0–127 to letters, digits, and control characters. Simple, fast, but English-only.", "visual": "🔤" },
+        "discovery": { "text": "Unicode expanded to 149,000+ characters: every modern script, historical scripts, and yes—emoji.", "visual": "😀" },
+        "twist": { "text": "UTF-8 encodes Unicode as variable-length bytes. ASCII stays one byte; rare characters use up to four.", "visual": "📏" },
+        "climax": { "text": "UTF-8 dominates the web. It's backward-compatible with ASCII and handles every language efficiently.", "visual": "🌐" },
+        "punchline": { "text": "From 128 characters to 149,000. UTF-8 bridged the gap.", "visual": "🌉" }
+      },
+      "quiz": {
+        "question": "Why is UTF-8 widely adopted?",
+        "options": ["It's fixed-length", "It's backward-compatible with ASCII and handles all languages", "It was mandated by law"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch04-famous-codes",
+      "title": "QR Codes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Scan a QR code with dirt and scratches on it. It still works. That resilience was designed using information theory.", "visual": "📱" },
+        "buildup": { "text": "QR codes encode data in 2D patterns of black and white modules—each module is roughly one bit.", "visual": "⬛" },
+        "discovery": { "text": "Reed-Solomon error correction is baked in. QR codes can lose up to 30% of their area and still decode.", "visual": "🛡️" },
+        "twist": { "text": "Artists exploit this by placing logos in the center. The error correction absorbs the damage gracefully.", "visual": "🎨" },
+        "climax": { "text": "QR codes encode up to 7,000 digits or 4,000 characters. Speed, capacity, and resilience in one design.", "visual": "⚡" },
+        "punchline": { "text": "Damaged, dirty, still readable. That's error correction.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "Why can QR codes still work when partially damaged?",
+        "options": ["They store data twice", "They use Reed-Solomon error correction", "They only contain simple data"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch04-famous-codes",
+      "title": "Braille and Encoding",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Braille uses six raised dots in a 2×3 grid. That's 64 possible patterns—a 6-bit code designed for fingertips.", "visual": "🔵" },
+        "buildup": { "text": "Louis Braille invented it at age 15 in 1824, adapting a military night-reading system for blind readers.", "visual": "👦" },
+        "discovery": { "text": "Each cell encodes one character. Contractions combine cells: 'the' becomes one symbol in Grade 2 Braille.", "visual": "📖" },
+        "twist": { "text": "Braille contractions are a form of compression—frequent words get shorter representations, just like Huffman.", "visual": "🗜️" },
+        "climax": { "text": "From Shannon's view, Braille is a channel-matched code: optimized for the bandwidth of human touch.", "visual": "🤚" },
+        "punchline": { "text": "Six dots. 64 patterns. A code for fingers.", "visual": "✋" }
+      },
+      "quiz": {
+        "question": "How many possible patterns does a standard Braille cell have?",
+        "options": ["26", "64", "128"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch04-famous-codes",
+      "title": "Bar Codes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The first barcode was scanned on a pack of Wrigley's gum in 1974. It encoded 12 digits in stripes of light and dark.", "visual": "🛒" },
+        "buildup": { "text": "UPC barcodes use variable-width bars. Each digit maps to a specific pattern of black and white stripes.", "visual": "📊" },
+        "discovery": { "text": "A check digit at the end detects scanning errors. Single-digit mistakes are always caught.", "visual": "✅" },
+        "twist": { "text": "The same idea scales: Code 128 encodes full ASCII; PDF417 encodes kilobytes in 2D stacked barcodes.", "visual": "📐" },
+        "climax": { "text": "Barcodes transformed retail, logistics, and healthcare. A simple encoding idea saved billions of human-hours.", "visual": "🏥" },
+        "punchline": { "text": "Stripes of light and dark. Trillions scanned daily.", "visual": "🔦" }
+      },
+      "quiz": {
+        "question": "What is the purpose of a barcode's check digit?",
+        "options": ["To store extra data", "To detect scanning errors", "To identify the manufacturer"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch05-limits-of-compression",
+      "title": "You Can't Compress Random Data",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A zip file of random noise is the same size as the noise itself. Compression failed. Why?", "visual": "📂" },
+        "buildup": { "text": "Random data has maximum entropy—every bit is unpredictable. There are no patterns to exploit.", "visual": "🎲" },
+        "discovery": { "text": "Shannon's theorem confirms it: you can't compress below entropy. Random data is already at the floor.", "visual": "🏗️" },
+        "twist": { "text": "A counting argument proves it: there are more possible files than there are shorter files. Not all can shrink.", "visual": "🔢" },
+        "climax": { "text": "Any lossless compressor that shrinks some files must enlarge others. There's no free lunch in compression.", "visual": "🍽️" },
+        "punchline": { "text": "No patterns, no compression. Entropy wins.", "visual": "🏆" }
+      },
+      "quiz": {
+        "question": "Why can't random data be compressed?",
+        "options": ["Compressors have bugs", "Random data has maximum entropy with no patterns to exploit", "Random data is too large"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch05-limits-of-compression",
+      "title": "Kolmogorov Complexity",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The string '010101…' repeated 1,000 times is simple. A random 1,000-bit string is complex. Kolmogorov measured this.", "visual": "📏" },
+        "buildup": { "text": "Kolmogorov complexity: the length of the shortest program that produces the string.", "visual": "💻" },
+        "discovery": { "text": "A patterned string has low complexity—a short loop generates it. Random strings need programs as long as themselves.", "visual": "🔁" },
+        "twist": { "text": "Kolmogorov complexity is uncomputable. You can't write a program that calculates it for arbitrary strings.", "visual": "🚫" },
+        "climax": { "text": "Despite being uncomputable, it's deeply useful as a theoretical benchmark for randomness and compression.", "visual": "🔬" },
+        "punchline": { "text": "True complexity: the shortest description. Unmeasurable but real.", "visual": "🌌" }
+      },
+      "quiz": {
+        "question": "What is Kolmogorov complexity?",
+        "options": ["The file size of compressed data", "The length of the shortest program producing the string", "The entropy of the source"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch05-limits-of-compression",
+      "title": "The Pigeonhole Principle in Compression",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "There are 256 one-byte files but only 128 files of 7 bits or fewer. Not all can shrink. Pigeonhole says so.", "visual": "🐦" },
+        "buildup": { "text": "The pigeonhole principle: if you map N items to fewer than N slots, at least two share a slot.", "visual": "📦" },
+        "discovery": { "text": "A lossless compressor must map each file to a unique output. Shorter outputs mean some files must get longer.", "visual": "📈" },
+        "twist": { "text": "Claims of universal compression that shrinks everything are mathematically impossible. Always.", "visual": "🚫" },
+        "climax": { "text": "This is why compression benchmarks use typical data—real files have patterns that random files don't.", "visual": "📊" },
+        "punchline": { "text": "Not everything can shrink. Math forbids it.", "visual": "⛔" }
+      },
+      "quiz": {
+        "question": "Why can't a lossless compressor shrink every possible file?",
+        "options": ["Compressors have limited memory", "There aren't enough shorter representations for all files", "Files are too large"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch05-limits-of-compression",
+      "title": "Approaching the Limit",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Shannon proved the entropy floor in 1948. It took 60 years of coding theory to get within touching distance.", "visual": "📏" },
+        "buildup": { "text": "Huffman codes came in 1952. Arithmetic coding in the 1970s. Each generation crept closer to the limit.", "visual": "📉" },
+        "discovery": { "text": "ANS (asymmetric numeral systems) by Jarek Duda in 2009 matches arithmetic coding's compression at Huffman's speed.", "visual": "⚡" },
+        "twist": { "text": "For channel coding, LDPC and turbo codes reached within fractions of a decibel of Shannon's limit.", "visual": "📡" },
+        "climax": { "text": "The gap between theory and practice is now razor-thin. Shannon's bounds have gone from dreams to engineering specs.", "visual": "🎯" },
+        "punchline": { "text": "Sixty years from theory to practice. Almost there.", "visual": "🏁" }
+      },
+      "quiz": {
+        "question": "What did ANS achieve in compression?",
+        "options": ["Beat Shannon's limit", "Matched arithmetic coding's efficiency at Huffman's speed", "Eliminated all data loss"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch05-limits-of-compression",
+      "title": "Compressing Compressed Data",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Someone zips a file, then zips the zip. The second zip is the same size. Compression doesn't stack.", "visual": "📂" },
+        "buildup": { "text": "Good compression removes all redundancy. The output looks random—maximum entropy, nothing left to exploit.", "visual": "🎲" },
+        "discovery": { "text": "Re-compressing adds overhead (headers, dictionaries) without removing data. File size can even grow.", "visual": "📈" },
+        "twist": { "text": "This is exactly what Shannon predicted: once you hit the entropy floor, no further compression is possible.", "visual": "🏗️" },
+        "climax": { "text": "The only way to shrink further is to accept loss—switch from lossless to lossy and discard perceptible data.", "visual": "✂️" },
+        "punchline": { "text": "Already compressed? You're done. Entropy says stop.", "visual": "🛑" }
+      },
+      "quiz": {
+        "question": "Why doesn't compressing already-compressed data make it smaller?",
+        "options": ["The algorithm is broken", "Redundancy was already removed; the data is near maximum entropy", "Compressed files have special protection"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch06-compression-in-the-wild",
+      "title": "How Netflix Streams",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Netflix sends 17% of all internet traffic. Without compression, the internet would need 100× more bandwidth.", "visual": "📺" },
+        "buildup": { "text": "Netflix uses H.264, H.265, and AV1 codecs that compress video 1,000× compared to raw frames.", "visual": "🗜️" },
+        "discovery": { "text": "Most frames are similar to the previous one. Codecs encode only the differences—temporal compression.", "visual": "🎬" },
+        "twist": { "text": "Netflix pre-encodes each title at dozens of quality levels. Your device picks the best one for your bandwidth.", "visual": "📶" },
+        "climax": { "text": "Adaptive bitrate streaming adjusts in real time. Bad connection? Lower quality. Good connection? Crystal clear.", "visual": "✨" },
+        "punchline": { "text": "1,000× compression. That's how you stream 4K.", "visual": "📱" }
+      },
+      "quiz": {
+        "question": "How do video codecs achieve high compression?",
+        "options": ["By removing audio", "By encoding only differences between similar frames", "By reducing resolution"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch06-compression-in-the-wild",
+      "title": "How Spotify Encodes Music",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An uncompressed song is about 50 MB. Spotify streams it at 3–4 MB. You can't hear what's missing.", "visual": "🎧" },
+        "buildup": { "text": "Spotify uses Ogg Vorbis and AAC—lossy codecs that model psychoacoustic masking.", "visual": "🎵" },
+        "discovery": { "text": "Quiet sounds near loud ones are inaudible. The codec identifies and removes them, saving 90% of the data.", "visual": "👂" },
+        "twist": { "text": "Audiophiles debate endlessly, but blind tests show most people can't distinguish high-bitrate lossy from lossless.", "visual": "🙉" },
+        "climax": { "text": "Streaming music to billions wouldn't be feasible without lossy compression. Shannon's limits guide every codec.", "visual": "🌍" },
+        "punchline": { "text": "Inaudible details removed. Music intact. Data saved.", "visual": "✂️" }
+      },
+      "quiz": {
+        "question": "What perceptual trick do music codecs exploit?",
+        "options": ["Humans prefer digital sound", "Quiet sounds near loud ones are inaudible", "Music is mostly silence"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch06-compression-in-the-wild",
+      "title": "Genomic Compression",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A sequenced human genome is about 100 GB of raw data. Specialized compressors shrink it to under 1 GB.", "visual": "🧬" },
+        "buildup": { "text": "Genomes are highly redundant. Any two humans share 99.9% of their DNA. Store one, encode the differences.", "visual": "🔗" },
+        "discovery": { "text": "Reference-based compression stores a genome as a diff against a standard reference. Massively efficient.", "visual": "📉" },
+        "twist": { "text": "Even without a reference, DNA's statistical patterns (CG content, codon bias) enable 100:1 compression.", "visual": "📊" },
+        "climax": { "text": "As sequencing costs plummet, genomic compression becomes essential for storage, sharing, and analysis.", "visual": "💾" },
+        "punchline": { "text": "99.9% shared. Store the 0.1% difference.", "visual": "📐" }
+      },
+      "quiz": {
+        "question": "Why is genomic data highly compressible?",
+        "options": ["Genes are very short", "Most DNA is shared across individuals", "DNA only has two bases"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch06-compression-in-the-wild",
+      "title": "Neural Compression",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A neural network learned to compress images better than JPEG in 2018. Machines are now designing codecs.", "visual": "🤖" },
+        "buildup": { "text": "Neural compression uses autoencoders that learn to compress and reconstruct data end-to-end.", "visual": "🧠" },
+        "discovery": { "text": "The network discovers perceptual features automatically—no hand-crafted transforms like DCT needed.", "visual": "🔍" },
+        "twist": { "text": "Training is expensive and decoding is slow. Classical codecs still win on speed and standardization.", "visual": "⏱️" },
+        "climax": { "text": "Hybrid approaches combine neural insights with classical frameworks, getting the best of both worlds.", "visual": "🤝" },
+        "punchline": { "text": "Machines learning to compress. The next frontier.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "What advantage do neural compressors have over classical codecs?",
+        "options": ["They're always faster", "They learn perceptual features automatically", "They use fewer bits than entropy allows"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--codes-and-compression--ch06-compression-in-the-wild",
+      "title": "Compression and Privacy",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A compressed file leaks information about its contents through its size. Attackers have exploited this.", "visual": "🔓" },
+        "buildup": { "text": "CRIME and BREACH attacks measured response sizes to guess encrypted web tokens one character at a time.", "visual": "🕵️" },
+        "discovery": { "text": "If a guessed character matches the token, compression shrinks the response. Size difference reveals the match.", "visual": "📉" },
+        "twist": { "text": "Compression and encryption are fundamentally at odds: compression finds patterns, encryption hides them.", "visual": "⚔️" },
+        "climax": { "text": "Modern web servers disabled compression on sensitive data. Security required sacrificing bandwidth savings.", "visual": "🛡️" },
+        "punchline": { "text": "File size can leak secrets. Compression has a dark side.", "visual": "🌑" }
+      },
+      "quiz": {
+        "question": "How did CRIME/BREACH attacks exploit compression?",
+        "options": ["By intercepting encrypted data", "By measuring size changes to guess secret tokens", "By corrupting compressed files"],
+        "correct": 1
+      }
+    }
+  ]
+}

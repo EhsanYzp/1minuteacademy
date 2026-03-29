@@ -1,0 +1,559 @@
+{
+  "categoryId": "information-theory",
+  "subject": "Information Theory",
+  "courseId": "information-theory--networks-and-communication",
+  "courseTitle": "Networks and Communication",
+  "emoji": "🌐",
+  "color": "#0288D1",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "information-theory--networks-and-communication--ch01-what-is-a-network", "title": "What Is a Network?", "position": 1 },
+    { "id": "information-theory--networks-and-communication--ch02-routing-and-flow", "title": "Routing and Flow", "position": 2 },
+    { "id": "information-theory--networks-and-communication--ch03-the-internet", "title": "The Internet", "position": 3 },
+    { "id": "information-theory--networks-and-communication--ch04-wireless-communication", "title": "Wireless Communication", "position": 4 },
+    { "id": "information-theory--networks-and-communication--ch05-network-effects", "title": "Network Effects", "position": 5 },
+    { "id": "information-theory--networks-and-communication--ch06-future-of-networks", "title": "Future of Networks", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch01-what-is-a-network",
+      "title": "Nodes and Edges",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Every network—roads, friendships, the internet—is just dots and lines. Nodes hold things. Edges connect them.", "visual": "🔗" },
+        "buildup": { "text": "Graph theory formalized this: a network is a set of nodes (vertices) connected by edges (links).", "visual": "📐" },
+        "discovery": { "text": "The structure of connections determines how information flows. Dense networks spread information fast.", "visual": "📡" },
+        "twist": { "text": "Not all connections are equal. Weighted edges carry different capacities, like roads carrying different traffic volumes.", "visual": "🛣️" },
+        "climax": { "text": "From neurons to the internet, the same graph abstractions describe every information network in nature and technology.", "visual": "🌐" },
+        "punchline": { "text": "Dots and lines. Every network reduces to the same math.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "What are the two basic elements of any network?",
+        "options": ["Signals and noise", "Nodes and edges", "Inputs and outputs"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch01-what-is-a-network",
+      "title": "Small World Networks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Any two people on Earth are connected by about six handshakes. Six billion people, six degrees of separation.", "visual": "🤝" },
+        "buildup": { "text": "Milgram's 1967 experiment showed that letters passed person-to-person reached strangers in about six steps.", "visual": "✉️" },
+        "discovery": { "text": "Small world networks have short path lengths despite sparse connections. A few long-range links shrink the diameter.", "visual": "🌍" },
+        "twist": { "text": "Watts and Strogatz showed in 1998 that rewiring just 1% of edges in a regular network creates the small-world property.", "visual": "🔀" },
+        "climax": { "text": "The brain, power grids, and social networks all exhibit small-world structure. It's nature's wiring efficiency.", "visual": "⚡" },
+        "punchline": { "text": "A few shortcuts connect everyone. Small worlds emerge easily.", "visual": "🔗" }
+      },
+      "quiz": {
+        "question": "What makes a network 'small world'?",
+        "options": ["It has few nodes", "Short average path lengths despite sparse connections", "All nodes connect directly"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch01-what-is-a-network",
+      "title": "Scale-Free Networks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "On the web, a few sites have millions of links. Most have almost none. The distribution follows a power law.", "visual": "📊" },
+        "buildup": { "text": "Barabási discovered scale-free networks: the degree distribution follows P(k) ~ k⁻ᵧ. A few hubs dominate.", "visual": "📈" },
+        "discovery": { "text": "The mechanism is preferential attachment: new nodes connect to already popular nodes. Rich get richer.", "visual": "💰" },
+        "twist": { "text": "Scale-free networks are robust against random failures but fragile against targeted hub attacks.", "visual": "🎯" },
+        "climax": { "text": "The internet, citation networks, and protein interactions all show scale-free properties. Hubs are everywhere.", "visual": "🌐" },
+        "punchline": { "text": "Few hubs, many loners. Power laws shape all networks.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What is preferential attachment?",
+        "options": ["Nodes connect randomly", "New nodes prefer connecting to already well-connected nodes", "All nodes get equal links"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch01-what-is-a-network",
+      "title": "Network Capacity",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A single fiber optic cable carries 70 terabits per second. Shannon's limit tells us exactly how much more is possible.", "visual": "💡" },
+        "buildup": { "text": "Each link in a network has a channel capacity. The network's total throughput depends on topology and routing.", "visual": "📐" },
+        "discovery": { "text": "The max-flow min-cut theorem: a network's maximum information flow equals its minimum bottleneck capacity.", "visual": "🚰" },
+        "twist": { "text": "Adding links doesn't always help. Braess's paradox shows that extra capacity can actually reduce flow in some networks.", "visual": "🤯" },
+        "climax": { "text": "Network information theory extends Shannon's point-to-point results to multi-node systems—and many problems remain open.", "visual": "📊" },
+        "punchline": { "text": "The weakest link limits the whole network. Bottlenecks rule.", "visual": "🔗" }
+      },
+      "quiz": {
+        "question": "What does the max-flow min-cut theorem state?",
+        "options": ["Maximum flow equals maximum capacity", "Maximum flow equals the minimum bottleneck cut capacity", "Flow is unlimited in large networks"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch01-what-is-a-network",
+      "title": "Network Resilience",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The internet was designed to survive a nuclear attack. Destroy any node and traffic reroutes. That's resilience.", "visual": "💣" },
+        "buildup": { "text": "ARPANET's packet-switching design ensured no single point of failure. Messages find alternative paths automatically.", "visual": "🔀" },
+        "discovery": { "text": "Network resilience depends on structure: redundant paths, decentralization, and diverse routing create robustness.", "visual": "🛡️" },
+        "twist": { "text": "Centralized networks fail catastrophically. Take out the hub and the entire network collapses—a single point of failure.", "visual": "💥" },
+        "climax": { "text": "Shannon's noisy channel theorem applies to networks: redundancy in routing lets information survive link failures.", "visual": "📡" },
+        "punchline": { "text": "Redundant paths keep networks alive. Centralization kills resilience.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "Why is a decentralized network more resilient?",
+        "options": ["It's cheaper to build", "No single point of failure can bring it down", "It uses less bandwidth"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch02-routing-and-flow",
+      "title": "Packet Switching",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your email doesn't travel as one piece. It's broken into packets that take different routes and reassemble at the end.", "visual": "📦" },
+        "buildup": { "text": "Packet switching divides data into small chunks. Each packet is routed independently through the network.", "visual": "🔀" },
+        "discovery": { "text": "This is statistically multiplexed: many users share the same links. Packets interleave, maximizing utilization.", "visual": "📊" },
+        "twist": { "text": "Before packets, there was circuit switching: a dedicated line for each call. It wasted capacity when no one was talking.", "visual": "☎️" },
+        "climax": { "text": "Baran and Davies independently invented packet switching in the 1960s. It became the foundation of the internet.", "visual": "🌐" },
+        "punchline": { "text": "Break it into packets. Share the roads. That's the internet.", "visual": "🛣️" }
+      },
+      "quiz": {
+        "question": "What advantage does packet switching have over circuit switching?",
+        "options": ["Faster individual connections", "Many users share links efficiently through statistical multiplexing", "Simpler hardware"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch02-routing-and-flow",
+      "title": "Routing Algorithms",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "How does a packet in Tokyo reach a server in London in 80 milliseconds? Routing algorithms choose the optimal path.", "visual": "🗺️" },
+        "buildup": { "text": "Dijkstra's algorithm finds the shortest path. Each router maintains a table of best next hops for every destination.", "visual": "📋" },
+        "discovery": { "text": "The internet uses two approaches: OSPF for internal networks and BGP for inter-domain routing between providers.", "visual": "🔗" },
+        "twist": { "text": "Optimal routing is NP-hard for large networks. Real routers use heuristics that are good enough, not perfect.", "visual": "⚡" },
+        "climax": { "text": "Routing is distributed computation: each router makes local decisions that collectively produce global information flow.", "visual": "🌐" },
+        "punchline": { "text": "Local decisions, global paths. Routing is distributed intelligence.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "Why don't internet routers find globally optimal paths?",
+        "options": ["They're broken", "Optimal routing is computationally too expensive for large networks", "They don't need optimal paths"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch02-routing-and-flow",
+      "title": "Congestion and Queuing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Netflix streams stutter at 9 PM because everyone watches at once. That's network congestion—demand exceeds capacity.", "visual": "📺" },
+        "buildup": { "text": "When traffic exceeds a link's capacity, packets queue in buffers. Too much queueing causes delay and packet loss.", "visual": "🚦" },
+        "discovery": { "text": "Little's law: average queue length equals arrival rate times average wait time. It governs every buffer in every router.", "visual": "📐" },
+        "twist": { "text": "TCP's congestion control backs off when it detects loss, then slowly increases again. It's a distributed negotiation.", "visual": "🤝" },
+        "climax": { "text": "Congestion control is game theory: each sender maximizes throughput while competing for shared resources.", "visual": "♟️" },
+        "punchline": { "text": "Too many packets, too little pipe. Congestion is the network's traffic jam.", "visual": "🚗" }
+      },
+      "quiz": {
+        "question": "What causes network congestion?",
+        "options": ["Broken cables", "Traffic demand exceeding link capacity", "Too few devices"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch02-routing-and-flow",
+      "title": "Network Coding",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Instead of just forwarding packets, what if routers combined them? Network coding mixes data for higher throughput.", "visual": "🔀" },
+        "buildup": { "text": "In a butterfly network, two flows cross at one node. Separately: bottleneck. Combined with XOR: problem solved.", "visual": "🦋" },
+        "discovery": { "text": "Network coding can achieve the max-flow bound that simple routing cannot. Mixing packets unlocks hidden capacity.", "visual": "📈" },
+        "twist": { "text": "The idea sounds counterintuitive: how can mixing information help? Because receivers can decode using other packets.", "visual": "🔓" },
+        "climax": { "text": "Network coding bridges information theory and network engineering, showing that processing at nodes beats pure routing.", "visual": "🌐" },
+        "punchline": { "text": "Mix packets at routers. Decode at endpoints. More throughput.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "How does network coding increase throughput?",
+        "options": ["By compressing packets", "By combining packets at intermediate nodes for efficient decoding", "By using faster cables"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch02-routing-and-flow",
+      "title": "Load Balancing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Google handles 100,000 searches per second. No single server could survive that. The load is split across millions.", "visual": "⚖️" },
+        "buildup": { "text": "Load balancing distributes requests across multiple servers so no single machine is overwhelmed.", "visual": "🔀" },
+        "discovery": { "text": "Algorithms range from round-robin to weighted least connections to consistent hashing for cache-friendly distribution.", "visual": "📊" },
+        "twist": { "text": "The power of two choices: randomly picking two servers and choosing the less loaded one dramatically reduces queuing.", "visual": "🎲" },
+        "climax": { "text": "Load balancing applies Shannon's insight: spread information across channels to approach total capacity.", "visual": "📐" },
+        "punchline": { "text": "Share the work, survive the storm. Balance is scalability.", "visual": "🏋️" }
+      },
+      "quiz": {
+        "question": "What problem does load balancing solve?",
+        "options": ["Making servers cheaper", "Distributing requests so no single server is overwhelmed", "Encrypting traffic"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch03-the-internet",
+      "title": "TCP/IP",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "TCP/IP is the language every internet device speaks. Two protocols, invented in 1974, that connect 5 billion people.", "visual": "🌐" },
+        "buildup": { "text": "IP handles addressing: every device gets a unique number. TCP handles reliability: lost packets get resent.", "visual": "📬" },
+        "discovery": { "text": "TCP adds error detection, ordering, and flow control. It turns an unreliable network into a reliable channel.", "visual": "✅" },
+        "twist": { "text": "IP is deliberately unreliable. It just delivers packets—no guarantees. Reliability is built on top, not baked in.", "visual": "🎲" },
+        "climax": { "text": "This layered design lets the internet evolve. New applications run on TCP/IP without changing the network itself.", "visual": "🏗️" },
+        "punchline": { "text": "IP delivers. TCP ensures. Together they are the internet.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "What does TCP add on top of IP?",
+        "options": ["Faster speed", "Reliability through error detection and retransmission", "Wireless capability"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch03-the-internet",
+      "title": "DNS: The Internet's Phone Book",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You type google.com and your browser contacts 142.250.80.46. DNS translated the name in about 20 milliseconds.", "visual": "📖" },
+        "buildup": { "text": "The Domain Name System maps human-readable names to IP addresses through a hierarchical distributed database.", "visual": "🗂️" },
+        "discovery": { "text": "DNS queries cascade: root servers point to TLD servers, which point to authoritative servers for each domain.", "visual": "📊" },
+        "twist": { "text": "DNS was designed in 1983 with minimal security. DNS spoofing lets attackers redirect traffic to malicious servers.", "visual": "🎭" },
+        "climax": { "text": "DNSSEC adds cryptographic signatures to DNS responses—error correction for the internet's address book.", "visual": "🔐" },
+        "punchline": { "text": "Names to numbers in milliseconds. DNS makes the internet usable.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "What does DNS do?",
+        "options": ["Encrypts web traffic", "Translates domain names to IP addresses", "Stores website content"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch03-the-internet",
+      "title": "HTTP and the Web",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Tim Berners-Lee wrote HTTP in 1991 on a NeXT computer at CERN. A simple protocol that became the world's library.", "visual": "📚" },
+        "buildup": { "text": "HTTP is a request-response protocol: the client asks for a resource, the server sends it back. Stateless and simple.", "visual": "🔄" },
+        "discovery": { "text": "The web is a hypertext network: documents link to other documents, creating an information graph of billions of pages.", "visual": "🕸️" },
+        "twist": { "text": "HTTP/1.1 was inefficient: one request per connection. HTTP/2 and HTTP/3 multiplex many requests over one connection.", "visual": "🚀" },
+        "climax": { "text": "The web layered human-readable information on top of the internet's raw packet delivery. Content on infrastructure.", "visual": "🏗️" },
+        "punchline": { "text": "Request, respond, link. Three verbs that built the web.", "visual": "🌐" }
+      },
+      "quiz": {
+        "question": "What is HTTP's basic communication model?",
+        "options": ["Continuous streaming", "Request-response: client asks, server answers", "Peer-to-peer sharing"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch03-the-internet",
+      "title": "Bandwidth and Latency",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A truck full of hard drives has enormous bandwidth. But the latency is hours. Bandwidth and latency differ greatly.", "visual": "🚛" },
+        "buildup": { "text": "Bandwidth is how much data per second. Latency is how long until the first bit arrives. Both matter for different uses.", "visual": "📊" },
+        "discovery": { "text": "Streaming video needs bandwidth. Online gaming needs low latency. Video calls need both. Applications dictate priority.", "visual": "🎮" },
+        "twist": { "text": "Light in fiber travels at 200,000 km/s. New York to London takes at least 28ms. Physics sets the latency floor.", "visual": "💡" },
+        "climax": { "text": "Shannon's channel capacity combines bandwidth and signal-to-noise ratio. More bandwidth means more bits per second.", "visual": "📐" },
+        "punchline": { "text": "Bandwidth is width. Latency is delay. Both shape experience.", "visual": "⏱️" }
+      },
+      "quiz": {
+        "question": "What determines the minimum possible latency?",
+        "options": ["Router speed", "The speed of light through the transmission medium", "Software optimization"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch03-the-internet",
+      "title": "Content Delivery Networks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Netflix doesn't serve video from one building. It caches content at 17,000 servers worldwide, close to every viewer.", "visual": "🎬" },
+        "buildup": { "text": "CDNs place copies of popular content at edge servers near users, reducing latency and backbone load.", "visual": "🌍" },
+        "discovery": { "text": "The information-theoretic insight: replicate data to reduce network distance. Trade storage for transmission.", "visual": "💾" },
+        "twist": { "text": "Cache invalidation—knowing when content changes—is called one of the two hardest problems in computer science.", "visual": "😅" },
+        "climax": { "text": "CDNs serve over 70% of internet traffic today. They turned geography from a problem into a solvable engineering task.", "visual": "📈" },
+        "punchline": { "text": "Store copies nearby. Deliver in milliseconds. Distance defeated.", "visual": "🏎️" }
+      },
+      "quiz": {
+        "question": "How do CDNs reduce latency?",
+        "options": ["By compressing all data", "By caching content on servers close to users", "By using faster protocols"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch04-wireless-communication",
+      "title": "Radio Waves as Channels",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Marconi sent the letter S across the Atlantic in 1901. Radio proved that air itself could be an information channel.", "visual": "📻" },
+        "buildup": { "text": "Radio waves carry information by modulating frequency, amplitude, or phase. The air is the transmission medium.", "visual": "🌊" },
+        "discovery": { "text": "Shannon's formula applies: the capacity of a radio channel depends on bandwidth and signal-to-noise ratio.", "visual": "📐" },
+        "twist": { "text": "Spectrum is finite. Every wireless device shares the same electromagnetic medium. It's a shared, noisy, crowded channel.", "visual": "📡" },
+        "climax": { "text": "The entire wireless industry—phones, WiFi, satellites—is an exercise in approaching Shannon's limit on radio channels.", "visual": "📱" },
+        "punchline": { "text": "Air carries data. Shannon's limit says how much.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "What determines the capacity of a radio channel?",
+        "options": ["Antenna size", "Bandwidth and signal-to-noise ratio", "Transmission power alone"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch04-wireless-communication",
+      "title": "Spread Spectrum",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Hedy Lamarr, the Hollywood actress, co-invented frequency hopping in 1942 to prevent torpedo jamming. It now runs WiFi.", "visual": "🎬" },
+        "buildup": { "text": "Spread spectrum spreads a signal across many frequencies. This makes it resistant to narrowband interference and jams.", "visual": "📡" },
+        "discovery": { "text": "The signal looks like noise to anyone who doesn't know the hopping pattern. Stealth and security come for free.", "visual": "🫥" },
+        "twist": { "text": "CDMA uses spread spectrum to let multiple users share the same band simultaneously—each with a unique spreading code.", "visual": "📱" },
+        "climax": { "text": "From military anti-jamming to billions of civilian devices. Spread spectrum is information theory meets radio design.", "visual": "🌐" },
+        "punchline": { "text": "Spread the signal wide. Hide in the noise. Share the spectrum.", "visual": "🌊" }
+      },
+      "quiz": {
+        "question": "Why does spread spectrum resist jamming?",
+        "options": ["It uses more power", "The signal is spread across many frequencies, making it hard to target", "It encrypts the data"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch04-wireless-communication",
+      "title": "MIMO and Spatial Multiplexing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your WiFi router has multiple antennas not for looks—each antenna creates an independent data stream through space.", "visual": "📡" },
+        "buildup": { "text": "MIMO: Multiple-Input Multiple-Output. Multiple antennas at both sender and receiver multiply the channel capacity.", "visual": "📈" },
+        "discovery": { "text": "In rich multipath environments, each antenna pair creates a separate spatial channel. Capacity scales linearly.", "visual": "📐" },
+        "twist": { "text": "MIMO turns multipath reflections—once considered interference—into an advantage. Reflections create parallel channels.", "visual": "🔄" },
+        "climax": { "text": "5G massive MIMO uses 64+ antennas. Shannon's capacity formula scales with the minimum of transmit and receive antennas.", "visual": "📊" },
+        "punchline": { "text": "More antennas, more channels. Space itself carries parallel data.", "visual": "🚀" }
+      },
+      "quiz": {
+        "question": "How does MIMO increase wireless capacity?",
+        "options": ["By using more power", "Multiple antennas create independent spatial data channels", "By compressing data better"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch04-wireless-communication",
+      "title": "5G and Beyond",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "5G promises 20 Gbps peak speed—100 times faster than 4G. It achieves this by using millimeter wave frequencies.", "visual": "📱" },
+        "buildup": { "text": "Higher frequencies offer wider bandwidth. Millimeter waves at 28-39 GHz provide channels hundreds of MHz wide.", "visual": "📊" },
+        "discovery": { "text": "The tradeoff: millimeter waves travel shorter distances and can't penetrate walls. More cells needed, closer together.", "visual": "🏗️" },
+        "twist": { "text": "Beamforming focuses energy toward specific users. Instead of broadcasting everywhere, the antenna targets you.", "visual": "🎯" },
+        "climax": { "text": "Each generation of wireless pushed closer to Shannon's limit. 5G approaches it from multiple directions simultaneously.", "visual": "📐" },
+        "punchline": { "text": "More bandwidth, more antennas, more cells. Physics pays for speed.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "Why does 5G use millimeter wave frequencies?",
+        "options": ["They're cheaper", "They offer much wider bandwidth for higher data rates", "They travel farther"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch04-wireless-communication",
+      "title": "Satellite Internet",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Starlink has over 5,000 satellites orbiting at 550 km. They beam internet to places no cable could ever reach.", "visual": "🛰️" },
+        "buildup": { "text": "Low-Earth orbit satellites reduce latency to 20-40 ms. Geostationary satellites at 36,000 km add 600 ms of delay.", "visual": "⏱️" },
+        "discovery": { "text": "Satellite constellations form a mesh network in space. Laser links between satellites route data without ground relay.", "visual": "🔗" },
+        "twist": { "text": "Spectrum sharing between satellites and ground systems is an information-theoretic puzzle: everyone shares the same sky.", "visual": "📡" },
+        "climax": { "text": "Satellite internet extends Shannon's channel to three dimensions. The information network now wraps the entire planet.", "visual": "🌍" },
+        "punchline": { "text": "No cables needed. The sky becomes the network.", "visual": "🌌" }
+      },
+      "quiz": {
+        "question": "Why do low-Earth orbit satellites have lower latency?",
+        "options": ["They're more powerful", "Their shorter distance reduces signal travel time", "They use better protocols"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch05-network-effects",
+      "title": "Metcalfe's Law",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A fax machine is useless alone. Two are useful. A million form a transformative network. Value grows with connections.", "visual": "📠" },
+        "buildup": { "text": "Metcalfe's law: a network's value is proportional to the square of its users. n users create n(n-1)/2 connections.", "visual": "📈" },
+        "discovery": { "text": "This explains why platforms push for growth. Each new user adds value to every existing user. Positive feedback.", "visual": "🔄" },
+        "twist": { "text": "Metcalfe's law overestimates. Not all connections are equally valuable. Odlyzko proposed n·log(n) as more realistic.", "visual": "📊" },
+        "climax": { "text": "Network effects create winner-take-all markets. Once a platform leads, switching costs lock users in.", "visual": "🏆" },
+        "punchline": { "text": "More users, more value. Networks reward scale.", "visual": "📈" }
+      },
+      "quiz": {
+        "question": "What does Metcalfe's law claim about network value?",
+        "options": ["It grows linearly with users", "It grows proportionally to the square of the number of users", "It stays constant"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch05-network-effects",
+      "title": "Information Cascades",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A restaurant is empty. You walk past. The next person walks past because you did. Soon everyone avoids it—no real data.", "visual": "🍽️" },
+        "buildup": { "text": "Information cascades occur when people follow others' actions rather than their own private information.", "visual": "👥" },
+        "discovery": { "text": "Once a cascade starts, private information is drowned out. Wrong decisions persist because everyone copies each other.", "visual": "🔄" },
+        "twist": { "text": "Cascades are fragile. A single credible dissenter revealing private information can collapse the entire chain.", "visual": "💥" },
+        "climax": { "text": "Social media accelerates cascades. Viral content spreads through imitation, not evaluation. Speed amplifies fragility.", "visual": "📱" },
+        "punchline": { "text": "Follow the crowd, ignore your data. Cascades amplify mistakes.", "visual": "🌊" }
+      },
+      "quiz": {
+        "question": "What causes an information cascade?",
+        "options": ["New data emerges", "People follow others' actions instead of their own private information", "Better communication"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch05-network-effects",
+      "title": "The Strength of Weak Ties",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You're more likely to find a job through an acquaintance than a close friend. Weak ties bridge different social worlds.", "visual": "🤝" },
+        "buildup": { "text": "Granovetter's 1973 theory: strong ties cluster in tight groups. Weak ties connect different clusters.", "visual": "🔗" },
+        "discovery": { "text": "Weak ties carry novel information because they reach outside your bubble. Strong ties share what you already know.", "visual": "📰" },
+        "twist": { "text": "Information theory explains: mutual information with close friends is high. They're redundant. Acquaintances surprise.", "visual": "😲" },
+        "climax": { "text": "Networks with more weak ties disseminate information faster and more broadly. Bridges are more valuable than clusters.", "visual": "🌉" },
+        "punchline": { "text": "Close friends tell you what you know. Acquaintances tell you what you don't.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "Why are weak ties informationally valuable?",
+        "options": ["They're cheaper to maintain", "They bridge different groups and carry novel information", "They're more reliable"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch05-network-effects",
+      "title": "Viral Spreading",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Gangnam Style reached one billion YouTube views in 2012. It spread like a disease—infecting person after person.", "visual": "🎵" },
+        "buildup": { "text": "Viral content follows epidemic models: R₀ is the reproduction number. If R₀ > 1, the content spreads exponentially.", "visual": "📈" },
+        "discovery": { "text": "Network structure matters: content reaching a hub node spreads faster than starting from a peripheral node.", "visual": "🎯" },
+        "twist": { "text": "Most content that could go viral doesn't. Virality requires the right content, right network position, and timing.", "visual": "🎲" },
+        "climax": { "text": "Information epidemiology uses the same math as disease modeling. Spreading information and disease are isomorphic.", "visual": "🦠" },
+        "punchline": { "text": "R₀ above one: it goes viral. Below one: it dies. Threshold is everything.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "What determines whether content goes viral?",
+        "options": ["Quality alone", "Whether the reproduction number R₀ exceeds 1 in the network", "The platform it's posted on"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch05-network-effects",
+      "title": "Echo Chambers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You see political posts you agree with. Your friend sees the opposite. Same platform, parallel realities. Echo chambers.", "visual": "🔊" },
+        "buildup": { "text": "Algorithmic feeds maximize engagement by showing content you'll interact with—usually content you already agree with.", "visual": "🔄" },
+        "discovery": { "text": "In information terms, echo chambers reduce the entropy of your information diet. Less diversity, less surprise.", "visual": "📉" },
+        "twist": { "text": "People also self-sort: they choose friends and sources that confirm their views. Algorithms amplify, not create, this.", "visual": "🧲" },
+        "climax": { "text": "Low-entropy info diets produce high-confidence, low-accuracy beliefs. Certainty without exposure to contrary evidence.", "visual": "⚠️" },
+        "punchline": { "text": "Hear only agreement. Believe you're right. Echo chambers shrink information.", "visual": "📦" }
+      },
+      "quiz": {
+        "question": "How do echo chambers affect information entropy?",
+        "options": ["They increase it", "They reduce it by limiting diversity of information", "They have no effect"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch06-future-of-networks",
+      "title": "Quantum Networks",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Quantum entanglement links two particles across any distance. Einstein called it 'spooky action at a distance.'", "visual": "⚛️" },
+        "buildup": { "text": "Quantum networks use entangled particles to share quantum states between nodes—the basis of a quantum internet.", "visual": "🔗" },
+        "discovery": { "text": "Quantum key distribution is already real: it detects any eavesdropping because measurement disturbs quantum states.", "visual": "🔐" },
+        "twist": { "text": "Quantum networks can't transmit classical information faster than light. They transmit quantum states, not messages.", "visual": "💡" },
+        "climax": { "text": "China's Micius satellite demonstrated quantum key distribution over 1,200 km in 2017. The quantum internet is beginning.", "visual": "🛰️" },
+        "punchline": { "text": "Entangled particles, unbreakable security. Quantum changes the rules.", "visual": "🔮" }
+      },
+      "quiz": {
+        "question": "What does quantum key distribution guarantee?",
+        "options": ["Faster data transfer", "Any eavesdropping attempt is detectable", "Infinite bandwidth"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch06-future-of-networks",
+      "title": "Mesh Networks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "During Hong Kong's 2014 protests, activists used Bridgefy to communicate peer-to-peer when cell towers were overwhelmed.", "visual": "📱" },
+        "buildup": { "text": "Mesh networks: every device is both user and router. Messages hop from phone to phone without central infrastructure.", "visual": "🔗" },
+        "discovery": { "text": "No cell towers, no ISP, no single point of failure. The network exists as long as devices are in range of each other.", "visual": "📡" },
+        "twist": { "text": "Mesh networks trade throughput for resilience. Hop-by-hop routing adds latency. Each hop reduces available bandwidth.", "visual": "📉" },
+        "climax": { "text": "In disaster zones, mesh networks can restore communication when all infrastructure is destroyed.", "visual": "🌪️" },
+        "punchline": { "text": "Every device a router. No towers needed. The people are the network.", "visual": "👥" }
+      },
+      "quiz": {
+        "question": "What makes mesh networks resilient?",
+        "options": ["They use stronger signals", "No central infrastructure—every device routes for others", "They're encrypted"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch06-future-of-networks",
+      "title": "Edge Computing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A self-driving car can't wait 50ms for a cloud server to decide whether to brake. Processing must happen at the edge.", "visual": "🚗" },
+        "buildup": { "text": "Edge computing moves processing closer to data sources—from centralized clouds to local servers or devices.", "visual": "📡" },
+        "discovery": { "text": "Reducing distance reduces latency. Processing data where it's generated avoids sending it across the network.", "visual": "⏱️" },
+        "twist": { "text": "Edge computing trades centralized efficiency for distributed speed. Not all computation benefits from being at the edge.", "visual": "⚖️" },
+        "climax": { "text": "The information-theoretic view: edge computing optimizes the rate-distortion tradeoff by processing before transmitting.", "visual": "📐" },
+        "punchline": { "text": "Process locally, send summaries. The edge is where speed lives.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "Why is edge computing important for self-driving cars?",
+        "options": ["It's cheaper", "Ultra-low latency—cloud round-trip is too slow for safety-critical decisions", "It uses less data"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch06-future-of-networks",
+      "title": "Decentralized Networks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Bitcoin has no central server. Ten thousand nodes maintain the same ledger. No authority, no single point of failure.", "visual": "₿" },
+        "buildup": { "text": "Decentralized networks distribute control across all participants. Consensus replaces central authority.", "visual": "🤝" },
+        "discovery": { "text": "The cost is efficiency: Bitcoin processes 7 transactions per second. Visa handles 65,000. Decentralization has overhead.", "visual": "📊" },
+        "twist": { "text": "The CAP theorem proves you can't have consistency, availability, and partition tolerance simultaneously. Pick two.", "visual": "⚖️" },
+        "climax": { "text": "Decentralized networks trade throughput for trust. No middleman means no dependency—but also no efficiency gains.", "visual": "🔀" },
+        "punchline": { "text": "No center, no single failure. Decentralization trades speed for trust.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What tradeoff do decentralized networks make?",
+        "options": ["Security for speed", "Throughput efficiency for trustless operation", "Simplicity for features"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--networks-and-communication--ch06-future-of-networks",
+      "title": "The Information Superhighway",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 1993, Al Gore predicted an 'information superhighway'. Thirty years later: Instagram, TikTok, and Zoom. Close enough?", "visual": "🛣️" },
+        "buildup": { "text": "Global internet traffic hit 5 zettabytes per year in 2022. That's every book ever written, every 36 seconds.", "visual": "📊" },
+        "discovery": { "text": "Shannon's 1948 paper made this possible. Every compression algorithm, every error-correcting code traces back to him.", "visual": "📜" },
+        "twist": { "text": "We're still nowhere near theoretical limits. Shannon showed the ceiling; engineering is still building the ladder.", "visual": "🪜" },
+        "climax": { "text": "From telegraph wires to quantum channels, the story of networks is the story of approaching Shannon's limits.", "visual": "📈" },
+        "punchline": { "text": "One paper in 1948. Every network since stands on its shoulders.", "visual": "🏔️" }
+      },
+      "quiz": {
+        "question": "What did Shannon's 1948 paper establish for networks?",
+        "options": ["The first network protocol", "Theoretical limits on information transmission that still guide engineering", "The design of the internet"],
+        "correct": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,559 @@
+{
+  "categoryId": "information-theory",
+  "subject": "Information Theory",
+  "courseId": "information-theory--error-correction",
+  "courseTitle": "Error Correction",
+  "emoji": "🛡️",
+  "color": "#0288D1",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "information-theory--error-correction--ch01-why-errors-happen", "title": "Why Errors Happen", "position": 1 },
+    { "id": "information-theory--error-correction--ch02-detecting-errors", "title": "Detecting Errors", "position": 2 },
+    { "id": "information-theory--error-correction--ch03-correcting-errors", "title": "Correcting Errors", "position": 3 },
+    { "id": "information-theory--error-correction--ch04-block-codes", "title": "Block Codes", "position": 4 },
+    { "id": "information-theory--error-correction--ch05-modern-codes", "title": "Modern Codes", "position": 5 },
+    { "id": "information-theory--error-correction--ch06-error-correction-everywhere", "title": "Error Correction Everywhere", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "information-theory--error-correction--ch01-why-errors-happen",
+      "title": "Noise Is Inevitable",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Every cable, wireless link, and hard drive introduces random errors. Perfect transmission is physically impossible.", "visual": "📡" },
+        "buildup": { "text": "Thermal noise, cosmic rays, and electrical interference flip bits at random during transmission and storage.", "visual": "⚡" },
+        "discovery": { "text": "Shannon modeled this as a noisy channel: input bits go in, some get flipped, corrupted bits come out.", "visual": "🔀" },
+        "twist": { "text": "You can't eliminate noise. But Shannon proved you can communicate perfectly through it—with the right code.", "visual": "🎯" },
+        "climax": { "text": "Error correction doesn't fight noise. It adds enough structure that the message survives despite the noise.", "visual": "🏗️" },
+        "punchline": { "text": "Noise is physics. Error correction is math fighting back.", "visual": "🧮" }
+      },
+      "quiz": {
+        "question": "According to Shannon, can you communicate perfectly through a noisy channel?",
+        "options": ["No, errors are unavoidable", "Yes, with the right error-correcting code", "Only by eliminating all noise first"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch01-why-errors-happen",
+      "title": "The Binary Symmetric Channel",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Flip a biased coin for every bit you send. Heads: bit arrives correctly. Tails: it flips. That's the BSC model.", "visual": "🪙" },
+        "buildup": { "text": "The binary symmetric channel has one parameter: the crossover probability p that any bit flips.", "visual": "📐" },
+        "discovery": { "text": "Shannon's channel capacity for the BSC is C = 1 − H(p), where H is the binary entropy function.", "visual": "📊" },
+        "twist": { "text": "Even at p = 0.1 (10% error rate), the capacity is 0.53 bits per channel use. Reliable communication is still possible.", "visual": "✅" },
+        "climax": { "text": "The BSC is the simplest noise model but captures the core challenge: random, independent bit flips.", "visual": "🎲" },
+        "punchline": { "text": "A coin flip per bit. The simplest model of noise.", "visual": "🪙" }
+      },
+      "quiz": {
+        "question": "What does the crossover probability p represent in the BSC?",
+        "options": ["The speed of transmission", "The probability that any single bit is flipped", "The total number of errors"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch01-why-errors-happen",
+      "title": "Channel Capacity",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A noisy phone line can carry only so many reliable bits per second. Shannon calculated that exact limit in 1948.", "visual": "📞" },
+        "buildup": { "text": "Channel capacity C is the maximum rate at which information can be sent with vanishing error probability.", "visual": "📐" },
+        "discovery": { "text": "Shannon proved: below capacity, reliable communication is possible. Above it, errors are unavoidable.", "visual": "📏" },
+        "twist": { "text": "He proved the limit exists but didn't show how to build codes that achieve it. That challenge lasted 50 years.", "visual": "⏳" },
+        "climax": { "text": "Turbo codes in 1993 and LDPC codes finally reached within a whisper of Shannon's limit in real systems.", "visual": "🎯" },
+        "punchline": { "text": "Shannon drew the line. Engineers spent decades reaching it.", "visual": "🏁" }
+      },
+      "quiz": {
+        "question": "What happens when you try to transmit above channel capacity?",
+        "options": ["Transmission speeds up", "Errors become unavoidable no matter the code", "The channel gets wider"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch01-why-errors-happen",
+      "title": "Bit Error Rate",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Wi-Fi operates at a bit error rate below one in a million. Your Bluetooth headphones tolerate one in a thousand.", "visual": "📶" },
+        "buildup": { "text": "Bit error rate (BER) measures the fraction of received bits that are wrong. Lower is better.", "visual": "📊" },
+        "discovery": { "text": "BER depends on signal strength, noise, and the coding scheme. Error correction codes drive BER down dramatically.", "visual": "📉" },
+        "twist": { "text": "Even a BER of 10⁻⁹ means one error every gigabit. For terabyte drives, that's thousands of errors per transfer.", "visual": "💾" },
+        "climax": { "text": "Modern systems stack multiple layers of error correction to push effective BER below 10⁻¹⁵.", "visual": "🛡️" },
+        "punchline": { "text": "One in a billion sounds safe. Multiply by terabytes.", "visual": "🔢" }
+      },
+      "quiz": {
+        "question": "Why is a BER of 10⁻⁹ still problematic for large storage systems?",
+        "options": ["The errors are permanent", "At terabyte scale, billions of bits mean thousands of errors", "It's too fast to correct"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch01-why-errors-happen",
+      "title": "Redundancy as Insurance",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Say every word twice twice. You just decoded that sentence despite the error. Redundancy saved you.", "visual": "🔁" },
+        "buildup": { "text": "Adding redundancy means sending extra bits that carry no new information but help detect or fix errors.", "visual": "📦" },
+        "discovery": { "text": "The simplest approach: send each bit three times. Majority vote corrects any single-bit flip.", "visual": "✅" },
+        "twist": { "text": "Triple repetition wastes 2/3 of bandwidth. Good codes add far less redundancy and correct far more errors.", "visual": "📉" },
+        "climax": { "text": "The art of coding is finding the minimum redundancy needed for the maximum error correction. Shannon set the bound.", "visual": "🎯" },
+        "punchline": { "text": "Extra bits now, fewer errors later. That's the deal.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "What is the tradeoff of adding redundancy for error correction?",
+        "options": ["Faster transmission", "Lower bandwidth efficiency for higher reliability", "Simpler hardware"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch02-detecting-errors",
+      "title": "Parity Bits",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Add one extra bit to make the total number of 1s even. If the count comes out odd, something flipped.", "visual": "🔢" },
+        "buildup": { "text": "A parity bit is the simplest error detection: one bit of redundancy catches any single-bit error.", "visual": "✅" },
+        "discovery": { "text": "Even parity: count the 1s, add a bit so the total is even. Odd parity works the same way but targets odd totals.", "visual": "📐" },
+        "twist": { "text": "Parity detects single errors but can't correct them. And two errors cancel out—parity sees nothing.", "visual": "🚫" },
+        "climax": { "text": "Despite its limits, parity is used in RAM (ECC memory), serial communication, and RAID storage.", "visual": "💾" },
+        "punchline": { "text": "One extra bit. Catches one error. Misses two.", "visual": "1️⃣" }
+      },
+      "quiz": {
+        "question": "What is the main limitation of a single parity bit?",
+        "options": ["It can't detect any errors", "It detects but cannot correct errors, and misses double errors", "It requires too much bandwidth"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch02-detecting-errors",
+      "title": "Checksums",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Download a file. The website shows a checksum. Compute yours. If they match, the file is intact. If not, re-download.", "visual": "📥" },
+        "buildup": { "text": "A checksum is a short digest computed from the data. It catches more error patterns than a single parity bit.", "visual": "📊" },
+        "discovery": { "text": "Internet checksums add 16-bit words and take the complement. It's fast, simple, and catches most random errors.", "visual": "➕" },
+        "twist": { "text": "Checksums can miss systematic errors. Reordering data blocks may produce the same sum. They're not foolproof.", "visual": "⚠️" },
+        "climax": { "text": "TCP, UDP, and IP all use checksums. Every internet packet is checked before delivery.", "visual": "🌐" },
+        "punchline": { "text": "A short summary that catches corruption. Quick and cheap.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "Why are checksums not foolproof?",
+        "options": ["They're too slow", "Some error patterns produce the same checksum", "They only work on small files"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch02-detecting-errors",
+      "title": "CRC Codes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Ethernet checks every frame with a CRC-32. In 40 years, the detection failure rate is virtually zero.", "visual": "🔌" },
+        "buildup": { "text": "CRC (cyclic redundancy check) treats data as a polynomial and computes its remainder after division.", "visual": "📐" },
+        "discovery": { "text": "CRC-32 detects all single-bit, double-bit, and odd-count errors. It catches bursts up to 32 bits long.", "visual": "🛡️" },
+        "twist": { "text": "CRCs detect errors but can't correct them. A failed CRC triggers retransmission, not repair.", "visual": "🔄" },
+        "climax": { "text": "CRCs are in Ethernet, USB, Bluetooth, ZIP files, and PNG images. They're the internet's sanity check.", "visual": "✅" },
+        "punchline": { "text": "Polynomial division catches corruption. Pure algebra.", "visual": "📏" }
+      },
+      "quiz": {
+        "question": "What mathematical operation does a CRC use?",
+        "options": ["Matrix multiplication", "Polynomial division", "Logarithmic hashing"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch02-detecting-errors",
+      "title": "Hash Functions for Integrity",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "SHA-256 produces a 256-bit fingerprint. Change one bit in a 10 GB file and the hash changes completely.", "visual": "🔏" },
+        "buildup": { "text": "Cryptographic hashes map arbitrary data to fixed-size digests. They're designed to catch any modification.", "visual": "🧬" },
+        "discovery": { "text": "The avalanche effect: flipping one input bit changes about half the output bits. Tiny changes are amplified.", "visual": "🌊" },
+        "twist": { "text": "Hashes detect tampering but can't detect accidental noise as efficiently as CRCs. Different tools for different jobs.", "visual": "🔧" },
+        "climax": { "text": "Git, blockchain, and software distribution all use cryptographic hashes to ensure data integrity.", "visual": "🔗" },
+        "punchline": { "text": "One bit changes everything. That's the avalanche effect.", "visual": "🌊" }
+      },
+      "quiz": {
+        "question": "What is the avalanche effect in cryptographic hashes?",
+        "options": ["Output size grows with input", "A tiny input change alters roughly half the output bits", "Hashes get slower with larger inputs"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch02-detecting-errors",
+      "title": "Detection vs Correction",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Detecting an error is easy. Fixing it without retransmission is hard. The difference defines two eras of coding.", "visual": "🔍" },
+        "buildup": { "text": "Detection tells you something went wrong. Correction tells you exactly what went wrong and fixes it.", "visual": "🔧" },
+        "discovery": { "text": "A code that detects d errors needs minimum distance d+1. Correcting t errors needs distance 2t+1.", "visual": "📐" },
+        "twist": { "text": "If you can retransmit (like TCP), detection is enough. If you can't (like space probes), correction is essential.", "visual": "🛰️" },
+        "climax": { "text": "Modern systems often combine both: correct small errors on the fly, detect large ones and request retransmission.", "visual": "🔄" },
+        "punchline": { "text": "Detect to retry. Correct to continue. Choose wisely.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What minimum Hamming distance is needed to correct t errors?",
+        "options": ["t + 1", "2t + 1", "t²"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch03-correcting-errors",
+      "title": "Hamming Codes",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "In 1950, Hamming was tired of restarting his computer every time a punch card had an error. So he fixed it.", "visual": "🖥️" },
+        "buildup": { "text": "Hamming codes place parity bits at power-of-2 positions. Each parity bit covers a specific set of data bits.", "visual": "📐" },
+        "discovery": { "text": "When an error occurs, the pattern of parity failures (the syndrome) directly points to the flipped bit.", "visual": "🎯" },
+        "twist": { "text": "Hamming(7,4) encodes 4 data bits with 3 parity bits. It corrects any single-bit error automatically.", "visual": "🔧" },
+        "climax": { "text": "ECC memory in every server uses Hamming codes or extensions to silently fix bit flips caused by cosmic rays.", "visual": "🛡️" },
+        "punchline": { "text": "Parity bits in the right places. Error located and fixed.", "visual": "📍" }
+      },
+      "quiz": {
+        "question": "How does a Hamming code locate the error?",
+        "options": ["By comparing duplicate copies", "By analyzing the syndrome from parity check failures", "By brute-force testing every bit"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch03-correcting-errors",
+      "title": "Hamming Distance",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "1011 and 1110 differ in three positions. That distance of 3 is what makes error correction possible.", "visual": "📏" },
+        "buildup": { "text": "Hamming distance counts the positions where two codewords differ. It measures how 'far apart' they are.", "visual": "🔢" },
+        "discovery": { "text": "If the minimum distance between any two valid codewords is d, the code detects d−1 errors and corrects ⌊(d−1)/2⌋.", "visual": "📐" },
+        "twist": { "text": "The Hamming bound limits how many codewords can fit at a given distance. Not all distances are achievable efficiently.", "visual": "📊" },
+        "climax": { "text": "Hamming distance is the core metric of coding theory. Every code design starts with choosing the right distance.", "visual": "🏗️" },
+        "punchline": { "text": "Distance between codewords. The foundation of all codes.", "visual": "📏" }
+      },
+      "quiz": {
+        "question": "What does a minimum Hamming distance of 3 allow?",
+        "options": ["Detection of 3 errors", "Correction of 1 error or detection of 2 errors", "Correction of 3 errors"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch03-correcting-errors",
+      "title": "Repetition Codes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Send each bit three times: 0 becomes 000, 1 becomes 111. Majority vote fixes one flip. Crude but effective.", "visual": "🔁" },
+        "buildup": { "text": "A repetition code with rate 1/n sends each bit n times. The decoder takes the majority vote.", "visual": "📊" },
+        "discovery": { "text": "The (3,1) code corrects 1 error. The (5,1) code corrects 2. But the rate plummets—only 1/n is useful data.", "visual": "📉" },
+        "twist": { "text": "Repetition codes are the worst efficient codes possible. They waste the most bandwidth for the least correction.", "visual": "🗑️" },
+        "climax": { "text": "They prove a concept: redundancy enables correction. Real codes do the same job with far less overhead.", "visual": "💡" },
+        "punchline": { "text": "Say it three times. Vote. Fixed. But very wasteful.", "visual": "🗳️" }
+      },
+      "quiz": {
+        "question": "Why are repetition codes inefficient?",
+        "options": ["They can't correct errors", "They use extreme redundancy for minimal correction", "They require special hardware"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch03-correcting-errors",
+      "title": "Syndrome Decoding",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You receive a codeword with a possible error. Multiply by a check matrix. The result—the syndrome—reveals the fault.", "visual": "🧮" },
+        "buildup": { "text": "Every linear code has a parity-check matrix H. Multiplying the received word by H gives the syndrome vector.", "visual": "📐" },
+        "discovery": { "text": "If the syndrome is zero, no error. If nonzero, the syndrome matches a column of H—pointing to the error position.", "visual": "🎯" },
+        "twist": { "text": "For multiple errors, the syndrome identifies the most likely error pattern. Decoding becomes a lookup operation.", "visual": "📖" },
+        "climax": { "text": "Syndrome decoding turns error correction from guesswork into linear algebra. Fast, systematic, and provably optimal.", "visual": "⚡" },
+        "punchline": { "text": "Multiply, check, fix. Algebra does the heavy lifting.", "visual": "🧮" }
+      },
+      "quiz": {
+        "question": "What does a nonzero syndrome indicate?",
+        "options": ["The message is too long", "An error occurred and the syndrome identifies it", "The code rate is too high"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch03-correcting-errors",
+      "title": "Interleaving",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A scratch on a CD destroys thousands of consecutive bits. Without interleaving, the error correction would fail.", "visual": "💿" },
+        "buildup": { "text": "Error-correcting codes handle scattered random errors well. Burst errors—long clusters—overwhelm them.", "visual": "💥" },
+        "discovery": { "text": "Interleaving shuffles data so consecutive bits come from different codewords. A burst error becomes spread out.", "visual": "🔀" },
+        "twist": { "text": "After deinterleaving, each codeword sees only a few errors, not a concentrated burst. Standard codes handle it.", "visual": "✅" },
+        "climax": { "text": "CDs, DVDs, and digital TV all use interleaving. It turns the hardest error pattern into the easiest.", "visual": "📺" },
+        "punchline": { "text": "Scatter the data. Spread the burst. Let the code fix it.", "visual": "🔀" }
+      },
+      "quiz": {
+        "question": "What problem does interleaving solve?",
+        "options": ["Slow decoding speed", "Burst errors that overwhelm error-correcting codes", "High bandwidth usage"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch04-block-codes",
+      "title": "Reed-Solomon Codes",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "The Voyager probes sent photos from Neptune using Reed-Solomon codes. Forty years later, the images are still perfect.", "visual": "🛰️" },
+        "buildup": { "text": "Reed-Solomon codes work on symbols (groups of bits) rather than individual bits. They excel at burst errors.", "visual": "📦" },
+        "discovery": { "text": "An RS code with 2t check symbols corrects up to t symbol errors—no matter which bits within each symbol are wrong.", "visual": "🔧" },
+        "twist": { "text": "RS codes treat data as polynomials over finite fields. Encoding and decoding are algebraic operations.", "visual": "📐" },
+        "climax": { "text": "CDs, QR codes, DVB television, and deep-space communication all rely on Reed-Solomon. It's the workhorse of coding.", "visual": "🌍" },
+        "punchline": { "text": "Polynomials over finite fields. Error correction's workhorse.", "visual": "🐴" }
+      },
+      "quiz": {
+        "question": "What unit does a Reed-Solomon code correct errors in?",
+        "options": ["Individual bits", "Symbols (groups of bits)", "Entire packets"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch04-block-codes",
+      "title": "BCH Codes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "BCH codes were independently discovered by three mathematicians on three continents in 1959-1960. Great ideas converge.", "visual": "🌍" },
+        "buildup": { "text": "BCH (Bose-Chaudhuri-Hocquenghem) codes are a family of cyclic codes with precise error-correcting guarantees.", "visual": "📐" },
+        "discovery": { "text": "For any desired number of correctable errors t, a BCH code exists with known length and redundancy.", "visual": "🎯" },
+        "twist": { "text": "Reed-Solomon codes are actually a special subclass of BCH codes—operating on multi-bit symbols instead of single bits.", "visual": "🔗" },
+        "climax": { "text": "BCH codes are used in flash memory (SSDs), satellite links, and DVB. Their algebraic structure makes decoding efficient.", "visual": "💾" },
+        "punchline": { "text": "Three discoverers. One family of powerful codes.", "visual": "🏆" }
+      },
+      "quiz": {
+        "question": "What is the relationship between Reed-Solomon and BCH codes?",
+        "options": ["They are unrelated", "Reed-Solomon codes are a special subclass of BCH codes", "BCH codes are simpler than Reed-Solomon"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch04-block-codes",
+      "title": "Golay Codes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 1949, Marcel Golay published a half-page paper describing a perfect code. It's been used in spacecraft ever since.", "visual": "📄" },
+        "buildup": { "text": "The binary Golay code (23,12) encodes 12 data bits into 23 bits and corrects any combination of up to 3 errors.", "visual": "📐" },
+        "discovery": { "text": "It's a perfect code: every possible received word is within distance 3 of exactly one codeword. No decoding ambiguity.", "visual": "🎯" },
+        "twist": { "text": "Perfect codes are extremely rare. The only nontrivial binary perfect codes are Hamming codes and the Golay code.", "visual": "💎" },
+        "climax": { "text": "The Golay code was used in the Voyager missions and connects to the Leech lattice in pure mathematics.", "visual": "🛰️" },
+        "punchline": { "text": "A half-page paper. A perfect code. Used in deep space.", "visual": "🌌" }
+      },
+      "quiz": {
+        "question": "What makes the Golay code special?",
+        "options": ["It has the highest rate", "It is one of the few perfect binary error-correcting codes", "It works without redundancy"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch04-block-codes",
+      "title": "Convolutional Codes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Block codes process data in chunks. Convolutional codes process a continuous stream through a shift register.", "visual": "🔄" },
+        "buildup": { "text": "A convolutional encoder feeds input bits through a shift register and XORs tapped positions to produce output.", "visual": "⚙️" },
+        "discovery": { "text": "The code has memory: each output depends on the current input and several previous bits. Past context helps.", "visual": "🧠" },
+        "twist": { "text": "Viterbi decoding finds the most likely sequence of inputs by tracing paths through a trellis diagram.", "visual": "🌐" },
+        "climax": { "text": "Convolutional codes powered early mobile phones, deep-space links, and dial-up modems. They're streaming-friendly.", "visual": "📱" },
+        "punchline": { "text": "Bits flow through memory. Context corrects errors.", "visual": "🌊" }
+      },
+      "quiz": {
+        "question": "How do convolutional codes differ from block codes?",
+        "options": ["They only detect errors", "They process data as a continuous stream using memory", "They require no redundancy"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch04-block-codes",
+      "title": "Code Rate and Overhead",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A rate 1/2 code doubles your data. Half the bits are redundancy. Is that too much? It depends on the channel.", "visual": "📊" },
+        "buildup": { "text": "Code rate R = k/n, where k is data bits and n is total bits. Higher rate means less redundancy, less protection.", "visual": "📐" },
+        "discovery": { "text": "Shannon's theorem: as long as R < C (channel capacity), codes exist that make errors vanishingly rare.", "visual": "📏" },
+        "twist": { "text": "A code with rate above capacity will always have errors, no matter how clever the design. Shannon's bound is absolute.", "visual": "🚫" },
+        "climax": { "text": "Engineers choose code rate by balancing bandwidth cost against error tolerance. It's a core design decision.", "visual": "⚖️" },
+        "punchline": { "text": "Rate versus reliability. Every system picks a point on the curve.", "visual": "📈" }
+      },
+      "quiz": {
+        "question": "What does a code rate of 1/2 mean?",
+        "options": ["Half the data is lost", "Half the transmitted bits carry actual data, half are redundancy", "The code corrects half of all errors"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch05-modern-codes",
+      "title": "Turbo Codes",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "In 1993, two French engineers stunned the coding world: their turbo codes came within 0.7 dB of Shannon's limit.", "visual": "🏎️" },
+        "buildup": { "text": "Turbo codes use two convolutional encoders in parallel, separated by an interleaver that scrambles the data.", "visual": "🔀" },
+        "discovery": { "text": "The decoder iterates: each decoder passes soft information to the other, refining estimates in ping-pong fashion.", "visual": "🏓" },
+        "twist": { "text": "Iterative decoding was the key. Individual codes were modest; together they reached near-Shannon performance.", "visual": "🤝" },
+        "climax": { "text": "Turbo codes were adopted for 3G/4G cellular, deep-space communication, and WiMAX. They changed engineering overnight.", "visual": "📱" },
+        "punchline": { "text": "Two weak codes cooperating beat one strong code alone.", "visual": "💪" }
+      },
+      "quiz": {
+        "question": "What was the key innovation in turbo codes?",
+        "options": ["Larger block sizes", "Iterative decoding between two parallel encoders", "Higher code rate"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch05-modern-codes",
+      "title": "LDPC Codes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Robert Gallager invented LDPC codes in his 1960 PhD thesis. They were ignored for 30 years, then revolutionized 5G.", "visual": "📡" },
+        "buildup": { "text": "LDPC (low-density parity-check) codes have sparse parity-check matrices. Most entries are zero.", "visual": "📐" },
+        "discovery": { "text": "The sparsity enables belief propagation decoding: messages pass along a graph, iteratively refining bit estimates.", "visual": "🌐" },
+        "twist": { "text": "LDPC codes can be designed to approach Shannon's limit within hundredths of a decibel. They're practically optimal.", "visual": "🎯" },
+        "climax": { "text": "5G NR, Wi-Fi 6, DVB-S2, and 10 Gigabit Ethernet all use LDPC codes. Gallager's thesis finally won.", "visual": "📲" },
+        "punchline": { "text": "Ignored for 30 years. Now in every phone and router.", "visual": "📶" }
+      },
+      "quiz": {
+        "question": "Why were LDPC codes ignored and then rediscovered?",
+        "options": ["They don't work well", "1960s computers couldn't handle the decoding; modern hardware can", "They were classified"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch05-modern-codes",
+      "title": "Polar Codes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2009, Erdal Arıkan proved something remarkable: polar codes provably achieve channel capacity with simple encoding.", "visual": "🧊" },
+        "buildup": { "text": "Polar codes exploit channel polarization: as block size grows, synthetic subchannels become either perfect or useless.", "visual": "📊" },
+        "discovery": { "text": "Send data on the perfect subchannels, freeze the useless ones. The code naturally adapts to the channel.", "visual": "❄️" },
+        "twist": { "text": "Polar codes are the first codes proven to achieve Shannon capacity with efficient encoding and decoding.", "visual": "🏆" },
+        "climax": { "text": "5G uses polar codes for control channels. Huawei championed them; Qualcomm backed LDPC. Both won different roles.", "visual": "📱" },
+        "punchline": { "text": "Channels polarize. Use the good ones. Ignore the bad.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "What unique property do polar codes have?",
+        "options": ["They work without redundancy", "They provably achieve channel capacity with efficient decoding", "They correct unlimited errors"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch05-modern-codes",
+      "title": "Fountain Codes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Broadcasting to millions of receivers. Each misses different packets. Fountain codes let all recover from any subset.", "visual": "⛲" },
+        "buildup": { "text": "Fountain codes generate a potentially unlimited stream of encoded symbols from k source symbols.", "visual": "🌊" },
+        "discovery": { "text": "Any k+ε received symbols suffice to decode. It doesn't matter which ones you catch—just that you catch enough.", "visual": "🎣" },
+        "twist": { "text": "LT and Raptor codes are practical fountain codes. They encode and decode in near-linear time.", "visual": "⚡" },
+        "climax": { "text": "Raptor codes power MBMS mobile broadcast and digital fountain systems for satellite file delivery.", "visual": "🛰️" },
+        "punchline": { "text": "Catch any subset. Decode the lot. Rateless and robust.", "visual": "💧" }
+      },
+      "quiz": {
+        "question": "What makes fountain codes rateless?",
+        "options": ["They have no code rate", "They generate unlimited encoded symbols; any sufficient subset decodes", "They ignore errors entirely"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch05-modern-codes",
+      "title": "Quantum Error Correction",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A qubit can't be copied—the no-cloning theorem forbids it. So how do you protect quantum information from errors?", "visual": "⚛️" },
+        "buildup": { "text": "Quantum errors are continuous: a qubit can rotate by any amount, not just flip. Correction seems impossible.", "visual": "🔄" },
+        "discovery": { "text": "Shor's 9-qubit code spreads one logical qubit across nine physical qubits. Syndrome measurements detect errors.", "visual": "🔬" },
+        "twist": { "text": "Measurement collapses quantum states—but syndromes only reveal the error type, not the data. Privacy is preserved.", "visual": "🔏" },
+        "climax": { "text": "Surface codes and topological codes now lead the quest for fault-tolerant quantum computing. Error correction is key.", "visual": "🧩" },
+        "punchline": { "text": "No copying. No peeking. Still correctable. Quantum magic.", "visual": "✨" }
+      },
+      "quiz": {
+        "question": "Why is quantum error correction more challenging than classical?",
+        "options": ["Qubits are larger", "Qubits can't be copied and errors are continuous", "Quantum computers are faster"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch06-error-correction-everywhere",
+      "title": "Error Correction in Space",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Voyager 2 transmits at 20 watts from 12 billion miles away. The signal arriving at Earth is trillions of times weaker.", "visual": "🛰️" },
+        "buildup": { "text": "Deep-space signals are incredibly faint. Without error correction, most received bits would be garbage.", "visual": "📡" },
+        "discovery": { "text": "NASA uses concatenated codes: an inner convolutional code plus an outer Reed-Solomon code. Double protection.", "visual": "🛡️" },
+        "twist": { "text": "The Mars Reconnaissance Orbiter uses turbo codes, pushing data rates 10× higher than older missions at the same power.", "visual": "🏎️" },
+        "climax": { "text": "Every stunning image of Saturn's rings and Pluto's heart traveled billions of miles error-free thanks to coding theory.", "visual": "🪐" },
+        "punchline": { "text": "Billions of miles. Trillions of times weaker. Zero errors.", "visual": "✨" }
+      },
+      "quiz": {
+        "question": "How does NASA protect deep-space data?",
+        "options": ["By transmitting at high power", "By using concatenated error-correcting codes", "By sending data only once"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch06-error-correction-everywhere",
+      "title": "Error Correction in Storage",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your SSD silently corrects thousands of bit errors every second. You never notice because the codes work perfectly.", "visual": "💾" },
+        "buildup": { "text": "Flash memory degrades with each write cycle. After thousands of writes, cells become unreliable.", "visual": "📉" },
+        "discovery": { "text": "SSDs use BCH or LDPC codes internally. As cells age, the controller switches to stronger codes with more redundancy.", "visual": "🔧" },
+        "twist": { "text": "Hard drives are similar: each sector has ECC bytes. Without them, drives would fail within hours of use.", "visual": "🖴" },
+        "climax": { "text": "RAID systems add another layer: disk-level redundancy so an entire drive can fail without losing data.", "visual": "🏗️" },
+        "punchline": { "text": "Your data survives because layers of codes protect it.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why do SSDs need increasingly strong error correction over time?",
+        "options": ["Data gets larger", "Flash memory cells degrade with each write cycle", "The controller slows down"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch06-error-correction-everywhere",
+      "title": "Error Correction in 5G",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "5G promises gigabit speeds over radio waves bouncing off buildings. Error correction makes that wild claim real.", "visual": "📶" },
+        "buildup": { "text": "Radio channels are harsh: multipath fading, interference, and mobility cause unpredictable error patterns.", "visual": "🏙️" },
+        "discovery": { "text": "5G NR uses LDPC codes for data channels and polar codes for control channels. Both approach Shannon's limit.", "visual": "📐" },
+        "twist": { "text": "Adaptive modulation and coding adjust the code rate in real time. Good signal? Less protection, more speed.", "visual": "⚡" },
+        "climax": { "text": "The combination of near-capacity codes and adaptive rates lets 5G deliver reliable gigabit speeds in messy environments.", "visual": "🎯" },
+        "punchline": { "text": "Bouncing signals, moving phones. Codes keep data intact.", "visual": "📱" }
+      },
+      "quiz": {
+        "question": "Which two code families does 5G NR use?",
+        "options": ["Hamming and CRC", "LDPC for data and polar codes for control", "Turbo and convolutional"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch06-error-correction-everywhere",
+      "title": "DNA Data Storage",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Researchers stored a movie in DNA. It survived for years. Error correction ensured every frame was intact.", "visual": "🧬" },
+        "buildup": { "text": "DNA stores data in four bases (A, T, C, G). Synthesis and sequencing introduce insertions, deletions, and substitutions.", "visual": "🔬" },
+        "discovery": { "text": "Reed-Solomon and fountain codes add redundancy across DNA strands. Even if some strands degrade, data survives.", "visual": "🛡️" },
+        "twist": { "text": "DNA can last thousands of years in cold storage. It's the densest storage medium ever: one gram holds 215 petabytes.", "visual": "❄️" },
+        "climax": { "text": "Error correction is what makes DNA data storage practical despite biology's messy chemistry.", "visual": "⚗️" },
+        "punchline": { "text": "Biology makes errors. Coding theory fixes them.", "visual": "🧬" }
+      },
+      "quiz": {
+        "question": "What types of errors affect DNA data storage?",
+        "options": ["Only bit flips", "Insertions, deletions, and substitutions", "Only complete strand loss"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--error-correction--ch06-error-correction-everywhere",
+      "title": "Error Correction and You",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You sent a text message today. It hopped through radio, fiber, routers, and servers. Codes protected it at every step.", "visual": "💬" },
+        "buildup": { "text": "Layer upon layer of error detection and correction operates invisibly in every digital device you use.", "visual": "📱" },
+        "discovery": { "text": "Your phone: polar and LDPC codes. Your SSD: BCH codes. Your Wi-Fi: convolutional codes. Your Blu-ray: Reed-Solomon.", "visual": "🔗" },
+        "twist": { "text": "If all error correction suddenly vanished, digital civilization would collapse in seconds. Every bit would be suspect.", "visual": "💥" },
+        "climax": { "text": "Shannon proved perfection through noise was possible. Engineers built the codes. You reap the benefits daily.", "visual": "🌍" },
+        "punchline": { "text": "Silent, invisible, everywhere. Error correction holds it all.", "visual": "🤲" }
+      },
+      "quiz": {
+        "question": "What would happen if all error correction were removed from digital systems?",
+        "options": ["Nothing noticeable", "Digital communication and storage would become unreliable", "Only old devices would be affected"],
+        "correct": 1
+      }
+    }
+  ]
+}

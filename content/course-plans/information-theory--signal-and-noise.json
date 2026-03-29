@@ -1,0 +1,559 @@
+{
+  "categoryId": "information-theory",
+  "subject": "Information Theory",
+  "courseId": "information-theory--signal-and-noise",
+  "courseTitle": "Signal and Noise",
+  "emoji": "📡",
+  "color": "#0288D1",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "information-theory--signal-and-noise--ch01-what-is-a-signal", "title": "What Is a Signal?", "position": 1 },
+    { "id": "information-theory--signal-and-noise--ch02-the-nature-of-noise", "title": "The Nature of Noise", "position": 2 },
+    { "id": "information-theory--signal-and-noise--ch03-channel-capacity", "title": "Channel Capacity", "position": 3 },
+    { "id": "information-theory--signal-and-noise--ch04-modulation-and-encoding", "title": "Modulation and Encoding", "position": 4 },
+    { "id": "information-theory--signal-and-noise--ch05-filtering-and-detection", "title": "Filtering and Detection", "position": 5 },
+    { "id": "information-theory--signal-and-noise--ch06-signal-processing-in-life", "title": "Signal Processing in Life", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch01-what-is-a-signal",
+      "title": "Signals Carry Information",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A lighthouse blinks in the dark. Each pattern of flashes tells ships exactly where the rocks are.", "visual": "🏠" },
+        "buildup": { "text": "A signal is any physical quantity that varies over time or space to convey information.", "visual": "📊" },
+        "discovery": { "text": "Sound waves, radio waves, voltage pulses, and light flashes are all signals carrying structured information.", "visual": "🌊" },
+        "twist": { "text": "The signal itself has no meaning. Meaning comes from the agreed code between sender and receiver.", "visual": "🤝" },
+        "climax": { "text": "Shannon separated the engineering problem from meaning. His job: move the signal reliably, not interpret it.", "visual": "🔧" },
+        "punchline": { "text": "A signal is a pattern. The pattern is the message.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "What makes something a signal?",
+        "options": ["It must be electronic", "It varies to convey information", "It must be visible"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch01-what-is-a-signal",
+      "title": "Analog vs Digital",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A vinyl record stores sound as a continuous groove. A CD stores it as billions of discrete ones and zeros.", "visual": "💿" },
+        "buildup": { "text": "Analog signals are continuous—infinite values at infinite time points. Digital signals are discrete steps.", "visual": "📐" },
+        "discovery": { "text": "Digital signals can be copied perfectly. Analog signals degrade with every copy as noise accumulates.", "visual": "📋" },
+        "twist": { "text": "Digitization loses information—rounding continuous values to steps. But the tradeoff is near-perfect reliability.", "visual": "✂️" },
+        "climax": { "text": "The digital revolution happened because discrete signals resist noise. Error correction is possible, perfection isn't.", "visual": "🛡️" },
+        "punchline": { "text": "Continuous is natural. Discrete is reliable.", "visual": "🔢" }
+      },
+      "quiz": {
+        "question": "Why did digital signals replace analog in most systems?",
+        "options": ["They sound better", "They resist noise and can be copied perfectly", "They're cheaper to produce"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch01-what-is-a-signal",
+      "title": "Bandwidth",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A telephone line carries voices. A fiber optic cable carries Netflix. The difference is bandwidth.", "visual": "🔌" },
+        "buildup": { "text": "Bandwidth is the range of frequencies a channel can transmit. Wider bandwidth means more data per second.", "visual": "📏" },
+        "discovery": { "text": "Human speech needs about 4 kHz. HD video needs millions of times more. Each application has bandwidth demands.", "visual": "📺" },
+        "twist": { "text": "Bandwidth is finite and expensive. Every wireless device competes for the same limited radio spectrum.", "visual": "📡" },
+        "climax": { "text": "Compression, multiplexing, and clever encoding squeeze more information into less bandwidth every year.", "visual": "🗜️" },
+        "punchline": { "text": "Wider pipe, more data. But pipes aren't free.", "visual": "💰" }
+      },
+      "quiz": {
+        "question": "What does bandwidth measure?",
+        "options": ["Signal strength", "The range of frequencies a channel can carry", "The physical size of a cable"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch01-what-is-a-signal",
+      "title": "The Nyquist Sampling Theorem",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "CD audio samples sound 44,100 times per second. That specific number isn't arbitrary—it's the minimum required.", "visual": "🎵" },
+        "buildup": { "text": "Nyquist proved: to perfectly capture a signal, sample at least twice its highest frequency.", "visual": "📐" },
+        "discovery": { "text": "Human hearing tops out at about 20 kHz. Twice that is 40 kHz. CDs use 44.1 kHz to add a safety margin.", "visual": "👂" },
+        "twist": { "text": "Sample below the Nyquist rate and you get aliasing: phantom frequencies that weren't in the original signal.", "visual": "👻" },
+        "climax": { "text": "This theorem bridges analog and digital. It guarantees perfect reconstruction from enough discrete samples.", "visual": "🌉" },
+        "punchline": { "text": "Sample fast enough and nothing is lost.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What does the Nyquist theorem require?",
+        "options": ["Sample once per cycle", "Sample at least twice the highest frequency", "Sample as fast as possible"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch01-what-is-a-signal",
+      "title": "Fourier's Gift",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Every sound you hear—a violin, a voice, a car horn—is just a sum of pure sine waves at different frequencies.", "visual": "🎻" },
+        "buildup": { "text": "Fourier proved in 1807 that any periodic signal can be decomposed into a sum of simple sine waves.", "visual": "🌊" },
+        "discovery": { "text": "The Fourier transform converts a signal from time domain to frequency domain, revealing its hidden structure.", "visual": "🔍" },
+        "twist": { "text": "This is why your phone equalizer works. It adjusts individual frequency bands, thanks to Fourier decomposition.", "visual": "🎛️" },
+        "climax": { "text": "MP3, JPEG, MRI, and speech recognition all depend on Fourier analysis. It's the backbone of signal processing.", "visual": "🏗️" },
+        "punchline": { "text": "Any signal is just sine waves in disguise.", "visual": "〰️" }
+      },
+      "quiz": {
+        "question": "What does the Fourier transform reveal?",
+        "options": ["The volume of a signal", "The frequency components that make up a signal", "The origin of a signal"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch02-the-nature-of-noise",
+      "title": "What Is Noise",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Static on an old radio. Snow on an analog TV. Hiss on a phone call. That's noise: the enemy of every signal.", "visual": "📻" },
+        "buildup": { "text": "Noise is any unwanted disturbance added to a signal during transmission, storage, or processing.", "visual": "🌀" },
+        "discovery": { "text": "Thermal noise comes from random electron motion. It exists in every conductor above absolute zero.", "visual": "🌡️" },
+        "twist": { "text": "You can never eliminate noise completely. The laws of thermodynamics guarantee a minimum noise floor.", "visual": "📉" },
+        "climax": { "text": "Engineering doesn't fight noise head-on. It designs systems that work correctly despite the noise.", "visual": "🛡️" },
+        "punchline": { "text": "Noise is physics. Engineering is the workaround.", "visual": "🔧" }
+      },
+      "quiz": {
+        "question": "Why can't noise be completely eliminated?",
+        "options": ["We lack the technology", "Thermal noise is guaranteed by thermodynamics", "Signals create noise"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch02-the-nature-of-noise",
+      "title": "Signal-to-Noise Ratio",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Shouting in a quiet library is easy to hear. Whispering at a rock concert is impossible. That's SNR in action.", "visual": "🔊" },
+        "buildup": { "text": "Signal-to-noise ratio measures how much stronger the signal is compared to the background noise.", "visual": "📊" },
+        "discovery": { "text": "SNR is measured in decibels. Every 10 dB increase means the signal is ten times stronger relative to noise.", "visual": "📈" },
+        "twist": { "text": "High SNR doesn't mean no noise. It means the signal dominates enough that noise becomes ignorable.", "visual": "🏔️" },
+        "climax": { "text": "Shannon's channel capacity formula directly depends on SNR. Higher SNR means more bits per second.", "visual": "🚀" },
+        "punchline": { "text": "Louder signal, quieter noise, better communication.", "visual": "📡" }
+      },
+      "quiz": {
+        "question": "What does a higher signal-to-noise ratio indicate?",
+        "options": ["More noise", "The signal is much stronger than the noise", "The channel is slower"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch02-the-nature-of-noise",
+      "title": "White Noise",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Turn on an old TV between channels. That static hiss contains every frequency in equal measure. That's white noise.", "visual": "📺" },
+        "buildup": { "text": "White noise has a flat power spectrum: every frequency contributes equally. It's the most random possible noise.", "visual": "📊" },
+        "discovery": { "text": "Shannon used white noise as the worst-case model. If your system works against white noise, it works against anything.", "visual": "🛡️" },
+        "twist": { "text": "Real noise is rarely white. Atmospheric noise, interference, and fading create colored noise with specific patterns.", "visual": "🌈" },
+        "climax": { "text": "White noise is the theoretical baseline. It makes math tractable and gives conservative performance guarantees.", "visual": "📐" },
+        "punchline": { "text": "Every frequency, equal power. The purest chaos.", "visual": "🎲" }
+      },
+      "quiz": {
+        "question": "What defines white noise?",
+        "options": ["Only high frequencies", "Equal power across all frequencies", "No frequencies at all"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch02-the-nature-of-noise",
+      "title": "Interference",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your Wi-Fi slows down when the microwave runs. Both devices use the same 2.4 GHz band. They're fighting.", "visual": "📶" },
+        "buildup": { "text": "Interference is noise from other signals sharing the same channel. It's predictable but hard to eliminate.", "visual": "⚔️" },
+        "discovery": { "text": "Spread-spectrum techniques scatter signals across wide frequency bands, making interference much harder.", "visual": "🌊" },
+        "twist": { "text": "Cell towers reuse frequencies at safe distances. Too close and they interfere. Too far and capacity drops.", "visual": "📡" },
+        "climax": { "text": "Managing interference is the central problem of wireless communication. Spectrum is shared, finite, and contested.", "visual": "🏟️" },
+        "punchline": { "text": "Other signals are noise. Your signal is their noise too.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "Why does a microwave interfere with Wi-Fi?",
+        "options": ["It blocks the router", "Both use the same 2.4 GHz frequency band", "Microwaves destroy radio waves"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch02-the-nature-of-noise",
+      "title": "Fading",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A phone call drops when you enter an elevator. The signal didn't disappear—it faded as reflections canceled each other.", "visual": "📱" },
+        "buildup": { "text": "Fading occurs when multiple copies of a signal arrive via different paths and interfere destructively.", "visual": "🔀" },
+        "discovery": { "text": "Rayleigh fading models this: signal strength fluctuates wildly as you move even a small distance.", "visual": "📉" },
+        "twist": { "text": "MIMO antennas exploit multipath: they turn fading from an enemy into extra data paths for higher throughput.", "visual": "📡" },
+        "climax": { "text": "5G uses massive MIMO—dozens of antennas working together to combat fading and boost capacity.", "visual": "🏗️" },
+        "punchline": { "text": "Reflections fight you. Smart antennas fight back.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "What causes multipath fading?",
+        "options": ["Low battery", "Signal copies arriving via different paths and interfering", "Too many users on the network"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch03-channel-capacity",
+      "title": "Shannon's Channel Capacity",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "There's a speed limit for data. No matter how clever your code, you can never exceed the channel capacity.", "visual": "🚦" },
+        "buildup": { "text": "Shannon's formula: C = B log₂(1 + SNR). Capacity depends only on bandwidth and signal-to-noise ratio.", "visual": "📐" },
+        "discovery": { "text": "Double the bandwidth, double the capacity. Double the SNR and capacity grows—but logarithmically, not linearly.", "visual": "📈" },
+        "twist": { "text": "Shannon proved you can transmit at any rate below C with near-zero errors. Above C, errors are unavoidable.", "visual": "🎯" },
+        "climax": { "text": "Modern systems like 5G operate within 1-2 dB of Shannon's limit. We've nearly maxed out the physics.", "visual": "🏆" },
+        "punchline": { "text": "Bandwidth times log of SNR. Nature's speed limit.", "visual": "🧮" }
+      },
+      "quiz": {
+        "question": "What determines channel capacity according to Shannon?",
+        "options": ["Only the cable type", "Bandwidth and signal-to-noise ratio", "The number of connected devices"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch03-channel-capacity",
+      "title": "The Shannon Limit",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "For decades, engineers designed codes that fell far short of Shannon's limit. Nobody could close the gap.", "visual": "📏" },
+        "buildup": { "text": "Shannon proved the limit existed but didn't show how to reach it. The code that achieves capacity was unknown.", "visual": "❓" },
+        "discovery": { "text": "In 1993, turbo codes came within a fraction of a dB of Shannon's limit, stunning the coding community.", "visual": "💥" },
+        "twist": { "text": "LDPC codes, invented in 1960 but forgotten, were rediscovered and matched turbo codes. Shannon's dream was realized.", "visual": "🔄" },
+        "climax": { "text": "5G, Wi-Fi 6, and deep-space communication all use codes operating near Shannon's theoretical maximum.", "visual": "🛰️" },
+        "punchline": { "text": "The limit was set in 1948. We reached it fifty years later.", "visual": "🏁" }
+      },
+      "quiz": {
+        "question": "What happened in 1993 that changed coding theory?",
+        "options": ["Shannon published his paper", "Turbo codes came within a fraction of the Shannon limit", "The internet was invented"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch03-channel-capacity",
+      "title": "Bandwidth vs SNR Tradeoff",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You can whisper slowly in a wide hallway or shout quickly through a narrow pipe. Both carry the same information.", "visual": "🔊" },
+        "buildup": { "text": "Shannon's formula reveals a fundamental tradeoff: you can trade bandwidth for SNR and vice versa.", "visual": "⚖️" },
+        "discovery": { "text": "Spread-spectrum exploits this: use enormous bandwidth at very low power. GPS signals are weaker than background noise.", "visual": "🛰️" },
+        "twist": { "text": "Narrowband systems need high power to achieve the same capacity. Wideband systems can whisper and still deliver.", "visual": "🤫" },
+        "climax": { "text": "This tradeoff shapes every wireless standard. 5G uses wider bands; satellite links use higher power.", "visual": "📡" },
+        "punchline": { "text": "Wide and quiet, or narrow and loud. Same data.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "What does Shannon's formula show about bandwidth and SNR?",
+        "options": ["They're unrelated", "You can trade one for the other to maintain capacity", "Both must always increase together"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch03-channel-capacity",
+      "title": "The Capacity of Wireless Channels",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your phone downloads videos in seconds. The same airwaves that carried Morse code now carry gigabits.", "visual": "📱" },
+        "buildup": { "text": "Wireless capacity depends on bandwidth, SNR, and the number of independent signal paths available.", "visual": "📊" },
+        "discovery": { "text": "MIMO multiplies capacity by transmitting different data on multiple antennas simultaneously.", "visual": "📡" },
+        "twist": { "text": "Shannon's formula assumed one path. With MIMO, capacity scales with the minimum of transmit and receive antennas.", "visual": "🚀" },
+        "climax": { "text": "Massive MIMO with 64+ antennas serves many users at once, approaching the theoretical limits of wireless channels.", "visual": "🏗️" },
+        "punchline": { "text": "More antennas, more paths, more data. Physics cooperates.", "visual": "✨" }
+      },
+      "quiz": {
+        "question": "How does MIMO increase wireless capacity?",
+        "options": ["By increasing power", "By using multiple antennas for parallel data streams", "By reducing noise"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch03-channel-capacity",
+      "title": "Approaching Channel Limits",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Voyager 1 sends data from 15 billion miles away at 160 bits per second. Every bit is precious and near-perfect.", "visual": "🛰️" },
+        "buildup": { "text": "Deep-space links operate at extremely low SNR. Codes must extract every last bit of capacity from the channel.", "visual": "📡" },
+        "discovery": { "text": "NASA uses codes that operate within 1 dB of Shannon's limit. The math from 1948 guides spacecraft in 2025.", "visual": "🚀" },
+        "twist": { "text": "At Shannon's limit, complexity explodes. Practical codes balance performance against decoding speed and power.", "visual": "⚡" },
+        "climax": { "text": "The gap between theory and practice shrinks every decade. Shannon's limit remains the ultimate benchmark.", "visual": "🎯" },
+        "punchline": { "text": "Fifteen billion miles. Every bit accounted for.", "visual": "🌌" }
+      },
+      "quiz": {
+        "question": "How close do modern deep-space codes get to Shannon's limit?",
+        "options": ["Within about 1 dB", "About 50% of capacity", "They haven't approached it yet"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch04-modulation-and-encoding",
+      "title": "Modulation Basics",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A digital message is ones and zeros. A radio channel carries waves. Modulation translates between the two.", "visual": "🌊" },
+        "buildup": { "text": "Modulation encodes information by varying a carrier wave's amplitude, frequency, or phase.", "visual": "📊" },
+        "discovery": { "text": "AM radio varies amplitude. FM radio varies frequency. Wi-Fi varies phase. Each trades different properties.", "visual": "📻" },
+        "twist": { "text": "Higher-order modulation packs more bits per symbol but requires higher SNR. It's a precision game.", "visual": "🎯" },
+        "climax": { "text": "Modern LTE uses 256-QAM: 8 bits per symbol, arranged in a 16×16 grid of precise amplitude-phase points.", "visual": "📐" },
+        "punchline": { "text": "Wiggle the wave differently. Each wiggle is data.", "visual": "〰️" }
+      },
+      "quiz": {
+        "question": "What does modulation do?",
+        "options": ["Removes noise from signals", "Encodes information onto a carrier wave", "Increases signal power"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch04-modulation-and-encoding",
+      "title": "Amplitude Modulation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "AM radio has broadcast since the 1920s. The signal's strength rises and falls to carry the sound wave's shape.", "visual": "📻" },
+        "buildup": { "text": "Amplitude modulation varies the carrier wave's height proportionally to the message signal.", "visual": "📈" },
+        "discovery": { "text": "AM is simple and cheap. One detector circuit can demodulate it. That simplicity made radio accessible worldwide.", "visual": "🌍" },
+        "twist": { "text": "AM is highly vulnerable to noise. Noise directly corrupts amplitude, so AM signals degrade in storms and near machines.", "visual": "⛈️" },
+        "climax": { "text": "FM largely replaced AM for music because frequency is more noise-resistant than amplitude.", "visual": "🎵" },
+        "punchline": { "text": "Vary the height. Simple but fragile.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "Why is AM radio vulnerable to noise?",
+        "options": ["It uses too much bandwidth", "Noise directly affects the signal's amplitude", "AM transmitters are weak"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch04-modulation-and-encoding",
+      "title": "Frequency Modulation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "FM radio sounds clearer than AM in a thunderstorm. The secret: information is in the frequency, not the amplitude.", "visual": "🎵" },
+        "buildup": { "text": "Frequency modulation varies how fast the carrier wave oscillates. Amplitude stays constant.", "visual": "〰️" },
+        "discovery": { "text": "Since noise mainly affects amplitude, FM signals resist interference far better than AM signals.", "visual": "🛡️" },
+        "twist": { "text": "FM uses more bandwidth than AM. That wider spectrum is the price for noise resistance. Another Shannon tradeoff.", "visual": "📏" },
+        "climax": { "text": "FM broadcasts, emergency radios, and aviation communication all rely on FM's noise resilience.", "visual": "✈️" },
+        "punchline": { "text": "Vary the speed, ignore the volume. Noise can't touch it.", "visual": "💪" }
+      },
+      "quiz": {
+        "question": "Why is FM more noise-resistant than AM?",
+        "options": ["FM uses higher power", "Information is in frequency, which noise doesn't easily affect", "FM signals travel further"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch04-modulation-and-encoding",
+      "title": "Phase Modulation and QAM",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Wi-Fi, 4G, and 5G don't vary loudness or pitch. They vary the wave's phase—its timing relative to a reference.", "visual": "⏱️" },
+        "buildup": { "text": "Phase modulation encodes bits by shifting the carrier wave's position in its cycle.", "visual": "🔄" },
+        "discovery": { "text": "QAM combines amplitude and phase. Each symbol is a point in a constellation diagram carrying multiple bits.", "visual": "✨" },
+        "twist": { "text": "256-QAM packs 8 bits per symbol but needs very high SNR. Points are so close that any noise causes errors.", "visual": "📐" },
+        "climax": { "text": "Adaptive modulation switches between schemes based on channel quality—fast when clear, robust when noisy.", "visual": "🔀" },
+        "punchline": { "text": "Shift the timing. Pack more bits. Accept the risk.", "visual": "🎰" }
+      },
+      "quiz": {
+        "question": "What does QAM combine?",
+        "options": ["Frequency and time", "Amplitude and phase modulation", "Two different signals"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch04-modulation-and-encoding",
+      "title": "OFDM: Dividing the Spectrum",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Wi-Fi sends data on dozens of tiny sub-channels at once. If one is jammed, the others carry on.", "visual": "📶" },
+        "buildup": { "text": "OFDM splits a wide channel into many narrow orthogonal sub-carriers, each carrying a small piece of data.", "visual": "🔀" },
+        "discovery": { "text": "Orthogonality means sub-carriers don't interfere with each other despite overlapping in frequency.", "visual": "🧩" },
+        "twist": { "text": "OFDM turns one difficult wideband channel into many easy narrowband channels. Each can be independently optimized.", "visual": "🎛️" },
+        "climax": { "text": "4G, 5G, Wi-Fi, and digital TV all use OFDM. It's the dominant modulation scheme of the modern era.", "visual": "🌐" },
+        "punchline": { "text": "Many narrow lanes beat one wide highway.", "visual": "🛣️" }
+      },
+      "quiz": {
+        "question": "What does OFDM do?",
+        "options": ["Increases transmitter power", "Splits a wide channel into many narrow sub-carriers", "Eliminates all noise"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch05-filtering-and-detection",
+      "title": "Filtering Noise",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A noisy photo can be smoothed. A crackly recording can be cleaned. Filters separate signal from noise.", "visual": "🖼️" },
+        "buildup": { "text": "A filter passes certain frequencies and blocks others. Low-pass filters remove high-frequency noise.", "visual": "🚰" },
+        "discovery": { "text": "The Wiener filter is optimal: it minimizes the expected difference between the filtered and original signal.", "visual": "🎯" },
+        "twist": { "text": "Filtering always loses some signal. Aggressive noise removal smears details. The tradeoff is fundamental.", "visual": "⚖️" },
+        "climax": { "text": "AI denoising learns the difference between noise and signal from millions of examples. It outperforms classical filters.", "visual": "🤖" },
+        "punchline": { "text": "Remove the noise, keep the signal. Easier said than done.", "visual": "🔧" }
+      },
+      "quiz": {
+        "question": "What tradeoff does filtering involve?",
+        "options": ["Speed vs accuracy", "Removing noise vs preserving signal detail", "Cost vs quality"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch05-filtering-and-detection",
+      "title": "Matched Filters",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Radar knows the exact pulse it sent. The optimal receiver is a filter shaped exactly like that pulse.", "visual": "📡" },
+        "buildup": { "text": "A matched filter maximizes SNR at the output by correlating the received signal with the known transmitted shape.", "visual": "📊" },
+        "discovery": { "text": "The math proves it: no other filter can achieve a higher peak SNR at the detection moment.", "visual": "🏆" },
+        "twist": { "text": "The matched filter is optimal only for known signals in white noise. Real-world noise requires modifications.", "visual": "🔧" },
+        "climax": { "text": "Radar, sonar, GPS, and digital communication receivers all use matched filtering as their foundation.", "visual": "🏗️" },
+        "punchline": { "text": "Know what you sent. Build a filter that listens for exactly that.", "visual": "👂" }
+      },
+      "quiz": {
+        "question": "What does a matched filter maximize?",
+        "options": ["Bandwidth", "Signal-to-noise ratio at the output", "Transmission speed"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch05-filtering-and-detection",
+      "title": "Signal Detection Theory",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A doctor reads a blurry scan. Is that shadow a tumor or just noise? Signal detection theory frames the answer.", "visual": "🏥" },
+        "buildup": { "text": "Detection is a decision: signal present or absent? Two errors lurk: false alarm and missed detection.", "visual": "⚖️" },
+        "discovery": { "text": "Setting the threshold trades off the two errors. Lower the bar and catch more signals—but also more false alarms.", "visual": "📉" },
+        "twist": { "text": "The ROC curve plots this tradeoff. A perfect detector reaches the top-left corner. Random guessing is the diagonal.", "visual": "📈" },
+        "climax": { "text": "This framework governs spam filters, radar, medical tests, and any system that must decide under uncertainty.", "visual": "🌐" },
+        "punchline": { "text": "Detect more, but cry wolf more often. Choose your tradeoff.", "visual": "🐺" }
+      },
+      "quiz": {
+        "question": "What does the ROC curve show?",
+        "options": ["Signal strength over time", "The tradeoff between detection rate and false alarms", "How noise changes frequency"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch05-filtering-and-detection",
+      "title": "Spread Spectrum",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "GPS satellites transmit below the noise floor. The signal is weaker than static—yet your phone finds it perfectly.", "visual": "🛰️" },
+        "buildup": { "text": "Spread spectrum spreads a signal across a wide frequency band using a pseudorandom code known to the receiver.", "visual": "🔀" },
+        "discovery": { "text": "The receiver correlates with the code, concentrating the signal back while noise stays spread. SNR jumps dramatically.", "visual": "📈" },
+        "twist": { "text": "Hedy Lamarr co-invented frequency hopping in 1942 for torpedo guidance. It became the basis of modern spread spectrum.", "visual": "🎬" },
+        "climax": { "text": "CDMA, GPS, Bluetooth, and military radios all use spread spectrum for resilience, security, and interference rejection.", "visual": "🛡️" },
+        "punchline": { "text": "Hide in the noise. Only the right code finds you.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "How does a spread spectrum receiver extract the signal?",
+        "options": ["By amplifying everything", "By correlating with a known pseudorandom code", "By blocking all noise"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch05-filtering-and-detection",
+      "title": "Equalization",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A signal arrives smeared and distorted after bouncing through cables and air. Equalization reverses the damage.", "visual": "🔄" },
+        "buildup": { "text": "Channels distort signals: some frequencies get amplified, others attenuated. The signal shape changes.", "visual": "📊" },
+        "discovery": { "text": "An equalizer applies the inverse of the channel's distortion, restoring the original signal shape.", "visual": "↩️" },
+        "twist": { "text": "The channel changes over time. Adaptive equalizers continuously adjust their correction using training sequences.", "visual": "🏃" },
+        "climax": { "text": "Without equalization, high-speed internet over copper or wireless would be impossible. It's silent and essential.", "visual": "🌐" },
+        "punchline": { "text": "The channel distorts. The equalizer undoes it. Quietly.", "visual": "🔇" }
+      },
+      "quiz": {
+        "question": "What does an equalizer do in communication?",
+        "options": ["Boosts signal power", "Reverses channel distortion to restore the signal", "Removes all noise"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch06-signal-processing-in-life",
+      "title": "How Your Ears Work",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your inner ear contains 3,500 hair cells arranged by frequency—a biological Fourier transform running constantly.", "visual": "👂" },
+        "buildup": { "text": "Sound enters the cochlea. High frequencies vibrate near the base, low frequencies near the tip.", "visual": "🐚" },
+        "discovery": { "text": "Each hair cell responds to a narrow frequency band. Together, they decompose sound into its frequency components.", "visual": "🎵" },
+        "twist": { "text": "Your brain reassembles these frequencies into voices, music, and warnings—all in milliseconds, using neural processing.", "visual": "🧠" },
+        "climax": { "text": "Cochlear implants replicate this: they stimulate hair cells electrically, restoring hearing through signal processing.", "visual": "🦻" },
+        "punchline": { "text": "Your ear is a spectrum analyzer. Evolution built it first.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "How does the cochlea process sound?",
+        "options": ["It amplifies everything equally", "Different positions respond to different frequencies", "It converts sound to light"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch06-signal-processing-in-life",
+      "title": "Image Compression",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A raw photo from your phone is 30 MB. JPEG shrinks it to 3 MB. You can't tell the difference.", "visual": "📸" },
+        "buildup": { "text": "JPEG uses the discrete cosine transform to convert pixel blocks into frequency components.", "visual": "🔢" },
+        "discovery": { "text": "The eye is less sensitive to high-frequency detail. JPEG discards those components first, saving the most space.", "visual": "👁️" },
+        "twist": { "text": "Push compression too far and blocky artifacts appear—the hallmark of over-compressed JPEG images.", "visual": "🟫" },
+        "climax": { "text": "Information theory defines the minimum: you can't compress below the image's entropy without losing quality.", "visual": "📏" },
+        "punchline": { "text": "Remove what eyes can't see. Keep what matters.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "How does JPEG achieve compression?",
+        "options": ["By making images smaller", "By discarding high-frequency detail the eye can't see", "By converting to black and white"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch06-signal-processing-in-life",
+      "title": "Noise Cancellation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your headphones detect engine roar, generate the exact opposite wave, and cancel it. Destructive interference.", "visual": "🎧" },
+        "buildup": { "text": "Active noise cancellation uses microphones to sample ambient noise and speakers to emit an anti-phase signal.", "visual": "🔇" },
+        "discovery": { "text": "The anti-noise must be precisely timed. Even microseconds of delay reduce cancellation effectiveness.", "visual": "⏱️" },
+        "twist": { "text": "ANC works best on steady, low-frequency noise. Sudden sharp sounds are too fast for the system to cancel.", "visual": "💥" },
+        "climax": { "text": "Modern ANC combines feedforward and feedback paths, adapting hundreds of times per second to changing noise.", "visual": "🔄" },
+        "punchline": { "text": "Fight sound with sound. Silence through addition.", "visual": "🤫" }
+      },
+      "quiz": {
+        "question": "How does active noise cancellation work?",
+        "options": ["It blocks sound physically", "It emits an anti-phase signal to cancel noise", "It increases music volume"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch06-signal-processing-in-life",
+      "title": "Medical Imaging",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An MRI scanner sees inside your body without a single cut. Pure signal processing turns radio echoes into anatomy.", "visual": "🏥" },
+        "buildup": { "text": "MRI excites hydrogen atoms with radio pulses. Different tissues relax at different rates, creating contrast.", "visual": "⚛️" },
+        "discovery": { "text": "Fourier transforms convert the raw signals from frequency space into spatial images—slice by precise slice.", "visual": "🔍" },
+        "twist": { "text": "Noise limits resolution. Signal averaging, surface coils, and compressed sensing push quality further each decade.", "visual": "📈" },
+        "climax": { "text": "From X-rays to CT to MRI to ultrasound, every medical image is a triumph of signal extraction from noise.", "visual": "🩻" },
+        "punchline": { "text": "Radio waves in, anatomy out. Signal processing saves lives.", "visual": "💓" }
+      },
+      "quiz": {
+        "question": "What role does signal processing play in MRI?",
+        "options": ["It generates the magnetic field", "It converts radio signals into anatomical images", "It powers the scanner"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--signal-and-noise--ch06-signal-processing-in-life",
+      "title": "Signal Processing in AI",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Siri hears your voice through noise, traffic, and wind. Signal processing cleans the audio before AI interprets it.", "visual": "🗣️" },
+        "buildup": { "text": "Speech recognition starts with filtering, spectral analysis, and feature extraction—all signal processing.", "visual": "📊" },
+        "discovery": { "text": "Convolutional neural networks are essentially learned filters. They extract features the same way classical filters do.", "visual": "🧠" },
+        "twist": { "text": "AI didn't replace signal processing. It learned to do it automatically from data instead of hand-tuned equations.", "visual": "🔄" },
+        "climax": { "text": "Self-driving cars, medical AI, and language models all begin with signal processing as their sensory front end.", "visual": "🚗" },
+        "punchline": { "text": "AI listens, sees, and senses. Signal processing is how.", "visual": "👁️" }
+      },
+      "quiz": {
+        "question": "How does signal processing relate to AI?",
+        "options": ["They're unrelated fields", "Signal processing prepares raw data for AI to interpret", "AI has replaced all signal processing"],
+        "correct": 1
+      }
+    }
+  ]
+}

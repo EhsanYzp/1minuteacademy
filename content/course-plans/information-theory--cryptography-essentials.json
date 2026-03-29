@@ -1,0 +1,559 @@
+{
+  "categoryId": "information-theory",
+  "subject": "Information Theory",
+  "courseId": "information-theory--cryptography-essentials",
+  "courseTitle": "Cryptography Essentials",
+  "emoji": "🔐",
+  "color": "#0288D1",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "information-theory--cryptography-essentials--ch01-secrets-and-ciphers", "title": "Secrets and Ciphers", "position": 1 },
+    { "id": "information-theory--cryptography-essentials--ch02-symmetric-encryption", "title": "Symmetric Encryption", "position": 2 },
+    { "id": "information-theory--cryptography-essentials--ch03-public-key-cryptography", "title": "Public-Key Cryptography", "position": 3 },
+    { "id": "information-theory--cryptography-essentials--ch04-information-theoretic-security", "title": "Information-Theoretic Security", "position": 4 },
+    { "id": "information-theory--cryptography-essentials--ch05-hashing-and-authentication", "title": "Hashing and Authentication", "position": 5 },
+    { "id": "information-theory--cryptography-essentials--ch06-cryptography-in-the-real-world", "title": "Cryptography in the Real World", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch01-secrets-and-ciphers",
+      "title": "Why Secrets Need Math",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Julius Caesar shifted each letter three places to hide his orders. It fooled centurions but not mathematicians.", "visual": "📜" },
+        "buildup": { "text": "For centuries, secrecy relied on clever tricks. Frequency analysis cracked almost every classical cipher.", "visual": "📊" },
+        "discovery": { "text": "Shannon proved in 1949 that truly unbreakable encryption exists, but only under strict conditions.", "visual": "🔒" },
+        "twist": { "text": "Security isn't about hiding methods. It's about making the math so hard that breaking it takes centuries.", "visual": "🧮" },
+        "climax": { "text": "Modern cryptography assumes the enemy knows the system. Only the key is secret.", "visual": "🔑" },
+        "punchline": { "text": "Hide the key, not the method.", "visual": "🗝️" }
+      },
+      "quiz": {
+        "question": "What did Shannon prove about encryption?",
+        "options": ["All encryption can be broken", "Truly unbreakable encryption exists under strict conditions", "Caesar ciphers are still secure"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch01-secrets-and-ciphers",
+      "title": "The Caesar Cipher",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Shift every letter by three: A becomes D, B becomes E. Caesar used this to protect military dispatches.", "visual": "🏛️" },
+        "buildup": { "text": "The cipher has only 25 possible keys. An attacker can try all of them in seconds.", "visual": "⏱️" },
+        "discovery": { "text": "Frequency analysis broke it: E is the most common letter, so the most frequent ciphertext letter is probably E.", "visual": "📈" },
+        "twist": { "text": "The lesson: a small key space means security through obscurity only. Brute force always wins.", "visual": "💪" },
+        "climax": { "text": "Caesar's cipher is terrible cryptography but a perfect teaching tool for what not to do.", "visual": "📚" },
+        "punchline": { "text": "Twenty-five guesses. That's not security.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why is the Caesar cipher insecure?",
+        "options": ["The alphabet is too long", "There are only 25 possible keys to try", "It only works in Latin"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch01-secrets-and-ciphers",
+      "title": "Substitution Ciphers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Replace each letter with a different letter: A becomes Q, B becomes X. The key space explodes to 26 factorial.", "visual": "🔤" },
+        "buildup": { "text": "With 400 septillion possible keys, brute force is impossible. So substitution ciphers seem unbreakable.", "visual": "🤯" },
+        "discovery": { "text": "Al-Kindi cracked them around 850 AD using frequency analysis. Letter patterns betray the substitution.", "visual": "🕵️" },
+        "twist": { "text": "English E appears roughly 13% of the time. The most common ciphertext letter is almost certainly E.", "visual": "📊" },
+        "climax": { "text": "A huge key space means nothing if the ciphertext leaks statistical patterns from the plaintext.", "visual": "💧" },
+        "punchline": { "text": "Big key space, leaky patterns. Size isn't everything.", "visual": "🔍" }
+      },
+      "quiz": {
+        "question": "How did Al-Kindi break substitution ciphers?",
+        "options": ["Brute force", "Frequency analysis of letter patterns", "Social engineering"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch01-secrets-and-ciphers",
+      "title": "The Enigma Machine",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Germany's Enigma had 158 trillion possible settings. The Allies broke it anyway, shortening WWII by years.", "visual": "⚙️" },
+        "buildup": { "text": "Enigma used rotating wheels that changed the substitution with every keypress, defeating simple frequency analysis.", "visual": "🔄" },
+        "discovery": { "text": "Polish mathematicians found structural weaknesses. Turing built machines to exploit repeated patterns.", "visual": "🖥️" },
+        "twist": { "text": "The fatal flaw: Enigma never encrypted a letter as itself. That single rule gave codebreakers a foothold.", "visual": "🚪" },
+        "climax": { "text": "Breaking Enigma showed that complexity alone isn't security. Structural flaws can undo any machine.", "visual": "🔨" },
+        "punchline": { "text": "One design rule. One fatal weakness.", "visual": "💀" }
+      },
+      "quiz": {
+        "question": "What structural flaw helped break Enigma?",
+        "options": ["Too few rotors", "A letter could never encrypt as itself", "The machine was too slow"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch01-secrets-and-ciphers",
+      "title": "Kerckhoffs' Principle",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 1883, Auguste Kerckhoffs declared that a cipher must be secure even if everything about it is public.", "visual": "📰" },
+        "buildup": { "text": "Before Kerckhoffs, militaries relied on secrecy of the whole system. Capture one device and everything collapses.", "visual": "🏳️" },
+        "discovery": { "text": "His principle: only the key should be secret. The algorithm can be published without weakening security.", "visual": "📖" },
+        "twist": { "text": "This is why AES, RSA, and every major standard is fully public. Openness invites attack, which builds trust.", "visual": "🛡️" },
+        "climax": { "text": "Secret algorithms hide weaknesses. Public algorithms expose them so they can be fixed before enemies find them.", "visual": "🔎" },
+        "punchline": { "text": "Publish the lock design. Just guard the key.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does Kerckhoffs' principle state?",
+        "options": ["Keep the entire system secret", "Only the key needs to be secret", "Never publish algorithms"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch02-symmetric-encryption",
+      "title": "One Key, Two Roles",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You lock a box with a key. Your friend opens it with the same key. That's symmetric encryption in one sentence.", "visual": "📦" },
+        "buildup": { "text": "Symmetric encryption uses one shared secret key for both locking and unlocking.", "visual": "🔑" },
+        "discovery": { "text": "It's fast and efficient. AES encrypts gigabytes per second on modern hardware.", "visual": "⚡" },
+        "twist": { "text": "The problem: how do you share the key securely in the first place? If an attacker intercepts it, all is lost.", "visual": "🕵️" },
+        "climax": { "text": "This key distribution problem drove the invention of public-key cryptography decades later.", "visual": "💡" },
+        "punchline": { "text": "Same key locks and unlocks. Sharing it is the hard part.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "What is the main challenge of symmetric encryption?",
+        "options": ["It's too slow", "Sharing the secret key securely", "It only works with small files"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch02-symmetric-encryption",
+      "title": "The One-Time Pad",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "XOR your message with a random key as long as the message. Shannon proved this is mathematically unbreakable.", "visual": "🎲" },
+        "buildup": { "text": "The one-time pad achieves perfect secrecy: the ciphertext reveals zero information about the plaintext.", "visual": "🔐" },
+        "discovery": { "text": "Every possible plaintext maps to the same ciphertext with equal probability. There's nothing to crack.", "visual": "🌫️" },
+        "twist": { "text": "The catch: the key must be truly random, used exactly once, and as long as the message. That's impractical at scale.", "visual": "📏" },
+        "climax": { "text": "The Washington-Moscow hotline used one-time pads. Perfect security for the highest-stakes messages.", "visual": "☎️" },
+        "punchline": { "text": "Unbreakable by math. Impractical by logistics.", "visual": "📦" }
+      },
+      "quiz": {
+        "question": "Why is the one-time pad rarely used in practice?",
+        "options": ["It's been broken", "The key must be as long as the message and used only once", "It's too slow"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch02-symmetric-encryption",
+      "title": "Block Ciphers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Cut your message into fixed-size blocks. Encrypt each block with the same key. That's a block cipher.", "visual": "🧱" },
+        "buildup": { "text": "DES used 64-bit blocks and 56-bit keys. It dominated the 1970s until computers got fast enough to crack it.", "visual": "🖥️" },
+        "discovery": { "text": "AES replaced DES in 2001 with 128-bit blocks and keys up to 256 bits. Brute force is computationally impossible.", "visual": "🏰" },
+        "twist": { "text": "Block ciphers need modes of operation. Encrypting blocks independently leaks patterns in repeated data.", "visual": "🐧" },
+        "climax": { "text": "CBC, CTR, and GCM modes chain blocks together, hiding patterns and adding integrity checks.", "visual": "🔗" },
+        "punchline": { "text": "Same key, fixed blocks, careful chaining.", "visual": "⛓️" }
+      },
+      "quiz": {
+        "question": "Why do block ciphers need modes of operation?",
+        "options": ["To encrypt faster", "To prevent identical blocks from producing identical ciphertext", "To reduce key size"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch02-symmetric-encryption",
+      "title": "Stream Ciphers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Instead of cutting messages into blocks, a stream cipher encrypts one bit at a time with a flowing keystream.", "visual": "🌊" },
+        "buildup": { "text": "A short seed key feeds a pseudorandom generator that produces a long keystream. XOR it with plaintext.", "visual": "🔀" },
+        "discovery": { "text": "RC4 was the world's most popular stream cipher—used in Wi-Fi and SSL for decades.", "visual": "📶" },
+        "twist": { "text": "Biases in RC4's output were discovered. Small statistical flaws became practical attacks over millions of messages.", "visual": "📉" },
+        "climax": { "text": "ChaCha20 replaced RC4: faster, simpler, and with no known biases. Google uses it across billions of connections.", "visual": "🚀" },
+        "punchline": { "text": "One bit at a time. Speed is the tradeoff.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "How does a stream cipher encrypt data?",
+        "options": ["In fixed-size blocks", "One bit at a time using a keystream", "By substituting letters"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch02-symmetric-encryption",
+      "title": "Key Length and Security",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "DES used 56-bit keys. In 1998, a machine cracked one in 56 hours. The key was simply too short.", "visual": "⏰" },
+        "buildup": { "text": "Each extra bit doubles the brute force effort. A 128-bit key requires 2^128 guesses—far beyond any computer.", "visual": "📈" },
+        "discovery": { "text": "AES-256 needs more guesses than atoms in the observable universe. Physics itself prevents brute force.", "visual": "🌌" },
+        "twist": { "text": "But key length only measures brute force resistance. Weak algorithms fall to smarter attacks regardless of key size.", "visual": "🧠" },
+        "climax": { "text": "Security is the combination of algorithm strength and key length. Neither alone is sufficient.", "visual": "⚖️" },
+        "punchline": { "text": "A long key on a weak lock is still a weak lock.", "visual": "🔓" }
+      },
+      "quiz": {
+        "question": "Why was DES eventually considered insecure?",
+        "options": ["The algorithm was flawed", "Its 56-bit key became too short for modern computers", "It was never standardized"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch03-public-key-cryptography",
+      "title": "The Key Exchange Problem",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Two strangers on opposite sides of the internet need a shared secret. Anyone watching can see everything they send.", "visual": "🌐" },
+        "buildup": { "text": "Symmetric encryption requires both parties to share a key. But how, if the channel itself is insecure?", "visual": "🤷" },
+        "discovery": { "text": "In 1976, Diffie and Hellman solved it: two people can create a shared secret by exchanging only public values.", "visual": "🤝" },
+        "twist": { "text": "The trick: mixing is easy, unmixing is hard. Like combining two paint colors—easy to mix, impossible to separate.", "visual": "🎨" },
+        "climax": { "text": "This single insight launched public-key cryptography and secured the entire internet.", "visual": "🔓" },
+        "punchline": { "text": "Shared secret from a public conversation. Pure math.", "visual": "🧮" }
+      },
+      "quiz": {
+        "question": "What did Diffie and Hellman's key exchange solve?",
+        "options": ["Faster encryption", "Creating a shared secret over an insecure channel", "Replacing all symmetric ciphers"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch03-public-key-cryptography",
+      "title": "RSA Encryption",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Multiply two huge primes: easy. Factor the result back into those primes: extraordinarily hard. RSA lives in that gap.", "visual": "🔢" },
+        "buildup": { "text": "Rivest, Shamir, and Adleman published RSA in 1977. It uses two keys: public for encryption, private for decryption.", "visual": "🔑" },
+        "discovery": { "text": "Anyone can encrypt with your public key. Only you can decrypt with your private key. Key sharing is solved.", "visual": "📬" },
+        "twist": { "text": "RSA is slow compared to symmetric ciphers. In practice, RSA encrypts a symmetric key, which encrypts the data.", "visual": "🐢" },
+        "climax": { "text": "Every HTTPS connection uses this hybrid: RSA for key exchange, AES for bulk encryption.", "visual": "🌐" },
+        "punchline": { "text": "Two keys. One public, one private. Problem solved.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What mathematical problem makes RSA secure?",
+        "options": ["Adding large numbers", "Factoring the product of two large primes", "Computing square roots"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch03-public-key-cryptography",
+      "title": "Digital Signatures",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You receive a software update. How do you know it's from the developer and not a hacker? A digital signature.", "visual": "✍️" },
+        "buildup": { "text": "Signatures reverse encryption: sign with your private key, verify with your public key. Only you could have signed.", "visual": "🔏" },
+        "discovery": { "text": "The signature is tied to the exact message. Change one bit and verification fails instantly.", "visual": "🚫" },
+        "twist": { "text": "This gives non-repudiation: the signer can't deny signing. Their private key is the only thing that could produce it.", "visual": "⚖️" },
+        "climax": { "text": "Every app, email certificate, and blockchain transaction relies on digital signatures for trust.", "visual": "🛡️" },
+        "punchline": { "text": "A mathematical handwritten signature. Unforgeable.", "visual": "🖊️" }
+      },
+      "quiz": {
+        "question": "What key is used to create a digital signature?",
+        "options": ["The public key", "The private key", "A shared symmetric key"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch03-public-key-cryptography",
+      "title": "Elliptic Curve Cryptography",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "RSA needs 3072-bit keys for strong security. Elliptic curves achieve the same strength with just 256 bits.", "visual": "📏" },
+        "buildup": { "text": "ECC uses the math of points on curves. Adding points is easy; reversing the operation is extremely hard.", "visual": "📐" },
+        "discovery": { "text": "Smaller keys mean faster computation, less bandwidth, and lighter storage—crucial for mobile and IoT devices.", "visual": "📱" },
+        "twist": { "text": "Bitcoin, Signal, and TLS 1.3 all use ECC. It replaced RSA as the default for most new systems.", "visual": "🔄" },
+        "climax": { "text": "The same security with far less data. ECC is the modern standard for public-key cryptography.", "visual": "🏆" },
+        "punchline": { "text": "Smaller key, same security. Curves beat primes.", "visual": "〰️" }
+      },
+      "quiz": {
+        "question": "What is the main advantage of ECC over RSA?",
+        "options": ["Larger keys", "Same security with much smaller keys", "It doesn't use math"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch03-public-key-cryptography",
+      "title": "Quantum Threat to Cryptography",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A quantum computer running Shor's algorithm could factor RSA keys in hours. Today's internet security would collapse.", "visual": "⚛️" },
+        "buildup": { "text": "Shor's algorithm exploits quantum superposition to try many factorizations simultaneously.", "visual": "🌊" },
+        "discovery": { "text": "RSA, Diffie-Hellman, and ECC all rely on problems that quantum computers can solve efficiently.", "visual": "💥" },
+        "twist": { "text": "Symmetric ciphers like AES survive: doubling the key length restores security against quantum attacks.", "visual": "🛡️" },
+        "climax": { "text": "Post-quantum cryptography is already being standardized. The race is on before large quantum computers arrive.", "visual": "🏃" },
+        "punchline": { "text": "Quantum breaks public keys. The fix: new math, not more bits.", "visual": "🧬" }
+      },
+      "quiz": {
+        "question": "Which cryptographic systems are threatened by quantum computers?",
+        "options": ["Only symmetric ciphers", "RSA, Diffie-Hellman, and ECC", "None—quantum computers can't break crypto"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch04-information-theoretic-security",
+      "title": "Perfect Secrecy",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Shannon defined perfect secrecy: seeing the ciphertext gives an attacker zero information about the plaintext.", "visual": "🌫️" },
+        "buildup": { "text": "Formally, P(plaintext | ciphertext) = P(plaintext). The ciphertext is statistically independent of the message.", "visual": "📐" },
+        "discovery": { "text": "The one-time pad achieves this. Every possible plaintext is equally likely given the ciphertext.", "visual": "🎲" },
+        "twist": { "text": "Shannon proved a harsh limit: perfect secrecy requires the key to be at least as long as the message.", "visual": "📏" },
+        "climax": { "text": "No shortcut exists. Computational security is a practical compromise—betting attackers lack enough computing power.", "visual": "💻" },
+        "punchline": { "text": "Perfect secrecy costs a perfectly long key.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does perfect secrecy require according to Shannon?",
+        "options": ["A very fast computer", "A key at least as long as the message", "Multiple encryption rounds"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch04-information-theoretic-security",
+      "title": "Computational vs Perfect Security",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "AES-256 isn't perfectly secret. An attacker could theoretically break it. We just bet they never will.", "visual": "🎰" },
+        "buildup": { "text": "Computational security assumes attackers have limited time and computing power. Perfect secrecy assumes unlimited.", "visual": "⏳" },
+        "discovery": { "text": "In practice, computational security works brilliantly. No one has broken AES in over two decades.", "visual": "🏰" },
+        "twist": { "text": "The gap is philosophical: perfect secrecy is provably unbreakable. Computational security is just very, very hard.", "visual": "🤔" },
+        "climax": { "text": "Almost all modern cryptography is computationally secure. The one-time pad remains the only perfect option.", "visual": "👑" },
+        "punchline": { "text": "Provably unbreakable vs probably unbreakable.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What does computational security assume?",
+        "options": ["Attackers have unlimited power", "Attackers have limited time and computing power", "The algorithm is secret"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch04-information-theoretic-security",
+      "title": "Entropy and Key Strength",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your password is 'password123'. It has 10 characters but nearly zero entropy. A dictionary attack cracks it instantly.", "visual": "🔓" },
+        "buildup": { "text": "Entropy measures unpredictability. A truly random 128-bit key has 128 bits of entropy. A common password has a few.", "visual": "📊" },
+        "discovery": { "text": "Shannon's entropy formula applies directly: H = -Σ p(x) log₂ p(x). More uniform distributions mean higher entropy.", "visual": "📐" },
+        "twist": { "text": "Length alone doesn't create security. Seven random words beat twenty predictable characters every time.", "visual": "📝" },
+        "climax": { "text": "Key strength equals entropy, not length. Randomness is the true measure of cryptographic security.", "visual": "🎲" },
+        "punchline": { "text": "Entropy is security. Predictability is the enemy.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why is 'password123' insecure despite having 11 characters?",
+        "options": ["It's too short", "It has very low entropy—it's highly predictable", "It contains numbers"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch04-information-theoretic-security",
+      "title": "Randomness in Cryptography",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 2012, researchers found thousands of RSA keys sharing a prime factor. The random number generator was broken.", "visual": "🎰" },
+        "buildup": { "text": "Cryptography depends on true randomness for key generation. Predictable randomness is an oxymoron and a disaster.", "visual": "⚠️" },
+        "discovery": { "text": "Hardware random number generators harvest entropy from thermal noise, radioactive decay, or circuit jitter.", "visual": "🌡️" },
+        "twist": { "text": "Software PRNGs are deterministic. If an attacker learns the seed, every future output is predictable.", "visual": "🔮" },
+        "climax": { "text": "Cryptographic PRNGs blend hardware entropy with algorithms, balancing speed and unpredictability.", "visual": "🔀" },
+        "punchline": { "text": "Bad randomness breaks good algorithms.", "visual": "💀" }
+      },
+      "quiz": {
+        "question": "Why is randomness critical in cryptography?",
+        "options": ["It makes algorithms faster", "Predictable keys can be guessed by attackers", "It reduces file sizes"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch04-information-theoretic-security",
+      "title": "Unicity Distance",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "How much ciphertext does an attacker need before only one possible key remains? That's the unicity distance.", "visual": "📏" },
+        "buildup": { "text": "Shannon calculated it: key entropy divided by plaintext redundancy. English has about 1.5 bits of entropy per letter.", "visual": "📐" },
+        "discovery": { "text": "For a simple substitution cipher, about 25 ciphertext letters suffice. After that, only one key fits.", "visual": "🔍" },
+        "twist": { "text": "The one-time pad has infinite unicity distance. No amount of ciphertext narrows the key possibilities.", "visual": "♾️" },
+        "climax": { "text": "Unicity distance quantifies how much data an attacker needs. It bridges information theory and cryptanalysis.", "visual": "🌉" },
+        "punchline": { "text": "Enough ciphertext and only one key survives.", "visual": "🗝️" }
+      },
+      "quiz": {
+        "question": "What does unicity distance measure?",
+        "options": ["How far data can travel", "How much ciphertext is needed to uniquely determine the key", "The length of the key"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch05-hashing-and-authentication",
+      "title": "What Is a Hash Function",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Feed in a novel, an image, or the entire internet. Out comes a fixed-size fingerprint, always the same length.", "visual": "🖐️" },
+        "buildup": { "text": "A hash function maps arbitrary input to a fixed output. SHA-256 always produces 256 bits, no matter the input.", "visual": "🔢" },
+        "discovery": { "text": "Good hashes are one-way: given the output, you can't reconstruct the input. It's a trapdoor with no way back.", "visual": "🚪" },
+        "twist": { "text": "Change one bit of input and the output changes completely. This avalanche effect makes hashes tamper-evident.", "visual": "❄️" },
+        "climax": { "text": "Hashing is everywhere: password storage, file integrity checks, digital signatures, and blockchain.", "visual": "🌐" },
+        "punchline": { "text": "Any input, fixed output. One-way and tamper-proof.", "visual": "🔏" }
+      },
+      "quiz": {
+        "question": "What property makes a hash function useful for security?",
+        "options": ["It compresses data", "It's one-way—you can't reverse the output to find the input", "It's reversible"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch05-hashing-and-authentication",
+      "title": "Collision Resistance",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Two different files producing the same hash? That's a collision—and it can forge documents or certificates.", "visual": "💥" },
+        "buildup": { "text": "A collision-resistant hash makes it computationally infeasible to find two inputs with the same output.", "visual": "🛡️" },
+        "discovery": { "text": "The birthday paradox applies: with a 256-bit hash, a collision requires roughly 2^128 attempts. That's plenty safe.", "visual": "🎂" },
+        "twist": { "text": "MD5 was once standard. In 2004, researchers found collisions in minutes. By 2008, they forged a CA certificate.", "visual": "🔥" },
+        "climax": { "text": "SHA-1 fell too. SHA-256 and SHA-3 are the current standards, designed with wider margins against attacks.", "visual": "🏗️" },
+        "punchline": { "text": "Same hash, different file. A forger's dream.", "visual": "😈" }
+      },
+      "quiz": {
+        "question": "Why is collision resistance important?",
+        "options": ["It makes hashes faster", "It prevents attackers from creating fake files with matching hashes", "It reduces storage"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch05-hashing-and-authentication",
+      "title": "Message Authentication Codes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You receive a bank transfer instruction. The message looks correct. But was it tampered with during transit?", "visual": "🏦" },
+        "buildup": { "text": "A MAC combines a secret key with the message to produce a tag. Without the key, you can't forge a valid tag.", "visual": "🏷️" },
+        "discovery": { "text": "HMAC uses a hash function plus a key. It proves both integrity and authenticity in one operation.", "visual": "✅" },
+        "twist": { "text": "Unlike digital signatures, MACs are symmetric—both parties need the same key. Faster but less flexible.", "visual": "⚡" },
+        "climax": { "text": "Every HTTPS session uses MACs to verify that no byte was altered between sender and receiver.", "visual": "🔗" },
+        "punchline": { "text": "Prove it wasn't changed. Prove it's from you.", "visual": "🔐" }
+      },
+      "quiz": {
+        "question": "What does a Message Authentication Code verify?",
+        "options": ["The sender's identity only", "Both message integrity and authenticity", "Message encryption strength"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch05-hashing-and-authentication",
+      "title": "Password Hashing",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "LinkedIn stored 6.5 million passwords as simple SHA-1 hashes. Hackers cracked most of them within hours.", "visual": "💀" },
+        "buildup": { "text": "Fast hashes are terrible for passwords. Attackers can try billions of guesses per second on GPUs.", "visual": "🖥️" },
+        "discovery": { "text": "Password hashes must be deliberately slow. Bcrypt, scrypt, and Argon2 add tunable cost to each attempt.", "visual": "🐌" },
+        "twist": { "text": "Salting adds random data per user. Even identical passwords produce different hashes, foiling precomputed attacks.", "visual": "🧂" },
+        "climax": { "text": "Good password hashing makes cracking one password take seconds. Bad hashing lets millions fall in minutes.", "visual": "⏱️" },
+        "punchline": { "text": "Slow by design. That's the entire point.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why should password hashing be slow?",
+        "options": ["To save storage space", "To make brute force attacks impractically slow", "To encrypt the password"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch05-hashing-and-authentication",
+      "title": "Zero-Knowledge Proofs",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Prove you know a secret without revealing the secret itself. Sounds impossible, but it's real mathematics.", "visual": "🎩" },
+        "buildup": { "text": "A zero-knowledge proof convinces a verifier that a statement is true while leaking absolutely no extra information.", "visual": "🤐" },
+        "discovery": { "text": "The classic example: prove you know the path through a maze by emerging from the correct exit—without showing the route.", "visual": "🔀" },
+        "twist": { "text": "ZK-proofs enable private transactions, anonymous authentication, and voting without revealing choices.", "visual": "🗳️" },
+        "climax": { "text": "zk-SNARKs power blockchain privacy. You verify a computation happened correctly without seeing the data.", "visual": "⛓️" },
+        "punchline": { "text": "I know. I can prove it. I won't tell you.", "visual": "🤫" }
+      },
+      "quiz": {
+        "question": "What does a zero-knowledge proof accomplish?",
+        "options": ["Encrypts data for storage", "Proves knowledge of a secret without revealing it", "Hides the algorithm used"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch06-cryptography-in-the-real-world",
+      "title": "TLS and HTTPS",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Every time you see the padlock icon in your browser, dozens of cryptographic operations execute in milliseconds.", "visual": "🔒" },
+        "buildup": { "text": "TLS negotiates a shared key, verifies the server's identity, and encrypts everything—all before the page loads.", "visual": "🤝" },
+        "discovery": { "text": "The handshake uses public-key crypto for key exchange, then switches to fast symmetric encryption for data.", "visual": "⚡" },
+        "twist": { "text": "TLS 1.3 trimmed the handshake to a single round trip. Faster and more secure than all previous versions.", "visual": "🏎️" },
+        "climax": { "text": "Over 95% of web traffic is now encrypted. TLS turned cryptography from military tech into daily infrastructure.", "visual": "🌐" },
+        "punchline": { "text": "That padlock? Decades of math, in milliseconds.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "What does TLS do during the handshake?",
+        "options": ["Compresses the webpage", "Negotiates encryption keys and verifies the server", "Blocks malicious websites"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch06-cryptography-in-the-real-world",
+      "title": "End-to-End Encryption",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "WhatsApp encrypts your message on your phone. Not even WhatsApp's servers can read it. Only the recipient can.", "visual": "📱" },
+        "buildup": { "text": "End-to-end encryption means only the communicating users hold the decryption keys. Intermediaries see gibberish.", "visual": "🔐" },
+        "discovery": { "text": "Signal Protocol uses ratcheting keys: every message gets a unique key. Compromise one and past messages stay safe.", "visual": "🔄" },
+        "twist": { "text": "Governments argue this shields criminals. Technologists argue backdoors endanger everyone. The debate is ongoing.", "visual": "⚖️" },
+        "climax": { "text": "E2EE is now standard in messaging, email, and cloud storage. Privacy at scale became technically possible.", "visual": "🌍" },
+        "punchline": { "text": "Only you and the recipient. Nobody in between.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "What makes end-to-end encryption different from regular encryption?",
+        "options": ["It's faster", "Only the communicating users hold decryption keys", "It doesn't use keys"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch06-cryptography-in-the-real-world",
+      "title": "Blockchain and Trust",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Bitcoin lets strangers exchange money without a bank, a government, or any trusted third party. How?", "visual": "₿" },
+        "buildup": { "text": "A blockchain is a chain of blocks, each containing transactions. Every block includes a hash of the previous one.", "visual": "🔗" },
+        "discovery": { "text": "Changing one old transaction changes its hash, which breaks the chain. Tampering is instantly detectable.", "visual": "🚨" },
+        "twist": { "text": "Digital signatures prove ownership. Hash chains prove order. Together they replace institutional trust with math.", "visual": "🧮" },
+        "climax": { "text": "Blockchain's real innovation isn't currency. It's trustless consensus among strangers using cryptography.", "visual": "🤝" },
+        "punchline": { "text": "Trust no one. Verify everything. That's the chain.", "visual": "⛓️" }
+      },
+      "quiz": {
+        "question": "How does a blockchain detect tampering?",
+        "options": ["Manual audits", "Each block contains a hash of the previous block", "Blocks are encrypted"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch06-cryptography-in-the-real-world",
+      "title": "Side-Channel Attacks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The algorithm is flawless. But the power consumption during decryption leaks the secret key, bit by bit.", "visual": "⚡" },
+        "buildup": { "text": "Side-channel attacks exploit physical information: timing, power usage, electromagnetic emissions, even sound.", "visual": "📡" },
+        "discovery": { "text": "Kocher showed in 1996 that measuring how long RSA takes reveals the private key through statistical analysis.", "visual": "⏱️" },
+        "twist": { "text": "The math can be perfect and the implementation still leaks secrets. Security must cover physics, not just algebra.", "visual": "🔬" },
+        "climax": { "text": "Constant-time code, power balancing, and shielding defend against these attacks. Every detail matters.", "visual": "🛡️" },
+        "punchline": { "text": "The algorithm didn't break. The hardware whispered.", "visual": "🤫" }
+      },
+      "quiz": {
+        "question": "What do side-channel attacks exploit?",
+        "options": ["Flaws in the algorithm", "Physical leakage like timing or power consumption", "Weak passwords"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--cryptography-essentials--ch06-cryptography-in-the-real-world",
+      "title": "The Future of Cryptography",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Quantum computers threaten today's encryption. Post-quantum algorithms are being standardized for the transition.", "visual": "🔮" },
+        "buildup": { "text": "NIST selected lattice-based algorithms in 2022 as post-quantum standards. Migration has officially begun.", "visual": "🏛️" },
+        "discovery": { "text": "Homomorphic encryption lets you compute on encrypted data without decrypting it. Privacy and utility coexist.", "visual": "🧮" },
+        "twist": { "text": "The arms race never ends. Every generation of cryptography faces new attacks and invents new defenses.", "visual": "⚔️" },
+        "climax": { "text": "Cryptography evolves with threats. The math changes, but the mission endures: protect data from unauthorized eyes.", "visual": "🗝️" },
+        "punchline": { "text": "The lock changes. The need for locks never does.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "What is homomorphic encryption?",
+        "options": ["Encryption that uses quantum computers", "Computing on encrypted data without decrypting it", "A type of password hashing"],
+        "correct": 1
+      }
+    }
+  ]
+}

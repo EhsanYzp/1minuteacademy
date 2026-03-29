@@ -1,0 +1,559 @@
+{
+  "categoryId": "information-theory",
+  "subject": "Information Theory",
+  "courseId": "information-theory--what-is-information",
+  "courseTitle": "What Is Information?",
+  "emoji": "💡",
+  "color": "#0288D1",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "information-theory--what-is-information--ch01-the-idea-of-information", "title": "The Idea of Information", "position": 1 },
+    { "id": "information-theory--what-is-information--ch02-measuring-information", "title": "Measuring Information", "position": 2 },
+    { "id": "information-theory--what-is-information--ch03-bits-and-bytes", "title": "Bits and Bytes", "position": 3 },
+    { "id": "information-theory--what-is-information--ch04-information-vs-meaning", "title": "Information vs Meaning", "position": 4 },
+    { "id": "information-theory--what-is-information--ch05-shannons-revolution", "title": "Shannon's Revolution", "position": 5 },
+    { "id": "information-theory--what-is-information--ch06-information-everywhere", "title": "Information Everywhere", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "information-theory--what-is-information--ch01-the-idea-of-information",
+      "title": "Surprise Is Information",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Your friend says the sun rose today. You shrug. They say it rose in the west. Now you're listening.", "visual": "🌅" },
+        "buildup": { "text": "Information is surprise. The less expected an event, the more information it carries.", "visual": "😲" },
+        "discovery": { "text": "Claude Shannon defined this in 1948: information is the reduction of uncertainty.", "visual": "📉" },
+        "twist": { "text": "A coin landing heads carries one bit. A fair die landing on 3 carries more—because it was less likely.", "visual": "🎲" },
+        "climax": { "text": "Shannon separated information from meaning. A random string carries maximum information—but says nothing.", "visual": "🔀" },
+        "punchline": { "text": "The less you expected it, the more you learned.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What makes a message carry more information?",
+        "options": ["Being longer", "Being more surprising", "Being more meaningful"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch01-the-idea-of-information",
+      "title": "Uncertainty and Knowledge",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Before opening a deck of cards, you have 52 possibilities. After seeing one card, you have 51. That gap is information.", "visual": "🃏" },
+        "buildup": { "text": "Information is what moves you from not knowing to knowing. It closes the gap of uncertainty.", "visual": "🔍" },
+        "discovery": { "text": "Shannon measured this gap in bits. Each bit cuts your remaining possibilities in half.", "visual": "✂️" },
+        "twist": { "text": "If you already knew the answer, the message carries zero information—no uncertainty was reduced.", "visual": "😐" },
+        "climax": { "text": "This is why gossip you already heard feels empty. Repetition adds no information.", "visual": "🔁" },
+        "punchline": { "text": "No uncertainty, no information.", "visual": "🤷" }
+      },
+      "quiz": {
+        "question": "When does a message carry zero information?",
+        "options": ["When it's very short", "When you already knew the content", "When it's in another language"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch01-the-idea-of-information",
+      "title": "Data vs Information",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A sensor logs temperature every second for a year. You have 31 million numbers. Are you informed?", "visual": "🌡️" },
+        "buildup": { "text": "Data is raw recordings. Information is data that changes what you know or do.", "visual": "📊" },
+        "discovery": { "text": "A million identical readings teach you nothing new. One spike in the data teaches you everything.", "visual": "📈" },
+        "twist": { "text": "More data doesn't always mean more information. Redundancy can bury the signal.", "visual": "🏔️" },
+        "climax": { "text": "The real skill is extracting the few bits that matter from the mountain that doesn't.", "visual": "⛏️" },
+        "punchline": { "text": "Data is what you record. Information is what you learn.", "visual": "💡" }
+      },
+      "quiz": {
+        "question": "What is the key difference between data and information?",
+        "options": ["Data is digital, information is analog", "Data is raw; information reduces uncertainty", "They are the same thing"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch01-the-idea-of-information",
+      "title": "The Role of the Receiver",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A fire alarm goes off. The sleeping person learns nothing. The awake person evacuates. Same signal, different outcomes.", "visual": "🔔" },
+        "buildup": { "text": "Information isn't just about sending. It depends on who receives it and what they already know.", "visual": "📡" },
+        "discovery": { "text": "Shannon's model has a source, a channel, and a receiver. The receiver's prior knowledge shapes the impact.", "visual": "📨" },
+        "twist": { "text": "An expert hears a diagnosis and understands the prognosis. A layperson hears the same words and panics.", "visual": "🏥" },
+        "climax": { "text": "Effective communication means matching the message to the receiver's existing uncertainty.", "visual": "🎯" },
+        "punchline": { "text": "What you already know decides what you can learn.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "Why does the same message carry different information for different people?",
+        "options": ["Because languages differ", "Because their prior knowledge differs", "Because signals degrade"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch01-the-idea-of-information",
+      "title": "Redundancy in Messages",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Cn y rd ths sntnc? You probably can. English is so redundant that half the letters are optional.", "visual": "✉️" },
+        "buildup": { "text": "Redundancy means a message contains more symbols than strictly needed to convey its content.", "visual": "📝" },
+        "discovery": { "text": "Shannon estimated English has about 50% redundancy. Every other letter is predictable from context.", "visual": "🔤" },
+        "twist": { "text": "Redundancy seems wasteful, but it's what lets you understand speech in a noisy room.", "visual": "🗣️" },
+        "climax": { "text": "Nature builds redundancy on purpose. It trades efficiency for reliability.", "visual": "🛡️" },
+        "punchline": { "text": "Repetition wastes space but saves meaning.", "visual": "🔁" }
+      },
+      "quiz": {
+        "question": "Why is redundancy useful in communication?",
+        "options": ["It makes messages longer", "It helps recover meaning despite noise", "It removes information"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch02-measuring-information",
+      "title": "The Bit",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A light switch is on or off. That single yes-or-no distinction is one bit—the smallest unit of information.", "visual": "💡" },
+        "buildup": { "text": "Shannon chose the bit as the fundamental measure. One bit resolves a single binary uncertainty.", "visual": "0️⃣" },
+        "discovery": { "text": "A fair coin flip produces exactly one bit. Two coins produce two bits—four possible outcomes.", "visual": "🪙" },
+        "twist": { "text": "Bits don't care about meaning. A bit from a coin flip and a bit from a life-changing message are equal.", "visual": "⚖️" },
+        "climax": { "text": "Everything digital—text, images, video—reduces to sequences of bits. Trillions of tiny yes-or-no answers.", "visual": "📱" },
+        "punchline": { "text": "One question, two answers. That's a bit.", "visual": "1️⃣" }
+      },
+      "quiz": {
+        "question": "How much information does a fair coin flip produce?",
+        "options": ["Half a bit", "One bit", "Two bits"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch02-measuring-information",
+      "title": "Self-Information",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Rolling a 6 on a fair die carries about 2.6 bits of information. How did Shannon calculate that?", "visual": "🎲" },
+        "buildup": { "text": "Self-information measures surprise: I(x) = -log₂(P(x)). Lower probability means higher information.", "visual": "📐" },
+        "discovery": { "text": "An event with probability 1/2 gives 1 bit. Probability 1/8 gives 3 bits. The log makes it additive.", "visual": "➕" },
+        "twist": { "text": "A certain event (probability 1) gives 0 bits. An impossible event would give infinite bits.", "visual": "♾️" },
+        "climax": { "text": "This formula lets us compare surprises precisely. A royal flush carries far more bits than a pair.", "visual": "🃏" },
+        "punchline": { "text": "Surprise has a formula. It's a logarithm.", "visual": "🧮" }
+      },
+      "quiz": {
+        "question": "What does self-information measure?",
+        "options": ["The length of a message", "The surprise of a single event", "The speed of transmission"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch02-measuring-information",
+      "title": "Entropy Introduced",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A loaded coin that lands heads 99% of the time is boring. A fair coin keeps you guessing. Which has more entropy?", "visual": "🪙" },
+        "buildup": { "text": "Entropy is the average surprise—the expected information per outcome from a source.", "visual": "📊" },
+        "discovery": { "text": "A fair coin has maximum entropy: 1 bit. The loaded coin has near-zero entropy—you already know what's coming.", "visual": "📉" },
+        "twist": { "text": "Entropy peaks when all outcomes are equally likely. Any bias reduces it.", "visual": "⚖️" },
+        "climax": { "text": "Shannon named it entropy after a suggestion from von Neumann: nobody understands entropy, so you'll always win debates.", "visual": "😏" },
+        "punchline": { "text": "Maximum uncertainty, maximum entropy.", "visual": "🎰" }
+      },
+      "quiz": {
+        "question": "When is entropy highest?",
+        "options": ["When one outcome is certain", "When all outcomes are equally likely", "When there are fewer outcomes"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch02-measuring-information",
+      "title": "Joint and Conditional Information",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Knowing today's weather helps you predict tomorrow's. The information in tomorrow's forecast drops.", "visual": "🌤️" },
+        "buildup": { "text": "Joint information measures two events together. Conditional information measures one given you know the other.", "visual": "🔗" },
+        "discovery": { "text": "If events are independent, joint information adds up. If they're correlated, the total is less than the sum.", "visual": "➕" },
+        "twist": { "text": "Conditional entropy is always less than or equal to unconditional. Knowing something never increases uncertainty.", "visual": "📉" },
+        "climax": { "text": "This principle underlies prediction everywhere—from weather models to autocomplete on your phone.", "visual": "📱" },
+        "punchline": { "text": "Context reduces surprise. Always.", "visual": "🧩" }
+      },
+      "quiz": {
+        "question": "What happens to entropy when you gain relevant context?",
+        "options": ["It increases", "It stays the same", "It decreases or stays the same"],
+        "correct": 2
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch02-measuring-information",
+      "title": "Mutual Information",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A friend texts you an umbrella emoji. You now know something about the weather without being told directly.", "visual": "☂️" },
+        "buildup": { "text": "Mutual information measures how much knowing one variable tells you about another.", "visual": "🔄" },
+        "discovery": { "text": "It's symmetric: X tells you as much about Y as Y tells you about X. The overlap is mutual.", "visual": "🤝" },
+        "twist": { "text": "If two variables are independent, mutual information is zero—knowing one says nothing about the other.", "visual": "🚫" },
+        "climax": { "text": "Machine learning uses mutual information to find which features actually predict the outcome.", "visual": "🤖" },
+        "punchline": { "text": "Shared uncertainty is shared knowledge.", "visual": "🔗" }
+      },
+      "quiz": {
+        "question": "What does mutual information measure?",
+        "options": ["The total data in two variables", "How much knowing one variable reveals about another", "The noise between two signals"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch03-bits-and-bytes",
+      "title": "Why Binary?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Computers could have been built on base-10. Early decimal machines existed. So why did binary win?", "visual": "💻" },
+        "buildup": { "text": "Binary uses two states: on and off. Transistors are cheap, fast, and reliable at distinguishing just two levels.", "visual": "⚡" },
+        "discovery": { "text": "Shannon proved in 1948 that any base works mathematically. But engineering constraints made binary the winner.", "visual": "🏆" },
+        "twist": { "text": "Ternary (base-3) is theoretically more efficient per digit. But building reliable three-state hardware is far harder.", "visual": "🔧" },
+        "climax": { "text": "Binary isn't a mathematical necessity. It's an engineering triumph—simplicity won over elegance.", "visual": "🎯" },
+        "punchline": { "text": "Two states. Cheap, fast, reliable. Done.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "Why did binary become the standard for computers?",
+        "options": ["It's mathematically superior", "Two-state hardware is simpler and more reliable", "Shannon mandated it"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch03-bits-and-bytes",
+      "title": "From Bits to Bytes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A single bit says yes or no. But a letter of the alphabet needs at least 5 bits. We group them into bytes.", "visual": "🔡" },
+        "buildup": { "text": "A byte is 8 bits—enough to represent 256 different values. Letters, numbers, punctuation all fit.", "visual": "📦" },
+        "discovery": { "text": "ASCII used 7 bits for 128 characters. The 8th bit was originally a parity check for error detection.", "visual": "✅" },
+        "twist": { "text": "Unicode now uses up to 32 bits per character to cover every script on Earth—and emoji.", "visual": "🌍" },
+        "climax": { "text": "The byte became computing's standard chunk: convenient for hardware, sufficient for text, and easy to address.", "visual": "🏠" },
+        "punchline": { "text": "Eight bits. 256 possibilities. A byte.", "visual": "🧱" }
+      },
+      "quiz": {
+        "question": "How many possible values can a single byte represent?",
+        "options": ["8", "128", "256"],
+        "correct": 2
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch03-bits-and-bytes",
+      "title": "Nats and Other Units",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Physicists rarely use bits. They prefer nats—using the natural logarithm instead of base-2.", "visual": "📐" },
+        "buildup": { "text": "A nat uses ln instead of log₂. One nat equals about 1.44 bits. Same concept, different scale.", "visual": "🔄" },
+        "discovery": { "text": "Using natural logs makes calculus simpler. Derivatives and integrals come out cleaner in base e.", "visual": "✏️" },
+        "twist": { "text": "There are also hartleys (base-10), bans, and digits. Each field picks the base that suits its math best.", "visual": "📚" },
+        "climax": { "text": "The choice of unit never changes the underlying information. Like Celsius vs Fahrenheit—same temperature.", "visual": "🌡️" },
+        "punchline": { "text": "Different logarithm, same information.", "visual": "♻️" }
+      },
+      "quiz": {
+        "question": "What is a nat?",
+        "options": ["A unit of information using the natural logarithm", "A unit of noise", "A type of encryption key"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch03-bits-and-bytes",
+      "title": "How Much Information in a Photo?",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your phone photo is 5 megabytes. But how much actual information does it contain? Far less than 5 MB.", "visual": "📸" },
+        "buildup": { "text": "Most pixels resemble their neighbors. Blue sky doesn't need a million unique blue values—it's redundant.", "visual": "🔵" },
+        "discovery": { "text": "JPEG compression exploits this. It strips predictable patterns and keeps only the surprising parts.", "visual": "🗜️" },
+        "twist": { "text": "A compressed file's size is closer to its true information content. The rest was just padding.", "visual": "📉" },
+        "climax": { "text": "Shannon's entropy gives the theoretical minimum. No compression can ever beat that lower bound.", "visual": "🏁" },
+        "punchline": { "text": "File size is not information content.", "visual": "📂" }
+      },
+      "quiz": {
+        "question": "Why is a photo's information content less than its file size?",
+        "options": ["Cameras add extra data", "Most pixel values are predictable from neighbors", "Files always contain metadata"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch03-bits-and-bytes",
+      "title": "Bandwidth and Data Rate",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A fiber optic cable carries billions of bits per second. A carrier pigeon with a USB stick can beat it on throughput.", "visual": "🐦" },
+        "buildup": { "text": "Bandwidth is the capacity of a channel—how many bits per second it can transmit.", "visual": "📶" },
+        "discovery": { "text": "Shannon's channel capacity theorem sets the absolute maximum: bandwidth × log₂(1 + signal/noise).", "visual": "📐" },
+        "twist": { "text": "Latency matters too. The pigeon has high throughput but terrible latency—hours until the data arrives.", "visual": "⏳" },
+        "climax": { "text": "Modern internet balances both. Streaming needs low latency; backups need high throughput.", "visual": "🎬" },
+        "punchline": { "text": "Speed isn't just fast. It's bits per second.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "What does Shannon's channel capacity depend on?",
+        "options": ["Cable length only", "Bandwidth and signal-to-noise ratio", "Number of connected devices"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch04-information-vs-meaning",
+      "title": "Shannon's Deliberate Omission",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Shannon's 1948 paper opens with a bold move: the meaning of a message is irrelevant to engineering.", "visual": "📄" },
+        "buildup": { "text": "He needed a theory that works regardless of content—love letters and stock prices treated equally.", "visual": "💌" },
+        "discovery": { "text": "By ignoring meaning, Shannon could quantify information purely as uncertainty reduction. Clean, universal.", "visual": "✨" },
+        "twist": { "text": "Critics called it incomplete. Meaning clearly matters to humans. But Shannon wasn't building a theory of meaning.", "visual": "🤔" },
+        "climax": { "text": "The omission was strategic genius. It let one framework power phones, internet, and satellites alike.", "visual": "🛰️" },
+        "punchline": { "text": "Ignoring meaning was the smartest move.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "Why did Shannon exclude meaning from information theory?",
+        "options": ["He didn't believe in meaning", "To create a universal engineering framework", "Meaning can't be measured at all"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch04-information-vs-meaning",
+      "title": "Semantic Information",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A nonsense string has high Shannon information—maximum entropy. But it means nothing. Something is missing.", "visual": "🔤" },
+        "buildup": { "text": "Semantic information adds a truth requirement: a message must be well-formed and truthful to be informative.", "visual": "✅" },
+        "discovery": { "text": "Philosopher Luciano Floridi proposed this: information = well-formed + meaningful + truthful data.", "visual": "📚" },
+        "twist": { "text": "By this definition, lies carry zero information—even if they're surprising. Shannon would disagree.", "visual": "🤥" },
+        "climax": { "text": "Neither view is wrong. They answer different questions: how much to transmit vs what to believe.", "visual": "⚖️" },
+        "punchline": { "text": "Transmission doesn't care about truth. Knowledge does.", "visual": "🔑" }
+      },
+      "quiz": {
+        "question": "What does semantic information require that Shannon information doesn't?",
+        "options": ["More bits", "Truthfulness", "Higher bandwidth"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch04-information-vs-meaning",
+      "title": "Information vs Knowledge",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You receive a stock tip. That's information. You verify it, understand it, and act on it. Now it's knowledge.", "visual": "📈" },
+        "buildup": { "text": "Information is raw signal. Knowledge is information that's been processed, verified, and integrated.", "visual": "🧩" },
+        "discovery": { "text": "The DIKW pyramid goes: Data → Information → Knowledge → Wisdom. Each level adds human judgment.", "visual": "🏛️" },
+        "twist": { "text": "AI can process data into information. Whether it achieves knowledge or wisdom is still fiercely debated.", "visual": "🤖" },
+        "climax": { "text": "Information theory handles the bottom layers. The top layers require something Shannon never modeled: a mind.", "visual": "🧠" },
+        "punchline": { "text": "Information is received. Knowledge is earned.", "visual": "🎓" }
+      },
+      "quiz": {
+        "question": "What distinguishes knowledge from information?",
+        "options": ["Knowledge is always written down", "Knowledge involves processing and understanding", "Knowledge is digital"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch04-information-vs-meaning",
+      "title": "Noise Can Create Meaning",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A musician adds static to a recording on purpose. A painter splatters random paint. Noise becomes art.", "visual": "🎨" },
+        "buildup": { "text": "In Shannon's theory, noise is the enemy—it corrupts the intended signal and destroys information.", "visual": "📡" },
+        "discovery": { "text": "But in creativity, randomness sparks new ideas. Genetic mutations are noise that drives evolution.", "visual": "🧬" },
+        "twist": { "text": "One field's noise is another field's signal. Context determines whether randomness helps or hurts.", "visual": "🔀" },
+        "climax": { "text": "Shannon's framework handles transmission, not interpretation. Meaning emerges upstream of his model.", "visual": "🌊" },
+        "punchline": { "text": "Noise destroys signals but can create ideas.", "visual": "💥" }
+      },
+      "quiz": {
+        "question": "How can noise be valuable outside information theory?",
+        "options": ["It always improves signals", "It introduces randomness that can spark creativity", "It reduces entropy"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch04-information-vs-meaning",
+      "title": "The Chinese Room Revisited",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Searle's Chinese Room processes symbols perfectly but understands nothing. It handles information without meaning.", "visual": "🏠" },
+        "buildup": { "text": "A person follows a rulebook to answer Chinese questions in Chinese—without speaking the language.", "visual": "📖" },
+        "discovery": { "text": "The room processes Shannon information flawlessly. Every bit is correct. But no meaning is grasped.", "visual": "✅" },
+        "twist": { "text": "This mirrors every computer: perfect information processing, zero understanding. Or does the system understand?", "visual": "🤔" },
+        "climax": { "text": "The thought experiment shows that information and understanding may be fundamentally different things.", "visual": "🔍" },
+        "punchline": { "text": "Processing information isn't understanding it.", "visual": "🚪" }
+      },
+      "quiz": {
+        "question": "What does the Chinese Room argument illustrate about information?",
+        "options": ["Information processing doesn't require understanding", "All computers understand meaning", "Chinese is harder to process"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch05-shannons-revolution",
+      "title": "Shannon's 1948 Paper",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "One paper, published in two parts, created an entire field of science overnight. That paper was Shannon's.", "visual": "📜" },
+        "buildup": { "text": "A Mathematical Theory of Communication appeared in Bell System Technical Journal. It was 55 pages long.", "visual": "📰" },
+        "discovery": { "text": "Shannon proved that reliable communication is possible over noisy channels—up to a precise limit.", "visual": "📡" },
+        "twist": { "text": "He didn't just state the limit. He proved it existed, gave the formula, and showed codes could reach it.", "visual": "🏆" },
+        "climax": { "text": "Every digital technology—WiFi, Bluetooth, 5G, streaming—traces back to results in this single paper.", "visual": "📱" },
+        "punchline": { "text": "Fifty-five pages. One new science.", "visual": "🌟" }
+      },
+      "quiz": {
+        "question": "What did Shannon's 1948 paper establish?",
+        "options": ["The internet protocol", "The mathematical foundations of information theory", "Binary computing standards"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch05-shannons-revolution",
+      "title": "Who Was Claude Shannon?",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Shannon juggled on unicycles at Bell Labs. He built flame-throwing trumpets. He also invented the digital age.", "visual": "🤹" },
+        "buildup": { "text": "Born in 1916 in Michigan, Shannon showed dual talent in math and engineering from childhood.", "visual": "👦" },
+        "discovery": { "text": "His 1937 master's thesis showed Boolean algebra could design circuits. It's the foundation of all digital hardware.", "visual": "⚡" },
+        "twist": { "text": "He was famously playful. He built a machine whose only purpose was to turn itself off when switched on.", "visual": "🔘" },
+        "climax": { "text": "Despite creating a trillion-dollar industry, Shannon stayed humble, curious, and slightly eccentric until his death.", "visual": "🎩" },
+        "punchline": { "text": "Playful genius. Built the digital world.", "visual": "🌍" }
+      },
+      "quiz": {
+        "question": "What did Shannon's 1937 master's thesis prove?",
+        "options": ["That information can be measured in bits", "That Boolean algebra can design electrical circuits", "That noise can be eliminated"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch05-shannons-revolution",
+      "title": "Before Shannon",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Before 1948, engineers designed telegraphs by intuition. There was no theory of how much a wire could carry.", "visual": "📠" },
+        "buildup": { "text": "Nyquist and Hartley made early progress in the 1920s, linking bandwidth to signaling rate.", "visual": "📊" },
+        "discovery": { "text": "Nyquist showed a channel of bandwidth W can carry 2W symbols per second. Hartley added a logarithmic measure.", "visual": "📐" },
+        "twist": { "text": "But neither addressed noise. Real channels are noisy, and without noise theory, the limits stayed unknown.", "visual": "🌧️" },
+        "climax": { "text": "Shannon's leap was combining noise, probability, and coding theory into one unified framework.", "visual": "🧩" },
+        "punchline": { "text": "Before Shannon: intuition. After: equations.", "visual": "✏️" }
+      },
+      "quiz": {
+        "question": "What key element did Nyquist and Hartley's work lack?",
+        "options": ["Mathematical formulas", "A theory of noise", "Binary encoding"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch05-shannons-revolution",
+      "title": "Shannon's Noisy Channel Theorem",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Everyone assumed noise was an unavoidable corrupter. Shannon proved you could communicate perfectly through it.", "visual": "📡" },
+        "buildup": { "text": "The noisy channel theorem: below channel capacity, error-free communication is achievable with clever coding.", "visual": "🔑" },
+        "discovery": { "text": "Shannon showed that adding redundancy in the right way lets the receiver reconstruct the original message.", "visual": "🔧" },
+        "twist": { "text": "Above capacity, errors are unavoidable no matter what you do. The limit is absolute.", "visual": "🚫" },
+        "climax": { "text": "Shannon proved the limit exists but didn't show how to build optimal codes. That took decades more.", "visual": "⏳" },
+        "punchline": { "text": "Noise is beatable. But only up to a point.", "visual": "🏁" }
+      },
+      "quiz": {
+        "question": "What does Shannon's noisy channel theorem guarantee?",
+        "options": ["Error-free communication at any rate", "Error-free communication below channel capacity", "Noise can always be eliminated"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch05-shannons-revolution",
+      "title": "The Source Coding Theorem",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "How much can you compress English text? Shannon proved there's an exact answer—and it's entropy.", "visual": "🗜️" },
+        "buildup": { "text": "The source coding theorem says you can compress data down to its entropy rate, but no further.", "visual": "📏" },
+        "discovery": { "text": "Entropy measures the average surprise per symbol. That's the minimum bits needed to encode the source.", "visual": "📐" },
+        "twist": { "text": "ZIP, MP3, and JPEG all approach this limit. None can beat it. Shannon proved the floor exists.", "visual": "🏗️" },
+        "climax": { "text": "The theorem split compression into two goals: approach the entropy limit and do it efficiently.", "visual": "🎯" },
+        "punchline": { "text": "Entropy sets the compression floor. Period.", "visual": "📉" }
+      },
+      "quiz": {
+        "question": "What is the minimum number of bits per symbol needed to encode a source?",
+        "options": ["One bit", "The source's entropy rate", "The alphabet size"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch06-information-everywhere",
+      "title": "Information in Physics",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Drop a book into a black hole. Is the information lost forever? Hawking said yes. He was probably wrong.", "visual": "🕳️" },
+        "buildup": { "text": "Modern physics treats information as fundamental—as real as energy or matter.", "visual": "⚛️" },
+        "discovery": { "text": "Landauer's principle: erasing one bit of information releases a minimum amount of heat. Information is physical.", "visual": "🔥" },
+        "twist": { "text": "The black hole information paradox sparked decades of debate. Current consensus: information is never truly destroyed.", "visual": "🌀" },
+        "climax": { "text": "Wheeler coined it: every particle, every force, every bit of space-time derives from information—it from bit.", "visual": "🧱" },
+        "punchline": { "text": "Erase a bit, release some heat. Information is real.", "visual": "🌡️" }
+      },
+      "quiz": {
+        "question": "What does Landauer's principle state?",
+        "options": ["Information travels at light speed", "Erasing a bit of information releases a minimum amount of heat", "Black holes destroy information"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch06-information-everywhere",
+      "title": "Information in Economics",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A used car seller knows the car's history. You don't. That gap of information changes the entire market.", "visual": "🚗" },
+        "buildup": { "text": "Akerlof's 1970 paper showed that information asymmetry can collapse markets—bad cars drive out good ones.", "visual": "🍋" },
+        "discovery": { "text": "Signaling, screening, and reputation systems all evolved to fix information gaps between buyers and sellers.", "visual": "🛡️" },
+        "twist": { "text": "Three economists won the Nobel Prize for studying information asymmetry. Markets and information are inseparable.", "visual": "🏅" },
+        "climax": { "text": "Every auction, every insurance policy, every job interview is shaped by who knows what—and who doesn't.", "visual": "🔎" },
+        "punchline": { "text": "Markets run on information, not just money.", "visual": "💰" }
+      },
+      "quiz": {
+        "question": "What is information asymmetry?",
+        "options": ["When information is encrypted", "When one party knows more than the other in a transaction", "When data is compressed"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch06-information-everywhere",
+      "title": "Information in Biology",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your DNA is a message written in a four-letter alphabet: A, T, C, G. It encodes about 1.5 gigabytes of data.", "visual": "🧬" },
+        "buildup": { "text": "Genes carry the instructions for building proteins. Evolution edits the code over generations.", "visual": "📝" },
+        "discovery": { "text": "DNA uses codons—three-letter words from a four-letter alphabet. Each codon maps to an amino acid. It's a code.", "visual": "🔡" },
+        "twist": { "text": "Only about 2% of DNA codes for proteins. The rest was called junk—but much of it regulates gene expression.", "visual": "🗃️" },
+        "climax": { "text": "Biology and information theory share deep parallels: encoding, copying, error correction, and compression.", "visual": "🤝" },
+        "punchline": { "text": "Life is information that copies itself.", "visual": "♾️" }
+      },
+      "quiz": {
+        "question": "How much data does the human genome approximately encode?",
+        "options": ["1 megabyte", "1.5 gigabytes", "1 terabyte"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch06-information-everywhere",
+      "title": "The Information Age",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Humanity created 5 exabytes of data by 2003. Now we create that much every two days.", "visual": "💾" },
+        "buildup": { "text": "The information age began when processing information became cheaper than processing materials.", "visual": "🏭" },
+        "discovery": { "text": "Shannon's work made it inevitable. Once we could quantify and compress information, the flood began.", "visual": "🌊" },
+        "twist": { "text": "More data doesn't mean more understanding. Information overload is the dark side of cheap bits.", "visual": "😵" },
+        "climax": { "text": "The next challenge isn't creating information. It's filtering, verifying, and making sense of what exists.", "visual": "🔍" },
+        "punchline": { "text": "We solved transmission. Now we need comprehension.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "What enabled the information age?",
+        "options": ["Social media platforms", "The ability to quantify, compress, and transmit information cheaply", "Faster airplanes"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--what-is-information--ch06-information-everywhere",
+      "title": "Is the Universe Made of Information?",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "John Wheeler proposed a radical idea: the universe isn't made of matter or energy. It's made of information.", "visual": "🌌" },
+        "buildup": { "text": "It from bit: every physical quantity derives its existence from yes-or-no questions—binary choices.", "visual": "0️⃣" },
+        "discovery": { "text": "Quantum mechanics supports this view. The wave function is pure information about possible measurement outcomes.", "visual": "🌊" },
+        "twist": { "text": "If information is fundamental, then physics isn't about stuff—it's about what can be known and communicated.", "visual": "🤯" },
+        "climax": { "text": "Not everyone agrees. But the idea has reshaped physics, from quantum gravity to holographic theories.", "visual": "🔬" },
+        "punchline": { "text": "Maybe the universe is one big computation.", "visual": "💻" }
+      },
+      "quiz": {
+        "question": "What does Wheeler's 'it from bit' propose?",
+        "options": ["The universe runs on binary code", "Physical reality derives from information", "Bits are made of atoms"],
+        "correct": 1
+      }
+    }
+  ]
+}

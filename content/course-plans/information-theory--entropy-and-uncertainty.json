@@ -1,0 +1,559 @@
+{
+  "categoryId": "information-theory",
+  "subject": "Information Theory",
+  "courseId": "information-theory--entropy-and-uncertainty",
+  "courseTitle": "Entropy and Uncertainty",
+  "emoji": "🎲",
+  "color": "#0288D1",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "information-theory--entropy-and-uncertainty--ch01-what-is-entropy", "title": "What Is Entropy?", "position": 1 },
+    { "id": "information-theory--entropy-and-uncertainty--ch02-entropy-in-action", "title": "Entropy in Action", "position": 2 },
+    { "id": "information-theory--entropy-and-uncertainty--ch03-relative-entropy", "title": "Relative Entropy", "position": 3 },
+    { "id": "information-theory--entropy-and-uncertainty--ch04-entropy-and-probability", "title": "Entropy and Probability", "position": 4 },
+    { "id": "information-theory--entropy-and-uncertainty--ch05-maximum-entropy", "title": "Maximum Entropy", "position": 5 },
+    { "id": "information-theory--entropy-and-uncertainty--ch06-entropy-beyond-math", "title": "Entropy Beyond Math", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch01-what-is-entropy",
+      "title": "Shannon Entropy Defined",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "How uncertain are you about tomorrow's weather? Shannon found a formula to measure that exactly.", "visual": "🌦️" },
+        "buildup": { "text": "Shannon entropy: H = -Σ p(x) log₂ p(x). It's the average number of bits needed to describe an outcome.", "visual": "📐" },
+        "discovery": { "text": "A fair coin: H = 1 bit. A loaded coin (99% heads): H ≈ 0.08 bits. Less surprise, less entropy.", "visual": "🪙" },
+        "twist": { "text": "Entropy doesn't measure disorder like in physics. It measures how unpredictable a source is.", "visual": "🔀" },
+        "climax": { "text": "High entropy means hard to predict. Low entropy means easy. That's the core insight.", "visual": "🎯" },
+        "punchline": { "text": "Entropy is average surprise, measured in bits.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "What does higher Shannon entropy indicate?",
+        "options": ["More predictability", "More uncertainty", "Fewer possible outcomes"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch01-what-is-entropy",
+      "title": "Why the Log?",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Why does Shannon's formula use a logarithm? Not for elegance—for a very practical reason.", "visual": "🧮" },
+        "buildup": { "text": "Logarithms make information additive. Two independent coin flips carry 2 bits, not 4.", "visual": "➕" },
+        "discovery": { "text": "Without the log, combining sources would multiply their information. Addition is far more natural.", "visual": "✖️" },
+        "twist": { "text": "The log also compresses the scale. An event with probability one in a billion gives only about 30 bits.", "visual": "📉" },
+        "climax": { "text": "The base of the log picks the unit: base 2 gives bits, base e gives nats, base 10 gives hartleys.", "visual": "🔢" },
+        "punchline": { "text": "The log makes surprises add up neatly.", "visual": "🧩" }
+      },
+      "quiz": {
+        "question": "Why does Shannon's entropy formula use a logarithm?",
+        "options": ["To make the formula look complex", "To make information from independent events additive", "To convert to binary"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch01-what-is-entropy",
+      "title": "Entropy of a Fair Die",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A six-sided die has entropy of about 2.58 bits. Why not a round number?", "visual": "🎲" },
+        "buildup": { "text": "Each face has probability 1/6. Self-information per face: log₂(6) ≈ 2.585 bits.", "visual": "📐" },
+        "discovery": { "text": "Since all faces are equally likely, the average equals each individual value. That's the maximum for six outcomes.", "visual": "⚖️" },
+        "twist": { "text": "If one face were more likely, entropy would drop. Bias always reduces uncertainty.", "visual": "📉" },
+        "climax": { "text": "2.58 bits means you need about 2.6 yes-or-no questions on average to identify the result.", "visual": "❓" },
+        "punchline": { "text": "Six faces, 2.58 bits. Not round, but exact.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What is the entropy of a fair six-sided die?",
+        "options": ["6 bits", "About 2.58 bits", "3 bits"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch01-what-is-entropy",
+      "title": "Entropy vs Thermodynamic Entropy",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Physicists had entropy long before Shannon. Boltzmann carved it on a tombstone. Are they the same thing?", "visual": "🪦" },
+        "buildup": { "text": "Thermodynamic entropy measures molecular disorder. Shannon entropy measures information uncertainty.", "visual": "🔬" },
+        "discovery": { "text": "Both use the same mathematical form: a sum of probabilities times their logarithms. Coincidence? Not quite.", "visual": "🤝" },
+        "twist": { "text": "Jaynes showed in 1957 that thermodynamic entropy is Shannon entropy applied to physics. Same math, different domain.", "visual": "🔗" },
+        "climax": { "text": "Von Neumann told Shannon to call it entropy because nobody understands it—so he'd win every argument.", "visual": "😂" },
+        "punchline": { "text": "Same formula. Physics and communication connected.", "visual": "🌉" }
+      },
+      "quiz": {
+        "question": "How are Shannon entropy and thermodynamic entropy related?",
+        "options": ["They are completely unrelated", "They share the same mathematical form", "One is the inverse of the other"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch01-what-is-entropy",
+      "title": "Zero Entropy",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A source that always outputs the same symbol has zero entropy. You already know every future message.", "visual": "🔁" },
+        "buildup": { "text": "Zero entropy means zero surprise, zero uncertainty, zero information per symbol.", "visual": "0️⃣" },
+        "discovery": { "text": "Mathematically: if P(x)=1, then -1×log₂(1)=0. The log of 1 is always zero.", "visual": "📐" },
+        "twist": { "text": "A channel carrying a constant signal wastes its capacity entirely. It transmits bits but communicates nothing.", "visual": "📡" },
+        "climax": { "text": "Zero entropy is perfect predictability. Useful for structure, useless for communicating new things.", "visual": "🏗️" },
+        "punchline": { "text": "No surprise, no information, zero entropy.", "visual": "🫥" }
+      },
+      "quiz": {
+        "question": "When does a source have zero entropy?",
+        "options": ["When all outcomes are equally likely", "When one outcome is certain", "When there are no outcomes"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch02-entropy-in-action",
+      "title": "Entropy of English",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "If every English letter were equally likely, entropy would be 4.7 bits per letter. The real value is much lower.", "visual": "🔤" },
+        "buildup": { "text": "Letters like E and T appear far more often than Q and Z. This bias reduces English entropy.", "visual": "📊" },
+        "discovery": { "text": "Shannon estimated English entropy between 1.0 and 1.5 bits per letter using human guessing experiments.", "visual": "🧪" },
+        "twist": { "text": "That means English is about 75% redundant. Most of what you read is predictable from context.", "visual": "🔮" },
+        "climax": { "text": "This redundancy is why crosswords, autocomplete, and spell check all work remarkably well.", "visual": "✏️" },
+        "punchline": { "text": "English is mostly predictable. About 1.3 bits per letter.", "visual": "📝" }
+      },
+      "quiz": {
+        "question": "What is the approximate entropy of English per letter?",
+        "options": ["4.7 bits", "About 1.0 to 1.5 bits", "8 bits"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch02-entropy-in-action",
+      "title": "Entropy in Passwords",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "'password123' has low entropy. A hacker's dictionary cracks it in seconds. A random 20-character string? Years.", "visual": "🔐" },
+        "buildup": { "text": "Password entropy measures how hard it is to guess. Each bit of entropy doubles the search space.", "visual": "🔑" },
+        "discovery": { "text": "A random 8-character lowercase password: about 37 bits. Add uppercase, digits, symbols: jumps to about 50 bits.", "visual": "📈" },
+        "twist": { "text": "Human-chosen passwords have far less entropy than random ones. Patterns, names, and dates are predictable.", "visual": "🧠" },
+        "climax": { "text": "Password managers generate high-entropy strings. The human only needs to remember one master password.", "visual": "🗝️" },
+        "punchline": { "text": "More entropy means harder to guess. That simple.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why do human-chosen passwords have low entropy?",
+        "options": ["Humans use short passwords", "Humans pick predictable patterns", "Humans avoid special characters"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch02-entropy-in-action",
+      "title": "Entropy in Genetics",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "DNA uses four letters: A, T, C, G. If equally distributed, each position carries 2 bits of entropy.", "visual": "🧬" },
+        "buildup": { "text": "But real genomes aren't uniform. Some regions are highly conserved—low entropy—while others vary widely.", "visual": "📊" },
+        "discovery": { "text": "Conserved regions like ribosomal RNA genes have low entropy: evolution keeps them nearly identical across species.", "visual": "🔒" },
+        "twist": { "text": "High-entropy regions evolve faster. They're where adaptation happens—mutations tolerated and sometimes rewarded.", "visual": "🦎" },
+        "climax": { "text": "Entropy maps of genomes reveal which regions matter most and which are free to drift.", "visual": "🗺️" },
+        "punchline": { "text": "Low entropy in DNA means evolution says don't touch.", "visual": "⚠️" }
+      },
+      "quiz": {
+        "question": "What does low entropy in a DNA region indicate?",
+        "options": ["The region mutates often", "The region is highly conserved by evolution", "The region is junk DNA"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch02-entropy-in-action",
+      "title": "Entropy in Machine Learning",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Decision trees split data by asking questions. The best question is the one that reduces entropy the most.", "visual": "🌳" },
+        "buildup": { "text": "Before splitting, a dataset of cats and dogs has high entropy. After a good split, each group is purer.", "visual": "🐱" },
+        "discovery": { "text": "Information gain is the entropy before minus entropy after a split. The biggest gain wins.", "visual": "📉" },
+        "twist": { "text": "Cross-entropy loss in neural networks also comes from Shannon. It measures how bad a model's predictions are.", "visual": "🤖" },
+        "climax": { "text": "Shannon's 1948 math runs inside every classifier, every language model, every recommendation engine.", "visual": "⚙️" },
+        "punchline": { "text": "Entropy guides machines to learn by asking better questions.", "visual": "❓" }
+      },
+      "quiz": {
+        "question": "What does information gain measure in a decision tree?",
+        "options": ["The number of features", "The reduction in entropy after a split", "The accuracy of the model"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch02-entropy-in-action",
+      "title": "Entropy in Gambling",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A roulette wheel has 38 slots. That's about 5.2 bits of entropy per spin. The house knows; you don't.", "visual": "🎰" },
+        "buildup": { "text": "Higher entropy means more uncertainty, which means worse odds for anyone trying to predict the outcome.", "visual": "📉" },
+        "discovery": { "text": "Kelly criterion uses entropy to calculate the optimal bet size given your edge over the house.", "visual": "💰" },
+        "twist": { "text": "Card counting in blackjack reduces the game's entropy. As cards are dealt, uncertainty drops—and strategy shifts.", "visual": "🃏" },
+        "climax": { "text": "Casinos hate low entropy. They shuffle constantly, ban counters, and add decks to keep uncertainty high.", "visual": "🔀" },
+        "punchline": { "text": "Casinos profit from your uncertainty.", "visual": "🏦" }
+      },
+      "quiz": {
+        "question": "How does card counting relate to entropy?",
+        "options": ["It increases entropy", "It reduces the game's entropy by tracking dealt cards", "It doesn't relate to entropy"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch03-relative-entropy",
+      "title": "KL Divergence",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You think a coin is fair. It's actually biased 70/30. How wrong are you? KL divergence tells you exactly.", "visual": "🪙" },
+        "buildup": { "text": "Kullback-Leibler divergence measures the extra bits wasted when you assume the wrong distribution.", "visual": "🗑️" },
+        "discovery": { "text": "D(P||Q) = Σ P(x) log(P(x)/Q(x)). It's always ≥ 0 and equals zero only when P = Q.", "visual": "📐" },
+        "twist": { "text": "It's not symmetric: D(P||Q) ≠ D(Q||P). The penalty depends on which direction you're wrong.", "visual": "↔️" },
+        "climax": { "text": "Machine learning uses KL divergence to measure how far a model's predictions are from reality.", "visual": "🤖" },
+        "punchline": { "text": "Wrong assumptions cost extra bits.", "visual": "💸" }
+      },
+      "quiz": {
+        "question": "What does KL divergence measure?",
+        "options": ["The distance between two points", "The extra bits from using the wrong probability distribution", "The entropy of a source"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch03-relative-entropy",
+      "title": "Cross-Entropy",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Design a code based on guessed letter frequencies. If you guess wrong, messages bloat. That bloat is measurable.", "visual": "📦" },
+        "buildup": { "text": "Cross-entropy H(P,Q) is the average bits needed when the true distribution is P but you code for Q.", "visual": "📊" },
+        "discovery": { "text": "Cross-entropy = entropy + KL divergence. The unavoidable part plus the waste from being wrong.", "visual": "➕" },
+        "twist": { "text": "Minimizing cross-entropy is how neural networks train. It pushes predictions toward the true distribution.", "visual": "🎯" },
+        "climax": { "text": "When cross-entropy equals entropy, your model perfectly matches reality. That's the theoretical floor.", "visual": "🏁" },
+        "punchline": { "text": "Perfect model? Cross-entropy equals true entropy.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What happens when cross-entropy equals entropy?",
+        "options": ["The model is overfitting", "The model's predictions perfectly match the true distribution", "The signal has no noise"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch03-relative-entropy",
+      "title": "Jensen-Shannon Divergence",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "KL divergence isn't symmetric and can be infinite. Scientists needed a friendlier version. They built one.", "visual": "🔧" },
+        "buildup": { "text": "Jensen-Shannon divergence averages two KL divergences: JSD(P||Q) = ½ D(P||M) + ½ D(Q||M), where M is the midpoint.", "visual": "⚖️" },
+        "discovery": { "text": "JSD is always finite, always symmetric, and its square root is a true mathematical distance metric.", "visual": "📏" },
+        "twist": { "text": "GANs (generative adversarial networks) originally used JSD to judge how realistic generated images looked.", "visual": "🖼️" },
+        "climax": { "text": "When comparing two distributions safely and symmetrically, JSD is the standard tool.", "visual": "🔬" },
+        "punchline": { "text": "A kinder, symmetric version of KL divergence.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "What advantage does Jensen-Shannon divergence have over KL divergence?",
+        "options": ["It's faster to compute", "It's symmetric and always finite", "It measures entropy directly"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch03-relative-entropy",
+      "title": "Information Gain",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You tested positive for a rare disease. How much did that result change your uncertainty? That change has a name.", "visual": "🏥" },
+        "buildup": { "text": "Information gain is the difference in entropy before and after receiving new evidence.", "visual": "📉" },
+        "discovery": { "text": "In decision trees, each split is chosen to maximize information gain—the biggest entropy drop wins.", "visual": "🌳" },
+        "twist": { "text": "Gain can be misleading with many-valued features. A unique ID gives perfect gain but zero generalization.", "visual": "⚠️" },
+        "climax": { "text": "Gain ratio and mutual information were developed to fix this, penalizing splits that overfit.", "visual": "🛠️" },
+        "punchline": { "text": "The best question is the one that cuts uncertainty most.", "visual": "✂️" }
+      },
+      "quiz": {
+        "question": "What does information gain measure?",
+        "options": ["Total entropy", "The reduction in entropy after new evidence", "The total number of features"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch03-relative-entropy",
+      "title": "Fisher Information",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Estimating a coin's bias from flips. After 10 you're uncertain. After 10,000 you're confident. Fisher quantified why.", "visual": "🪙" },
+        "buildup": { "text": "Fisher information measures how much data tells you about an unknown parameter.", "visual": "📐" },
+        "discovery": { "text": "High Fisher information means your estimate improves quickly with more samples. Low means it barely budges.", "visual": "📈" },
+        "twist": { "text": "The Cramér-Rao bound says no estimator can beat 1/Fisher information in variance. It's the precision floor.", "visual": "🏗️" },
+        "climax": { "text": "Fisher information shapes experimental design: choose measurements that maximize what you learn per sample.", "visual": "🔬" },
+        "punchline": { "text": "Some experiments teach fast. Fisher tells you which.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "What does high Fisher information imply?",
+        "options": ["The parameter is large", "Data is highly informative about the parameter", "There is more noise"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch04-entropy-and-probability",
+      "title": "Entropy and Bayesian Updating",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Before the coin flip, you're maximally uncertain. After seeing 100 heads in a row, your belief shifts. Entropy drops.", "visual": "🪙" },
+        "buildup": { "text": "Bayesian updating adjusts your probability beliefs as evidence arrives. Entropy tracks the shrinking uncertainty.", "visual": "📉" },
+        "discovery": { "text": "Each observation narrows the posterior distribution—peaks sharpen, tails shrink, entropy falls.", "visual": "📊" },
+        "twist": { "text": "But surprising evidence can temporarily raise entropy by spreading probability over more hypotheses.", "visual": "🤯" },
+        "climax": { "text": "On average, evidence always reduces entropy. Individual surprises are just detours on the path to certainty.", "visual": "🛤️" },
+        "punchline": { "text": "Update your beliefs, watch uncertainty shrink.", "visual": "🔍" }
+      },
+      "quiz": {
+        "question": "How does Bayesian updating typically affect entropy?",
+        "options": ["It always increases entropy", "It reduces entropy on average", "It has no effect on entropy"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch04-entropy-and-probability",
+      "title": "Entropy and the Law of Large Numbers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Flip a coin 10 times: chaotic results. Flip it a million times: heads approaches exactly 50%. Entropy predicted this.", "visual": "🎲" },
+        "buildup": { "text": "The law of large numbers says averages converge to expected values. Entropy measures the speed of convergence.", "visual": "📏" },
+        "discovery": { "text": "High-entropy sources converge slower—they're inherently more variable and need more samples to pin down.", "visual": "🐌" },
+        "twist": { "text": "Shannon's asymptotic equipartition property formalizes this: typical sequences cluster tightly as length grows.", "visual": "🔬" },
+        "climax": { "text": "AEP is why compression works. Long sequences become predictable even from unpredictable sources.", "visual": "🗜️" },
+        "punchline": { "text": "Long enough sequences reveal the source's true nature.", "visual": "🔮" }
+      },
+      "quiz": {
+        "question": "What does the asymptotic equipartition property describe?",
+        "options": ["All sequences become equally likely", "Typical sequences cluster as length increases", "Entropy always increases over time"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch04-entropy-and-probability",
+      "title": "Conditional Entropy",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "How uncertain is tomorrow's weather given today's? Less uncertain. Conditional entropy measures how much less.", "visual": "🌤️" },
+        "buildup": { "text": "Conditional entropy H(Y|X) measures remaining uncertainty about Y after learning X.", "visual": "📉" },
+        "discovery": { "text": "If X and Y are independent, H(Y|X) = H(Y). Knowing one says nothing about the other.", "visual": "🚫" },
+        "twist": { "text": "If X completely determines Y, H(Y|X) = 0. Zero remaining uncertainty—X tells you everything.", "visual": "🎯" },
+        "climax": { "text": "Mutual information is the gap: I(X;Y) = H(Y) - H(Y|X). What X told you about Y.", "visual": "🔗" },
+        "punchline": { "text": "Condition on what you know. Measure what's left.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "When does H(Y|X) equal zero?",
+        "options": ["When X and Y are independent", "When knowing X completely determines Y", "When Y has maximum entropy"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch04-entropy-and-probability",
+      "title": "Chain Rule for Entropy",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "How much entropy do two dice have together? You can break it into one die plus the other given the first.", "visual": "🎲" },
+        "buildup": { "text": "Chain rule: H(X,Y) = H(X) + H(Y|X). Joint entropy equals marginal plus conditional.", "visual": "🔗" },
+        "discovery": { "text": "For independent dice: H(X,Y) = H(X) + H(Y). The conditional adds nothing because they don't interact.", "visual": "➕" },
+        "twist": { "text": "For correlated variables, H(Y|X) < H(Y), so the joint is less than the sum. Correlation reduces total entropy.", "visual": "📉" },
+        "climax": { "text": "The chain rule extends to any number of variables, decomposing complex joint entropy step by step.", "visual": "🪜" },
+        "punchline": { "text": "Joint entropy splits into what you know and what's left.", "visual": "🧩" }
+      },
+      "quiz": {
+        "question": "What does the chain rule for entropy state?",
+        "options": ["H(X,Y) = H(X) × H(Y)", "H(X,Y) = H(X) + H(Y|X)", "H(X,Y) = H(X) - H(Y|X)"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch04-entropy-and-probability",
+      "title": "Entropy Rate of a Process",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "English seems random letter by letter. But after 'th', the next letter is almost always 'e'. Patterns lower the rate.", "visual": "📝" },
+        "buildup": { "text": "Entropy rate is the per-symbol entropy of a stochastic process as the sequence grows long.", "visual": "📐" },
+        "discovery": { "text": "For an independent source, the rate equals single-symbol entropy. For a correlated one, it's lower.", "visual": "📉" },
+        "twist": { "text": "Markov chains have simple entropy rates: only the current state matters, not the full history.", "visual": "⛓️" },
+        "climax": { "text": "The entropy rate sets the ultimate compression limit for a source. No codec can beat it.", "visual": "🏁" },
+        "punchline": { "text": "Patterns lower entropy rate. More compression follows.", "visual": "🗜️" }
+      },
+      "quiz": {
+        "question": "What does a lower entropy rate indicate?",
+        "options": ["Less compressible source", "More predictable source", "Noisier source"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch05-maximum-entropy",
+      "title": "The Maximum Entropy Principle",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You know a die's average is 3.5 but nothing else. What should you assume about each face? Maximum entropy decides.", "visual": "🎲" },
+        "buildup": { "text": "The maximum entropy principle says: given constraints, choose the distribution that is most uncertain otherwise.", "visual": "⚖️" },
+        "discovery": { "text": "For a fair die with no extra info, uniform distribution wins. It assumes the least, commits the least.", "visual": "🏆" },
+        "twist": { "text": "With constraints like a known mean, the max-entropy distribution isn't uniform—it's exponential or Gaussian.", "visual": "📊" },
+        "climax": { "text": "Jaynes showed this principle unifies statistical mechanics, Bayesian reasoning, and information theory.", "visual": "🧩" },
+        "punchline": { "text": "When in doubt, assume maximum ignorance.", "visual": "🤷" }
+      },
+      "quiz": {
+        "question": "What does the maximum entropy principle recommend?",
+        "options": ["Always use uniform distributions", "Choose the most uncertain distribution consistent with constraints", "Minimize entropy"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch05-maximum-entropy",
+      "title": "Why Gaussian Is Special",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The bell curve shows up everywhere—heights, test scores, noise. Shannon's theory explains why.", "visual": "📊" },
+        "buildup": { "text": "Among all distributions with a fixed mean and variance, the Gaussian has the highest entropy.", "visual": "🏆" },
+        "discovery": { "text": "It commits to nothing beyond what you measured. Any other shape smuggles in extra assumptions.", "visual": "🔍" },
+        "twist": { "text": "This is why engineers model noise as Gaussian by default. It's the honest admission of maximum ignorance.", "visual": "📡" },
+        "climax": { "text": "The central limit theorem and max entropy converge: sums of random variables approach the Gaussian for the same reason.", "visual": "📐" },
+        "punchline": { "text": "Maximum ignorance with known spread: it's a bell curve.", "visual": "🔔" }
+      },
+      "quiz": {
+        "question": "Why does the Gaussian distribution appear so often?",
+        "options": ["It's the simplest to compute", "It maximizes entropy for a given mean and variance", "It's the only continuous distribution"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch05-maximum-entropy",
+      "title": "MaxEnt in Language Modeling",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Early spell checkers guessed the next word from frequency alone. Maximum entropy models did something smarter.", "visual": "📱" },
+        "buildup": { "text": "MaxEnt models combine multiple features—word frequency, grammar rules, context—into one unified prediction.", "visual": "🔗" },
+        "discovery": { "text": "The model finds the distribution over next words that fits all features while being maximally uncertain otherwise.", "visual": "🎯" },
+        "twist": { "text": "Before deep learning dominated, MaxEnt models powered machine translation, tagging, and text classification.", "visual": "📚" },
+        "climax": { "text": "Even neural language models implicitly use entropy. Cross-entropy loss is the training objective for GPT and friends.", "visual": "🤖" },
+        "punchline": { "text": "Predict with features. Stay humble about the rest.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "How does a MaxEnt language model make predictions?",
+        "options": ["Random guessing", "Fitting features while maximizing uncertainty for unknowns", "Memorizing all sentences"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch05-maximum-entropy",
+      "title": "MaxEnt and Statistical Mechanics",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Boltzmann derived gas laws from microstates in the 1870s. Jaynes re-derived them from pure information theory in 1957.", "visual": "🌡️" },
+        "buildup": { "text": "Jaynes treated thermodynamics as inference: given energy constraints, find the maximum entropy distribution.", "visual": "📐" },
+        "discovery": { "text": "The Boltzmann distribution falls out automatically. Temperature is just a Lagrange multiplier on the energy constraint.", "visual": "🔥" },
+        "twist": { "text": "This means statistical mechanics isn't about atoms colliding. It's about optimal inference given limited information.", "visual": "🤯" },
+        "climax": { "text": "Jaynes unified physics and information theory. Entropy is the thread connecting both worlds.", "visual": "🧵" },
+        "punchline": { "text": "Physics from ignorance. Jaynes showed the way.", "visual": "🗺️" }
+      },
+      "quiz": {
+        "question": "What did Jaynes show about statistical mechanics?",
+        "options": ["It requires quantum mechanics", "It can be derived from the maximum entropy principle", "It contradicts information theory"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch05-maximum-entropy",
+      "title": "Criticisms of MaxEnt",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Maximum entropy sounds perfect—assume the least. But critics argue it secretly assumes more than it admits.", "visual": "🔎" },
+        "buildup": { "text": "The choice of constraint set is itself an assumption. Different constraints yield wildly different distributions.", "visual": "⚖️" },
+        "discovery": { "text": "Seidenfeld showed that MaxEnt can violate Bayesian conditioning: updating and MaxEnt don't always agree.", "visual": "❌" },
+        "twist": { "text": "Defenders counter that every method makes assumptions. MaxEnt just makes them explicit and minimal.", "visual": "🛡️" },
+        "climax": { "text": "The debate is unsettled. MaxEnt is powerful but not universally accepted as the foundation of inference.", "visual": "⚔️" },
+        "punchline": { "text": "Even maximum ignorance requires choosing what to be ignorant about.", "visual": "🤔" }
+      },
+      "quiz": {
+        "question": "What is a main criticism of the maximum entropy principle?",
+        "options": ["It always gives wrong answers", "The choice of constraints is itself a hidden assumption", "It can't handle continuous data"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch06-entropy-beyond-math",
+      "title": "Entropy and the Arrow of Time",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Stir milk into coffee and it mixes. It never spontaneously unmixes. Entropy explains why time seems to have a direction.", "visual": "☕" },
+        "buildup": { "text": "The second law of thermodynamics: in closed systems, entropy never decreases. Disorder grows.", "visual": "📈" },
+        "discovery": { "text": "The mixed state has vastly more microstates than the unmixed one. Statistics make reversal overwhelmingly unlikely.", "visual": "🎰" },
+        "twist": { "text": "The fundamental laws of physics are time-symmetric. Entropy is what breaks that symmetry in practice.", "visual": "⏰" },
+        "climax": { "text": "Some physicists argue entropy doesn't cause the arrow of time—it just correlates with it. The debate continues.", "visual": "🔬" },
+        "punchline": { "text": "Entropy goes up. That's why time moves forward.", "visual": "➡️" }
+      },
+      "quiz": {
+        "question": "How does entropy relate to the arrow of time?",
+        "options": ["Entropy decreases over time", "Entropy's increase gives time its apparent direction", "Entropy has no connection to time"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch06-entropy-beyond-math",
+      "title": "Entropy and Ecology",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A forest with 50 species has higher diversity than one with 3. Ecologists measure this with Shannon entropy.", "visual": "🌲" },
+        "buildup": { "text": "Shannon diversity index: H = -Σ pᵢ log pᵢ, where pᵢ is each species' proportion. Same formula, different domain.", "visual": "📐" },
+        "discovery": { "text": "A forest where one species dominates has low entropy. An even mix of many species has high entropy.", "visual": "🌿" },
+        "twist": { "text": "High diversity (high entropy) ecosystems are more resilient. The redundancy buffers against shocks.", "visual": "🛡️" },
+        "climax": { "text": "Shannon's formula traveled from phone lines to rainforests. Math doesn't care what the symbols represent.", "visual": "🌎" },
+        "punchline": { "text": "Same formula measures message surprise and forest diversity.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "How do ecologists use Shannon entropy?",
+        "options": ["To measure temperature", "To quantify species diversity", "To count total organisms"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch06-entropy-beyond-math",
+      "title": "Entropy and Creativity",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Jazz improvisers play unexpected notes. Pop songs repeat the same four chords. Which has more entropy?", "visual": "🎵" },
+        "buildup": { "text": "Musical entropy has been measured: jazz has higher entropy than pop, classical falls in between.", "visual": "📊" },
+        "discovery": { "text": "High-entropy compositions surprise listeners more. But too much surprise becomes noise instead of music.", "visual": "🎧" },
+        "twist": { "text": "The sweet spot for creativity may be moderate entropy—surprising enough to be interesting, structured enough to follow.", "visual": "🎯" },
+        "climax": { "text": "Artists intuitively manage entropy. They balance predictability with surprise across every creative medium.", "visual": "🎨" },
+        "punchline": { "text": "Great art: enough surprise to delight, enough pattern to follow.", "visual": "✨" }
+      },
+      "quiz": {
+        "question": "What does high musical entropy indicate?",
+        "options": ["The music is louder", "The note sequences are less predictable", "The tempo is faster"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch06-entropy-beyond-math",
+      "title": "Entropy and Consciousness",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Under anesthesia, your brain's entropy drops. When you wake, it rises. Could entropy measure consciousness itself?", "visual": "🧠" },
+        "buildup": { "text": "Researchers measured the entropy of brain signals in awake, sleeping, and anesthetized patients.", "visual": "🔬" },
+        "discovery": { "text": "Conscious states show higher entropy than unconscious ones. The brain generates more unpredictable activity.", "visual": "📈" },
+        "twist": { "text": "Psychedelic states show even higher entropy than normal waking. More conscious or just more chaotic?", "visual": "🌈" },
+        "climax": { "text": "The entropic brain hypothesis proposes that consciousness sits at the edge of order and disorder.", "visual": "⚖️" },
+        "punchline": { "text": "Awake brains are high-entropy machines.", "visual": "⚡" }
+      },
+      "quiz": {
+        "question": "What does the entropic brain hypothesis suggest?",
+        "options": ["Consciousness requires low entropy", "Conscious states have higher brain signal entropy", "Entropy is unrelated to brain activity"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--entropy-and-uncertainty--ch06-entropy-beyond-math",
+      "title": "Entropy Is Everywhere",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Linguistics, genetics, finance, neuroscience, ecology. Shannon's formula shows up in every field. Why?", "visual": "🌍" },
+        "buildup": { "text": "Entropy is a property of probability distributions. Every field that uses probabilities can use entropy.", "visual": "📊" },
+        "discovery": { "text": "It answers the universal question: how surprised should I be on average? That question is everywhere.", "visual": "❓" },
+        "twist": { "text": "Some fields rediscovered entropy independently before learning Shannon had formalized it decades earlier.", "visual": "😲" },
+        "climax": { "text": "Entropy is the rare formula that transcends domain. It connects physics, biology, AI, and human thought.", "visual": "🔗" },
+        "punchline": { "text": "One formula. Every field. Average surprise.", "visual": "🌟" }
+      },
+      "quiz": {
+        "question": "Why does Shannon's entropy appear across so many fields?",
+        "options": ["Shannon promoted it aggressively", "It measures a universal property of probability distributions", "It's the only formula involving logarithms"],
+        "correct": 1
+      }
+    }
+  ]
+}

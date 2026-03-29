@@ -1,0 +1,559 @@
+{
+  "categoryId": "information-theory",
+  "subject": "Information Theory",
+  "courseId": "information-theory--language-and-information",
+  "courseTitle": "Language and Information",
+  "emoji": "🗣️",
+  "color": "#0288D1",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "information-theory--language-and-information--ch01-information-in-words", "title": "Information in Words", "position": 1 },
+    { "id": "information-theory--language-and-information--ch02-redundancy-in-language", "title": "Redundancy in Language", "position": 2 },
+    { "id": "information-theory--language-and-information--ch03-language-as-code", "title": "Language as Code", "position": 3 },
+    { "id": "information-theory--language-and-information--ch04-measuring-language", "title": "Measuring Language", "position": 4 },
+    { "id": "information-theory--language-and-information--ch05-translation-and-meaning", "title": "Translation and Meaning", "position": 5 },
+    { "id": "information-theory--language-and-information--ch06-language-in-the-digital-age", "title": "Language in the Digital Age", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "information-theory--language-and-information--ch01-information-in-words",
+      "title": "Letters Aren't Equal",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "The letter E appears 13% of the time in English. Z appears 0.07%. They carry very different amounts of information.", "visual": "🔤" },
+        "buildup": { "text": "Shannon computed: rare letters carry more information because they're more surprising when they appear.", "visual": "😲" },
+        "discovery": { "text": "E carries about 3 bits of information. Z carries over 10 bits. Rarity equals surprise equals information.", "visual": "📊" },
+        "twist": { "text": "This is why crossword puzzles reward rare letters more. Q and Z score higher because they're harder to place.", "visual": "📝" },
+        "climax": { "text": "Shannon showed English has about 1.0 to 1.5 bits of entropy per letter—far less than its 4.7-bit maximum.", "visual": "📉" },
+        "punchline": { "text": "Common letters say little. Rare letters say a lot.", "visual": "💎" }
+      },
+      "quiz": {
+        "question": "Why does the letter Z carry more information than E?",
+        "options": ["It's at the end of the alphabet", "It's much rarer and therefore more surprising", "It's used in more important words"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch01-information-in-words",
+      "title": "Word Frequency and Zipf's Law",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The most common English word, 'the', appears twice as often as the second, 'of', and three times as often as the third.", "visual": "📊" },
+        "buildup": { "text": "Zipf's law: the frequency of a word is inversely proportional to its rank. Rank times frequency is roughly constant.", "visual": "📈" },
+        "discovery": { "text": "This pattern holds in every known language, in city populations, in website traffic, and in income distributions.", "visual": "🌍" },
+        "twist": { "text": "No one fully explains why. Zipf proposed least effort: speakers want short frequent words, listeners want unique ones.", "visual": "⚖️" },
+        "climax": { "text": "Zipf's law shapes compression, search engines, and NLP. Knowing word frequencies is knowing language's skeleton.", "visual": "🦴" },
+        "punchline": { "text": "A few words do most of the work. Most words barely appear.", "visual": "📚" }
+      },
+      "quiz": {
+        "question": "What does Zipf's law describe?",
+        "options": ["Grammar rules", "Word frequency is inversely proportional to rank", "Alphabetical ordering"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch01-information-in-words",
+      "title": "Context Reduces Surprise",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "After reading 'The cat sat on the', you already know the next word is probably 'mat'. Context kills surprise.", "visual": "🐱" },
+        "buildup": { "text": "Language has massive statistical structure. Each word constrains what follows, reducing remaining uncertainty.", "visual": "🔗" },
+        "discovery": { "text": "Shannon calculated: with context, English carries about 1 bit per letter instead of 4.7. Context provides the rest.", "visual": "📉" },
+        "twist": { "text": "This is why you can read texts with missing vowels. Context fills in the gaps your brain already expects.", "visual": "🧠" },
+        "climax": { "text": "Predictive text on your phone exploits this. It models context to guess your next word before you type it.", "visual": "📱" },
+        "punchline": { "text": "The more context, the less surprise. Language is predictable.", "visual": "🔮" }
+      },
+      "quiz": {
+        "question": "How does context affect information content?",
+        "options": ["It increases information", "It reduces uncertainty and thus information per symbol", "It has no effect"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch01-information-in-words",
+      "title": "Shannon's Guessing Game",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Shannon asked subjects to guess the next letter in a text. They were right 75% of the time. Language is predictable.", "visual": "🎯" },
+        "buildup": { "text": "He used this to estimate English entropy: how much genuine information each letter contributes.", "visual": "📐" },
+        "discovery": { "text": "The result: about 1 to 1.5 bits per character. English uses only a quarter of its theoretical capacity.", "visual": "📊" },
+        "twist": { "text": "This method bypasses complex grammar models. Human intuition directly measures the statistics of language.", "visual": "🧠" },
+        "climax": { "text": "Modern language models like GPT measure the same thing computationally—perplexity is entropy in disguise.", "visual": "🤖" },
+        "punchline": { "text": "Humans guessed English's entropy. Machines now calculate it.", "visual": "📏" }
+      },
+      "quiz": {
+        "question": "What did Shannon's guessing game measure?",
+        "options": ["Vocabulary size", "The entropy (information content) of English text", "Reading speed"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch01-information-in-words",
+      "title": "The Entropy of Languages",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Chinese has thousands of characters. English uses 26 letters. Both convey roughly equal info per minute of speech.", "visual": "🇨🇳" },
+        "buildup": { "text": "Languages with fewer phonemes speak faster. Languages with more phonemes speak slower. Information rate equalizes.", "visual": "⏱️" },
+        "discovery": { "text": "Studies show most languages transmit about 39 bits per second of speech, regardless of structure.", "visual": "📊" },
+        "twist": { "text": "The units differ—syllables, characters, letters—but the throughput matches. The bottleneck is cognition, not language.", "visual": "🧠" },
+        "climax": { "text": "Information theory reveals that diverse languages converge on a universal processing rate. Biology constrains speech.", "visual": "🌐" },
+        "punchline": { "text": "Different scripts, same speed. Brains are the bottleneck.", "visual": "🏎️" }
+      },
+      "quiz": {
+        "question": "Why do all languages convey roughly the same information per second?",
+        "options": ["They all use the same grammar", "Human cognitive processing speed is the limiting factor", "Translators make them equivalent"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch02-redundancy-in-language",
+      "title": "Why Language Is Redundant",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Ths sntnce s mssng vwls bt y cn stll rd t. That's redundancy—language carries far more structure than needed.", "visual": "🔤" },
+        "buildup": { "text": "Shannon estimated English is about 50-75% redundant. Most letters are predictable from context.", "visual": "📈" },
+        "discovery": { "text": "Redundancy exists because language evolved for noisy environments—crowded rooms, bad connections, accents.", "visual": "🔊" },
+        "twist": { "text": "Without redundancy, one misheard syllable would destroy the whole meaning. Redundancy is nature's error correction.", "visual": "🛡️" },
+        "climax": { "text": "Compression algorithms exploit redundancy. They remove the predictable parts and keep only the surprises.", "visual": "🗜️" },
+        "punchline": { "text": "Redundancy seems wasteful. It's actually armor.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "Why is language redundant?",
+        "options": ["Bad grammar design", "To survive noisy communication environments", "Languages haven't been optimized"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch02-redundancy-in-language",
+      "title": "Spelling and Error Tolerance",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You read 'teh' as 'the' without even pausing. Your brain fixed the error before you noticed it.", "visual": "🧠" },
+        "buildup": { "text": "English spelling has enough redundancy that most single-letter errors don't change the recognized word.", "visual": "✅" },
+        "discovery": { "text": "Autocorrect works because few misspellings match another real word. The redundancy creates error-correcting distance.", "visual": "📱" },
+        "twist": { "text": "Languages with less redundancy would be harder to read in noisy conditions. Every letter would be critical.", "visual": "⚠️" },
+        "climax": { "text": "Spelling rules that seem arbitrary actually create Hamming-like distance between words, aiding recognition.", "visual": "📏" },
+        "punchline": { "text": "Messy spelling has a hidden purpose: resilience.", "visual": "💪" }
+      },
+      "quiz": {
+        "question": "How does spelling redundancy help communication?",
+        "options": ["It makes words longer", "Misspellings can be corrected because few errors match other words", "It slows reading down"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch02-redundancy-in-language",
+      "title": "Grammar as Structure",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Colorless green ideas sleep furiously. Grammatically perfect, semantically absurd. Grammar is structure without meaning.", "visual": "🌀" },
+        "buildup": { "text": "Grammar rules constrain which words can follow which, massively reducing the number of valid sentences.", "visual": "🔗" },
+        "discovery": { "text": "This constraint is redundancy. It lets listeners detect errors: 'he go store' is flagged instantly as wrong.", "visual": "🚩" },
+        "twist": { "text": "Shannon's n-gram models captured grammar statistically. Modern LLMs do the same with billions of parameters.", "visual": "🤖" },
+        "climax": { "text": "Grammar adds predictability, which adds redundancy, which adds resilience. Structure serves communication.", "visual": "🏗️" },
+        "punchline": { "text": "Rules constrain. Constraints protect.", "visual": "🛡️" }
+      },
+      "quiz": {
+        "question": "How does grammar contribute to redundancy?",
+        "options": ["It makes sentences longer", "It constrains word sequences, making errors detectable", "It adds decoration"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch02-redundancy-in-language",
+      "title": "Abbreviations and Compression",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "LOL, BTW, ASAP—abbreviations compress common phrases into tiny tokens. Humans invented text compression naturally.", "visual": "💬" },
+        "buildup": { "text": "Frequently used phrases get shortened because the effort of spelling them out exceeds their information content.", "visual": "⚡" },
+        "discovery": { "text": "This mirrors Huffman coding: common symbols get short codes, rare symbols get long codes. Language does it intuitively.", "visual": "📊" },
+        "twist": { "text": "Too many abbreviations reduce redundancy and increase ambiguity. Context must compensate for what compression removes.", "visual": "❓" },
+        "climax": { "text": "Texting slang is a natural experiment in lossy compression. Meaning survives, but ambiguity creeps in at the edges.", "visual": "📱" },
+        "punchline": { "text": "Short for common, long for rare. Language self-compresses.", "visual": "🗜️" }
+      },
+      "quiz": {
+        "question": "How are abbreviations similar to Huffman coding?",
+        "options": ["Both use binary", "Both assign shorter representations to more common items", "Both were invented by Shannon"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch02-redundancy-in-language",
+      "title": "Poetry and Constraint",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A sonnet must have 14 lines, iambic pentameter, and a specific rhyme scheme. Constraints make it harder—and richer.", "visual": "📜" },
+        "buildup": { "text": "Poetic forms add extra redundancy: rhyme, meter, and structure all constrain word choices beyond normal grammar.", "visual": "🎭" },
+        "discovery": { "text": "More constraints mean fewer valid completions. Each word carries more information because fewer words could fit.", "visual": "💎" },
+        "twist": { "text": "This is why poetry feels dense with meaning. The constraints force the poet to pack more information per word.", "visual": "📦" },
+        "climax": { "text": "Information theory explains the paradox: restrictions increase the information value of each surviving choice.", "visual": "📈" },
+        "punchline": { "text": "More constraints, more meaning per word. Structure creates depth.", "visual": "🏔️" }
+      },
+      "quiz": {
+        "question": "Why does constrained poetry feel dense with meaning?",
+        "options": ["Poets use rare words", "Constraints make each word choice carry more information", "Poems are always short"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch03-language-as-code",
+      "title": "Language Is a Code",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A baby learns that 'water' maps to the clear liquid in a cup. That mapping is a code—arbitrary but shared.", "visual": "👶" },
+        "buildup": { "text": "Shannon defined a code as a mapping from source symbols to channel symbols. Language maps thoughts to sounds.", "visual": "🔤" },
+        "discovery": { "text": "The code is arbitrary: 'water', 'eau', and 'mizu' all map to the same concept. No inherent connection exists.", "visual": "🌊" },
+        "twist": { "text": "But language isn't random. Onomatopoeia, iconicity, and sound symbolism show weak but real form-meaning links.", "visual": "💥" },
+        "climax": { "text": "Information theory treats language as a noisy channel code. The source is thought; the channel is air and ears.", "visual": "📡" },
+        "punchline": { "text": "Words are codes. Shared codes create understanding.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "In Shannon's framework, what role does language play?",
+        "options": ["The noise source", "A code mapping thoughts to transmittable signals", "The receiver"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch03-language-as-code",
+      "title": "Morse Code and Efficiency",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "E is a single dot in Morse code. Q is dash-dash-dot-dash. Morse assigned shorter codes to common letters in 1838.", "visual": "📡" },
+        "buildup": { "text": "Morse estimated letter frequencies from a printer's type case—more E tiles than Q tiles—and coded accordingly.", "visual": "🔤" },
+        "discovery": { "text": "This is a variable-length code: frequent symbols get short sequences, rare ones get long sequences.", "visual": "📊" },
+        "twist": { "text": "Morse code isn't optimal—Huffman coding does better—but it was a remarkable intuitive leap toward information theory.", "visual": "💡" },
+        "climax": { "text": "Shannon formalized what Morse felt: optimal coding matches code length to symbol probability.", "visual": "📐" },
+        "punchline": { "text": "Common letters, short codes. Morse figured it out by counting type.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why is E just a dot in Morse code?",
+        "options": ["E is the first vowel", "E is the most common letter, so it gets the shortest code", "Dots are easier to send"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch03-language-as-code",
+      "title": "Writing Systems as Encoding",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "English uses 26 letters. Chinese uses thousands of characters. Both encode language—at different levels.", "visual": "🖊️" },
+        "buildup": { "text": "Alphabets encode phonemes—sound units. Character systems encode morphemes—meaning units. Different tradeoffs.", "visual": "⚖️" },
+        "discovery": { "text": "Alphabets need fewer symbols but more per word. Character systems need more symbols but fewer per idea.", "visual": "📊" },
+        "twist": { "text": "Information theory predicts the tradeoff: fewer symbols means more bits per symbol but more symbols per message.", "visual": "📐" },
+        "climax": { "text": "Both systems converge on similar information density per page. The encoding differs; the throughput matches.", "visual": "📖" },
+        "punchline": { "text": "Different encoding, same information. Scripts are design choices.", "visual": "🔀" }
+      },
+      "quiz": {
+        "question": "What do alphabets encode?",
+        "options": ["Meaning units", "Sound units (phonemes)", "Complete sentences"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch03-language-as-code",
+      "title": "Ambiguity as Compression",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Bank means a river's edge and a financial institution. One word, two meanings. Language reuses symbols to save space.", "visual": "🏦" },
+        "buildup": { "text": "Ambiguity lets language use a smaller vocabulary. Context resolves which meaning is intended.", "visual": "🔍" },
+        "discovery": { "text": "This is like compression: reuse symbols for multiple purposes and rely on context to decompress.", "visual": "🗜️" },
+        "twist": { "text": "Too much ambiguity causes miscommunication. Too little wastes vocabulary. Languages balance both pressures.", "visual": "⚖️" },
+        "climax": { "text": "Puns exploit ambiguity intentionally. Legal language avoids it obsessively. Both prove context drives meaning.", "visual": "⚖️" },
+        "punchline": { "text": "One word, multiple meanings. Context picks the right one.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "Why does language tolerate ambiguity?",
+        "options": ["It's a design flaw", "It compresses vocabulary size while context resolves meaning", "People enjoy confusion"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch03-language-as-code",
+      "title": "Braille and Tactile Codes",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Louis Braille was 15 when he invented a six-dot code that let blind people read with their fingertips.", "visual": "⠃" },
+        "buildup": { "text": "Six dots give 64 possible patterns—enough for letters, numbers, and punctuation with contractions for common words.", "visual": "🔢" },
+        "discovery": { "text": "Grade 2 Braille compresses frequent words into single cells. 'The' is one cell, not three. Efficiency matters.", "visual": "⚡" },
+        "twist": { "text": "Braille optimizes for tactile bandwidth: fingers detect patterns faster than individual dots. The code fits the channel.", "visual": "👆" },
+        "climax": { "text": "Every writing system is a channel code. Braille shows that the channel shapes the optimal encoding.", "visual": "📡" },
+        "punchline": { "text": "Six dots, 64 patterns. A code designed for fingertips.", "visual": "✋" }
+      },
+      "quiz": {
+        "question": "Why does Grade 2 Braille use contractions?",
+        "options": ["To save paper", "To compress common words for faster reading", "To reduce the number of dots used"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch04-measuring-language",
+      "title": "Perplexity",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A language model with perplexity 20 is as uncertain as choosing uniformly among 20 equally likely next words.", "visual": "🤔" },
+        "buildup": { "text": "Perplexity is 2 raised to the cross-entropy. It measures how surprised a model is by real text.", "visual": "📐" },
+        "discovery": { "text": "Lower perplexity means the model predicts text better. GPT-4 has far lower perplexity than simple n-gram models.", "visual": "📉" },
+        "twist": { "text": "Perplexity doesn't measure understanding. A model can predict the next word perfectly without knowing what it means.", "visual": "🤖" },
+        "climax": { "text": "Shannon's entropy sets the floor. No model can achieve perplexity lower than the true entropy of the language.", "visual": "📏" },
+        "punchline": { "text": "How surprised is the model? That's perplexity.", "visual": "😲" }
+      },
+      "quiz": {
+        "question": "What does lower perplexity indicate?",
+        "options": ["The model is confused", "The model predicts text well", "The text is more complex"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch04-measuring-language",
+      "title": "Cross-Entropy in NLP",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You train a language model and measure its loss. That loss function is cross-entropy—pure information theory.", "visual": "📊" },
+        "buildup": { "text": "Cross-entropy measures the average bits needed to encode text using the model's predictions instead of reality.", "visual": "📐" },
+        "discovery": { "text": "If the model matches reality perfectly, cross-entropy equals true entropy. Any mismatch adds extra bits.", "visual": "📏" },
+        "twist": { "text": "KL divergence is the gap: cross-entropy minus true entropy. It measures how many bits the model wastes.", "visual": "📉" },
+        "climax": { "text": "Every LLM training run minimizes cross-entropy. Shannon's 1948 paper is literally the loss function of modern AI.", "visual": "🤖" },
+        "punchline": { "text": "AI training loss is Shannon's entropy. History rhymes.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "What does cross-entropy measure in NLP?",
+        "options": ["Word frequency", "How many bits the model needs to encode real text", "Grammar accuracy"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch04-measuring-language",
+      "title": "N-Gram Models",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Shannon built a letter-by-letter text generator in 1948 using character frequency tables. It produced eerie English.", "visual": "🤖" },
+        "buildup": { "text": "An n-gram model predicts the next symbol from the previous n-1 symbols. Bigrams use one, trigrams use two.", "visual": "📊" },
+        "discovery": { "text": "With enough data, trigrams capture basic word patterns. Shannon's random text improved from gibberish to near readable.", "visual": "📈" },
+        "twist": { "text": "N-grams can't capture long-range structure. 'The doctor who treated patients' needs more context than 3 words.", "visual": "🔗" },
+        "climax": { "text": "LLMs are the spiritual descendants of n-grams: same principle, vastly more context, trained on internet-scale data.", "visual": "🌐" },
+        "punchline": { "text": "Predict the next symbol from the last few. Shannon started the chain.", "visual": "⛓️" }
+      },
+      "quiz": {
+        "question": "What does an n-gram model predict?",
+        "options": ["The topic of a document", "The next symbol based on the previous n-1 symbols", "The author of a text"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch04-measuring-language",
+      "title": "Mutual Information",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The word 'doctor' makes 'hospital' more likely. Mutual information measures how much one word reveals about another.", "visual": "🏥" },
+        "buildup": { "text": "Mutual information quantifies shared information between two variables. I(X;Y) = H(X) - H(X|Y).", "visual": "📐" },
+        "discovery": { "text": "High mutual information means knowing one word strongly predicts the other. It captures semantic association.", "visual": "🔗" },
+        "twist": { "text": "Unlike correlation, mutual information captures nonlinear relationships. It detects associations linear measures miss.", "visual": "🔍" },
+        "climax": { "text": "NLP uses mutual information for feature selection, word association, and topic modeling across languages.", "visual": "🌐" },
+        "punchline": { "text": "How much does one word reveal about another? Exactly that much.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "What does mutual information measure?",
+        "options": ["How often two words appear", "How much knowing one variable reduces uncertainty about another", "The distance between words"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch04-measuring-language",
+      "title": "Kolmogorov Complexity",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The string 'ababababab' can be described as 'ab repeated 5 times'. The shortest description is its complexity.", "visual": "📏" },
+        "buildup": { "text": "Kolmogorov complexity is the length of the shortest program that produces a given string. Simpler strings compress more.", "visual": "💻" },
+        "discovery": { "text": "A random string can't be compressed. Its Kolmogorov complexity equals its length. Randomness is incompressible.", "visual": "🎲" },
+        "twist": { "text": "Kolmogorov complexity is uncomputable. No algorithm can calculate it for all strings. It's a theoretical ideal.", "visual": "🚫" },
+        "climax": { "text": "Despite being uncomputable, it grounds compression theory, defines randomness, and connects to Gödel's incompleteness.", "visual": "🌉" },
+        "punchline": { "text": "The shortest description is the true complexity. We can't always find it.", "visual": "🔮" }
+      },
+      "quiz": {
+        "question": "What is Kolmogorov complexity?",
+        "options": ["The number of characters in a string", "The length of the shortest program that produces the string", "The encryption key length"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch05-translation-and-meaning",
+      "title": "Translation as Recoding",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A French sentence and its English translation look nothing alike. Yet they carry the same information.", "visual": "🇫🇷" },
+        "buildup": { "text": "Translation maps one code to another: French phonemes to English phonemes, preserving the underlying meaning.", "visual": "🔄" },
+        "discovery": { "text": "Perfect translation is impossible because languages carve meaning differently. Some concepts have no equivalent.", "visual": "✂️" },
+        "twist": { "text": "Information loss in translation is about mismatched codebooks, not lost bits. The encoding changes, not the channel.", "visual": "📖" },
+        "climax": { "text": "Neural machine translation learns the mapping from parallel texts, building a shared meaning space between languages.", "visual": "🧠" },
+        "punchline": { "text": "Same meaning, different code. Translation is recoding.", "visual": "🔀" }
+      },
+      "quiz": {
+        "question": "Why is perfect translation impossible?",
+        "options": ["Translators aren't skilled enough", "Languages partition meaning differently, creating mismatches", "Computers can't translate"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch05-translation-and-meaning",
+      "title": "The Semantic Gap",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Japanese has 'komorebi': sunlight filtering through leaves. English needs an entire phrase. One word versus seven.", "visual": "🌿" },
+        "buildup": { "text": "The semantic gap: concepts that one language encodes compactly may require verbose descriptions in another.", "visual": "📏" },
+        "discovery": { "text": "Information theory says both carry the same information—but the encoding efficiency differs across codebooks.", "visual": "📊" },
+        "twist": { "text": "The Sapir-Whorf hypothesis suggests language shapes thought. If you lack the word, do you lack the concept?", "visual": "🤔" },
+        "climax": { "text": "Evidence is mixed: language influences but doesn't determine thought. You can think what you can't easily say.", "visual": "💭" },
+        "punchline": { "text": "No word doesn't mean no concept. Just costlier to express.", "visual": "💰" }
+      },
+      "quiz": {
+        "question": "What does the semantic gap refer to?",
+        "options": ["Grammar differences", "Concepts that one language encodes compactly but another cannot", "Differences in alphabet size"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch05-translation-and-meaning",
+      "title": "Machine Translation Evolution",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In 1954, IBM translated 60 Russian sentences into English using six grammar rules. They declared it nearly solved.", "visual": "🖥️" },
+        "buildup": { "text": "Rule-based translation failed at scale. Languages are too irregular for handcrafted rules to handle.", "visual": "📝" },
+        "discovery": { "text": "Statistical MT in the 1990s learned translation probabilities from parallel texts. No rules, just data.", "visual": "📊" },
+        "twist": { "text": "Neural MT in 2014 replaced statistics with neural networks that learn continuous representations of meaning.", "visual": "🧠" },
+        "climax": { "text": "Transformers in 2017 revolutionized translation again. Attention mechanisms model long-range word dependencies.", "visual": "🔗" },
+        "punchline": { "text": "Rules, statistics, neurons, attention. Each leap was information theory applied.", "visual": "📈" }
+      },
+      "quiz": {
+        "question": "What replaced rule-based machine translation?",
+        "options": ["Better dictionaries", "Statistical methods learning from parallel texts", "Faster computers alone"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch05-translation-and-meaning",
+      "title": "Embeddings and Meaning Space",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "King minus man plus woman equals queen. A computer learned this relationship from raw text alone.", "visual": "👑" },
+        "buildup": { "text": "Word embeddings map words to vectors in a high-dimensional space where distance reflects semantic similarity.", "visual": "📐" },
+        "discovery": { "text": "Word2Vec showed that vector arithmetic captures meaning relationships. Similar words cluster together.", "visual": "🔢" },
+        "twist": { "text": "Cross-lingual embeddings align different languages into a shared space. 'Cat' and 'gato' become neighbors.", "visual": "🐱" },
+        "climax": { "text": "Embeddings compress language into a continuous code—the information-theoretic dual of discrete symbols.", "visual": "🌊" },
+        "punchline": { "text": "Words as coordinates. Meaning as geometry.", "visual": "📍" }
+      },
+      "quiz": {
+        "question": "What do word embeddings represent?",
+        "options": ["Grammar rules", "Words as vectors where distance reflects meaning similarity", "Character frequencies"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch05-translation-and-meaning",
+      "title": "Information Loss in Summarization",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Shrink a 10-page report into 3 sentences. Some information must be lost. Which information do you keep?", "visual": "📄" },
+        "buildup": { "text": "Summarization is lossy compression: reduce the text while preserving the most important information.", "visual": "🗜️" },
+        "discovery": { "text": "Rate-distortion theory applies: given a target length, there's a minimum information loss you can't avoid.", "visual": "📉" },
+        "twist": { "text": "What counts as important depends on the reader. A financial analyst and a journalist want different summaries.", "visual": "👥" },
+        "climax": { "text": "AI summarization models learn what humans consider important from millions of examples.", "visual": "🤖" },
+        "punchline": { "text": "Shorter text, lost details. Compression has a cost.", "visual": "✂️" }
+      },
+      "quiz": {
+        "question": "What information theory concept applies to summarization?",
+        "options": ["Channel capacity", "Rate-distortion theory—minimum loss for a given compression", "Error correction"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch06-language-in-the-digital-age",
+      "title": "Text Compression",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A plain text file shrinks by 70% with ZIP. Predictable patterns squeezed out without losing a single character.", "visual": "🗜️" },
+        "buildup": { "text": "Lempel-Ziv algorithms find repeated patterns and replace them with short references. Common phrases become tiny.", "visual": "🔄" },
+        "discovery": { "text": "The compression ratio of text reveals its redundancy. English compresses much more than random data.", "visual": "📊" },
+        "twist": { "text": "Shannon's entropy sets the limit. No lossless compressor can beat the entropy rate of the source.", "visual": "📏" },
+        "climax": { "text": "Modern compressors like zstd approach Shannon's limit for text, squeezing out nearly all redundancy.", "visual": "🏁" },
+        "punchline": { "text": "Predictable text compresses. Random data doesn't.", "visual": "🎲" }
+      },
+      "quiz": {
+        "question": "What limits how much text can be losslessly compressed?",
+        "options": ["Computer speed", "Shannon's entropy rate of the source", "File format restrictions"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch06-language-in-the-digital-age",
+      "title": "Autocomplete and Prediction",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "You type 'how d' and your phone suggests 'how do you'. It predicted your sentence from two characters. Shannon approves.", "visual": "📱" },
+        "buildup": { "text": "Autocomplete is a language model in your pocket, predicting the highest-probability next word from context.", "visual": "🔮" },
+        "discovery": { "text": "With enough training data, these models capture grammar, idioms, and even personal writing style.", "visual": "📊" },
+        "twist": { "text": "Good prediction reduces keystrokes—a form of compression. Less typing means the system provides the redundant parts.", "visual": "⌨️" },
+        "climax": { "text": "From T9 to swipe typing to GPT-powered compose, prediction has transformed how humans produce text.", "visual": "🚀" },
+        "punchline": { "text": "Your phone finishes your sentences. It learned the statistics.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "How is autocomplete related to information theory?",
+        "options": ["It encrypts messages", "It uses language statistics to predict and compress keystrokes", "It corrects grammar"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch06-language-in-the-digital-age",
+      "title": "Spam Detection",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your inbox filters 45% of all email as spam. It decides in milliseconds using Bayesian statistics and word frequencies.", "visual": "📧" },
+        "buildup": { "text": "Spam filters compare the word distribution of incoming mail against models of spam and legitimate messages.", "visual": "📊" },
+        "discovery": { "text": "Words like 'free', 'winner', and 'click' shift the probability toward spam. Formal language shifts it away.", "visual": "🎯" },
+        "twist": { "text": "Spammers adapt: letter substitutions, images instead of text, and social engineering to bypass statistical filters.", "visual": "🎭" },
+        "climax": { "text": "The cat-and-mouse game is information-theoretic: both sides optimize their strategies against the other's model.", "visual": "🐱" },
+        "punchline": { "text": "Words betray intent. Filters listen to the statistics.", "visual": "👂" }
+      },
+      "quiz": {
+        "question": "What do spam filters primarily analyze?",
+        "options": ["Sender IP addresses only", "Word distributions and probabilities", "Email file sizes"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch06-language-in-the-digital-age",
+      "title": "Large Language Models",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "GPT generates human-like text by predicting one token at a time. It's Shannon's text generator scaled to billions.", "visual": "🤖" },
+        "buildup": { "text": "LLMs learn probability distributions over language from trillions of tokens. They minimize cross-entropy loss.", "visual": "📈" },
+        "discovery": { "text": "Shannon's theory predicts: a perfect language model achieves entropy rate. LLMs approximate this remarkably well.", "visual": "📐" },
+        "twist": { "text": "These models don't understand meaning—they model statistical patterns. But the patterns are so rich they mimic insight.", "visual": "🎭" },
+        "climax": { "text": "From Shannon's letter-by-letter generator to GPT: the same principle at incomprehensibly different scale.", "visual": "🌌" },
+        "punchline": { "text": "Predict the next token. Repeat. That's the recipe.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "What loss function do LLMs minimize during training?",
+        "options": ["Mean squared error", "Cross-entropy loss", "Absolute difference"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "information-theory--language-and-information--ch06-language-in-the-digital-age",
+      "title": "The Limits of Language Models",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "An LLM writes a flawless essay about physics. Ask it to count the letters in 'strawberry' and it fails. Why?", "visual": "🍓" },
+        "buildup": { "text": "LLMs model token distributions, not underlying logic. They predict what text looks like, not what it means.", "visual": "📊" },
+        "discovery": { "text": "Shannon warned: information theory handles transmission, not semantics. LLMs inherit this limitation.", "visual": "⚠️" },
+        "twist": { "text": "Scaling helps but doesn't solve the problem. More data teaches better patterns, not genuine reasoning.", "visual": "📈" },
+        "climax": { "text": "The gap between pattern and understanding is where information theory ends and intelligence begins.", "visual": "🌅" },
+        "punchline": { "text": "Perfect prediction isn't understanding. Shannon knew the difference.", "visual": "🧠" }
+      },
+      "quiz": {
+        "question": "Why do LLMs struggle with tasks requiring logic?",
+        "options": ["They need more data", "They model statistical patterns, not underlying reasoning", "Their training is incomplete"],
+        "correct": 1
+      }
+    }
+  ]
+}
