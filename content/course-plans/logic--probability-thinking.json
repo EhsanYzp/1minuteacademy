@@ -1,0 +1,559 @@
+{
+  "categoryId": "logic",
+  "subject": "Logic",
+  "courseId": "logic--probability-thinking",
+  "courseTitle": "Probability Thinking",
+  "emoji": "🎲",
+  "color": "#3949AB",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "logic--probability-thinking--ch01-foundations-of-probability", "title": "Foundations of Probability", "position": 1 },
+    { "id": "logic--probability-thinking--ch02-conditional-thinking", "title": "Conditional Thinking", "position": 2 },
+    { "id": "logic--probability-thinking--ch03-bayesian-reasoning", "title": "Bayesian Reasoning", "position": 3 },
+    { "id": "logic--probability-thinking--ch04-risk-and-uncertainty", "title": "Risk and Uncertainty", "position": 4 },
+    { "id": "logic--probability-thinking--ch05-common-probability-traps", "title": "Common Probability Traps", "position": 5 },
+    { "id": "logic--probability-thinking--ch06-probability-in-life", "title": "Probability in Life", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "logic--probability-thinking--ch01-foundations-of-probability",
+      "title": "What Is Probability",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Will it rain tomorrow? You can't know for sure—but you can assign a number to the uncertainty.", "visual": "🌦️" },
+        "buildup": { "text": "Probability measures how likely an event is, on a scale from 0 (impossible) to 1 (certain).", "visual": "📏" },
+        "discovery": { "text": "A fair coin toss is 0.5. Drawing an ace from a full deck is 4/52, about 0.077.", "visual": "🎴" },
+        "twist": { "text": "Probability isn't about predicting individual events. It's about patterns across many repetitions.", "visual": "🔁" },
+        "climax": { "text": "Understanding probability means accepting uncertainty while still making smarter decisions.", "visual": "🧭" },
+        "punchline": { "text": "Numbers for the unknown.", "visual": "🔢" }
+      },
+      "quiz": {
+        "question": "What does a probability of 0 mean?",
+        "options": ["Certain to happen", "Impossible", "Equally likely"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch01-foundations-of-probability",
+      "title": "Sample Spaces and Events",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Before calculating probability, you need to know everything that could happen. That's the sample space.", "visual": "🗺️" },
+        "buildup": { "text": "A sample space is the set of all possible outcomes. For a die roll, it's {1, 2, 3, 4, 5, 6}.", "visual": "🎲" },
+        "discovery": { "text": "An event is a subset you care about. \"Rolling even\" is the event {2, 4, 6}—three out of six outcomes.", "visual": "✅" },
+        "twist": { "text": "Get the sample space wrong and every calculation built on it fails. It's the foundation everything rests on.", "visual": "🏗️" },
+        "climax": { "text": "Define your space first, then your event. Probability always starts with knowing the full picture.", "visual": "🖼️" },
+        "punchline": { "text": "Know all possibilities first.", "visual": "📋" }
+      },
+      "quiz": {
+        "question": "What is a sample space?",
+        "options": ["The most likely outcome", "The set of all possible outcomes", "A random sample"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch01-foundations-of-probability",
+      "title": "The Law of Large Numbers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Flip a coin ten times and you might get 7 heads. Flip it a million times and you'll land near 50%.", "visual": "🪙" },
+        "buildup": { "text": "The law of large numbers says that as trials increase, the observed frequency converges to the true probability.", "visual": "📈" },
+        "discovery": { "text": "Casinos rely on this. Any single bet is uncertain, but across thousands of bets, the house always wins.", "visual": "🏠" },
+        "twist": { "text": "It doesn't mean short runs self-correct. Getting five heads doesn't make tails more likely next flip.", "visual": "🚫" },
+        "climax": { "text": "Large samples reveal the truth. Small samples can deceive. Sample size is everything.", "visual": "🔬" },
+        "punchline": { "text": "More data, closer to truth.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "What does the law of large numbers state?",
+        "options": ["Big numbers are always right", "Frequency converges to probability with more trials", "Every trial is independent"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch01-foundations-of-probability",
+      "title": "Independent vs. Dependent Events",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Does drawing one card change the odds for the next? If you don't put it back—yes, absolutely.", "visual": "🃏" },
+        "buildup": { "text": "Independent events don't affect each other. Coin flips are independent—each flip is a fresh start.", "visual": "🪙" },
+        "discovery": { "text": "Dependent events change odds. Drawing without replacement shifts the remaining deck's probabilities.", "visual": "🎴" },
+        "twist": { "text": "People assume independence where it doesn't exist. \"The stock went up three days; it must crash\" is wrong.", "visual": "📉" },
+        "climax": { "text": "Always ask: does knowing one outcome change the probability of the other? If yes, they're dependent.", "visual": "🔗" },
+        "punchline": { "text": "Connected events share fate.", "visual": "⛓️" }
+      },
+      "quiz": {
+        "question": "What makes two events independent?",
+        "options": ["They happen at the same time", "One doesn't affect the other's probability", "They have equal probability"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch01-foundations-of-probability",
+      "title": "Complementary Probability",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "What's the chance of NOT rolling a six? Sometimes it's easier to calculate what won't happen.", "visual": "🎲" },
+        "buildup": { "text": "The complement of an event covers everything that isn't the event. Subtract its probability from one.", "visual": "🔄" },
+        "discovery": { "text": "Probability of rolling a six: 1/6. Probability of not rolling a six: 1 - 1/6 = 5/6. Much simpler.", "visual": "🧮" },
+        "twist": { "text": "Complex problems often become trivial when you calculate the complement instead of the event directly.", "visual": "💡" },
+        "climax": { "text": "\"At least one\" problems are prime candidates. Calculate \"none\" and subtract from 1.", "visual": "🎯" },
+        "punchline": { "text": "Flip the question, simplify the math.", "visual": "🔀" }
+      },
+      "quiz": {
+        "question": "If P(A) = 0.3, what is P(not A)?",
+        "options": ["0.3", "0.7", "1.3"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch02-conditional-thinking",
+      "title": "What Is Conditional Probability",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "It's cloudy. Does that change the probability of rain? Of course—that's conditional probability.", "visual": "☁️" },
+        "buildup": { "text": "P(A|B) means the probability of A given that B already happened. New information updates the odds.", "visual": "📊" },
+        "discovery": { "text": "P(rain|cloudy) is much higher than P(rain) alone. The condition narrows the sample space.", "visual": "🌧️" },
+        "twist": { "text": "P(A|B) is not the same as P(B|A). The probability of clouds given rain differs from rain given clouds.", "visual": "🔀" },
+        "climax": { "text": "Conditional probability is how rational agents update beliefs when new evidence arrives.", "visual": "🧠" },
+        "punchline": { "text": "New evidence, new odds.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "What does P(A|B) represent?",
+        "options": ["Probability of A and B together", "Probability of A given B happened", "Probability of B given A"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch02-conditional-thinking",
+      "title": "The Multiplication Rule",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "What's the chance of drawing two aces in a row? You need both probabilities—and how they connect.", "visual": "🃏" },
+        "buildup": { "text": "For independent events: P(A and B) = P(A) × P(B). Two coin flips: 0.5 × 0.5 = 0.25.", "visual": "✖️" },
+        "discovery": { "text": "For dependent events: P(A and B) = P(A) × P(B|A). The second probability adjusts for the first.", "visual": "🔗" },
+        "twist": { "text": "Forgetting to adjust for dependence is one of the most common probability mistakes in real problems.", "visual": "⚠️" },
+        "climax": { "text": "Multiply probabilities in sequence—but always check whether earlier outcomes change later ones.", "visual": "🧮" },
+        "punchline": { "text": "Multiply, but adjust for context.", "visual": "⚙️" }
+      },
+      "quiz": {
+        "question": "How do you calculate P(A and B) for dependent events?",
+        "options": ["P(A) + P(B)", "P(A) × P(B|A)", "P(A) × P(B)"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch02-conditional-thinking",
+      "title": "The Base Rate Trap",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A test is 99% accurate. You test positive. The disease affects 1 in 10,000. What are your real odds?", "visual": "🏥" },
+        "buildup": { "text": "Most people say 99%. The actual chance you have the disease? About 1%. The base rate changes everything.", "visual": "📉" },
+        "discovery": { "text": "In 10,000 people: 1 truly positive, 100 false positives (1% error on 9,999 healthy). You're likely a false positive.", "visual": "📊" },
+        "twist": { "text": "Ignoring base rates—base rate neglect—leads to panic, wrongful convictions, and wasted resources.", "visual": "😨" },
+        "climax": { "text": "Always combine test accuracy with how common the condition is. One without the other misleads.", "visual": "⚖️" },
+        "punchline": { "text": "Rare events stay rare, even with good tests.", "visual": "🔬" }
+      },
+      "quiz": {
+        "question": "What does base rate neglect ignore?",
+        "options": ["Test accuracy", "How common the condition is in the population", "Sample size"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch02-conditional-thinking",
+      "title": "False Positives Explained",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Airport security flags your bag. You're clean. Happens constantly—and probability explains why.", "visual": "🧳" },
+        "buildup": { "text": "A false positive occurs when a test says \"yes\" for something that's actually \"no.\"", "visual": "🚨" },
+        "discovery": { "text": "If threats are rare but the test flags 5% of safe bags, almost every flag is a false alarm.", "visual": "📊" },
+        "twist": { "text": "Making the test more sensitive catches more threats—but also increases false positives. A painful tradeoff.", "visual": "⚖️" },
+        "climax": { "text": "No test is perfect. Understanding false positive rates prevents overreacting to every alarm.", "visual": "🧠" },
+        "punchline": { "text": "Most alarms are false ones.", "visual": "🔔" }
+      },
+      "quiz": {
+        "question": "What is a false positive?",
+        "options": ["Correctly detecting a problem", "Flagging something that isn't there", "Missing a real problem"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch02-conditional-thinking",
+      "title": "Prosecutor's Fallacy",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "\"The DNA match odds are one in a million—the defendant must be guilty.\" Not so fast.", "visual": "⚖️" },
+        "buildup": { "text": "The prosecutor's fallacy confuses P(evidence|innocent) with P(innocent|evidence). They're different.", "visual": "🔀" },
+        "discovery": { "text": "In a city of 5 million, a 1-in-a-million match means about 5 people match. The suspect is just one.", "visual": "👥" },
+        "twist": { "text": "This fallacy has contributed to wrongful convictions. Courts must consider the full population, not one match.", "visual": "🏛️" },
+        "climax": { "text": "Evidence narrows suspects but doesn't prove guilt alone. Context and base rates complete the picture.", "visual": "🧩" },
+        "punchline": { "text": "Matching isn't proving.", "visual": "🔍" }
+      },
+      "quiz": {
+        "question": "What does the prosecutor's fallacy confuse?",
+        "options": ["Guilt with innocence", "P(evidence|innocent) with P(innocent|evidence)", "The suspect with the victim"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch03-bayesian-reasoning",
+      "title": "Bayes' Theorem Basics",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "You get new evidence. How much should it change your belief? Bayes' theorem gives the exact answer.", "visual": "📐" },
+        "buildup": { "text": "Start with a prior belief (before evidence). Update it with the likelihood of the evidence. Get a posterior belief.", "visual": "🔄" },
+        "discovery": { "text": "P(H|E) = P(E|H) × P(H) / P(E). Prior times likelihood, divided by the total evidence probability.", "visual": "🧮" },
+        "twist": { "text": "Thomas Bayes published the idea in 1763—posthumously. It was ignored for two centuries, then revolutionized AI.", "visual": "🤖" },
+        "climax": { "text": "Bayesian reasoning is now the gold standard for updating beliefs rationally with new data.", "visual": "🏆" },
+        "punchline": { "text": "Evidence in, better belief out.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "What does Bayes' theorem calculate?",
+        "options": ["The probability of evidence", "Updated belief given new evidence", "The prior probability"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch03-bayesian-reasoning",
+      "title": "Priors and Posteriors",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Before any data, you have a guess. After new evidence, your guess should shift. By how much?", "visual": "🎛️" },
+        "buildup": { "text": "The prior is your belief before seeing evidence. The posterior is your belief after updating with evidence.", "visual": "📊" },
+        "discovery": { "text": "Strong priors resist change—you need overwhelming evidence. Weak priors shift easily with even a little data.", "visual": "⚖️" },
+        "twist": { "text": "Choosing the right prior matters enormously. A biased prior can distort every conclusion that follows.", "visual": "🔧" },
+        "climax": { "text": "Good Bayesian thinking means being honest about your starting beliefs—and willing to update them.", "visual": "🪞" },
+        "punchline": { "text": "Start somewhere. Update honestly.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "What is a 'prior' in Bayesian reasoning?",
+        "options": ["The final conclusion", "Your belief before seeing evidence", "The evidence itself"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch03-bayesian-reasoning",
+      "title": "Likelihood Ratios",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Two suspects. Same evidence. Who does it point to more? The likelihood ratio tells you.", "visual": "🔍" },
+        "buildup": { "text": "A likelihood ratio compares how probable the evidence is under two competing hypotheses.", "visual": "⚖️" },
+        "discovery": { "text": "If the evidence is 10× more likely under hypothesis A than B, A gets a strong evidential boost.", "visual": "📈" },
+        "twist": { "text": "A ratio of 1 means the evidence is equally likely under both. It's useless for deciding.", "visual": "🤷" },
+        "climax": { "text": "Likelihood ratios let you weigh evidence without getting lost in raw probability numbers.", "visual": "🧮" },
+        "punchline": { "text": "How much more likely under A than B?", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "What does a likelihood ratio of 1 mean?",
+        "options": ["Strong evidence for A", "Evidence equally supports both hypotheses", "Strong evidence for B"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch03-bayesian-reasoning",
+      "title": "Updating Beliefs Step by Step",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "One piece of evidence barely moves the needle. Stack ten and your belief transforms completely.", "visual": "🧱" },
+        "buildup": { "text": "Bayesian updating is iterative. Each new posterior becomes the prior for the next piece of evidence.", "visual": "🔄" },
+        "discovery": { "text": "A doctor runs test after test. Each result updates the diagnosis probability—narrowing the possibilities.", "visual": "🩺" },
+        "twist": { "text": "Order doesn't matter mathematically. The same evidence in any sequence gives the same final posterior.", "visual": "🔢" },
+        "climax": { "text": "Incremental updating prevents overreaction to single data points and builds confidence gradually.", "visual": "📈" },
+        "punchline": { "text": "Stack evidence, sharpen belief.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "In Bayesian updating, what does each posterior become?",
+        "options": ["The final answer", "The prior for the next update", "A likelihood ratio"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch03-bayesian-reasoning",
+      "title": "When Bayesian Thinking Fails",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Bayes works beautifully in theory. In practice, humans are terrible at updating beliefs.", "visual": "🧠" },
+        "buildup": { "text": "We overweight dramatic evidence and ignore boring statistical data. Our priors are often wildly off.", "visual": "📊" },
+        "discovery": { "text": "Anchoring means our first estimate dominates all updates. Even good evidence can't budge a stubborn anchor.", "visual": "⚓" },
+        "twist": { "text": "Confirmation bias filters evidence: we accept what fits and dismiss what doesn't. Not very Bayesian.", "visual": "🔒" },
+        "climax": { "text": "Knowing Bayes' theorem and practicing it are different skills. The math is easy; the mindset is hard.", "visual": "🏋️" },
+        "punchline": { "text": "The formula is simple. We aren't.", "visual": "🤷" }
+      },
+      "quiz": {
+        "question": "What makes Bayesian thinking hard in practice?",
+        "options": ["The math is too complex", "Human biases distort priors and evidence weighting", "It only works in labs"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch04-risk-and-uncertainty",
+      "title": "Risk vs. Uncertainty",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Rolling a die is risky—you know the odds. Starting a new business? That's uncertain.", "visual": "🎲" },
+        "buildup": { "text": "Risk has known probabilities. Uncertainty means you don't even know all the possible outcomes.", "visual": "🌫️" },
+        "discovery": { "text": "Frank Knight defined this distinction in 1921. Insurance handles risk. Uncertainty requires judgment.", "visual": "📘" },
+        "twist": { "text": "Most real decisions involve uncertainty, not risk. Yet we treat them as if the odds are known.", "visual": "🎭" },
+        "climax": { "text": "Knowing which you face changes your strategy. Risk calls for math. Uncertainty calls for flexibility.", "visual": "🧭" },
+        "punchline": { "text": "Known odds vs. unknown unknowns.", "visual": "❓" }
+      },
+      "quiz": {
+        "question": "What distinguishes uncertainty from risk?",
+        "options": ["Uncertainty is less dangerous", "Risk has known probabilities; uncertainty doesn't", "They're the same thing"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch04-risk-and-uncertainty",
+      "title": "Expected Value",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A lottery ticket costs $1 and has a 1-in-a-million chance of winning $500,000. Good deal?", "visual": "🎟️" },
+        "buildup": { "text": "Expected value multiplies each outcome by its probability and sums them up. EV = Σ(outcome × probability).", "visual": "🧮" },
+        "discovery": { "text": "The ticket's EV: $500,000 × 0.000001 = $0.50. You pay $1 for $0.50 of expected value. Bad deal.", "visual": "📉" },
+        "twist": { "text": "Positive EV doesn't mean you'll win. It means that over many repetitions, you'd come out ahead on average.", "visual": "📈" },
+        "climax": { "text": "Every rational bet should consider expected value. Ignoring it is how casinos and lotteries profit.", "visual": "🏦" },
+        "punchline": { "text": "Multiply outcome by odds. Then decide.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What does expected value calculate?",
+        "options": ["The most likely outcome", "The average outcome weighted by probability", "The maximum possible gain"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch04-risk-and-uncertainty",
+      "title": "Fat Tails and Black Swans",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Normal distributions say extreme events are vanishingly rare. Financial crashes say otherwise.", "visual": "📉" },
+        "buildup": { "text": "Fat-tailed distributions have extreme outcomes far more often than bell curves predict.", "visual": "📊" },
+        "discovery": { "text": "Nassim Taleb named these \"Black Swans\"—rare, high-impact events that models consistently underestimate.", "visual": "🦢" },
+        "twist": { "text": "The 2008 financial crisis was a \"once in 10,000 years\" event by normal models. It happened anyway.", "visual": "💥" },
+        "climax": { "text": "Assuming normality in fat-tailed worlds is dangerous. Extreme events define these systems, not averages.", "visual": "⚠️" },
+        "punchline": { "text": "The tail wags the dog.", "visual": "🐕" }
+      },
+      "quiz": {
+        "question": "What is a 'Black Swan' event?",
+        "options": ["A common, low-impact event", "A rare, high-impact event that models underestimate", "A predictable market trend"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch04-risk-and-uncertainty",
+      "title": "The Precautionary Principle",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A new chemical might be safe. The evidence is unclear. Should it be used while we figure it out?", "visual": "🧪" },
+        "buildup": { "text": "The precautionary principle says: when the potential harm is severe, act cautiously even before proof.", "visual": "🛡️" },
+        "discovery": { "text": "It flips the burden: instead of proving danger, require proof of safety before proceeding.", "visual": "🔄" },
+        "twist": { "text": "Critics say it blocks innovation. Everything carries some risk—taken to extremes, nothing would be approved.", "visual": "🚫" },
+        "climax": { "text": "The key is proportionality: more caution for catastrophic risks, less for manageable ones.", "visual": "⚖️" },
+        "punchline": { "text": "When stakes are huge, caution isn't cowardice.", "visual": "🏔️" }
+      },
+      "quiz": {
+        "question": "What does the precautionary principle prioritize?",
+        "options": ["Speed of innovation", "Acting cautiously before proof of safety", "Ignoring all risk"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch04-risk-and-uncertainty",
+      "title": "Ergodicity and Time",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A bet with positive expected value can still bankrupt you. How? Time and sequence matter.", "visual": "⏳" },
+        "buildup": { "text": "Ergodicity means that the average across many people equals the average for one person over time. Often untrue.", "visual": "🔢" },
+        "discovery": { "text": "Flip a coin. Heads: gain 50%. Tails: lose 40%. Average gain is +5%. But play long enough and you go broke.", "visual": "💸" },
+        "twist": { "text": "The ensemble average (across people) looks great. The time average (for you) is devastating. They diverge.", "visual": "📉" },
+        "climax": { "text": "In non-ergodic systems, expected value misleads. Survival matters more than average outcomes.", "visual": "🛡️" },
+        "punchline": { "text": "Averages don't save individuals.", "visual": "🧍" }
+      },
+      "quiz": {
+        "question": "What does ergodicity mean?",
+        "options": ["All bets are safe", "The group average equals the time average for an individual", "Probability doesn't change over time"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch05-common-probability-traps",
+      "title": "The Conjunction Fallacy",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Linda is a bank teller. Linda is a feminist bank teller. Which is more probable? Most people pick wrong.", "visual": "👩" },
+        "buildup": { "text": "The conjunction fallacy: thinking A AND B is more likely than A alone. Mathematically impossible.", "visual": "📐" },
+        "discovery": { "text": "Kahneman and Tversky showed that adding details makes a story more believable but less probable.", "visual": "📖" },
+        "twist": { "text": "\"Bank teller\" includes all bank tellers—feminist ones and non-feminist ones. The subset can't be bigger.", "visual": "🔍" },
+        "climax": { "text": "Our brains prefer detailed, coherent stories over raw probabilities. Narrative beats math every time.", "visual": "🧠" },
+        "punchline": { "text": "More detail, less likely.", "visual": "📉" }
+      },
+      "quiz": {
+        "question": "Why is A AND B never more probable than A alone?",
+        "options": ["Because B is impossible", "The conjunction is a subset of A", "A is always true"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch05-common-probability-traps",
+      "title": "Availability Heuristic",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Which kills more—shark attacks or falling coconuts? Coconuts win, but your brain says sharks.", "visual": "🦈" },
+        "buildup": { "text": "The availability heuristic judges probability by how easily examples pop into your mind.", "visual": "🧠" },
+        "discovery": { "text": "Dramatic events (plane crashes, terrorism) feel common because media covers them endlessly.", "visual": "📺" },
+        "twist": { "text": "Heart disease kills far more than homicides, but headlines about murder shape our fear more.", "visual": "❤️" },
+        "climax": { "text": "To beat this trap, check the actual statistics instead of trusting how vivid a memory feels.", "visual": "📊" },
+        "punchline": { "text": "Memorable isn't common.", "visual": "🔇" }
+      },
+      "quiz": {
+        "question": "What does the availability heuristic use to judge probability?",
+        "options": ["Statistical data", "How easily examples come to mind", "Expert testimony"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch05-common-probability-traps",
+      "title": "Regression to the Mean",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A student scores 98 on a test, then 82 on the next. Did they get worse—or just return to normal?", "visual": "📝" },
+        "buildup": { "text": "Regression to the mean says extreme results are often followed by more average ones, simply by chance.", "visual": "📊" },
+        "discovery": { "text": "Sports Illustrated's \"cover jinx\": athletes on the cover often decline afterward. They regressed to the mean.", "visual": "📰" },
+        "twist": { "text": "People invent causal explanations—pride, pressure—when the real cause is just statistical inevitability.", "visual": "🤷" },
+        "climax": { "text": "Beware of judging interventions by what follows an extreme. The bounce-back was going to happen anyway.", "visual": "🏀" },
+        "punchline": { "text": "Extreme results pull back to average.", "visual": "🧲" }
+      },
+      "quiz": {
+        "question": "What causes regression to the mean?",
+        "options": ["Loss of skill", "Statistical likelihood of returning to average", "External pressure"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch05-common-probability-traps",
+      "title": "Neglecting Sample Size",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A small hospital reports 70% boy births one month. A large one reports 52%. Which is more surprising?", "visual": "🏥" },
+        "buildup": { "text": "Small samples are naturally more variable. A few births can easily swing to 70%. Thousands can't.", "visual": "📏" },
+        "discovery": { "text": "People treat small and large samples as equally reliable. They're not—small ones are noisier.", "visual": "📊" },
+        "twist": { "text": "A restaurant with five 5-star reviews isn't necessarily better than one with 500 reviews averaging 4.5.", "visual": "⭐" },
+        "climax": { "text": "Always ask: how big is the sample? Small numbers can produce wild results by pure chance.", "visual": "🔢" },
+        "punchline": { "text": "Small samples tell noisy stories.", "visual": "🔊" }
+      },
+      "quiz": {
+        "question": "Why are small samples misleading?",
+        "options": ["They always show the true average", "They have much higher natural variability", "They're collected incorrectly"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch05-common-probability-traps",
+      "title": "Survivorship Bias",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "\"Follow your passion—look at these successful founders!\" What about the thousands who followed and failed?", "visual": "🏆" },
+        "buildup": { "text": "Survivorship bias studies the winners and ignores the losers, distorting the true picture.", "visual": "🪞" },
+        "discovery": { "text": "WWII planes returned with bullet holes on wings. Engineers wanted to armor those spots—wrong move.", "visual": "✈️" },
+        "twist": { "text": "Abraham Wald realized: armor where there AREN'T holes—those planes didn't survive to be studied.", "visual": "💡" },
+        "climax": { "text": "To avoid survivorship bias, always ask: where are the failures? What does the data not show me?", "visual": "🔍" },
+        "punchline": { "text": "The dead tell no tales—but they should.", "visual": "💀" }
+      },
+      "quiz": {
+        "question": "What does survivorship bias ignore?",
+        "options": ["The winners", "The failures and losers", "Statistical significance"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch06-probability-in-life",
+      "title": "Probabilistic Forecasting",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "\"Will it rain?\" is the wrong question. \"What's the 70% rain zone?\" is how forecasters actually think.", "visual": "🌦️" },
+        "buildup": { "text": "Probabilistic forecasts express confidence as a range, not a single prediction.", "visual": "📊" },
+        "discovery": { "text": "Superforecasters—the best predictors alive—think in precise percentages: 73%, not \"probably.\"", "visual": "📐" },
+        "twist": { "text": "A 70% forecast that's wrong 30% of the time isn't bad—it's perfectly calibrated.", "visual": "🎯" },
+        "climax": { "text": "The best forecasters update constantly, think in ranges, and track their accuracy over time.", "visual": "📈" },
+        "punchline": { "text": "Good forecasts are ranges, not bets.", "visual": "🧭" }
+      },
+      "quiz": {
+        "question": "What distinguishes a probabilistic forecast from a regular prediction?",
+        "options": ["It uses more words", "It expresses confidence as a probability range", "It's always correct"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch06-probability-in-life",
+      "title": "Thinking in Bets",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A good decision can have a bad outcome. Professional poker players understand this. Most people don't.", "visual": "🃏" },
+        "buildup": { "text": "Decision quality and outcome quality are separate. You can play the odds perfectly and still lose once.", "visual": "🎲" },
+        "discovery": { "text": "Annie Duke calls this \"thinking in bets\"—judging decisions by process, not just results.", "visual": "📘" },
+        "twist": { "text": "Resulting—judging a decision by its outcome—punishes good bets that lost and rewards bad ones that won.", "visual": "🎰" },
+        "climax": { "text": "Over time, good decision-making wins. A single outcome means nothing; the process means everything.", "visual": "📈" },
+        "punchline": { "text": "Judge the decision, not the dice.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "What is 'resulting'?",
+        "options": ["Making decisions based on process", "Judging a decision solely by its outcome", "Calculating expected values"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch06-probability-in-life",
+      "title": "Medical Probability Literacy",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Your doctor says a procedure has a \"95% success rate.\" What does that actually mean for you?", "visual": "🩺" },
+        "buildup": { "text": "Does it mean 95 out of 100 patients survive? Improve? Have no complications? Definitions vary wildly.", "visual": "📋" },
+        "discovery": { "text": "Absolute vs. relative risk matters. A drug \"reduces risk by 50%\" sounds huge—until the base risk is 0.02%.", "visual": "🔬" },
+        "twist": { "text": "A 50% relative reduction of 0.02% is 0.01%. The actual benefit is tiny—but the headline sounds massive.", "visual": "📰" },
+        "climax": { "text": "Ask for absolute numbers. \"5 out of 1,000 vs. 10 out of 1,000\" is far clearer than \"50% reduction.\"", "visual": "📊" },
+        "punchline": { "text": "Absolute numbers beat percentages.", "visual": "🔢" }
+      },
+      "quiz": {
+        "question": "Why can relative risk reductions be misleading?",
+        "options": ["They're always inaccurate", "They hide how small the base risk is", "Doctors never use them"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch06-probability-in-life",
+      "title": "Luck vs. Skill",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The CEO doubled revenue. Genius or lucky timing? Separating skill from chance is tricky—and essential.", "visual": "🍀" },
+        "buildup": { "text": "In high-luck domains, outcomes tell you little about ability. A few lucky breaks look like genius.", "visual": "🎰" },
+        "discovery": { "text": "Michael Mauboussin's test: can you lose on purpose? If yes, skill dominates. If no, luck dominates.", "visual": "🎯" },
+        "twist": { "text": "Short-term results overweight luck. Long-term results reveal skill. But we judge people on short runs.", "visual": "⏳" },
+        "climax": { "text": "In luck-heavy domains, focus on process over outcomes. Good processes win over enough repetitions.", "visual": "🔁" },
+        "punchline": { "text": "Short runs reveal luck. Long runs reveal skill.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "How can you test if skill or luck dominates an activity?",
+        "options": ["Check if outcomes are always positive", "Ask whether you can lose on purpose", "See if experts always win"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--probability-thinking--ch06-probability-in-life",
+      "title": "Embracing Uncertainty",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Certainty feels good. But the most accurate thinkers sit comfortably with doubt.", "visual": "☁️" },
+        "buildup": { "text": "Tolerating ambiguity allows you to hold multiple possibilities in mind and weigh them honestly.", "visual": "⚖️" },
+        "discovery": { "text": "Superforecasters score high on a trait called \"active open-mindedness\"—they seek out evidence that challenges them.", "visual": "🔓" },
+        "twist": { "text": "Prematurely locking in a belief kills learning. The best thinkers delay certainty as long as they can.", "visual": "⏸️" },
+        "climax": { "text": "Probability thinking at its best is a mindset: comfort with nuance, respect for evidence, and patience.", "visual": "🧘" },
+        "punchline": { "text": "Comfortable with doubt, ready for data.", "visual": "🧭" }
+      },
+      "quiz": {
+        "question": "What trait do the best forecasters share?",
+        "options": ["Extreme confidence", "Active open-mindedness", "Avoidance of data"],
+        "correct": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,559 @@
+{
+  "categoryId": "logic",
+  "subject": "Logic",
+  "courseId": "logic--formal-logic",
+  "courseTitle": "Formal Logic",
+  "emoji": "📐",
+  "color": "#3949AB",
+  "requireAuthoredStory": true,
+  "chapters": [
+    { "id": "logic--formal-logic--ch01-the-language-of-logic", "title": "The Language of Logic", "position": 1 },
+    { "id": "logic--formal-logic--ch02-truth-tables", "title": "Truth Tables", "position": 2 },
+    { "id": "logic--formal-logic--ch03-logical-equivalences", "title": "Logical Equivalences", "position": 3 },
+    { "id": "logic--formal-logic--ch04-predicate-logic", "title": "Predicate Logic", "position": 4 },
+    { "id": "logic--formal-logic--ch05-proofs-and-derivations", "title": "Proofs and Derivations", "position": 5 },
+    { "id": "logic--formal-logic--ch06-systems-and-limits", "title": "Systems and Limits", "position": 6 }
+  ],
+  "topics": [
+    {
+      "chapter_id": "logic--formal-logic--ch01-the-language-of-logic",
+      "title": "Why Symbols Matter",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "\"All men are mortal\" hides ambiguity. Replace words with symbols and the meaning becomes razor-sharp.", "visual": "✏️" },
+        "buildup": { "text": "Natural language is messy. \"I saw the man with the telescope\" has two readings. Logic removes that fog.", "visual": "🔭" },
+        "discovery": { "text": "Formal logic replaces words with symbols so we can check reasoning mechanically, like solving equations.", "visual": "⚙️" },
+        "twist": { "text": "Computers run on formal logic. Every circuit in your phone evaluates symbolic true-or-false statements.", "visual": "📱" },
+        "climax": { "text": "Symbols don't make logic harder—they make it unambiguous. Precision is the whole point.", "visual": "🎯" },
+        "punchline": { "text": "Symbols strip away confusion.", "visual": "💎" }
+      },
+      "quiz": {
+        "question": "Why does formal logic use symbols?",
+        "options": ["To look impressive", "To eliminate ambiguity", "To replace all language"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch01-the-language-of-logic",
+      "title": "Propositions and Variables",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In formal logic, \"It is raining\" becomes just P. One letter carries the entire statement.", "visual": "🌧️" },
+        "buildup": { "text": "A proposition is any statement that's either true or false. We assign it a variable: P, Q, R, and so on.", "visual": "🔤" },
+        "discovery": { "text": "Variables let us study argument structure without caring about content. P → Q works for any P and Q.", "visual": "🧩" },
+        "twist": { "text": "This abstraction is the power move: one formula proves validity for millions of different real-world arguments.", "visual": "♾️" },
+        "climax": { "text": "By stripping content away, formal logic reveals that structure alone determines validity.", "visual": "🏗️" },
+        "punchline": { "text": "One letter, one truth claim.", "visual": "🅿️" }
+      },
+      "quiz": {
+        "question": "What does a propositional variable like P represent?",
+        "options": ["A number", "A statement that is true or false", "A question"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch01-the-language-of-logic",
+      "title": "Logical Connectives",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Five tiny symbols—and, or, not, if-then, if-and-only-if—can express any logical thought.", "visual": "🔗" },
+        "buildup": { "text": "AND (∧) is true when both parts are true. OR (∨) is true when at least one is. NOT (¬) flips the truth.", "visual": "⚡" },
+        "discovery": { "text": "IF-THEN (→) says: if the first is true, the second must be. Only false when P is true but Q is false.", "visual": "➡️" },
+        "twist": { "text": "IFF (↔) requires both sides to match: both true or both false. It's the strictest connective.", "visual": "🔐" },
+        "climax": { "text": "Every complex argument, no matter how tangled, can be built from combinations of these five connectives.", "visual": "🏗️" },
+        "punchline": { "text": "Five connectives. Infinite arguments.", "visual": "🧱" }
+      },
+      "quiz": {
+        "question": "When is an OR (∨) statement true?",
+        "options": ["Only when both parts are true", "When at least one part is true", "When neither part is true"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch01-the-language-of-logic",
+      "title": "Negation and Its Tricks",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Negating \"All cats are black\" isn't \"No cats are black.\" Getting negation wrong is a classic mistake.", "visual": "🐱" },
+        "buildup": { "text": "NOT (¬) simply flips truth to false and false to true. ¬P is the opposite of P.", "visual": "🔄" },
+        "discovery": { "text": "The negation of \"all\" is \"at least one is not.\" Not \"none.\" This trips up even experienced thinkers.", "visual": "💡" },
+        "twist": { "text": "Double negation—¬¬P—brings you back to P. Two flips restore the original truth value.", "visual": "🪃" },
+        "climax": { "text": "Mastering negation prevents the most common errors in formal reasoning and everyday arguments.", "visual": "🛡️" },
+        "punchline": { "text": "Flip once carefully. Flip twice, you're back.", "visual": "🔁" }
+      },
+      "quiz": {
+        "question": "What is the negation of 'All birds can fly'?",
+        "options": ["No birds can fly", "At least one bird cannot fly", "Most birds can fly"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch01-the-language-of-logic",
+      "title": "Well-Formed Formulas",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Not every string of symbols is meaningful. \"P → ∧ Q\" is nonsense—formal logic has grammar rules.", "visual": "📏" },
+        "buildup": { "text": "A well-formed formula (WFF) follows strict syntax: correct connectives between proper propositions.", "visual": "✅" },
+        "discovery": { "text": "\"(P ∧ Q) → R\" is well-formed. \"P ∧ → Q\" is not. Parentheses and order matter.", "visual": "🔢" },
+        "twist": { "text": "Just like natural language needs grammar, formal logic needs syntax to prevent ambiguity and errors.", "visual": "📖" },
+        "climax": { "text": "Only WFFs can be evaluated for truth. Ill-formed strings have no truth value—they're just noise.", "visual": "🔇" },
+        "punchline": { "text": "No grammar, no meaning.", "visual": "📐" }
+      },
+      "quiz": {
+        "question": "What is a well-formed formula?",
+        "options": ["Any string of symbols", "A logically correct sentence following syntax rules", "A true statement"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch02-truth-tables",
+      "title": "Building a Truth Table",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "How do you prove a logical formula works for every possible input? List them all in a table.", "visual": "📊" },
+        "buildup": { "text": "A truth table lists every combination of true/false for each variable, then evaluates the whole formula.", "visual": "🔢" },
+        "discovery": { "text": "Two variables make four rows. Three make eight. Each new variable doubles the rows: 2^n combinations.", "visual": "📈" },
+        "twist": { "text": "Truth tables are brute-force but foolproof. If the formula holds in every row, it's a tautology.", "visual": "🏋️" },
+        "climax": { "text": "They're the simplest proof method in logic—no creativity needed, just careful bookkeeping.", "visual": "📋" },
+        "punchline": { "text": "Every case checked. No exceptions.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "How many rows does a truth table with 3 variables have?",
+        "options": ["6", "8", "9"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch02-truth-tables",
+      "title": "Evaluating AND and OR",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "\"I'll come if it's sunny AND I'm free.\" Both conditions needed. Change AND to OR and the rules shift.", "visual": "☀️" },
+        "buildup": { "text": "P ∧ Q is true only when both P and Q are true. One false input makes the whole thing false.", "visual": "🚫" },
+        "discovery": { "text": "P ∨ Q is true when at least one is true. It's only false when both P and Q are false.", "visual": "✅" },
+        "twist": { "text": "English \"or\" is often exclusive (one or the other). Logical OR is inclusive—both can be true.", "visual": "🤝" },
+        "climax": { "text": "Mixing up AND and OR in conditions causes bugs in code, contracts, and legal documents constantly.", "visual": "🐛" },
+        "punchline": { "text": "AND demands both. OR needs just one.", "visual": "⚖️" }
+      },
+      "quiz": {
+        "question": "When is P ∧ Q (P AND Q) true?",
+        "options": ["When either is true", "When both are true", "When neither is true"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch02-truth-tables",
+      "title": "The Conditional Surprise",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "\"If pigs fly, I'll give you a million dollars.\" Pigs don't fly. Is my promise broken? Formally: no.", "visual": "🐷" },
+        "buildup": { "text": "P → Q is false only when P is true and Q is false. In all other cases, the conditional is true.", "visual": "➡️" },
+        "discovery": { "text": "When P is false, P → Q is true regardless of Q. This is called a \"vacuously true\" conditional.", "visual": "🕳️" },
+        "twist": { "text": "This shocks beginners. \"If 2+2=5 then I'm the Pope\" is technically true in formal logic.", "visual": "😲" },
+        "climax": { "text": "The material conditional doesn't match everyday \"if-then\" perfectly, but it makes formal systems consistent.", "visual": "⚙️" },
+        "punchline": { "text": "False premise, true conditional. Always.", "visual": "🤷" }
+      },
+      "quiz": {
+        "question": "When is P → Q false?",
+        "options": ["When P is false", "When P is true and Q is false", "When both are true"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch02-truth-tables",
+      "title": "Tautologies and Contradictions",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "\"It's either raining or not raining.\" True no matter what. That's a tautology—always true by structure.", "visual": "☔" },
+        "buildup": { "text": "A tautology is a formula that's true in every row of its truth table. P ∨ ¬P is the classic example.", "visual": "✅" },
+        "discovery": { "text": "A contradiction is always false. P ∧ ¬P—something is both true and false—fails in every row.", "visual": "❌" },
+        "twist": { "text": "Contingent formulas are neither: sometimes true, sometimes false depending on the variable values.", "visual": "🎲" },
+        "climax": { "text": "Tautologies are logical laws. They hold regardless of facts—pure structural guarantees.", "visual": "🏛️" },
+        "punchline": { "text": "Always true isn't opinion—it's structure.", "visual": "🔒" }
+      },
+      "quiz": {
+        "question": "What is a tautology?",
+        "options": ["A formula that's always false", "A formula that's always true", "A formula that's sometimes true"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch02-truth-tables",
+      "title": "Testing Validity with Tables",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Is this argument valid? Build a truth table and the answer jumps out—no guesswork required.", "visual": "🔍" },
+        "buildup": { "text": "An argument is valid if every row where all premises are true also makes the conclusion true.", "visual": "📋" },
+        "discovery": { "text": "Find the rows where premises are true. If even one has a false conclusion, the argument is invalid.", "visual": "🚩" },
+        "twist": { "text": "A valid argument can have false premises. Validity only guarantees: true inputs → true output.", "visual": "⚙️" },
+        "climax": { "text": "Truth tables give a mechanical, objective test. No intuition needed—just follow the rows.", "visual": "🤖" },
+        "punchline": { "text": "Rows don't lie.", "visual": "📊" }
+      },
+      "quiz": {
+        "question": "How do truth tables test validity?",
+        "options": ["Check if the conclusion is always true", "Check that true premises always yield a true conclusion", "Count the number of rows"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch03-logical-equivalences",
+      "title": "De Morgan's Laws",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "\"Not (A and B)\" equals \"not A or not B.\" Augustus De Morgan found the swap rule that simplifies everything.", "visual": "🔀" },
+        "buildup": { "text": "De Morgan's first law: ¬(P ∧ Q) ≡ (¬P ∨ ¬Q). Negate AND, distribute, flip to OR.", "visual": "1️⃣" },
+        "discovery": { "text": "Second law: ¬(P ∨ Q) ≡ (¬P ∧ ¬Q). Negate OR, distribute, flip to AND. Mirror image of the first.", "visual": "2️⃣" },
+        "twist": { "text": "Programmers use De Morgan constantly. Simplifying complex conditions makes code easier to read and debug.", "visual": "💻" },
+        "climax": { "text": "These two laws let you rewrite any negated compound statement into a simpler equivalent form.", "visual": "✂️" },
+        "punchline": { "text": "Negate and flip: AND becomes OR.", "visual": "🔄" }
+      },
+      "quiz": {
+        "question": "What does ¬(P ∧ Q) equal according to De Morgan's laws?",
+        "options": ["¬P ∧ ¬Q", "¬P ∨ ¬Q", "P ∨ Q"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch03-logical-equivalences",
+      "title": "The Contrapositive",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "\"If it rains, the ground is wet\" means exactly the same as \"If the ground is dry, it didn't rain.\"", "visual": "🌧️" },
+        "buildup": { "text": "The contrapositive of P → Q is ¬Q → ¬P. Flip both parts and negate them. Always equivalent.", "visual": "🔄" },
+        "discovery": { "text": "The converse (Q → P) is NOT equivalent. \"If the ground is wet, it rained\" could be wrong—sprinklers.", "visual": "💦" },
+        "twist": { "text": "The inverse (¬P → ¬Q) also fails equivalence. Only the contrapositive preserves truth perfectly.", "visual": "❌" },
+        "climax": { "text": "Contrapositive reasoning is a proof technique: prove the contrapositive to prove the original.", "visual": "🔬" },
+        "punchline": { "text": "Flip and negate—same meaning.", "visual": "🪞" }
+      },
+      "quiz": {
+        "question": "What is the contrapositive of 'If P then Q'?",
+        "options": ["If Q then P", "If not Q then not P", "If not P then not Q"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch03-logical-equivalences",
+      "title": "Distribution Laws",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "In math, a(b + c) = ab + ac. Logic has the same trick: AND distributes over OR, and vice versa.", "visual": "📐" },
+        "buildup": { "text": "P ∧ (Q ∨ R) ≡ (P ∧ Q) ∨ (P ∧ R). AND distributes over OR just like multiplication over addition.", "visual": "✖️" },
+        "discovery": { "text": "P ∨ (Q ∧ R) ≡ (P ∨ Q) ∧ (P ∨ R). OR distributes over AND too—a symmetry math doesn't have.", "visual": "➕" },
+        "twist": { "text": "In algebra, addition doesn't distribute over multiplication. Logic is more symmetric than arithmetic.", "visual": "⚖️" },
+        "climax": { "text": "Distribution lets you expand or factor logical formulas—essential for simplification and proofs.", "visual": "🔧" },
+        "punchline": { "text": "Expand or factor—logic goes both ways.", "visual": "🔀" }
+      },
+      "quiz": {
+        "question": "What does P ∧ (Q ∨ R) equal?",
+        "options": ["(P ∧ Q) ∨ (P ∧ R)", "(P ∨ Q) ∧ (P ∨ R)", "P ∧ Q ∧ R"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch03-logical-equivalences",
+      "title": "Material Biconditional",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "\"You pass if and only if you score above 70.\" Both directions must hold—not just one.", "visual": "📝" },
+        "buildup": { "text": "P ↔ Q means P → Q AND Q → P. Both the conditional and its converse must be true.", "visual": "🔗" },
+        "discovery": { "text": "P ↔ Q is true when P and Q match (both true or both false). It's false when they disagree.", "visual": "🤝" },
+        "twist": { "text": "\"If and only if\" is much stronger than just \"if.\" Dropping \"only if\" halves the requirement.", "visual": "✂️" },
+        "climax": { "text": "Definitions in math use biconditionals. \"Even\" means n = 2k if and only if n is divisible by 2.", "visual": "📖" },
+        "punchline": { "text": "Both ways or no deal.", "visual": "🤝" }
+      },
+      "quiz": {
+        "question": "When is P ↔ Q true?",
+        "options": ["Only when both are true", "When P and Q have the same truth value", "When either is true"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch03-logical-equivalences",
+      "title": "Logical Equivalence Proofs",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Two formulas look different but mean the same thing. How do you prove they're logically equivalent?", "visual": "🔍" },
+        "buildup": { "text": "Method one: build truth tables for both and check that every row matches. Brute force but reliable.", "visual": "📊" },
+        "discovery": { "text": "Method two: use known equivalence laws—De Morgan, distribution, double negation—to transform one into the other.", "visual": "🔧" },
+        "twist": { "text": "Method two is faster but requires creativity. Method one always works but grows exponentially with variables.", "visual": "📈" },
+        "climax": { "text": "Logical equivalence is the backbone of simplification—in proofs, circuits, and programming.", "visual": "⚡" },
+        "punchline": { "text": "Same truth, different packaging.", "visual": "🎁" }
+      },
+      "quiz": {
+        "question": "What proves two formulas logically equivalent?",
+        "options": ["They look similar", "They have identical truth tables", "They use the same variables"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch04-predicate-logic",
+      "title": "Beyond Propositions",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "\"All dogs are loyal\" can't be expressed with P and Q alone. You need a more powerful language.", "visual": "🐕" },
+        "buildup": { "text": "Propositional logic treats whole statements as atoms. Predicate logic looks inside—at subjects and properties.", "visual": "🔬" },
+        "discovery": { "text": "\"D(x)\" means \"x is a dog.\" \"L(x)\" means \"x is loyal.\" Now you can write: for all x, D(x) → L(x).", "visual": "📝" },
+        "twist": { "text": "This jump from propositional to predicate logic was one of the biggest leaps in the history of reasoning.", "visual": "🚀" },
+        "climax": { "text": "Predicate logic can express relationships, quantities, and structures that propositional logic simply cannot.", "visual": "🏗️" },
+        "punchline": { "text": "Look inside the statement.", "visual": "🔍" }
+      },
+      "quiz": {
+        "question": "What does predicate logic add beyond propositional logic?",
+        "options": ["More connectives", "Subjects, properties, and quantifiers", "Longer formulas"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch04-predicate-logic",
+      "title": "Universal Quantifier",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "\"Every student passed.\" In symbols: ∀x (S(x) → P(x)). The upside-down A means \"for all.\"", "visual": "🅰️" },
+        "buildup": { "text": "The universal quantifier (∀) asserts that a property holds for every member of a domain.", "visual": "🌐" },
+        "discovery": { "text": "∀x P(x) is true only if P(x) is true for every single x. One exception makes it false.", "visual": "❌" },
+        "twist": { "text": "The domain matters enormously. \"All numbers are positive\" is false for integers but true for natural numbers.", "visual": "🔢" },
+        "climax": { "text": "Universal statements are bold claims. They're easy to disprove—just find one counterexample.", "visual": "🔍" },
+        "punchline": { "text": "One exception breaks \"for all.\"", "visual": "💥" }
+      },
+      "quiz": {
+        "question": "What does the symbol ∀ mean?",
+        "options": ["There exists", "For all", "Not any"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch04-predicate-logic",
+      "title": "Existential Quantifier",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "\"Some birds can't fly.\" One example is enough: penguins. In symbols: ∃x (B(x) ∧ ¬F(x)).", "visual": "🐧" },
+        "buildup": { "text": "The existential quantifier (∃) asserts that at least one member of the domain satisfies the property.", "visual": "☝️" },
+        "discovery": { "text": "∃x P(x) is true if there's even one x making P(x) true. Just one is enough.", "visual": "✅" },
+        "twist": { "text": "\"There exists\" is humble. It doesn't say how many—just that the count isn't zero.", "visual": "1️⃣" },
+        "climax": { "text": "Existential claims are proven by example. Finding one witness makes the whole statement true.", "visual": "🔦" },
+        "punchline": { "text": "One witness proves existence.", "visual": "👆" }
+      },
+      "quiz": {
+        "question": "How do you prove an existential statement?",
+        "options": ["Check every member", "Find at least one example", "Disprove the universal"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch04-predicate-logic",
+      "title": "Quantifier Negation",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Negating \"everyone is happy\" doesn't give \"nobody is happy.\" It gives \"someone isn't happy.\"", "visual": "😊" },
+        "buildup": { "text": "¬∀x P(x) ≡ ∃x ¬P(x). Negating \"for all\" flips to \"there exists one that doesn't.\"", "visual": "🔄" },
+        "discovery": { "text": "¬∃x P(x) ≡ ∀x ¬P(x). Negating \"there exists\" flips to \"none do.\"", "visual": "🚫" },
+        "twist": { "text": "These are the De Morgan's laws for quantifiers. Same pattern: negate, flip the quantifier, negate inside.", "visual": "🪞" },
+        "climax": { "text": "Getting quantifier negation right prevents the most common logical errors in philosophy and law.", "visual": "⚖️" },
+        "punchline": { "text": "Negate and flip—quantifier edition.", "visual": "🔁" }
+      },
+      "quiz": {
+        "question": "What is ¬∀x P(x) equivalent to?",
+        "options": ["∀x ¬P(x)", "∃x ¬P(x)", "¬∃x P(x)"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch04-predicate-logic",
+      "title": "Nested Quantifiers",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "\"Everyone loves someone\" and \"someone is loved by everyone\" use the same words—but mean different things.", "visual": "❤️" },
+        "buildup": { "text": "∀x ∃y L(x,y): for every person, there's someone they love. Each person can love a different someone.", "visual": "👥" },
+        "discovery": { "text": "∃y ∀x L(x,y): there's one person everyone loves. A single beloved individual.", "visual": "⭐" },
+        "twist": { "text": "Order matters! Swapping ∀ and ∃ changes meaning completely. This catches even experienced logicians.", "visual": "🔀" },
+        "climax": { "text": "Read nested quantifiers from left to right. The outer one sets the scope for the inner one.", "visual": "📖" },
+        "punchline": { "text": "Same words, swap order, new meaning.", "visual": "🎭" }
+      },
+      "quiz": {
+        "question": "Does swapping ∀ and ∃ change the meaning?",
+        "options": ["Never", "Yes, it can completely change the meaning", "Only with negation"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch05-proofs-and-derivations",
+      "title": "What Is a Proof?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "A proof isn't persuasion. It's a chain of steps where each follows unavoidably from the last.", "visual": "⛓️" },
+        "buildup": { "text": "In formal logic, a proof starts from axioms or premises and applies inference rules to reach a conclusion.", "visual": "🪜" },
+        "discovery": { "text": "Every step must be justified by a specific rule: modus ponens, generalization, substitution, and so on.", "visual": "📏" },
+        "twist": { "text": "A proof that skips a step is no proof at all. Rigor is what separates demonstration from hand-waving.", "visual": "🖐️" },
+        "climax": { "text": "Proofs make truth mechanical. A computer can check every step without understanding the subject.", "visual": "🤖" },
+        "punchline": { "text": "Every step justified. No exceptions.", "visual": "✅" }
+      },
+      "quiz": {
+        "question": "What must every step in a formal proof have?",
+        "options": ["An intuitive explanation", "A justification by an inference rule", "Emotional appeal"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch05-proofs-and-derivations",
+      "title": "Direct Proof",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "The most straightforward strategy: start with what you know and march step by step to the conclusion.", "visual": "🚶" },
+        "buildup": { "text": "A direct proof assumes the premises are true, applies rules, and derives the conclusion. No tricks.", "visual": "➡️" },
+        "discovery": { "text": "Prove: if n is even, then n² is even. Let n = 2k. Then n² = 4k² = 2(2k²), which is even. Done.", "visual": "✅" },
+        "twist": { "text": "Direct proofs are clean but not always possible. Some conclusions resist a forward march.", "visual": "🚧" },
+        "climax": { "text": "When a direct path exists, take it. It's the most transparent and convincing proof method.", "visual": "🛤️" },
+        "punchline": { "text": "Straight from A to B.", "visual": "🎯" }
+      },
+      "quiz": {
+        "question": "How does a direct proof work?",
+        "options": ["It assumes the conclusion is false", "It derives the conclusion from the premises step by step", "It tests every possible case"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch05-proofs-and-derivations",
+      "title": "Proof by Contradiction",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Assume the opposite of what you want to prove. If that leads to nonsense, your original claim must be true.", "visual": "💥" },
+        "buildup": { "text": "Proof by contradiction (reductio ad absurdum) assumes ¬C, then derives a contradiction, proving C.", "visual": "🔄" },
+        "discovery": { "text": "Prove √2 is irrational: assume it's rational (a/b in lowest terms), and you get both a and b are even. Contradiction.", "visual": "📐" },
+        "twist": { "text": "This method is controversial in some math philosophies. Constructivists want to build truth, not just deny falsehood.", "visual": "🏗️" },
+        "climax": { "text": "Contradiction proofs are powerful when direct paths are blocked. They attack from the reverse direction.", "visual": "⚔️" },
+        "punchline": { "text": "Assume the opposite. Watch it break.", "visual": "💔" }
+      },
+      "quiz": {
+        "question": "What does proof by contradiction assume?",
+        "options": ["The conclusion is true", "The negation of the conclusion", "A random premise"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch05-proofs-and-derivations",
+      "title": "Proof by Induction",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Knock down the first domino and prove each one knocks the next. All of them fall.", "visual": "🁫" },
+        "buildup": { "text": "Mathematical induction proves a statement for all natural numbers in two steps: base case and inductive step.", "visual": "🔢" },
+        "discovery": { "text": "Base case: show it's true for n=1. Inductive step: assume true for n=k, then prove it for n=k+1.", "visual": "🪜" },
+        "twist": { "text": "Induction doesn't try every number—that's impossible. It proves the infinite chain holds with just two steps.", "visual": "♾️" },
+        "climax": { "text": "It's the primary tool for proving things about infinite sequences, sums, and recursive structures.", "visual": "🔬" },
+        "punchline": { "text": "Two steps prove infinity.", "visual": "🏆" }
+      },
+      "quiz": {
+        "question": "What are the two steps of mathematical induction?",
+        "options": ["Hypothesis and conclusion", "Base case and inductive step", "Assumption and contradiction"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch05-proofs-and-derivations",
+      "title": "Proof by Cases",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Can't prove it all at once? Split into cases and prove each one separately.", "visual": "🔀" },
+        "buildup": { "text": "Proof by cases divides the possibilities into exhaustive groups and proves the claim for each group.", "visual": "📂" },
+        "discovery": { "text": "Prove |x| ≥ 0: Case 1, x ≥ 0, so |x| = x ≥ 0. Case 2, x < 0, so |x| = -x > 0. Both covered.", "visual": "✅" },
+        "twist": { "text": "The cases must be exhaustive—missing one leaves a gap. And they must cover everything, no overlap required.", "visual": "🧩" },
+        "climax": { "text": "Case analysis is simple but effective. Complex problems often yield to careful splitting.", "visual": "✂️" },
+        "punchline": { "text": "Cover every case. Miss none.", "visual": "🗂️" }
+      },
+      "quiz": {
+        "question": "What requirement must cases satisfy in a proof by cases?",
+        "options": ["They must overlap", "They must be exhaustive", "There must be exactly two"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch06-systems-and-limits",
+      "title": "What Is a Formal System?",
+      "is_free": true,
+      "story": {
+        "hook": { "text": "Chess has pieces, a board, and rules. A formal system has symbols, axioms, and inference rules.", "visual": "♟️" },
+        "buildup": { "text": "A formal system defines a language (symbols), starting truths (axioms), and rules for deriving new truths.", "visual": "📜" },
+        "discovery": { "text": "Euclidean geometry is one: five axioms, clear rules, and every theorem ever proven follows from them.", "visual": "📐" },
+        "twist": { "text": "Change one axiom (like the parallel postulate) and you get a completely different geometry.", "visual": "🌐" },
+        "climax": { "text": "Formal systems are truth machines—but they're only as good as their axioms and rules.", "visual": "⚙️" },
+        "punchline": { "text": "Axioms define the universe of truths.", "visual": "🌌" }
+      },
+      "quiz": {
+        "question": "What are the components of a formal system?",
+        "options": ["Symbols, axioms, and inference rules", "Numbers, equations, and graphs", "Premises, conclusions, and proofs"],
+        "correct": 0
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch06-systems-and-limits",
+      "title": "Soundness and Completeness",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "A logical system can have a fatal flaw: proving things that aren't true, or failing to prove things that are.", "visual": "⚠️" },
+        "buildup": { "text": "Soundness means every provable statement is actually true. The system never lies.", "visual": "✅" },
+        "discovery": { "text": "Completeness means every true statement is provable. The system misses nothing.", "visual": "🔍" },
+        "twist": { "text": "Gödel proved that powerful enough systems can't be both complete and consistent. Something must give.", "visual": "💔" },
+        "climax": { "text": "We choose soundness: better to miss some truths than to prove falsehoods.", "visual": "🛡️" },
+        "punchline": { "text": "Never false, but sometimes silent.", "visual": "🤫" }
+      },
+      "quiz": {
+        "question": "What does soundness guarantee about a logical system?",
+        "options": ["It can prove everything", "Everything it proves is true", "It has no axioms"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch06-systems-and-limits",
+      "title": "Decidability",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "Can a computer always determine whether a logical statement is true or false? Sometimes, no.", "visual": "🤖" },
+        "buildup": { "text": "A system is decidable if there's an algorithm that can determine the truth of any statement in it.", "visual": "⚡" },
+        "discovery": { "text": "Propositional logic is decidable—truth tables always work. Predicate logic is not always decidable.", "visual": "📊" },
+        "twist": { "text": "Alonzo Church and Alan Turing independently proved this in 1936. Some questions are algorithmically unsolvable.", "visual": "💻" },
+        "climax": { "text": "Undecidability isn't a bug—it's a fundamental limit of computation and formal reasoning.", "visual": "🏔️" },
+        "punchline": { "text": "Some truths have no algorithm.", "visual": "🚫" }
+      },
+      "quiz": {
+        "question": "What does it mean for a system to be decidable?",
+        "options": ["All statements are true", "An algorithm can determine truth of any statement", "It has finitely many axioms"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch06-systems-and-limits",
+      "title": "Non-Classical Logics",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "What if true and false aren't the only options? Several logics throw out the binary.", "visual": "🌈" },
+        "buildup": { "text": "Three-valued logic adds \"unknown.\" Fuzzy logic allows partial truth. Intuitionistic logic rejects excluded middle.", "visual": "🔢" },
+        "discovery": { "text": "Fuzzy logic powers washing machines and cruise control—situations where \"somewhat true\" is more useful than binary.", "visual": "🧺" },
+        "twist": { "text": "Quantum logic challenges even basic rules: in quantum mechanics, distribution laws can fail.", "visual": "⚛️" },
+        "climax": { "text": "Classical logic isn't wrong—it's just one system. Different domains need different logical tools.", "visual": "🧰" },
+        "punchline": { "text": "True, false—and everything between.", "visual": "🌗" }
+      },
+      "quiz": {
+        "question": "What does fuzzy logic allow?",
+        "options": ["Only true or false", "Partial truth values", "No truth values at all"],
+        "correct": 1
+      }
+    },
+    {
+      "chapter_id": "logic--formal-logic--ch06-systems-and-limits",
+      "title": "Why Formal Logic Endures",
+      "is_free": false,
+      "story": {
+        "hook": { "text": "AI, circuits, law, philosophy—formal logic powers systems you use every day without realizing.", "visual": "🌐" },
+        "buildup": { "text": "Every database query is logic. Every circuit gate is AND, OR, NOT. Every legal contract is an if-then chain.", "visual": "⚡" },
+        "discovery": { "text": "Formal verification uses logic to prove software has zero bugs—before it even runs.", "visual": "🛡️" },
+        "twist": { "text": "Despite its limits (Gödel, undecidability), formal logic remains the most reliable reasoning tool we have.", "visual": "🔧" },
+        "climax": { "text": "Where precision matters and ambiguity kills, formal logic is the language humans and machines share.", "visual": "🤝" },
+        "punchline": { "text": "Symbols outlast arguments.", "visual": "♾️" }
+      },
+      "quiz": {
+        "question": "Where is formal logic used in technology?",
+        "options": ["Nowhere practical", "Circuits, databases, and software verification", "Only in universities"],
+        "correct": 1
+      }
+    }
+  ]
+}
