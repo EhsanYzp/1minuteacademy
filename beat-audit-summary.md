@@ -22,12 +22,9 @@
 
 | # | Subject | Issues |
 |---|---------|--------|
-| 1 | Communication | 283 |
-| 2 | Cybersecurity | 283 |
 | 3 | Creativity | 259 |
 | 4 | Critical Thinking | 206 |
 | 5 | Behavioral Economics | 140 |
-| 6 | Archaeology | 134 |
 | 7 | Decision Making | 119 |
 | 8 | Neuroscience | 117 |
 | 9 | Economics | 103 |
