@@ -22,7 +22,6 @@
 
 | # | Subject | Issues |
 |---|---------|--------|
-| 3 | Creativity | 259 |
 | 4 | Critical Thinking | 206 |
 | 5 | Behavioral Economics | 140 |
 | 7 | Decision Making | 119 |
