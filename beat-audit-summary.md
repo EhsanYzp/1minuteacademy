@@ -39,13 +39,6 @@
 | 18 | Public Health | 37 |
 | 19 | Copywriting | 34 |
 | 20 | Life Skills | 31 |
-| 21 | Business | 27 |
-| 22 | Data | 27 |
-| 23 | Workplace Skills | 27 |
-| 24 | Career | 24 |
-| 25 | Genetics | 24 |
-| 26 | Gardening | 15 |
-| 27 | Cooking | 14 |
 | 28 | Future Tech | 8 |
 | 29 | Insurance | 2 |
 | 30 | Startups | 2 |
