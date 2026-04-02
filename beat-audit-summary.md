@@ -22,12 +22,6 @@
 
 | # | Subject | Issues |
 |---|---------|--------|
-| 4 | Critical Thinking | 206 |
-| 5 | Behavioral Economics | 140 |
-| 7 | Decision Making | 119 |
-| 8 | Neuroscience | 117 |
-| 9 | Economics | 103 |
-| 10 | Learning Methods | 102 |
 | 11 | Food Science | 99 |
 | 12 | E-Commerce | 91 |
 | 13 | Television & Streaming | 72 |
