@@ -756,15 +756,19 @@
 .catflow-progressTrack {
   height: 9px;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.06);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: color-mix(in srgb, var(--accent, #93c5fd) 12%, rgba(255, 249, 241, 0.94));
+  border: 1px solid color-mix(in srgb, var(--accent, #93c5fd) 18%, rgba(92, 71, 44, 0.12));
   overflow: hidden;
 }
 
 .catflow-progressFill {
   height: 100%;
   width: var(--progress-pct, 0%);
-  background: linear-gradient(90deg, rgba(34, 197, 94, 0.85), rgba(16, 185, 129, 0.78));
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--accent, #93c5fd) 72%, white) 0%,
+    color-mix(in srgb, var(--accent, #93c5fd) 88%, rgba(15, 23, 42, 0.18)) 100%
+  );
   border-radius: 999px;
 }
 
@@ -776,19 +780,20 @@
 }
 
 .catflow-pill {
+  --pill-accent: var(--accent, #93c5fd);
   font-size: 12px;
   font-weight: 900;
   padding: 5px 9px;
   border-radius: 999px;
-  background: rgba(255, 249, 242, 0.66);
-  border: 1px solid rgba(92, 71, 44, 0.09);
-  color: rgba(45, 52, 54, 0.78);
+  background: color-mix(in srgb, var(--pill-accent) 14%, rgba(255, 249, 242, 0.92));
+  border: 1px solid color-mix(in srgb, var(--pill-accent) 28%, rgba(92, 71, 44, 0.10));
+  color: color-mix(in srgb, var(--pill-accent) 48%, rgba(45, 52, 54, 0.92));
 }
 
 .catflow-pill-locked {
-  background: rgba(245, 158, 11, 0.12);
-  border-color: rgba(245, 158, 11, 0.28);
-  color: rgba(120, 53, 15, 0.95);
+  background: color-mix(in srgb, var(--pill-accent) 10%, rgba(255, 248, 240, 0.96));
+  border-color: color-mix(in srgb, var(--pill-accent) 22%, rgba(92, 71, 44, 0.16));
+  color: rgba(92, 71, 44, 0.90);
 }
 
 .catflow-actions {
@@ -813,15 +818,23 @@
 }
 
 .catflow-button.primary {
-  border-color: rgba(37, 99, 235, 0.30);
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.18) 0%, rgba(96, 165, 250, 0.14) 100%);
-  color: rgba(30, 64, 175, 0.98);
+  border-color: color-mix(in srgb, var(--accent, #93c5fd) 34%, rgba(92, 71, 44, 0.12));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent, #93c5fd) 18%, rgba(255, 249, 241, 0.96)) 0%,
+    color-mix(in srgb, var(--accent, #93c5fd) 30%, rgba(255, 243, 229, 0.94)) 100%
+  );
+  color: color-mix(in srgb, var(--accent, #93c5fd) 58%, rgba(45, 52, 54, 0.96));
 }
 
 .catflow-button.primary.locked {
-  border-color: rgba(245, 158, 11, 0.34);
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.18) 0%, rgba(251, 191, 36, 0.14) 100%);
-  color: rgba(120, 53, 15, 0.98);
+  border-color: color-mix(in srgb, var(--accent, #93c5fd) 22%, rgba(92, 71, 44, 0.18));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent, #93c5fd) 10%, rgba(255, 249, 241, 0.96)) 0%,
+    color-mix(in srgb, var(--accent, #93c5fd) 18%, rgba(247, 238, 227, 0.92)) 100%
+  );
+  color: rgba(92, 71, 44, 0.90);
 }
 
 .catflow-button:hover {
@@ -829,7 +842,11 @@
 }
 
 .catflow-button.primary:hover {
-  background: rgba(37, 99, 235, 0.14);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent, #93c5fd) 22%, rgba(255, 251, 246, 0.98)) 0%,
+    color-mix(in srgb, var(--accent, #93c5fd) 34%, rgba(250, 242, 232, 0.96)) 100%
+  );
 }
 
 /* ── Category card with SVG background ─────────────────────────────── */
@@ -908,8 +925,8 @@
 }
 
 .catflow-card--cat .catflow-progressTrack {
-  background: rgba(255, 249, 241, 0.50);
-  border-color: rgba(92, 71, 44, 0.08);
+  background: color-mix(in srgb, var(--accent, #93c5fd) 12%, rgba(255, 249, 241, 0.82));
+  border-color: color-mix(in srgb, var(--accent, #93c5fd) 18%, rgba(92, 71, 44, 0.10));
 }
 
 .catflow-card--cat .catflow-cardDesc {
@@ -934,7 +951,11 @@
 }
 
 .catflow-row--cat .catflow-button.primary {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.20) 0%, rgba(96, 165, 250, 0.16) 100%);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--accent, #93c5fd) 18%, rgba(255, 249, 241, 0.96)) 0%,
+    color-mix(in srgb, var(--accent, #93c5fd) 30%, rgba(247, 238, 227, 0.92)) 100%
+  );
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
