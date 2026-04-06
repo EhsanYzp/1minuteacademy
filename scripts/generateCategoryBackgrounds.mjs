@@ -334,180 +334,180 @@ const ICONS = {
 
 const CATEGORIES = {
   // ─── Finance & Money ───
-  'accounting':                ['bar-chart',   '#0f172a', '#1e3a5f', '#3b82f6'],
-  'banking':                   ['building',    '#172554', '#1e40af', '#60a5fa'],
-  'behavioral-economics':      ['brain',       '#312e81', '#4338ca', '#818cf8'],
-  'business':                  ['briefcase',   '#1e293b', '#334155', '#64748b'],
-  'business-models':           ['layers',      '#1c1917', '#44403c', '#a8a29e'],
-  'e-commerce':                ['cart',        '#2e1065', '#6d28d9', '#a78bfa'],
-  'economics':                 ['trending-up', '#0c4a6e', '#0369a1', '#38bdf8'],
-  'entrepreneurship':          ['rocket',      '#1e1b4b', '#3730a3', '#818cf8'],
-  'insurance':                 ['shield',      '#0f172a', '#1e40af', '#60a5fa'],
-  'investing':                 ['trending-up', '#0f172a', '#1d4ed8', '#60a5fa'],
-  'money':                     ['dollar',      '#1c1917', '#78350f', '#fbbf24'],
-  'personal-finance':          ['dollar',      '#0f172a', '#1e3a5f', '#3b82f6'],
-  'real-estate':               ['building',    '#292524', '#78350f', '#f59e0b'],
-  'startups':                  ['rocket',      '#2e1065', '#7c3aed', '#a78bfa'],
-  'taxes':                     ['percent',     '#1e3a5f', '#1e40af', '#60a5fa'],
-  'trading':                   ['trending-up', '#0c4a6e', '#0284c7', '#38bdf8'],
-  'fraud-and-scams':           ['lock',        '#450a0a', '#991b1b', '#fca5a5'],
-  'risk-and-compliance':       ['shield',      '#1e293b', '#475569', '#94a3b8'],
+  'accounting':                ['bar-chart',   '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'banking':                   ['building',    '#93c5fd', '#bfdbfe', '#e0e7ff'],
+  'behavioral-economics':      ['brain',       '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'business':                  ['briefcase',   '#94a3b8', '#cbd5e1', '#e2e8f0'],
+  'business-models':           ['layers',      '#a8a29e', '#d6d3d1', '#e7e5e4'],
+  'e-commerce':                ['cart',        '#c4b5fd', '#ddd6fe', '#ede9fe'],
+  'economics':                 ['trending-up', '#7dd3fc', '#bae6fd', '#e0f2fe'],
+  'entrepreneurship':          ['rocket',      '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'insurance':                 ['shield',      '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'investing':                 ['trending-up', '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'money':                     ['dollar',      '#fcd34d', '#fde68a', '#fef9c3'],
+  'personal-finance':          ['dollar',      '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'real-estate':               ['building',    '#fbbf24', '#fcd34d', '#fef3c7'],
+  'startups':                  ['rocket',      '#c4b5fd', '#ddd6fe', '#ede9fe'],
+  'taxes':                     ['percent',     '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'trading':                   ['trending-up', '#7dd3fc', '#bae6fd', '#e0f2fe'],
+  'fraud-and-scams':           ['lock',        '#fca5a5', '#fecaca', '#fee2e2'],
+  'risk-and-compliance':       ['shield',      '#94a3b8', '#cbd5e1', '#e2e8f0'],
 
   // ─── Professional & Career ───
-  'career':                    ['compass',     '#1e1b4b', '#3730a3', '#818cf8'],
-  'communication':             ['message',     '#0e7490', '#06b6d4', '#67e8f9'],
-  'copywriting':               ['pen',         '#713f12', '#a16207', '#fde047'],
-  'human-resources':           ['users',       '#0f4c5c', '#0e7490', '#22d3ee'],
-  'leadership':                ['crown',       '#1e1b4b', '#4338ca', '#a5b4fc'],
-  'management':                ['users',       '#1e293b', '#334155', '#94a3b8'],
-  'marketing':                 ['target',      '#9f1239', '#e11d48', '#fda4af'],
-  'negotiation':               ['users',       '#1e3a5f', '#1d4ed8', '#93c5fd'],
-  'operations':                ['gear',        '#1e293b', '#374151', '#9ca3af'],
-  'product-management':        ['crown',       '#2e1065', '#7c3aed', '#c4b5fd'],
-  'productivity':              ['clock',       '#134e4a', '#0d9488', '#5eead4'],
-  'project-management':        ['clock',       '#1e293b', '#475569', '#cbd5e1'],
-  'public-speaking':           ['message',     '#4c1d95', '#7c3aed', '#c4b5fd'],
-  'sales':                     ['target',      '#14532d', '#15803d', '#86efac'],
-  'workplace-skills':          ['briefcase',   '#1e3a5f', '#2563eb', '#93c5fd'],
+  'career':                    ['compass',     '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'communication':             ['message',     '#67e8f9', '#a5f3fc', '#cffafe'],
+  'copywriting':               ['pen',         '#fde047', '#fef08a', '#fef9c3'],
+  'human-resources':           ['users',       '#67e8f9', '#a5f3fc', '#cffafe'],
+  'leadership':                ['crown',       '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'management':                ['users',       '#94a3b8', '#cbd5e1', '#e2e8f0'],
+  'marketing':                 ['target',      '#fda4af', '#fecdd3', '#ffe4e6'],
+  'negotiation':               ['users',       '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'operations':                ['gear',        '#9ca3af', '#d1d5db', '#e5e7eb'],
+  'product-management':        ['crown',       '#c4b5fd', '#ddd6fe', '#ede9fe'],
+  'productivity':              ['clock',       '#5eead4', '#99f6e4', '#ccfbf1'],
+  'project-management':        ['clock',       '#94a3b8', '#cbd5e1', '#e2e8f0'],
+  'public-speaking':           ['message',     '#c4b5fd', '#ddd6fe', '#ede9fe'],
+  'sales':                     ['target',      '#86efac', '#bbf7d0', '#dcfce7'],
+  'workplace-skills':          ['briefcase',   '#93c5fd', '#bfdbfe', '#dbeafe'],
 
   // ─── Learning & Thinking ───
-  'critical-thinking':         ['puzzle',      '#312e81', '#4f46e5', '#a5b4fc'],
-  'creativity':                ['lightbulb',   '#713f12', '#ca8a04', '#fde047'],
-  'decision-making':           ['compass',     '#1e3a5f', '#2563eb', '#93c5fd'],
-  'education':                 ['book',        '#0f4c5c', '#0e7490', '#67e8f9'],
-  'game-theory':               ['puzzle',      '#1c1917', '#57534e', '#d6d3d1'],
-  'information-theory':        ['network',     '#1e1b4b', '#4338ca', '#a5b4fc'],
-  'learning':                  ['book',        '#134e4a', '#0f766e', '#5eead4'],
-  'learning-methods':          ['lightbulb',   '#134e4a', '#0d9488', '#99f6e4'],
-  'life-skills':               ['compass',     '#1e3a5f', '#1d4ed8', '#93c5fd'],
-  'logic':                     ['puzzle',      '#0f172a', '#1e40af', '#60a5fa'],
-  'mental-models':             ['brain',       '#312e81', '#4f46e5', '#c7d2fe'],
+  'critical-thinking':         ['puzzle',      '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'creativity':                ['lightbulb',   '#fde047', '#fef08a', '#fef9c3'],
+  'decision-making':           ['compass',     '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'education':                 ['book',        '#67e8f9', '#a5f3fc', '#cffafe'],
+  'game-theory':               ['puzzle',      '#d6d3d1', '#e7e5e4', '#f5f5f4'],
+  'information-theory':        ['network',     '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'learning':                  ['book',        '#5eead4', '#99f6e4', '#ccfbf1'],
+  'learning-methods':          ['lightbulb',   '#5eead4', '#99f6e4', '#ccfbf1'],
+  'life-skills':               ['compass',     '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'logic':                     ['puzzle',      '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'mental-models':             ['brain',       '#a5b4fc', '#c7d2fe', '#e0e7ff'],
 
   // ─── Psychology & Mind ───
-  'cognitive-science':         ['brain',       '#312e81', '#6d28d9', '#c4b5fd'],
-  'emotions':                  ['heart',       '#831843', '#be185d', '#f9a8d4'],
-  'mental-health':             ['heart',       '#134e4a', '#0d9488', '#99f6e4'],
-  'neuroscience':              ['brain',       '#2e1065', '#7c3aed', '#c4b5fd'],
-  'psychology':                ['brain',       '#4c1d95', '#7c3aed', '#a78bfa'],
+  'cognitive-science':         ['brain',       '#c4b5fd', '#ddd6fe', '#ede9fe'],
+  'emotions':                  ['heart',       '#f9a8d4', '#fbcfe8', '#fce7f3'],
+  'mental-health':             ['heart',       '#5eead4', '#99f6e4', '#ccfbf1'],
+  'neuroscience':              ['brain',       '#c4b5fd', '#ddd6fe', '#ede9fe'],
+  'psychology':                ['brain',       '#c4b5fd', '#ddd6fe', '#ede9fe'],
 
   // ─── Health & Body ───
-  'first-aid-safety':          ['shield',      '#7f1d1d', '#dc2626', '#fca5a5'],
-  'human-body':                ['stethoscope', '#4c1d95', '#7c3aed', '#c4b5fd'],
-  'human-evolution':           ['dna',         '#1e3a5f', '#4338ca', '#818cf8'],
-  'medicine':                  ['stethoscope', '#042f2e', '#0d9488', '#5eead4'],
-  'nutrition':                 ['apple',       '#14532d', '#16a34a', '#86efac'],
-  'physical-fitness':          ['dumbbell',    '#7f1d1d', '#dc2626', '#fca5a5'],
-  'public-health':             ['stethoscope', '#0e7490', '#06b6d4', '#67e8f9'],
-  'self-care':                 ['heart',       '#831843', '#db2777', '#f9a8d4'],
-  'sexual-health':             ['heart',       '#9f1239', '#e11d48', '#fda4af'],
-  'sleep':                     ['moon',        '#1e1b4b', '#312e81', '#818cf8'],
+  'first-aid-safety':          ['shield',      '#fca5a5', '#fecaca', '#fee2e2'],
+  'human-body':                ['stethoscope', '#c4b5fd', '#ddd6fe', '#ede9fe'],
+  'human-evolution':           ['dna',         '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'medicine':                  ['stethoscope', '#5eead4', '#99f6e4', '#ccfbf1'],
+  'nutrition':                 ['apple',       '#86efac', '#bbf7d0', '#dcfce7'],
+  'physical-fitness':          ['dumbbell',    '#fca5a5', '#fecaca', '#fee2e2'],
+  'public-health':             ['stethoscope', '#67e8f9', '#a5f3fc', '#cffafe'],
+  'self-care':                 ['heart',       '#f9a8d4', '#fbcfe8', '#fce7f3'],
+  'sexual-health':             ['heart',       '#fda4af', '#fecdd3', '#ffe4e6'],
+  'sleep':                     ['moon',        '#a5b4fc', '#c7d2fe', '#e0e7ff'],
 
   // ─── Social & Relationships ───
-  'parenting':                 ['users',       '#7c2d12', '#ea580c', '#fdba74'],
-  'relationships':             ['heart',       '#831843', '#be185d', '#fbcfe8'],
-  'social-media':              ['network',     '#0e7490', '#06b6d4', '#67e8f9'],
-  'sociology':                 ['users',       '#1e3a5f', '#3b82f6', '#93c5fd'],
+  'parenting':                 ['users',       '#fdba74', '#fed7aa', '#ffedd5'],
+  'relationships':             ['heart',       '#f9a8d4', '#fbcfe8', '#fce7f3'],
+  'social-media':              ['network',     '#67e8f9', '#a5f3fc', '#cffafe'],
+  'sociology':                 ['users',       '#93c5fd', '#bfdbfe', '#dbeafe'],
 
   // ─── Humanities & Culture ───
-  'anthropology':              ['globe',       '#713f12', '#a16207', '#fde047'],
-  'archaeology':               ['shovel',      '#78350f', '#a16207', '#fcd34d'],
-  'culture':                   ['globe',       '#4c1d95', '#7c3aed', '#c4b5fd'],
-  'ethics':                    ['scale',       '#1e293b', '#475569', '#94a3b8'],
-  'geopolitics':               ['globe',       '#1e3a5f', '#1d4ed8', '#93c5fd'],
-  'history':                   ['scroll',      '#78350f', '#92400e', '#fcd34d'],
-  'languages':                 ['message',     '#134e4a', '#0f766e', '#5eead4'],
-  'law':                       ['scale',       '#1e293b', '#1e40af', '#60a5fa'],
-  'linguistics':               ['message',     '#312e81', '#4f46e5', '#a5b4fc'],
-  'literature':                ['book',        '#78350f', '#a16207', '#fde047'],
-  'media-literacy':            ['eye',         '#1e293b', '#475569', '#94a3b8'],
-  'myth-symbolism':            ['scroll',      '#4c1d95', '#6d28d9', '#c4b5fd'],
-  'mythology':                 ['scroll',      '#2e1065', '#7c3aed', '#a78bfa'],
-  'philosophy':                ['lightbulb',   '#1e1b4b', '#312e81', '#a5b4fc'],
-  'politics':                  ['building',    '#1e293b', '#475569', '#94a3b8'],
-  'religion':                  ['cross',       '#2e1065', '#6d28d9', '#c4b5fd'],
-  'religion-and-spirituality': ['cross',       '#2e1065', '#6d28d9', '#c4b5fd'],
-  'religion-spirituality':     ['cross',       '#2e1065', '#6d28d9', '#c4b5fd'],
+  'anthropology':              ['globe',       '#fde047', '#fef08a', '#fef9c3'],
+  'archaeology':               ['shovel',      '#fcd34d', '#fde68a', '#fef9c3'],
+  'culture':                   ['globe',       '#c4b5fd', '#ddd6fe', '#ede9fe'],
+  'ethics':                    ['scale',       '#94a3b8', '#cbd5e1', '#e2e8f0'],
+  'geopolitics':               ['globe',       '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'history':                   ['scroll',      '#fcd34d', '#fde68a', '#fef9c3'],
+  'languages':                 ['message',     '#5eead4', '#99f6e4', '#ccfbf1'],
+  'law':                       ['scale',       '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'linguistics':               ['message',     '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'literature':                ['book',        '#fde047', '#fef08a', '#fef9c3'],
+  'media-literacy':            ['eye',         '#94a3b8', '#cbd5e1', '#e2e8f0'],
+  'myth-symbolism':            ['scroll',      '#c4b5fd', '#ddd6fe', '#ede9fe'],
+  'mythology':                 ['scroll',      '#c4b5fd', '#ddd6fe', '#ede9fe'],
+  'philosophy':                ['lightbulb',   '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'politics':                  ['building',    '#94a3b8', '#cbd5e1', '#e2e8f0'],
+  'religion':                  ['cross',       '#c4b5fd', '#ddd6fe', '#ede9fe'],
+  'religion-and-spirituality': ['cross',       '#c4b5fd', '#ddd6fe', '#ede9fe'],
+  'religion-spirituality':     ['cross',       '#c4b5fd', '#ddd6fe', '#ede9fe'],
 
   // ─── Arts & Creative ───
-  'animation':                 ['film',        '#9f1239', '#e11d48', '#fda4af'],
-  'art':                       ['palette',     '#9f1239', '#be123c', '#fda4af'],
-  'art-design':                ['palette',     '#9f1239', '#be123c', '#fda4af'],
-  'design':                    ['palette',     '#4c1d95', '#7c3aed', '#c4b5fd'],
-  'fashion':                   ['shirt',       '#831843', '#be185d', '#f9a8d4'],
-  'film-and-cinema':           ['film',        '#1c1917', '#44403c', '#a8a29e'],
-  'gaming':                    ['gamepad',     '#4c1d95', '#7c3aed', '#a78bfa'],
-  'music':                     ['music',       '#2e1065', '#9333ea', '#d8b4fe'],
-  'music-production':          ['music',       '#1e1b4b', '#4338ca', '#a5b4fc'],
-  'photography':               ['camera',      '#1c1917', '#374151', '#9ca3af'],
-  'television-and-streaming':  ['film',        '#0f172a', '#1e40af', '#60a5fa'],
-  'writing':                   ['pen',         '#78350f', '#a16207', '#fde047'],
+  'animation':                 ['film',        '#fda4af', '#fecdd3', '#ffe4e6'],
+  'art':                       ['palette',     '#fda4af', '#fecdd3', '#ffe4e6'],
+  'art-design':                ['palette',     '#fda4af', '#fecdd3', '#ffe4e6'],
+  'design':                    ['palette',     '#c4b5fd', '#ddd6fe', '#ede9fe'],
+  'fashion':                   ['shirt',       '#f9a8d4', '#fbcfe8', '#fce7f3'],
+  'film-and-cinema':           ['film',        '#a8a29e', '#d6d3d1', '#e7e5e4'],
+  'gaming':                    ['gamepad',     '#c4b5fd', '#ddd6fe', '#ede9fe'],
+  'music':                     ['music',       '#d8b4fe', '#e9d5ff', '#f3e8ff'],
+  'music-production':          ['music',       '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'photography':               ['camera',      '#9ca3af', '#d1d5db', '#e5e7eb'],
+  'television-and-streaming':  ['film',        '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'writing':                   ['pen',         '#fde047', '#fef08a', '#fef9c3'],
 
   // ─── Science ───
-  'astronomy-and-space':       ['moon',        '#0f172a', '#1e1b4b', '#818cf8'],
-  'astronomy-space':           ['moon',        '#0f172a', '#1e1b4b', '#818cf8'],
-  'biology':                   ['dna',         '#14532d', '#15803d', '#86efac'],
-  'biotechnology':             ['dna',         '#134e4a', '#0d9488', '#5eead4'],
-  'chemistry':                 ['atom',        '#0e7490', '#0891b2', '#67e8f9'],
-  'ecology':                   ['leaf',        '#14532d', '#16a34a', '#4ade80'],
-  'food-science':              ['microscope',  '#713f12', '#a16207', '#fde047'],
-  'genetics':                  ['dna',         '#2e1065', '#7c3aed', '#c4b5fd'],
-  'geography':                 ['globe',       '#14532d', '#15803d', '#86efac'],
-  'geology':                   ['mountain',    '#78350f', '#92400e', '#fcd34d'],
-  'mathematics':               ['sigma',       '#1e1b4b', '#3730a3', '#a5b4fc'],
-  'meteorology':               ['cloud',       '#0c4a6e', '#0369a1', '#7dd3fc'],
-  'oceanography':              ['droplet',     '#0c4a6e', '#0284c7', '#38bdf8'],
-  'physics':                   ['atom',        '#1e1b4b', '#4338ca', '#818cf8'],
-  'science':                   ['atom',        '#0f172a', '#1e40af', '#60a5fa'],
-  'statistics':                ['bar-chart',   '#1e3a5f', '#4338ca', '#818cf8'],
+  'astronomy-and-space':       ['moon',        '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'astronomy-space':           ['moon',        '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'biology':                   ['dna',         '#86efac', '#bbf7d0', '#dcfce7'],
+  'biotechnology':             ['dna',         '#5eead4', '#99f6e4', '#ccfbf1'],
+  'chemistry':                 ['atom',        '#67e8f9', '#a5f3fc', '#cffafe'],
+  'ecology':                   ['leaf',        '#86efac', '#bbf7d0', '#dcfce7'],
+  'food-science':              ['microscope',  '#fde047', '#fef08a', '#fef9c3'],
+  'genetics':                  ['dna',         '#c4b5fd', '#ddd6fe', '#ede9fe'],
+  'geography':                 ['globe',       '#86efac', '#bbf7d0', '#dcfce7'],
+  'geology':                   ['mountain',    '#fcd34d', '#fde68a', '#fef9c3'],
+  'mathematics':               ['sigma',       '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'meteorology':               ['cloud',       '#7dd3fc', '#bae6fd', '#e0f2fe'],
+  'oceanography':              ['droplet',     '#7dd3fc', '#bae6fd', '#e0f2fe'],
+  'physics':                   ['atom',        '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'science':                   ['atom',        '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'statistics':                ['bar-chart',   '#a5b4fc', '#c7d2fe', '#e0e7ff'],
 
   // ─── Nature & Environment ───
-  'agriculture':               ['leaf',        '#14532d', '#166534', '#4ade80'],
-  'climate-and-environment':   ['leaf',        '#134e4a', '#047857', '#34d399'],
-  'coffee-and-tea':            ['coffee',      '#3b0764', '#78350f', '#d4a574'],
-  'cooking':                   ['utensils',    '#7c2d12', '#c2410c', '#fdba74'],
-  'energy':                    ['zap',         '#713f12', '#ca8a04', '#fde047'],
-  'gardening':                 ['leaf',        '#14532d', '#15803d', '#86efac'],
+  'agriculture':               ['leaf',        '#86efac', '#bbf7d0', '#dcfce7'],
+  'climate-and-environment':   ['leaf',        '#5eead4', '#99f6e4', '#ccfbf1'],
+  'coffee-and-tea':            ['coffee',      '#d4a574', '#e8c9a0', '#f5e6d3'],
+  'cooking':                   ['utensils',    '#fdba74', '#fed7aa', '#ffedd5'],
+  'energy':                    ['zap',         '#fde047', '#fef08a', '#fef9c3'],
+  'gardening':                 ['leaf',        '#86efac', '#bbf7d0', '#dcfce7'],
 
   // ─── Engineering ───
-  'architecture':              ['building',    '#1c1917', '#44403c', '#a8a29e'],
-  'civil-engineering':         ['building',    '#1e293b', '#475569', '#94a3b8'],
-  'electrical-engineering':    ['zap',         '#1e1b4b', '#4338ca', '#818cf8'],
-  'engineering-fundamentals':  ['gear',        '#1e293b', '#374151', '#9ca3af'],
-  'materials-science':         ['layers',      '#0f172a', '#334155', '#94a3b8'],
-  'mechanical-engineering':    ['gear',        '#1c1917', '#44403c', '#a8a29e'],
-  'nanotechnology':            ['microscope',  '#1e1b4b', '#4338ca', '#a5b4fc'],
-  'transportation-systems':    ['plane',       '#0c4a6e', '#0369a1', '#38bdf8'],
-  'urban-planning':            ['building',    '#134e4a', '#0f766e', '#5eead4'],
+  'architecture':              ['building',    '#a8a29e', '#d6d3d1', '#e7e5e4'],
+  'civil-engineering':         ['building',    '#94a3b8', '#cbd5e1', '#e2e8f0'],
+  'electrical-engineering':    ['zap',         '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'engineering-fundamentals':  ['gear',        '#9ca3af', '#d1d5db', '#e5e7eb'],
+  'materials-science':         ['layers',      '#94a3b8', '#cbd5e1', '#e2e8f0'],
+  'mechanical-engineering':    ['gear',        '#a8a29e', '#d6d3d1', '#e7e5e4'],
+  'nanotechnology':            ['microscope',  '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'transportation-systems':    ['plane',       '#7dd3fc', '#bae6fd', '#e0f2fe'],
+  'urban-planning':            ['building',    '#5eead4', '#99f6e4', '#ccfbf1'],
 
   // ─── Technology ───
-  'ai':                        ['cpu',         '#2e1065', '#7c3aed', '#a78bfa'],
-  'ai-agents':                 ['cpu',         '#2e1065', '#7c3aed', '#a78bfa'],
-  'cloud-computing':           ['cloud',       '#0c4a6e', '#0284c7', '#7dd3fc'],
-  'computer-networking':       ['network',     '#0f172a', '#1e40af', '#60a5fa'],
-  'cybersecurity':             ['shield',      '#042f2e', '#065f46', '#34d399'],
-  'data':                      ['database',    '#1e1b4b', '#4338ca', '#818cf8'],
-  'data-engineering':          ['database',    '#0f172a', '#1e40af', '#60a5fa'],
-  'databases':                 ['database',    '#312e81', '#4f46e5', '#a5b4fc'],
-  'devops':                    ['gear',        '#0c4a6e', '#0284c7', '#7dd3fc'],
-  'future-tech':               ['rocket',      '#1e1b4b', '#3730a3', '#818cf8'],
-  'mobile-development':        ['smartphone',  '#1e293b', '#3b82f6', '#93c5fd'],
-  'privacy-and-digital-rights':['lock',        '#0f172a', '#1e40af', '#60a5fa'],
-  'programming':               ['code',        '#1e1b4b', '#4338ca', '#818cf8'],
-  'quality-assurance-testing': ['search',      '#1e293b', '#475569', '#94a3b8'],
-  'supply-chain-logistics':    ['truck',       '#1e293b', '#374151', '#9ca3af'],
-  'system-design':             ['layers',      '#0f172a', '#1d4ed8', '#60a5fa'],
-  'technology':                ['cpu',         '#0f172a', '#1e40af', '#60a5fa'],
-  'ux-research':               ['eye',         '#4c1d95', '#7c3aed', '#c4b5fd'],
-  'web-development':           ['code',        '#0e7490', '#06b6d4', '#67e8f9'],
-  'web3':                      ['code',        '#1c1917', '#44403c', '#a8a29e'],
+  'ai':                        ['cpu',         '#c4b5fd', '#ddd6fe', '#ede9fe'],
+  'ai-agents':                 ['cpu',         '#c4b5fd', '#ddd6fe', '#ede9fe'],
+  'cloud-computing':           ['cloud',       '#7dd3fc', '#bae6fd', '#e0f2fe'],
+  'computer-networking':       ['network',     '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'cybersecurity':             ['shield',      '#5eead4', '#99f6e4', '#ccfbf1'],
+  'data':                      ['database',    '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'data-engineering':          ['database',    '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'databases':                 ['database',    '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'devops':                    ['gear',        '#7dd3fc', '#bae6fd', '#e0f2fe'],
+  'future-tech':               ['rocket',      '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'mobile-development':        ['smartphone',  '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'privacy-and-digital-rights':['lock',        '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'programming':               ['code',        '#a5b4fc', '#c7d2fe', '#e0e7ff'],
+  'quality-assurance-testing': ['search',      '#94a3b8', '#cbd5e1', '#e2e8f0'],
+  'supply-chain-logistics':    ['truck',       '#9ca3af', '#d1d5db', '#e5e7eb'],
+  'system-design':             ['layers',      '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'technology':                ['cpu',         '#93c5fd', '#bfdbfe', '#dbeafe'],
+  'ux-research':               ['eye',         '#c4b5fd', '#ddd6fe', '#ede9fe'],
+  'web-development':           ['code',        '#67e8f9', '#a5f3fc', '#cffafe'],
+  'web3':                      ['code',        '#a8a29e', '#d6d3d1', '#e7e5e4'],
 
   // ─── Lifestyle ───
-  'automotive-and-evs':        ['car',         '#1e293b', '#374151', '#9ca3af'],
-  'home-diy':                  ['home',        '#713f12', '#a16207', '#fcd34d'],
-  'home-and-diy':              ['home',        '#713f12', '#a16207', '#fcd34d'],
-  'hospitality':               ['coffee',      '#7c2d12', '#c2410c', '#fdba74'],
-  'sports':                    ['dumbbell',    '#14532d', '#15803d', '#86efac'],
-  'travel':                    ['plane',       '#0e7490', '#0891b2', '#67e8f9'],
+  'automotive-and-evs':        ['car',         '#9ca3af', '#d1d5db', '#e5e7eb'],
+  'home-diy':                  ['home',        '#fcd34d', '#fde68a', '#fef9c3'],
+  'home-and-diy':              ['home',        '#fcd34d', '#fde68a', '#fef9c3'],
+  'hospitality':               ['coffee',      '#fdba74', '#fed7aa', '#ffedd5'],
+  'sports':                    ['dumbbell',    '#86efac', '#bbf7d0', '#dcfce7'],
+  'travel':                    ['plane',       '#67e8f9', '#a5f3fc', '#cffafe'],
 };
 
 // ── SVG Generation ────────────────────────────────────────────────
@@ -524,7 +524,7 @@ function generateSvg(categoryId, config) {
     const cx = Math.round(rng() * 800);
     const cy = Math.round(rng() * 400);
     const r = 30 + Math.round(rng() * 120);
-    const opacity = (0.03 + rng() * 0.05).toFixed(3);
+    const opacity = (0.04 + rng() * 0.06).toFixed(3);
     circles.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#fff" opacity="${opacity}"/>`);
   }
 
@@ -535,7 +535,7 @@ function generateSvg(categoryId, config) {
     const cx = Math.round(rng() * 800);
     const cy = Math.round(rng() * 400);
     const r = 1.5 + Math.round(rng() * 3);
-    const opacity = (0.08 + rng() * 0.14).toFixed(2);
+    const opacity = (0.06 + rng() * 0.10).toFixed(2);
     dots.push(`<circle cx="${cx}" cy="${cy}" r="${r}" fill="#fff" opacity="${opacity}"/>`);
   }
 
@@ -543,7 +543,7 @@ function generateSvg(categoryId, config) {
   const iconScale = 7 + rng() * 2;
   const iconX = 480 + Math.round(rng() * 80) - 40;
   const iconY = 80 + Math.round(rng() * 60) - 30;
-  const iconOpacity = (0.08 + rng() * 0.06).toFixed(2);
+  const iconOpacity = (0.12 + rng() * 0.08).toFixed(2);
 
   // Glow position variation
   const glowCx = (0.55 + rng() * 0.3).toFixed(2);
@@ -556,14 +556,14 @@ function generateSvg(categoryId, config) {
       <stop offset="1" stop-color="${c2}"/>
     </linearGradient>
     <radialGradient id="a" cx="${glowCx}" cy="${glowCy}" r=".65">
-      <stop offset="0" stop-color="${c3}" stop-opacity=".35"/>
+      <stop offset="0" stop-color="${c3}" stop-opacity=".5"/>
       <stop offset="1" stop-color="${c3}" stop-opacity="0"/>
     </radialGradient>
   </defs>
   <rect width="800" height="400" fill="url(#g)"/>
   <rect width="800" height="400" fill="url(#a)"/>
   ${circles.join('\n  ')}
-  <g transform="translate(${iconX},${iconY}) scale(${iconScale.toFixed(1)})" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="${iconOpacity}">
+  <g transform="translate(${iconX},${iconY}) scale(${iconScale.toFixed(1)})" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="${iconOpacity}">
     ${iconContent}
   </g>
   ${dots.join('\n  ')}

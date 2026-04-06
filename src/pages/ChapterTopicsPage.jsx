@@ -224,8 +224,8 @@ export default function ChapterTopicsPage() {
               return (
                 <div
                   key={id}
-                  className="catflow-row"
-                  style={accent ? { '--row-accent': accent } : undefined}
+                  className="catflow-row catflow-row--cat"
+                  style={{ '--row-accent': accent || undefined, backgroundImage: `url(/catalog-icons/categories/${category}.svg)` }}
                 >
                   <div className="catflow-rowMeta">
                     <h3 className="catflow-rowTitle">

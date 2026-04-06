@@ -788,28 +788,28 @@
 .catflow-card--cat {
   background-size: cover;
   background-position: center;
-  border-left-color: rgba(255, 255, 255, 0.30);
-  color: #fff;
+  border-left-color: rgba(255, 255, 255, 0.50);
+  border-color: rgba(0, 0, 0, 0.06);
 }
 
 .catflow-card--cat::before {
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.08) 0%,
-    rgba(0, 0, 0, 0.52) 100%
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.55) 100%
   );
   opacity: 1;
 }
 
 .catflow-card--cat:hover {
-  border-color: rgba(255, 255, 255, 0.18);
+  border-color: rgba(0, 0, 0, 0.10);
 }
 
 .catflow-card--cat:hover::before {
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0.02) 0%,
-    rgba(0, 0, 0, 0.42) 100%
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0.45) 100%
   );
 }
 
@@ -820,17 +820,17 @@
 
 .catflow-card--cat .catflow-cardTitle,
 .catflow-card--cat .catflow-cardTitleTop {
-  color: #fff;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+  color: rgba(15, 23, 42, 0.94);
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.5);
 }
 
 .catflow-card--cat .catflow-badge {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.55);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.22);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  color: rgba(15, 23, 42, 0.82);
+  border-color: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
 }
 
 .catflow-card--cat .catflow-metaChips {
@@ -839,42 +839,83 @@
 }
 
 .catflow-card--cat .catflow-metaChip {
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.50);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-color: rgba(255, 255, 255, 0.18);
-  color: #fff;
+  border-color: rgba(0, 0, 0, 0.06);
+  color: rgba(15, 23, 42, 0.88);
 }
 
 .catflow-card--cat .catflow-metaChipLabel {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(15, 23, 42, 0.54);
 }
 
 .catflow-card--cat .catflow-metaChipValue {
-  color: #fff;
+  color: rgba(15, 23, 42, 0.92);
 }
 
 .catflow-card--cat .catflow-progress {
   position: relative;
   z-index: 1;
-  color: rgba(255, 255, 255, 0.95);
-}
-
-.catflow-card--cat .catflow-progressTop {
-  color: rgba(255, 255, 255, 0.92);
 }
 
 .catflow-card--cat .catflow-progressTrack {
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.12);
-}
-
-.catflow-card--cat .catflow-progressFill {
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.65));
+  background: rgba(255, 255, 255, 0.45);
+  border-color: rgba(0, 0, 0, 0.06);
 }
 
 .catflow-card--cat .catflow-cardDesc {
   position: relative;
   z-index: 1;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(15, 23, 42, 0.68);
+}
+
+/* ── Topic row with SVG background ─────────────────────────────────── */
+.catflow-row--cat {
+  background-size: cover;
+  background-position: center;
+  border-left-color: rgba(255, 255, 255, 0.50);
+  border-color: rgba(0, 0, 0, 0.06);
+  position: relative;
+}
+
+.catflow-row--cat::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.40) 0%,
+    rgba(255, 255, 255, 0.58) 100%
+  );
+}
+
+.catflow-row--cat .catflow-rowMeta {
+  position: relative;
+  z-index: 1;
+}
+
+.catflow-row--cat .catflow-actions {
+  position: relative;
+  z-index: 1;
+}
+
+.catflow-row--cat .catflow-button {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.catflow-row--cat .catflow-button.primary {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.20) 0%, rgba(96, 165, 250, 0.16) 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.catflow-row--cat .catflow-check {
+  position: relative;
+  z-index: 1;
 }
