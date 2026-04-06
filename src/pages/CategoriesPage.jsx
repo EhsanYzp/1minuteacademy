@@ -457,8 +457,8 @@ export default function CategoriesPage() {
                       <Link
                         key={id}
                         to={`/categories/${encodeURIComponent(categoryId)}/courses/${encodeURIComponent(id)}`}
-                        className="catflow-card"
-                        style={borderColor ? { '--card-accent': borderColor } : undefined}
+                        className="catflow-card catflow-card--cat"
+                        style={{ '--card-accent': borderColor || undefined, backgroundImage: `url(/catalog-icons/categories/${categoryId}.svg)` }}
                       >
                         <div className="catflow-cardTop">
                           <h3 className="catflow-cardTitle catflow-cardTitleTop"><HighlightTokens text={title} tokens={queryTokens} /></h3>
@@ -504,7 +504,8 @@ export default function CategoriesPage() {
                       <Link
                         key={chapterId}
                         to={`/categories/${encodeURIComponent(categoryId)}/courses/${encodeURIComponent(courseId)}/chapters/${encodeURIComponent(chapterId)}`}
-                        className="catflow-card"
+                        className="catflow-card catflow-card--cat"
+                        style={{ backgroundImage: `url(/catalog-icons/categories/${categoryId}.svg)` }}
                       >
                         <div className="catflow-cardTop">
                           <h3 className="catflow-cardTitle catflow-cardTitleTop"><HighlightTokens text={title} tokens={queryTokens} /></h3>
