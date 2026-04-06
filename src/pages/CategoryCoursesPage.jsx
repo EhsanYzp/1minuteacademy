@@ -8,7 +8,7 @@ import ProgressVisualsToggle from '../components/ProgressVisualsToggle';
 import { getCourseCountsBatch, listCategories, listCourses } from '../services/catalog';
 import { useAuth } from '../context/AuthContext';
 import { getUserCompletedTopicsByCourse } from '../services/progress';
-import { getCategorySurfaceColor } from '../lib/categorySurfaceColors';
+import { getCategorySurfaceColor, getCategoryThemeVars } from '../lib/categorySurfaceColors';
 import useShowProgressVisuals from '../lib/useShowProgressVisuals';
 import './CategoriesFlow.css';
 
@@ -137,6 +137,7 @@ export default function CategoryCoursesPage() {
 
   const visibleCourses = useMemo(() => (Array.isArray(courses) ? courses : []), [courses]);
   const categorySurfaceColor = getCategorySurfaceColor(id, category?.color ? String(category.color) : '');
+  const categoryThemeVars = getCategoryThemeVars(id, category?.color ? String(category.color) : '');
 
   return (
     <motion.div className="catflow" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
@@ -197,7 +198,7 @@ export default function CategoryCoursesPage() {
                   key={courseId}
                   to={`/categories/${encodeURIComponent(id)}/courses/${encodeURIComponent(courseId)}`}
                   className="catflow-card catflow-card--cat"
-                  style={{ '--card-accent': borderColor || undefined, backgroundImage: `url(/catalog-icons/categories/${id}.svg)` }}
+                  style={{ ...categoryThemeVars, '--card-accent': borderColor || undefined, backgroundImage: `url(/catalog-icons/categories/${id}.svg)` }}
                 >
                   <div className="catflow-cardTop">
                     <h2 className="catflow-cardTitle catflow-cardTitleTop">{courseTitle}</h2>

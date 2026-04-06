@@ -172,6 +172,16 @@ function toRgba(hex, alpha, fallback) {
   return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
 }
 
+function getRelativeLuminance(hex) {
+  const rgb = hexToRgb(hex);
+  if (!rgb) return null;
+  const srgb = [rgb.r, rgb.g, rgb.b].map((value) => value / 255);
+  const linear = srgb.map((value) => (
+    value <= 0.03928 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4
+  ));
+  return (0.2126 * linear[0]) + (0.7152 * linear[1]) + (0.0722 * linear[2]);
+}
+
 export function getCategoryChipVars(categoryId, fallback = "") {
   const color = getCategorySurfaceColor(categoryId, fallback);
   if (!color) return undefined;
@@ -179,5 +189,40 @@ export function getCategoryChipVars(categoryId, fallback = "") {
     '--chip-accent': color,
     '--chip-border': toRgba(color, 0.22, 'rgba(92, 71, 44, 0.09)'),
     '--chip-bg': toRgba(color, 0.12, 'rgba(255, 249, 242, 0.64)'),
+  };
+}
+
+export function getCategoryThemeVars(categoryId, fallback = "") {
+  const color = getCategorySurfaceColor(categoryId, fallback);
+  if (!color) return undefined;
+
+  const luminance = getRelativeLuminance(color);
+  const isVeryLight = luminance != null && luminance >= 0.68;
+  const isLight = luminance != null && luminance >= 0.52;
+
+  const ink = isVeryLight
+    ? 'rgba(72, 56, 24, 0.96)'
+    : isLight
+      ? 'rgba(63, 55, 40, 0.95)'
+      : 'rgba(36, 46, 64, 0.96)';
+
+  const inkSoft = isVeryLight
+    ? 'rgba(92, 71, 44, 0.82)'
+    : isLight
+      ? 'rgba(81, 72, 56, 0.76)'
+      : 'rgba(55, 65, 81, 0.76)';
+
+  const borderSoftAlpha = isVeryLight ? 0.32 : isLight ? 0.24 : 0.18;
+  const borderStrongAlpha = isVeryLight ? 0.40 : isLight ? 0.30 : 0.22;
+  const surfaceAlpha = isVeryLight ? 0.18 : isLight ? 0.14 : 0.10;
+  const surfaceStrongAlpha = isVeryLight ? 0.28 : isLight ? 0.22 : 0.16;
+
+  return {
+    '--tone-ink': ink,
+    '--tone-ink-soft': inkSoft,
+    '--tone-border-soft': toRgba(color, borderSoftAlpha, 'rgba(92, 71, 44, 0.09)'),
+    '--tone-border-strong': toRgba(color, borderStrongAlpha, 'rgba(92, 71, 44, 0.14)'),
+    '--tone-surface': toRgba(color, surfaceAlpha, 'rgba(255, 249, 241, 0.52)'),
+    '--tone-surface-strong': toRgba(color, surfaceStrongAlpha, 'rgba(255, 249, 241, 0.68)'),
   };
 }

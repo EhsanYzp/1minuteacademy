@@ -14,7 +14,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { getUserCompletedTopicsByCategory } from '../services/progress';
 import { getCurrentTier, getTopicGate } from '../services/entitlements';
-import { getCategoryChipVars, getCategorySurfaceColor } from '../lib/categorySurfaceColors';
+import { getCategoryChipVars, getCategorySurfaceColor, getCategoryThemeVars } from '../lib/categorySurfaceColors';
 import useShowProgressVisuals from '../lib/useShowProgressVisuals';
 import './CategoriesFlow.css';
 
@@ -343,6 +343,7 @@ export default function CategoriesPage() {
               const id = String(cat?.id ?? '').trim();
               const title = String(cat?.title ?? 'Untitled');
               const borderColor = getCategorySurfaceColor(id, cat?.color ? String(cat.color) : '');
+              const themeVars = getCategoryThemeVars(id, cat?.color ? String(cat.color) : '');
               const courseCount = courseCountsByCategoryId.get(id) ?? 0;
               const completedTopics = completedTopicsByCategoryId.get(id) ?? 0;
               const totalTopics = topicCountsByCategoryId.get(id) ?? 0;
@@ -355,7 +356,7 @@ export default function CategoriesPage() {
                   key={id}
                   to={`/categories/${encodeURIComponent(id)}`}
                   className="catflow-card catflow-card--cat"
-                  style={{ '--card-accent': borderColor || undefined, backgroundImage: `url(/catalog-icons/categories/${id}.svg)` }}
+                  style={{ ...themeVars, '--card-accent': borderColor || undefined, backgroundImage: `url(/catalog-icons/categories/${id}.svg)` }}
                 >
                   <div className="catflow-cardTop">
                     <h2 className="catflow-cardTitle catflow-cardTitleTop">{title}</h2>
@@ -400,6 +401,7 @@ export default function CategoriesPage() {
                     const title = String(cat?.title ?? 'Untitled');
                     const borderColor = getCategorySurfaceColor(id, cat?.color ? String(cat.color) : '');
                     const chipVars = getCategoryChipVars(id, cat?.color ? String(cat.color) : '');
+                    const themeVars = getCategoryThemeVars(id, cat?.color ? String(cat.color) : '');
                     const courseCount = courseCountsByCategoryId.get(id) ?? 0;
                     const completedTopics = completedTopicsByCategoryId.get(id) ?? 0;
                     const totalTopics = topicCountsByCategoryId.get(id) ?? 0;
@@ -412,7 +414,7 @@ export default function CategoriesPage() {
                         key={id}
                         to={`/categories/${encodeURIComponent(id)}`}
                         className="catflow-card catflow-card--cat"
-                        style={{ '--card-accent': borderColor || undefined, backgroundImage: `url(/catalog-icons/categories/${id}.svg)` }}
+                        style={{ ...themeVars, '--card-accent': borderColor || undefined, backgroundImage: `url(/catalog-icons/categories/${id}.svg)` }}
                       >
                         <div className="catflow-cardTop">
                           <h3 className="catflow-cardTitle catflow-cardTitleTop"><HighlightTokens text={title} tokens={queryTokens} /></h3>
@@ -464,6 +466,7 @@ export default function CategoriesPage() {
                     const title = String(c?.title ?? 'Course');
                     const borderColor = getCategorySurfaceColor(categoryId, c?.color ? String(c.color) : '');
                     const chipVars = getCategoryChipVars(categoryId, c?.color ? String(c.color) : '');
+                    const themeVars = getCategoryThemeVars(categoryId, c?.color ? String(c.color) : '');
                     const categoryTitle = categoryTitleById.get(categoryId) ?? categoryId;
 
                     return (
@@ -471,7 +474,7 @@ export default function CategoriesPage() {
                         key={id}
                         to={`/categories/${encodeURIComponent(categoryId)}/courses/${encodeURIComponent(id)}`}
                         className="catflow-card catflow-card--cat"
-                        style={{ '--card-accent': borderColor || undefined, backgroundImage: `url(/catalog-icons/categories/${categoryId}.svg)` }}
+                        style={{ ...themeVars, '--card-accent': borderColor || undefined, backgroundImage: `url(/catalog-icons/categories/${categoryId}.svg)` }}
                       >
                         <div className="catflow-cardTop">
                           <h3 className="catflow-cardTitle catflow-cardTitleTop"><HighlightTokens text={title} tokens={queryTokens} /></h3>
@@ -511,6 +514,7 @@ export default function CategoriesPage() {
                     const courseTitle = String(courseRow?.title ?? courseId);
                     const categoryTitle = categoryTitleById.get(categoryId) ?? categoryId;
                     const chipVars = getCategoryChipVars(categoryId);
+                    const themeVars = getCategoryThemeVars(categoryId);
 
                     if (!courseId || !categoryId) return null;
 
@@ -519,7 +523,7 @@ export default function CategoriesPage() {
                         key={chapterId}
                         to={`/categories/${encodeURIComponent(categoryId)}/courses/${encodeURIComponent(courseId)}/chapters/${encodeURIComponent(chapterId)}`}
                         className="catflow-card catflow-card--cat"
-                        style={{ '--card-accent': getCategorySurfaceColor(categoryId) || undefined, backgroundImage: `url(/catalog-icons/categories/${categoryId}.svg)` }}
+                        style={{ ...themeVars, '--card-accent': getCategorySurfaceColor(categoryId) || undefined, backgroundImage: `url(/catalog-icons/categories/${categoryId}.svg)` }}
                       >
                         <div className="catflow-cardTop">
                           <h3 className="catflow-cardTitle catflow-cardTitleTop"><HighlightTokens text={title} tokens={queryTokens} /></h3>
@@ -571,6 +575,7 @@ export default function CategoriesPage() {
                     const tierLabel = isFree ? 'Free' : 'Pro';
                     const gate = getTopicGate({ tier, topicRow: t });
                     const chipVars = getCategoryChipVars(topicCatId);
+                    const themeVars = getCategoryThemeVars(topicCatId);
                     const startTo = gate?.locked
                       ? (gate.reason === 'paused' ? '/me' : '/upgrade')
                       : `/lesson/${encodeURIComponent(id)}`;
@@ -579,7 +584,7 @@ export default function CategoriesPage() {
                       <div
                         key={id}
                         className="catflow-result catflow-resultClickable catflow-result--cat"
-                        style={topicCatId ? { '--row-accent': categoryColorById.get(topicCatId) || undefined, '--cat-bg': categoryColorById.get(topicCatId) || undefined } : undefined}
+                        style={topicCatId ? { ...themeVars, '--row-accent': categoryColorById.get(topicCatId) || undefined, '--cat-bg': categoryColorById.get(topicCatId) || undefined } : undefined}
                         role="link"
                         tabIndex={0}
                         onClick={() => navigate(path)}

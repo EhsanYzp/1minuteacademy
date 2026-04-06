@@ -622,10 +622,18 @@
 
 .catflow-result--cat {
   border-left-color: var(--accent);
-  border-color: rgba(92, 71, 44, 0.08);
+  border-color: var(--tone-border-soft, rgba(92, 71, 44, 0.08));
   background:
     linear-gradient(180deg, rgba(255, 250, 244, 0.68) 0%, rgba(248, 240, 229, 0.52) 100%),
     var(--cat-bg, rgba(255, 250, 244, 0.82));
+}
+
+.catflow-result--cat .catflow-resultTitle {
+  color: var(--tone-ink, rgba(15, 23, 42, 0.94));
+}
+
+.catflow-result--cat .catflow-resultDesc {
+  color: var(--tone-ink-soft, rgba(15, 23, 42, 0.70));
 }
 
 .catflow-resultMain {
@@ -748,7 +756,7 @@
   justify-content: space-between;
   align-items: baseline;
   gap: 10px;
-  color: rgba(45, 52, 54, 0.84);
+  color: var(--tone-ink-soft, rgba(45, 52, 54, 0.84));
   font-weight: 900;
   font-size: 12.5px;
 }
@@ -756,8 +764,8 @@
 .catflow-progressTrack {
   height: 9px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--accent, #93c5fd) 12%, rgba(255, 249, 241, 0.94));
-  border: 1px solid color-mix(in srgb, var(--accent, #93c5fd) 18%, rgba(92, 71, 44, 0.12));
+  background: color-mix(in srgb, var(--accent, #93c5fd) 12%, var(--tone-surface-strong, rgba(255, 249, 241, 0.94)));
+  border: 1px solid var(--tone-border-soft, color-mix(in srgb, var(--accent, #93c5fd) 18%, rgba(92, 71, 44, 0.12)));
   overflow: hidden;
 }
 
@@ -785,15 +793,15 @@
   font-weight: 900;
   padding: 5px 9px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--pill-accent) 14%, rgba(255, 249, 242, 0.92));
-  border: 1px solid color-mix(in srgb, var(--pill-accent) 28%, rgba(92, 71, 44, 0.10));
-  color: color-mix(in srgb, var(--pill-accent) 48%, rgba(45, 52, 54, 0.92));
+  background: color-mix(in srgb, var(--pill-accent) 14%, var(--tone-surface-strong, rgba(255, 249, 242, 0.92)));
+  border: 1px solid var(--tone-border-soft, color-mix(in srgb, var(--pill-accent) 28%, rgba(92, 71, 44, 0.10)));
+  color: var(--tone-ink, color-mix(in srgb, var(--pill-accent) 48%, rgba(45, 52, 54, 0.92)));
 }
 
 .catflow-pill-locked {
-  background: color-mix(in srgb, var(--pill-accent) 10%, rgba(255, 248, 240, 0.96));
-  border-color: color-mix(in srgb, var(--pill-accent) 22%, rgba(92, 71, 44, 0.16));
-  color: rgba(92, 71, 44, 0.90);
+  background: color-mix(in srgb, var(--pill-accent) 10%, var(--tone-surface-strong, rgba(255, 248, 240, 0.96)));
+  border-color: var(--tone-border-soft, color-mix(in srgb, var(--pill-accent) 22%, rgba(92, 71, 44, 0.16)));
+  color: var(--tone-ink, rgba(92, 71, 44, 0.90));
 }
 
 .catflow-actions {
@@ -818,23 +826,23 @@
 }
 
 .catflow-button.primary {
-  border-color: color-mix(in srgb, var(--accent, #93c5fd) 34%, rgba(92, 71, 44, 0.12));
+  border-color: var(--tone-border-strong, color-mix(in srgb, var(--accent, #93c5fd) 34%, rgba(92, 71, 44, 0.12)));
   background: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--accent, #93c5fd) 18%, rgba(255, 249, 241, 0.96)) 0%,
-    color-mix(in srgb, var(--accent, #93c5fd) 30%, rgba(255, 243, 229, 0.94)) 100%
+    color-mix(in srgb, var(--accent, #93c5fd) 18%, var(--tone-surface-strong, rgba(255, 249, 241, 0.96))) 0%,
+    color-mix(in srgb, var(--accent, #93c5fd) 30%, var(--tone-surface, rgba(255, 243, 229, 0.94))) 100%
   );
-  color: color-mix(in srgb, var(--accent, #93c5fd) 58%, rgba(45, 52, 54, 0.96));
+  color: var(--tone-ink, color-mix(in srgb, var(--accent, #93c5fd) 58%, rgba(45, 52, 54, 0.96)));
 }
 
 .catflow-button.primary.locked {
-  border-color: color-mix(in srgb, var(--accent, #93c5fd) 22%, rgba(92, 71, 44, 0.18));
+  border-color: var(--tone-border-soft, color-mix(in srgb, var(--accent, #93c5fd) 22%, rgba(92, 71, 44, 0.18)));
   background: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--accent, #93c5fd) 10%, rgba(255, 249, 241, 0.96)) 0%,
-    color-mix(in srgb, var(--accent, #93c5fd) 18%, rgba(247, 238, 227, 0.92)) 100%
+    color-mix(in srgb, var(--accent, #93c5fd) 10%, var(--tone-surface-strong, rgba(255, 249, 241, 0.96))) 0%,
+    color-mix(in srgb, var(--accent, #93c5fd) 18%, var(--tone-surface, rgba(247, 238, 227, 0.92))) 100%
   );
-  color: rgba(92, 71, 44, 0.90);
+  color: var(--tone-ink, rgba(92, 71, 44, 0.90));
 }
 
 .catflow-button:hover {
@@ -854,7 +862,7 @@
   background-size: cover;
   background-position: center;
   border-left-color: rgba(255, 255, 255, 0.50);
-  border-color: rgba(92, 71, 44, 0.08);
+  border-color: var(--tone-border-soft, rgba(92, 71, 44, 0.08));
 }
 
 .catflow-card--cat::before {
@@ -867,7 +875,7 @@
 }
 
 .catflow-card--cat:hover {
-  border-color: rgba(92, 71, 44, 0.12);
+  border-color: var(--tone-border-strong, rgba(92, 71, 44, 0.12));
 }
 
 .catflow-card--cat:hover::before {
@@ -885,16 +893,16 @@
 
 .catflow-card--cat .catflow-cardTitle,
 .catflow-card--cat .catflow-cardTitleTop {
-  color: rgba(15, 23, 42, 0.94);
+  color: var(--tone-ink, rgba(15, 23, 42, 0.94));
   text-shadow: 0 1px 4px rgba(255, 255, 255, 0.5);
 }
 
 .catflow-card--cat .catflow-badge {
-  background: rgba(255, 249, 241, 0.54);
+  background: var(--tone-surface, rgba(255, 249, 241, 0.54));
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  color: rgba(15, 23, 42, 0.82);
-  border-color: rgba(92, 71, 44, 0.08);
+  color: var(--tone-ink, rgba(15, 23, 42, 0.82));
+  border-color: var(--tone-border-soft, rgba(92, 71, 44, 0.08));
   box-shadow: none;
 }
 
@@ -904,19 +912,19 @@
 }
 
 .catflow-card--cat .catflow-metaChip {
-  background: rgba(255, 249, 241, 0.48);
+  background: var(--tone-surface, rgba(255, 249, 241, 0.48));
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-color: rgba(92, 71, 44, 0.08);
-  color: rgba(15, 23, 42, 0.88);
+  border-color: var(--tone-border-soft, rgba(92, 71, 44, 0.08));
+  color: var(--tone-ink, rgba(15, 23, 42, 0.88));
 }
 
 .catflow-card--cat .catflow-metaChipLabel {
-  color: rgba(15, 23, 42, 0.54);
+  color: var(--tone-ink-soft, rgba(15, 23, 42, 0.54));
 }
 
 .catflow-card--cat .catflow-metaChipValue {
-  color: rgba(15, 23, 42, 0.92);
+  color: var(--tone-ink, rgba(15, 23, 42, 0.92));
 }
 
 .catflow-card--cat .catflow-progress {
@@ -932,15 +940,20 @@
 .catflow-card--cat .catflow-cardDesc {
   position: relative;
   z-index: 1;
-  color: rgba(15, 23, 42, 0.68);
+  color: var(--tone-ink-soft, rgba(15, 23, 42, 0.68));
 }
 
 .catflow-row--cat {
   border-left-color: var(--accent);
-  border-color: rgba(92, 71, 44, 0.08);
+  border-color: var(--tone-border-soft, rgba(92, 71, 44, 0.08));
   background:
     linear-gradient(180deg, rgba(255, 250, 244, 0.68) 0%, rgba(248, 240, 229, 0.54) 100%),
     var(--cat-bg, rgba(255, 250, 244, 0.84));
+}
+
+.catflow-row--cat .catflow-rowTitle,
+.catflow-row--cat .catflow-rowTitleText {
+  color: var(--tone-ink, rgba(15, 23, 42, 0.94));
 }
 
 .catflow-row--cat .catflow-button {

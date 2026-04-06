@@ -9,7 +9,7 @@ import { getCourse, listCategories, listChapters, listTopicsForCourse } from '..
 import { useAuth } from '../context/AuthContext';
 import { getContentSource } from '../services/_contentSource';
 import { listUserTopicProgressForCourse } from '../services/progress';
-import { getCategorySurfaceColor } from '../lib/categorySurfaceColors';
+import { getCategorySurfaceColor, getCategoryThemeVars } from '../lib/categorySurfaceColors';
 import useShowProgressVisuals from '../lib/useShowProgressVisuals';
 import './CategoriesFlow.css';
 
@@ -151,6 +151,7 @@ export default function CourseChaptersPage() {
 
   const categoryTitle = String(categoryRow?.title ?? category);
   const categorySurfaceColor = getCategorySurfaceColor(category, categoryRow?.color ? String(categoryRow.color) : '');
+  const categoryThemeVars = getCategoryThemeVars(category, categoryRow?.color ? String(categoryRow.color) : '');
 
   return (
     <motion.div className="catflow" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
@@ -220,7 +221,7 @@ export default function CourseChaptersPage() {
                     key={chapterId}
                     to={`/categories/${encodeURIComponent(category)}/courses/${encodeURIComponent(course)}/chapters/${encodeURIComponent(chapterId)}`}
                     className="catflow-card catflow-card--cat"
-                    style={{ '--card-accent': categorySurfaceColor || undefined, backgroundImage: `url(/catalog-icons/categories/${category}.svg)` }}
+                    style={{ ...categoryThemeVars, '--card-accent': categorySurfaceColor || undefined, backgroundImage: `url(/catalog-icons/categories/${category}.svg)` }}
                   >
                     <div className="catflow-cardTop">
                       <h3 className="catflow-cardTitle catflow-cardTitleTop">{title}</h3>
