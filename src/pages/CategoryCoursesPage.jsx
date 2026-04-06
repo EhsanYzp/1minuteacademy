@@ -150,7 +150,7 @@ export default function CategoryCoursesPage() {
       <Header />
 
       <main className="catflow-main">
-        <div className="catflow-hero catflow-hero--cat" style={{ backgroundImage: `url(/catalog-icons/categories/${id}.svg)` }}>
+        <div className="catflow-hero catflow-hero--cat" style={{ ...categoryThemeVars, backgroundImage: `url(/catalog-icons/categories/${id}.svg)` }}>
           <Link className="catflow-back" to="/categories">← Categories</Link>
           <Breadcrumbs
             items={[

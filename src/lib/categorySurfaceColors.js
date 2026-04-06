@@ -220,6 +220,8 @@ export function getCategoryThemeVars(categoryId, fallback = "") {
   const overlayBottom = isVeryLight ? 'rgba(247, 238, 227, 0.72)' : isLight ? 'rgba(247, 238, 227, 0.60)' : 'rgba(247, 238, 227, 0.48)';
   const overlayTopHover = isVeryLight ? 'rgba(255, 249, 242, 0.34)' : isLight ? 'rgba(255, 249, 242, 0.28)' : 'rgba(255, 249, 242, 0.20)';
   const overlayBottomHover = isVeryLight ? 'rgba(247, 238, 227, 0.56)' : isLight ? 'rgba(247, 238, 227, 0.46)' : 'rgba(247, 238, 227, 0.36)';
+  const heroOverlayTop = isVeryLight ? 'rgba(255, 249, 242, 0.62)' : isLight ? 'rgba(255, 249, 242, 0.52)' : 'rgba(255, 249, 242, 0.42)';
+  const heroOverlayBottom = isVeryLight ? 'rgba(247, 238, 227, 0.82)' : isLight ? 'rgba(247, 238, 227, 0.72)' : 'rgba(247, 238, 227, 0.62)';
 
   return {
     '--tone-ink': ink,
@@ -232,5 +234,7 @@ export function getCategoryThemeVars(categoryId, fallback = "") {
     '--tone-overlay-bottom': overlayBottom,
     '--tone-overlay-top-hover': overlayTopHover,
     '--tone-overlay-bottom-hover': overlayBottomHover,
+    '--tone-hero-overlay-top': heroOverlayTop,
+    '--tone-hero-overlay-bottom': heroOverlayBottom,
   };
 }
