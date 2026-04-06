@@ -355,7 +355,7 @@ export default function CategoriesPage() {
                 <Link
                   key={id}
                   to={`/categories/${encodeURIComponent(id)}`}
-                  className="catflow-card catflow-card--cat"
+                  className="catflow-card catflow-card--cat catflow-card--category"
                   style={{ ...themeVars, '--card-accent': borderColor || undefined, backgroundImage: `url(/catalog-icons/categories/${id}.svg)` }}
                 >
                   <div className="catflow-cardTop">
@@ -413,7 +413,7 @@ export default function CategoriesPage() {
                       <Link
                         key={id}
                         to={`/categories/${encodeURIComponent(id)}`}
-                        className="catflow-card catflow-card--cat"
+                        className="catflow-card catflow-card--cat catflow-card--category catflow-card--search"
                         style={{ ...themeVars, '--card-accent': borderColor || undefined, backgroundImage: `url(/catalog-icons/categories/${id}.svg)` }}
                       >
                         <div className="catflow-cardTop">
@@ -473,7 +473,7 @@ export default function CategoriesPage() {
                       <Link
                         key={id}
                         to={`/categories/${encodeURIComponent(categoryId)}/courses/${encodeURIComponent(id)}`}
-                        className="catflow-card catflow-card--cat"
+                        className="catflow-card catflow-card--cat catflow-card--course catflow-card--search"
                         style={{ ...themeVars, '--card-accent': borderColor || undefined, backgroundImage: `url(/catalog-icons/categories/${categoryId}.svg)` }}
                       >
                         <div className="catflow-cardTop">
@@ -522,7 +522,7 @@ export default function CategoriesPage() {
                       <Link
                         key={chapterId}
                         to={`/categories/${encodeURIComponent(categoryId)}/courses/${encodeURIComponent(courseId)}/chapters/${encodeURIComponent(chapterId)}`}
-                        className="catflow-card catflow-card--cat"
+                        className="catflow-card catflow-card--cat catflow-card--chapter catflow-card--search"
                         style={{ ...themeVars, '--card-accent': getCategorySurfaceColor(categoryId) || undefined, backgroundImage: `url(/catalog-icons/categories/${categoryId}.svg)` }}
                       >
                         <div className="catflow-cardTop">
@@ -583,7 +583,7 @@ export default function CategoriesPage() {
                     return (
                       <div
                         key={id}
-                        className="catflow-result catflow-resultClickable catflow-result--cat"
+                        className="catflow-result catflow-resultClickable catflow-result--cat catflow-result--minimal"
                         style={topicCatId ? { ...themeVars, '--row-accent': categoryColorById.get(topicCatId) || undefined, '--cat-bg': categoryColorById.get(topicCatId) || undefined } : undefined}
                         role="link"
                         tabIndex={0}

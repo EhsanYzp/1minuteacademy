@@ -227,7 +227,7 @@ export default function ChapterTopicsPage() {
               return (
                 <div
                   key={id}
-                  className="catflow-row catflow-row--cat"
+                  className="catflow-row catflow-row--cat catflow-row--topic"
                   style={{ ...categoryThemeVars, '--row-accent': accent || categorySurfaceColor || undefined, '--cat-bg': categorySurfaceColor || undefined }}
                 >
                   <div className="catflow-rowMeta">

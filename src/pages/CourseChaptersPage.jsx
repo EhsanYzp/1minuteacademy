@@ -220,7 +220,7 @@ export default function CourseChaptersPage() {
                   <Link
                     key={chapterId}
                     to={`/categories/${encodeURIComponent(category)}/courses/${encodeURIComponent(course)}/chapters/${encodeURIComponent(chapterId)}`}
-                    className="catflow-card catflow-card--cat"
+                    className="catflow-card catflow-card--cat catflow-card--chapter"
                     style={{ ...categoryThemeVars, '--card-accent': categorySurfaceColor || undefined, backgroundImage: `url(/catalog-icons/categories/${category}.svg)` }}
                   >
                     <div className="catflow-cardTop">
