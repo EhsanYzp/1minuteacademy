@@ -5,14 +5,12 @@ import { useState, useCallback, useRef } from 'react';
 /* ── Constants ─────────────────────────────────────────────── */
 
 const BEATS = ['hook', 'buildup', 'discovery', 'twist', 'climax', 'punchline'];
-const BEAT_DURATION_S = 8;
+const BEAT_DURATION_S = 8.5;
 const TOTAL_SECONDS = 60;
-const INTRO_S = 4;   // 0‒4 s  – intro card
-const OUTRO_S = 2;   // 58‒60 s – outro card
-const QUIZ_S = 6;    // 52‒58 s – quiz
-const BEATS_START_S = INTRO_S;                           // 4 s
-const QUIZ_START_S = BEATS_START_S + BEATS.length * BEAT_DURATION_S; // 52 s
-const OUTRO_START_S = QUIZ_START_S + QUIZ_S;             // 58 s
+const INTRO_S = 5;   // 0‒5 s  – intro card
+const OUTRO_S = TOTAL_SECONDS - INTRO_S - (BEATS.length * BEAT_DURATION_S); // 56‒60 s – outro card
+const BEATS_START_S = INTRO_S;                           // 5 s
+const OUTRO_START_S = BEATS_START_S + (BEATS.length * BEAT_DURATION_S); // 56 s
 const W = 1920;
 const H = 1080;
 const IS_MOBILE = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -1076,7 +1074,6 @@ export default function useVideoExport() {
     setExportError(null);
 
     const storyBeats = topicRow.story;
-    const quiz = topicRow.quiz;
     const topicTitle = String(topicRow.title || 'Lesson');
     const topicEmoji = topicRow.emoji || '\ud83d\udcda';
     const category = topicRow.subject || '';
@@ -1270,10 +1267,9 @@ export default function useVideoExport() {
         const timeRemaining = Math.max(0, Math.ceil(TOTAL_SECONDS - elapsedS));
 
         // ── Segment dispatch ──
-        // 0‒2 s  : intro card
-        // 2‒50 s : 6 beats × 8 s
-        // 50‒58 s: quiz (8 s)
-        // 58‒60 s: outro card
+        // 0‒5 s  : intro card
+        // 5‒56 s : 6 beats × 8.5 s
+        // 56‒60 s: outro card
 
         if (elapsedS < INTRO_S) {
           // ── Intro ──
@@ -1287,7 +1283,7 @@ export default function useVideoExport() {
             logoImg,
           });
 
-        } else if (elapsedS < QUIZ_START_S) {
+        } else if (elapsedS < OUTRO_START_S) {
           // ── Story beats ──
           const beatTime = elapsedS - BEATS_START_S;
           const beatIdx = Math.min(BEATS.length - 1, Math.floor(beatTime / BEAT_DURATION_S));
@@ -1304,20 +1300,6 @@ export default function useVideoExport() {
             fadeIn: Math.min(1, beatElapsed / 0.5),
             beatIdx,
             elapsedS,
-          });
-
-        } else if (elapsedS < OUTRO_START_S) {
-          // ── Quiz ──
-          const quizElapsed = elapsedS - QUIZ_START_S;
-          drawQuizFrame(ctx, {
-            s,
-            question: quiz?.question || '',
-            options: quiz?.options || [],
-            correct: quiz?.correct ?? 0,
-            topicTitle,
-            topicEmoji,
-            timeRemaining,
-            showAnswer: quizElapsed >= 3,
           });
 
         } else {
