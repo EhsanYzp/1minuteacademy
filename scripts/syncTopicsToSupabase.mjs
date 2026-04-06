@@ -4,6 +4,10 @@ import { createClient } from '@supabase/supabase-js';
 import { COURSE_PLANS_DIR, TOPICS_DIR } from './_contentPaths.mjs';
 import dotenv from 'dotenv';
 
+const SUPABASE_RETRY_ATTEMPTS = 5;
+const SUPABASE_RETRY_BASE_MS = 1000;
+const SUPABASE_RETRY_MAX_MS = 8000;
+
 function parseEnvNameFromArgv(argv) {
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--env') {
@@ -133,6 +137,76 @@ async function listCoursePlanFiles(dir) {
 function safeString(v) {
   const s = typeof v === 'string' ? v.trim() : '';
   return s || null;
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function getErrorText(error) {
+  if (!error) return '';
+  if (typeof error === 'string') return error;
+  if (typeof error.message === 'string' && error.message.trim()) return error.message;
+  try {
+    return JSON.stringify(error);
+  } catch {
+    return String(error);
+  }
+}
+
+function isTransientSupabaseError(error) {
+  const status = Number(error?.status ?? error?.statusCode ?? error?.code ?? NaN);
+  if ([408, 409, 425, 429, 500, 502, 503, 504].includes(status)) return true;
+
+  const text = getErrorText(error).toLowerCase();
+  if (!text) return false;
+
+  return (
+    text.includes('bad gateway') ||
+    text.includes('cloudflare') ||
+    text.includes('gateway timeout') ||
+    text.includes('temporarily unavailable') ||
+    text.includes('fetch failed') ||
+    text.includes('network error') ||
+    text.includes('econnreset') ||
+    text.includes('etimedout') ||
+    text.includes('timeout') ||
+    text.includes('<!doctype html>')
+  );
+}
+
+async function runSupabaseOpWithRetry(label, operation) {
+  let lastError = null;
+
+  for (let attempt = 1; attempt <= SUPABASE_RETRY_ATTEMPTS; attempt += 1) {
+    try {
+      const result = await operation();
+      const error = result?.error ?? null;
+      if (!error) return result;
+
+      if (!isTransientSupabaseError(error) || attempt === SUPABASE_RETRY_ATTEMPTS) {
+        return result;
+      }
+
+      lastError = error;
+    } catch (error) {
+      if (!isTransientSupabaseError(error) || attempt === SUPABASE_RETRY_ATTEMPTS) {
+        throw error;
+      }
+
+      lastError = error;
+    }
+
+    const delayMs = Math.min(SUPABASE_RETRY_BASE_MS * 2 ** (attempt - 1), SUPABASE_RETRY_MAX_MS);
+    console.warn(
+      `[content:sync] transient Supabase error during ${label}; retrying in ${delayMs}ms ` +
+      `(attempt ${attempt + 1}/${SUPABASE_RETRY_ATTEMPTS})`
+    );
+    await sleep(delayMs);
+  }
+
+  if (lastError) throw lastError;
+  throw new Error(`Supabase operation failed without an error payload: ${label}`);
 }
 
 async function loadChaptersFromPlans({ courseIds }) {
@@ -396,9 +470,13 @@ async function main() {
         console.log(`(dry-run) category upsert: ${cat.id} -> ${cat.title}`);
       }
     } else {
-      const { error: catErr } = await supabase
-        .from('categories')
-        .upsert(categoryRows, { onConflict: 'id', ignoreDuplicates: true });
+      const { error: catErr } = await runSupabaseOpWithRetry(
+        'categories upsert',
+        () =>
+          supabase
+            .from('categories')
+            .upsert(categoryRows, { onConflict: 'id', ignoreDuplicates: true })
+      );
       if (catErr) throw catErr;
       console.log('✅ Categories upserted from course plans.');
     }
@@ -412,9 +490,13 @@ async function main() {
         console.log(`(dry-run) course upsert: ${c.id} -> ${c.title}`);
       }
     } else {
-      const { error: crsErr } = await supabase
-        .from('courses')
-        .upsert(courseRows, { onConflict: 'id', ignoreDuplicates: true });
+      const { error: crsErr } = await runSupabaseOpWithRetry(
+        'courses upsert',
+        () =>
+          supabase
+            .from('courses')
+            .upsert(courseRows, { onConflict: 'id', ignoreDuplicates: true })
+      );
       if (crsErr) throw crsErr;
       console.log('✅ Courses upserted from course plans.');
     }
@@ -428,10 +510,14 @@ async function main() {
   const planCategoryIds = [...new Set(categoryRows.map((c) => c.id))];
 
   if (planCategoryIds.length > 0) {
-    const { data: dbCourses, error: dbCrsErr } = await supabase
-      .from('courses')
-      .select('id')
-      .in('category_id', planCategoryIds);
+    const { data: dbCourses, error: dbCrsErr } = await runSupabaseOpWithRetry(
+      'stale courses lookup',
+      () =>
+        supabase
+          .from('courses')
+          .select('id')
+          .in('category_id', planCategoryIds)
+    );
     if (dbCrsErr) throw dbCrsErr;
 
     const staleCourseIds = (dbCourses ?? [])
@@ -444,16 +530,24 @@ async function main() {
         for (const id of staleCourseIds) console.log(`  - ${id}`);
       } else {
         // Delete child chapters first (FK), then the stale courses themselves.
-        const { error: chDelErr } = await supabase
-          .from('chapters')
-          .delete()
-          .in('course_id', staleCourseIds);
+        const { error: chDelErr } = await runSupabaseOpWithRetry(
+          'stale chapters delete',
+          () =>
+            supabase
+              .from('chapters')
+              .delete()
+              .in('course_id', staleCourseIds)
+        );
         if (chDelErr) throw chDelErr;
 
-        const { error: crsDelErr, count: pruned } = await supabase
-          .from('courses')
-          .delete({ count: 'exact' })
-          .in('id', staleCourseIds);
+        const { error: crsDelErr, count: pruned } = await runSupabaseOpWithRetry(
+          'stale courses delete',
+          () =>
+            supabase
+              .from('courses')
+              .delete({ count: 'exact' })
+              .in('id', staleCourseIds)
+        );
         if (crsDelErr) throw crsDelErr;
         console.log(`🗑️  Pruned ${pruned} stale course(s) from Supabase: ${staleCourseIds.join(', ')}`);
       }
@@ -472,7 +566,10 @@ async function main() {
         console.log(`(dry-run) …and ${chapterRowsFromPlans.length - 10} more chapter(s)`);
       }
     } else {
-      const { error: chErr } = await supabase.from('chapters').upsert(chapterRowsFromPlans, { onConflict: 'id' });
+      const { error: chErr } = await runSupabaseOpWithRetry(
+        'chapters upsert',
+        () => supabase.from('chapters').upsert(chapterRowsFromPlans, { onConflict: 'id' })
+      );
       if (chErr) throw chErr;
       console.log('✅ Chapters upserted from course plans.');
     }
@@ -503,10 +600,14 @@ async function main() {
   const remoteById = new Map();
   for (let i = 0; i < ids.length; i += FETCH_BATCH) {
     const slice = ids.slice(i, i + FETCH_BATCH);
-    const { data: remoteRows, error: remoteErr } = await supabase
-      .from('topics')
-      .select('id, subject, subcategory, title, emoji, color, description, is_free, published, lesson, journey')
-      .in('id', slice);
+    const { data: remoteRows, error: remoteErr } = await runSupabaseOpWithRetry(
+      `topics fetch batch ${Math.floor(i / FETCH_BATCH) + 1}`,
+      () =>
+        supabase
+          .from('topics')
+          .select('id, subject, subcategory, title, emoji, color, description, is_free, published, lesson, journey')
+          .in('id', slice)
+    );
 
     if (remoteErr) throw remoteErr;
     for (const r of remoteRows ?? []) remoteById.set(r.id, r);
@@ -613,7 +714,10 @@ async function main() {
     for (let i = 0; i < batches.length; i++) {
       const b = batches[i];
       const suffix = batches.length > 1 ? ` (batch ${i + 1}/${batches.length})` : '';
-      const { data, error } = await fn(b);
+      const { data, error } = await runSupabaseOpWithRetry(
+        `${label || 'topic sync'}${suffix}`,
+        () => fn(b)
+      );
       if (error) {
         if (String(error?.code ?? '') === 'P0001' && String(error?.message ?? '').toLowerCase() === 'forbidden') {
           throw new Error(
@@ -666,6 +770,12 @@ async function main() {
 }
 
 main().catch((e) => {
+  if (isTransientSupabaseError(e)) {
+    console.error(
+      '[content:sync] Supabase is currently returning a transient upstream error after retries. ' +
+      'This is usually a temporary host-side outage or gateway issue. Re-run the sync once Supabase recovers.'
+    );
+  }
   console.error(e);
   process.exit(1);
 });
