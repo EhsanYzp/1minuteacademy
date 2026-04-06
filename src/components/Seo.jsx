@@ -101,7 +101,8 @@ export default function Seo({
 
     const ogImage = image || '/og/og-image.png';
     const twImage = twitterImage || ogImage;
-    const isSvg = (p) => String(p ?? '').toLowerCase().includes('.svg');
+    const ogImageUrl = toAbsoluteUrl(ogImage);
+    const twitterImageUrl = toAbsoluteUrl(twImage);
 
     const url = toAbsoluteUrl(path || (typeof window !== 'undefined' ? window.location.pathname : '/'));
     const canonicalUrl = toAbsoluteUrl(
@@ -115,9 +116,13 @@ export default function Seo({
       { property: 'og:description', content: nextDescription },
       { property: 'og:type', content: String(type ?? 'website') },
       { property: 'og:url', content: url },
-      { property: 'og:image', content: toAbsoluteUrl(ogImage) },
-      { name: 'twitter:image', content: toAbsoluteUrl(twImage) },
-      { name: 'twitter:card', content: (!isSvg(twImage) && !isSvg(ogImage)) ? 'summary_large_image' : 'summary' },
+      { property: 'og:image', content: ogImageUrl },
+      { property: 'og:image:secure_url', content: ogImageUrl },
+      { property: 'og:image:type', content: 'image/png' },
+      { property: 'og:image:width', content: '1200' },
+      { property: 'og:image:height', content: '630' },
+      { name: 'twitter:image', content: twitterImageUrl },
+      { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: nextTitle },
       { name: 'twitter:description', content: nextDescription },
       { name: 'robots', content: noindex ? 'noindex,nofollow' : 'index,follow' },

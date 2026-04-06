@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { buildTopicOgPngPath } from '../src/lib/topicOg.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -88,7 +89,7 @@ function renderTopicHtml(template, topic, routePath, siteUrl) {
   const title = String(rawTitle).trim() || 'Topic';
   const description = String(topic.description ?? 'Learn this topic in 60 seconds.').trim() || 'Learn this topic in 60 seconds.';
   const fullTitle = `${title} | 1 Minute Academy`;
-  const ogImagePath = `/og/topics/${encodeURIComponent(topicId)}.svg`;
+  const ogImagePath = buildTopicOgPngPath(topicId);
   const ogImage = absoluteUrl(siteUrl, ogImagePath);
   const routeUrl = absoluteUrl(siteUrl, routePath);
   const canonicalUrl = absoluteUrl(siteUrl, `/topic/${encodeURIComponent(topicId)}`);
@@ -119,7 +120,7 @@ function renderTopicHtml(template, topic, routePath, siteUrl) {
   html = upsertMeta(html, 'property', 'og:description', description);
   html = upsertMeta(html, 'property', 'og:image', ogImage);
   html = upsertMeta(html, 'property', 'og:image:secure_url', ogImage);
-  html = upsertMeta(html, 'property', 'og:image:type', 'image/svg+xml');
+  html = upsertMeta(html, 'property', 'og:image:type', 'image/png');
   html = upsertMeta(html, 'property', 'og:image:width', '1200');
   html = upsertMeta(html, 'property', 'og:image:height', '630');
   html = upsertMeta(html, 'name', 'twitter:card', 'summary_large_image');
