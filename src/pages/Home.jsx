@@ -352,7 +352,7 @@ function Home() {
       exit={{ opacity: 0 }}
     >
       <Seo
-        title="Learn anything in one minute"
+        title="Learn Anything in One Minute"
         description="Strict 60-second lessons: pick a topic or get surprised."
         path="/"
         jsonLd={[
