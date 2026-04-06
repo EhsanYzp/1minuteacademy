@@ -14,6 +14,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { getUserCompletedTopicsByCategory } from '../services/progress';
 import { getCurrentTier, getTopicGate } from '../services/entitlements';
+import { getCategorySurfaceColor } from '../lib/categorySurfaceColors';
 import useShowProgressVisuals from '../lib/useShowProgressVisuals';
 import './CategoriesFlow.css';
 
@@ -208,6 +209,16 @@ export default function CategoriesPage() {
       const id = String(c?.id ?? '').trim();
       const title = String(c?.title ?? id).trim();
       if (id) m.set(id, title);
+    }
+    return m;
+  }, [categories]);
+
+  const categoryColorById = useMemo(() => {
+    const m = new Map();
+    for (const c of Array.isArray(categories) ? categories : []) {
+      const id = String(c?.id ?? '').trim();
+      const color = getCategorySurfaceColor(c?.id, String(c?.color ?? '').trim());
+      if (id && color) m.set(id, color);
     }
     return m;
   }, [categories]);
@@ -564,7 +575,7 @@ export default function CategoriesPage() {
                       <div
                         key={id}
                         className="catflow-result catflow-resultClickable catflow-result--cat"
-                        style={topicCatId ? { backgroundImage: `url(/catalog-icons/categories/${topicCatId}.svg)` } : undefined}
+                        style={topicCatId ? { '--row-accent': categoryColorById.get(topicCatId) || undefined, '--cat-bg': categoryColorById.get(topicCatId) || undefined } : undefined}
                         role="link"
                         tabIndex={0}
                         onClick={() => navigate(path)}

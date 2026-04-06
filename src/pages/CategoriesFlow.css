@@ -457,14 +457,14 @@
 }
 
 .catflow-badge {
-  font-size: 13.5px;
+  font-size: 12px;
   font-weight: 900;
-  padding: 7px 12px;
+  padding: 5px 10px;
   border-radius: 999px;
-  background: rgba(255, 250, 243, 0.78);
+  background: rgba(255, 250, 243, 0.62);
   border: 1px solid var(--catflow-border);
-  color: rgba(45, 52, 54, 0.88);
-  box-shadow: 0 10px 22px rgba(92, 68, 37, 0.08);
+  color: rgba(45, 52, 54, 0.80);
+  box-shadow: none;
 }
 
 .catflow-cardTitle {
@@ -500,53 +500,53 @@
   margin-top: 10px;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
 .catflow-metaChips--compact {
   margin-top: 8px;
-  gap: 7px;
+  gap: 6px;
 }
 
 .catflow-metaChip {
   --chip-accent: rgba(148, 163, 184, 0.95);
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 11px 7px 9px;
+  gap: 5px;
+  padding: 6px 9px;
   border-radius: 999px;
-  border: 1px solid rgba(92, 71, 44, 0.10);
-  background: rgba(255, 249, 242, 0.76);
-  box-shadow: 0 12px 30px rgba(92, 68, 37, 0.06);
+  border: 1px solid rgba(92, 71, 44, 0.09);
+  background: rgba(255, 249, 242, 0.64);
+  box-shadow: none;
   color: rgba(15, 23, 42, 0.88);
-  font-size: 12.5px;
+  font-size: 11.5px;
   line-height: 1;
   position: relative;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(6px);
 }
 
 .catflow-metaChip::before {
   content: '';
-  width: 7px;
-  height: 18px;
+  width: 5px;
+  height: 14px;
   border-radius: 999px;
   background: var(--chip-accent);
   display: inline-block;
   flex: 0 0 auto;
-  opacity: 0.92;
+  opacity: 0.82;
 }
 
 .catflow-metaChipLabel {
   font-weight: 950;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  font-size: 10.5px;
-  color: rgba(15, 23, 42, 0.54);
+  font-size: 9.5px;
+  color: rgba(15, 23, 42, 0.46);
 }
 
 .catflow-metaChipValue {
   font-weight: 950;
-  color: rgba(15, 23, 42, 0.94);
+  color: rgba(15, 23, 42, 0.82);
 }
 .catflow-metaChip--category {
   --chip-accent: rgba(99, 102, 241, 0.95);
@@ -605,51 +605,25 @@
   align-items: flex-start;
   gap: 12px;
   text-decoration: none;
-  border-radius: 18px;
-  border: 1px solid var(--catflow-border);
-  border-left: 6px solid var(--accent);
-  background: rgba(255, 249, 242, 0.90);
-  box-shadow: 0 14px 40px rgba(92, 68, 37, 0.08);
-  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(92, 71, 44, 0.08);
+  border-left: 4px solid var(--accent);
+  background: rgba(255, 250, 244, 0.82);
+  box-shadow: 0 6px 18px rgba(92, 68, 37, 0.05);
+  padding: 11px 13px;
   color: rgba(45, 52, 54, 0.96);
 }
 
 .catflow-result:hover {
-  background: var(--catflow-surface-hover);
+  background: rgba(255, 251, 246, 0.94);
 }
 
 .catflow-result--cat {
-  border-left-color: rgba(255, 255, 255, 0.50);
+  border-left-color: var(--accent);
   border-color: rgba(92, 71, 44, 0.08);
-  position: relative;
-  overflow: hidden;
-}
-
-.catflow-result--cat::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 249, 242, 0.44) 0%,
-    rgba(247, 238, 227, 0.26) 100%
-  );
-}
-
-.catflow-result--cat .catflow-resultMain,
-.catflow-result--cat .catflow-resultSide {
-  position: relative;
-  z-index: 1;
-}
-
-.catflow-result--cat:hover::before {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 249, 242, 0.34) 0%,
-    rgba(247, 238, 227, 0.16) 100%
-  );
+  background:
+    linear-gradient(180deg, rgba(255, 250, 244, 0.68) 0%, rgba(248, 240, 229, 0.52) 100%),
+    var(--cat-bg, rgba(255, 250, 244, 0.82));
 }
 
 .catflow-resultMain {
@@ -677,8 +651,8 @@
 }
 
 .catflow-resultClickable:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 18px 50px rgba(92, 68, 37, 0.12);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(92, 68, 37, 0.08);
 }
 
 .catflow-resultClickable:focus-visible {
@@ -719,12 +693,12 @@
   justify-content: space-between;
   gap: 12px;
   align-items: center;
-  border-radius: 22px;
-  border: 1px solid var(--catflow-border);
-  border-left: 6px solid var(--accent);
-  background: linear-gradient(180deg, rgba(255, 250, 243, 0.95) 0%, rgba(248, 240, 229, 0.84) 100%);
-  box-shadow: 0 18px 50px rgba(92, 68, 37, 0.10);
-  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(92, 71, 44, 0.08);
+  border-left: 4px solid var(--accent);
+  background: rgba(255, 250, 244, 0.84);
+  box-shadow: 0 6px 18px rgba(92, 68, 37, 0.05);
+  padding: 12px 14px;
 }
 
 .catflow-rowMeta {
@@ -802,11 +776,11 @@
 .catflow-pill {
   font-size: 12px;
   font-weight: 900;
-  padding: 6px 10px;
+  padding: 5px 9px;
   border-radius: 999px;
-  background: rgba(255, 249, 242, 0.80);
-  border: 1px solid var(--catflow-border);
-  color: rgba(45, 52, 54, 0.86);
+  background: rgba(255, 249, 242, 0.66);
+  border: 1px solid rgba(92, 71, 44, 0.09);
+  color: rgba(45, 52, 54, 0.78);
 }
 
 .catflow-pill-locked {
@@ -829,9 +803,9 @@
   text-decoration: none;
   height: 38px;
   padding: 0 12px;
-  border-radius: 12px;
+  border-radius: 10px;
   border: 1px solid var(--catflow-border);
-  background: rgba(255, 249, 242, 0.84);
+  background: rgba(255, 250, 244, 0.76);
   color: rgba(45, 52, 54, 0.94);
   font-weight: 950;
 }
@@ -849,7 +823,7 @@
 }
 
 .catflow-button:hover {
-  background: rgba(255, 252, 247, 0.96);
+  background: rgba(255, 251, 246, 0.9);
 }
 
 .catflow-button.primary:hover {
@@ -897,12 +871,12 @@
 }
 
 .catflow-card--cat .catflow-badge {
-  background: rgba(255, 249, 241, 0.62);
+  background: rgba(255, 249, 241, 0.54);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   color: rgba(15, 23, 42, 0.82);
   border-color: rgba(92, 71, 44, 0.08);
-  box-shadow: 0 4px 14px rgba(92, 68, 37, 0.06);
+  box-shadow: none;
 }
 
 .catflow-card--cat .catflow-metaChips {
@@ -911,7 +885,7 @@
 }
 
 .catflow-card--cat .catflow-metaChip {
-  background: rgba(255, 249, 241, 0.56);
+  background: rgba(255, 249, 241, 0.48);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-color: rgba(92, 71, 44, 0.08);
@@ -942,38 +916,16 @@
   color: rgba(15, 23, 42, 0.68);
 }
 
-/* ── Topic row with SVG background ─────────────────────────────────── */
 .catflow-row--cat {
-  border-left-color: rgba(255, 255, 255, 0.50);
+  border-left-color: var(--accent);
   border-color: rgba(92, 71, 44, 0.08);
-  position: relative;
-}
-
-.catflow-row--cat::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 249, 242, 0.34) 0%,
-    rgba(247, 238, 227, 0.46) 100%
-  );
-}
-
-.catflow-row--cat .catflow-rowMeta {
-  position: relative;
-  z-index: 1;
-}
-
-.catflow-row--cat .catflow-actions {
-  position: relative;
-  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(255, 250, 244, 0.68) 0%, rgba(248, 240, 229, 0.54) 100%),
+    var(--cat-bg, rgba(255, 250, 244, 0.84));
 }
 
 .catflow-row--cat .catflow-button {
-  background: rgba(255, 249, 241, 0.64);
+  background: rgba(255, 250, 244, 0.72);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-color: rgba(92, 71, 44, 0.08);
@@ -985,7 +937,3 @@
   -webkit-backdrop-filter: blur(8px);
 }
 
-.catflow-row--cat .catflow-check {
-  position: relative;
-  z-index: 1;
-}

@@ -9,6 +9,7 @@ import { useAuth } from '../context/AuthContext';
 import { getContentSource } from '../services/_contentSource';
 import { listUserTopicProgressForChapter } from '../services/progress';
 import { getCurrentTier, getTopicGate } from '../services/entitlements';
+import { getCategorySurfaceColor } from '../lib/categorySurfaceColors';
 import './CategoriesFlow.css';
 
 function norm(s) {
@@ -106,6 +107,7 @@ export default function ChapterTopicsPage() {
   const chapterTitle = String(chapterRow?.title ?? 'Chapter');
 
   const chapterBasePath = `/categories/${encodeURIComponent(category)}/courses/${encodeURIComponent(course)}/chapters/${encodeURIComponent(chapter)}`;
+  const categorySurfaceColor = getCategorySurfaceColor(category, categoryRow?.color || '');
 
   const fromChapterState = useMemo(
     () => ({
@@ -225,7 +227,7 @@ export default function ChapterTopicsPage() {
                 <div
                   key={id}
                   className="catflow-row catflow-row--cat"
-                  style={{ '--row-accent': accent || undefined, backgroundImage: `url(/catalog-icons/categories/${category}.svg)` }}
+                  style={{ '--row-accent': accent || categorySurfaceColor || undefined, '--cat-bg': categorySurfaceColor || undefined }}
                 >
                   <div className="catflow-rowMeta">
                     <h3 className="catflow-rowTitle">
