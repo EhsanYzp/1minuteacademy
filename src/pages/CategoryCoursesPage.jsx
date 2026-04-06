@@ -8,6 +8,7 @@ import ProgressVisualsToggle from '../components/ProgressVisualsToggle';
 import { getCourseCountsBatch, listCategories, listCourses } from '../services/catalog';
 import { useAuth } from '../context/AuthContext';
 import { getUserCompletedTopicsByCourse } from '../services/progress';
+import { getCategorySurfaceColor } from '../lib/categorySurfaceColors';
 import useShowProgressVisuals from '../lib/useShowProgressVisuals';
 import './CategoriesFlow.css';
 
@@ -135,6 +136,7 @@ export default function CategoryCoursesPage() {
   }, [description, id, title]);
 
   const visibleCourses = useMemo(() => (Array.isArray(courses) ? courses : []), [courses]);
+  const categorySurfaceColor = getCategorySurfaceColor(id, category?.color ? String(category.color) : '');
 
   return (
     <motion.div className="catflow" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
@@ -176,7 +178,7 @@ export default function CategoryCoursesPage() {
             {visibleCourses.map((c) => {
               const courseId = String(c?.id ?? '').trim();
               const courseTitle = String(c?.title ?? 'Untitled course');
-              const borderColor = c?.color ? String(c.color) : null;
+              const borderColor = categorySurfaceColor || getCategorySurfaceColor(id, c?.color ? String(c.color) : '');
               const counts = countsByCourseId.get(courseId) ?? null;
               const chapters = counts?.chapters;
               const topics = counts?.topics;

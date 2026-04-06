@@ -342,7 +342,7 @@ export default function CategoriesPage() {
             {(Array.isArray(categories) ? categories : []).map((cat) => {
               const id = String(cat?.id ?? '').trim();
               const title = String(cat?.title ?? 'Untitled');
-              const borderColor = cat?.color ? String(cat.color) : null;
+              const borderColor = getCategorySurfaceColor(id, cat?.color ? String(cat.color) : '');
               const courseCount = courseCountsByCategoryId.get(id) ?? 0;
               const completedTopics = completedTopicsByCategoryId.get(id) ?? 0;
               const totalTopics = topicCountsByCategoryId.get(id) ?? 0;
@@ -398,7 +398,7 @@ export default function CategoriesPage() {
                   {limitedResults.categories.map((cat) => {
                     const id = String(cat?.id ?? '').trim();
                     const title = String(cat?.title ?? 'Untitled');
-                    const borderColor = cat?.color ? String(cat.color) : null;
+                    const borderColor = getCategorySurfaceColor(id, cat?.color ? String(cat.color) : '');
                     const courseCount = courseCountsByCategoryId.get(id) ?? 0;
                     const completedTopics = completedTopicsByCategoryId.get(id) ?? 0;
                     const totalTopics = topicCountsByCategoryId.get(id) ?? 0;
@@ -461,7 +461,7 @@ export default function CategoriesPage() {
                     const id = String(c?.id ?? '').trim();
                     const categoryId = String(c?.category_id ?? '').trim();
                     const title = String(c?.title ?? 'Course');
-                    const borderColor = c?.color ? String(c.color) : null;
+                    const borderColor = getCategorySurfaceColor(categoryId, c?.color ? String(c.color) : '');
                     const categoryTitle = categoryTitleById.get(categoryId) ?? categoryId;
 
                     return (
@@ -516,7 +516,7 @@ export default function CategoriesPage() {
                         key={chapterId}
                         to={`/categories/${encodeURIComponent(categoryId)}/courses/${encodeURIComponent(courseId)}/chapters/${encodeURIComponent(chapterId)}`}
                         className="catflow-card catflow-card--cat"
-                        style={{ backgroundImage: `url(/catalog-icons/categories/${categoryId}.svg)` }}
+                        style={{ '--card-accent': getCategorySurfaceColor(categoryId) || undefined, backgroundImage: `url(/catalog-icons/categories/${categoryId}.svg)` }}
                       >
                         <div className="catflow-cardTop">
                           <h3 className="catflow-cardTitle catflow-cardTitleTop"><HighlightTokens text={title} tokens={queryTokens} /></h3>
