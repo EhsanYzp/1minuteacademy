@@ -1,4 +1,5 @@
 export const SITE_NAME = '1 Minute Academy';
+const DEFAULT_SITE_URL = 'https://www.1minute.academy';
 
 export function normalizeSiteUrl(input) {
   const raw = String(input ?? '').trim();
@@ -16,7 +17,7 @@ export function getSiteUrl() {
     return normalizeSiteUrl(window.location.origin);
   }
 
-  return '';
+  return DEFAULT_SITE_URL;
 }
 
 export function toAbsoluteUrl(pathname) {
