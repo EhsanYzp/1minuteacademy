@@ -18,6 +18,31 @@
   backdrop-filter: blur(10px);
 }
 
+.catflow-hero--cat {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.catflow-hero--cat::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.60) 100%
+  );
+}
+
+.catflow-hero--cat > * {
+  position: relative;
+  z-index: 1;
+}
+
 .catflow-back {
   display: inline-flex;
   align-items: center;
@@ -580,6 +605,42 @@
   background: rgba(255, 255, 255, 0.94);
 }
 
+.catflow-result--cat {
+  background-size: auto 100%;
+  background-position: right center;
+  border-left-color: rgba(255, 255, 255, 0.50);
+  border-color: rgba(0, 0, 0, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.catflow-result--cat::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.35) 100%
+  );
+}
+
+.catflow-result--cat .catflow-resultMain,
+.catflow-result--cat .catflow-resultSide {
+  position: relative;
+  z-index: 1;
+}
+
+.catflow-result--cat:hover::before {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.25) 100%
+  );
+}
+
 .catflow-resultMain {
   min-width: 0;
 }
@@ -872,8 +933,8 @@
 
 /* ── Topic row with SVG background ─────────────────────────────────── */
 .catflow-row--cat {
-  background-size: cover;
-  background-position: center;
+  background-size: auto 100%;
+  background-position: right center;
   border-left-color: rgba(255, 255, 255, 0.50);
   border-color: rgba(0, 0, 0, 0.06);
   position: relative;

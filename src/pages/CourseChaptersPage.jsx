@@ -161,7 +161,7 @@ export default function CourseChaptersPage() {
       <Header />
 
       <main className="catflow-main">
-        <div className="catflow-hero">
+        <div className="catflow-hero catflow-hero--cat" style={{ backgroundImage: `url(/catalog-icons/categories/${category}.svg)` }}>
           <Link className="catflow-back" to={`/categories/${encodeURIComponent(category)}`}>← Courses</Link>
           <Breadcrumbs
             items={[

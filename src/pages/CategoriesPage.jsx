@@ -547,6 +547,8 @@ export default function CategoriesPage() {
                     const path = String(t?.path ?? `/topic/${encodeURIComponent(id)}`);
                     const subject = String(t?.subject ?? '').trim();
                     const subcategory = String(t?.subcategory ?? '').trim();
+                    const topicCourseId = String(t?.course_id ?? '');
+                    const topicCatId = topicCourseId.split('--')[0];
                     const chapterId = String(t?.chapter_id ?? '').trim();
                     const chapterTitle = chapterId
                       ? (chapterTitleById.get(chapterId) ?? humanizeChapterId(chapterId))
@@ -561,7 +563,8 @@ export default function CategoriesPage() {
                     return (
                       <div
                         key={id}
-                        className="catflow-result catflow-resultClickable"
+                        className="catflow-result catflow-resultClickable catflow-result--cat"
+                        style={topicCatId ? { backgroundImage: `url(/catalog-icons/categories/${topicCatId}.svg)` } : undefined}
                         role="link"
                         tabIndex={0}
                         onClick={() => navigate(path)}
