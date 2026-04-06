@@ -1,12 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createRequire } from 'node:module';
 import { TOPICS_DIR, ROOT } from './_contentPaths.mjs';
-import { makeTopicOgSvg } from '../src/lib/topicOg.js';
-
-const require = createRequire(import.meta.url);
-const { PNG } = require('pngjs');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -79,88 +74,6 @@ async function writeFileEnsuringDir(filePath, content) {
   }
   await fs.writeFile(filePath, next, 'utf8');
   return true;
-}
-
-async function writeBinaryEnsuringDir(filePath, buffer) {
-  await fs.mkdir(path.dirname(filePath), { recursive: true });
-  const next = Buffer.isBuffer(buffer) ? buffer : Buffer.from(buffer);
-  try {
-    const prev = await fs.readFile(filePath);
-    if (Buffer.isBuffer(prev) && prev.equals(next)) return false;
-  } catch {
-    // ignore
-  }
-  await fs.writeFile(filePath, next);
-  return true;
-}
-
-function setPixel(png, x, y, r, g, b, a = 255) {
-  if (x < 0 || y < 0 || x >= png.width || y >= png.height) return;
-  const idx = (png.width * y + x) << 2;
-  png.data[idx] = r;
-  png.data[idx + 1] = g;
-  png.data[idx + 2] = b;
-  png.data[idx + 3] = a;
-}
-
-function fill(png, r, g, b, a = 255) {
-  for (let y = 0; y < png.height; y += 1) {
-    for (let x = 0; x < png.width; x += 1) {
-      setPixel(png, x, y, r, g, b, a);
-    }
-  }
-}
-
-function drawRing(png, cx, cy, outerRadius, innerRadius, r, g, b, a = 255) {
-  const out2 = outerRadius * outerRadius;
-  const in2 = innerRadius * innerRadius;
-  const minX = Math.floor(cx - outerRadius);
-  const maxX = Math.ceil(cx + outerRadius);
-  const minY = Math.floor(cy - outerRadius);
-  const maxY = Math.ceil(cy + outerRadius);
-
-  for (let y = minY; y <= maxY; y += 1) {
-    for (let x = minX; x <= maxX; x += 1) {
-      const dx = x - cx;
-      const dy = y - cy;
-      const d2 = dx * dx + dy * dy;
-      if (d2 <= out2 && d2 >= in2) setPixel(png, x, y, r, g, b, a);
-    }
-  }
-}
-
-function drawLine(png, x0, y0, x1, y1, thickness, r, g, b, a = 255) {
-  const dx = x1 - x0;
-  const dy = y1 - y0;
-  const steps = Math.max(Math.abs(dx), Math.abs(dy));
-  if (steps === 0) return;
-
-  for (let i = 0; i <= steps; i += 1) {
-    const t = i / steps;
-    const x = Math.round(x0 + dx * t);
-    const y = Math.round(y0 + dy * t);
-
-    for (let oy = -thickness; oy <= thickness; oy += 1) {
-      for (let ox = -thickness; ox <= thickness; ox += 1) {
-        setPixel(png, x + ox, y + oy, r, g, b, a);
-      }
-    }
-  }
-}
-
-async function pngToBuffer(png) {
-  return new Promise((resolve, reject) => {
-    const chunks = [];
-    png
-      .pack()
-      .on('data', (c) => chunks.push(c))
-      .on('end', () => resolve(Buffer.concat(chunks)))
-      .on('error', reject);
-  });
-}
-
-function clamp(n, min, max) {
-  return Math.max(min, Math.min(max, n));
 }
 
 function parseLessonVersion(data) {
@@ -260,46 +173,7 @@ async function main() {
 
   const publicDir = path.join(ROOT, 'public');
   await writeFileEnsuringDir(path.join(publicDir, 'sitemap.xml'), xml);
-
-  // Default OG image (PNG): keep simple and brand-consistent.
-  {
-    const png = new PNG({ width: 1200, height: 630 });
-    fill(png, 11, 16, 32, 255); // #0b1020
-
-    // Accent ring + hands (simple clock)
-    const cx = 210;
-    const cy = 315;
-    drawRing(png, cx, cy, 150, 120, 34, 197, 94, 255); // green-ish
-    drawRing(png, cx, cy, 160, 150, 59, 130, 246, 255); // blue-ish outer
-    drawLine(png, cx, cy, cx, cy - 75, 3, 229, 231, 235, 255);
-    drawLine(png, cx, cy, cx + 55, cy + 35, 3, 229, 231, 235, 255);
-
-    // Soft gradient stripe
-    for (let x = 0; x < png.width; x += 1) {
-      const t = x / (png.width - 1);
-      const a = Math.round(255 * clamp(0.55 - Math.abs(t - 0.5) * 1.1, 0, 0.55));
-      for (let y = 0; y < 8; y += 1) setPixel(png, x, y, 59, 130, 246, a);
-      for (let y = png.height - 8; y < png.height; y += 1) setPixel(png, x, y, 34, 197, 94, a);
-    }
-
-    const ogDir = path.join(publicDir, 'og');
-    await writeBinaryEnsuringDir(path.join(ogDir, 'og-image.png'), await pngToBuffer(png));
-  }
-
-  // Topic-specific OG images (SVG): includes title + emoji + accent color.
-  {
-    const outDir = path.join(publicDir, 'og', 'topics');
-    await fs.mkdir(outDir, { recursive: true });
-    for (const t of topicRows) {
-      const filename = `${encodeURIComponent(t.id)}.svg`;
-      const svg = makeTopicOgSvg({
-        title: t.title,
-        emoji: t.emoji,
-        color: t.color,
-      });
-      await writeFileEnsuringDir(path.join(outDir, filename), svg);
-    }
-  }
+  await fs.rm(path.join(publicDir, 'og', 'topics'), { recursive: true, force: true });
 
   const llmsLines = [];
   llmsLines.push('# 1 Minute Academy');
@@ -393,7 +267,7 @@ async function main() {
     await writeFileEnsuringDir(path.join(publicDir, 'topics.txt'), lines.join('\n'));
   }
 
-  console.log(`✅ SEO assets generated: public/sitemap.xml, public/llms.txt, public/topics.json, public/topics.txt, public/og/* (${topicRows.length} topics)`);
+  console.log(`✅ SEO assets generated: public/sitemap.xml, public/llms.txt, public/topics.json, public/topics.txt (${topicRows.length} topics)`);
 }
 
 main().catch((e) => {

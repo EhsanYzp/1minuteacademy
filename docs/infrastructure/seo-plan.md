@@ -75,11 +75,9 @@ Recommended: set both to the same value, e.g. `https://1minute.academy`.
 ## P1 (high impact — better previews + rich results)
 
 1. **OG/Twitter images**
-   - Implemented default OG image: `public/og/og-image.png` (referenced from `index.html` and used as the default in the `Seo` component).
-   - Implemented topic-specific OG images as SVGs generated at build time:
-     - Pattern: `/og/topics/<encodedTopicId>.svg`
-     - Generated from `content/topics/**/*.topic.json` (title/emoji/color)
-   - Note: some social platforms are inconsistent with SVG previews; we keep Twitter image pinned to the PNG default on topic pages as a safe fallback.
+   - Implemented a single shared OG image at `public/og/og-image.png`.
+   - The image is a real screenshot of the live homepage hero section and is referenced from `index.html`, the runtime `Seo` component, and prerendered topic HTML.
+   - Regeneration command: `npm run og:capture-home-hero`.
 
 2. **Structured data (JSON-LD)**
    - Home: `Organization` + `WebSite` (already added).

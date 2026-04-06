@@ -21,7 +21,7 @@ and this project aims to follow [Semantic Versioning](https://semver.org/spec/v2
 - SEO assets: `robots.txt`, generated `sitemap.xml`, generated `llms.txt`, and a first-party `favicon.svg` + web manifest.
 - Build-time icon generation for a full favicon/PWA set (`favicon.ico`, `apple-touch-icon.png`, `icon-192.png`, `icon-512.png`).
 - SEO implementation plan doc: `docs/seo-plan.md` with P0/P1/P2 tasks and pipeline guidance.
-- Default OpenGraph image at `/og/og-image.png` and build-time generation of topic-specific OG images under `/og/topics/`.
+- Shared OpenGraph image at `/og/og-image.png`, captured from the live homepage hero and used consistently across all shared links.
 - Structured data (JSON-LD): `ItemList` on Topics and `LearningResource` on Topic pages.
 - Topic pages now include a “Related topics” section to improve internal linking.
 - LLM/crawler-friendly topics catalog endpoints: `/topics.json` and `/topics.txt` (generated at build time from published topics).

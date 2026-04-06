@@ -11,7 +11,6 @@ import { getContentSource } from '../services/_contentSource';
 import { useAuth } from '../context/AuthContext';
 import { canReview, canStartTopic, formatTierLabel, getCurrentTier, getTopicGate, isFreeTopic } from '../services/entitlements';
 import { toAbsoluteUrl } from '../services/seo';
-import { buildTopicOgPngPath } from '../lib/topicOg';
 import StarRating from '../components/StarRating';
 import { getMyTopicRating, getTopicRatingSummaries, setMyTopicRating } from '../services/ratings';
 import { compileJourneyFromTopic, getTopicStartLearningPoints } from '../engine/journey/compileJourney';
@@ -278,8 +277,6 @@ function TopicPage() {
           description={topic?.description || 'Upgrade to Pro to unlock this topic.'}
           path={location?.pathname}
           canonicalPath={`/topic/${topicId}`}
-          image={buildTopicOgPngPath(topicId)}
-          twitterImage={buildTopicOgPngPath(topicId)}
           jsonLd={topicJsonLd}
           noindex
         />
@@ -339,8 +336,6 @@ function TopicPage() {
         description={topic?.description || 'Learn this topic in 60 seconds.'}
         path={location?.pathname}
         canonicalPath={`/topic/${topicId}`}
-        image={buildTopicOgPngPath(topicId)}
-        twitterImage={buildTopicOgPngPath(topicId)}
         jsonLd={topicJsonLd}
       />
       <Header />
