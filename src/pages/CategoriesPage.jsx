@@ -14,7 +14,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { getUserCompletedTopicsByCategory } from '../services/progress';
 import { getCurrentTier, getTopicGate } from '../services/entitlements';
-import { getCategorySurfaceColor } from '../lib/categorySurfaceColors';
+import { getCategoryChipVars, getCategorySurfaceColor } from '../lib/categorySurfaceColors';
 import useShowProgressVisuals from '../lib/useShowProgressVisuals';
 import './CategoriesFlow.css';
 
@@ -399,6 +399,7 @@ export default function CategoriesPage() {
                     const id = String(cat?.id ?? '').trim();
                     const title = String(cat?.title ?? 'Untitled');
                     const borderColor = getCategorySurfaceColor(id, cat?.color ? String(cat.color) : '');
+                    const chipVars = getCategoryChipVars(id, cat?.color ? String(cat.color) : '');
                     const courseCount = courseCountsByCategoryId.get(id) ?? 0;
                     const completedTopics = completedTopicsByCategoryId.get(id) ?? 0;
                     const totalTopics = topicCountsByCategoryId.get(id) ?? 0;
@@ -417,11 +418,11 @@ export default function CategoriesPage() {
                           <h3 className="catflow-cardTitle catflow-cardTitleTop"><HighlightTokens text={title} tokens={queryTokens} /></h3>
                         </div>
                         <div className="catflow-metaChips" aria-label="Category metadata">
-                          <span className="catflow-metaChip">
+                          <span className="catflow-metaChip" style={chipVars}>
                             <span className="catflow-metaChipLabel">Courses</span>
                             <span className="catflow-metaChipValue">{courseCount}</span>
                           </span>
-                          <span className="catflow-metaChip">
+                          <span className="catflow-metaChip" style={chipVars}>
                             <span className="catflow-metaChipLabel">Topics</span>
                             <span className="catflow-metaChipValue">{totalTopics}</span>
                           </span>
@@ -462,6 +463,7 @@ export default function CategoriesPage() {
                     const categoryId = String(c?.category_id ?? '').trim();
                     const title = String(c?.title ?? 'Course');
                     const borderColor = getCategorySurfaceColor(categoryId, c?.color ? String(c.color) : '');
+                    const chipVars = getCategoryChipVars(categoryId, c?.color ? String(c.color) : '');
                     const categoryTitle = categoryTitleById.get(categoryId) ?? categoryId;
 
                     return (
@@ -476,7 +478,7 @@ export default function CategoriesPage() {
                         </div>
                         <div className="catflow-metaChips" aria-label="Course metadata">
                           {categoryTitle ? (
-                            <span className="catflow-metaChip catflow-metaChip--category">
+                            <span className="catflow-metaChip catflow-metaChip--category" style={chipVars}>
                               <span className="catflow-metaChipLabel">Category</span>
                               <span className="catflow-metaChipValue">{categoryTitle}</span>
                             </span>
@@ -508,6 +510,7 @@ export default function CategoriesPage() {
                     const title = String(ch?.title ?? 'Chapter');
                     const courseTitle = String(courseRow?.title ?? courseId);
                     const categoryTitle = categoryTitleById.get(categoryId) ?? categoryId;
+                    const chipVars = getCategoryChipVars(categoryId);
 
                     if (!courseId || !categoryId) return null;
 
@@ -523,13 +526,13 @@ export default function CategoriesPage() {
                         </div>
                         <div className="catflow-metaChips" aria-label="Chapter metadata">
                           {categoryTitle ? (
-                            <span className="catflow-metaChip catflow-metaChip--category">
+                            <span className="catflow-metaChip catflow-metaChip--category" style={chipVars}>
                               <span className="catflow-metaChipLabel">Category</span>
                               <span className="catflow-metaChipValue">{categoryTitle}</span>
                             </span>
                           ) : null}
                           {courseTitle ? (
-                            <span className="catflow-metaChip catflow-metaChip--course">
+                            <span className="catflow-metaChip catflow-metaChip--course" style={chipVars}>
                               <span className="catflow-metaChipLabel">Course</span>
                               <span className="catflow-metaChipValue">{courseTitle}</span>
                             </span>
@@ -567,6 +570,7 @@ export default function CategoriesPage() {
                     const isFree = Boolean(t?.is_free);
                     const tierLabel = isFree ? 'Free' : 'Pro';
                     const gate = getTopicGate({ tier, topicRow: t });
+                    const chipVars = getCategoryChipVars(topicCatId);
                     const startTo = gate?.locked
                       ? (gate.reason === 'paused' ? '/me' : '/upgrade')
                       : `/lesson/${encodeURIComponent(id)}`;
@@ -591,19 +595,19 @@ export default function CategoriesPage() {
 
                           <div className="catflow-metaChips catflow-metaChips--compact" aria-label="Topic metadata">
                             {subject ? (
-                              <span className="catflow-metaChip catflow-metaChip--category">
+                              <span className="catflow-metaChip catflow-metaChip--category" style={chipVars}>
                                 <span className="catflow-metaChipLabel">Category</span>
                                 <span className="catflow-metaChipValue">{subject}</span>
                               </span>
                             ) : null}
                             {subcategory ? (
-                              <span className="catflow-metaChip catflow-metaChip--course">
+                              <span className="catflow-metaChip catflow-metaChip--course" style={chipVars}>
                                 <span className="catflow-metaChipLabel">Course</span>
                                 <span className="catflow-metaChipValue">{subcategory}</span>
                               </span>
                             ) : null}
                             {chapterTitle ? (
-                              <span className="catflow-metaChip catflow-metaChip--chapter">
+                              <span className="catflow-metaChip catflow-metaChip--chapter" style={chipVars}>
                                 <span className="catflow-metaChipLabel">Chapter</span>
                                 <span className="catflow-metaChipValue">{chapterTitle}</span>
                               </span>

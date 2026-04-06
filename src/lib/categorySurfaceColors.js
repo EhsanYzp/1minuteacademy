@@ -155,3 +155,29 @@ export function getCategorySurfaceColor(categoryId, fallback = "") {
   const key = String(categoryId ?? "").trim();
   return CATEGORY_SURFACE_COLORS[key] || fallback;
 }
+
+function hexToRgb(hex) {
+  const value = String(hex ?? '').trim().replace('#', '');
+  if (!/^[0-9a-fA-F]{6}$/.test(value)) return null;
+  return {
+    r: parseInt(value.slice(0, 2), 16),
+    g: parseInt(value.slice(2, 4), 16),
+    b: parseInt(value.slice(4, 6), 16),
+  };
+}
+
+function toRgba(hex, alpha, fallback) {
+  const rgb = hexToRgb(hex);
+  if (!rgb) return fallback;
+  return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
+}
+
+export function getCategoryChipVars(categoryId, fallback = "") {
+  const color = getCategorySurfaceColor(categoryId, fallback);
+  if (!color) return undefined;
+  return {
+    '--chip-accent': color,
+    '--chip-border': toRgba(color, 0.22, 'rgba(92, 71, 44, 0.09)'),
+    '--chip-bg': toRgba(color, 0.12, 'rgba(255, 249, 242, 0.64)'),
+  };
+}
