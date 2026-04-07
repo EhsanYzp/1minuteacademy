@@ -390,6 +390,13 @@ function lessonsEqual(a, b) {
   return stableStringify(a) === stableStringify(b);
 }
 
+function detailsEqual(a, b) {
+  if (a === b) return true;
+  if (a == null && b == null) return true;
+  if (a == null || b == null) return false;
+  return stableStringify(a) === stableStringify(b);
+}
+
 async function main() {
   // Guardrails: prevent accidentally leaking the service role key to the frontend
   forbidEnv('VITE_SUPABASE_SERVICE_ROLE_KEY');
@@ -438,6 +445,7 @@ async function main() {
       color: t.color,
       description: t.description,
       is_free: Boolean(t.is_free),
+      details: t.details ?? null,
       lesson: lesson,
       journey: t.journey ?? null,
       published: Boolean(t.published),
@@ -605,7 +613,7 @@ async function main() {
       () =>
         supabase
           .from('topics')
-          .select('id, subject, subcategory, title, emoji, color, description, is_free, published, lesson, journey')
+          .select('id, subject, subcategory, title, emoji, color, description, is_free, details, published, lesson, journey')
           .in('id', slice)
     );
 
@@ -636,6 +644,7 @@ async function main() {
 
     const lessonChanged = !lessonsEqual(local.lesson ?? null, remote.lesson ?? null);
     const journeyChanged = !journeysEqual(local.journey ?? null, remote.journey ?? null);
+    const detailsChanged = !detailsEqual(local.details ?? null, remote.details ?? null);
 
     const publishedChanged = Boolean(local.published) !== Boolean(remote.published);
     const subjectChanged = (local.subject ?? null) !== (remote.subject ?? null);
@@ -667,12 +676,14 @@ async function main() {
       toUpdate.push(local);
     } else if (journeyChanged) {
       toUpdate.push(local);
+    } else if (detailsChanged) {
+      toUpdate.push(local);
     } else if (metaChanged) {
       toUpdate.push(local);
     } else {
       skipped.push({
         id,
-        reason: `no changes (lesson/journey/meta unchanged)`,
+        reason: `no changes (lesson/journey/details/meta unchanged)`,
       });
     }
   }
