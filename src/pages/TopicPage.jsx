@@ -286,30 +286,7 @@ function TopicPage() {
     };
   }, [tier, isCompleted, canStart, canUseReview, user, topic?.title, navigate, topicId, lessonTo, location?.state]);
 
-  // ── Pro gate (rendered after all hooks are registered) ──
-  if (!loading && topic && topicGate?.locked && topicGate?.reason === 'pro') {
-    return (
-      <motion.div className="topic-page" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-        <Seo
-          title={topic?.title ? `${topic.title} (Pro)` : 'Pro-only topic'}
-          description={topic?.description || 'Upgrade to Pro to unlock this topic.'}
-          path={location?.pathname}
-          canonicalPath={`/topic/${topicId}`}
-          jsonLd={topicJsonLd}
-          noindex
-        />
-        <Header />
-        <ProTopicGate
-          topic={topic}
-          topicRow={topicRow}
-          tier={tier}
-          backTo={backToChapterTo}
-          backLabel="Back to chapter"
-          context="topic"
-        />
-      </motion.div>
-    );
-  }
+  const showInlineProGate = !loading && topic && topicGate?.locked && topicGate?.reason === 'pro';
 
   if (!topic && loading) {
     return (
@@ -498,6 +475,17 @@ function TopicPage() {
 
             </motion.div>
           </div>
+
+          {showInlineProGate && (
+            <ProTopicGate
+              topic={topic}
+              topicRow={topicRow}
+              tier={tier}
+              backTo={backToChapterTo}
+              backLabel="Back to chapter"
+              context="topic"
+            />
+          )}
 
           {topic.details && (
             <motion.div
