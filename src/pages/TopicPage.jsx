@@ -40,6 +40,7 @@ function normalizeTopic(topicRow, topicId) {
     description: topicRow?.description ?? 'No description yet.',
     duration: '60 seconds',
     is_free: Boolean(topicRow?.is_free),
+    details: topicRow?.details ?? null,
     learningPoints:
       learningPoints.length > 0
         ? learningPoints
@@ -181,7 +182,7 @@ function TopicPage() {
       '@context': 'https://schema.org',
       '@type': 'LearningResource',
       name: String(topic.title ?? 'Topic'),
-      description: String(topic.description ?? ''),
+      description: String(topic.details?.summary ?? topic.description ?? ''),
       url: topicUrl,
       inLanguage: 'en',
       timeRequired: 'PT1M',
@@ -193,6 +194,23 @@ function TopicPage() {
       },
     };
   }, [topic, topicId]);
+
+  const faqJsonLd = useMemo(() => {
+    const faq = topic?.details?.faq;
+    if (!Array.isArray(faq) || faq.length === 0) return null;
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faq.map((item) => ({
+        '@type': 'Question',
+        name: String(item.question ?? ''),
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: String(item.answer ?? ''),
+        },
+      })),
+    };
+  }, [topic]);
 
 
   const isCompleted = Number(completedCount) > 0;
@@ -333,11 +351,17 @@ function TopicPage() {
     >
       <Seo
         title={topic?.title || 'Topic'}
-        description={topic?.description || 'Learn this topic in 60 seconds.'}
+        description={topic?.details?.summary || topic?.description || 'Learn this topic in 60 seconds.'}
         path={location?.pathname}
         canonicalPath={`/topic/${topicId}`}
         jsonLd={topicJsonLd}
       />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
       <Header />
       
       <main className="topic-main">
@@ -474,6 +498,65 @@ function TopicPage() {
 
             </motion.div>
           </div>
+
+          {topic.details && (
+            <motion.div
+              className="topic-details"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.25 }}
+            >
+              {topic.details.summary && (
+                <section className="topic-details__section">
+                  <h2 className="topic-details__heading">About This Topic</h2>
+                  <p className="topic-details__text">{topic.details.summary}</p>
+                </section>
+              )}
+
+              {topic.details.whyItMatters && (
+                <section className="topic-details__section">
+                  <h2 className="topic-details__heading">Why It Matters</h2>
+                  <p className="topic-details__text">{topic.details.whyItMatters}</p>
+                </section>
+              )}
+
+              {Array.isArray(topic.details.takeaways) && topic.details.takeaways.length > 0 && (
+                <section className="topic-details__section">
+                  <h2 className="topic-details__heading">Key Takeaways</h2>
+                  <ul className="topic-details__takeaways">
+                    {topic.details.takeaways.map((t, i) => (
+                      <li key={`ta-${i}`}>{t}</li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+
+              {Array.isArray(topic.details.keywords) && topic.details.keywords.length > 0 && (
+                <section className="topic-details__section">
+                  <h2 className="topic-details__heading">Related Concepts</h2>
+                  <div className="topic-details__keywords">
+                    {topic.details.keywords.map((kw, i) => (
+                      <span key={`kw-${i}`} className="topic-details__keyword">{kw}</span>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {Array.isArray(topic.details.faq) && topic.details.faq.length > 0 && (
+                <section className="topic-details__section">
+                  <h2 className="topic-details__heading">FAQ</h2>
+                  <dl className="topic-details__faq">
+                    {topic.details.faq.map((item, i) => (
+                      <div key={`faq-${i}`} className="topic-details__faq-item">
+                        <dt>{item.question}</dt>
+                        <dd>{item.answer}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </section>
+              )}
+            </motion.div>
+          )}
 
         </div>
       </main>

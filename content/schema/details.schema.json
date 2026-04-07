@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://1minuteacademy.dev/schemas/details.schema.json",
+  "title": "1MinuteAcademy Topic Details",
+  "description": "Rich topic context for SEO and user experience. Provides unique, human-written content per topic page.",
+  "type": "object",
+  "required": ["summary", "whyItMatters", "takeaways", "keywords", "faq"],
+  "additionalProperties": false,
+  "properties": {
+    "summary": {
+      "type": "string",
+      "minLength": 100,
+      "maxLength": 300,
+      "description": "Plain-language summary of what the topic covers. Used as meta description."
+    },
+    "whyItMatters": {
+      "type": "string",
+      "minLength": 80,
+      "maxLength": 250,
+      "description": "One-paragraph motivation explaining why this topic is important."
+    },
+    "takeaways": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 30, "maxLength": 120 },
+      "minItems": 3,
+      "maxItems": 3,
+      "description": "Three concrete learning outcomes the user will get from this lesson."
+    },
+    "keywords": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 2, "maxLength": 60 },
+      "minItems": 3,
+      "maxItems": 5,
+      "description": "Related search terms and concepts for keyword density and internal linking."
+    },
+    "faq": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["question", "answer"],
+        "additionalProperties": false,
+        "properties": {
+          "question": { "type": "string", "minLength": 20, "maxLength": 150 },
+          "answer": { "type": "string", "minLength": 50, "maxLength": 300 }
+        }
+      },
+      "minItems": 2,
+      "maxItems": 2,
+      "description": "Two FAQ pairs rendered as Schema.org FAQPage for Google rich results."
+    }
+  }
+}

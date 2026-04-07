@@ -222,11 +222,13 @@ async function main() {
 
   const blockSchema = await readJson(path.join(SCHEMA_DIR, 'block.schema.json'));
   const journeySchema = await readJson(path.join(SCHEMA_DIR, 'journey.schema.json'));
+  const detailsSchema = await readJson(path.join(SCHEMA_DIR, 'details.schema.json'));
   const storySchema = relaxStorySchemaForValidation(await readJson(path.join(SCHEMA_DIR, 'story.schema.json')));
   const topicSchema = await readJson(path.join(SCHEMA_DIR, 'topic.schema.json'));
 
   ajv.addSchema(blockSchema, 'block.schema.json');
   ajv.addSchema(journeySchema, 'journey.schema.json');
+  ajv.addSchema(detailsSchema, 'details.schema.json');
   ajv.addSchema(storySchema, 'story.schema.json');
   const validateTopic = ajv.compile(topicSchema);
 
@@ -314,6 +316,41 @@ async function main() {
   if (files.length === 0 && validated === 0) {
     console.log('No topic content found under content/topics/.');
     process.exit(0);
+  }
+
+  /* ─── Phase 3: Details coverage report (non-blocking) ──────────── */
+  console.log('\n── Phase 3: Topic details coverage ──');
+  const detailsByCat = new Map();
+  for (const file of files) {
+    let data;
+    try { data = await readJson(file); } catch { continue; }
+    const cat = data.subject || path.relative(TOPICS_DIR, file).split(path.sep)[0] || '(unknown)';
+    if (!detailsByCat.has(cat)) detailsByCat.set(cat, { total: 0, withDetails: 0 });
+    const entry = detailsByCat.get(cat);
+    entry.total += 1;
+    if (data.details && typeof data.details === 'object' && data.details.summary) {
+      entry.withDetails += 1;
+    }
+  }
+
+  let totalTopics = 0;
+  let totalWithDetails = 0;
+  const missingCats = [];
+  for (const [cat, counts] of [...detailsByCat.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {
+    totalTopics += counts.total;
+    totalWithDetails += counts.withDetails;
+    if (counts.withDetails < counts.total) {
+      missingCats.push(`  ${cat}: ${counts.withDetails}/${counts.total}`);
+    }
+  }
+
+  const pct = totalTopics > 0 ? ((totalWithDetails / totalTopics) * 100).toFixed(1) : '0.0';
+  console.log(`Details coverage: ${totalWithDetails}/${totalTopics} topics (${pct}%)`);
+  if (missingCats.length > 0 && missingCats.length <= 20) {
+    console.log('Categories missing details:');
+    for (const line of missingCats) console.log(line);
+  } else if (missingCats.length > 20) {
+    console.log(`${missingCats.length} categories still missing details (run with --topics-prefix to see specific ones).`);
   }
 
   if (totalFailed > 0) {

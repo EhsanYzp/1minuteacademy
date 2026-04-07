@@ -57,6 +57,7 @@ function beatLimit(beat, strictLengths) {
 
 function validatePlan(plan, relPath, { strictLengths }) {
   const errors = [];
+  const warnings = [];
 
   if (!plan || typeof plan !== 'object') {
     errors.push(`${relPath}: plan is not an object`);
@@ -143,9 +144,62 @@ function validatePlan(plan, relPath, { strictLengths }) {
         }
       }
     }
+
+    // ── details (warned for existing plans, required by generator for new ones) ──
+    const details = topic.details;
+    if (!details || typeof details !== 'object') {
+      warnings.push(`${label}: missing details object`);
+    } else {
+      if (typeof details.summary !== 'string' || details.summary.length < 100 || details.summary.length > 300) {
+        warnings.push(`${label}: details.summary must be a string of 100–300 chars (got ${details.summary?.length ?? 0})`);
+      }
+      if (typeof details.whyItMatters !== 'string' || details.whyItMatters.length < 80 || details.whyItMatters.length > 250) {
+        warnings.push(`${label}: details.whyItMatters must be a string of 80–250 chars (got ${details.whyItMatters?.length ?? 0})`);
+      }
+      const takeaways = Array.isArray(details.takeaways) ? details.takeaways : [];
+      if (takeaways.length !== 3) {
+        warnings.push(`${label}: details.takeaways must have exactly 3 items (got ${takeaways.length})`);
+      } else {
+        for (let k = 0; k < takeaways.length; k += 1) {
+          const t = takeaways[k];
+          if (typeof t !== 'string' || t.length < 30 || t.length > 120) {
+            warnings.push(`${label}: details.takeaways[${k}] must be 30–120 chars (got ${typeof t === 'string' ? t.length : typeof t})`);
+          }
+        }
+      }
+      const keywords = Array.isArray(details.keywords) ? details.keywords : [];
+      if (keywords.length < 3 || keywords.length > 5) {
+        warnings.push(`${label}: details.keywords must have 3–5 items (got ${keywords.length})`);
+      } else {
+        for (let k = 0; k < keywords.length; k += 1) {
+          const kw = keywords[k];
+          if (typeof kw !== 'string' || kw.length < 2 || kw.length > 60) {
+            warnings.push(`${label}: details.keywords[${k}] must be 2–60 chars (got ${typeof kw === 'string' ? kw.length : typeof kw})`);
+          }
+        }
+      }
+      const faq = Array.isArray(details.faq) ? details.faq : [];
+      if (faq.length !== 2) {
+        warnings.push(`${label}: details.faq must have exactly 2 items (got ${faq.length})`);
+      } else {
+        for (let k = 0; k < faq.length; k += 1) {
+          const f = faq[k];
+          if (!f || typeof f !== 'object') {
+            warnings.push(`${label}: details.faq[${k}] must be an object`);
+          } else {
+            if (typeof f.question !== 'string' || f.question.length < 20 || f.question.length > 150) {
+              warnings.push(`${label}: details.faq[${k}].question must be 20–150 chars (got ${f.question?.length ?? 0})`);
+            }
+            if (typeof f.answer !== 'string' || f.answer.length < 50 || f.answer.length > 300) {
+              warnings.push(`${label}: details.faq[${k}].answer must be 50–300 chars (got ${f.answer?.length ?? 0})`);
+            }
+          }
+        }
+      }
+    }
   }
 
-  return errors;
+  return { errors, warnings };
 }
 
 async function main() {
@@ -161,6 +215,8 @@ async function main() {
     }
   }
   let totalErrors = 0;
+  let totalWarnings = 0;
+  let plansWithWarnings = 0;
 
   console.log(`── Course plan structural validation ──`);
   console.log(`plans=${files.length} strictLengths=${args.strictLengths} prefix=${args.prefix ?? '(all)'}`);
@@ -176,12 +232,20 @@ async function main() {
       continue;
     }
 
-    const errs = validatePlan(plan, rel, args);
+    const { errors: errs, warnings: warns } = validatePlan(plan, rel, args);
     if (errs.length > 0) {
       totalErrors += errs.length;
       console.error(`\n❌ ${rel}: ${errs.length} issue(s)`);
       for (const err of errs) console.error(`  - ${err}`);
     }
+    if (warns.length > 0) {
+      totalWarnings += warns.length;
+      plansWithWarnings += 1;
+    }
+  }
+
+  if (totalWarnings > 0) {
+    console.log(`\n⚠️  ${totalWarnings} details warning(s) across ${plansWithWarnings} course plan(s) — add "details" to each topic.`);
   }
 
   if (totalErrors > 0) {

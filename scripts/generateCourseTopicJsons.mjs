@@ -345,6 +345,14 @@ async function main() {
     }
     const quiz = quizFromPlan({ title, quiz: t.quiz });
 
+    const details = t.details;
+    if (!details || typeof details !== 'object') {
+      throw new Error(
+        `Missing details for topic: ${topicId}\n` +
+        `All topics must include a "details" object with summary, whyItMatters, takeaways, keywords, and faq.`
+      );
+    }
+
     const json = {
       id: topicId,
       version: 1,
@@ -360,6 +368,7 @@ async function main() {
       published: true,
       story,
       quiz,
+      details,
     };
 
     const outDir = path.join(TOPICS_DIR, plan.categoryId, plan.courseId, chapterId);
