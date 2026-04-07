@@ -1,0 +1,602 @@
+{
+  "ai--science-of-ml--t-features-what-the-model-actually-sees": {
+    "summary": "Features are the measurable properties that a model uses as input — pixel values, word frequencies, sensor readings. Choosing the right features determines whether the model can learn meaningful patterns.",
+    "whyItMatters": "Feature selection is often more important than algorithm choice. The best model in the world cannot learn if it never sees the relevant information. Features define what AI can and cannot discover.",
+    "takeaways": [
+      "Features are the measurable inputs a model processes",
+      "Choosing relevant features is critical for model success",
+      "Deep learning automates feature discovery from raw data"
+    ],
+    "keywords": ["features", "feature engineering", "model input", "data representation"],
+    "faq": [
+      {
+        "question": "What is the difference between features and data?",
+        "answer": "Data is raw information like images or text. Features are specific measurable properties extracted from that data — like edge counts in an image or word frequencies in text — that the model actually uses for learning."
+      },
+      {
+        "question": "Do modern AI models still need manual feature engineering?",
+        "answer": "Deep learning models automatically discover features from raw data. However, for traditional ML methods on structured data, manual feature engineering remains important and often determines model performance."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-labels-and-supervision": {
+    "summary": "Labels are the correct answers attached to training examples — labeling a photo as 'cat' or an email as 'spam.' These labels teach the model what to look for during supervised learning.",
+    "whyItMatters": "Label quality determines model quality. Incorrect, inconsistent, or biased labels produce unreliable AI. Understanding labeling reveals a hidden human workforce behind every AI system.",
+    "takeaways": [
+      "Labels are correct answers paired with training inputs",
+      "They guide the model to learn specific patterns and categories",
+      "Label quality directly impacts model accuracy and fairness"
+    ],
+    "keywords": ["labels", "supervised learning", "data annotation", "training data"],
+    "faq": [
+      {
+        "question": "Who creates the labels for AI training data?",
+        "answer": "Large-scale labeling is done by human annotators, often through platforms like Amazon Mechanical Turk or specialized data labeling companies. Expert domains like medicine require trained professionals."
+      },
+      {
+        "question": "What happens when labels are wrong?",
+        "answer": "The model learns incorrect patterns. If 10% of cat images are mislabeled as dogs, the model's accuracy ceiling drops. Large-scale mislabeling can systematically bias the model's outputs."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-learning-without-being-programmed": {
+    "summary": "Machine learning enables computers to improve at tasks through experience rather than explicit programming. Instead of writing rules, developers provide data and let the algorithm discover patterns on its own.",
+    "whyItMatters": "This paradigm shift means AI can tackle problems too complex for human programmers to specify. It is the foundation of modern AI and the reason computers can now recognize speech, faces, and language.",
+    "takeaways": [
+      "ML systems learn from data instead of following coded rules",
+      "Developers provide examples; the algorithm discovers patterns",
+      "This enables solutions to problems too complex for manual coding"
+    ],
+    "keywords": ["machine learning", "learning from data", "pattern discovery", "automation"],
+    "faq": [
+      {
+        "question": "How is machine learning different from traditional software?",
+        "answer": "Traditional software follows explicit rules written by programmers. Machine learning discovers its own rules from data. A spam filter learns what spam looks like from examples rather than being given a list of spam words."
+      },
+      {
+        "question": "Does machine learning work for every problem?",
+        "answer": "No. ML needs sufficient data, clear patterns to discover, and problems where approximate solutions are acceptable. For tasks with exact rules like accounting math, traditional programming is better."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-the-three-types-of-machine-learning": {
+    "summary": "Machine learning has three main approaches: supervised learning uses labeled examples, unsupervised learning finds hidden patterns, and reinforcement learning trains through trial, error, and rewards.",
+    "whyItMatters": "Each type suits different problems. Knowing which approach fits which situation is fundamental to choosing the right ML strategy for any given task.",
+    "takeaways": [
+      "Supervised learning uses labeled input-output pairs",
+      "Unsupervised learning discovers structure without labels",
+      "Reinforcement learning optimizes through reward signals"
+    ],
+    "keywords": ["supervised learning", "unsupervised learning", "reinforcement learning"],
+    "faq": [
+      {
+        "question": "Which type of machine learning is most commonly used?",
+        "answer": "Supervised learning is the most widely deployed type because labeled data enables precise training. Most commercial AI applications — from spam filters to medical imaging — use supervised approaches."
+      },
+      {
+        "question": "Can these three types be combined?",
+        "answer": "Yes. Semi-supervised learning combines labeled and unlabeled data. Self-supervised learning creates labels from the data itself. Modern systems like ChatGPT use pre-training, fine-tuning, and RLHF across all three types."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-why-data-quantity-and-quality-both-matter": {
+    "summary": "AI needs enough data to find patterns and clean enough data to find the right patterns. More data generally helps, but noisy, biased, or mislabeled data can do more harm than having less data.",
+    "whyItMatters": "The 'garbage in, garbage out' principle is AI's most important law. Companies spend billions on data without understanding that cleaning matters more than collecting.",
+    "takeaways": [
+      "More data helps but only if quality is maintained",
+      "Noisy or biased data teaches the model wrong patterns",
+      "Data cleaning and curation are often the most impactful AI work"
+    ],
+    "keywords": ["data quality", "data quantity", "data cleaning", "training data"],
+    "faq": [
+      {
+        "question": "Is more data always better for AI?",
+        "answer": "Not necessarily. Beyond a point, adding more of the same data shows diminishing returns. Adding diverse, high-quality data helps more than simply increasing volume. Mislabeled data actively hurts performance."
+      },
+      {
+        "question": "How do AI teams ensure data quality?",
+        "answer": "Through validation checks, multiple annotators per example, statistical analysis of label consistency, and automated anomaly detection. Data quality assurance often takes more time than model development itself."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-classification-sorting-into-buckets": {
+    "summary": "Classification assigns inputs to predefined categories — sorting emails into spam or not spam, identifying diseases from scans, or detecting objects in images. It is one of ML's most fundamental tasks.",
+    "whyItMatters": "Classification powers countless everyday AI applications. Understanding how it works reveals why false positives and false negatives occur and how to tune the tradeoff between them.",
+    "takeaways": [
+      "Classification assigns inputs to discrete predefined categories",
+      "It powers spam filters, medical diagnosis, and content moderation",
+      "False positives and false negatives require careful tradeoff tuning"
+    ],
+    "keywords": ["classification", "categorization", "supervised learning", "prediction"],
+    "faq": [
+      {
+        "question": "How does a classification model make its decision?",
+        "answer": "The model computes probability scores for each possible category. Inputs are assigned to the category with the highest score. A threshold can be adjusted to favor precision or recall depending on the application."
+      },
+      {
+        "question": "Why is classification sometimes wrong?",
+        "answer": "Edge cases between categories, examples unlike anything in training, and noisy data all cause errors. No classifier achieves perfect accuracy on real-world data because the world contains inherent ambiguity."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-decision-trees-if-then-intelligence": {
+    "summary": "Decision trees make predictions by asking a series of yes/no questions, splitting data at each step until reaching a final prediction. They are simple, interpretable, and effective for structured data.",
+    "whyItMatters": "Decision trees are one of the most interpretable models — you can trace exactly why a prediction was made. When explainability matters, trees offer transparency that neural networks cannot.",
+    "takeaways": [
+      "Decision trees split data through a series of binary questions",
+      "They are highly interpretable — you can trace the reasoning",
+      "Random forests combine many trees for better accuracy"
+    ],
+    "keywords": ["decision trees", "interpretable AI", "random forest", "structured data"],
+    "faq": [
+      {
+        "question": "How does a decision tree decide which questions to ask?",
+        "answer": "The algorithm finds the question that best separates the data at each step, using measures like information gain or Gini impurity. It picks the feature and threshold that create the purest possible splits."
+      },
+      {
+        "question": "When should you use decision trees over neural networks?",
+        "answer": "Use decision trees when interpretability is important, data is structured and tabular, datasets are small, or you need to explain decisions to regulators. Neural networks are better for images, text, and very large datasets."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-k-nearest-neighbors-you-are-who-you-re-near": {
+    "summary": "K-nearest neighbors classifies new data points by looking at the labels of their closest neighbors in the training data. If most nearby points are cats, the new point is probably a cat too.",
+    "whyItMatters": "KNN demonstrates the simplest form of machine learning — learning by analogy. Its intuitive logic makes it a great entry point for understanding how AI uses similarity to make predictions.",
+    "takeaways": [
+      "KNN classifies based on the labels of the closest training points",
+      "It requires no training phase — predictions use the raw data",
+      "Simple and intuitive but slow for large datasets"
+    ],
+    "keywords": ["k-nearest neighbors", "KNN", "similarity", "lazy learning"],
+    "faq": [
+      {
+        "question": "What does the 'k' in KNN represent?",
+        "answer": "k is the number of neighbors consulted. With k=3, the algorithm checks the 3 closest training points and takes a majority vote. Choosing k involves a tradeoff between noise sensitivity and smoothness."
+      },
+      {
+        "question": "Why is KNN called a lazy learner?",
+        "answer": "It does no computation during training — it simply stores the data. All work happens at prediction time when it searches for nearest neighbors. This makes training instant but prediction slow for large datasets."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-naive-bayes-probability-to-the-rescue": {
+    "summary": "Naive Bayes classifiers use probability theory to make predictions, assuming features are independent. Despite this naive assumption being usually wrong, the method works remarkably well for text classification.",
+    "whyItMatters": "Naive Bayes powers spam filters and text classifiers with minimal computation. It demonstrates that simple models with wrong assumptions can still outperform complex ones when data is limited.",
+    "takeaways": [
+      "Naive Bayes applies probability theory assuming feature independence",
+      "The independence assumption is wrong but the method still works well",
+      "It is fast, simple, and effective for text classification tasks"
+    ],
+    "keywords": ["Naive Bayes", "probability", "text classification", "spam filter"],
+    "faq": [
+      {
+        "question": "Why is it called 'naive' if it works well?",
+        "answer": "It naively assumes all features are independent of each other, which is rarely true. The word 'free' and 'money' appearing together in spam are correlated, but Naive Bayes ignores this. It works despite the wrong assumption."
+      },
+      {
+        "question": "Where is Naive Bayes commonly used?",
+        "answer": "Email spam filtering, sentiment analysis, document categorization, and medical diagnosis. It is especially popular when training data is limited because it needs fewer examples to learn than more complex algorithms."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-regression-predicting-numbers": {
+    "summary": "Regression predicts continuous values instead of categories. Given features like square footage and location, a regression model predicts a house price. It finds the mathematical relationship between inputs and outputs.",
+    "whyItMatters": "Regression is everywhere — from economic forecasting to medical dosing to weather prediction. It is one of the most practical and widely used techniques in data science and AI.",
+    "takeaways": [
+      "Regression predicts a continuous number from input features",
+      "Linear regression fits a straight line; nonlinear captures curves",
+      "It drives forecasting, pricing, and quantitative prediction tasks"
+    ],
+    "keywords": ["regression", "linear regression", "prediction", "numerical output"],
+    "faq": [
+      {
+        "question": "What is the simplest form of regression?",
+        "answer": "Linear regression fits a straight line through data points to model the relationship between inputs and outputs. Despite its simplicity, it is effective for many real-world problems and is easy to interpret."
+      },
+      {
+        "question": "When does simple regression fail?",
+        "answer": "When the relationship between variables is nonlinear, has complex interactions, or involves many features. In such cases, polynomial regression, decision tree regression, or neural networks may perform better."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-anomaly-detection-finding-the-oddballs": {
+    "summary": "Anomaly detection learns what normal looks like and flags anything that deviates significantly. It catches fraud, equipment failures, and security breaches by identifying data points that do not fit the pattern.",
+    "whyItMatters": "Finding rare events in massive data streams is impossible for humans but critical for safety and security. Anomaly detection automates this vigilance at scale.",
+    "takeaways": [
+      "The model learns the pattern of normal data first",
+      "Anything significantly different gets flagged as an anomaly",
+      "Used in fraud detection, security, and industrial monitoring"
+    ],
+    "keywords": ["anomaly detection", "outlier detection", "fraud detection", "novelty detection"],
+    "faq": [
+      {
+        "question": "How does AI know what is abnormal without examples of anomalies?",
+        "answer": "It learns a model of normal behavior. Anything that falls far outside this normal distribution is flagged. This approach works because anomalies are rare and varied, making them hard to train on directly."
+      },
+      {
+        "question": "What is the biggest challenge in anomaly detection?",
+        "answer": "Setting the right sensitivity threshold. Too sensitive and the system flags too many false alarms. Not enough and it misses real anomalies. Tuning this balance depends on the cost of each type of error."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-anomaly-detection-finding-the-outliers": {
+    "summary": "Outlier detection identifies data points that lie far from the rest of the dataset. These statistical anomalies might indicate fraud, measurement error, rare events, or novel phenomena worth investigating.",
+    "whyItMatters": "Outliers can indicate both problems and opportunities. Ignoring them risks missing fraud or errors; over-reacting to them wastes resources. The right approach depends on context.",
+    "takeaways": [
+      "Outliers are data points significantly different from the majority",
+      "They can indicate errors, fraud, or genuinely rare phenomena",
+      "Context determines whether outliers should be flagged or ignored"
+    ],
+    "keywords": ["outliers", "statistical anomalies", "data quality", "rare events"],
+    "faq": [
+      {
+        "question": "How does AI determine whether a data point is an outlier?",
+        "answer": "Statistical methods measure distance from the data's center or density. Points far from the cluster or in low-density regions are flagged. Isolation forests and autoencoders are common ML-based approaches."
+      },
+      {
+        "question": "Should outliers always be removed from data?",
+        "answer": "Not always. Outliers due to measurement error should be removed. But outliers representing real but rare events, like fraud, should be kept and investigated. The decision depends on what the outlier represents."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-clustering-finding-natural-groups": {
+    "summary": "Clustering groups similar data points together without any labels, discovering natural categories the data contains. It reveals hidden structure like customer segments, gene families, or document topics.",
+    "whyItMatters": "Clustering extracts value from unlabeled data by revealing structure humans might miss. It powers market segmentation, biology research, and any domain where natural groups need discovery.",
+    "takeaways": [
+      "Clustering groups similar data without predefined categories",
+      "K-means and hierarchical clustering are popular methods",
+      "It discovers hidden structure in unlabeled datasets"
+    ],
+    "keywords": ["clustering", "k-means", "unsupervised learning", "data grouping"],
+    "faq": [
+      {
+        "question": "How does clustering know how many groups to create?",
+        "answer": "It often does not — choosing the number of clusters is a key challenge. Methods like the elbow method or silhouette analysis help. Some algorithms like DBSCAN determine the number of clusters automatically."
+      },
+      {
+        "question": "What are common applications of clustering?",
+        "answer": "Customer segmentation for marketing, grouping genes with similar expression, topic discovery in documents, image compression, and anomaly detection by finding points that do not fit any cluster."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-dimensionality-reduction-simplifying-complexity": {
+    "summary": "Dimensionality reduction compresses data with many features into fewer dimensions while preserving important patterns. It enables visualization, speeds computation, and removes noise from complex datasets.",
+    "whyItMatters": "Real-world data often has hundreds or thousands of features. Dimensionality reduction makes this data manageable for visualization, analysis, and more efficient model training.",
+    "takeaways": [
+      "It compresses many features into fewer while preserving patterns",
+      "PCA and t-SNE are widely used reduction techniques",
+      "Reduction enables visualization and faster model training"
+    ],
+    "keywords": ["dimensionality reduction", "PCA", "t-SNE", "feature compression"],
+    "faq": [
+      {
+        "question": "What is PCA in simple terms?",
+        "answer": "Principal Component Analysis finds the directions in data that contain the most variation and projects data onto fewer dimensions along those directions. It keeps the most informative aspects while discarding noise."
+      },
+      {
+        "question": "When should you use dimensionality reduction?",
+        "answer": "When data has many features relative to the number of samples, when you need to visualize high-dimensional data, or when you want to speed up model training by reducing input complexity."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-reinforcement-learning-trial-error-reward": {
+    "summary": "Reinforcement learning trains an agent through rewards and penalties as it interacts with an environment. Over millions of trials, the agent discovers strategies that maximize cumulative reward.",
+    "whyItMatters": "RL enables AI to learn in situations where correct answers are not known in advance. It powers game-playing AI, robot control, and any task where learning from experience is more practical than from labels.",
+    "takeaways": [
+      "Agents learn by receiving rewards for desirable outcomes",
+      "No labeled data is needed — just an environment and reward signal",
+      "RL excels at sequential decision-making problems"
+    ],
+    "keywords": ["reinforcement learning", "reward signal", "agent", "policy learning"],
+    "faq": [
+      {
+        "question": "How is reinforcement learning different from other ML types?",
+        "answer": "Supervised learning needs correct answers. Unsupervised learning finds patterns. Reinforcement learning learns from consequences — the agent tries actions, observes outcomes, and adjusts strategy based on rewards."
+      },
+      {
+        "question": "What are the biggest challenges in reinforcement learning?",
+        "answer": "It requires enormous amounts of trial and error, making it computationally expensive. Designing reward functions that produce desired behavior without unintended shortcuts is also notoriously difficult."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-convolutional-networks-ai-that-sees": {
+    "summary": "Convolutional neural networks process images by scanning with small filters that detect edges, textures, and shapes. Layers stack from simple features to complex objects, mirroring how biological vision works.",
+    "whyItMatters": "CNNs are the backbone of computer vision, powering everything from medical imaging to self-driving cars. Understanding their layer-by-layer approach reveals how AI builds visual understanding.",
+    "takeaways": [
+      "CNNs scan images with filters that detect visual features",
+      "Lower layers find edges; deeper layers recognize whole objects",
+      "They power most AI image recognition applications"
+    ],
+    "keywords": ["convolutional networks", "CNN", "computer vision", "image recognition"],
+    "faq": [
+      {
+        "question": "How does a convolutional filter work?",
+        "answer": "A small matrix slides across the image, computing a dot product at each position. Each filter detects a specific feature like a vertical edge or color gradient. Many filters together capture diverse visual patterns."
+      },
+      {
+        "question": "Are CNNs still used now that Transformers exist?",
+        "answer": "Yes. CNNs remain efficient for many vision tasks, especially on devices with limited compute. Vision Transformers are powerful but computationally heavier. Many systems use hybrid CNN-Transformer designs."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-how-a-single-neuron-works": {
+    "summary": "An artificial neuron takes multiple inputs, multiplies each by a weight, sums the results, and passes the sum through an activation function. This simple operation, scaled to billions, creates modern AI.",
+    "whyItMatters": "Every neural network is built from these simple units. Understanding one neuron means understanding the atomic building block of deep learning systems from GPT to AlphaFold.",
+    "takeaways": [
+      "A neuron multiplies inputs by weights and sums the results",
+      "An activation function adds nonlinearity to the output",
+      "Billions of these simple units create complex AI systems"
+    ],
+    "keywords": ["artificial neuron", "weights", "activation function", "neural networks"],
+    "faq": [
+      {
+        "question": "What does the activation function do?",
+        "answer": "Without activation functions, stacking layers would only compute linear relationships. Activation functions like ReLU introduce nonlinearity, enabling networks to learn complex patterns that straight lines cannot capture."
+      },
+      {
+        "question": "How does a neuron learn?",
+        "answer": "During training, backpropagation adjusts each weight based on how much it contributed to prediction errors. Over many iterations, weights converge to values that produce accurate outputs for the training data."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-layers-building-depth": {
+    "summary": "Neural networks stack layers of neurons, each transforming its input. Depth allows networks to learn hierarchical representations — from raw pixels to edges to shapes to complete objects across successive layers.",
+    "whyItMatters": "Depth is what makes deep learning deep. More layers enable the model to discover increasingly abstract patterns. Understanding layers reveals how AI builds complex understanding from simple elements.",
+    "takeaways": [
+      "Layers progressively transform data into abstract representations",
+      "More layers enable detection of more complex patterns",
+      "Depth is the key difference between shallow and deep learning"
+    ],
+    "keywords": ["neural network layers", "deep learning", "hierarchical features", "depth"],
+    "faq": [
+      {
+        "question": "How many layers does a typical neural network have?",
+        "answer": "It varies widely. Simple classifiers may have 3-5 layers. Image recognition networks like ResNet have 50-152. Large language models have 80-120 transformer layers. Depth depends on task complexity."
+      },
+      {
+        "question": "Can adding more layers always improve performance?",
+        "answer": "Not always. Very deep networks suffer from vanishing gradients and diminishing returns. Techniques like skip connections help, but eventually adding depth increases cost without meaningful accuracy gains."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-recurrent-networks-ai-that-remembers": {
+    "summary": "Recurrent neural networks process sequences by maintaining a hidden state that carries information from previous steps. This memory mechanism lets them handle text, time series, and speech in order.",
+    "whyItMatters": "RNNs introduced the concept of memory into neural networks, enabling AI to process sequential data. Though largely replaced by Transformers, RNN concepts remain foundational to sequence modeling.",
+    "takeaways": [
+      "RNNs process inputs one step at a time, maintaining memory",
+      "Hidden states carry information from earlier in the sequence",
+      "They enabled early successes in translation and speech recognition"
+    ],
+    "keywords": ["recurrent networks", "RNN", "sequence modeling", "hidden state"],
+    "faq": [
+      {
+        "question": "What problem do recurrent networks solve?",
+        "answer": "Standard neural networks process each input independently. RNNs maintain a hidden state that acts as memory, letting them understand sequences where order matters — like words in a sentence or stock prices over time."
+      },
+      {
+        "question": "Why have Transformers replaced RNNs?",
+        "answer": "RNNs process sequences one step at a time, making them slow to train on long sequences. Transformers process all positions simultaneously using attention, enabling faster training and better long-range understanding."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-recurrent-neural-networks-memory-for-sequences": {
+    "summary": "RNNs and their variants LSTM and GRU maintain structured memory cells that selectively remember or forget information across long sequences. This gating mechanism solved the vanishing gradient problem.",
+    "whyItMatters": "LSTM and GRU networks enabled AI to process long sequences like paragraphs and time series. Their gating innovations paved the way for the attention mechanisms used in modern Transformers.",
+    "takeaways": [
+      "LSTM and GRU add gates that control memory retention and forgetting",
+      "Gates solve the vanishing gradient problem over long sequences",
+      "These innovations laid groundwork for modern attention mechanisms"
+    ],
+    "keywords": ["LSTM", "GRU", "gated units", "sequence memory", "vanishing gradient"],
+    "faq": [
+      {
+        "question": "What are LSTM gates and what do they do?",
+        "answer": "LSTM has three gates: forget, input, and output. The forget gate discards irrelevant past information. The input gate adds new relevant information. The output gate controls what gets passed forward as the hidden state."
+      },
+      {
+        "question": "Are LSTMs still relevant with Transformers dominating?",
+        "answer": "LSTMs are less common for large-scale tasks but remain useful where compute is limited, sequences are very long, or real-time processing requires simple architectures, such as edge devices and simple time series."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-batch-size-epochs-and-learning-rate": {
+    "summary": "Batch size, epochs, and learning rate are key training hyperparameters. Batch size controls examples per update, epochs control passes through data, and learning rate controls step size during optimization.",
+    "whyItMatters": "Tuning these hyperparameters determines whether training succeeds. Wrong settings cause models to diverge, overfit, or waste compute. Understanding them is essential for practical ML.",
+    "takeaways": [
+      "Batch size sets how many examples are processed per weight update",
+      "Epochs count complete passes through the entire training dataset",
+      "Learning rate controls how much weights change each step"
+    ],
+    "keywords": ["hyperparameters", "batch size", "epochs", "learning rate"],
+    "faq": [
+      {
+        "question": "What happens if the learning rate is too high or too low?",
+        "answer": "Too high and the model overshoots optimal values, diverging or oscillating wildly. Too low and training takes forever or gets stuck in suboptimal solutions. Finding the right rate is crucial for successful training."
+      },
+      {
+        "question": "How do practitioners choose the right hyperparameters?",
+        "answer": "Through systematic experimentation: grid search, random search, or automated methods like Bayesian optimization. Learning rate schedulers that adjust the rate during training are also common practice."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-gradient-descent-learning-by-sliding-downhill": {
+    "summary": "Gradient descent optimizes neural networks by repeatedly calculating the slope of the error landscape and stepping downhill. Each step reduces prediction error, gradually moving weights toward their optimal values.",
+    "whyItMatters": "Gradient descent is the engine behind all neural network learning. Without it, models could not improve from experience. Understanding it demystifies how AI actually learns from data.",
+    "takeaways": [
+      "Gradient descent calculates the direction that reduces error most",
+      "Weights are updated by stepping in that direction repeatedly",
+      "It is the fundamental optimization algorithm behind deep learning"
+    ],
+    "keywords": ["gradient descent", "optimization", "loss landscape", "weight update"],
+    "faq": [
+      {
+        "question": "What is a gradient in simple terms?",
+        "answer": "The gradient is the slope of the error at the current position. It points in the direction of steepest increase. By going in the opposite direction, the algorithm moves toward lower error — the learning direction."
+      },
+      {
+        "question": "Can gradient descent get stuck?",
+        "answer": "Yes, in local minima or saddle points where the gradient is near zero but the error is not minimized. Techniques like momentum, Adam optimizer, and learning rate scheduling help escape these traps."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-loss-functions-measuring-how-wrong-you-are": {
+    "summary": "A loss function measures the gap between what the model predicted and the correct answer. It provides the error signal that gradient descent uses to improve the model during training.",
+    "whyItMatters": "The loss function defines what 'good' means for the model. Choosing the wrong loss function can produce a model that optimizes the wrong thing, even if training appears successful.",
+    "takeaways": [
+      "Loss functions quantify the difference between prediction and truth",
+      "They provide the error signal that drives model improvement",
+      "Choosing the right loss function is critical for model behavior"
+    ],
+    "keywords": ["loss function", "error measurement", "cost function", "optimization target"],
+    "faq": [
+      {
+        "question": "What are common types of loss functions?",
+        "answer": "Mean squared error for regression, cross-entropy for classification, and triplet loss for similarity learning. Each measures different types of prediction errors appropriate for different tasks."
+      },
+      {
+        "question": "Can a model have a low loss but still be bad?",
+        "answer": "Yes. A model can minimize loss on training data while overfitting and performing poorly on new data. The loss can also be poorly chosen, so a low value does not mean the model is actually useful."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-overfitting-memorizing-instead-of-learning": {
+    "summary": "Overfitting occurs when a model memorizes training examples rather than learning general patterns. It achieves near-perfect training accuracy but fails badly on unseen data, like a student who memorizes without understanding.",
+    "whyItMatters": "Overfitting is the most common failure mode in machine learning. Recognizing and preventing it is essential for building models that work in the real world, not just on training data.",
+    "takeaways": [
+      "Overfitted models memorize training data instead of learning patterns",
+      "The gap between training and test accuracy indicates overfitting",
+      "Regularization and validation are the primary defenses"
+    ],
+    "keywords": ["overfitting", "memorization", "generalization", "regularization"],
+    "faq": [
+      {
+        "question": "How do you detect overfitting during training?",
+        "answer": "Monitor both training and validation accuracy. If training accuracy keeps improving while validation accuracy plateaus or drops, the model is overfitting. The divergence point is when to stop training."
+      },
+      {
+        "question": "What are the best ways to prevent overfitting?",
+        "answer": "Use more diverse training data, apply regularization, implement dropout, use early stopping based on validation performance, and simplify the model architecture. Data augmentation also helps significantly."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-transfer-learning-standing-on-giant-shoulders": {
+    "summary": "Transfer learning reuses a model trained on one task as the starting point for a different task. Instead of learning from scratch, it adapts existing knowledge, making AI practical with small datasets.",
+    "whyItMatters": "Most organizations do not have massive datasets. Transfer learning democratizes AI by letting anyone fine-tune powerful pre-trained models for specific needs with modest data and compute.",
+    "takeaways": [
+      "Pre-trained models provide learned features as a starting point",
+      "Fine-tuning adapts these features to specific new tasks",
+      "It makes powerful AI accessible with limited data and compute"
+    ],
+    "keywords": ["transfer learning", "fine-tuning", "pre-trained models", "feature reuse"],
+    "faq": [
+      {
+        "question": "How much data is needed for transfer learning?",
+        "answer": "Dramatically less than training from scratch. Fine-tuning a pre-trained model can work with hundreds or thousands of examples for a new task, versus millions needed to train from scratch."
+      },
+      {
+        "question": "When does transfer learning not work well?",
+        "answer": "When the new task is very different from the original training domain. A model trained on text will not transfer well to medical imaging. The source and target domains need some shared structure."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-a-b-testing-the-real-world-scorecard": {
+    "summary": "A/B testing compares two versions of a system on real users to measure which performs better. It is the gold standard for evaluating AI in production because lab performance does not always match the real world.",
+    "whyItMatters": "A model that looks great on benchmarks might fail with real users. A/B testing provides ground truth about real-world performance, preventing costly mistakes from deploying inferior systems.",
+    "takeaways": [
+      "A/B tests compare versions using real user interactions",
+      "Lab benchmarks often do not predict real-world performance well",
+      "Statistical rigor prevents drawing conclusions from noise"
+    ],
+    "keywords": ["A/B testing", "experimentation", "statistical significance", "production testing"],
+    "faq": [
+      {
+        "question": "How does A/B testing work for AI models?",
+        "answer": "Users are randomly split into groups. Group A sees the current model and Group B sees the new model. Real metrics like engagement, accuracy, and revenue are compared. Statistical tests determine if differences are real."
+      },
+      {
+        "question": "How long should an A/B test run?",
+        "answer": "Until you have enough data for statistical significance — usually thousands of observations minimum. Running too short risks false conclusions. The exact duration depends on traffic volume and the size of the expected effect."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-accuracy-is-not-enough": {
+    "summary": "Overall accuracy can be misleading when classes are imbalanced. A model could achieve 99% accuracy on cancer detection by simply predicting 'no cancer' every time if only 1% of patients have cancer.",
+    "whyItMatters": "Relying solely on accuracy leads to dangerous blind spots. For medical, financial, and safety applications, understanding precision, recall, and F1 score is essential for responsible AI evaluation.",
+    "takeaways": [
+      "High accuracy can hide failure on rare but important cases",
+      "Precision measures how many positive predictions are correct",
+      "Recall measures how many actual positives are detected"
+    ],
+    "keywords": ["accuracy", "precision", "recall", "class imbalance", "F1 score"],
+    "faq": [
+      {
+        "question": "When is accuracy a good metric?",
+        "answer": "When classes are roughly balanced and all types of errors are equally costly. For spam detection with 50-50 spam ratio, accuracy works fine. For rare disease detection, it is dangerously misleading."
+      },
+      {
+        "question": "What metrics should be used instead of accuracy?",
+        "answer": "Precision, recall, and F1 score for classification. AUC-ROC for ranking models. Mean absolute error for regression. The right metric depends on whether false positives or false negatives are more costly."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-cross-validation-testing-without-waste": {
+    "summary": "Cross-validation rotates portions of data between training and testing, ensuring every example gets used for both. It provides more reliable performance estimates than a single train-test split, especially with limited data.",
+    "whyItMatters": "A single test set might give misleading results by chance. Cross-validation produces robust performance estimates that better predict real-world behavior, critical when data is scarce.",
+    "takeaways": [
+      "Data is split into folds that rotate between training and testing",
+      "Every example serves as both training and test data across folds",
+      "It provides more reliable estimates than a single split"
+    ],
+    "keywords": ["cross-validation", "k-fold", "model evaluation", "data splitting"],
+    "faq": [
+      {
+        "question": "How does k-fold cross-validation work?",
+        "answer": "Data is split into k equal parts. The model trains on k-1 parts and tests on the remaining one. This rotates k times so each part serves as the test set once. Results are averaged across all folds."
+      },
+      {
+        "question": "What value of k is commonly used?",
+        "answer": "k=5 or k=10 are most common, balancing computational cost with estimate reliability. With very small datasets, leave-one-out cross-validation uses k equal to the number of examples for maximum data usage."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-cross-validation-trust-but-verify": {
+    "summary": "Cross-validation is the trust-but-verify principle for ML models. By testing on data the model has never seen during training, it reveals whether the model has genuinely learned or just memorized.",
+    "whyItMatters": "Without cross-validation, there is no way to know if a model will work on new data. It is the essential safeguard against deploying models that overfit and fail in production.",
+    "takeaways": [
+      "Cross-validation tests models on data they have never seen",
+      "It reveals overfitting that training metrics would miss",
+      "Essential for any model before real-world deployment"
+    ],
+    "keywords": ["cross-validation", "model verification", "overfitting detection", "generalization"],
+    "faq": [
+      {
+        "question": "Is cross-validation always necessary?",
+        "answer": "For any model going into production, some form of held-out testing is essential. Cross-validation is most valuable when data is limited. With very large datasets, a single hold-out test set may be sufficient."
+      },
+      {
+        "question": "Can cross-validation be fooled?",
+        "answer": "Yes, if there is data leakage — information from the test set inadvertently included in training. Careful data separation and awareness of temporal dependencies are needed to prevent this subtle but serious issue."
+      }
+    ]
+  },
+  "ai--science-of-ml--t-the-confusion-matrix-a-map-of-mistakes": {
+    "summary": "A confusion matrix shows exactly where a classifier makes mistakes: which categories it confuses with which others. It reveals patterns of errors that a single accuracy number hides.",
+    "whyItMatters": "Knowing which specific mistakes a model makes is more useful than knowing overall accuracy. The confusion matrix guides targeted improvements and helps assess whether errors are acceptable.",
+    "takeaways": [
+      "A confusion matrix shows predicted vs actual categories in a grid",
+      "It reveals specific error patterns between category pairs",
+      "True positives, false positives, true negatives, and false negatives are all visible"
+    ],
+    "keywords": ["confusion matrix", "error analysis", "classification metrics", "diagnostics"],
+    "faq": [
+      {
+        "question": "How do you read a confusion matrix?",
+        "answer": "Rows represent actual classes and columns represent predictions. Diagonal cells show correct predictions. Off-diagonal cells show specific confusions: the cell at row A, column B shows how often actual A was predicted as B."
+      },
+      {
+        "question": "What can a confusion matrix tell you that accuracy cannot?",
+        "answer": "It shows exactly which classes the model confuses, whether errors are symmetric, and where the model is strong or weak. A model with 90% accuracy might ignore an entire minority class, which only the matrix reveals."
+      }
+    ]
+  }
+}

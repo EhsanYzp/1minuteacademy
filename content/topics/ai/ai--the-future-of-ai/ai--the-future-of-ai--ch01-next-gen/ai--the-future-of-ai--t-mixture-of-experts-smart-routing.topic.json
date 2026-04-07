@@ -45,5 +45,30 @@
       "They reduce the total number of parameters"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Mixture of Experts models route each input to specialized sub-networks rather than processing everything through the entire model. This makes giant models faster and cheaper by only activating relevant experts.",
+    "whyItMatters": "MoE enables building much larger models without proportionally increasing compute costs. It is a key architecture behind frontier models, making powerful AI more efficient and scalable.",
+    "takeaways": [
+      "MoE routes inputs to specialized sub-networks called experts",
+      "Only a fraction of the model is active for each input",
+      "It enables scaling model size without scaling compute costs"
+    ],
+    "keywords": [
+      "mixture of experts",
+      "MoE",
+      "sparse models",
+      "efficient AI"
+    ],
+    "faq": [
+      {
+        "question": "How does the routing in MoE models work?",
+        "answer": "A learned gating network examines each input and selects which experts should process it. Typically only 2-4 experts are activated out of dozens or hundreds, keeping compute costs low despite massive total model size."
+      },
+      {
+        "question": "Which major AI models use Mixture of Experts?",
+        "answer": "GPT-4 and Mixtral are both rumored or confirmed to use MoE architectures. The approach is increasingly popular as a way to scale model capability while controlling inference costs."
+      }
+    ]
   }
 }

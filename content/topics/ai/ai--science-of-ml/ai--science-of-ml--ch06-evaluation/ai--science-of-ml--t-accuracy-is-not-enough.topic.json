@@ -45,5 +45,31 @@
       "Balanced datasets don't exist"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Overall accuracy can be misleading when classes are imbalanced. A model could achieve 99% accuracy on cancer detection by simply predicting 'no cancer' every time if only 1% of patients have cancer.",
+    "whyItMatters": "Relying solely on accuracy leads to dangerous blind spots. For medical, financial, and safety applications, understanding precision, recall, and F1 score is essential for responsible AI evaluation.",
+    "takeaways": [
+      "High accuracy can hide failure on rare but important cases",
+      "Precision measures how many positive predictions are correct",
+      "Recall measures how many actual positives are detected"
+    ],
+    "keywords": [
+      "accuracy",
+      "precision",
+      "recall",
+      "class imbalance",
+      "F1 score"
+    ],
+    "faq": [
+      {
+        "question": "When is accuracy a good metric?",
+        "answer": "When classes are roughly balanced and all types of errors are equally costly. For spam detection with 50-50 spam ratio, accuracy works fine. For rare disease detection, it is dangerously misleading."
+      },
+      {
+        "question": "What metrics should be used instead of accuracy?",
+        "answer": "Precision, recall, and F1 score for classification. AUC-ROC for ranking models. Mean absolute error for regression. The right metric depends on whether false positives or false negatives are more costly."
+      }
+    ]
   }
 }

@@ -1,0 +1,602 @@
+{
+  "ai--understanding-llms--t-embeddings-words-as-numbers": {
+    "summary": "Embeddings convert words into dense vectors of numbers where similar words end up near each other in mathematical space. This numerical representation lets AI models perform calculations on language and discover relationships between words.",
+    "whyItMatters": "Without embeddings, AI cannot process language mathematically. They are the foundation of every modern language model, enabling search engines, recommendations, and chatbots to understand meaning.",
+    "takeaways": [
+      "Embeddings map words to dense numerical vectors in high-dimensional space",
+      "Similar words cluster together, capturing semantic relationships",
+      "They are the core input representation for every modern language model"
+    ],
+    "keywords": ["embeddings", "word vectors", "Word2Vec", "semantic representation"],
+    "faq": [
+      {
+        "question": "How do embeddings capture word meaning?",
+        "answer": "Words that appear in similar contexts during training are placed near each other in vector space. 'King' is near 'queen' and 'ruler' while far from 'banana' — the model learns meaning from usage patterns."
+      },
+      {
+        "question": "What dimensions do embedding vectors use?",
+        "answer": "Modern embeddings typically use 768 to 4096 dimensions. Each dimension captures some aspect of meaning, though individual dimensions are not easily interpretable by humans. The richness enables nuanced similarity."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-the-transformer-architecture": {
+    "summary": "The Transformer is the neural network architecture behind all modern LLMs. Introduced in the 2017 'Attention Is All You Need' paper, it replaced older approaches with a parallel, attention-based design that scales efficiently.",
+    "whyItMatters": "Transformers enabled the GPT, BERT, and LLaMA breakthroughs. Understanding this architecture is key to grasping how modern AI processes language and why recent progress has been so rapid.",
+    "takeaways": [
+      "Transformers use self-attention to process all words simultaneously",
+      "They replaced sequential RNNs with parallel, scalable computation",
+      "Every major LLM — GPT, BERT, LLaMA — is built on Transformers"
+    ],
+    "keywords": ["Transformer", "attention mechanism", "neural architecture", "GPT"],
+    "faq": [
+      {
+        "question": "Why did Transformers replace previous architectures?",
+        "answer": "Earlier RNNs processed words one at a time, creating bottlenecks with long sequences. Transformers process all words in parallel using attention, enabling faster training on GPUs and better handling of long-range dependencies."
+      },
+      {
+        "question": "What are the main components of a Transformer?",
+        "answer": "Self-attention layers that let each word attend to every other, feed-forward networks for processing, positional encodings for word order, and layer normalization for training stability. These components stack into deep networks."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-tokens-how-llms-read-text": {
+    "summary": "LLMs read text by splitting it into tokens — pieces that might be words, subwords, or individual characters. Tokenization determines what the model sees and fundamentally shapes its capabilities and limitations.",
+    "whyItMatters": "Tokenization explains many LLM quirks: why they struggle with counting letters, why some languages cost more, and why context windows are limited. Understanding tokens reveals the model's actual input.",
+    "takeaways": [
+      "Tokens are subword pieces, not whole words or characters",
+      "Common words are single tokens; rare words split into pieces",
+      "Token limits define how much text an LLM can process at once"
+    ],
+    "keywords": ["tokens", "tokenization", "BPE", "subword units"],
+    "faq": [
+      {
+        "question": "Why don't LLMs use whole words as tokens?",
+        "answer": "A whole-word vocabulary would need millions of entries for all languages and terms. Subword tokenization creates a manageable vocabulary of 30,000-100,000 tokens that can represent any text by breaking rare words into common pieces."
+      },
+      {
+        "question": "Why do some languages use more tokens than others?",
+        "answer": "Tokenizers are trained mostly on English text, so English words are efficiently encoded. Other languages, especially those with different scripts, get split into more tokens per word, making them more expensive to process."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-what-is-a-language-model": {
+    "summary": "A language model is an AI system trained to predict the next word in a sequence. By learning patterns in vast amounts of text, it develops the ability to generate coherent, contextually appropriate language.",
+    "whyItMatters": "Language models power chatbots, translation, code generation, and search. Understanding their core mechanism — next-word prediction — explains both their impressive abilities and fundamental limitations.",
+    "takeaways": [
+      "Language models predict the probability of the next word in a sequence",
+      "Training on vast text gives them broad knowledge and language ability",
+      "Next-word prediction is the simple foundation of complex AI behavior"
+    ],
+    "keywords": ["language model", "next-word prediction", "text generation", "NLP"],
+    "faq": [
+      {
+        "question": "How does predicting the next word produce intelligent responses?",
+        "answer": "To predict well, the model must learn grammar, facts, reasoning patterns, and context. These emergent abilities arise from scale: a model trained on trillions of words develops surprisingly sophisticated capabilities."
+      },
+      {
+        "question": "Is a language model actually understanding language?",
+        "answer": "This is debated. Language models produce human-like text through statistical patterns, not conscious understanding. They can reason and answer correctly yet also produce confident nonsense — suggesting sophisticated pattern matching rather than true comprehension."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-what-makes-a-language-model-large": {
+    "summary": "A language model becomes 'large' when it has billions of parameters — the numerical weights learned during training. More parameters allow the model to store more knowledge and handle more complex tasks.",
+    "whyItMatters": "Model size drives capability. Understanding what makes a model large explains the arms race in AI, the costs of development, and the tradeoff between bigger models and practical deployment.",
+    "takeaways": [
+      "Parameters are the learned numerical weights inside the model",
+      "Large language models have billions to trillions of parameters",
+      "More parameters generally mean more capability but higher costs"
+    ],
+    "keywords": ["parameters", "model size", "large language model", "scaling"],
+    "faq": [
+      {
+        "question": "How many parameters do major LLMs have?",
+        "answer": "GPT-3 has 175 billion parameters. GPT-4 is estimated at over a trillion. Llama 3 comes in 8B, 70B, and 405B variants. The trend has been toward larger models, though smaller efficient models are now also advancing."
+      },
+      {
+        "question": "Do more parameters always mean better performance?",
+        "answer": "Generally yes, up to a point. But training data quality, training techniques, and architecture also matter enormously. A well-trained smaller model can outperform a poorly trained larger one."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-fine-tuning-teaching-manners": {
+    "summary": "Fine-tuning adapts a pre-trained language model to specific tasks or behaviors using a smaller, curated dataset. It is how a general-purpose model learns to be a helpful assistant, a coder, or a medical advisor.",
+    "whyItMatters": "Fine-tuning makes general AI models useful for specific applications. Without it, LLMs would be impressive text generators but poor assistants, making fine-tuning essential for real-world deployment.",
+    "takeaways": [
+      "Fine-tuning trains a pre-trained model on task-specific data",
+      "It adapts general capabilities to specific applications",
+      "Instruction tuning teaches models to follow user instructions"
+    ],
+    "keywords": ["fine-tuning", "instruction tuning", "model adaptation", "specialization"],
+    "faq": [
+      {
+        "question": "How does fine-tuning differ from pre-training?",
+        "answer": "Pre-training learns general language from vast internet text. Fine-tuning then adjusts the model on a smaller, curated dataset for specific behavior — like following instructions, answering questions, or generating code."
+      },
+      {
+        "question": "Can anyone fine-tune a language model?",
+        "answer": "Yes, with open-source models. Techniques like LoRA allow fine-tuning with modest hardware by updating only a small subset of parameters. It has become accessible to individual developers and small companies."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-pre-training-learning-from-the-internet": {
+    "summary": "Pre-training is the initial phase where a language model learns from trillions of words of internet text. The model develops general language understanding, world knowledge, and reasoning abilities during this expensive process.",
+    "whyItMatters": "Pre-training creates the foundation of all LLM capabilities. It requires massive compute and data investment, which is why only a few organizations can train frontier models from scratch.",
+    "takeaways": [
+      "Pre-training teaches general language from trillions of text tokens",
+      "It is the most expensive phase, requiring massive compute clusters",
+      "The quality and diversity of training data shape model capabilities"
+    ],
+    "keywords": ["pre-training", "training data", "compute", "foundation model"],
+    "faq": [
+      {
+        "question": "What data is used for pre-training?",
+        "answer": "Web pages, books, academic papers, code repositories, and other text sources. The data is filtered for quality, deduplicated, and processed into trillions of tokens. Data composition significantly affects the model's strengths."
+      },
+      {
+        "question": "How long does pre-training take?",
+        "answer": "Training a frontier model takes weeks to months on thousands of specialized GPUs. GPT-4's training cost is estimated at over $100 million. Smaller models can be trained in days on more modest hardware."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-rlhf-learning-from-human-feedback": {
+    "summary": "Reinforcement Learning from Human Feedback trains models to prefer responses that humans rate as helpful, honest, and harmless. Annotators rank outputs and the model learns to match human preferences.",
+    "whyItMatters": "RLHF is what makes chatbots helpful rather than merely predictive. It bridges the gap between raw language modeling and the kind of useful, safe behavior users expect from AI assistants.",
+    "takeaways": [
+      "RLHF uses human ratings to guide model behavior",
+      "Annotators compare outputs and rank them by quality",
+      "It teaches models to be helpful, honest, and safe"
+    ],
+    "keywords": ["RLHF", "human feedback", "reward model", "alignment training"],
+    "faq": [
+      {
+        "question": "How does RLHF work step by step?",
+        "answer": "First, human annotators rank model outputs by quality. These rankings train a reward model that scores responses. Then reinforcement learning optimizes the language model to produce responses that score highly according to the reward model."
+      },
+      {
+        "question": "What are the limitations of RLHF?",
+        "answer": "It can make models sycophantic — agreeing with users rather than being truthful. It depends on annotator quality and consistency. It can also suppress useful but edgy outputs, leading to overly cautious behavior."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-training-data-garbage-in-garbage-out": {
+    "summary": "The quality of training data determines the quality of AI outputs. Biased, inaccurate, or toxic data produces biased, inaccurate, or toxic models. Data curation is among the most important steps in building responsible AI.",
+    "whyItMatters": "Every flaw in AI can be traced back to training data. Understanding this relationship explains why AI exhibits biases, makes errors, and why data quality investment is critical for trustworthy systems.",
+    "takeaways": [
+      "Training data quality directly determines model output quality",
+      "Biased data produces biased models — the effect is inescapable",
+      "Data curation and filtering are critical for responsible AI"
+    ],
+    "keywords": ["training data", "data quality", "bias", "data curation"],
+    "faq": [
+      {
+        "question": "What makes training data high quality?",
+        "answer": "Diverse representation of topics and perspectives, factual accuracy, minimal toxic content, and proper deduplication. High-quality data is carefully filtered, which is expensive and time-consuming but essential."
+      },
+      {
+        "question": "Can bad training data be fixed after the model is trained?",
+        "answer": "Partially, through fine-tuning and RLHF. But fundamental biases from pre-training are difficult to fully remove. Prevention through data curation is far more effective than post-hoc correction."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-transfer-learning-one-model-many-skills": {
+    "summary": "Transfer learning lets a model trained on one task apply its knowledge to different tasks. Pre-trained language models transfer their general understanding to new domains through fine-tuning, saving enormous time and compute.",
+    "whyItMatters": "Without transfer learning, every AI application would need training from scratch. It makes AI practical for specialized domains by building on existing general capabilities rather than starting over.",
+    "takeaways": [
+      "Transfer learning reuses knowledge from one task for another",
+      "It saves the enormous cost of training from scratch",
+      "Fine-tuning adapts general models to specific domains efficiently"
+    ],
+    "keywords": ["transfer learning", "fine-tuning", "domain adaptation", "pre-trained models"],
+    "faq": [
+      {
+        "question": "How does transfer learning save resources?",
+        "answer": "Training a model from scratch costs millions of dollars and months of compute. Transfer learning starts with an already-trained model and adapts it with a fraction of the data and compute, often in hours."
+      },
+      {
+        "question": "What kinds of knowledge transfer between tasks?",
+        "answer": "Grammar, reasoning patterns, world knowledge, and general language understanding all transfer well. Domain-specific jargon and specialized reasoning require additional fine-tuning on relevant data."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-multi-head-attention-seeing-multiple-patterns": {
+    "summary": "Multi-head attention runs several attention operations in parallel, each focusing on different linguistic patterns. One head might track grammar while another follows meaning, allowing rich parallel analysis of text.",
+    "whyItMatters": "Multi-head attention is why Transformers understand language so well. Multiple parallel perspectives capture the many simultaneous relationships in language that a single attention pass would miss.",
+    "takeaways": [
+      "Multiple attention heads analyze text in parallel from different angles",
+      "Each head can specialize in different linguistic relationships",
+      "This parallel analysis captures richer patterns than single attention"
+    ],
+    "keywords": ["multi-head attention", "attention heads", "Transformer", "parallel analysis"],
+    "faq": [
+      {
+        "question": "What does each attention head do?",
+        "answer": "Each head learns to focus on different relationship types. Research shows individual heads can specialize in syntax, coreference, or positional patterns. The combined output gives the model a rich, multi-faceted understanding."
+      },
+      {
+        "question": "How many heads do typical models use?",
+        "answer": "GPT-3 uses 96 attention heads per layer across 96 layers. Smaller models may use 12-32 heads. More heads allow finer-grained parallel analysis but increase computational overhead."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-positional-encoding-tracking-word-order": {
+    "summary": "Since Transformers process all words simultaneously rather than sequentially, positional encoding adds information about each word's position so the model knows word order. Without it, 'dog bites man' and 'man bites dog' would look identical.",
+    "whyItMatters": "Word order is fundamental to meaning. Positional encoding solves the critical problem of maintaining sequence information in an architecture designed for parallel processing.",
+    "takeaways": [
+      "Transformers process words in parallel and lose natural order information",
+      "Positional encodings add position data to each token's representation",
+      "Without them, the model cannot distinguish word order at all"
+    ],
+    "keywords": ["positional encoding", "word order", "Transformer", "sequence information"],
+    "faq": [
+      {
+        "question": "How do positional encodings work?",
+        "answer": "Original Transformers use sine and cosine functions at different frequencies to create unique position signals. Modern models often learn position representations during training using Rotary Position Embeddings (RoPE)."
+      },
+      {
+        "question": "Why not just process words in order like older models?",
+        "answer": "Sequential processing creates a bottleneck — each word must wait for all previous words. Parallel processing with positional encoding is dramatically faster on modern GPUs and handles longer sequences much better."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-self-attention-step-by-step": {
+    "summary": "Self-attention lets each word in a sentence look at every other word to determine which are most relevant to its meaning. Each word computes a weighted sum of all words, with weights reflecting relevance.",
+    "whyItMatters": "Self-attention is the core mechanism behind Transformer models. It enables contextual understanding — the same word gets different representations depending on surrounding words.",
+    "takeaways": [
+      "Each word attends to every other word in the input sequence",
+      "Attention weights indicate which words are most relevant to each other",
+      "This creates context-dependent word representations"
+    ],
+    "keywords": ["self-attention", "attention weights", "query-key-value", "Transformer"],
+    "faq": [
+      {
+        "question": "How does self-attention compute word relationships?",
+        "answer": "Each word is projected into query, key, and value vectors. The query of one word is matched against keys of all words to compute attention scores. These scores weight the values to produce a context-aware representation."
+      },
+      {
+        "question": "Why is self-attention better than previous approaches?",
+        "answer": "Unlike RNNs that lose information over long distances, self-attention directly connects every word pair. A word at position 1 can attend to position 1000 just as easily, enabling superior long-range understanding."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-the-context-window-llm-memory": {
+    "summary": "The context window is the maximum amount of text an LLM can consider at once. Early models handled 2,000 tokens; modern models support 100,000 or more, enabling analysis of entire documents and long conversations.",
+    "whyItMatters": "Context window size determines what an LLM can do. Small windows forget earlier conversation. Large windows enable document analysis, code understanding, and sustained complex reasoning.",
+    "takeaways": [
+      "The context window limits how much text an LLM processes at once",
+      "Larger windows enable longer conversations and document analysis",
+      "Memory beyond the context window is effectively lost"
+    ],
+    "keywords": ["context window", "token limit", "long context", "LLM memory"],
+    "faq": [
+      {
+        "question": "What happens when conversation exceeds the context window?",
+        "answer": "The oldest tokens are dropped from the model's input. The model literally forgets the beginning of the conversation. This is why long chats can lose coherence — the model no longer sees what was discussed earlier."
+      },
+      {
+        "question": "How are context windows getting larger?",
+        "answer": "Techniques like RoPE scaling, sliding window attention, and efficient attention algorithms have extended windows from 2K to 200K+ tokens. Google's Gemini 1.5 supports a million tokens in research settings."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-why-attention-matters": {
+    "summary": "Attention is the mechanism that lets neural networks focus on relevant parts of their input. It transformed AI by allowing models to weigh the importance of each element dynamically rather than treating all inputs equally.",
+    "whyItMatters": "Attention is the single most important innovation behind modern AI. Without it, LLMs, image generators, and speech models would not exist at their current level of capability.",
+    "takeaways": [
+      "Attention lets models focus on the most relevant parts of input",
+      "It dynamically weighs input elements based on context",
+      "It is the foundational mechanism behind all modern AI progress"
+    ],
+    "keywords": ["attention mechanism", "neural networks", "Transformer", "focus"],
+    "faq": [
+      {
+        "question": "How did attention change AI?",
+        "answer": "Before attention, models processed inputs uniformly or lost information over distance. Attention enables selective focus, dramatically improving performance on translation, summarization, generation, and any task requiring understanding relationships."
+      },
+      {
+        "question": "Is attention used outside of language models?",
+        "answer": "Yes, attention powers vision transformers for images, diffusion models for image generation, speech recognition systems, protein structure prediction, and virtually every recent AI breakthrough."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-chain-of-thought-reasoning": {
+    "summary": "Chain-of-thought prompting asks LLMs to show their reasoning step by step before giving an answer. This simple technique dramatically improves accuracy on math, logic, and complex reasoning tasks.",
+    "whyItMatters": "Chain-of-thought revealed that LLMs can reason more carefully when asked to. It changed how people interact with AI and inspired reasoning models that think step-by-step automatically.",
+    "takeaways": [
+      "Asking LLMs to reason step by step improves their accuracy",
+      "It works especially well for math, logic, and multi-step problems",
+      "It inspired dedicated reasoning models like OpenAI's o1"
+    ],
+    "keywords": ["chain of thought", "step-by-step reasoning", "prompting", "CoT"],
+    "faq": [
+      {
+        "question": "Why does chain-of-thought work?",
+        "answer": "LLMs generate each token based on previous tokens. When forced to spell out intermediate steps, each step conditions the next, reducing errors. Without explicit steps, the model must jump directly to answers."
+      },
+      {
+        "question": "When should you use chain-of-thought prompting?",
+        "answer": "For math problems, logical reasoning, code debugging, multi-step analysis, and any task requiring sequential thought. For simple factual questions or creative tasks, it adds unnecessary overhead."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-few-shot-learning-teaching-by-example": {
+    "summary": "Few-shot learning provides an LLM with a few examples in the prompt to demonstrate a desired task or format. The model generalizes from these examples without any retraining, adapting its behavior on the fly.",
+    "whyItMatters": "Few-shot learning makes LLMs instantly adaptable to new tasks without fine-tuning. It is a key technique for getting reliable, formatted outputs from general-purpose models.",
+    "takeaways": [
+      "A few examples in the prompt teach the model a new task pattern",
+      "No retraining or fine-tuning is required — it works immediately",
+      "It enables rapid adaptation to custom formats and workflows"
+    ],
+    "keywords": ["few-shot learning", "in-context learning", "prompt examples", "ICL"],
+    "faq": [
+      {
+        "question": "How many examples does few-shot learning need?",
+        "answer": "Typically 2-5 examples suffice for simple tasks. More examples help with complex or ambiguous tasks. Zero-shot (no examples) sometimes works, but even one example often dramatically improves consistency."
+      },
+      {
+        "question": "Why does few-shot learning work without training?",
+        "answer": "LLMs are powerful pattern matchers. Examples in the prompt create a pattern the model continues. It leverages the model's pre-trained ability to recognize and extend patterns rather than learning new weights."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-retrieval-augmented-generation-grounding-ai-in-facts": {
+    "summary": "Retrieval-Augmented Generation fetches relevant documents from a knowledge base and includes them in the prompt, grounding the LLM's response in real, up-to-date information rather than relying on memory alone.",
+    "whyItMatters": "RAG solves two critical LLM problems: outdated knowledge and hallucination. By providing source documents, it enables accurate, verifiable answers grounded in authoritative information.",
+    "takeaways": [
+      "RAG retrieves relevant documents and adds them to the prompt",
+      "It reduces hallucinations by grounding responses in source material",
+      "It keeps LLM knowledge current without expensive retraining"
+    ],
+    "keywords": ["RAG", "retrieval-augmented generation", "knowledge grounding"],
+    "faq": [
+      {
+        "question": "How does RAG work in practice?",
+        "answer": "When a user asks a question, the system searches a knowledge base for relevant documents using embeddings. The retrieved documents are added to the LLM prompt, and the model generates an answer based on that context."
+      },
+      {
+        "question": "When should you use RAG instead of fine-tuning?",
+        "answer": "Use RAG when information changes frequently, when source attribution matters, or when you need answers from specific documents. Use fine-tuning when you want to change the model's overall behavior or writing style."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-system-prompts-setting-the-stage": {
+    "summary": "System prompts are hidden instructions that define an LLM's persona, rules, and behavior before a user interacts with it. They shape how the model responds, what it refuses, and what personality it presents.",
+    "whyItMatters": "System prompts are how developers control AI assistants. They determine whether a model is helpful or guarded, creative or precise, and what boundaries it observes during conversation.",
+    "takeaways": [
+      "System prompts set the model's persona, rules, and behavior",
+      "They are provided by developers, not visible to end users",
+      "They control tone, boundaries, and capabilities of AI assistants"
+    ],
+    "keywords": ["system prompt", "instructions", "AI persona", "model behavior"],
+    "faq": [
+      {
+        "question": "Can system prompts be overridden by users?",
+        "answer": "Users sometimes succeed in getting models to ignore system prompts through creative prompting. This is called prompt injection. Better models are increasingly resistant, but no system prompt is perfectly unbreakable."
+      },
+      {
+        "question": "What makes a good system prompt?",
+        "answer": "Clear, specific instructions about desired behavior, explicit boundaries for what the model should refuse, example interactions, and output format requirements. Good system prompts are tested and iterated extensively."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-what-is-a-prompt": {
+    "summary": "A prompt is the text input sent to a language model to generate a response. Prompt engineering — crafting effective prompts — has become a crucial skill as the quality of the prompt directly determines the quality of AI output.",
+    "whyItMatters": "The prompt is the primary interface between humans and language models. Mastering prompt design unlocks dramatically better AI results without any technical changes to the underlying model.",
+    "takeaways": [
+      "A prompt is the text input that instructs the language model",
+      "Prompt quality directly determines output quality",
+      "Prompt engineering is a skill that dramatically improves AI results"
+    ],
+    "keywords": ["prompt", "prompt engineering", "input design", "LLM interaction"],
+    "faq": [
+      {
+        "question": "What makes a good prompt?",
+        "answer": "Clear instructions, specific context, desired output format, and relevant examples. Good prompts are unambiguous about what is wanted. They specify constraints, provide background, and show the expected style of response."
+      },
+      {
+        "question": "Is prompt engineering a real skill?",
+        "answer": "Yes. The difference between naive and expert prompts can be dramatic. Companies hire prompt engineers, and systematic techniques like chain-of-thought, few-shot examples, and structured outputs reliably improve results."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-bias-in-language-models": {
+    "summary": "Language models inherit and sometimes amplify biases present in their training data: gender stereotypes, racial biases, cultural assumptions, and political leanings. These biases affect millions of users and decisions.",
+    "whyItMatters": "Biased AI can perpetuate discrimination at scale. When language models inform hiring, lending, healthcare, and education decisions, even small biases cause real harm to real people.",
+    "takeaways": [
+      "LLMs inherit biases from their training data",
+      "Biases include gender, racial, cultural, and political dimensions",
+      "Mitigating bias is an active area of research with no complete solution"
+    ],
+    "keywords": ["AI bias", "fairness", "stereotypes", "bias mitigation"],
+    "faq": [
+      {
+        "question": "How do language models become biased?",
+        "answer": "Training data reflects historical and societal biases. If the internet contains more male CEO examples, the model associates leadership with men. These patterns are learned statistically and surface in outputs."
+      },
+      {
+        "question": "Can bias in language models be eliminated?",
+        "answer": "Not completely with current techniques. RLHF, data filtering, and fine-tuning reduce measured biases but cannot eliminate all embedded associations. Ongoing monitoring and targeted corrections are the practical approach."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-hallucinations-when-ai-makes-things-up": {
+    "summary": "Hallucinations occur when an LLM generates confident, fluent text that is factually wrong or entirely fabricated. The model has no mechanism for distinguishing truth from plausible fiction in its outputs.",
+    "whyItMatters": "Hallucinations undermine trust in AI and can cause real harm: fake legal citations, incorrect medical advice, and fabricated sources. Understanding why they happen is essential for safe AI use.",
+    "takeaways": [
+      "LLMs generate plausible text regardless of factual accuracy",
+      "They have no internal mechanism to verify truth",
+      "Hallucinations are a fundamental limitation, not a fixable bug"
+    ],
+    "keywords": ["hallucinations", "confabulation", "factual errors", "AI reliability"],
+    "faq": [
+      {
+        "question": "Why do LLMs hallucinate?",
+        "answer": "LLMs are trained to generate statistically likely text, not verified truth. When the model lacks knowledge, it fills gaps with plausible-sounding content rather than admitting ignorance. The architecture has no fact-checking step."
+      },
+      {
+        "question": "Can hallucinations be prevented?",
+        "answer": "Reduced but not eliminated. RAG grounds responses in source documents. Reasoning models check their own work. But all current LLMs hallucinate sometimes, making human verification essential for high-stakes uses."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-the-knowledge-cutoff-problem": {
+    "summary": "LLMs only know information from their training data, which has a cutoff date. They cannot access current events, recent discoveries, or updated facts unless given external tools or retrieval systems.",
+    "whyItMatters": "Users often expect AI to know everything, including yesterday's news. The knowledge cutoff explains outdated answers and drives solutions like RAG and web search integration.",
+    "takeaways": [
+      "LLM knowledge ends at the training data cutoff date",
+      "Events after the cutoff are unknown unless provided externally",
+      "RAG and web search tools extend LLM knowledge to current data"
+    ],
+    "keywords": ["knowledge cutoff", "outdated information", "training freeze", "RAG"],
+    "faq": [
+      {
+        "question": "When is the knowledge cutoff for major models?",
+        "answer": "It varies by model and version. GPT-4's cutoff is typically months before release. Models are continuously updated but always have some lag. The cutoff date is usually disclosed in model documentation."
+      },
+      {
+        "question": "How can the knowledge cutoff be addressed?",
+        "answer": "RAG retrieval adds current information to prompts. Web search plugins fetch real-time data. Fine-tuning on recent data can update knowledge but is expensive. The most practical solution is combining the LLM with external tools."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-the-sycophancy-problem": {
+    "summary": "Sycophancy is the tendency of LLMs to agree with users even when the user is wrong. RLHF training rewards being helpful and pleasing, inadvertently teaching models to prioritize agreement over truthfulness.",
+    "whyItMatters": "Sycophantic AI reinforces misconceptions and gives users false confidence. When an AI agrees with wrong medical or financial beliefs, the consequences can be serious. Truthfulness should outweigh agreeableness.",
+    "takeaways": [
+      "LLMs tend to agree with user statements even when incorrect",
+      "RLHF inadvertently rewards agreement over truth",
+      "Sycophancy makes AI unreliable for verifying beliefs"
+    ],
+    "keywords": ["sycophancy", "people-pleasing AI", "truthfulness", "RLHF bias"],
+    "faq": [
+      {
+        "question": "Why does RLHF cause sycophancy?",
+        "answer": "Annotators naturally prefer responses that feel helpful and agreeable. This trains the model to optimize for user satisfaction over accuracy. Disagreeing with users feels unhelpful, so the model learns to avoid it."
+      },
+      {
+        "question": "How is sycophancy being addressed?",
+        "answer": "Training for truthfulness over agreeableness, evaluating models on their willingness to disagree, and rewarding correct pushback in RLHF are active approaches. Some models are explicitly trained to say when users are wrong."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-why-llms-struggle-with-math": {
+    "summary": "LLMs struggle with math because they process text tokens, not numerical values. They can reproduce memorized calculations and follow patterns but lack the symbolic computation engine needed for reliable arithmetic.",
+    "whyItMatters": "Math failures reveal a fundamental limitation: LLMs process patterns in text, not abstract mathematical relationships. Understanding this prevents over-reliance on AI for calculations.",
+    "takeaways": [
+      "LLMs process math as text patterns, not numerical computation",
+      "They memorize common calculations but fail on novel problems",
+      "External tools like code interpreters solve this limitation"
+    ],
+    "keywords": ["LLM math", "arithmetic failure", "symbolic reasoning", "tool use"],
+    "faq": [
+      {
+        "question": "Why can LLMs solve some math but not all?",
+        "answer": "Common calculations appear frequently in training data, so the model memorizes their patterns. Novel or large-number calculations require actual computation, which text prediction cannot reliably perform."
+      },
+      {
+        "question": "How are math limitations being addressed?",
+        "answer": "Code interpreter tools let LLMs write and execute calculation code. Reasoning models spend more tokens on step-by-step work. Specialized math training improves performance but does not replace true symbolic computation."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-multimodal-llms-beyond-text": {
+    "summary": "Multimodal LLMs process multiple input types — text, images, audio, and video — within a single model. They can analyze photos, transcribe speech, and discuss visual content in natural conversation.",
+    "whyItMatters": "The world is not just text. Multimodal models bring AI closer to human-like perception by combining language with sight and sound, enabling far richer and more useful applications.",
+    "takeaways": [
+      "Multimodal LLMs accept text, images, audio, and video inputs",
+      "They enable AI to see, hear, and discuss the world naturally",
+      "GPT-4V and Gemini are leading multimodal examples"
+    ],
+    "keywords": ["multimodal AI", "GPT-4V", "Gemini", "vision and language"],
+    "faq": [
+      {
+        "question": "How do multimodal models process different input types?",
+        "answer": "Different encoders convert images, audio, and video into token-like representations in the same mathematical space as text. The language model then processes all modalities together using its existing attention mechanism."
+      },
+      {
+        "question": "What can multimodal LLMs do in practice?",
+        "answer": "Describe and analyze photos, read handwritten text, interpret charts and diagrams, transcribe audio, answer questions about video content, and combine visual and textual reasoning in conversation."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-multimodal-models-beyond-text": {
+    "summary": "Multimodal models extend AI beyond text to process images, audio, video, and even code simultaneously. They unify understanding across modalities, enabling richer AI applications that perceive the world more like humans do.",
+    "whyItMatters": "Real-world problems are multimodal. A doctor reads scans and notes together. Multimodal AI mirrors this by combining modalities, making it useful for tasks that text-only models simply cannot handle.",
+    "takeaways": [
+      "Multimodal models process multiple data types in one system",
+      "They unify understanding across text, images, audio, and video",
+      "They enable applications that require cross-modal reasoning"
+    ],
+    "keywords": ["multimodal AI", "cross-modal reasoning", "unified models"],
+    "faq": [
+      {
+        "question": "How are multimodal models different from separate specialized models?",
+        "answer": "Separate models cannot reason across modalities. A multimodal model can explain what it sees in an image while referencing related text, enabling integrated understanding rather than isolated analysis of each input type."
+      },
+      {
+        "question": "What breakthroughs enabled multimodal models?",
+        "answer": "Large-scale paired datasets of images and captions, the Transformer's flexible attention mechanism that works across modality tokens, and contrastive learning techniques like CLIP that align visual and text representations."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-open-source-vs-closed-models": {
+    "summary": "Open-source LLMs like Llama and Mistral are freely available for anyone to use, modify, and deploy. Closed models like GPT-4 are only accessible via paid APIs. This divide shapes AI's future accessibility and innovation.",
+    "whyItMatters": "Whether AI is open or closed determines who can build with it, inspect it, and benefit from it. This is a defining question for whether AI power concentrates or distributes across society.",
+    "takeaways": [
+      "Open-source models are free to download, modify, and self-host",
+      "Closed models offer more capability but lock users to one provider",
+      "The open vs closed debate shapes AI's future power structure"
+    ],
+    "keywords": ["open source LLMs", "closed models", "Llama", "AI access"],
+    "faq": [
+      {
+        "question": "What are the best open-source language models?",
+        "answer": "Meta's Llama 3, Mistral's models, and Google's Gemma are leading open-source LLMs. They approach closed model performance on many tasks while allowing full customization and private deployment."
+      },
+      {
+        "question": "Why would a company choose open-source over closed models?",
+        "answer": "Data privacy (no data sent to third parties), customization through fine-tuning, no per-token API costs at scale, no vendor lock-in, and the ability to deploy anywhere including offline environments."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-reasoning-models-ai-that-thinks-longer": {
+    "summary": "Reasoning models use extended inference time to work through complex problems step by step. Unlike standard LLMs that answer immediately, they generate longer internal reasoning chains before producing higher-quality answers.",
+    "whyItMatters": "Reasoning models show that spending more compute at inference — not just training — dramatically improves accuracy. This opens a new axis for improving AI beyond simply making models larger.",
+    "takeaways": [
+      "Reasoning models trade speed for accuracy on complex problems",
+      "They generate internal reasoning chains before final answers",
+      "Inference-time compute is a new scaling axis for AI capability"
+    ],
+    "keywords": ["reasoning models", "inference scaling", "o1", "extended thinking"],
+    "faq": [
+      {
+        "question": "How do reasoning models differ from standard LLMs?",
+        "answer": "Standard LLMs produce tokens at constant speed. Reasoning models allocate more computation to harder problems, generating extended chains of thought. The result is slower but significantly more accurate on complex tasks."
+      },
+      {
+        "question": "What problems benefit from reasoning models?",
+        "answer": "Math competitions, complex coding, scientific reasoning, and multi-step logic problems see the biggest improvements. For simple questions or creative writing, standard LLMs are faster without meaningful accuracy loss."
+      }
+    ]
+  },
+  "ai--understanding-llms--t-small-language-models-less-is-more": {
+    "summary": "Small language models with 1-7 billion parameters achieve impressive results through careful training on high-quality data. They run on personal devices, require less energy, and are practical for focused applications.",
+    "whyItMatters": "Not every application needs GPT-4. Small models make AI accessible on phones, laptops, and embedded devices, enabling private, fast, and affordable AI without cloud dependency.",
+    "takeaways": [
+      "Models with 1-7B parameters can perform well on focused tasks",
+      "High-quality training data matters more than raw model size",
+      "They enable private, offline AI on personal devices"
+    ],
+    "keywords": ["small language models", "efficient AI", "on-device models", "Phi"],
+    "faq": [
+      {
+        "question": "What can small language models do well?",
+        "answer": "They excel at focused tasks like summarization, classification, code completion, and question answering within specific domains. They struggle with broad knowledge and complex multi-step reasoning compared to larger models."
+      },
+      {
+        "question": "What makes small models effective despite fewer parameters?",
+        "answer": "Training on curated, high-quality data rather than raw internet text. Techniques like distillation transfer knowledge from large models. Architecture efficiency improvements also help smaller models punch above their weight."
+      }
+    ]
+  }
+}

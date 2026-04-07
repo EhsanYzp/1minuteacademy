@@ -45,5 +45,30 @@
       "Positional encoding improves vocabulary size"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Since Transformers process all words simultaneously rather than sequentially, positional encoding adds information about each word's position so the model knows word order. Without it, 'dog bites man' and 'man bites dog' would look identical.",
+    "whyItMatters": "Word order is fundamental to meaning. Positional encoding solves the critical problem of maintaining sequence information in an architecture designed for parallel processing.",
+    "takeaways": [
+      "Transformers process words in parallel and lose natural order information",
+      "Positional encodings add position data to each token's representation",
+      "Without them, the model cannot distinguish word order at all"
+    ],
+    "keywords": [
+      "positional encoding",
+      "word order",
+      "Transformer",
+      "sequence information"
+    ],
+    "faq": [
+      {
+        "question": "How do positional encodings work?",
+        "answer": "Original Transformers use sine and cosine functions at different frequencies to create unique position signals. Modern models often learn position representations during training using Rotary Position Embeddings (RoPE)."
+      },
+      {
+        "question": "Why not just process words in order like older models?",
+        "answer": "Sequential processing creates a bottleneck — each word must wait for all previous words. Parallel processing with positional encoding is dramatically faster on modern GPUs and handles longer sequences much better."
+      }
+    ]
   }
 }

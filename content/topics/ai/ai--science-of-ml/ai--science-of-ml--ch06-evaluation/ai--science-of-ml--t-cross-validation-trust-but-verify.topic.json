@@ -45,5 +45,30 @@
       "It trains the model faster"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Cross-validation is the trust-but-verify principle for ML models. By testing on data the model has never seen during training, it reveals whether the model has genuinely learned or just memorized.",
+    "whyItMatters": "Without cross-validation, there is no way to know if a model will work on new data. It is the essential safeguard against deploying models that overfit and fail in production.",
+    "takeaways": [
+      "Cross-validation tests models on data they have never seen",
+      "It reveals overfitting that training metrics would miss",
+      "Essential for any model before real-world deployment"
+    ],
+    "keywords": [
+      "cross-validation",
+      "model verification",
+      "overfitting detection",
+      "generalization"
+    ],
+    "faq": [
+      {
+        "question": "Is cross-validation always necessary?",
+        "answer": "For any model going into production, some form of held-out testing is essential. Cross-validation is most valuable when data is limited. With very large datasets, a single hold-out test set may be sufficient."
+      },
+      {
+        "question": "Can cross-validation be fooled?",
+        "answer": "Yes, if there is data leakage — information from the test set inadvertently included in training. Careful data separation and awareness of temporal dependencies are needed to prevent this subtle but serious issue."
+      }
+    ]
   }
 }

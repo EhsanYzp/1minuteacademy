@@ -45,5 +45,30 @@
       "The number of GPUs available"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "The context window is the maximum amount of text an LLM can consider at once. Early models handled 2,000 tokens; modern models support 100,000 or more, enabling analysis of entire documents and long conversations.",
+    "whyItMatters": "Context window size determines what an LLM can do. Small windows forget earlier conversation. Large windows enable document analysis, code understanding, and sustained complex reasoning.",
+    "takeaways": [
+      "The context window limits how much text an LLM processes at once",
+      "Larger windows enable longer conversations and document analysis",
+      "Memory beyond the context window is effectively lost"
+    ],
+    "keywords": [
+      "context window",
+      "token limit",
+      "long context",
+      "LLM memory"
+    ],
+    "faq": [
+      {
+        "question": "What happens when conversation exceeds the context window?",
+        "answer": "The oldest tokens are dropped from the model's input. The model literally forgets the beginning of the conversation. This is why long chats can lose coherence — the model no longer sees what was discussed earlier."
+      },
+      {
+        "question": "How are context windows getting larger?",
+        "answer": "Techniques like RoPE scaling, sliding window attention, and efficient attention algorithms have extended windows from 2K to 200K+ tokens. Google's Gemini 1.5 supports a million tokens in research settings."
+      }
+    ]
   }
 }

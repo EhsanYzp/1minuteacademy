@@ -45,5 +45,30 @@
       "It eliminates the need for test data"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Cross-validation rotates portions of data between training and testing, ensuring every example gets used for both. It provides more reliable performance estimates than a single train-test split, especially with limited data.",
+    "whyItMatters": "A single test set might give misleading results by chance. Cross-validation produces robust performance estimates that better predict real-world behavior, critical when data is scarce.",
+    "takeaways": [
+      "Data is split into folds that rotate between training and testing",
+      "Every example serves as both training and test data across folds",
+      "It provides more reliable estimates than a single split"
+    ],
+    "keywords": [
+      "cross-validation",
+      "k-fold",
+      "model evaluation",
+      "data splitting"
+    ],
+    "faq": [
+      {
+        "question": "How does k-fold cross-validation work?",
+        "answer": "Data is split into k equal parts. The model trains on k-1 parts and tests on the remaining one. This rotates k times so each part serves as the test set once. Results are averaged across all folds."
+      },
+      {
+        "question": "What value of k is commonly used?",
+        "answer": "k=5 or k=10 are most common, balancing computational cost with estimate reliability. With very small datasets, leave-one-out cross-validation uses k equal to the number of examples for maximum data usage."
+      }
+    ]
   }
 }

@@ -45,5 +45,30 @@
       "Long words are always removed"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "LLMs read text by splitting it into tokens — pieces that might be words, subwords, or individual characters. Tokenization determines what the model sees and fundamentally shapes its capabilities and limitations.",
+    "whyItMatters": "Tokenization explains many LLM quirks: why they struggle with counting letters, why some languages cost more, and why context windows are limited. Understanding tokens reveals the model's actual input.",
+    "takeaways": [
+      "Tokens are subword pieces, not whole words or characters",
+      "Common words are single tokens; rare words split into pieces",
+      "Token limits define how much text an LLM can process at once"
+    ],
+    "keywords": [
+      "tokens",
+      "tokenization",
+      "BPE",
+      "subword units"
+    ],
+    "faq": [
+      {
+        "question": "Why don't LLMs use whole words as tokens?",
+        "answer": "A whole-word vocabulary would need millions of entries for all languages and terms. Subword tokenization creates a manageable vocabulary of 30,000-100,000 tokens that can represent any text by breaking rare words into common pieces."
+      },
+      {
+        "question": "Why do some languages use more tokens than others?",
+        "answer": "Tokenizers are trained mostly on English text, so English words are efficiently encoded. Other languages, especially those with different scripts, get split into more tokens per word, making them more expensive to process."
+      }
+    ]
   }
 }
