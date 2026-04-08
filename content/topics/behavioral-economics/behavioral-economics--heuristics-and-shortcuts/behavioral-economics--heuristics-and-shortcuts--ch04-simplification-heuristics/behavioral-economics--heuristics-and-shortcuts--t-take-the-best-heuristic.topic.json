@@ -45,5 +45,31 @@
       "Only in medical scenarios"
     ],
     "correct": 1
+  },
+  "details": {
+    "summary": "The take-the-best heuristic makes decisions by finding the single most valid cue that discriminates between options and choosing based on that cue alone. If the best cue does not discriminate, it moves to the next best. It ignores all other information entirely.",
+    "whyItMatters": "Take-the-best demonstrates that ignoring information can improve predictions. In competitive tests against complex regression models, take-the-best often wins because it avoids overfitting by using only one cue while complex models overweight noisy.",
+    "takeaways": [
+      "Decisions based on the single best discriminating cue can outperform complex models",
+      "Ignoring less-valid cues prevents noise from degrading prediction accuracy",
+      "Take-the-best is especially effective when one cue is much more valid than others"
+    ],
+    "keywords": [
+      "take the best",
+      "one-reason decision",
+      "cue validity",
+      "fast heuristic",
+      "Gigerenzer"
+    ],
+    "faq": [
+      {
+        "question": "How can using only one piece of information be better than using all of it?",
+        "answer": "When the best cue is highly valid and the remaining cues add more noise than signal, additional information degrades the prediction. Take-the-best exploits this by stopping as soon as one good cue discriminates, avoiding the noise carried by weaker cues."
+      },
+      {
+        "question": "In what environments does take-the-best perform well?",
+        "answer": "When cues have very different validities, meaning one or two cues are much better than the rest. When the environment is noisy or sample sizes are small. It does not work well when many cues contribute equally to the outcome."
+      }
+    ]
   }
 }
