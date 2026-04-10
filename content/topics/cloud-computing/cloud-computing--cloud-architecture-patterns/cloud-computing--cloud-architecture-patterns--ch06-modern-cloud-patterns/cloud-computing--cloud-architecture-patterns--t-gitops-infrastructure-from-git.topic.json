@@ -45,5 +45,30 @@
       "Infrastructure changes are made manually and then documented in Git"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "GitOps uses Git as the single source of truth for both application and infrastructure state. Changes are made via pull requests, and automated agents reconcile the live environment with the desired state declared in the repository.",
+    "whyItMatters": "GitOps brings the rigor of code review and version control to infrastructure operations. Every change is auditable, reversible, and approved before it reaches production.",
+    "takeaways": [
+      "Git is the single source of truth for desired state",
+      "Automated agents reconcile live state with the repository",
+      "Every change is auditable through Git history"
+    ],
+    "keywords": [
+      "GitOps",
+      "desired state",
+      "reconciliation",
+      "pull request workflow"
+    ],
+    "faq": [
+      {
+        "question": "How does GitOps differ from traditional CI/CD?",
+        "answer": "Traditional CI/CD pushes changes to the environment after build. GitOps pulls desired state from Git and continuously reconciles. The environment converges toward what is declared in Git, even if someone makes manual changes that drift from the declared state."
+      },
+      {
+        "question": "What tools implement GitOps?",
+        "answer": "ArgoCD and Flux are the most popular GitOps operators for Kubernetes. They watch Git repositories and automatically apply changes to clusters. Both support multi-cluster management, progressive delivery, and integration with secret management tools."
+      }
+    ]
   }
 }

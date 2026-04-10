@@ -45,5 +45,30 @@
       "Only after the company has more than 1,000 employees"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "A monolith packages all application logic into a single deployable unit, while distributed systems split logic across multiple networked services. Monoliths are simpler to develop and deploy but harder to scale selectively.",
+    "whyItMatters": "Choosing between monolith and distributed architecture is one of the most consequential decisions in cloud engineering. The wrong choice creates years of technical debt.",
+    "takeaways": [
+      "Monoliths are simpler to build, test, and deploy initially",
+      "Distributed systems allow independent scaling of components",
+      "Many teams start monolith and migrate to services later"
+    ],
+    "keywords": [
+      "monolith",
+      "distributed systems",
+      "architecture tradeoffs",
+      "migration"
+    ],
+    "faq": [
+      {
+        "question": "Is a monolith always bad for cloud deployments?",
+        "answer": "No. Monoliths are perfectly appropriate for small teams, early-stage products, and applications without extreme scaling needs. Many successful companies run monoliths in the cloud. Premature decomposition into microservices often creates more problems than it solves."
+      },
+      {
+        "question": "How do you migrate from monolith to microservices?",
+        "answer": "The strangler fig pattern is the most common approach: incrementally extract functionality into new services while routing traffic away from the monolith. This avoids a risky big-bang rewrite and allows gradual validation of the new architecture."
+      }
+    ]
   }
 }

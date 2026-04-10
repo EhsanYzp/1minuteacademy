@@ -45,5 +45,30 @@
       "Auto-scaling always reduces performance regardless of settings"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Auto-scaling automatically adjusts the number of running instances based on real-time demand metrics. When traffic increases, new instances launch within minutes. When demand drops, excess instances terminate. This ensures consistent performance while minimizing cost during low-traffic periods.",
+    "whyItMatters": "Auto-scaling delivers the cloud promise of paying only for what you use while maintaining performance under any load. It removes the need to provision for peak capacity permanently.",
+    "takeaways": [
+      "New instances launch automatically when demand metrics rise",
+      "Excess instances terminate when demand subsides",
+      "Scaling policies define thresholds and response behavior"
+    ],
+    "keywords": [
+      "auto-scaling",
+      "scaling policies",
+      "demand management",
+      "elastic compute"
+    ],
+    "faq": [
+      {
+        "question": "What metrics trigger auto-scaling?",
+        "answer": "Common triggers include CPU utilization above 70 percent, memory usage thresholds, request queue depth, custom application latency metrics, and scheduled patterns. Combining multiple metrics prevents scaling on false signals from a single metric spike."
+      },
+      {
+        "question": "How do you prevent auto-scaling cost surprises?",
+        "answer": "Set maximum instance limits to cap spending. Define cooldown periods to prevent rapid cycling. Monitor scaling events and set billing alerts. Use target tracking policies that maintain a specific metric value rather than step policies that can overshoot."
+      }
+    ]
   }
 }

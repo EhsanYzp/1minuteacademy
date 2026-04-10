@@ -45,5 +45,30 @@
       "Events eliminate the need for any databases"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Event-driven architecture uses events to trigger and communicate between decoupled services. When something happens, an event is published and interested services react independently. This enables loose coupling and real-time responsiveness.",
+    "whyItMatters": "Event-driven systems scale naturally because producers and consumers are decoupled. They power real-time features like notifications, analytics, and order processing across modern cloud platforms.",
+    "takeaways": [
+      "Producers publish events without knowing who consumes them",
+      "Services react independently to relevant events",
+      "Enables real-time processing and loose coupling"
+    ],
+    "keywords": [
+      "event-driven",
+      "publish-subscribe",
+      "loose coupling",
+      "real-time processing"
+    ],
+    "faq": [
+      {
+        "question": "What is the difference between events and messages?",
+        "answer": "An event is a notification that something happened, published without expecting a specific consumer. A message is directed communication sent to a known recipient. Events use pub/sub patterns while messages use point-to-point queues."
+      },
+      {
+        "question": "How do you handle event ordering in distributed systems?",
+        "answer": "Partition keys ensure events for the same entity go to the same partition, preserving order within that entity. Global ordering across all events is generally impractical at scale. Idempotent consumers handle duplicate deliveries safely."
+      }
+    ]
   }
 }

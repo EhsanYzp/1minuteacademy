@@ -45,5 +45,30 @@
       "Data is stored in a single data center and cached everywhere else"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Global databases replicate data across multiple regions worldwide, enabling low-latency reads from any region and resilience against regional outages. Google Spanner, Cosmos DB, and Aurora Global Database offer different consistency and latency tradeoffs.",
+    "whyItMatters": "Applications serving global users need data close to every user. Global databases solve this without building custom replication, which is one of the hardest problems in distributed systems.",
+    "takeaways": [
+      "Data is replicated across regions for low-latency global reads",
+      "Provides resilience against full regional cloud outages",
+      "Google Spanner offers strong global consistency uniquely"
+    ],
+    "keywords": [
+      "global database",
+      "multi-region replication",
+      "Spanner",
+      "low latency"
+    ],
+    "faq": [
+      {
+        "question": "How does Google Spanner achieve global consistency?",
+        "answer": "Spanner uses TrueTime, a globally synchronized clock based on GPS and atomic clocks in every data center. This gives transactions globally consistent timestamps, enabling strong consistency across regions without the performance penalties of traditional distributed consensus."
+      },
+      {
+        "question": "What are the costs of global databases?",
+        "answer": "Global databases charge for compute and storage in each region plus cross-region replication bandwidth. Costs can be three to five times higher than single-region deployments. The expense is justified only for applications requiring global low-latency access or regional failover."
+      }
+    ]
   }
 }

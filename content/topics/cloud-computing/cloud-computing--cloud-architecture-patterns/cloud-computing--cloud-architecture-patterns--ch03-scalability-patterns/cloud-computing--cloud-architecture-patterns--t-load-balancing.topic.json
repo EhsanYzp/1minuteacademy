@@ -45,5 +45,30 @@
       "They automatically write code for new microservices"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Load balancers distribute incoming traffic across multiple servers to prevent any single server from becoming overwhelmed. They improve availability by routing around failed instances and enable horizontal scaling by adding more servers behind the balancer.",
+    "whyItMatters": "Without load balancing, a single server failure takes down the entire application. Load balancers are the most fundamental building block for high availability in the cloud.",
+    "takeaways": [
+      "Traffic is distributed across multiple healthy servers",
+      "Failed instances are detected and removed from rotation",
+      "Enables horizontal scaling by adding more backend servers"
+    ],
+    "keywords": [
+      "load balancing",
+      "traffic distribution",
+      "high availability",
+      "horizontal scaling"
+    ],
+    "faq": [
+      {
+        "question": "What algorithms do load balancers use?",
+        "answer": "Common algorithms include round-robin, least connections, weighted round-robin, and IP hash. Layer 7 load balancers can route based on URL path, headers, or cookies. The best choice depends on whether sessions are sticky and how even the workload is."
+      },
+      {
+        "question": "What is the difference between L4 and L7 load balancing?",
+        "answer": "Layer 4 balancers route based on IP address and TCP port without inspecting content. Layer 7 balancers inspect HTTP headers, URLs, and cookies for smarter routing. L7 is more flexible but adds latency due to deeper packet inspection."
+      }
+    ]
   }
 }

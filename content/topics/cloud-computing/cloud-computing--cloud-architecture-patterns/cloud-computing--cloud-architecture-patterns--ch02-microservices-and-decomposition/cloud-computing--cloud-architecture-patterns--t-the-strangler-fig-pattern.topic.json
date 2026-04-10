@@ -45,5 +45,30 @@
       "Running two identical copies of the same system for redundancy"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "The strangler fig pattern incrementally replaces a legacy system by routing specific features to new services while the old system continues handling everything else. Over time the new system grows until the legacy system can be decommissioned entirely.",
+    "whyItMatters": "Big-bang rewrites are risky and often fail. The strangler fig enables safe, gradual modernization with continuous delivery of value and reduced risk at each step.",
+    "takeaways": [
+      "Legacy functionality is replaced incrementally, not all at once",
+      "A routing layer directs traffic to old or new implementation",
+      "Risk is minimized because rollback is always possible"
+    ],
+    "keywords": [
+      "strangler fig",
+      "legacy migration",
+      "incremental modernization",
+      "routing layer"
+    ],
+    "faq": [
+      {
+        "question": "Where does the name strangler fig come from?",
+        "answer": "It refers to strangler fig trees that grow around a host tree, gradually replacing it. Martin Fowler coined the pattern name. The new system wraps around the old one, taking over functionality piece by piece until the original is no longer needed."
+      },
+      {
+        "question": "How do you implement the routing layer?",
+        "answer": "An API gateway or reverse proxy inspects incoming requests and routes them to either the legacy system or the new service based on URL path, feature flags, or user segments. This layer is the key to incremental cutover and safe rollback."
+      }
+    ]
   }
 }

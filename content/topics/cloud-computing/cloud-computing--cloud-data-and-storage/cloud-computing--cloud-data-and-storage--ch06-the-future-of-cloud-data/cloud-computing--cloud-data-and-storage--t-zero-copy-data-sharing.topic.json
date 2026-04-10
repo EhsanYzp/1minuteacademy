@@ -45,5 +45,30 @@
       "It makes all shared data publicly available on the internet"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Zero-copy data sharing lets organizations share live data without moving or copying it. Snowflake, Databricks, and BigQuery enable cross-account data access where the consumer queries data in place. This eliminates duplication, reduces cost, and ensures freshness.",
+    "whyItMatters": "Traditional data sharing through files or API exports creates stale copies and duplication. Zero-copy sharing keeps data fresh, reduces storage costs, and simplifies governance.",
+    "takeaways": [
+      "Consumers query shared data in place without copying it",
+      "Eliminates data duplication and staleness of shared copies",
+      "Snowflake's data marketplace pioneered this model"
+    ],
+    "keywords": [
+      "zero-copy sharing",
+      "data sharing",
+      "data marketplace",
+      "Snowflake"
+    ],
+    "faq": [
+      {
+        "question": "How does zero-copy sharing work technically?",
+        "answer": "The data provider grants read access to specific tables or views. The consumer's compute engine queries the provider's storage directly using access controls. No data is physically moved; only metadata and permissions are shared across accounts."
+      },
+      {
+        "question": "What are the security implications of zero-copy sharing?",
+        "answer": "Access controls must be carefully managed since consumers directly access live data. Row-level and column-level security filter sensitive data at query time. Audit logs track all access. Revoking access immediately stops data availability without needing to retrieve copies."
+      }
+    ]
   }
 }

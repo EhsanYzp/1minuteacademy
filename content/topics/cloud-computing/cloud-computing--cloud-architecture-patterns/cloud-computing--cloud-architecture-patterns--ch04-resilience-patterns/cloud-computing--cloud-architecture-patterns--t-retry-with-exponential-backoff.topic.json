@@ -45,5 +45,30 @@
       "To encrypt retry attempts for security"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Exponential backoff retries failed requests with increasing delays between attempts. Adding random jitter prevents many clients from retrying simultaneously. This pattern handles transient failures gracefully without overwhelming the recovering service.",
+    "whyItMatters": "Transient failures are inevitable in distributed systems. Smart retry logic prevents thundering herds that can turn a minor hiccup into a major outage.",
+    "takeaways": [
+      "Delays increase exponentially with each retry attempt",
+      "Random jitter prevents synchronized retry storms",
+      "Handles transient network and service failures gracefully"
+    ],
+    "keywords": [
+      "exponential backoff",
+      "retry logic",
+      "jitter",
+      "transient failures"
+    ],
+    "faq": [
+      {
+        "question": "What is jitter and why is it important?",
+        "answer": "Jitter adds randomness to retry timing so clients do not all retry at the same instant. Without jitter, thousands of clients retrying at exactly the same exponential intervals create a thundering herd that overwhelms the service again."
+      },
+      {
+        "question": "How many retries should you allow?",
+        "answer": "Typically three to five retries with exponential backoff is sufficient. Cap the maximum delay to prevent excessively long waits. Combine with a circuit breaker so that after sustained failures, retries stop entirely rather than consuming resources."
+      }
+    ]
   }
 }

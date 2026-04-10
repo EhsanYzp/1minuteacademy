@@ -45,5 +45,30 @@
       "It sends all traffic to the database instead"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "The circuit breaker pattern stops an application from repeatedly calling a failing service. After a threshold of failures, the circuit opens and requests fail fast instead of waiting. It periodically tests if the service has recovered before closing again.",
+    "whyItMatters": "Without circuit breakers, a single failing dependency can cascade and bring down an entire system. This pattern is essential for building resilient distributed architectures.",
+    "takeaways": [
+      "Prevents cascading failures from a broken dependency",
+      "Requests fail fast when the circuit is open",
+      "Periodically tests recovery before resuming normal calls"
+    ],
+    "keywords": [
+      "circuit breaker",
+      "fault tolerance",
+      "cascading failure",
+      "resilience pattern"
+    ],
+    "faq": [
+      {
+        "question": "What are the three states of a circuit breaker?",
+        "answer": "Closed means requests pass through normally. Open means requests fail immediately without calling the remote service. Half-open means a limited number of test requests are allowed through to check if the service has recovered."
+      },
+      {
+        "question": "How do you choose circuit breaker thresholds?",
+        "answer": "Set failure thresholds based on normal error rates so the circuit does not trip on transient errors. Timeout durations should balance between giving the failing service time to recover and failing fast enough to protect the caller. Test under realistic conditions."
+      }
+    ]
   }
 }

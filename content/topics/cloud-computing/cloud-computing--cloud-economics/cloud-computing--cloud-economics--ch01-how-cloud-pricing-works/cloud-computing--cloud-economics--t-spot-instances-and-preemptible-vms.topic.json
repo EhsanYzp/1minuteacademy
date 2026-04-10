@@ -45,5 +45,30 @@
       "Data stored on spot instances is never encrypted"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Spot instances use spare cloud capacity at discounts of up to 90 percent but can be reclaimed by the provider with short notice. They are ideal for fault-tolerant workloads like batch processing, CI/CD, and distributed computing that can handle interruptions.",
+    "whyItMatters": "Spot instances offer the deepest discounts in cloud computing. Architectures designed to handle interruptions can save enormous amounts on compute-heavy workloads.",
+    "takeaways": [
+      "Discounts of up to 90 percent on compute costs",
+      "Instances can be reclaimed with two minutes' notice",
+      "Best for fault-tolerant, interruptible workloads"
+    ],
+    "keywords": [
+      "spot instances",
+      "preemptible VMs",
+      "spare capacity",
+      "batch processing"
+    ],
+    "faq": [
+      {
+        "question": "What workloads are best suited for spot instances?",
+        "answer": "Batch processing, CI/CD pipelines, data processing, machine learning training with checkpointing, rendering, and any workload that can save progress and resume after interruption. Stateless web servers behind load balancers can also use spot with proper draining."
+      },
+      {
+        "question": "How do you handle spot instance interruptions?",
+        "answer": "Use interruption notices to gracefully drain connections or checkpoint work. Spread workloads across multiple instance types and availability zones to reduce simultaneous interruption risk. Combine spot with on-demand instances for a reliable baseline."
+      }
+    ]
   }
 }

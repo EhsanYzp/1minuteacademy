@@ -45,5 +45,30 @@
       "Data can only be replicated to a maximum of three regions"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Data replication copies data across nodes or regions for durability and availability. Strong consistency ensures all reads see the latest write, while eventual consistency allows temporary staleness for better performance. The CAP theorem defines the fundamental tradeoffs.",
+    "whyItMatters": "Every distributed database and storage system forces a choice between consistency, availability, and partition tolerance. Understanding these tradeoffs prevents data loss and unexpected behavior.",
+    "takeaways": [
+      "Strong consistency guarantees all reads see the latest write",
+      "Eventual consistency allows temporary staleness for speed",
+      "The CAP theorem limits what distributed systems can guarantee"
+    ],
+    "keywords": [
+      "data replication",
+      "consistency models",
+      "CAP theorem",
+      "eventual consistency"
+    ],
+    "faq": [
+      {
+        "question": "What does the CAP theorem say?",
+        "answer": "The CAP theorem states that a distributed system can guarantee at most two of three properties: consistency, availability, and partition tolerance. Since network partitions are inevitable, the practical choice is between consistency and availability during a partition."
+      },
+      {
+        "question": "When is eventual consistency acceptable?",
+        "answer": "Eventual consistency works well for social media feeds, product catalogs, analytics data, and any scenario where briefly stale data is acceptable. Financial transactions, inventory counts, and access control typically require strong consistency."
+      }
+    ]
   }
 }

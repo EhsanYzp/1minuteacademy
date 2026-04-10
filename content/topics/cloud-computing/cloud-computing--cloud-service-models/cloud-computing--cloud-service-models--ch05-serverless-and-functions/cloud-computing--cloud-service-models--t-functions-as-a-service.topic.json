@@ -45,5 +45,30 @@
       "The process of deploying a function for the first time"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "FaaS lets developers deploy individual functions that run in response to events and scale automatically to zero when idle. AWS Lambda, Azure Functions, and Google Cloud Functions charge only for actual execution time, eliminating idle resource costs entirely.",
+    "whyItMatters": "FaaS is the purest form of pay-for-what-you-use computing. It eliminates server management entirely and is ideal for event-driven workloads with variable traffic.",
+    "takeaways": [
+      "Functions execute in response to events like HTTP or queue messages",
+      "Billing is per execution with millisecond granularity",
+      "Scales to zero when idle, eliminating baseline costs"
+    ],
+    "keywords": [
+      "FaaS",
+      "serverless functions",
+      "AWS Lambda",
+      "event-driven computing"
+    ],
+    "faq": [
+      {
+        "question": "What is cold start latency?",
+        "answer": "Cold start occurs when a function has not run recently and must be initialized from scratch, adding latency. This can range from 100ms to several seconds depending on runtime and package size. Provisioned concurrency or keeping functions warm mitigates this."
+      },
+      {
+        "question": "What are common FaaS use cases?",
+        "answer": "API backends, webhook processors, file transformations triggered by uploads, scheduled tasks, IoT data processing, and chat bot handlers are all natural FaaS workloads. Any task that is short-lived and event-triggered is a strong candidate."
+      }
+    ]
   }
 }

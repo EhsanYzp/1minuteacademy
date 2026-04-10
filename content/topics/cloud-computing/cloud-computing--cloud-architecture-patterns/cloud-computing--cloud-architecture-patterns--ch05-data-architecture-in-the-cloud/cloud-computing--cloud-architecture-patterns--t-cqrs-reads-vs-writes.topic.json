@@ -45,5 +45,30 @@
       "Storing data only in memory, never on disk"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "CQRS separates the read model from the write model in an application. Commands that change state go through one path, while queries that read state use a different, optimized path. This allows each side to scale and evolve independently.",
+    "whyItMatters": "Most applications read far more than they write. CQRS lets you optimize each path separately, improving performance and simplifying complex domain logic.",
+    "takeaways": [
+      "Read and write operations use separate optimized models",
+      "Each side can scale independently based on load patterns",
+      "Often paired with event sourcing for full auditability"
+    ],
+    "keywords": [
+      "CQRS",
+      "command query separation",
+      "read model",
+      "write model"
+    ],
+    "faq": [
+      {
+        "question": "When should you use CQRS?",
+        "answer": "CQRS is valuable when read and write loads differ significantly, when the read model needs denormalized data for performance, or when the domain logic for writes is complex. Simple CRUD applications rarely benefit from the added complexity."
+      },
+      {
+        "question": "Does CQRS mean eventual consistency?",
+        "answer": "Not necessarily, but it often does. If the read model is updated asynchronously from writes, there is a delay. Some implementations use synchronous updates for strong consistency at the cost of tighter coupling between the two sides."
+      }
+    ]
   }
 }

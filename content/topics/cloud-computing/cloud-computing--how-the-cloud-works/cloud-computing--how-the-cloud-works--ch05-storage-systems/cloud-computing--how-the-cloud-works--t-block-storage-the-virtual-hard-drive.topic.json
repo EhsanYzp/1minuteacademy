@@ -45,5 +45,30 @@
       "Databases can only run on block storage by design"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Block storage provides virtual hard drives that attach to cloud VMs, offering raw storage volumes with low latency and high throughput. Services like AWS EBS and Azure Managed Disks support different performance tiers for workloads ranging from boot volumes to high-IOPS databases.",
+    "whyItMatters": "Block storage is essential for applications that need a traditional file system, like databases and operating systems. Choosing the right volume type directly affects application performance and cost.",
+    "takeaways": [
+      "Block storage provides virtual hard drives for cloud VMs",
+      "Different tiers offer varying IOPS and throughput levels",
+      "Snapshots enable point-in-time backups of entire volumes"
+    ],
+    "keywords": [
+      "block storage",
+      "EBS",
+      "IOPS",
+      "storage volumes"
+    ],
+    "faq": [
+      {
+        "question": "How does block storage differ from object storage?",
+        "answer": "Block storage presents raw volumes that the operating system formats with a file system, offering low latency for random reads and writes. Object storage stores data as complete objects via HTTP APIs. Block storage suits databases and OS disks; object storage suits large-scale unstructured data."
+      },
+      {
+        "question": "What are EBS volume types?",
+        "answer": "AWS EBS offers gp3 for general purpose, io2 for high-performance databases needing consistent IOPS, st1 for throughput-optimized big data workloads, and sc1 for infrequently accessed cold data. Each type balances performance, durability, and cost differently."
+      }
+    ]
   }
 }

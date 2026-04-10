@@ -45,5 +45,30 @@
       "High latency by caching data closer to users"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Cloud providers automatically replicate data across multiple physical locations to protect against hardware failure, corruption, and facility-level disasters. Most storage services replicate within a region by default, while cross-region replication provides protection against regional outages.",
+    "whyItMatters": "Data replication is how cloud providers deliver durability guarantees like 11 nines. Understanding replication behavior helps you choose appropriate protection levels for your data.",
+    "takeaways": [
+      "Data is automatically replicated across multiple facilities",
+      "Within-region replication protects against hardware failures",
+      "Cross-region replication protects against regional disasters"
+    ],
+    "keywords": [
+      "data replication",
+      "durability",
+      "cross-region",
+      "data protection"
+    ],
+    "faq": [
+      {
+        "question": "How many copies of my data does the cloud keep?",
+        "answer": "S3 stores at least three copies across different facilities within a region. EBS replicates within a single AZ. Cloud providers may keep additional copies for durability. Cross-region replication creates additional copies in a different geographic region for disaster protection."
+      },
+      {
+        "question": "Can data still be lost in the cloud?",
+        "answer": "Data loss from provider infrastructure failure is extremely rare given replication. However, accidental deletion by users, software bugs, and malicious actions can still cause data loss. Versioning, deletion protection, and cross-region backups protect against these human-caused scenarios."
+      }
+    ]
   }
 }

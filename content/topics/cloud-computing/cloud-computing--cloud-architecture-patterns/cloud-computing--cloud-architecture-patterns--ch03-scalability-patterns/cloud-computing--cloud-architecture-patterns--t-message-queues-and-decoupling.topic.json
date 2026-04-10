@@ -45,5 +45,30 @@
       "Queues eliminate the need for databases entirely"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Message queues let services communicate asynchronously by placing messages in a buffer that consumers process at their own pace. This decouples producers from consumers, absorbs traffic spikes, and ensures messages are not lost if a consumer is temporarily down.",
+    "whyItMatters": "Synchronous calls between services create tight coupling and cascading failures. Queues buffer demand, smooth traffic spikes, and make systems more resilient to partial outages.",
+    "takeaways": [
+      "Producers and consumers operate independently via a queue",
+      "Queues absorb traffic spikes and smooth processing load",
+      "Messages persist until successfully processed"
+    ],
+    "keywords": [
+      "message queue",
+      "asynchronous communication",
+      "decoupling",
+      "buffering"
+    ],
+    "faq": [
+      {
+        "question": "What is the difference between a queue and a topic?",
+        "answer": "A queue delivers each message to exactly one consumer, useful for work distribution. A topic delivers each message to all subscribers, useful for fan-out notifications. Some systems like Kafka combine both models through consumer groups."
+      },
+      {
+        "question": "How do you handle poison messages?",
+        "answer": "A poison message repeatedly fails processing and blocks the queue. Dead letter queues capture messages that exceed a retry limit so they can be inspected without blocking other messages. Alerting on dead letter queue depth catches problems early."
+      }
+    ]
   }
 }

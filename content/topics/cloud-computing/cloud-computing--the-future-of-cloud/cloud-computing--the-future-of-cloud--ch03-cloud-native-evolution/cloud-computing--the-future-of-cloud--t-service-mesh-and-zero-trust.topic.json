@@ -45,5 +45,30 @@
       "Zero trust eliminates the need for encryption entirely"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Service meshes like Istio enforce zero-trust networking by requiring every service-to-service communication to be authenticated, authorized, and encrypted. This replaces the traditional perimeter security model where internal network traffic was implicitly trusted.",
+    "whyItMatters": "Zero trust is becoming the default security model for cloud-native applications. Service meshes implement it transparently, securing communications without changing application code.",
+    "takeaways": [
+      "Service meshes enforce mutual TLS between all services",
+      "Zero trust assumes no network traffic is inherently safe",
+      "Policy enforcement happens transparently at the infrastructure layer"
+    ],
+    "keywords": [
+      "service mesh",
+      "zero trust",
+      "Istio",
+      "mutual TLS"
+    ],
+    "faq": [
+      {
+        "question": "What is a service mesh?",
+        "answer": "A service mesh is an infrastructure layer that handles service-to-service communication in microservices architectures. Sidecar proxies attached to each service manage load balancing, encryption, authentication, and observability without changes to application code."
+      },
+      {
+        "question": "Why is zero trust important for cloud?",
+        "answer": "Cloud environments have no clear network perimeter to defend. Resources are distributed across regions, accounts, and providers. Zero trust verifies every request regardless of origin, preventing lateral movement by attackers who breach any single service."
+      }
+    ]
   }
 }

@@ -45,5 +45,30 @@
       "Encrypt user passwords stored in databases"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Private endpoints let cloud services communicate over private network paths instead of the public internet, while service meshes manage encrypted communication between microservices automatically. Together they eliminate unnecessary exposure of internal traffic.",
+    "whyItMatters": "Internal service-to-service traffic is an attractive target for lateral movement. Private endpoints and service meshes reduce the network attack surface without requiring application changes.",
+    "takeaways": [
+      "Private endpoints keep service traffic off the public internet",
+      "Service meshes automate mTLS between microservices",
+      "Both reduce lateral movement opportunities for attackers"
+    ],
+    "keywords": [
+      "private endpoints",
+      "service mesh",
+      "mTLS",
+      "internal traffic"
+    ],
+    "faq": [
+      {
+        "question": "What is a service mesh?",
+        "answer": "A service mesh is an infrastructure layer that manages communication between microservices using sidecar proxies. It handles encryption, load balancing, retries, and observability without modifying application code. Istio and Linkerd are popular implementations."
+      },
+      {
+        "question": "Do private endpoints eliminate the need for encryption?",
+        "answer": "No. Private endpoints reduce exposure but traffic still crosses shared provider infrastructure. Defense in depth demands encrypting data in transit even on private networks. Combine private endpoints with TLS for comprehensive protection."
+      }
+    ]
   }
 }

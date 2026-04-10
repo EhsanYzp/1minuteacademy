@@ -45,5 +45,30 @@
       "Events are automatically deleted after processing"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Event sourcing stores every state change as an immutable event rather than overwriting current state. The current state is derived by replaying events. This creates a complete audit trail and enables time-travel debugging.",
+    "whyItMatters": "Event sourcing provides a perfect history of what happened and why. It is essential in domains like finance and compliance where audit trails are mandatory.",
+    "takeaways": [
+      "State is derived by replaying a sequence of immutable events",
+      "Every change is recorded and can never be lost",
+      "Enables rebuilding state to any point in time"
+    ],
+    "keywords": [
+      "event sourcing",
+      "immutable events",
+      "audit trail",
+      "state reconstruction"
+    ],
+    "faq": [
+      {
+        "question": "How does event sourcing differ from traditional CRUD?",
+        "answer": "CRUD overwrites the current record on each update, losing history. Event sourcing appends a new event for each change, preserving the full history. Current state is computed by replaying all events from the beginning or from a snapshot."
+      },
+      {
+        "question": "What are the challenges of event sourcing?",
+        "answer": "Event stores grow large over time, requiring snapshots for performance. Schema evolution of events is complex. Querying current state requires projections. The learning curve is steep for teams accustomed to traditional database patterns."
+      }
+    ]
   }
 }

@@ -45,5 +45,30 @@
       "Cloud providers charge extra for cache invalidation requests"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Caching stores frequently accessed data in fast storage to reduce latency and database load. Strategies include cache-aside where the application manages the cache, write-through where writes go to cache and database together, and write-behind where cache writes are batched to the database.",
+    "whyItMatters": "Effective caching can reduce database load by 90 percent and cut response times from hundreds of milliseconds to single digits. It is one of the highest-impact performance optimizations.",
+    "takeaways": [
+      "Cache-aside gives applications explicit control over caching",
+      "Write-through ensures cache and database stay synchronized",
+      "TTL-based expiration prevents serving stale data indefinitely"
+    ],
+    "keywords": [
+      "caching",
+      "cache-aside",
+      "write-through",
+      "TTL"
+    ],
+    "faq": [
+      {
+        "question": "What is cache invalidation and why is it hard?",
+        "answer": "Cache invalidation removes or updates stale data in the cache when the source changes. It is notoriously difficult because you must identify all cached copies and update them consistently. Time-based expiration is simpler but trades freshness for complexity."
+      },
+      {
+        "question": "When should you avoid caching?",
+        "answer": "Avoid caching data that changes frequently and must always be current, like real-time stock prices. Also avoid caching when the dataset is too large for the cache or when cache misses are the common case, making the cache layer add latency without benefit."
+      }
+    ]
   }
 }

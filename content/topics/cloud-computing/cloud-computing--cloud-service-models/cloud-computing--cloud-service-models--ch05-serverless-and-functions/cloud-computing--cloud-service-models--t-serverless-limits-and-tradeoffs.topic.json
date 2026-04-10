@@ -45,5 +45,30 @@
       "Cloud providers want to force customers to upgrade to IaaS"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Serverless has constraints including execution time limits, memory caps, cold start latency, limited local storage, and reduced observability. These trade-offs make serverless unsuitable for long-running processes, stateful workloads, or latency-critical applications.",
+    "whyItMatters": "Choosing serverless for unsuitable workloads leads to frustration and workarounds. Understanding its limits ensures you apply it where it genuinely excels.",
+    "takeaways": [
+      "Execution time limits typically cap at 15 minutes",
+      "Cold starts add latency for infrequently invoked functions",
+      "Limited local storage and no persistent state between calls"
+    ],
+    "keywords": [
+      "serverless limits",
+      "cold start",
+      "execution timeout",
+      "trade-offs"
+    ],
+    "faq": [
+      {
+        "question": "What workloads should not use serverless?",
+        "answer": "Long-running batch jobs exceeding timeout limits, workloads needing persistent local state, GPU-intensive computing, applications requiring websocket connections, and latency-critical services that cannot tolerate cold starts are poor fits for serverless."
+      },
+      {
+        "question": "How can cold start latency be reduced?",
+        "answer": "Use provisioned concurrency to keep instances warm, minimize deployment package size, choose lightweight runtimes like Node.js or Python, and avoid VPC attachments when unnecessary. Some providers also offer snap-start features that pre-initialize functions."
+      }
+    ]
   }
 }

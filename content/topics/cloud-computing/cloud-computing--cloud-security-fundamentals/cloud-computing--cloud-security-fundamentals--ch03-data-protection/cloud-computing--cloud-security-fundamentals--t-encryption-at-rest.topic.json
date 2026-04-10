@@ -45,5 +45,30 @@
       "They encrypt data faster than provider-managed keys"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Encryption at rest protects stored data by encrypting it on disk so that even if physical storage is compromised, the data remains unreadable without the decryption key. All major cloud providers offer default or configurable encryption for storage services.",
+    "whyItMatters": "Data theft from stolen disks or unauthorized access to storage is a real threat. Encryption at rest ensures data remains protected even when physical security fails.",
+    "takeaways": [
+      "Data is encrypted on disk using symmetric keys",
+      "All major clouds offer default encryption at rest",
+      "Key management determines who can decrypt the data"
+    ],
+    "keywords": [
+      "encryption at rest",
+      "data encryption",
+      "key management",
+      "storage security"
+    ],
+    "faq": [
+      {
+        "question": "Should you use provider-managed or customer-managed keys?",
+        "answer": "Provider-managed keys are simpler but give you less control. Customer-managed keys let you control rotation, access policies, and revocation. For sensitive or regulated data, customer-managed keys are recommended to maintain full control over decryption."
+      },
+      {
+        "question": "Does encryption at rest slow performance?",
+        "answer": "Modern cloud storage uses hardware-accelerated encryption with negligible performance impact. AES-256 encryption is performed by dedicated chips in storage controllers, making encrypted reads and writes virtually as fast as unencrypted ones."
+      }
+    ]
   }
 }

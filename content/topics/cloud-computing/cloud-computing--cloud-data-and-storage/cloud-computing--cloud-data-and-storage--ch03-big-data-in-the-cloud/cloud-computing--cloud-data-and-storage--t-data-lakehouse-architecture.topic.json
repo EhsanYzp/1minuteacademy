@@ -45,5 +45,30 @@
       "It only works with real-time streaming data"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "A data lakehouse combines the low-cost storage and flexibility of a data lake with the query performance and governance of a data warehouse. Technologies like Delta Lake, Apache Iceberg, and Apache Hudi add ACID transactions and schema enforcement to lake storage.",
+    "whyItMatters": "The lakehouse architecture eliminates the need to maintain separate lake and warehouse systems, reducing data duplication, cost, and the complexity of keeping both in sync.",
+    "takeaways": [
+      "Combines data lake flexibility with warehouse performance",
+      "ACID transactions on open file formats like Parquet",
+      "Eliminates expensive data duplication between lake and warehouse"
+    ],
+    "keywords": [
+      "data lakehouse",
+      "Delta Lake",
+      "Apache Iceberg",
+      "ACID transactions"
+    ],
+    "faq": [
+      {
+        "question": "How does a lakehouse differ from a data lake?",
+        "answer": "A data lake stores raw files without transaction guarantees or schema enforcement. A lakehouse adds a metadata layer that provides ACID transactions, time travel, schema evolution, and fast SQL queries on the same open-format files stored in the lake."
+      },
+      {
+        "question": "Which lakehouse technology should you choose?",
+        "answer": "Delta Lake integrates tightly with Databricks and Spark. Apache Iceberg has broad engine support including Trino, Spark, and Flink. Apache Hudi was designed for incremental data processing. The best choice depends on your existing tooling and query engines."
+      }
+    ]
   }
 }

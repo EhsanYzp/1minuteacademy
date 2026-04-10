@@ -45,5 +45,30 @@
       "Three servers, two regions, one cloud provider"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Cloud data backup strategies include automated snapshots, cross-region replication, and point-in-time recovery. The right approach depends on RPO and RTO requirements. Managed databases automate most backup tasks, but responsibility for testing restores remains with the customer.",
+    "whyItMatters": "Backups are worthless if they cannot be restored. Regular restore testing is the most neglected practice in cloud data management and the first thing that fails during a real disaster.",
+    "takeaways": [
+      "Automated snapshots provide point-in-time recovery",
+      "Cross-region replication protects against regional failures",
+      "Restore testing is essential but frequently neglected"
+    ],
+    "keywords": [
+      "backup",
+      "disaster recovery",
+      "point-in-time recovery",
+      "snapshots"
+    ],
+    "faq": [
+      {
+        "question": "How often should you test database restores?",
+        "answer": "At least quarterly for production databases, monthly for critical systems. Automated restore testing in a separate environment can run weekly or even daily. The test should verify not just that the restore completes but that the data is consistent and the application works."
+      },
+      {
+        "question": "What is point-in-time recovery?",
+        "answer": "Point-in-time recovery lets you restore a database to any second within a retention window, typically up to 35 days. It uses continuous backup of transaction logs. This is critical for recovering from accidental deletions or corrupt data writes."
+      }
+    ]
   }
 }

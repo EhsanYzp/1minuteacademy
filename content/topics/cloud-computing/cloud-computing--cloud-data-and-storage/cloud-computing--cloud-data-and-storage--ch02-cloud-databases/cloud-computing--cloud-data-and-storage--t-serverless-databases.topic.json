@@ -45,5 +45,30 @@
       "Serverless databases lose all data when they scale to zero"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Serverless databases automatically scale compute and storage with demand and charge only for actual usage. Aurora Serverless, Cosmos DB serverless, and Neon scale to zero when idle, making them ideal for variable or unpredictable workloads.",
+    "whyItMatters": "Traditional databases require provisioning for peak capacity, wasting money during idle periods. Serverless databases match cost to actual demand, which is transformative for development and sporadic workloads.",
+    "takeaways": [
+      "Compute scales automatically with query demand",
+      "Can scale to zero when idle, eliminating baseline costs",
+      "Ideal for variable workloads and development environments"
+    ],
+    "keywords": [
+      "serverless database",
+      "Aurora Serverless",
+      "auto-scaling",
+      "pay-per-use"
+    ],
+    "faq": [
+      {
+        "question": "What is the cold start problem for serverless databases?",
+        "answer": "When a serverless database scales from zero, the first query experiences higher latency while compute resources are provisioned. This cold start can take seconds. Some services offer minimum capacity settings to avoid cold starts at a small cost premium."
+      },
+      {
+        "question": "Are serverless databases cheaper than provisioned?",
+        "answer": "For sporadic or variable workloads, yes. For consistent high-throughput workloads, provisioned instances are often cheaper because serverless pricing per unit of compute is higher. The breakeven depends on how many hours per day the database is active."
+      }
+    ]
   }
 }

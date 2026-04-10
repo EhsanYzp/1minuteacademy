@@ -45,5 +45,30 @@
       "Horizontal scaling doesn't require any network communication"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Vertical scaling adds more CPU, memory, or storage to a single machine. Horizontal scaling adds more machines to share the load. Cloud architectures favor horizontal scaling because it offers near-unlimited growth and better fault tolerance.",
+    "whyItMatters": "Vertical scaling hits hardware limits and creates single points of failure. Horizontal scaling is the foundation of cloud elasticity and the basis for auto-scaling strategies.",
+    "takeaways": [
+      "Vertical scaling has hard hardware upper limits",
+      "Horizontal scaling adds machines for near-unlimited growth",
+      "Cloud-native applications are designed to scale horizontally"
+    ],
+    "keywords": [
+      "horizontal scaling",
+      "vertical scaling",
+      "scale out",
+      "scale up"
+    ],
+    "faq": [
+      {
+        "question": "When is vertical scaling appropriate?",
+        "answer": "Vertical scaling works well for databases that are hard to distribute, legacy applications that cannot be parallelized, and workloads that need massive single-node memory like in-memory caches. It is simpler to implement but limited by the largest available machine."
+      },
+      {
+        "question": "What makes horizontal scaling harder?",
+        "answer": "Applications must be designed to run as multiple instances sharing state through external stores. Session management, data consistency, and distributed coordination add complexity. Stateless services are easiest to scale horizontally."
+      }
+    ]
   }
 }

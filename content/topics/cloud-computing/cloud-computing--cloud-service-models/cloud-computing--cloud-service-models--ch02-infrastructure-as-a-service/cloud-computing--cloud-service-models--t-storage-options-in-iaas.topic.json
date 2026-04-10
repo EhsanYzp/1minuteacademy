@@ -45,5 +45,30 @@
       "File storage like EFS"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "IaaS storage includes block storage for VM disks, object storage for unstructured data, and file storage for shared access. Each type has different performance, durability, and cost characteristics suited to different workload requirements.",
+    "whyItMatters": "Choosing the wrong storage type leads to performance bottlenecks or excessive costs. Understanding the options ensures data is stored efficiently and accessibly.",
+    "takeaways": [
+      "Block storage provides high-performance VM disk volumes",
+      "Object storage offers scalable, durable unstructured storage",
+      "File storage enables shared access across multiple instances"
+    ],
+    "keywords": [
+      "block storage",
+      "object storage",
+      "file storage",
+      "IaaS storage"
+    ],
+    "faq": [
+      {
+        "question": "What is the difference between block and object storage?",
+        "answer": "Block storage works like a hard drive attached to a VM, supporting random reads and writes at low latency. Object storage stores files as complete objects with metadata, optimized for large-scale reads and writes but not random access within files."
+      },
+      {
+        "question": "Which storage type is cheapest?",
+        "answer": "Object storage is the cheapest per gigabyte, especially in archive tiers. Block storage costs more due to provisioned IOPS and low latency guarantees. File storage falls in between. Most architectures use a mix based on access patterns."
+      }
+    ]
   }
 }

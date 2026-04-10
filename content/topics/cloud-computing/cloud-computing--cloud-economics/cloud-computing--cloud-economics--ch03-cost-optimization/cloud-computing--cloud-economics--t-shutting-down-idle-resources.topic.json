@@ -45,5 +45,30 @@
       "Require CEO approval for every resource created"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Idle resources like unused instances, unattached storage volumes, and forgotten development environments waste billions across cloud accounts globally. Automated scheduling to stop non-production resources outside business hours can cut development costs by over 60 percent.",
+    "whyItMatters": "Idle resources are pure waste. Automated scheduling and cleanup policies are the lowest-effort, highest-impact cost optimizations available.",
+    "takeaways": [
+      "Development environments left running overnight waste money",
+      "Automated scheduling can cut non-production costs by 60 percent",
+      "Unattached volumes and old snapshots accumulate silently"
+    ],
+    "keywords": [
+      "idle resources",
+      "cost waste",
+      "automated scheduling",
+      "cleanup policies"
+    ],
+    "faq": [
+      {
+        "question": "What are the most common idle resources?",
+        "answer": "Development and staging instances running 24/7 when only needed during business hours, unattached EBS volumes from terminated instances, old snapshots never cleaned up, idle load balancers, and unused elastic IP addresses. Each seems small but they add up."
+      },
+      {
+        "question": "How do you automate idle resource cleanup?",
+        "answer": "Use AWS Instance Scheduler or custom Lambda functions to stop instances on schedules. Tag resources with owners and expiry dates. Run automated scripts that identify unattached volumes and old snapshots. Set budget alerts that trigger investigation."
+      }
+    ]
   }
 }

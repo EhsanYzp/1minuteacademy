@@ -45,5 +45,30 @@
       "It replaces the need for monitoring and alerting systems"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Chaos engineering deliberately introduces failures into production to verify that systems handle them gracefully. Pioneered by Netflix with Chaos Monkey, it has become an industry standard practice for building confidence that redundancy and failover actually work under real conditions.",
+    "whyItMatters": "Systems that have never been broken in controlled conditions will inevitably break in uncontrolled ones. Chaos testing finds weaknesses before real outages expose them.",
+    "takeaways": [
+      "Chaos engineering deliberately injects failures into production",
+      "Netflix pioneered the practice with Chaos Monkey",
+      "It verifies that failover actually works under real conditions"
+    ],
+    "keywords": [
+      "chaos engineering",
+      "Chaos Monkey",
+      "resilience testing",
+      "failure injection"
+    ],
+    "faq": [
+      {
+        "question": "Is it safe to break things in production?",
+        "answer": "Chaos experiments are carefully scoped and monitored with automatic rollback capabilities. Teams start small, injecting single-instance failures, and gradually increase scope. The goal is controlled, observable failure that validates resilience without causing customer impact."
+      },
+      {
+        "question": "What tools enable chaos engineering?",
+        "answer": "Netflix's Chaos Monkey and Simian Army, AWS Fault Injection Simulator, Gremlin, and LitmusChaos for Kubernetes are popular tools. They inject latency, terminate instances, simulate network partitions, and cause regional failures in controlled experiments."
+      }
+    ]
   }
 }

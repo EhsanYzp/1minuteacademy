@@ -45,5 +45,30 @@
       "A tool that automatically generates microservice code"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "An API gateway is a single entry point that routes client requests to appropriate backend services. It handles cross-cutting concerns like authentication, rate limiting, logging, and response transformation, so individual services do not have to.",
+    "whyItMatters": "API gateways simplify client integration and centralize security enforcement. They are essential in microservices architectures where clients would otherwise need to know about dozens of service endpoints.",
+    "takeaways": [
+      "Provides a single entry point for all client requests",
+      "Handles auth, rate limiting, and logging centrally",
+      "Decouples clients from backend service topology"
+    ],
+    "keywords": [
+      "API gateway",
+      "request routing",
+      "rate limiting",
+      "authentication"
+    ],
+    "faq": [
+      {
+        "question": "What is the difference between an API gateway and a load balancer?",
+        "answer": "A load balancer distributes traffic across instances of the same service. An API gateway routes requests to different services based on the request path or content, and adds cross-cutting features like auth and transformation. They often work together."
+      },
+      {
+        "question": "Can an API gateway become a bottleneck?",
+        "answer": "Yes. Since all traffic flows through it, the gateway must be highly available and horizontally scalable. Managed services like AWS API Gateway and Azure API Management handle scaling automatically. Self-hosted gateways need careful capacity planning."
+      }
+    ]
   }
 }

@@ -45,5 +45,30 @@
       "US-East-1 is the only region with internet connectivity"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "AWS US-East-1 is the oldest and most feature-rich AWS region, and many global services depend on it internally. When US-East-1 has outages, services in other regions that silently depend on it can also fail, creating unexpected global impact.",
+    "whyItMatters": "Hidden dependencies on a single region undermine multi-region resilience strategies. Understanding the US-East-1 dependency chain is essential for truly robust cloud architecture.",
+    "takeaways": [
+      "Many AWS global services depend on US-East-1 internally",
+      "Outages in one region can cascade to others unexpectedly",
+      "Architects must test for hidden cross-region dependencies"
+    ],
+    "keywords": [
+      "US-East-1",
+      "region dependency",
+      "cascading failure",
+      "cloud resilience"
+    ],
+    "faq": [
+      {
+        "question": "Why is US-East-1 so critical?",
+        "answer": "As the first AWS region launched, US-East-1 hosts the control planes for several global services including IAM, Route 53, and CloudFront management. When it experiences issues, actions that should be region-independent can fail globally."
+      },
+      {
+        "question": "How can you protect against US-East-1 dependency?",
+        "answer": "Design for graceful degradation, cache critical resources locally, use static fallbacks for websites, and regularly test what happens when US-East-1 is unavailable. AWS has been working to reduce these dependencies, but some remain embedded in older services."
+      }
+    ]
   }
 }

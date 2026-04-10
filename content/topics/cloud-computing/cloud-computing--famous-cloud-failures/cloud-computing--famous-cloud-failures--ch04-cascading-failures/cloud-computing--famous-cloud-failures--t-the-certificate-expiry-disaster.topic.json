@@ -45,5 +45,30 @@
       "Cloud providers intentionally let certificates expire to sell new ones"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Expired TLS certificates have caused major outages at Microsoft, Spotify, and LinkedIn. When a certificate expires, all encrypted connections fail instantly. Despite being entirely preventable, teams forget to renew certificates because manual tracking processes break down.",
+    "whyItMatters": "Certificate expiry is one of the most entirely preventable causes of outages. Automated certificate management eliminates a failure mode that has taken down some of the world's largest services.",
+    "takeaways": [
+      "Expired certificates cause instant total service failure",
+      "Major companies including Microsoft have been affected",
+      "Automated renewal with services like Let's Encrypt prevents this"
+    ],
+    "keywords": [
+      "certificate expiry",
+      "TLS failure",
+      "outage prevention",
+      "certificate management"
+    ],
+    "faq": [
+      {
+        "question": "Why do certificate expirations still cause outages?",
+        "answer": "Large organizations manage thousands of certificates across many teams. Manual tracking in spreadsheets breaks down. Certificates embedded in load balancers, APIs, and internal services are easily forgotten. Without automated monitoring and renewal, expiry is inevitable."
+      },
+      {
+        "question": "How can certificate expiry outages be prevented?",
+        "answer": "Automate certificate renewal using ACME protocol with services like Let's Encrypt. Implement certificate monitoring that alerts weeks before expiry. Maintain a comprehensive certificate inventory. Use short-lived certificates that force automated rotation."
+      }
+    ]
   }
 }

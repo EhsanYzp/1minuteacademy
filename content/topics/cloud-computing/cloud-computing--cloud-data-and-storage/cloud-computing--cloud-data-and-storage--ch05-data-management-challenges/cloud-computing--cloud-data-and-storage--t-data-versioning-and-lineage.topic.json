@@ -45,5 +45,30 @@
       "The cost of storing data across different cloud regions"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Data versioning tracks changes to datasets over time, enabling rollback and reproducibility. Data lineage traces how data flows through pipelines from source to destination. Together they provide the audit trail needed for debugging, compliance, and trust in data.",
+    "whyItMatters": "Without versioning and lineage, diagnosing bad data is nearly impossible. Knowing what changed, when, and how it propagated is essential for regulated industries and machine learning reproducibility.",
+    "takeaways": [
+      "Versioning enables rollback to any previous dataset state",
+      "Lineage tracks data from source through every transformation",
+      "Essential for compliance, debugging, and ML reproducibility"
+    ],
+    "keywords": [
+      "data versioning",
+      "data lineage",
+      "audit trail",
+      "reproducibility"
+    ],
+    "faq": [
+      {
+        "question": "What tools provide data lineage?",
+        "answer": "Apache Atlas, DataHub, and OpenLineage capture lineage from data pipelines. Cloud providers offer lineage in Azure Purview and Google Dataplex. dbt tracks lineage for SQL transformations. Modern data catalogs integrate lineage visualization."
+      },
+      {
+        "question": "How does data versioning work in practice?",
+        "answer": "Delta Lake and Apache Iceberg version datasets using transaction logs that record every change. You can query any historical version using time travel. For ML datasets, tools like DVC version data files alongside code in Git repositories."
+      }
+    ]
   }
 }

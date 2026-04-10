@@ -45,5 +45,30 @@
       "A server that turns itself off permanently after one use"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Serverless computing lets developers run code without managing servers. The cloud provider automatically provisions, scales, and bills only for actual execution time. AWS Lambda, Google Cloud Functions, and Azure Functions execute code in response to events like HTTP requests or database changes.",
+    "whyItMatters": "Serverless eliminates infrastructure management entirely, letting developers focus purely on code. It is ideal for event-driven workloads and can dramatically reduce costs for intermittent traffic.",
+    "takeaways": [
+      "Serverless runs code without managing any servers",
+      "Billing is based on actual execution time, often in milliseconds",
+      "Auto-scaling handles traffic from zero to thousands of requests"
+    ],
+    "keywords": [
+      "serverless",
+      "Lambda",
+      "functions",
+      "event-driven"
+    ],
+    "faq": [
+      {
+        "question": "What is the cold start problem?",
+        "answer": "When a serverless function has not been called recently, the provider must initialize a new execution environment, causing a delay of 100 milliseconds to several seconds. Keeping functions warm, using provisioned concurrency, or choosing runtimes with fast startup mitigates cold starts."
+      },
+      {
+        "question": "When is serverless not appropriate?",
+        "answer": "Serverless has execution time limits, typically 15 minutes maximum. Long-running processes, workloads requiring persistent connections, and applications needing consistent low latency may not suit serverless. High-throughput steady-state workloads can also be more expensive on serverless."
+      }
+    ]
   }
 }

@@ -45,5 +45,30 @@
       "They run faster but cannot access the internet"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Spot instances provide spare cloud capacity at discounts of up to 90% compared to on-demand pricing. The trade-off is that the provider can reclaim them with short notice when capacity is needed. They are ideal for fault-tolerant, flexible workloads like batch processing and testing.",
+    "whyItMatters": "Spot instances dramatically reduce costs for workloads that can tolerate interruption. Understanding when and how to use them can cut computing bills by more than half.",
+    "takeaways": [
+      "Spot instances offer up to 90% discount on on-demand prices",
+      "They can be reclaimed by the provider with minutes of notice",
+      "Batch processing and CI/CD pipelines are ideal spot use cases"
+    ],
+    "keywords": [
+      "spot instances",
+      "preemptible VMs",
+      "cost savings",
+      "spare capacity"
+    ],
+    "faq": [
+      {
+        "question": "When will a spot instance be interrupted?",
+        "answer": "Spot instances are reclaimed when the provider needs the capacity back for on-demand or reserved customers. AWS gives a two-minute warning. Google Cloud gives a 30-second warning for preemptible VMs. Interruption frequency varies by instance type, region, and time."
+      },
+      {
+        "question": "How do you design for spot instance interruptions?",
+        "answer": "Save progress frequently through checkpointing. Distribute work across many small instances rather than few large ones. Mix spot and on-demand instances for baseline reliability. Use instance diversification across types and AZs to reduce simultaneous interruption risk."
+      }
+    ]
   }
 }

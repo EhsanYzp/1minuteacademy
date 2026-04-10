@@ -45,5 +45,30 @@
       "Cloud providers throttle accounts that scale too quickly"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Auto-scaling can amplify problems instead of solving them. If unhealthy instances trigger scaling, the system launches more failing instances. Cascading restarts, resource exhaustion from overly aggressive scaling, and cost explosions from unbounded scale-up are all real risks.",
+    "whyItMatters": "Auto-scaling is powerful but not foolproof. Without proper health checks and limits, it can turn a small incident into a large-scale cascading failure.",
+    "takeaways": [
+      "Auto-scaling can amplify failures by launching broken instances",
+      "Unbounded scaling can cause massive unexpected costs",
+      "Proper health checks and scaling limits are essential"
+    ],
+    "keywords": [
+      "auto-scaling failure",
+      "cascading restarts",
+      "scaling limits",
+      "health checks"
+    ],
+    "faq": [
+      {
+        "question": "How can auto-scaling make an outage worse?",
+        "answer": "If failing instances are replaced but the root cause persists, auto-scaling launches more failing instances that consume resources, overwhelm downstream services, and generate astronomical costs. Each new instance might also cause a burst of connection attempts that overloads databases."
+      },
+      {
+        "question": "What safeguards should auto-scaling have?",
+        "answer": "Set maximum instance limits. Implement cooldown periods between scaling events. Use proper health checks that verify application functionality, not just instance responsiveness. Configure scaling policies that respond to meaningful metrics rather than symptoms."
+      }
+    ]
   }
 }

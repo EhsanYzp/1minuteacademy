@@ -45,5 +45,30 @@
       "Data can only be downloaded once from any cloud service"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Data transfer costs charge for moving data between cloud regions, availability zones, services, and to the internet. Ingress is usually free but egress can cost $0.09 per gigabyte or more. At petabyte scale, data transfer bills can exceed compute costs.",
+    "whyItMatters": "Data transfer is the most underestimated cost in cloud architectures. Poor placement of services across zones and regions can generate massive unexpected transfer charges.",
+    "takeaways": [
+      "Ingress is typically free; egress incurs per-gigabyte charges",
+      "Cross-region and cross-AZ transfer adds considerable cost",
+      "Architecture decisions directly impact transfer bills"
+    ],
+    "keywords": [
+      "data transfer costs",
+      "egress fees",
+      "cross-region",
+      "network charges"
+    ],
+    "faq": [
+      {
+        "question": "How can you reduce data transfer costs?",
+        "answer": "Colocate communicating services in the same availability zone. Use VPC endpoints to avoid NAT gateway charges. Compress data before transfer. Use CDNs for outbound traffic to users. Consider providers with free egress for bandwidth-heavy workloads."
+      },
+      {
+        "question": "Which cloud providers have the cheapest data transfer?",
+        "answer": "Cloudflare offers free egress on its R2 storage. Oracle Cloud includes generous free egress. GCP and Azure are generally cheaper than AWS for egress. AWS charges the most for data transfer but has the largest ecosystem. Competition is driving prices down."
+      }
+    ]
   }
 }

@@ -45,5 +45,30 @@
       "It only supports simple data types that are faster to process"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Redis is an in-memory data store used as a cache, session store, and message broker. Cloud-managed versions like ElastiCache and MemoryDB provide microsecond latency without managing Redis clusters yourself. Caching can reduce database load by over 90 percent.",
+    "whyItMatters": "In-memory caching is the single most effective way to improve application performance. Redis has become the default caching layer for cloud applications worldwide.",
+    "takeaways": [
+      "Stores data in memory for microsecond response times",
+      "Reduces database load by serving repeated queries from cache",
+      "Managed services handle clustering, failover, and patching"
+    ],
+    "keywords": [
+      "Redis",
+      "in-memory cache",
+      "ElastiCache",
+      "microsecond latency"
+    ],
+    "faq": [
+      {
+        "question": "What is the difference between Redis and Memcached?",
+        "answer": "Redis supports complex data structures like sorted sets, lists, and hashes, plus persistence and replication. Memcached is simpler, supporting only key-value strings with multi-threaded performance. Redis is more versatile; Memcached can be faster for simple caching."
+      },
+      {
+        "question": "How do you handle cache invalidation with Redis?",
+        "answer": "Set TTLs on cached entries so stale data expires automatically. Use pub/sub or event-driven invalidation to remove entries when the source data changes. Cache-aside pattern gives the application explicit control over when to populate and invalidate cache entries."
+      }
+    ]
   }
 }

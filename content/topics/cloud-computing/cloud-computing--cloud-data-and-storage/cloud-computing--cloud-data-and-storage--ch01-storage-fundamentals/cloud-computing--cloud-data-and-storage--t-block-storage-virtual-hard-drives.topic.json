@@ -45,5 +45,30 @@
       "Databases cannot run on object or file storage"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Block storage provides raw storage volumes that attach to virtual machines like physical hard drives. Data is divided into fixed-size blocks for fast random access. It is essential for databases, operating systems, and applications needing low-latency disk I/O.",
+    "whyItMatters": "Block storage powers the disks behind every virtual machine and most cloud databases. Choosing the right volume type directly affects application performance and cost.",
+    "takeaways": [
+      "Provides raw volumes that attach to virtual machines",
+      "Optimized for low-latency random read and write access",
+      "Essential for databases and operating system disks"
+    ],
+    "keywords": [
+      "block storage",
+      "EBS",
+      "virtual hard drive",
+      "IOPS"
+    ],
+    "faq": [
+      {
+        "question": "What are IOPS and why do they matter?",
+        "answer": "IOPS stands for input/output operations per second, measuring how many read and write operations a volume can handle. Database workloads require high IOPS. Cloud providers offer volume types optimized for IOPS, throughput, or cost."
+      },
+      {
+        "question": "How does block storage differ from object storage?",
+        "answer": "Block storage provides low-latency access for operating systems and databases but is limited to the region and availability zone. Object storage is accessed via HTTP, scales globally, and is cheaper but too slow for database workloads."
+      }
+    ]
   }
 }

@@ -45,5 +45,30 @@
       "Using auto-scaling instead of reserved instances"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Auto-scaling adjusts the number of running instances based on demand, adding capacity during peaks and removing it during lulls. Properly configured auto-scaling eliminates paying for idle resources during off-peak hours while ensuring sufficient capacity during surges.",
+    "whyItMatters": "Most applications have variable demand. Without auto-scaling, you either over-provision and waste money or under-provision and lose customers during traffic spikes.",
+    "takeaways": [
+      "Scales out during demand peaks and in during lulls",
+      "Eliminates paying for idle capacity during off-peak hours",
+      "Requires careful configuration of scaling policies and limits"
+    ],
+    "keywords": [
+      "auto-scaling",
+      "elastic capacity",
+      "cost optimization",
+      "demand-based scaling"
+    ],
+    "faq": [
+      {
+        "question": "What metrics should trigger auto-scaling?",
+        "answer": "CPU utilization and request count are most common. Custom metrics like queue depth, response latency, and active connections provide better signals for specific workloads. Predictive scaling uses historical patterns to scale proactively before demand arrives."
+      },
+      {
+        "question": "What are the risks of auto-scaling?",
+        "answer": "Scaling too aggressively can create runaway costs if a bug generates endless load. Scaling too slowly causes poor performance during sudden spikes. Always set maximum instance limits and billing alerts. Test scaling behavior under realistic load conditions."
+      }
+    ]
   }
 }

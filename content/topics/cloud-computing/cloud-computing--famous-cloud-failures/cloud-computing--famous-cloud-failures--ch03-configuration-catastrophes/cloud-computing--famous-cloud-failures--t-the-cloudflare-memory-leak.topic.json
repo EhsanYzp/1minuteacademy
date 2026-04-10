@@ -45,5 +45,30 @@
       "The bug was intentionally introduced by a Cloudflare employee"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "In 2017, a Cloudflare bug nicknamed Cloudbleed leaked sensitive data from customer websites into random HTTP responses. Usernames, passwords, and encryption keys were exposed and cached by search engines, affecting millions of websites behind Cloudflare.",
+    "whyItMatters": "Cloudbleed showed that a bug in shared infrastructure can leak private data from millions of unrelated websites. It highlighted the systemic risk of centralized security proxies.",
+    "takeaways": [
+      "A parser bug leaked sensitive data into random responses",
+      "Passwords and keys were cached by search engines",
+      "Millions of websites behind Cloudflare were affected"
+    ],
+    "keywords": [
+      "Cloudbleed",
+      "memory leak",
+      "data exposure",
+      "CDN security"
+    ],
+    "faq": [
+      {
+        "question": "What data was leaked in Cloudbleed?",
+        "answer": "HTTP cookies, authentication tokens, passwords, private API keys, and other sensitive data from customer websites were randomly injected into other users' responses. Some of this data was cached by search engines like Google, requiring extensive cleanup."
+      },
+      {
+        "question": "How was Cloudbleed discovered?",
+        "answer": "Google Project Zero researcher Tavis Ormandy noticed unexpected data appearing in search engine results that clearly belonged to other websites. He reported it to Cloudflare, who fixed the bug within hours but faced weeks of cleanup for cached leaked data."
+      }
+    ]
   }
 }

@@ -45,5 +45,30 @@
       "Hackers launched a coordinated attack on S3 infrastructure"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "In 2017, a typo during routine maintenance took down a large portion of AWS S3, causing widespread failures across the internet including Slack, Quora, and Trello. The outage lasted about four hours and revealed how heavily the modern web depends on a single cloud service.",
+    "whyItMatters": "The S3 outage showed that even the most reliable cloud services fail. It drove adoption of multi-region designs and forced the industry to confront single-provider dependency.",
+    "takeaways": [
+      "A single command typo cascaded into a massive outage",
+      "Thousands of websites and services went offline",
+      "The incident accelerated multi-region architecture adoption"
+    ],
+    "keywords": [
+      "S3 outage",
+      "AWS failure",
+      "cloud dependency",
+      "cascading failure"
+    ],
+    "faq": [
+      {
+        "question": "What caused the 2017 S3 outage?",
+        "answer": "An engineer executing a routine debugging command accidentally removed more servers than intended from the S3 subsystem. The reduced capacity triggered cascading failures across dependent services, taking about four hours to fully recover."
+      },
+      {
+        "question": "What did AWS change after the outage?",
+        "answer": "AWS added safeguards against removing too much capacity at once, improved the S3 service health dashboard to not depend on S3 itself, and increased internal review requirements for commands that affect large numbers of servers simultaneously."
+      }
+    ]
   }
 }

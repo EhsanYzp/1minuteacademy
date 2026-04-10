@@ -45,5 +45,30 @@
       "By charging extra for any bucket with public access enabled"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Misconfigured S3 buckets have exposed billions of records including military intelligence, voter records, and medical data. The epidemic of public buckets continued for years because default settings once allowed public access, and many organizations lacked visibility into their configurations.",
+    "whyItMatters": "The S3 bucket epidemic is the clearest example of cloud misconfiguration at scale. It drove AWS to implement account-level public access blocks and industry-wide configuration scanning.",
+    "takeaways": [
+      "Billions of records were exposed through public S3 buckets",
+      "Military, healthcare, and voter data were all compromised",
+      "AWS now blocks public access at the account level by default"
+    ],
+    "keywords": [
+      "S3 bucket exposure",
+      "public data",
+      "misconfiguration",
+      "data leak"
+    ],
+    "faq": [
+      {
+        "question": "Why were so many S3 buckets left public?",
+        "answer": "Earlier S3 defaults did not block public access. Developers often set public access during development and forgot to restrict it. Many organizations lacked tools to scan for misconfigurations, and S3 bucket policies were complex enough to misconfigure easily."
+      },
+      {
+        "question": "What has AWS done to prevent public buckets?",
+        "answer": "AWS introduced S3 Block Public Access at the account and bucket level, enabled by default for new accounts. The console now displays prominent warnings for public buckets. AWS also added Access Analyzer to detect unintended public resource policies."
+      }
+    ]
   }
 }

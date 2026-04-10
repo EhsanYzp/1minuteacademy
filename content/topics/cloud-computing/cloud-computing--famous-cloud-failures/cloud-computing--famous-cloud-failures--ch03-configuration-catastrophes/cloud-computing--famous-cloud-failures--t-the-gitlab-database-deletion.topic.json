@@ -45,5 +45,30 @@
       "They shut down the company permanently after the incident"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "In 2017, a GitLab engineer accidentally deleted a production database during maintenance. Five backup methods all failed or were misconfigured, and only a lucky six-hour-old snapshot saved the company from total data loss. GitLab live-streamed the recovery.",
+    "whyItMatters": "GitLab's incident proved that untested backups are not backups at all. It became a landmark case study for why backup verification and disaster recovery testing are non-negotiable.",
+    "takeaways": [
+      "Five backup methods all failed when needed",
+      "Only a lucky recent snapshot prevented total data loss",
+      "GitLab live-streamed recovery, setting a transparency standard"
+    ],
+    "keywords": [
+      "GitLab database deletion",
+      "backup failure",
+      "disaster recovery",
+      "data loss"
+    ],
+    "faq": [
+      {
+        "question": "Why did all GitLab backups fail?",
+        "answer": "PostgreSQL backups were silently failing due to version mismatches, LVM snapshots were not configured, the staging database was stale, and replication to secondary databases was paused. None of the backup methods had been recently tested for actual restorability."
+      },
+      {
+        "question": "What lesson is most important from the GitLab incident?",
+        "answer": "Test your backups regularly by actually restoring them. Backups that have never been restored are assumptions, not safeguards. GitLab now conducts regular restore drills and published detailed incident reports that became essential reading for the industry."
+      }
+    ]
   }
 }

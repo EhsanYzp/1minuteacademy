@@ -45,5 +45,30 @@
       "Creating a new database schema from scratch"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Migrating databases to the cloud involves choosing between lift-and-shift rehosting, replatforming to managed services, or refactoring to cloud-native databases. Each approach trades migration effort for long-term operational benefits. Zero-downtime migration requires careful planning.",
+    "whyItMatters": "Database migration is often the riskiest and most complex part of cloud adoption. A failed migration can corrupt data and cause extended outages that damage the business.",
+    "takeaways": [
+      "Lift-and-shift is fastest but misses managed service benefits",
+      "Replatforming to managed services reduces operational burden",
+      "Zero-downtime migration uses replication and gradual cutover"
+    ],
+    "keywords": [
+      "database migration",
+      "rehosting",
+      "replatforming",
+      "zero downtime"
+    ],
+    "faq": [
+      {
+        "question": "What tools assist with database migration?",
+        "answer": "AWS Database Migration Service, Azure Database Migration Service, and Google Database Migration Service handle schema conversion and continuous replication. For complex migrations, custom scripts and dual-write patterns supplement managed tools."
+      },
+      {
+        "question": "How do you achieve zero-downtime migration?",
+        "answer": "Set up continuous replication from source to target. Run both databases in parallel and verify data consistency. Gradually shift read traffic to the target. When confident, cut over writes, verify final consistency, and decommission the source."
+      }
+    ]
   }
 }

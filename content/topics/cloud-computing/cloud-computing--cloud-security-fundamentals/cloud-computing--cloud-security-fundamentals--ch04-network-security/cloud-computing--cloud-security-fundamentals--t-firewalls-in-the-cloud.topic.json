@@ -45,5 +45,30 @@
       "How much bandwidth each cloud resource can use"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Cloud firewalls filter traffic using security groups and network ACLs that define which ports, protocols, and IP ranges are allowed. Unlike physical firewalls, cloud firewalls are software-defined and can be applied to individual instances or entire subnets programmatically.",
+    "whyItMatters": "Misconfigured security groups that allow unrestricted inbound access are among the most common cloud vulnerabilities. Proper firewall rules are the first line of network defense.",
+    "takeaways": [
+      "Security groups and NACLs filter cloud network traffic",
+      "Default-deny rules block all traffic not explicitly allowed",
+      "Firewall rules can be managed as code for consistency"
+    ],
+    "keywords": [
+      "cloud firewall",
+      "security groups",
+      "network ACL",
+      "traffic filtering"
+    ],
+    "faq": [
+      {
+        "question": "What is the difference between security groups and NACLs?",
+        "answer": "Security groups are stateful and operate at the instance level, automatically allowing return traffic. Network ACLs are stateless and operate at the subnet level, requiring explicit rules for both inbound and outbound. Most architectures use both layers together."
+      },
+      {
+        "question": "Should all ports be closed by default?",
+        "answer": "Yes. Follow a default-deny approach where all inbound traffic is blocked unless explicitly permitted. Open only the specific ports needed for the service, restrict source IP ranges as narrowly as possible, and avoid using 0.0.0.0/0 for any production rules."
+      }
+    ]
   }
 }

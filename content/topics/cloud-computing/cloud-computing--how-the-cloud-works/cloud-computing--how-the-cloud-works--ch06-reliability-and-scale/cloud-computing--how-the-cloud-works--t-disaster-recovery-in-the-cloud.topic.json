@@ -45,5 +45,30 @@
       "Using cloud services instead of on-premises backups"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Cloud disaster recovery uses cross-region replication, automated failover, and infrastructure as code to restore services after catastrophic failures. Strategies range from simple backups in another region to fully active multi-region deployments, each balancing cost against recovery speed.",
+    "whyItMatters": "Disaster recovery in the cloud is dramatically simpler and cheaper than with owned infrastructure. Understanding DR strategies helps design appropriate protection for your recovery objectives.",
+    "takeaways": [
+      "DR strategies range from backup-restore to active-active multi-region",
+      "RTO and RPO define recovery speed and acceptable data loss",
+      "Infrastructure as code makes environment recreation automated"
+    ],
+    "keywords": [
+      "disaster recovery",
+      "RTO",
+      "RPO",
+      "cross-region failover"
+    ],
+    "faq": [
+      {
+        "question": "What are RTO and RPO?",
+        "answer": "Recovery Time Objective is the maximum acceptable time to restore service after a disaster. Recovery Point Objective is the maximum acceptable data loss measured in time. An RPO of one hour means you can lose up to one hour of data. These define your DR strategy and cost."
+      },
+      {
+        "question": "What are the main DR strategies?",
+        "answer": "Backup and restore is cheapest but slowest. Pilot light keeps minimal infrastructure running in the DR region. Warm standby runs a scaled-down copy. Active-active runs full capacity in multiple regions simultaneously, offering near-zero RTO and RPO but at the highest cost."
+      }
+    ]
   }
 }

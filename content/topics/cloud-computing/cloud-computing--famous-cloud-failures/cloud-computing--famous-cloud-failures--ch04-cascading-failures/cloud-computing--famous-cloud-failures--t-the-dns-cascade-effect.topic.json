@@ -45,5 +45,30 @@
       "By recruiting human volunteers to send requests manually"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "DNS failures have a unique ability to cascade across the internet because every service depends on name resolution. When Dyn was hit by a massive DDoS attack in 2016, Twitter, Netflix, Reddit, and major newspapers became unreachable in the eastern US.",
+    "whyItMatters": "DNS is the critical first step in every internet connection. A single DNS provider failure can render entire sections of the internet inaccessible regardless of server health.",
+    "takeaways": [
+      "DNS failures make healthy services completely unreachable",
+      "The 2016 Dyn DDoS took down major internet services",
+      "Multiple DNS providers reduce single-point-of-failure risk"
+    ],
+    "keywords": [
+      "DNS failure",
+      "Dyn DDoS",
+      "cascading outage",
+      "name resolution"
+    ],
+    "faq": [
+      {
+        "question": "How did the Dyn DDoS attack work?",
+        "answer": "The Mirai botnet, composed of compromised IoT devices, flooded Dyn's DNS servers with traffic. With DNS resolution unavailable, browsers could not find the IP addresses of websites using Dyn, making them unreachable even though their servers were running normally."
+      },
+      {
+        "question": "How can DNS dependency be reduced?",
+        "answer": "Use multiple DNS providers with automatic failover. Increase DNS TTL values for critical records to extend caching. Consider anycast DNS networks that distribute resolution globally. Some organizations use split DNS with different providers for different zones."
+      }
+    ]
   }
 }

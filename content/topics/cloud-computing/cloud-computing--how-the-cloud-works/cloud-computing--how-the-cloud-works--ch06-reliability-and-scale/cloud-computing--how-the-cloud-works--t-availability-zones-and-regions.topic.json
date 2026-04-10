@@ -45,5 +45,30 @@
       "To separate free-tier and paid customers into different areas"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Cloud regions are geographic areas containing multiple availability zones, which are physically separate data center facilities with independent power, cooling, and networking. Deploying across multiple AZs protects against facility-level failures while keeping latency under two milliseconds.",
+    "whyItMatters": "Multi-AZ deployment is the most fundamental cloud resilience pattern. Understanding regions and AZs is essential for designing applications that survive infrastructure failures.",
+    "takeaways": [
+      "Regions are geographic areas, AZs are separate facilities within them",
+      "AZs have independent power, cooling, and networking",
+      "Latency between AZs in a region is typically under 2 milliseconds"
+    ],
+    "keywords": [
+      "availability zones",
+      "regions",
+      "cloud resilience",
+      "multi-AZ"
+    ],
+    "faq": [
+      {
+        "question": "How many AZs should you use?",
+        "answer": "Deploy across at least two AZs for high availability. Three AZs provide additional resilience and are recommended for production workloads. Each AZ should be able to handle the full application load independently so that losing one AZ causes no user-visible impact."
+      },
+      {
+        "question": "How do you choose a cloud region?",
+        "answer": "Consider proximity to users for low latency, data sovereignty requirements, available services, and pricing which varies by region. Some services are only available in specific regions. Cost-sensitive workloads can benefit from less popular regions with lower pricing."
+      }
+    ]
   }
 }

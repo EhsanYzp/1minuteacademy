@@ -45,5 +45,30 @@
       "Elasticsearch could only run on public-facing servers"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Thousands of Elasticsearch and MongoDB instances were exposed to the internet without authentication, leaking hundreds of millions of records. Attackers systematically found and ransomed these databases, sometimes deleting data permanently when ransoms were not paid.",
+    "whyItMatters": "Default-open configurations on internet-facing databases are a recurring catastrophe. These incidents drove database vendors to change defaults and organizations to scan for exposed services.",
+    "takeaways": [
+      "Thousands of databases were exposed without authentication",
+      "Attackers systematically found and ransomed exposed data",
+      "Default-open configurations were the root cause"
+    ],
+    "keywords": [
+      "Elasticsearch exposure",
+      "MongoDB ransom",
+      "database misconfiguration",
+      "authentication failure"
+    ],
+    "faq": [
+      {
+        "question": "Why were so many databases exposed?",
+        "answer": "Elasticsearch and MongoDB defaulted to binding to all network interfaces without authentication. Developers deployed them to cloud VMs with public IPs without understanding these defaults. The combination created internet-accessible databases with zero access controls."
+      },
+      {
+        "question": "How did attackers find exposed databases?",
+        "answer": "Automated scanners like Shodan continuously index internet-facing services. Attackers scripted mass connection attempts to default ports. Within hours of deployment, an unprotected database would typically be discovered and either stolen from or ransomed."
+      }
+    ]
   }
 }

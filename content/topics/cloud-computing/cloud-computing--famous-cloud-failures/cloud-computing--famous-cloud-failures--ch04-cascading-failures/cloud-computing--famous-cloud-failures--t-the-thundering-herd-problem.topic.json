@@ -45,5 +45,30 @@
       "Cloud providers limiting the number of active connections"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "The thundering herd occurs when many clients simultaneously reconnect after an outage, overwhelming the recovering service with a surge of requests that causes it to fail again. This pattern turns brief outages into prolonged cascading failures.",
+    "whyItMatters": "Without backoff and jitter in client retry logic, recovering services face demand spikes many times normal load. The thundering herd turns every brief outage into a potential extended one.",
+    "takeaways": [
+      "Mass simultaneous reconnections overwhelm recovering services",
+      "Exponential backoff with jitter spreads retry load over time",
+      "Circuit breakers prevent clients from overwhelming servers"
+    ],
+    "keywords": [
+      "thundering herd",
+      "retry storms",
+      "exponential backoff",
+      "circuit breaker"
+    ],
+    "faq": [
+      {
+        "question": "What causes the thundering herd?",
+        "answer": "When a service goes down, all connected clients start retrying simultaneously. When the service comes back, it faces a concentrated burst of requests many times greater than normal traffic. Without staggered retries, the burst can crash the service again repeatedly."
+      },
+      {
+        "question": "How is the thundering herd prevented?",
+        "answer": "Implement exponential backoff with random jitter in all client retry logic so retries spread over time. Use circuit breakers that stop retrying after repeated failures. Gradually ramp up capacity during recovery rather than accepting all traffic at once."
+      }
+    ]
   }
 }

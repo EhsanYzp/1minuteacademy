@@ -45,5 +45,30 @@
       "AWS disclosed Capital One's data to a third party"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "In 2019, a misconfigured WAF on AWS allowed an attacker to exploit a server-side request forgery vulnerability and access over 100 million Capital One customer records including names, addresses, and credit scores stored in S3 buckets.",
+    "whyItMatters": "The breach demonstrated that cloud misconfiguration, not cloud infrastructure weakness, is the real security threat. Shared responsibility failures have massive real-world consequences.",
+    "takeaways": [
+      "A misconfigured WAF enabled a server-side request forgery attack",
+      "Over 100 million customer records were exposed",
+      "The breach was a customer misconfiguration, not an AWS flaw"
+    ],
+    "keywords": [
+      "Capital One breach",
+      "SSRF",
+      "cloud misconfiguration",
+      "data breach"
+    ],
+    "faq": [
+      {
+        "question": "How did the Capital One breach happen?",
+        "answer": "The attacker exploited an overly permissioned WAF to perform SSRF, accessing the EC2 instance metadata service which returned temporary credentials. These credentials had excessive access to S3 buckets containing customer data. Multiple misconfigurations compounded the attack."
+      },
+      {
+        "question": "What changed after the breach?",
+        "answer": "AWS introduced IMDSv2 requiring session tokens for metadata access, making SSRF attacks harder. Capital One paid an $80 million fine. The incident accelerated industry adoption of least-privilege IAM policies and metadata service hardening."
+      }
+    ]
   }
 }

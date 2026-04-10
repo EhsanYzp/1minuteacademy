@@ -45,5 +45,30 @@
       "The outage only affected test environments, not production"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "In 2023, an Azure Entra ID outage disrupted authentication for Microsoft 365 and Azure services worldwide. Users could not sign in for hours, demonstrating how centralized identity services become critical single points of failure in cloud environments.",
+    "whyItMatters": "Identity is the backbone of cloud access. When the authentication service goes down, every service behind it becomes inaccessible regardless of its individual health.",
+    "takeaways": [
+      "Identity service failures lock users out of all connected services",
+      "Centralized authentication creates a single point of failure",
+      "Break-glass accounts and cached sessions mitigate impact"
+    ],
+    "keywords": [
+      "Entra ID outage",
+      "Azure authentication",
+      "identity failure",
+      "single point of failure"
+    ],
+    "faq": [
+      {
+        "question": "Why are identity outages so impactful?",
+        "answer": "Every cloud service depends on authentication. When the identity provider fails, users cannot access any connected application, even perfectly healthy ones. The blast radius of an identity outage spans every service and user in the organization."
+      },
+      {
+        "question": "How can organizations prepare for identity outages?",
+        "answer": "Configure break-glass emergency accounts with separate credentials, extend session token lifetimes for critical applications, implement cached authentication that works during brief outages, and document manual procedures for essential operations."
+      }
+    ]
   }
 }

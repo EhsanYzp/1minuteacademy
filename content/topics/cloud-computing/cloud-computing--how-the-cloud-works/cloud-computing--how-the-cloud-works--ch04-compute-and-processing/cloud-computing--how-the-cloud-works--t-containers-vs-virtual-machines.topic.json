@@ -45,5 +45,30 @@
       "Containers require more memory than virtual machines"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Containers share the host operating system kernel and isolate at the application level, while VMs each run a full operating system on virtualized hardware. Containers start faster, use less resources, and are easier to scale, but VMs provide stronger isolation between workloads.",
+    "whyItMatters": "Choosing between containers and VMs affects deployment speed, resource efficiency, security isolation, and operational complexity. Most modern cloud architectures use both for different purposes.",
+    "takeaways": [
+      "Containers share the OS kernel, VMs virtualize full hardware",
+      "Containers start in seconds, VMs in minutes",
+      "VMs provide stronger isolation, containers better efficiency"
+    ],
+    "keywords": [
+      "containers",
+      "virtual machines",
+      "Docker",
+      "isolation"
+    ],
+    "faq": [
+      {
+        "question": "When should you use containers vs VMs?",
+        "answer": "Use containers for microservices, rapid deployment, and high-density workloads. Use VMs when you need full OS isolation, run different operating systems, or have applications that require specific kernel features. Many architectures run containers inside VMs for defense in depth."
+      },
+      {
+        "question": "Are containers less secure than VMs?",
+        "answer": "Containers share the host kernel, creating a larger attack surface than VMs with separate kernels. However, container security has improved significantly with rootless containers, seccomp profiles, and lightweight VM technologies like Firecracker that combine container speed with VM isolation."
+      }
+    ]
   }
 }

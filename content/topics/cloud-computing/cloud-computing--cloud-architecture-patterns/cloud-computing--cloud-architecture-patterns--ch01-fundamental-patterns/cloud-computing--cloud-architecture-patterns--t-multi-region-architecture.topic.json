@@ -45,5 +45,30 @@
       "Multi-region architectures cannot use managed databases"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Multi-region architecture deploys an application across geographically separated cloud regions for low latency and high availability. If one region fails entirely, traffic failovers to another. Data replication and consistency across regions are the primary challenges.",
+    "whyItMatters": "Single-region deployments are vulnerable to regional outages that take down major cloud providers for hours. Multi-region is essential for applications that require near-zero downtime.",
+    "takeaways": [
+      "Deploys workloads across multiple geographic regions",
+      "Provides resilience against full regional cloud outages",
+      "Data replication and consistency are the hardest challenges"
+    ],
+    "keywords": [
+      "multi-region",
+      "geographic redundancy",
+      "data replication",
+      "failover"
+    ],
+    "faq": [
+      {
+        "question": "What is active-active vs active-passive multi-region?",
+        "answer": "Active-active serves traffic from all regions simultaneously, offering the best latency and availability but the most complex data synchronization. Active-passive keeps a standby region ready to take over on failure, simpler but with longer failover time."
+      },
+      {
+        "question": "How is data kept consistent across regions?",
+        "answer": "Options include synchronous replication for strong consistency at the cost of latency, asynchronous replication for better performance with eventual consistency, and conflict-free replicated data types for automatic conflict resolution."
+      }
+    ]
   }
 }

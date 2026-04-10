@@ -45,5 +45,30 @@
       "It requires all changes to be made directly in the cloud console"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "GitOps uses Git repositories as the single source of truth for infrastructure and application configuration. Changes are made through pull requests, automatically applied by controllers that continuously reconcile the desired state in Git with the actual state of the infrastructure.",
+    "whyItMatters": "GitOps brings software development best practices to infrastructure management. Every change is versioned, reviewed, auditable, and reversible, improving reliability and security.",
+    "takeaways": [
+      "Git is the single source of truth for infrastructure state",
+      "Changes go through pull requests with reviews and approvals",
+      "Controllers automatically reconcile desired and actual state"
+    ],
+    "keywords": [
+      "GitOps",
+      "infrastructure as code",
+      "ArgoCD",
+      "Flux"
+    ],
+    "faq": [
+      {
+        "question": "How does GitOps improve over traditional IaC?",
+        "answer": "Traditional IaC runs imperatively: you execute commands to change infrastructure. GitOps is declarative: you commit the desired state and controllers enforce it continuously. If someone makes a manual change, the controller reverts it to match Git, preventing configuration drift."
+      },
+      {
+        "question": "What tools implement GitOps?",
+        "answer": "ArgoCD and Flux are the most popular GitOps controllers for Kubernetes. They watch Git repositories and automatically deploy changes to clusters. For broader infrastructure, Terraform with Atlantis or Spacelift provides GitOps workflows for cloud resources beyond Kubernetes."
+      }
+    ]
   }
 }

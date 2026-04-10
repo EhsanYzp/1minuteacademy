@@ -45,5 +45,30 @@
       "Log data must be stored in the most expensive storage tier"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Cloud logging and monitoring costs accumulate silently as applications emit logs, metrics, and traces. CloudWatch, Azure Monitor, and third-party tools charge per GB ingested and retained. Without log level management, monitoring costs can rival compute expenses.",
+    "whyItMatters": "Organizations often discover monitoring costs only when reviewing unexpectedly high bills. Proactive log management prevents monitoring from becoming one of the largest cloud line items.",
+    "takeaways": [
+      "Log ingestion and retention charges grow with application scale",
+      "Debug-level logging in production dramatically inflates costs",
+      "Log sampling and retention policies control spending"
+    ],
+    "keywords": [
+      "logging costs",
+      "monitoring tax",
+      "CloudWatch",
+      "log management"
+    ],
+    "faq": [
+      {
+        "question": "How do you reduce monitoring costs?",
+        "answer": "Set appropriate log levels with verbose debugging disabled in production. Implement log sampling for high-volume services. Set retention policies to delete old logs. Use filters to discard noisy but valueless log lines. Consider cheaper log storage tiers for archival."
+      },
+      {
+        "question": "How much does cloud monitoring typically cost?",
+        "answer": "For a medium-sized application, monitoring costs often run 5 to 15 percent of compute costs. High-traffic applications with verbose logging can see monitoring costs exceeding 20 percent. Custom metrics, distributed tracing, and long retention amplify costs."
+      }
+    ]
   }
 }

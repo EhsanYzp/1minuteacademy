@@ -45,5 +45,30 @@
       "Compression only works on text files, not binary data"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Data compression reduces storage costs and transfer times in the cloud. Columnar formats like Parquet compress analytical data by 80 percent or more. Choosing the right compression algorithm balances size reduction against CPU cost for compression and decompression.",
+    "whyItMatters": "At cloud scale, compression savings compound. Reducing data size by 80 percent cuts storage costs, speeds up queries, and reduces network transfer time and egress charges.",
+    "takeaways": [
+      "Columnar formats like Parquet compress analytical data dramatically",
+      "Compression reduces storage, transfer, and query scan costs",
+      "Algorithm choice trades compression ratio against CPU cost"
+    ],
+    "keywords": [
+      "data compression",
+      "Parquet",
+      "columnar format",
+      "storage optimization"
+    ],
+    "faq": [
+      {
+        "question": "What compression algorithms are common in the cloud?",
+        "answer": "Gzip offers good compression ratios for general use. Snappy and LZ4 provide fast compression and decompression for real-time workloads. Zstandard balances both. Columnar formats like Parquet use dictionary and run-length encoding for additional savings."
+      },
+      {
+        "question": "Does compression affect query performance?",
+        "answer": "Compression usually improves query performance in analytical workloads because less data needs to be read from storage. The CPU cost of decompression is typically small compared to the I/O savings. Modern columnar engines are optimized for this tradeoff."
+      }
+    ]
   }
 }

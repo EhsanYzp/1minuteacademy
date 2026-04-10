@@ -45,5 +45,30 @@
       "Data from being replicated across multiple regions"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Bulkhead isolation partitions system resources so that a failure in one component cannot exhaust resources needed by others. Named after ship bulkheads that prevent flooding from sinking the entire vessel, this pattern limits the blast radius of failures.",
+    "whyItMatters": "Without isolation, a single runaway service or traffic spike can consume all available threads, connections, or memory, bringing down unrelated services sharing those resources.",
+    "takeaways": [
+      "Resources are partitioned to limit failure blast radius",
+      "Named after ship compartments that contain flooding",
+      "Prevents one failing component from draining shared resources"
+    ],
+    "keywords": [
+      "bulkhead pattern",
+      "fault isolation",
+      "resource partitioning",
+      "blast radius"
+    ],
+    "faq": [
+      {
+        "question": "How is the bulkhead pattern implemented?",
+        "answer": "Common implementations include separate thread pools for different service calls, dedicated connection pools per dependency, and separate container or pod deployments for critical components. Each partition can fail without affecting others."
+      },
+      {
+        "question": "How does bulkhead differ from circuit breaker?",
+        "answer": "Bulkhead prevents resource exhaustion by partitioning resources in advance. Circuit breaker detects failures and stops calling a broken service. They complement each other: bulkheads limit damage while circuit breakers stop the bleeding."
+      }
+    ]
   }
 }

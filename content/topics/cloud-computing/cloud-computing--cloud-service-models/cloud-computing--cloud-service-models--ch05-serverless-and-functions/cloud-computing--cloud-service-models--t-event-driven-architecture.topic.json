@@ -45,5 +45,30 @@
       "Event-driven systems cannot handle more than 100 users"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Event-driven architecture uses events like file uploads, database changes, or messages to trigger processing automatically. Cloud services like EventBridge, Pub/Sub, and Event Grid route events between producers and consumers without tight coupling.",
+    "whyItMatters": "Event-driven design enables loosely coupled systems that scale independently and respond to changes in real time. It is the natural architecture for serverless and microservices.",
+    "takeaways": [
+      "Events trigger processing without direct service coupling",
+      "Producers and consumers scale independently",
+      "Cloud event buses route events between services automatically"
+    ],
+    "keywords": [
+      "event-driven architecture",
+      "EventBridge",
+      "Pub/Sub",
+      "loose coupling"
+    ],
+    "faq": [
+      {
+        "question": "What is an event in cloud computing?",
+        "answer": "An event is a notification that something happened: a file was uploaded, a database record changed, a user signed up, or a timer fired. Events carry enough information for consumers to react without querying the source system directly."
+      },
+      {
+        "question": "What are the challenges of event-driven architecture?",
+        "answer": "Debugging distributed event flows is harder than tracing synchronous calls. Out-of-order events, duplicate delivery, and eventual consistency require careful design. Observability tooling that traces events across services is essential for production reliability."
+      }
+    ]
   }
 }

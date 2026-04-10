@@ -45,5 +45,30 @@
       "Encrypting all traffic between users and servers"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Load balancers distribute incoming traffic across multiple servers to prevent any single server from becoming overwhelmed. They check server health, route traffic intelligently, handle SSL termination, and automatically adjust as servers are added or removed through auto-scaling.",
+    "whyItMatters": "Load balancers are essential for running reliable, scalable applications in the cloud. They allow horizontal scaling and ensure traffic goes only to healthy servers.",
+    "takeaways": [
+      "Load balancers distribute traffic across multiple servers",
+      "Health checks route traffic only to healthy instances",
+      "They enable horizontal scaling without application changes"
+    ],
+    "keywords": [
+      "load balancer",
+      "traffic distribution",
+      "health checks",
+      "SSL termination"
+    ],
+    "faq": [
+      {
+        "question": "What types of load balancers exist?",
+        "answer": "Layer 4 load balancers route based on IP and port, operating at the transport level. Layer 7 load balancers inspect HTTP content and can route based on URL paths, headers, or cookies. Cloud providers offer both types, with Layer 7 being more common for web applications."
+      },
+      {
+        "question": "How do load balancers check server health?",
+        "answer": "Load balancers periodically send health check requests to each server. If a server fails consecutive checks, the load balancer stops sending traffic to it. When the server passes checks again, it is gradually brought back into rotation. This happens automatically."
+      }
+    ]
   }
 }

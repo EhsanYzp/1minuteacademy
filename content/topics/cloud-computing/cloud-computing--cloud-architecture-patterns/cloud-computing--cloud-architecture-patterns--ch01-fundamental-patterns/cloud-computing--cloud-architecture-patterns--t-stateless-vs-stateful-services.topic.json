@@ -45,5 +45,30 @@
       "Cloud providers only charge for stateless services"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Stateless services store no client data between requests, making them easy to scale and replace. Stateful services maintain data across requests, requiring sticky sessions or external state stores. Most cloud patterns favor stateless services with externalized state.",
+    "whyItMatters": "Statelessness is the key enabler of horizontal scaling and auto-scaling. Understanding when and how to externalize state is fundamental to cloud-native design.",
+    "takeaways": [
+      "Stateless services can be freely replicated and replaced",
+      "State is externalized to databases, caches, or object stores",
+      "Auto-scaling works best with stateless service instances"
+    ],
+    "keywords": [
+      "stateless",
+      "stateful",
+      "externalized state",
+      "horizontal scaling"
+    ],
+    "faq": [
+      {
+        "question": "Where should externalized state be stored?",
+        "answer": "Redis or Memcached for session data and caches, relational or NoSQL databases for persistent data, and object storage for files and blobs. The choice depends on access patterns, durability requirements, and latency needs."
+      },
+      {
+        "question": "Are databases stateful services?",
+        "answer": "Yes. Databases are inherently stateful because they persist data. Cloud-managed databases handle the complexity of stateful operation, including replication, failover, and backup, so application developers can focus on stateless application tiers."
+      }
+    ]
   }
 }

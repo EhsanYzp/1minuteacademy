@@ -45,5 +45,30 @@
       "Cloud providers charge 10x more for incorrect region usage"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Deploying resources to the wrong cloud region has caused data sovereignty violations, latency issues, and compliance failures. When a European company accidentally stores data in a US region, GDPR violations can follow, with fines up to four percent of global revenue.",
+    "whyItMatters": "Region selection affects compliance, latency, and cost. Accidental wrong-region deployment is a surprisingly common error with potentially severe regulatory consequences.",
+    "takeaways": [
+      "Wrong-region deployments can violate data sovereignty laws",
+      "GDPR fines can reach four percent of global revenue",
+      "Service control policies can restrict available regions"
+    ],
+    "keywords": [
+      "wrong region",
+      "data sovereignty",
+      "GDPR violation",
+      "region restriction"
+    ],
+    "faq": [
+      {
+        "question": "How does wrong-region deployment happen?",
+        "answer": "Default region settings in CLI tools or console sessions, copy-paste errors in infrastructure code, and developer environments configured for convenience rather than compliance all contribute. Without guardrails, any user can deploy to any available region."
+      },
+      {
+        "question": "How can wrong-region deployment be prevented?",
+        "answer": "Use service control policies to deny resource creation in unapproved regions. Set default regions in infrastructure as code templates. Implement CI/CD pipelines that validate region parameters. Alert on any resources detected in non-approved regions."
+      }
+    ]
   }
 }

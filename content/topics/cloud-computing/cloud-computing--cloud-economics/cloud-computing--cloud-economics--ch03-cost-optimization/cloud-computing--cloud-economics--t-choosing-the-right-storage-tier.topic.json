@@ -45,5 +45,30 @@
       "Data in cold storage cannot be encrypted"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Cloud storage tiers trade access speed for cost. Hot storage is fast and expensive, cold is slower and cheaper, archive is cheapest but retrieval takes hours. Matching data to the right tier based on access frequency is one of the simplest ways to cut storage costs.",
+    "whyItMatters": "Most organizations store the majority of their data in hot storage even though 80 percent of it is rarely accessed. Proper tiering can reduce storage costs by 50 to 80 percent.",
+    "takeaways": [
+      "Hot storage suits frequently accessed data",
+      "Cold and archive tiers suit rarely accessed compliance or backup data",
+      "Intelligent tiering automates placement based on access patterns"
+    ],
+    "keywords": [
+      "storage tiers",
+      "hot storage",
+      "cold storage",
+      "intelligent tiering"
+    ],
+    "faq": [
+      {
+        "question": "How does intelligent tiering work?",
+        "answer": "Services like S3 Intelligent-Tiering monitor access patterns and automatically move objects between tiers. Frequently accessed objects stay in hot storage while untouched objects move to cold. A small monitoring fee per object is charged but savings typically far exceed this cost."
+      },
+      {
+        "question": "What is the cost difference between storage tiers?",
+        "answer": "As a rough guide, standard S3 costs about $0.023 per GB/month, infrequent access about $0.0125, and Glacier Deep Archive about $0.00099. That makes archive storage roughly 95 percent cheaper than hot storage, with the tradeoff of hours-long retrieval times."
+      }
+    ]
   }
 }

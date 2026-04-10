@@ -45,5 +45,30 @@
       "Only when used with reserved instance pricing"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Serverless computing charges per request and execution duration with no cost when idle. For sporadic workloads, this is dramatically cheaper than running always-on servers. But at high and consistent volume, the per-invocation cost can exceed the price of reserved instances.",
+    "whyItMatters": "Serverless economics are counterintuitive. It is the cheapest option for low and variable traffic but can become the most expensive at high sustained volume. Understanding the crossover point is critical.",
+    "takeaways": [
+      "Zero cost when idle with no minimum charges",
+      "Per-invocation pricing is expensive at sustained high volume",
+      "Cost crossover with instances depends on traffic patterns"
+    ],
+    "keywords": [
+      "serverless pricing",
+      "per-invocation cost",
+      "idle savings",
+      "cost crossover"
+    ],
+    "faq": [
+      {
+        "question": "At what point is serverless more expensive than instances?",
+        "answer": "The crossover varies by workload, but a rough guideline is when a function runs consistently at high concurrency. If a Lambda function runs 24/7 at steady load, an equivalent reserved instance can be 5 to 10 times cheaper. The exact breakeven depends on memory and duration."
+      },
+      {
+        "question": "What hidden costs does serverless have?",
+        "answer": "API Gateway charges, data transfer costs, CloudWatch logging, and the cost of integrating with other services all add up. Cold start latency has an indirect cost in user experience. Monitoring and debugging distributed serverless applications also requires specialized tooling."
+      }
+    ]
   }
 }

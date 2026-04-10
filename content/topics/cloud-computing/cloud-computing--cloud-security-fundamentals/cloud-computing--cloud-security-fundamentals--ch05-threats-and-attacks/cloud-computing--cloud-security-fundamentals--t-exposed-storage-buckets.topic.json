@@ -45,5 +45,30 @@
       "Cloud providers publish a list of all buckets on their websites"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Publicly exposed cloud storage buckets have leaked billions of records including personal data, medical records, and military intelligence. Default access settings and misconfigured policies make it alarmingly easy to accidentally make storage publicly accessible.",
+    "whyItMatters": "Storage bucket exposure is the most common and devastating cloud misconfiguration. A single policy error can expose an organization's most sensitive data to the entire internet.",
+    "takeaways": [
+      "Public bucket exposure has caused billions of record leaks",
+      "Default settings can accidentally make storage world-readable",
+      "Block public access at the account level as a guardrail"
+    ],
+    "keywords": [
+      "storage buckets",
+      "S3 exposure",
+      "data leak",
+      "public access"
+    ],
+    "faq": [
+      {
+        "question": "How do storage buckets become publicly exposed?",
+        "answer": "Through overly permissive bucket policies, ACLs granting public read access, or misconfigured static website hosting. Developers often set public access during testing and forget to restrict it. Without account-level public access blocks, these errors go undetected."
+      },
+      {
+        "question": "How do attackers find exposed buckets?",
+        "answer": "Automated tools scan predictable bucket naming patterns and enumerate public listings. Services like GrayhatWarfare catalog exposed buckets. Attackers also harvest bucket names from DNS records, JavaScript source code, and error messages."
+      }
+    ]
   }
 }

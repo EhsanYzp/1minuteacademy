@@ -45,5 +45,30 @@
       "The time it takes to write and deploy a new serverless function"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Serverless architecture lets developers write functions that run on demand without managing servers. The cloud provider handles provisioning, scaling, and patching. You pay only for actual execution time, often measured in milliseconds.",
+    "whyItMatters": "Serverless eliminates infrastructure management for event-driven workloads. It can drastically reduce costs for sporadic traffic and accelerate development by removing operational overhead.",
+    "takeaways": [
+      "No servers to provision, patch, or manage",
+      "Billing is based on actual execution time",
+      "Scales automatically from zero to thousands of instances"
+    ],
+    "keywords": [
+      "serverless",
+      "functions as a service",
+      "auto-scaling",
+      "event-driven"
+    ],
+    "faq": [
+      {
+        "question": "What are the limitations of serverless?",
+        "answer": "Cold starts add latency when functions have not been invoked recently. Execution time limits typically cap at 15 minutes. Debugging distributed serverless systems is harder. Vendor lock-in is significant because function runtimes differ between providers."
+      },
+      {
+        "question": "When is serverless the wrong choice?",
+        "answer": "Long-running processes, workloads with predictable high throughput, and applications needing specialized hardware like GPUs are poor fits. Consistent high-volume traffic may also be cheaper on reserved instances than pay-per-invocation serverless."
+      }
+    ]
   }
 }

@@ -45,5 +45,30 @@
       "Users choosing weak passwords for their accounts"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Encryption in transit protects data as it moves between clients and servers or between cloud services using protocols like TLS. Without it, attackers can intercept sensitive information through man-in-the-middle attacks on network traffic.",
+    "whyItMatters": "Data crosses many network hops between users and cloud services. Encrypting traffic ensures confidentiality and integrity even on untrusted networks.",
+    "takeaways": [
+      "TLS encrypts data moving between endpoints",
+      "Prevents man-in-the-middle interception attacks",
+      "Should be enforced for all internal and external traffic"
+    ],
+    "keywords": [
+      "encryption in transit",
+      "TLS",
+      "HTTPS",
+      "data in motion"
+    ],
+    "faq": [
+      {
+        "question": "Is HTTPS enough for encryption in transit?",
+        "answer": "HTTPS via TLS protects client-to-server traffic, but service-to-service communication within the cloud also needs encryption. Mutual TLS authenticates both ends of a connection, and service meshes can automate encryption for all internal microservice traffic."
+      },
+      {
+        "question": "What TLS version should be used?",
+        "answer": "TLS 1.2 is the minimum acceptable version, and TLS 1.3 is preferred for its improved security and performance. Older versions like TLS 1.0 and 1.1 have known vulnerabilities and should be disabled in all cloud configurations."
+      }
+    ]
   }
 }

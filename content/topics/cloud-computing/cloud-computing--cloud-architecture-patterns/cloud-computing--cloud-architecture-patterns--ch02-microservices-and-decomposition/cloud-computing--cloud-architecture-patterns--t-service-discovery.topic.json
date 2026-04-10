@@ -45,5 +45,30 @@
       "It prevents services from being deployed to the wrong region"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Service discovery allows services to find each other dynamically without hardcoded addresses. As instances scale up, down, or move, a registry tracks their current locations. Clients query the registry to find healthy endpoints.",
+    "whyItMatters": "In cloud environments where instances are ephemeral, hardcoded addresses break constantly. Service discovery is the mechanism that makes dynamic scaling and self-healing possible.",
+    "takeaways": [
+      "Services register themselves on startup and deregister on shutdown",
+      "Clients query a registry for current service locations",
+      "Enables dynamic scaling without configuration changes"
+    ],
+    "keywords": [
+      "service discovery",
+      "service registry",
+      "dynamic routing",
+      "ephemeral instances"
+    ],
+    "faq": [
+      {
+        "question": "What is client-side vs server-side service discovery?",
+        "answer": "In client-side discovery, the client queries the registry and picks an instance. In server-side discovery, the client calls a load balancer that queries the registry. Kubernetes uses server-side discovery through its built-in DNS and service abstractions."
+      },
+      {
+        "question": "What tools are used for service discovery?",
+        "answer": "Consul, etcd, and ZooKeeper are popular standalone service registries. Kubernetes has built-in service discovery through DNS. Cloud providers offer managed equivalents like AWS Cloud Map. Most service mesh implementations also include discovery."
+      }
+    ]
   }
 }

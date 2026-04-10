@@ -45,5 +45,30 @@
       "Redundancy is only needed for companies with over 1 million users"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Every major cloud failure reinforces that redundancy is not optional. Single points of failure in regions, availability zones, services, and providers all eventually fail. Redundancy must be tested regularly because untested failover is not actually redundancy.",
+    "whyItMatters": "It is not a question of if cloud components will fail but when. Redundancy and tested failover are the only reliable protection against inevitable failures.",
+    "takeaways": [
+      "Every cloud component will eventually fail",
+      "Redundancy must span zones, regions, and sometimes providers",
+      "Untested failover does not count as redundancy"
+    ],
+    "keywords": [
+      "redundancy",
+      "failover",
+      "high availability",
+      "cloud resilience"
+    ],
+    "faq": [
+      {
+        "question": "What types of redundancy should cloud architectures have?",
+        "answer": "Multi-AZ for withstanding data center failures, multi-region for surviving regional outages, multi-provider for eliminating single-vendor risk, and application-level redundancy with graceful degradation when any dependency is unavailable."
+      },
+      {
+        "question": "How often should failover be tested?",
+        "answer": "Critical systems should test failover quarterly at minimum. Game day exercises that simulate real failures in production reveal gaps that theoretical analysis misses. Netflix's Chaos Monkey approach of continuously injecting failures keeps systems resilient through constant testing."
+      }
+    ]
   }
 }

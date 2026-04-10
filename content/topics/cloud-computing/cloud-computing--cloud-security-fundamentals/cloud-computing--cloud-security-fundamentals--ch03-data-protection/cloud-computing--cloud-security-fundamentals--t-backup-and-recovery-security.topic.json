@@ -45,5 +45,30 @@
       "Backups that automatically update when the source data changes"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Backups are a critical security control, but they also create additional attack surfaces. Backups must be encrypted, access-controlled, stored in separate accounts, and regularly tested to ensure they can actually be restored when needed.",
+    "whyItMatters": "Ransomware attackers specifically target backups to eliminate recovery options. Securing and testing backups is essential for resilience against destructive attacks.",
+    "takeaways": [
+      "Encrypt backups and store them in separate accounts",
+      "Use immutable storage to prevent backup deletion",
+      "Test restore procedures regularly to verify recoverability"
+    ],
+    "keywords": [
+      "backup security",
+      "disaster recovery",
+      "immutable storage",
+      "restore testing"
+    ],
+    "faq": [
+      {
+        "question": "What is immutable backup storage?",
+        "answer": "Immutable storage prevents backups from being deleted or modified for a defined retention period, even by administrators. This protects against ransomware and accidental deletion. AWS S3 Object Lock and Azure immutable blob storage provide this capability."
+      },
+      {
+        "question": "How often should backup restores be tested?",
+        "answer": "Critical systems should have restore procedures tested quarterly at minimum. Many organizations discover during real incidents that their backups are corrupted, incomplete, or take far longer to restore than expected. Regular testing eliminates these dangerous surprises."
+      }
+    ]
   }
 }
