@@ -45,5 +45,30 @@
       "Assigns bandwidth to each user"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "The Domain Name System translates human-readable domain names like google.com into IP addresses that computers use. DNS is a distributed hierarchical database. When you type a URL, your device queries DNS resolvers that traverse root servers, TLD servers, and authoritative servers to find the IP.",
+    "whyItMatters": "DNS is critical infrastructure. Without it, you would need to memorize IP addresses for every website. DNS failures make the entire internet seem broken.",
+    "takeaways": [
+      "DNS converts domain names to IP addresses",
+      "It uses a distributed hierarchy of root, TLD, and authoritative servers",
+      "DNS caching reduces lookup latency for frequently visited sites"
+    ],
+    "keywords": [
+      "DNS",
+      "domain name",
+      "name resolution",
+      "DNS resolver"
+    ],
+    "faq": [
+      {
+        "question": "What happens if DNS goes down?",
+        "answer": "If DNS is unavailable, browsers cannot resolve domain names to IP addresses. Websites appear unreachable even though the servers are running. The 2016 Dyn DNS attack demonstrated this. Cached DNS entries still work temporarily, but new lookups fail."
+      },
+      {
+        "question": "Why does DNS have a hierarchy of servers?",
+        "answer": "No single server could handle all DNS queries for the entire internet. The hierarchy distributes the load. Root servers direct to TLD servers, which direct to authoritative servers for each domain. Caching at every level reduces the number of queries that reach the top."
+      }
+    ]
   }
 }

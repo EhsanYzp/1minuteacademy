@@ -45,5 +45,30 @@
       "CrowdStrike's servers went offline simultaneously"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "In July 2024, a faulty CrowdStrike Falcon sensor update caused millions of Windows computers to crash with blue screens of death simultaneously across airlines, hospitals, banks, and governments worldwide. It was the largest IT outage in history, requiring manual recovery of each affected machine.",
+    "whyItMatters": "The CrowdStrike incident showed that security software running at kernel level is itself a critical single point of failure that can cause more damage than the threats it protects against.",
+    "takeaways": [
+      "A faulty kernel-level update crashed millions of Windows PCs",
+      "Airlines, hospitals, and banks were paralyzed simultaneously",
+      "Each machine required manual intervention to recover"
+    ],
+    "keywords": [
+      "CrowdStrike",
+      "blue screen",
+      "kernel update",
+      "2024 outage"
+    ],
+    "faq": [
+      {
+        "question": "Why did CrowdStrike's update crash so many computers?",
+        "answer": "CrowdStrike's Falcon sensor runs at the kernel level for deep system access. A faulty channel file update caused a logic error that triggered a system crash before Windows could fully boot. Because it loaded before the OS, machines entered an unrecoverable boot loop."
+      },
+      {
+        "question": "Why couldn't the fix be deployed automatically?",
+        "answer": "The machines crashed before the operating system could load, making remote patching impossible. IT staff had to physically access each machine, boot into safe mode, and manually delete the faulty file. For organizations with thousands of machines, recovery took days."
+      }
+    ]
   }
 }

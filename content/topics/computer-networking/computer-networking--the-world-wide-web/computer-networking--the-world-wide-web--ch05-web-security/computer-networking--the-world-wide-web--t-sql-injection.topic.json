@@ -45,5 +45,30 @@
       "Encrypting the database connection with TLS"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "SQL injection attacks insert malicious database queries through web form inputs, URL parameters, or any other user-controlled data that reaches a database query. Successful injection can dump entire databases, modify data, bypass authentication, or execute system commands on the database server.",
+    "whyItMatters": "SQL injection has been a top web vulnerability for over two decades. A single vulnerable input can expose an entire database of user data, making prevention through parameterized queries non-negotiable.",
+    "takeaways": [
+      "User input included in SQL queries without parameterization is vulnerable",
+      "Parameterized queries separate code from data, preventing injection",
+      "Web application firewalls add defense in depth but are not sufficient alone"
+    ],
+    "keywords": [
+      "SQL injection",
+      "database security",
+      "parameterized queries",
+      "web vulnerability"
+    ],
+    "faq": [
+      {
+        "question": "How does a SQL injection attack work?",
+        "answer": "An attacker enters SQL code into a form field. If the server builds a query by concatenating that input directly into SQL, the injected code executes as part of the query. For example, entering ' OR '1'='1 into a login form might bypass authentication by making the WHERE clause always true."
+      },
+      {
+        "question": "What is the best defense against SQL injection?",
+        "answer": "Use parameterized queries or prepared statements, which separate SQL structure from user data. The database engine treats parameters as literal values, never as executable SQL. ORMs that use parameterized queries internally also protect against injection."
+      }
+    ]
   }
 }

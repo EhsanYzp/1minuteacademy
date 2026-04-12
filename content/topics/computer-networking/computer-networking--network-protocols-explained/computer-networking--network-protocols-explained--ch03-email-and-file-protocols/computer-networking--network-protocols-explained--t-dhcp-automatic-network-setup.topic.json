@@ -45,5 +45,30 @@
       "An encrypted tunnel to a remote server"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "DHCP automatically assigns IP addresses, subnet masks, gateways, and DNS server addresses to devices when they join a network. This eliminates manual configuration and prevents address conflicts. DHCP leases addresses temporarily, reclaiming them when devices leave the network.",
+    "whyItMatters": "DHCP makes networks work automatically for end users. Without it, every device would need manual IP configuration, making networks impractical for anything beyond a handful of devices.",
+    "takeaways": [
+      "DHCP assigns IP addresses automatically when devices connect",
+      "Leases are temporary and reclaimed when devices disconnect",
+      "The four-step DORA process handles address assignment"
+    ],
+    "keywords": [
+      "DHCP",
+      "IP assignment",
+      "network configuration",
+      "address lease"
+    ],
+    "faq": [
+      {
+        "question": "What is the DHCP DORA process?",
+        "answer": "Discover: the client broadcasts a request for an address. Offer: the DHCP server offers an available address. Request: the client accepts the offer. Acknowledge: the server confirms the lease. This four-step exchange typically completes in milliseconds when a device connects to the network."
+      },
+      {
+        "question": "What happens when a DHCP lease expires?",
+        "answer": "Devices attempt to renew their lease at 50 percent of the lease time. If renewal fails, they try again at 87.5 percent. If the lease expires completely, the device must restart the DORA process. Short leases reclaim addresses faster but generate more DHCP traffic."
+      }
+    ]
   }
 }

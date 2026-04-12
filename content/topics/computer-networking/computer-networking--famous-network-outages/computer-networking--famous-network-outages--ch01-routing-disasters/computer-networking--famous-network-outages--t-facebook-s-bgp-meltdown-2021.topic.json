@@ -45,5 +45,30 @@
       "A power failure at their main data center"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "On October 4, 2021, Facebook withdrew its own BGP routes during a maintenance operation, making Facebook, Instagram, and WhatsApp completely unreachable for over six hours. Engineers could not even access internal tools to fix the problem because those tools also depended on the same network.",
+    "whyItMatters": "Facebook's outage showed that when internal infrastructure depends entirely on the same network as external services, a routing error can lock engineers out of their own systems.",
+    "takeaways": [
+      "Facebook accidentally withdrew its BGP routes globally",
+      "Engineers were locked out of internal tools for hours",
+      "Three billion users lost access to all Meta services"
+    ],
+    "keywords": [
+      "Facebook outage",
+      "BGP withdrawal",
+      "Meta",
+      "2021 outage"
+    ],
+    "faq": [
+      {
+        "question": "Why couldn't Facebook engineers fix the problem remotely?",
+        "answer": "Facebook's internal tools, dashboards, and communication systems all ran on the same network that went down. Engineers could not SSH into servers, access monitoring, or even badge into data centers. They had to physically travel to facilities and reset equipment manually."
+      },
+      {
+        "question": "What caused the BGP routes to be withdrawn?",
+        "answer": "A configuration change during routine maintenance accidentally withdrew all BGP route announcements. Without BGP routes, the internet had no path to Facebook's servers. DNS entries expired, and the entire Facebook ecosystem vanished from the internet."
+      }
+    ]
   }
 }

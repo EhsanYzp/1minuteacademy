@@ -45,5 +45,31 @@
       "Encrypting email content end-to-end"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "SMTP is the protocol that transfers email messages from sender to recipient across the internet. It routes messages through mail servers using MX DNS records, authenticates senders with mechanisms like SPF and DKIM, and queues messages for retry if the destination server is temporarily unavailable.",
+    "whyItMatters": "SMTP has powered email since 1982 and remains the only standard for sending email between servers. Understanding SMTP explains why email delivery is complex and why spam filtering exists.",
+    "takeaways": [
+      "SMTP transfers email between mail servers across the internet",
+      "MX records in DNS direct email to the correct server",
+      "SPF and DKIM authenticate senders to prevent email spoofing"
+    ],
+    "keywords": [
+      "SMTP",
+      "email protocol",
+      "mail server",
+      "SPF",
+      "DKIM"
+    ],
+    "faq": [
+      {
+        "question": "How does email get from sender to recipient?",
+        "answer": "Your email client sends the message via SMTP to your mail server. Your server looks up the recipient's domain MX record in DNS to find their mail server. It then transfers the message via SMTP to that server. The recipient retrieves the message using IMAP or POP3."
+      },
+      {
+        "question": "Why does email sometimes end up in spam?",
+        "answer": "Spam filters check SPF, DKIM, and DMARC records to verify the sender's authenticity. Missing or misconfigured authentication records cause legitimate email to be flagged. Content analysis also scores messages for spam-like patterns. Proper DNS configuration is essential for email deliverability."
+      }
+    ]
   }
 }

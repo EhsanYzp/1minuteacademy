@@ -45,5 +45,30 @@
       "They can execute malicious code on your computer"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Cookies are small data packets that servers store in browsers to maintain state across HTTP's stateless request model. Session cookies track login status, preference cookies remember settings, and tracking cookies follow users across sites. Privacy regulations now require transparent cookie consent.",
+    "whyItMatters": "Cookies are the primary mechanism for maintaining user sessions on the web. Understanding their security attributes and privacy implications is essential for web development.",
+    "takeaways": [
+      "Cookies maintain state across stateless HTTP requests",
+      "HttpOnly and Secure flags protect cookies from common attacks",
+      "SameSite attribute limits cross-site cookie transmission"
+    ],
+    "keywords": [
+      "cookies",
+      "web sessions",
+      "session management",
+      "SameSite"
+    ],
+    "faq": [
+      {
+        "question": "What are the security risks of cookies?",
+        "answer": "Cross-site scripting can steal cookies if HttpOnly is not set. Cross-site request forgery uses cookies to perform unauthorized actions. Session hijacking intercepts cookies to impersonate users. Secure, HttpOnly, and SameSite attributes mitigate these risks."
+      },
+      {
+        "question": "What is the SameSite cookie attribute?",
+        "answer": "SameSite controls whether cookies are sent with cross-site requests. Strict sends cookies only to the same site. Lax allows cookies on top-level navigations like clicking a link. None allows all cross-site requests but requires Secure. Chrome defaults to Lax, blocking most cross-site cookie abuse."
+      }
+    ]
   }
 }

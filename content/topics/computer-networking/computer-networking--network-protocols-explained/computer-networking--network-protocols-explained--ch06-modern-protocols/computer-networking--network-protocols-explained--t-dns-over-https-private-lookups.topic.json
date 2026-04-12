@@ -45,5 +45,30 @@
       "The integrity of DNS by adding digital signatures"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "DNS-over-HTTPS encrypts DNS queries inside HTTPS connections, preventing ISPs, network operators, and eavesdroppers from seeing which domains you visit.",
+    "whyItMatters": "Traditional DNS queries are sent in plain text, revealing every website you visit to your network operator. DNS-over-HTTPS closes this major privacy gap in internet communication.",
+    "takeaways": [
+      "DoH encrypts DNS queries inside standard HTTPS connections",
+      "Network operators cannot see which domains are being resolved",
+      "Major browsers enable DoH by default with trusted resolvers"
+    ],
+    "keywords": [
+      "DNS-over-HTTPS",
+      "DoH",
+      "encrypted DNS",
+      "DNS privacy"
+    ],
+    "faq": [
+      {
+        "question": "What is the difference between DoH and DoT?",
+        "answer": "DNS-over-HTTPS sends queries over port 443 mixed with regular web traffic, making it nearly impossible to block. DNS-over-TLS uses a dedicated port 853, which is easier for networks to identify and block. DoH provides stronger privacy but makes network-level DNS filtering more difficult."
+      },
+      {
+        "question": "Does DoH affect network security?",
+        "answer": "DoH prevents network administrators from seeing DNS queries, which can bypass security filters and content policies. Organizations may need to configure endpoint policies to use internal DNS resolvers. The privacy benefits for users must be balanced against organizational security requirements."
+      }
+    ]
   }
 }

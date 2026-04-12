@@ -45,5 +45,30 @@
       "Made encryption optional for performance"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "TLS secures communication by combining asymmetric cryptography for key exchange, symmetric ciphers for bulk encryption, and certificates for identity verification. TLS 1.3 simplified the handshake to one round trip, removed outdated cipher suites, and mandates forward secrecy for all connections.",
+    "whyItMatters": "TLS protects nearly all sensitive internet traffic. Understanding its layered security model reveals how data remains confidential and tamper-proof across untrusted networks.",
+    "takeaways": [
+      "TLS 1.3 completes the handshake in a single round trip",
+      "Forward secrecy ensures past traffic stays secure if keys leak",
+      "Certificate chains build trust from root CAs to individual sites"
+    ],
+    "keywords": [
+      "TLS",
+      "transport layer security",
+      "cipher suite",
+      "forward secrecy"
+    ],
+    "faq": [
+      {
+        "question": "What is forward secrecy?",
+        "answer": "Forward secrecy uses ephemeral key exchange so that each session generates unique encryption keys. Even if the server's long-term private key is later compromised, recorded past sessions cannot be decrypted. TLS 1.3 mandates forward secrecy by requiring ephemeral Diffie-Hellman key exchange."
+      },
+      {
+        "question": "Why was TLS 1.3 a major improvement?",
+        "answer": "TLS 1.3 removed support for vulnerable cipher suites like RC4 and CBC mode, reduced the handshake from two round trips to one, mandated forward secrecy, and simplified the protocol. Zero round-trip resumption enables even faster reconnections to previously visited servers."
+      }
+    ]
   }
 }

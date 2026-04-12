@@ -45,5 +45,30 @@
       "A fire destroyed GitHub's primary data center"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "In October 2018, a 43-second network interruption triggered GitHub's MySQL database to fail over to a secondary. The secondary had fallen behind, creating data inconsistencies. GitHub chose data integrity over availability and spent 24 hours carefully reconciling before full restoration.",
+    "whyItMatters": "GitHub's response demonstrated that sometimes the right choice is to stay offline longer to protect data integrity rather than rush back online with corrupt data.",
+    "takeaways": [
+      "A 43-second blip triggered a database failover cascade",
+      "The secondary database had fallen behind the primary",
+      "GitHub prioritized data integrity over speed of recovery"
+    ],
+    "keywords": [
+      "GitHub outage",
+      "database failover",
+      "data integrity",
+      "MySQL replication"
+    ],
+    "faq": [
+      {
+        "question": "Why did a 43-second interruption cause a 24-hour outage?",
+        "answer": "The brief interruption triggered automatic failover to a secondary database that had replication lag. New writes went to the secondary while the primary had different data. Reconciling the two without data loss required careful, manual work that took 24 hours."
+      },
+      {
+        "question": "What lesson does this teach about database failover?",
+        "answer": "Automatic failover can create worse problems if secondaries are not perfectly synchronized. Replication lag must be monitored continuously. GitHub's decision to prioritize correctness over speed protected millions of repositories from data corruption."
+      }
+    ]
   }
 }

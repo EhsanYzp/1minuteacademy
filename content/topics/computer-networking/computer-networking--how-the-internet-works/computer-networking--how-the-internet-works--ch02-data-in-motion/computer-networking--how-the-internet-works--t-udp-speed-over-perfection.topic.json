@@ -45,5 +45,30 @@
       "UDP can carry larger files than TCP"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "UDP sends packets without establishing connections, without acknowledgments, and without retransmission. This makes it fast but unreliable. UDP is used for video streaming, online gaming, DNS queries, and voice calls where speed matters more than perfect delivery.",
+    "whyItMatters": "UDP enables real-time applications where a late packet is worse than a lost packet. It is the protocol behind live video, voice, and gaming responsiveness.",
+    "takeaways": [
+      "UDP sends data without connection setup or acknowledgment",
+      "Lost packets are not retransmitted, reducing latency",
+      "Ideal for streaming, gaming, and real-time communication"
+    ],
+    "keywords": [
+      "UDP",
+      "connectionless",
+      "real-time",
+      "low latency"
+    ],
+    "faq": [
+      {
+        "question": "Why is UDP better than TCP for gaming and video calls?",
+        "answer": "In a video call, a retransmitted packet arrives too late to be useful. Playing old audio or video frames creates jarring interruptions. UDP drops late packets and moves on, maintaining smooth real-time playback. The slight quality loss from dropped packets is preferable to delays."
+      },
+      {
+        "question": "Can applications build reliability on top of UDP?",
+        "answer": "Yes. QUIC, developed by Google and used in HTTP/3, runs over UDP but adds its own reliability, encryption, and congestion control. This allows applications to customize which data needs reliable delivery and which does not, unlike TCP's all-or-nothing approach."
+      }
+    ]
   }
 }

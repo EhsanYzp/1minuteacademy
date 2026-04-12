@@ -45,5 +45,30 @@
       "From the sender's SMTP server directly"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "DomainKeys Identified Mail adds a cryptographic signature to emails that proves the message was sent by the domain and was not altered in transit. The sending server signs the message with a private key and publishes the public key in DNS for receivers to verify authenticity.",
+    "whyItMatters": "DKIM provides cryptographic proof that an email is genuine and unmodified. It is the strongest technical defense against email forgery and tampering.",
+    "takeaways": [
+      "DKIM signs emails with a private key held by the sending domain",
+      "Receivers verify signatures using the public key published in DNS",
+      "DKIM detects both sender forgery and message tampering"
+    ],
+    "keywords": [
+      "DKIM",
+      "email signature",
+      "cryptographic authentication",
+      "message integrity"
+    ],
+    "faq": [
+      {
+        "question": "What does a DKIM signature actually verify?",
+        "answer": "It verifies that specific email headers and the body were not modified after the sending server signed them. It also proves the message was sent by a server holding the domain's private key. This prevents both forgery and tampering during transit."
+      },
+      {
+        "question": "Can DKIM be defeated?",
+        "answer": "DKIM can break when mailing lists or forwarding services modify the message body or headers. Replay attacks can resend a legitimately signed message. DKIM alone does not tell receivers what to do with unsigned messages. DMARC adds policy enforcement on top of DKIM."
+      }
+    ]
   }
 }

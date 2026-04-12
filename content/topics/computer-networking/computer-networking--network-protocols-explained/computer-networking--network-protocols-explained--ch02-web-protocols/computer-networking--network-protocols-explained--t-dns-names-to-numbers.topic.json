@@ -45,5 +45,30 @@
       "Email addresses to server locations"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "DNS translates human-readable domain names like example.com into IP addresses that computers use to route traffic. The hierarchical system of root servers, TLD servers, and authoritative name servers resolves billions of queries daily, with caching at every level for speed.",
+    "whyItMatters": "DNS is the first step of almost every internet interaction. A DNS failure or slowdown makes the entire internet appear broken, even when servers are perfectly healthy.",
+    "takeaways": [
+      "DNS resolves domain names to IP addresses hierarchically",
+      "Recursive resolvers cache answers to speed up repeated queries",
+      "TTL values control how long DNS answers are cached"
+    ],
+    "keywords": [
+      "DNS",
+      "domain name resolution",
+      "name server",
+      "DNS cache"
+    ],
+    "faq": [
+      {
+        "question": "What happens during a DNS lookup?",
+        "answer": "Your device asks a recursive resolver, which checks its cache. If not cached, it queries a root server for the TLD server, then the TLD server for the authoritative name server, then the authoritative server for the IP address. Each answer is cached per its TTL value."
+      },
+      {
+        "question": "What is a DNS TTL value?",
+        "answer": "Time-to-live tells resolvers how long to cache a DNS answer in seconds. A short TTL like 60 seconds allows fast changes but increases query load. A long TTL like 86400 seconds reduces load but delays propagation of changes. Most sites use TTLs between 300 and 3600 seconds."
+      }
+    ]
   }
 }

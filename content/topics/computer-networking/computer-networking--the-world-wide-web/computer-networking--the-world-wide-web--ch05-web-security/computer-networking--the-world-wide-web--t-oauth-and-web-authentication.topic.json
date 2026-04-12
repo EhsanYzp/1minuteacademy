@@ -45,5 +45,30 @@
       "Full access to the user's identity provider account"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "OAuth 2.0 enables secure delegated authorization where users grant third-party applications limited access to their accounts without sharing passwords. OpenID Connect adds an identity layer for authentication. Together they power sign-in-with-Google, social logins, and API access across the web.",
+    "whyItMatters": "OAuth and OIDC are the security foundation of the connected web. Every social login, API integration, and third-party app authorization relies on these protocols.",
+    "takeaways": [
+      "OAuth grants limited access tokens instead of sharing passwords",
+      "OpenID Connect adds authentication to OAuth's authorization framework",
+      "Scopes restrict what permissions applications receive"
+    ],
+    "keywords": [
+      "OAuth",
+      "OpenID Connect",
+      "web authentication",
+      "access tokens"
+    ],
+    "faq": [
+      {
+        "question": "What is the OAuth authorization code flow?",
+        "answer": "The user clicks login, the app redirects to the authorization server, the user authenticates and consents, the server redirects back with a short-lived code, the app exchanges this code for access and refresh tokens server-side. This flow keeps tokens off the browser for better security."
+      },
+      {
+        "question": "What are the risks of OAuth?",
+        "answer": "Misconfigured redirect URIs can leak tokens. Overly broad scopes grant more access than needed. Token theft enables account takeover. CSRF attacks can trick users into linking attacker accounts. PKCE extension mitigates several attacks for public clients like mobile and SPA applications."
+      }
+    ]
   }
 }

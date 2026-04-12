@@ -45,5 +45,30 @@
       "HTTP"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "ICMP carries error messages and diagnostic information between network devices. Ping uses ICMP echo requests and replies to test reachability and measure round-trip time. Traceroute uses ICMP to map the path packets take through the network, identifying each router along the way.",
+    "whyItMatters": "ICMP is the primary tool for network troubleshooting. Ping and traceroute are the first commands every network engineer runs when diagnosing connectivity problems.",
+    "takeaways": [
+      "Ping uses ICMP echo to test if a host is reachable",
+      "Traceroute maps each hop between source and destination",
+      "ICMP error messages report unreachable hosts and network problems"
+    ],
+    "keywords": [
+      "ICMP",
+      "ping",
+      "traceroute",
+      "network diagnostics"
+    ],
+    "faq": [
+      {
+        "question": "How does traceroute work?",
+        "answer": "Traceroute sends packets with incrementing TTL values starting at 1. Each router decrements the TTL and discards packets when it reaches zero, sending back an ICMP time-exceeded message. This reveals each hop's IP address and round-trip time, mapping the entire path to the destination."
+      },
+      {
+        "question": "Why do some hosts not respond to ping?",
+        "answer": "Many firewalls and servers block ICMP echo requests for security reasons. Cloud providers often disable ping by default. A host that does not respond to ping may still be fully operational and reachable on other ports. Use TCP-based checks when ICMP is blocked."
+      }
+    ]
   }
 }

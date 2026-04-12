@@ -45,5 +45,30 @@
       "Hexadecimal"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "MIME extends email beyond plain text to support attachments, images, HTML formatting, and multiple character sets. It encodes binary files as text using Base64 so they can travel through text-only SMTP servers. Every email attachment you send uses MIME encoding.",
+    "whyItMatters": "Without MIME, email could only carry plain ASCII text. MIME made email a rich communication medium supporting any file type, formatting, and language.",
+    "takeaways": [
+      "MIME enables attachments, HTML formatting, and character sets",
+      "Binary files are encoded as text using Base64 for SMTP transport",
+      "MIME types identify the content type of each message part"
+    ],
+    "keywords": [
+      "MIME",
+      "email attachments",
+      "Base64",
+      "content type"
+    ],
+    "faq": [
+      {
+        "question": "Why do attachments make emails so much larger?",
+        "answer": "Base64 encoding converts binary data to text characters, increasing size by about 33 percent. A 3 MB photo becomes roughly 4 MB in the email. This overhead exists because SMTP was designed for text only, and MIME must encode binary data as text for transport."
+      },
+      {
+        "question": "What are MIME types used for?",
+        "answer": "MIME types tell the receiving client what each part of the email contains: text/plain for text, image/jpeg for photos, application/pdf for PDFs. The client uses this to decide how to display or handle each part. Web servers also use MIME types for HTTP responses."
+      }
+    ]
   }
 }

@@ -45,5 +45,30 @@
       "The attachments included in the email"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Email headers contain metadata about the message including sender, recipient, date, subject, and a record of every server the email passed through. The Received headers create a trace route showing the email's journey. Headers are essential for debugging delivery problems and detecting spoofing.",
+    "whyItMatters": "Email headers are the forensic evidence of delivery. They reveal where an email really came from, what path it took, and whether authentication checks passed or failed.",
+    "takeaways": [
+      "Headers record every server the email passed through",
+      "Received headers create a trace route of the delivery path",
+      "Authentication results from SPF, DKIM, and DMARC appear in headers"
+    ],
+    "keywords": [
+      "email headers",
+      "Received header",
+      "metadata",
+      "email forensics"
+    ],
+    "faq": [
+      {
+        "question": "How do you read email headers to trace a message?",
+        "answer": "Received headers are added by each server in reverse order. Read from bottom to top to follow the chronological path. Each Received line shows the server name, IP address, and timestamp. Comparing timestamps reveals where delays occurred in the delivery chain."
+      },
+      {
+        "question": "Can email headers be forged?",
+        "answer": "The From header is trivially forgeable. However, Received headers added by each server are more reliable. SPF, DKIM, and DMARC authentication results in headers reveal whether the sender is legitimate. Modern email clients use these authentication results to flag suspicious messages."
+      }
+    ]
   }
 }

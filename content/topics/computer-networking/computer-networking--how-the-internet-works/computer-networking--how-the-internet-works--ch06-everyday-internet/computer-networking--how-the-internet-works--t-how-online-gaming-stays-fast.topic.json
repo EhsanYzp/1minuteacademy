@@ -45,5 +45,30 @@
       "UDP encrypts game data automatically"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Online games use UDP for speed, client-side prediction to mask latency, and server reconciliation to maintain consistency. The game client renders actions immediately while the server validates and corrects them.",
+    "whyItMatters": "Online gaming pushes network performance to the extreme. The techniques used to hide latency are relevant to any real-time application needing instant responsiveness.",
+    "takeaways": [
+      "Games use UDP for minimal latency over reliable delivery",
+      "Client-side prediction renders actions before server confirmation",
+      "Server reconciliation corrects discrepancies between client and server"
+    ],
+    "keywords": [
+      "online gaming",
+      "netcode",
+      "latency compensation",
+      "UDP gaming"
+    ],
+    "faq": [
+      {
+        "question": "What is client-side prediction in gaming?",
+        "answer": "When you press a key, the game client immediately shows the result without waiting for the server. The server later confirms or corrects the action. If the server disagrees, the client rewinds and replays. This makes the game feel responsive despite network latency."
+      },
+      {
+        "question": "Why is ping so important for online games?",
+        "answer": "Ping measures the round-trip time to the game server. Lower ping means less delay between your action and the server's response. High ping makes client-side prediction less accurate, causing rubber-banding and desyncs. Competitive gamers need under 30ms ping for fair play."
+      }
+    ]
   }
 }

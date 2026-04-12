@@ -45,5 +45,30 @@
       "404 Not Found"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Browser caching stores copies of web resources locally to avoid re-downloading them. Cache-Control headers tell browsers how long resources stay fresh. Conditional requests check if cached resources have changed using ETags.",
+    "whyItMatters": "Caching is the most impactful web performance optimization. A well-cached site loads in milliseconds on return visits because most resources come from the local disk instead of the network.",
+    "takeaways": [
+      "Cache-Control max-age sets how long browsers keep resources fresh",
+      "ETags enable conditional requests that check for changes",
+      "Immutable file names with hashes enable aggressive long-term caching"
+    ],
+    "keywords": [
+      "browser cache",
+      "Cache-Control",
+      "ETag",
+      "web caching"
+    ],
+    "faq": [
+      {
+        "question": "How does Cache-Control work?",
+        "answer": "Cache-Control is an HTTP header that directs caching behavior. max-age=3600 means the resource is fresh for one hour. no-cache forces revalidation before each use. no-store prevents caching entirely. public allows shared caches; private restricts to the user's browser only."
+      },
+      {
+        "question": "What is cache busting?",
+        "answer": "Cache busting forces browsers to download a new version of a changed resource. The most common technique adds a content hash to the filename, like styles.a1b2c3.css. When the file changes, the hash changes, creating a new URL that bypasses the old cached version completely."
+      }
+    ]
   }
 }

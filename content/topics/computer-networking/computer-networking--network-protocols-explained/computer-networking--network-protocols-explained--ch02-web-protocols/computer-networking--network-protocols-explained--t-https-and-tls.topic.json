@@ -45,5 +45,31 @@
       "By sharing its private encryption key"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "HTTPS wraps HTTP inside a TLS encrypted tunnel, protecting data confidentiality, integrity, and server authenticity. TLS uses certificates to verify server identity and asymmetric cryptography to establish a shared secret, then encrypts all traffic with fast symmetric ciphers.",
+    "whyItMatters": "HTTPS is now the baseline for all web communication. Without it, passwords, personal data, and financial information travel in plain text visible to anyone on the network path.",
+    "takeaways": [
+      "TLS encrypts all HTTP traffic between browser and server",
+      "Certificates verify the server is who it claims to be",
+      "Modern TLS 1.3 completes the handshake in a single round trip"
+    ],
+    "keywords": [
+      "HTTPS",
+      "TLS",
+      "encryption",
+      "certificates",
+      "secure web"
+    ],
+    "faq": [
+      {
+        "question": "How does the TLS handshake work?",
+        "answer": "The client sends supported cipher suites, the server responds with its certificate and chosen cipher. The client verifies the certificate chain and they exchange key material to derive shared encryption keys. TLS 1.3 completes this in one round trip, while TLS 1.2 requires two."
+      },
+      {
+        "question": "Is HTTPS required for all websites?",
+        "answer": "Browsers now mark HTTP sites as insecure and may block certain features. Search engines rank HTTPS sites higher. Let's Encrypt provides free certificates, eliminating cost barriers. Every website should use HTTPS, even if it serves only static content, to protect user privacy."
+      }
+    ]
   }
 }

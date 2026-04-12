@@ -45,5 +45,30 @@
       "It assigns IP addresses to individual users"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Border Gateway Protocol connects the internet's autonomous systems, which are large networks operated by ISPs, companies, and institutions. BGP routers exchange information about reachable networks and select paths based on policy, not just shortest distance.",
+    "whyItMatters": "BGP is the protocol that holds the internet together. Its policy-based routing reflects business relationships, and BGP errors have caused massive outages.",
+    "takeaways": [
+      "BGP connects autonomous systems across the internet",
+      "It uses policy-based path selection, not just shortest path",
+      "BGP misconfigurations have caused major internet outages"
+    ],
+    "keywords": [
+      "BGP",
+      "autonomous systems",
+      "internet routing",
+      "path selection"
+    ],
+    "faq": [
+      {
+        "question": "Why is BGP considered fragile?",
+        "answer": "BGP was designed with implicit trust between operators. Any autonomous system can announce routes to any network, whether legitimate or not. Route hijacking, whether accidental or malicious, can redirect traffic globally. RPKI adds verification but adoption is incomplete."
+      },
+      {
+        "question": "How did a BGP error take down Facebook in 2021?",
+        "answer": "Facebook accidentally withdrew its own BGP routes during a maintenance operation. Every other network lost the path to Facebook's IP ranges. DNS servers for Facebook became unreachable. The outage lasted six hours because engineers could not access internal tools to fix it."
+      }
+    ]
   }
 }

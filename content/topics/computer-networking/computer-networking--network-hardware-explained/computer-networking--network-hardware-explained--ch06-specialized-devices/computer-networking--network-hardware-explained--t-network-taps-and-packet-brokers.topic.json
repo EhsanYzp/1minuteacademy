@@ -45,5 +45,30 @@
       "They compress traffic to save storage space"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Network TAPs are passive hardware devices that create exact copies of traffic flowing through a network link, feeding those copies to monitoring tools without affecting the production network. Packet brokers aggregate, filter, and distribute TAP outputs to multiple monitoring tools efficiently.",
+    "whyItMatters": "TAPs provide guaranteed, unaltered access to every packet on a link. Unlike mirror ports, they cannot drop packets under load, making them essential for accurate security monitoring and compliance.",
+    "takeaways": [
+      "TAPs passively copy all traffic without affecting the live link",
+      "Packet brokers aggregate and filter traffic for monitoring tools",
+      "TAPs are more reliable than SPAN ports for security monitoring"
+    ],
+    "keywords": [
+      "network TAP",
+      "packet broker",
+      "traffic mirroring",
+      "SPAN port"
+    ],
+    "faq": [
+      {
+        "question": "Why use a TAP instead of a SPAN or mirror port?",
+        "answer": "SPAN ports can drop packets when the switch is under heavy load and may alter frame timing. TAPs are passive devices that copy every packet regardless of load, preserving timing accuracy. For security monitoring where missing even one packet matters, TAPs are the reliable choice."
+      },
+      {
+        "question": "What does a packet broker do?",
+        "answer": "A packet broker sits between TAPs and monitoring tools, aggregating traffic from multiple TAPs, filtering out irrelevant packets, deduplicating copies, and distributing specific subsets to different tools."
+      }
+    ]
   }
 }

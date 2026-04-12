@@ -45,5 +45,30 @@
       "Encrypting HTTP traffic with TLS"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "HTTP/2 introduced binary framing, multiplexing, header compression, and server push to dramatically improve web performance over HTTP/1.1. Multiplexing allows multiple requests and responses to share a single TCP connection simultaneously, eliminating the head-of-line blocking problem.",
+    "whyItMatters": "HTTP/2 doubled web page loading speed for many sites by eliminating the inefficiencies of HTTP/1.1's serial request model. It is now the default protocol for the majority of web traffic.",
+    "takeaways": [
+      "Multiplexing sends multiple requests over one TCP connection",
+      "Header compression with HPACK reduces overhead significantly",
+      "Binary framing replaces text-based HTTP/1.1 for efficiency"
+    ],
+    "keywords": [
+      "HTTP/2",
+      "multiplexing",
+      "header compression",
+      "binary framing"
+    ],
+    "faq": [
+      {
+        "question": "What is head-of-line blocking?",
+        "answer": "In HTTP/1.1, requests on a single connection are processed sequentially. A slow response blocks all subsequent requests. HTTP/2 multiplexing interleaves request and response frames so a slow resource does not block others. However, TCP-level head-of-line blocking can still occur with packet loss."
+      },
+      {
+        "question": "Does HTTP/2 require HTTPS?",
+        "answer": "The HTTP/2 specification allows unencrypted connections, but all major browsers only support HTTP/2 over TLS. In practice, you need a valid HTTPS certificate to use HTTP/2 in browsers. This effectively made TLS mandatory for modern web performance."
+      }
+    ]
   }
 }

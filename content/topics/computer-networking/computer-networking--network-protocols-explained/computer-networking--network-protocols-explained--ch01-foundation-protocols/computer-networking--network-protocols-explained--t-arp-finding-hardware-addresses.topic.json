@@ -45,5 +45,30 @@
       "Port numbers to application names"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "ARP maps IP addresses to MAC hardware addresses on a local network so frames can be delivered to the correct physical device. When a device needs to communicate with a local IP address, it broadcasts an ARP request and the target responds with its MAC address, which is then cached.",
+    "whyItMatters": "ARP is the glue between the logical IP layer and the physical network. Without ARP, devices could not translate IP addresses into the MAC addresses needed to actually deliver frames on Ethernet.",
+    "takeaways": [
+      "ARP maps IP addresses to MAC addresses on the local network",
+      "ARP requests are broadcast to all devices on the segment",
+      "ARP caches store mappings to avoid repeated broadcasts"
+    ],
+    "keywords": [
+      "ARP",
+      "MAC address",
+      "address resolution",
+      "Ethernet addressing"
+    ],
+    "faq": [
+      {
+        "question": "What is an ARP cache?",
+        "answer": "The ARP cache stores recently resolved IP-to-MAC mappings so devices do not need to broadcast ARP requests for every packet. Entries typically expire after a few minutes. You can view the ARP cache on most systems with the arp -a command."
+      },
+      {
+        "question": "What is ARP spoofing?",
+        "answer": "ARP spoofing sends fake ARP replies to associate an attacker's MAC address with a legitimate IP address. This redirects traffic through the attacker, enabling man-in-the-middle attacks. Dynamic ARP Inspection on managed switches prevents this by validating ARP packets against trusted bindings."
+      }
+    ]
   }
 }

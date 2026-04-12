@@ -45,5 +45,30 @@
       "To roll back all changes automatically"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Canary deployments roll out changes to a small percentage of servers first, monitor for problems, then gradually expand. Named after canaries in coal mines, this strategy catches dangerous changes before they affect all users.",
+    "whyItMatters": "Canary deployments are the single most effective practice for preventing configuration and code changes from causing global outages.",
+    "takeaways": [
+      "Deploy changes to a small subset of servers first",
+      "Monitor error rates and performance before expanding",
+      "Automatic rollback on anomaly detection prevents cascading failure"
+    ],
+    "keywords": [
+      "canary deployment",
+      "progressive rollout",
+      "safe deployment",
+      "rollback"
+    ],
+    "faq": [
+      {
+        "question": "How does a canary deployment work in practice?",
+        "answer": "A change is deployed to one or two percent of servers. Automated monitoring compares error rates, latency, and resource usage against the unchanged servers. If metrics stay healthy, the rollout expands gradually. If anomalies are detected, the change is automatically rolled back."
+      },
+      {
+        "question": "Why don't all companies use canary deployments?",
+        "answer": "They require sophisticated monitoring, automated comparison, and rollback infrastructure. Small organizations may lack the tooling. Some changes like database schema migrations are difficult to canary. But for most code and configuration changes, canaries are straightforward and effective."
+      }
+    ]
   }
 }

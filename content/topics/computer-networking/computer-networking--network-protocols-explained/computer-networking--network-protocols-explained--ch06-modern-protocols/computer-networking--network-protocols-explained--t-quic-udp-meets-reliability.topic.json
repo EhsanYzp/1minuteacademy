@@ -45,5 +45,30 @@
       "Resolving domain names"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "QUIC is a transport protocol built on UDP that provides reliable, encrypted, multiplexed connections with lower latency than TCP and TLS combined. It integrates encryption into the transport layer, supports connection migration when IP addresses change, and eliminates head-of-line blocking.",
+    "whyItMatters": "QUIC is replacing TCP as the transport for web traffic through HTTP/3. Its design solves fundamental TCP limitations that have constrained internet performance for decades.",
+    "takeaways": [
+      "QUIC provides reliability over UDP with built-in encryption",
+      "Connection migration keeps sessions alive during network changes",
+      "Independent streams prevent one lost packet from blocking others"
+    ],
+    "keywords": [
+      "QUIC",
+      "transport protocol",
+      "connection migration",
+      "UDP reliability"
+    ],
+    "faq": [
+      {
+        "question": "How does QUIC handle connection migration?",
+        "answer": "QUIC identifies connections by a connection ID rather than the IP address and port tuple that TCP uses. When a phone switches from Wi-Fi to cellular, the IP changes but the connection ID stays the same, so the QUIC session continues without interruption or a new handshake."
+      },
+      {
+        "question": "Why is QUIC built on UDP instead of creating a new protocol?",
+        "answer": "Deploying a new transport protocol would require updating every router and firewall on the internet. By running over UDP, QUIC works through existing network infrastructure. UDP passes through almost all firewalls and NAT devices, allowing QUIC to deploy without waiting for network upgrades."
+      }
+    ]
   }
 }

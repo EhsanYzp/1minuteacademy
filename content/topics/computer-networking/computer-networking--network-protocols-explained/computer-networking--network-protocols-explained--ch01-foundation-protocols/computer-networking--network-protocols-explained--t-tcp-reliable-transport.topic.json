@@ -45,5 +45,30 @@
       "Encryption of all transmitted data"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "TCP provides reliable, ordered, error-checked delivery of data between applications over IP networks. It establishes connections with a three-way handshake, tracks every byte with sequence numbers, retransmits lost packets, and uses flow control to prevent overwhelming receivers.",
+    "whyItMatters": "TCP carries the vast majority of internet traffic including web pages, email, and file transfers. Its reliability guarantees are what make the unreliable internet feel dependable to applications.",
+    "takeaways": [
+      "TCP uses a three-way handshake to establish connections",
+      "Sequence numbers and acknowledgments ensure every byte arrives",
+      "Flow control and congestion control prevent network overload"
+    ],
+    "keywords": [
+      "TCP",
+      "reliable transport",
+      "three-way handshake",
+      "congestion control"
+    ],
+    "faq": [
+      {
+        "question": "How does TCP handle lost packets?",
+        "answer": "TCP assigns sequence numbers to every byte and requires acknowledgment from the receiver. If an acknowledgment does not arrive within a timeout period, the sender retransmits the data. Fast retransmit triggers resending after three duplicate acknowledgments without waiting for the timeout."
+      },
+      {
+        "question": "What is the TCP three-way handshake?",
+        "answer": "The client sends a SYN packet, the server responds with SYN-ACK, and the client replies with ACK. This three-step process establishes sequence numbers for both directions and confirms both sides are ready to communicate. It adds one round-trip of latency before data transfer begins."
+      }
+    ]
   }
 }

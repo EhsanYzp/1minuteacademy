@@ -45,5 +45,30 @@
       "To make the data unreadable for security"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Data sent over the internet is broken into small packets, each carrying a piece of the original message plus headers with routing information. Packets travel independently across the network and are reassembled at the destination. This packet switching makes the internet efficient and resilient.",
+    "whyItMatters": "Packet switching is the fundamental design that makes the internet work. It allows millions of conversations to share the same wires simultaneously.",
+    "takeaways": [
+      "Data is split into small packets for transmission",
+      "Each packet carries headers with source and destination addresses",
+      "Packets travel independently and are reassembled at the destination"
+    ],
+    "keywords": [
+      "packets",
+      "packet switching",
+      "data transmission",
+      "fragmentation"
+    ],
+    "faq": [
+      {
+        "question": "Why not send data as one continuous stream?",
+        "answer": "Sending one continuous stream would monopolize the connection and prevent other traffic from using it. Packets allow multiplexing: many conversations share the same links simultaneously. If one packet is lost, only that packet needs retransmission, not the entire message."
+      },
+      {
+        "question": "What happens if packets arrive out of order?",
+        "answer": "TCP handles reordering. Each packet has a sequence number indicating its position in the original data. The receiving device holds packets in a buffer and reassembles them in the correct order before passing the complete data to the application."
+      }
+    ]
   }
 }

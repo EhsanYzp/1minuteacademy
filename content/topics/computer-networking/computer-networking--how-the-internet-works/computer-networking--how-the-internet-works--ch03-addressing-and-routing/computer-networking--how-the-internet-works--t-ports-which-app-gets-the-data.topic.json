@@ -45,5 +45,30 @@
       "To assign IP addresses to devices"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Ports are numerical identifiers that direct incoming data to the correct application on a device. While the IP address identifies the device, the port identifies which program should receive the data. HTTP uses port 80, HTTPS uses 443, and applications can use any of 65,535 available ports.",
+    "whyItMatters": "Ports allow a single device to run many networked applications simultaneously. Without ports, a computer could only communicate with one service at a time.",
+    "takeaways": [
+      "Ports identify which application should receive incoming data",
+      "Well-known ports: HTTP is 80, HTTPS is 443, SSH is 22",
+      "There are 65,535 available ports per protocol"
+    ],
+    "keywords": [
+      "ports",
+      "port numbers",
+      "TCP ports",
+      "network addressing"
+    ],
+    "faq": [
+      {
+        "question": "What is the difference between well-known and ephemeral ports?",
+        "answer": "Well-known ports are 0 to 1023, reserved for standard services like HTTP and SSH. Registered ports are 1024 to 49151 for specific applications. Ephemeral ports, 49152 to 65535, are assigned temporarily by the OS for outgoing connections. The client uses an ephemeral port to receive responses."
+      },
+      {
+        "question": "Why do firewalls block certain ports?",
+        "answer": "Firewalls block ports to prevent unauthorized access to services. An open port means a program is listening for connections. Leaving unnecessary ports open creates attack surface. Firewalls typically allow only ports 80 and 443 for web traffic and block everything else by default."
+      }
+    ]
   }
 }

@@ -45,5 +45,30 @@
       "A new version of TCP called TCP/2"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "HTTP/3 replaces TCP with QUIC as its transport layer, eliminating TCP's head-of-line blocking and reducing connection setup time. QUIC builds encryption, multiplexing, and reliability directly into the transport layer over UDP, enabling faster page loads especially on unreliable mobile networks.",
+    "whyItMatters": "HTTP/3 solves the last major performance bottleneck of web communication. By moving to QUIC over UDP, it delivers faster connections and better resilience on mobile and lossy networks.",
+    "takeaways": [
+      "HTTP/3 uses QUIC over UDP instead of TCP for transport",
+      "Zero-RTT connection resumption enables instant reconnections",
+      "Per-stream error recovery eliminates head-of-line blocking"
+    ],
+    "keywords": [
+      "HTTP/3",
+      "QUIC",
+      "UDP transport",
+      "zero-RTT"
+    ],
+    "faq": [
+      {
+        "question": "How is HTTP/3 faster than HTTP/2?",
+        "answer": "HTTP/2 over TCP suffers head-of-line blocking when a single packet is lost, stalling all streams. HTTP/3 uses QUIC where each stream is independent, so one lost packet only affects its own stream. QUIC also combines the TLS handshake with connection setup, saving a round trip."
+      },
+      {
+        "question": "Is HTTP/3 widely supported?",
+        "answer": "All major browsers and many CDNs support HTTP/3. Google, Cloudflare, and Facebook already serve significant traffic over HTTP/3. Adoption is growing rapidly. Server software like Nginx and Caddy support it natively, and cloud load balancers are adding HTTP/3 termination."
+      }
+    ]
   }
 }

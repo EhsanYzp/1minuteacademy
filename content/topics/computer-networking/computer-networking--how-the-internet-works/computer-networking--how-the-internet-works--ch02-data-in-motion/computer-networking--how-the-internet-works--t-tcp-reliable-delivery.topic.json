@@ -45,5 +45,30 @@
       "Restarts the entire transfer from scratch"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "TCP ensures data arrives complete and in order by numbering packets, requiring acknowledgments, and retransmitting lost packets. It provides reliable delivery at the cost of some speed. TCP is used for web pages, email, file transfers, and any application that cannot tolerate missing data.",
+    "whyItMatters": "TCP's reliability makes the web, email, and file transfer work correctly. Without it, missing packets would produce corrupted pages and incomplete downloads.",
+    "takeaways": [
+      "TCP numbers packets and requires acknowledgment of receipt",
+      "Lost packets are automatically retransmitted",
+      "TCP sacrifices speed for guaranteed complete delivery"
+    ],
+    "keywords": [
+      "TCP",
+      "reliable delivery",
+      "packet acknowledgment",
+      "retransmission"
+    ],
+    "faq": [
+      {
+        "question": "How does TCP detect lost packets?",
+        "answer": "TCP uses acknowledgment timers. When the sender does not receive an acknowledgment within the expected time, it assumes the packet was lost and retransmits. The receiver can also signal gaps using selective acknowledgment, telling the sender exactly which packets are missing."
+      },
+      {
+        "question": "Why does TCP slow down during congestion?",
+        "answer": "TCP uses congestion control algorithms that reduce sending speed when packet loss is detected. Loss usually indicates network congestion. By slowing down, TCP prevents overwhelming the network. All TCP connections cooperatively reduce their rates during congestion."
+      }
+    ]
   }
 }

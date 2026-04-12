@@ -45,5 +45,30 @@
       "It compresses data before sending"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "UDP sends datagrams without establishing connections, tracking delivery, or guaranteeing order. This minimal overhead makes it ideal for time-sensitive applications like video streaming, online gaming, and DNS lookups where speed matters more than guaranteed delivery of every packet.",
+    "whyItMatters": "UDP powers the real-time applications that users care about most. Understanding when to use UDP versus TCP is a fundamental network design decision.",
+    "takeaways": [
+      "UDP sends datagrams with no connection setup or delivery guarantee",
+      "Lower overhead means less latency than TCP for each packet",
+      "Video streaming and gaming prefer UDP for real-time performance"
+    ],
+    "keywords": [
+      "UDP",
+      "datagram",
+      "connectionless",
+      "real-time protocol"
+    ],
+    "faq": [
+      {
+        "question": "When should you use UDP instead of TCP?",
+        "answer": "Use UDP when speed matters more than reliability: live video, voice calls, online gaming, and DNS queries. A dropped video frame is better than a delayed one. TCP's retransmissions add latency that ruins real-time experiences. Many modern protocols build their own reliability on top of UDP."
+      },
+      {
+        "question": "Is the UDP protocol unreliable?",
+        "answer": "UDP itself does not guarantee delivery, order, or duplicate protection. But applications can build reliability features on top of UDP as needed. QUIC, for example, runs over UDP and provides reliability comparable to TCP. UDP gives applications the freedom to choose their own trade-offs."
+      }
+    ]
   }
 }

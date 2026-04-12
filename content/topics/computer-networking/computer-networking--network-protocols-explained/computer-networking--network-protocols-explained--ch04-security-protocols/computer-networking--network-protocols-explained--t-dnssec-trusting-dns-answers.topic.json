@@ -45,5 +45,30 @@
       "DDoS attacks on DNS servers"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "DNSSEC adds cryptographic signatures to DNS records, allowing resolvers to verify that responses are authentic and have not been tampered with. Each zone signs its records with a private key, and parent zones vouch for child zones through a chain of trust anchored at the DNS root.",
+    "whyItMatters": "Without DNSSEC, attackers can forge DNS responses to redirect users to malicious sites. DNSSEC prevents cache poisoning and ensures DNS answers genuinely come from the authorized source.",
+    "takeaways": [
+      "DNSSEC signs DNS records with cryptographic signatures",
+      "A chain of trust from the root verifies signature authenticity",
+      "Resolvers reject responses that fail signature validation"
+    ],
+    "keywords": [
+      "DNSSEC",
+      "DNS security",
+      "digital signatures",
+      "DNS authentication"
+    ],
+    "faq": [
+      {
+        "question": "How does DNSSEC prevent DNS spoofing?",
+        "answer": "Every DNS zone signs its records with a private key. Resolvers verify signatures using the corresponding public key, which is authenticated through a chain of trust to the DNS root. Forged or tampered responses fail verification and are discarded, preventing attackers from redirecting users."
+      },
+      {
+        "question": "Why is DNSSEC not universally deployed?",
+        "answer": "DNSSEC adds complexity to DNS management, increases response sizes, and requires careful key rotation. Misconfigured DNSSEC causes domain outages because resolvers reject unsigned or incorrectly signed responses. Many domain operators find the operational risk outweighs the security benefit."
+      }
+    ]
   }
 }

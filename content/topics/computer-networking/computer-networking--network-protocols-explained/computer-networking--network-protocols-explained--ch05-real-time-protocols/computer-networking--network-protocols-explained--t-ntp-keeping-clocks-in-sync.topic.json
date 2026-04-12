@@ -45,5 +45,30 @@
       "NTP directly encrypts network traffic"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "NTP synchronizes computer clocks to within milliseconds of Coordinated Universal Time by exchanging timestamps with a hierarchy of time servers. Accurate time is critical for security certificates, log correlation, database replication, and distributed system coordination.",
+    "whyItMatters": "Synchronized clocks are invisible infrastructure that everything depends on. Security protocols, logging, transactions, and distributed systems all break when clocks drift apart.",
+    "takeaways": [
+      "NTP synchronizes clocks across networks to millisecond accuracy",
+      "A stratum hierarchy distributes time from atomic clock sources",
+      "Modern systems use NTP pools with multiple servers for reliability"
+    ],
+    "keywords": [
+      "NTP",
+      "time synchronization",
+      "network time",
+      "clock accuracy"
+    ],
+    "faq": [
+      {
+        "question": "Why does accurate time matter for networks?",
+        "answer": "TLS certificates have validity windows checked against system time. Security logs must be correlated across servers using consistent timestamps. Distributed databases use timestamps for consistency. Authentication tokens expire based on time. Clock errors cause failures across all these systems."
+      },
+      {
+        "question": "What is the NTP stratum hierarchy?",
+        "answer": "Stratum 0 devices are atomic clocks and GPS receivers. Stratum 1 servers connect directly to stratum 0 sources. Each additional stratum is one hop further from the reference clock. Most devices use stratum 2 or 3 servers. The maximum is stratum 15; stratum 16 means unsynchronized."
+      }
+    ]
   }
 }

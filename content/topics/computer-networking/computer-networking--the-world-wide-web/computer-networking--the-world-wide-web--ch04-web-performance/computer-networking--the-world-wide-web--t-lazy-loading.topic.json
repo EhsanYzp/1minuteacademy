@@ -45,5 +45,30 @@
       "async='image'"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Lazy loading defers downloading of offscreen resources until the user scrolls near them. Native browser lazy loading uses the loading=lazy attribute on images and iframes. For JavaScript modules, dynamic import() loads code only when needed.",
+    "whyItMatters": "Users rarely scroll through an entire page immediately. Lazy loading avoids wasting bandwidth and processing time on content the user may never see, dramatically improving initial load.",
+    "takeaways": [
+      "loading=lazy on images defers downloading until near the viewport",
+      "Dynamic import() loads JavaScript modules on demand",
+      "Initial page weight drops significantly on long content pages"
+    ],
+    "keywords": [
+      "lazy loading",
+      "deferred loading",
+      "loading=lazy",
+      "code splitting"
+    ],
+    "faq": [
+      {
+        "question": "Should all images use lazy loading?",
+        "answer": "No. Images visible in the initial viewport should load eagerly because lazy loading them could delay LCP. Apply lazy loading only to images below the fold that users must scroll to see. The first visible image should use loading=eager or simply omit the attribute for default eager behavior."
+      },
+      {
+        "question": "What is code splitting?",
+        "answer": "Code splitting breaks JavaScript bundles into smaller chunks loaded on demand. Only the code needed for the current page ships initially. Additional code loads when the user navigates or triggers features."
+      }
+    ]
   }
 }

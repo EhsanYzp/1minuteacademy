@@ -1,0 +1,752 @@
+{
+  "computer-networking--how-the-internet-works--t-what-is-the-internet": {
+    "summary": "The internet is a global network of interconnected networks that communicate using standardized protocols. It is not a single entity but a vast mesh of private, public, academic, and government networks linked by copper, fiber, and wireless connections spanning the globe.",
+    "whyItMatters": "The internet underpins modern civilization. Understanding what it actually is demystifies every online experience and reveals why connectivity failures happen.",
+    "takeaways": [
+      "The internet is a network of networks, not a single system",
+      "Standardized protocols enable diverse networks to communicate",
+      "No single entity owns or controls the entire internet"
+    ],
+    "keywords": [
+      "internet",
+      "network of networks",
+      "protocols",
+      "connectivity"
+    ],
+    "faq": [
+      {
+        "question": "Who owns the internet?",
+        "answer": "No one owns the entire internet. Different organizations own pieces: ISPs own access networks, companies own data centers, governments control some infrastructure. Standards bodies like IETF coordinate protocols. The internet works because everyone agrees to follow shared rules."
+      },
+      {
+        "question": "Is the internet the same as the World Wide Web?",
+        "answer": "No. The internet is the physical and logical infrastructure connecting devices worldwide. The web is one application that runs on top of the internet using HTTP and browsers. Email, streaming, gaming, and messaging also run on the internet but are not the web."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-what-is-a-protocol": {
+    "summary": "A network protocol is a set of rules governing how devices communicate. Protocols define message formats, ordering, error handling, and addressing. Without agreed-upon protocols, different devices and software could not exchange data reliably across the internet.",
+    "whyItMatters": "Protocols are the language of the internet. Every click, stream, and message relies on multiple protocols working together seamlessly.",
+    "takeaways": [
+      "Protocols define rules for formatting, sending, and receiving data",
+      "Different protocols handle different layers of communication",
+      "Internet communication uses a stack of layered protocols"
+    ],
+    "keywords": [
+      "protocol",
+      "network rules",
+      "communication standards",
+      "protocol stack"
+    ],
+    "faq": [
+      {
+        "question": "Why are there so many different protocols?",
+        "answer": "Each protocol handles a specific job: IP handles addressing, TCP handles reliable delivery, HTTP handles web requests. Layering protocols lets each one focus on its task. This modularity allows upgrading one layer without breaking others."
+      },
+      {
+        "question": "What happens when two devices use different protocols?",
+        "answer": "They cannot communicate directly. A gateway or translator must convert between protocols. This is why protocol standards are critical. Universal adoption of TCP/IP is what makes the internet work across billions of diverse devices."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-clients-and-servers": {
+    "summary": "In the client-server model, clients request services and servers provide them. Your browser is a client that requests web pages from servers. This model organizes most internet communication, though peer-to-peer networks offer an alternative where every device is both client and server.",
+    "whyItMatters": "The client-server model is the foundation of web architecture. Understanding it explains how browsers, apps, and APIs interact with remote systems.",
+    "takeaways": [
+      "Clients request resources; servers respond with them",
+      "Most internet services use the client-server model",
+      "Peer-to-peer is an alternative where all nodes are equal"
+    ],
+    "keywords": [
+      "client-server",
+      "web architecture",
+      "request-response",
+      "peer-to-peer"
+    ],
+    "faq": [
+      {
+        "question": "Can a device be both a client and a server?",
+        "answer": "Yes. A device running a web server can serve pages to others while its browser acts as a client to other servers. In peer-to-peer networks like BitTorrent, every device simultaneously uploads and downloads, acting as both client and server."
+      },
+      {
+        "question": "Why is the client-server model dominant over peer-to-peer?",
+        "answer": "Centralized servers are easier to secure, manage, and scale. They provide consistent availability and performance. Peer-to-peer lacks central control, making it harder to ensure reliability. However, P2P excels at distributing large files efficiently."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-how-data-becomes-packets": {
+    "summary": "Data sent over the internet is broken into small packets, each carrying a piece of the original message plus headers with routing information. Packets travel independently across the network and are reassembled at the destination. This packet switching makes the internet efficient and resilient.",
+    "whyItMatters": "Packet switching is the fundamental design that makes the internet work. It allows millions of conversations to share the same wires simultaneously.",
+    "takeaways": [
+      "Data is split into small packets for transmission",
+      "Each packet carries headers with source and destination addresses",
+      "Packets travel independently and are reassembled at the destination"
+    ],
+    "keywords": [
+      "packets",
+      "packet switching",
+      "data transmission",
+      "fragmentation"
+    ],
+    "faq": [
+      {
+        "question": "Why not send data as one continuous stream?",
+        "answer": "Sending one continuous stream would monopolize the connection and prevent other traffic from using it. Packets allow multiplexing: many conversations share the same links simultaneously. If one packet is lost, only that packet needs retransmission, not the entire message."
+      },
+      {
+        "question": "What happens if packets arrive out of order?",
+        "answer": "TCP handles reordering. Each packet has a sequence number indicating its position in the original data. The receiving device holds packets in a buffer and reassembles them in the correct order before passing the complete data to the application."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-bandwidth-vs-latency": {
+    "summary": "Bandwidth is how much data a connection can carry per second, measured in bits per second. Latency is the time it takes for a single packet to travel from source to destination. High bandwidth with high latency feels sluggish; low latency matters most for real-time applications.",
+    "whyItMatters": "Bandwidth and latency are the two dimensions of network performance. Confusing them leads to misdiagnosing connection problems and choosing wrong solutions.",
+    "takeaways": [
+      "Bandwidth measures capacity; latency measures delay",
+      "High bandwidth does not guarantee low latency",
+      "Real-time apps like gaming need low latency over high bandwidth"
+    ],
+    "keywords": [
+      "bandwidth",
+      "latency",
+      "network performance",
+      "throughput"
+    ],
+    "faq": [
+      {
+        "question": "Why can I have fast internet but still experience lag?",
+        "answer": "You likely have high bandwidth but high latency. Bandwidth determines download speed for large files, but latency determines responsiveness. A connection with 1 Gbps bandwidth but 200ms latency will feel slow for video calls and gaming even though large downloads are fast."
+      },
+      {
+        "question": "What causes high latency?",
+        "answer": "Physical distance is a major factor since signals travel at the speed of light. Network congestion adds queuing delay. Each router hop adds processing time. Satellite connections have high latency due to distance. Wi-Fi adds latency compared to wired connections."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-what-happens-when-you-hit-enter": {
+    "summary": "Typing a URL and pressing Enter triggers a cascade: DNS resolves the domain to an IP, TCP establishes a connection via three-way handshake, TLS negotiates encryption, HTTP sends the request, and the server responds with HTML that the browser renders into a visible page.",
+    "whyItMatters": "This single action involves dozens of protocols and systems working in milliseconds. Understanding the chain explains slow loads, errors, and security.",
+    "takeaways": [
+      "DNS resolution converts the domain name to an IP address",
+      "TCP and TLS establish a secure connection before data flows",
+      "The browser parses HTML, CSS, and JavaScript to render the page"
+    ],
+    "keywords": [
+      "URL request",
+      "DNS resolution",
+      "page load",
+      "browser rendering"
+    ],
+    "faq": [
+      {
+        "question": "How long does this entire process typically take?",
+        "answer": "A simple page load takes 100 to 500 milliseconds. DNS lookup takes 10 to 100ms, TCP handshake adds one round trip, TLS adds another. The server response and rendering take the rest. CDNs and caching reduce these times by serving content from nearby locations."
+      },
+      {
+        "question": "What is the most common cause of slow page loads?",
+        "answer": "Server response time and large page resources are the most common causes. Too many JavaScript files, unoptimized images, and render-blocking resources slow page display. DNS lookup delays and distant servers add latency. Browser caching eliminates much of this on repeat visits."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-how-data-travels-through-cables": {
+    "summary": "Internet data travels as electrical signals through copper cables, light pulses through fiber optic cables, and radio waves through wireless connections. Undersea fiber cables carry over 95 percent of intercontinental traffic. The physical layer determines the speed and capacity of every connection.",
+    "whyItMatters": "The internet feels wireless and abstract but depends on physical infrastructure. Cables determine the speed limits and reliability of global connectivity.",
+    "takeaways": [
+      "Copper carries electrical signals for short distances",
+      "Fiber optic uses light pulses for high-speed, long-distance links",
+      "Over 95% of intercontinental data travels through undersea cables"
+    ],
+    "keywords": [
+      "fiber optic",
+      "copper cables",
+      "undersea cables",
+      "physical layer"
+    ],
+    "faq": [
+      {
+        "question": "Why is fiber optic faster than copper?",
+        "answer": "Light in fiber travels faster and with less signal degradation than electricity in copper. Fiber supports much higher bandwidth because light wavelengths can be multiplexed. Fiber is also immune to electromagnetic interference that degrades copper signals."
+      },
+      {
+        "question": "What happens if an undersea cable breaks?",
+        "answer": "Traffic reroutes through other cables, but bandwidth drops and latency increases. Specialized cable repair ships locate the break and splice the cable on the ocean floor. Repairs can take weeks. Redundant cable routes provide resilience for critical connections."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-tcp-reliable-delivery": {
+    "summary": "TCP ensures data arrives complete and in order by numbering packets, requiring acknowledgments, and retransmitting lost packets. It provides reliable delivery at the cost of some speed. TCP is used for web pages, email, file transfers, and any application that cannot tolerate missing data.",
+    "whyItMatters": "TCP's reliability makes the web, email, and file transfer work correctly. Without it, missing packets would produce corrupted pages and incomplete downloads.",
+    "takeaways": [
+      "TCP numbers packets and requires acknowledgment of receipt",
+      "Lost packets are automatically retransmitted",
+      "TCP sacrifices speed for guaranteed complete delivery"
+    ],
+    "keywords": [
+      "TCP",
+      "reliable delivery",
+      "packet acknowledgment",
+      "retransmission"
+    ],
+    "faq": [
+      {
+        "question": "How does TCP detect lost packets?",
+        "answer": "TCP uses acknowledgment timers. When the sender does not receive an acknowledgment within the expected time, it assumes the packet was lost and retransmits. The receiver can also signal gaps using selective acknowledgment, telling the sender exactly which packets are missing."
+      },
+      {
+        "question": "Why does TCP slow down during congestion?",
+        "answer": "TCP uses congestion control algorithms that reduce sending speed when packet loss is detected. Loss usually indicates network congestion. By slowing down, TCP prevents overwhelming the network. All TCP connections cooperatively reduce their rates during congestion."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-udp-speed-over-perfection": {
+    "summary": "UDP sends packets without establishing connections, without acknowledgments, and without retransmission. This makes it fast but unreliable. UDP is used for video streaming, online gaming, DNS queries, and voice calls where speed matters more than perfect delivery.",
+    "whyItMatters": "UDP enables real-time applications where a late packet is worse than a lost packet. It is the protocol behind live video, voice, and gaming responsiveness.",
+    "takeaways": [
+      "UDP sends data without connection setup or acknowledgment",
+      "Lost packets are not retransmitted, reducing latency",
+      "Ideal for streaming, gaming, and real-time communication"
+    ],
+    "keywords": [
+      "UDP",
+      "connectionless",
+      "real-time",
+      "low latency"
+    ],
+    "faq": [
+      {
+        "question": "Why is UDP better than TCP for gaming and video calls?",
+        "answer": "In a video call, a retransmitted packet arrives too late to be useful. Playing old audio or video frames creates jarring interruptions. UDP drops late packets and moves on, maintaining smooth real-time playback. The slight quality loss from dropped packets is preferable to delays."
+      },
+      {
+        "question": "Can applications build reliability on top of UDP?",
+        "answer": "Yes. QUIC, developed by Google and used in HTTP/3, runs over UDP but adds its own reliability, encryption, and congestion control. This allows applications to customize which data needs reliable delivery and which does not, unlike TCP's all-or-nothing approach."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-the-three-way-handshake": {
+    "summary": "TCP establishes connections through a three-way handshake: the client sends SYN, the server replies with SYN-ACK, and the client confirms with ACK. This exchange synchronizes sequence numbers and confirms both sides are ready to communicate before any data is sent.",
+    "whyItMatters": "Every TCP connection starts with this handshake. It adds one round trip of latency to every new connection, which is why connection reuse and HTTP/2 matter for performance.",
+    "takeaways": [
+      "SYN, SYN-ACK, ACK is the three-step connection establishment",
+      "The handshake synchronizes sequence numbers between endpoints",
+      "It adds one round-trip time of latency to new connections"
+    ],
+    "keywords": [
+      "three-way handshake",
+      "SYN",
+      "TCP connection",
+      "connection establishment"
+    ],
+    "faq": [
+      {
+        "question": "Why does TCP need a three-way handshake instead of just two steps?",
+        "answer": "Two messages would only confirm one direction works. The third message confirms the server's response reached the client, verifying both directions can communicate. It also prevents old duplicate connection requests from accidentally opening unwanted connections."
+      },
+      {
+        "question": "How do SYN flood attacks exploit the handshake?",
+        "answer": "Attackers send thousands of SYN packets without completing the handshake. The server allocates memory for each half-open connection, exhausting resources. SYN cookies defend against this by encoding connection state in the SYN-ACK response, avoiding memory allocation until the handshake completes."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-ip-addresses-explained": {
+    "summary": "IP addresses are numerical labels assigned to every device on a network. IPv4 uses 32-bit addresses like 192.168.1.1, providing about 4.3 billion unique addresses. IPv6 uses 128-bit addresses to provide a virtually unlimited supply.",
+    "whyItMatters": "IP addresses are how devices find each other on the internet. IPv4 address exhaustion drove the adoption of IPv6 and technologies like NAT.",
+    "takeaways": [
+      "IPv4 uses 32-bit addresses with about 4.3 billion possible values",
+      "IPv6 uses 128-bit addresses for virtually unlimited devices",
+      "IP addresses identify devices for routing and delivery"
+    ],
+    "keywords": [
+      "IP address",
+      "IPv4",
+      "IPv6",
+      "network addressing"
+    ],
+    "faq": [
+      {
+        "question": "Why are we running out of IPv4 addresses?",
+        "answer": "IPv4 has about 4.3 billion addresses, but the world has many more connected devices. Smartphones, IoT devices, and cloud servers all need addresses. Regional registries exhausted their pools years ago. NAT and IPv6 are the main solutions to this scarcity."
+      },
+      {
+        "question": "Why hasn't everyone switched to IPv6 yet?",
+        "answer": "IPv6 is not backward compatible with IPv4. Both must run simultaneously during the transition. Many legacy systems only support IPv4. NAT solved the immediate address shortage, reducing urgency. The transition requires updating hardware, software, and operational practices everywhere."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-dns-the-internet-s-phone-book": {
+    "summary": "The Domain Name System translates human-readable domain names like google.com into IP addresses that computers use. DNS is a distributed hierarchical database. When you type a URL, your device queries DNS resolvers that traverse root servers, TLD servers, and authoritative servers to find the IP.",
+    "whyItMatters": "DNS is critical infrastructure. Without it, you would need to memorize IP addresses for every website. DNS failures make the entire internet seem broken.",
+    "takeaways": [
+      "DNS converts domain names to IP addresses",
+      "It uses a distributed hierarchy of root, TLD, and authoritative servers",
+      "DNS caching reduces lookup latency for frequently visited sites"
+    ],
+    "keywords": [
+      "DNS",
+      "domain name",
+      "name resolution",
+      "DNS resolver"
+    ],
+    "faq": [
+      {
+        "question": "What happens if DNS goes down?",
+        "answer": "If DNS is unavailable, browsers cannot resolve domain names to IP addresses. Websites appear unreachable even though the servers are running. The 2016 Dyn DNS attack demonstrated this. Cached DNS entries still work temporarily, but new lookups fail."
+      },
+      {
+        "question": "Why does DNS have a hierarchy of servers?",
+        "answer": "No single server could handle all DNS queries for the entire internet. The hierarchy distributes the load. Root servers direct to TLD servers, which direct to authoritative servers for each domain. Caching at every level reduces the number of queries that reach the top."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-how-routers-find-the-best-path": {
+    "summary": "Routers use routing protocols to build maps of the network and determine the best path for each packet. They exchange information with neighboring routers about reachable destinations and link conditions. Routing decisions happen in microseconds for every packet crossing the internet.",
+    "whyItMatters": "Routing is how the internet directs your data through millions of possible paths. Efficient routing determines the speed and reliability of every connection.",
+    "takeaways": [
+      "Routers build routing tables from neighbor information exchanges",
+      "Routing protocols determine optimal paths based on metrics",
+      "Routing decisions are made per-packet in microseconds"
+    ],
+    "keywords": [
+      "routing",
+      "routing protocols",
+      "path selection",
+      "routing table"
+    ],
+    "faq": [
+      {
+        "question": "What metrics do routers use to choose the best path?",
+        "answer": "Routers consider hop count, link bandwidth, latency, congestion level, and link reliability. Different routing protocols weigh these metrics differently. OSPF uses link cost based on bandwidth. BGP uses policy-based routing considering business relationships between networks."
+      },
+      {
+        "question": "What happens when a route fails?",
+        "answer": "Routing protocols detect failures within seconds and propagate updates. Routers recalculate paths using alternative routes. This convergence process temporarily causes packet loss. Redundant paths ensure traffic can flow even during failures, though the new path may be slower."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-nat-sharing-one-public-ip": {
+    "summary": "Network Address Translation allows multiple devices on a private network to share a single public IP address. Your home router uses NAT to let all your devices access the internet through one IP. NAT helped delay IPv4 exhaustion but complicates peer-to-peer connections and some protocols.",
+    "whyItMatters": "NAT is why your home network works with a single internet connection. It extended IPv4's life by decades but introduced complexity that still affects applications today.",
+    "takeaways": [
+      "NAT maps private IP addresses to a single public address",
+      "It allows many devices to share one public IP via port mapping",
+      "NAT complicates peer-to-peer and inbound connections"
+    ],
+    "keywords": [
+      "NAT",
+      "private IP",
+      "public IP",
+      "port mapping"
+    ],
+    "faq": [
+      {
+        "question": "Why does NAT make peer-to-peer connections difficult?",
+        "answer": "NAT hides devices behind a single IP. External devices cannot directly reach a specific device behind NAT. Techniques like STUN, TURN, and hole punching help establish peer-to-peer connections through NAT. This is why video calls sometimes require relay servers."
+      },
+      {
+        "question": "Will IPv6 eliminate the need for NAT?",
+        "answer": "IPv6 provides enough addresses for every device to have a public address, making NAT technically unnecessary. However, some networks still use NAT with IPv6 for security by hiding internal network structure. Full IPv6 adoption would reduce but not completely eliminate NAT."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-ports-which-app-gets-the-data": {
+    "summary": "Ports are numerical identifiers that direct incoming data to the correct application on a device. While the IP address identifies the device, the port identifies which program should receive the data. HTTP uses port 80, HTTPS uses 443, and applications can use any of 65,535 available ports.",
+    "whyItMatters": "Ports allow a single device to run many networked applications simultaneously. Without ports, a computer could only communicate with one service at a time.",
+    "takeaways": [
+      "Ports identify which application should receive incoming data",
+      "Well-known ports: HTTP is 80, HTTPS is 443, SSH is 22",
+      "There are 65,535 available ports per protocol"
+    ],
+    "keywords": [
+      "ports",
+      "port numbers",
+      "TCP ports",
+      "network addressing"
+    ],
+    "faq": [
+      {
+        "question": "What is the difference between well-known and ephemeral ports?",
+        "answer": "Well-known ports are 0 to 1023, reserved for standard services like HTTP and SSH. Registered ports are 1024 to 49151 for specific applications. Ephemeral ports, 49152 to 65535, are assigned temporarily by the OS for outgoing connections. The client uses an ephemeral port to receive responses."
+      },
+      {
+        "question": "Why do firewalls block certain ports?",
+        "answer": "Firewalls block ports to prevent unauthorized access to services. An open port means a program is listening for connections. Leaving unnecessary ports open creates attack surface. Firewalls typically allow only ports 80 and 443 for web traffic and block everything else by default."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-http-how-browsers-talk-to-servers": {
+    "summary": "HTTP is the protocol browsers use to request and receive web content. It uses a simple request-response pattern with methods like GET and POST. HTTP is stateless, meaning each request is independent. Headers carry metadata and the body carries content like HTML, JSON, or images.",
+    "whyItMatters": "HTTP is the foundation of the web. Every web page, API call, and file download uses HTTP. Understanding it unlocks debugging, performance optimization, and API design.",
+    "takeaways": [
+      "HTTP uses request-response with methods like GET and POST",
+      "Each request is stateless and independent",
+      "Headers carry metadata; the body carries content"
+    ],
+    "keywords": [
+      "HTTP",
+      "request-response",
+      "GET",
+      "web protocol"
+    ],
+    "faq": [
+      {
+        "question": "Why is HTTP stateless?",
+        "answer": "Statelessness simplifies servers because they do not need to track client connections between requests. Each request contains all information needed to process it. Cookies and sessions add state on top of stateless HTTP when applications need to track users across requests."
+      },
+      {
+        "question": "What is the difference between GET and POST?",
+        "answer": "GET requests data without changing anything on the server. POST sends data to create or modify a resource. GET parameters are visible in the URL. POST data is in the request body. Browsers can safely retry GET requests but not POST, because POST may cause side effects."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-https-and-tls-encryption": {
+    "summary": "HTTPS is HTTP secured with TLS encryption. TLS establishes an encrypted connection using certificates and key exchange before any data flows. It prevents eavesdropping, tampering, and impersonation. HTTPS is now the default for the web, with browsers marking unencrypted sites as insecure.",
+    "whyItMatters": "HTTPS protects every interaction between your browser and websites. Without it, passwords, credit cards, and personal data travel as readable text.",
+    "takeaways": [
+      "HTTPS wraps HTTP in TLS encryption for security",
+      "TLS uses certificates to verify server identity",
+      "Browsers mark HTTP sites as insecure to push HTTPS adoption"
+    ],
+    "keywords": [
+      "HTTPS",
+      "TLS",
+      "encryption",
+      "web security"
+    ],
+    "faq": [
+      {
+        "question": "How does TLS verify that a website is genuine?",
+        "answer": "The server presents a certificate signed by a trusted Certificate Authority. The browser verifies the certificate chain back to a root CA it trusts. If verification fails, the browser shows a security warning. Let's Encrypt made free certificates available to everyone."
+      },
+      {
+        "question": "Does HTTPS protect against all attacks?",
+        "answer": "HTTPS protects data in transit from eavesdropping and tampering. It does not protect against malware on the server, phishing from fake sites with valid certificates, or vulnerabilities in the web application itself. HTTPS is necessary but not sufficient for web security."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-cookies-and-sessions": {
+    "summary": "Cookies are small data fragments servers store in your browser to remember you across HTTP requests. Session cookies expire when you close the browser; persistent cookies last longer. Sessions use cookies to maintain login state, shopping carts, and preferences across stateless HTTP.",
+    "whyItMatters": "Cookies make the stateless web feel stateful. Without them, you would need to log in on every page load and your shopping cart would empty with each click.",
+    "takeaways": [
+      "Cookies store small data in the browser for state tracking",
+      "Session cookies expire on browser close; persistent ones last longer",
+      "Sessions track login state and user data across requests"
+    ],
+    "keywords": [
+      "cookies",
+      "sessions",
+      "web state",
+      "HTTP cookies"
+    ],
+    "faq": [
+      {
+        "question": "Why are cookies a privacy concern?",
+        "answer": "Third-party cookies track your browsing across different websites, building advertising profiles. Companies use cookies to follow you around the web. Browser makers are phasing out third-party cookies. First-party cookies from the site you visit are generally necessary for functionality."
+      },
+      {
+        "question": "How do sessions work with cookies?",
+        "answer": "The server creates a unique session ID when you log in and sends it as a cookie. Your browser sends this cookie with every request. The server looks up your session data using the ID to identify you. When you log out, the server destroys the session."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-apis-machines-talking-to-machines": {
+    "summary": "APIs allow software applications to communicate with each other programmatically. Web APIs use HTTP to let clients request data or actions from servers. REST APIs dominate the web, returning structured data like JSON instead of HTML pages. APIs enable mobile apps, integrations, and microservices.",
+    "whyItMatters": "APIs power the modern internet. Mobile apps, third-party integrations, and microservices all communicate through APIs. They are the backbone of software interoperability.",
+    "takeaways": [
+      "APIs let applications communicate programmatically via HTTP",
+      "REST APIs return structured data like JSON instead of HTML",
+      "APIs enable mobile apps, integrations, and microservices"
+    ],
+    "keywords": [
+      "API",
+      "REST",
+      "web services",
+      "JSON"
+    ],
+    "faq": [
+      {
+        "question": "What makes an API RESTful?",
+        "answer": "REST APIs use standard HTTP methods: GET to read, POST to create, PUT to update, DELETE to remove. They are stateless, with each request containing all needed information. Resources are identified by URLs. REST is a set of principles, not a strict specification."
+      },
+      {
+        "question": "Why are APIs important for mobile apps?",
+        "answer": "Mobile apps cannot render server-side HTML like browsers. They need raw data to display in their native interfaces. APIs provide structured data that mobile apps can parse and present. The same API can serve web apps, mobile apps, and third-party integrations simultaneously."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-cdns-content-closer-to-you": {
+    "summary": "Content Delivery Networks distribute copies of website content to servers around the world so users load data from a nearby location instead of a distant origin server. CDNs reduce latency, handle traffic spikes, and protect against DDoS attacks. Most of the web is served through CDNs.",
+    "whyItMatters": "CDNs make the web feel fast regardless of your location. Without them, users far from the origin server would experience much slower page loads.",
+    "takeaways": [
+      "CDNs cache content at edge servers near users worldwide",
+      "They reduce latency by serving from the closest location",
+      "CDNs absorb traffic spikes and mitigate DDoS attacks"
+    ],
+    "keywords": [
+      "CDN",
+      "edge server",
+      "content caching",
+      "web performance"
+    ],
+    "faq": [
+      {
+        "question": "How does a CDN know which server to use for a request?",
+        "answer": "CDNs use DNS-based routing and anycast to direct users to the nearest edge server. When you request a CDN-hosted resource, DNS resolves to the closest server's IP based on your geographic location. Some CDNs also consider server load and network conditions."
+      },
+      {
+        "question": "What happens when a CDN edge server doesn't have the content?",
+        "answer": "The edge server fetches the content from the origin server, caches it, and serves it to the user. Subsequent requests for the same content are served from the cache. This is called a cache miss on the first request and a cache hit on following ones."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-isps-and-how-you-connect": {
+    "summary": "Internet Service Providers connect your home or business to the internet through technologies like fiber, cable, DSL, or wireless. ISPs operate at different tiers: Tier 1 carriers own backbone networks, Tier 2 regional providers buy transit, and Tier 3 local ISPs sell access to consumers.",
+    "whyItMatters": "ISPs are the gatekeepers of internet access. Their infrastructure and policies directly determine your connection speed, reliability, and cost.",
+    "takeaways": [
+      "ISPs provide the physical connection between you and the internet",
+      "Tier 1 carriers own backbone, Tier 2 are regional, Tier 3 are local",
+      "Connection technologies include fiber, cable, DSL, and wireless"
+    ],
+    "keywords": [
+      "ISP",
+      "internet access",
+      "Tier 1",
+      "broadband"
+    ],
+    "faq": [
+      {
+        "question": "Why do ISP speeds vary so much?",
+        "answer": "Speed depends on the last-mile technology: fiber offers gigabit speeds, cable shares bandwidth among neighbors, DSL degrades with distance from the exchange. ISPs also oversell bandwidth, assuming not all users will peak simultaneously. Congestion during peak hours reduces actual speeds."
+      },
+      {
+        "question": "What is the difference between ISP tiers?",
+        "answer": "Tier 1 carriers like AT&T and NTT own global backbone networks and peer with each other without paying. Tier 2 providers have regional networks and pay Tier 1 for global reach. Tier 3 ISPs buy from Tier 2 and sell access to consumers. Your data traverses multiple tiers."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-bgp-the-routing-glue": {
+    "summary": "Border Gateway Protocol connects the internet's autonomous systems, which are large networks operated by ISPs, companies, and institutions. BGP routers exchange information about reachable networks and select paths based on policy, not just shortest distance.",
+    "whyItMatters": "BGP is the protocol that holds the internet together. Its policy-based routing reflects business relationships, and BGP errors have caused massive outages.",
+    "takeaways": [
+      "BGP connects autonomous systems across the internet",
+      "It uses policy-based path selection, not just shortest path",
+      "BGP misconfigurations have caused major internet outages"
+    ],
+    "keywords": [
+      "BGP",
+      "autonomous systems",
+      "internet routing",
+      "path selection"
+    ],
+    "faq": [
+      {
+        "question": "Why is BGP considered fragile?",
+        "answer": "BGP was designed with implicit trust between operators. Any autonomous system can announce routes to any network, whether legitimate or not. Route hijacking, whether accidental or malicious, can redirect traffic globally. RPKI adds verification but adoption is incomplete."
+      },
+      {
+        "question": "How did a BGP error take down Facebook in 2021?",
+        "answer": "Facebook accidentally withdrew its own BGP routes during a maintenance operation. Every other network lost the path to Facebook's IP ranges. DNS servers for Facebook became unreachable. The outage lasted six hours because engineers could not access internal tools to fix it."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-internet-exchange-points": {
+    "summary": "Internet Exchange Points are physical locations where different networks connect and exchange traffic directly. IXPs reduce latency by letting nearby networks communicate without routing through distant intermediaries. Major IXPs handle terabits of traffic and are critical infrastructure.",
+    "whyItMatters": "IXPs keep local traffic local. Without them, a message between two networks in the same city might travel across a continent through a Tier 1 carrier.",
+    "takeaways": [
+      "IXPs let networks exchange traffic directly in one physical location",
+      "They reduce latency by keeping local traffic on local paths",
+      "Major IXPs handle terabits of traffic per second"
+    ],
+    "keywords": [
+      "IXP",
+      "peering",
+      "traffic exchange",
+      "network interconnection"
+    ],
+    "faq": [
+      {
+        "question": "Why do networks peer at IXPs instead of using transit?",
+        "answer": "Peering is free or much cheaper than buying transit from a Tier 1 carrier. It also reduces latency because traffic flows directly between networks. High-traffic networks save millions in transit costs by peering. IXPs make peering efficient by providing a shared location."
+      },
+      {
+        "question": "Where are the largest IXPs located?",
+        "answer": "DE-CIX in Frankfurt, AMS-IX in Amsterdam, and LINX in London are among the world's largest. They handle multiple terabits per second. Major IXPs exist in every region. Their locations reflect historical internet development and business concentration."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-data-centers-where-the-internet-lives": {
+    "summary": "Data centers are facilities housing thousands of servers that store and process internet data. They require massive power, cooling, redundant connectivity, and physical security. Cloud services like AWS, Azure, and Google Cloud operate hyperscale data centers across the globe.",
+    "whyItMatters": "Data centers are the physical home of the internet. Understanding them reveals the real infrastructure behind seemingly ethereal cloud services.",
+    "takeaways": [
+      "Data centers house the servers that power internet services",
+      "They require enormous power, cooling, and redundant connectivity",
+      "Hyperscale data centers operated by cloud providers span the globe"
+    ],
+    "keywords": [
+      "data center",
+      "server farm",
+      "cloud infrastructure",
+      "hyperscale"
+    ],
+    "faq": [
+      {
+        "question": "How much power does a data center use?",
+        "answer": "A large data center can consume 100 megawatts or more, equivalent to a small city. Cooling accounts for a significant portion. Power Usage Effectiveness measures efficiency: a PUE of 1.2 means 20 percent overhead for cooling and infrastructure. Renewable energy adoption is increasing."
+      },
+      {
+        "question": "What happens if a data center loses power?",
+        "answer": "Uninterruptible power supplies provide instant battery backup. Diesel generators start within seconds for longer outages. Critical data centers have multiple independent power feeds. Data is replicated across multiple data centers so services continue even if one facility fails completely."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-undersea-cables": {
+    "summary": "Undersea fiber optic cables carry over 95 percent of intercontinental internet traffic along the ocean floor. These cables are thin but carry enormous bandwidth using wavelength-division multiplexing. They are laid by specialized ships and are vulnerable to anchors, earthquakes, and sabotage.",
+    "whyItMatters": "The global internet depends on undersea cables. Understanding this reveals why certain regions lose connectivity during natural disasters or geopolitical conflicts.",
+    "takeaways": [
+      "Over 95% of international internet traffic uses undersea cables",
+      "Cables are laid on the ocean floor by specialized ships",
+      "They are vulnerable to anchors, earthquakes, and sabotage"
+    ],
+    "keywords": [
+      "undersea cables",
+      "submarine cables",
+      "fiber optic",
+      "intercontinental"
+    ],
+    "faq": [
+      {
+        "question": "How many undersea cables exist?",
+        "answer": "Over 500 submarine cables are in operation, totaling more than 1.4 million kilometers. New cables are constantly being laid as bandwidth demand grows. Google, Meta, and Microsoft are among the largest investors in new submarine cable projects."
+      },
+      {
+        "question": "Are satellites a viable alternative to undersea cables?",
+        "answer": "Satellites cannot match undersea cable bandwidth and have much higher latency for geostationary orbits. Low-earth orbit constellations like Starlink improve latency but still cannot match cable capacity. Satellites complement cables for reaching remote areas but will not replace them."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-how-streaming-works": {
+    "summary": "Video streaming uses adaptive bitrate to adjust quality in real time based on your connection speed. Content is encoded at multiple quality levels and broken into small segments.",
+    "whyItMatters": "Streaming generates the majority of internet traffic. Understanding how it adapts to network conditions explains why video quality fluctuates and buffering occurs.",
+    "takeaways": [
+      "Adaptive bitrate adjusts video quality to connection speed",
+      "Content is pre-encoded at multiple quality levels",
+      "CDNs serve video segments from the closest server"
+    ],
+    "keywords": [
+      "streaming",
+      "adaptive bitrate",
+      "video delivery",
+      "buffering"
+    ],
+    "faq": [
+      {
+        "question": "Why does video quality drop during streaming?",
+        "answer": "The player detects reduced bandwidth and switches to a lower-quality segment to avoid buffering. Network congestion, Wi-Fi interference, or ISP throttling can reduce bandwidth. The player constantly measures download speed and adjusts quality within seconds."
+      },
+      {
+        "question": "How much bandwidth does streaming actually use?",
+        "answer": "Standard definition requires about 3 Mbps, HD needs 5 to 8 Mbps, 4K requires 25 Mbps or more. Streaming accounts for over 50 percent of all internet traffic. Netflix alone generates about 15 percent of downstream traffic in North America during peak hours."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-how-online-gaming-stays-fast": {
+    "summary": "Online games use UDP for speed, client-side prediction to mask latency, and server reconciliation to maintain consistency. The game client renders actions immediately while the server validates and corrects them.",
+    "whyItMatters": "Online gaming pushes network performance to the extreme. The techniques used to hide latency are relevant to any real-time application needing instant responsiveness.",
+    "takeaways": [
+      "Games use UDP for minimal latency over reliable delivery",
+      "Client-side prediction renders actions before server confirmation",
+      "Server reconciliation corrects discrepancies between client and server"
+    ],
+    "keywords": [
+      "online gaming",
+      "netcode",
+      "latency compensation",
+      "UDP gaming"
+    ],
+    "faq": [
+      {
+        "question": "What is client-side prediction in gaming?",
+        "answer": "When you press a key, the game client immediately shows the result without waiting for the server. The server later confirms or corrects the action. If the server disagrees, the client rewinds and replays. This makes the game feel responsive despite network latency."
+      },
+      {
+        "question": "Why is ping so important for online games?",
+        "answer": "Ping measures the round-trip time to the game server. Lower ping means less delay between your action and the server's response. High ping makes client-side prediction less accurate, causing rubber-banding and desyncs. Competitive gamers need under 30ms ping for fair play."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-vpns-tunnels-through-the-internet": {
+    "summary": "Virtual Private Networks create encrypted tunnels through the public internet, making your traffic appear to come from the VPN server's location. VPNs protect privacy on untrusted networks, bypass geographic restrictions, and connect remote offices securely.",
+    "whyItMatters": "VPNs are widely used for privacy and security. Understanding how they work helps evaluate when they actually protect you and when they do not.",
+    "takeaways": [
+      "VPNs create encrypted tunnels through the public internet",
+      "Your traffic appears to originate from the VPN server location",
+      "VPNs protect on untrusted networks but do not provide anonymity"
+    ],
+    "keywords": [
+      "VPN",
+      "encrypted tunnel",
+      "privacy",
+      "remote access"
+    ],
+    "faq": [
+      {
+        "question": "Does a VPN make you anonymous?",
+        "answer": "No. A VPN hides your activity from your ISP and local network, but the VPN provider can see all your traffic. Websites can still identify you through cookies, browser fingerprinting, and login credentials. A VPN shifts trust from your ISP to the VPN provider."
+      },
+      {
+        "question": "When should you use a VPN?",
+        "answer": "Use a VPN on public Wi-Fi to prevent eavesdropping. Use it to access your company's internal network remotely. Use it to bypass geographic content restrictions. Do not rely on a VPN for true anonymity or to hide illegal activity. Choose a provider with a verified no-logs policy."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-net-neutrality-explained": {
+    "summary": "Net neutrality is the principle that ISPs should treat all internet traffic equally, without blocking, throttling, or charging more for specific content.",
+    "whyItMatters": "Net neutrality determines whether the internet remains an open platform. Without it, ISPs control which content loads fast and which does not.",
+    "takeaways": [
+      "Net neutrality requires ISPs to treat all traffic equally",
+      "Without it, ISPs could create paid fast lanes",
+      "The debate centers on innovation, competition, and free expression"
+    ],
+    "keywords": [
+      "net neutrality",
+      "ISP",
+      "open internet",
+      "traffic equality"
+    ],
+    "faq": [
+      {
+        "question": "Why do ISPs oppose net neutrality?",
+        "answer": "ISPs want to charge content providers for priority delivery, creating new revenue streams. They argue that heavy users like Netflix should pay more since they consume most bandwidth. ISPs claim they need this revenue to fund network infrastructure investment."
+      },
+      {
+        "question": "Has net neutrality been violated in practice?",
+        "answer": "Yes. ISPs have throttled Netflix and YouTube traffic. Comcast throttled BitTorrent. AT&T blocked FaceTime on cellular plans to push customers to more expensive plans. These incidents demonstrate why net neutrality rules exist and why enforcement matters."
+      }
+    ]
+  },
+  "computer-networking--how-the-internet-works--t-the-internet-vs-the-web": {
+    "summary": "The internet is the global network of networks connected by cables and protocols. The World Wide Web is one service running on the internet, using HTTP and browsers to deliver linked documents. Email, streaming, gaming, and messaging also run on the internet but are separate from the web.",
+    "whyItMatters": "Confusing the internet with the web is the most common networking misconception. Understanding the distinction clarifies the architecture of our connected world.",
+    "takeaways": [
+      "The internet is the physical and logical network infrastructure",
+      "The web is one application running on top of the internet",
+      "Email, streaming, and gaming are internet services but not the web"
+    ],
+    "keywords": [
+      "internet vs web",
+      "World Wide Web",
+      "network infrastructure",
+      "web services"
+    ],
+    "faq": [
+      {
+        "question": "When was the web created and by whom?",
+        "answer": "Tim Berners-Lee invented the World Wide Web in 1989 at CERN. He created HTML, HTTP, and the first web browser and server. The web was built on top of the existing internet, which had been operating since the 1980s with email and file transfer already in use."
+      },
+      {
+        "question": "Can the internet exist without the web?",
+        "answer": "Yes. The internet existed for decades before the web. Email was invented in the 1970s, file transfer in the 1980s. If the web disappeared, the internet would continue carrying email, streaming, messaging, and other services. The web is the internet's most popular application."
+      }
+    ]
+  }
+}

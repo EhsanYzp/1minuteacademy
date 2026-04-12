@@ -45,5 +45,30 @@
       "Encrypts the voice stream end-to-end"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "SIP establishes, modifies, and terminates multimedia communication sessions like voice and video calls over IP networks. It handles signaling such as ringing, call transfer, and conference setup, while the actual media flows through separate RTP streams between the participants.",
+    "whyItMatters": "SIP powers VoIP phone systems used by millions of businesses worldwide. Understanding SIP explains how voice calls work over the internet and why call quality varies.",
+    "takeaways": [
+      "SIP handles call signaling while RTP carries the actual media",
+      "SIP uses text-based messages similar to HTTP for communication",
+      "It supports call transfer, forwarding, and multi-party conferencing"
+    ],
+    "keywords": [
+      "SIP",
+      "VoIP",
+      "call signaling",
+      "session initiation"
+    ],
+    "faq": [
+      {
+        "question": "How does a SIP call get established?",
+        "answer": "The caller sends an INVITE message to the recipient's SIP proxy. The proxy rings the recipient's device, which returns a 180 Ringing response. When answered, a 200 OK with SDP media details is sent. The caller acknowledges and media flows directly between endpoints via RTP."
+      },
+      {
+        "question": "Why do SIP calls sometimes have quality issues?",
+        "answer": "SIP signaling and RTP media use different network paths. NAT traversal problems can cause one-way audio. Insufficient bandwidth causes choppy voice. Jitter and packet loss degrade quality. Proper QoS configuration prioritizing voice traffic over data resolves most SIP quality issues."
+      }
+    ]
   }
 }

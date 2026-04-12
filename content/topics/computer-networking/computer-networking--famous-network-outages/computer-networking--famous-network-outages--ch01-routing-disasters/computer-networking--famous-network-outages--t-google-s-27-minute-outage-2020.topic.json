@@ -45,5 +45,30 @@
       "An earthquake damaged their primary data center"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "In December 2020, Google services including Gmail, YouTube, and Google Cloud went down for 47 minutes due to an authentication system failure. The outage affected billions of users who could not log in to any Google service, revealing how authentication is the single most critical shared dependency.",
+    "whyItMatters": "Google's outage showed that authentication services are the ultimate single point of failure. When login breaks, every service behind it becomes inaccessible simultaneously.",
+    "takeaways": [
+      "An authentication system failure took down all Google services",
+      "Billions of users lost access to Gmail, YouTube, and Drive",
+      "Shared authentication is the most critical dependency to protect"
+    ],
+    "keywords": [
+      "Google outage",
+      "authentication failure",
+      "2020",
+      "single point of failure"
+    ],
+    "faq": [
+      {
+        "question": "What caused Google's authentication to fail?",
+        "answer": "Google's identity management system ran out of storage for authentication tokens. An automated tool that manages storage quotas had a bug that prevented it from allocating new space. Without tokens, no user could authenticate to any Google service."
+      },
+      {
+        "question": "How did Google prevent this from happening again?",
+        "answer": "They improved monitoring of storage quotas for critical authentication systems. They added alerts that trigger well before capacity is exhausted and ensured that quota management tools have redundant failsafes."
+      }
+    ]
   }
 }

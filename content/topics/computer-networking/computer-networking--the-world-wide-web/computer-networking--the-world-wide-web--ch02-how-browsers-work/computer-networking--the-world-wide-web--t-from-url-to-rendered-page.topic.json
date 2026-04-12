@@ -45,5 +45,30 @@
       "CSS custom properties"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "When you enter a URL, the browser resolves DNS, opens a TCP connection, performs a TLS handshake, sends an HTTP request, receives HTML, parses it into a DOM, fetches CSS and JavaScript, computes styles and layout, and paints pixels. This pipeline completes in milliseconds for fast sites.",
+    "whyItMatters": "Understanding the critical rendering path reveals where performance bottlenecks occur. Each step offers optimization opportunities that determine whether a page loads instantly or frustratingly slowly.",
+    "takeaways": [
+      "DNS, TCP, TLS, and HTTP happen before the first byte arrives",
+      "HTML parsing, CSS styling, layout, and paint produce visible content",
+      "Render-blocking resources delay the first meaningful paint"
+    ],
+    "keywords": [
+      "critical rendering path",
+      "page load",
+      "browser rendering",
+      "first paint"
+    ],
+    "faq": [
+      {
+        "question": "What is the critical rendering path?",
+        "answer": "The critical rendering path is the sequence of steps a browser takes to convert HTML, CSS, and JavaScript into visible pixels. It includes DOM construction, CSSOM construction, render tree building, layout, and paint."
+      },
+      {
+        "question": "What are render-blocking resources?",
+        "answer": "CSS files and synchronous JavaScript block rendering because the browser needs them to calculate visual layout. The browser pauses rendering until these resources are downloaded and processed. Deferring non-critical JavaScript, inlining critical CSS, and using async loading minimize render blocking."
+      }
+    ]
   }
 }

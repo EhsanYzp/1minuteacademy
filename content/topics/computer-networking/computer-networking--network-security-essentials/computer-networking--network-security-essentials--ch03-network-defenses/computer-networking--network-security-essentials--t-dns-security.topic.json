@@ -45,5 +45,30 @@
       "Running out of domain names"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "DNS security protects the domain name system from attacks like cache poisoning, hijacking, and tunneling. DNSSEC validates response authenticity with cryptographic signatures. DNS filtering blocks access to known malicious domains.",
+    "whyItMatters": "DNS is a critical attack vector because compromising it redirects users invisibly. DNS security prevents attackers from manipulating name resolution to intercept traffic or redirect users to malicious sites.",
+    "takeaways": [
+      "DNSSEC validates DNS responses with cryptographic signatures",
+      "DNS filtering blocks connections to known malicious domains",
+      "DNS tunneling can exfiltrate data through seemingly normal queries"
+    ],
+    "keywords": [
+      "DNS security",
+      "DNSSEC",
+      "DNS filtering",
+      "cache poisoning"
+    ],
+    "faq": [
+      {
+        "question": "What is DNS cache poisoning?",
+        "answer": "An attacker injects forged DNS records into a resolver's cache, redirecting users to malicious IP addresses. When users request a legitimate domain, they get the poisoned answer and connect to the attacker's server. DNSSEC prevents this by cryptographically signing DNS records."
+      },
+      {
+        "question": "How does DNS tunneling work?",
+        "answer": "Attackers encode data in DNS query names and responses, creating a covert communication channel. Since DNS traffic is rarely blocked, this technique bypasses firewalls. Monitoring for unusually long domain names, high query volumes, and abnormal record types helps detect DNS tunneling."
+      }
+    ]
   }
 }

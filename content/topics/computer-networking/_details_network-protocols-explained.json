@@ -1,0 +1,757 @@
+{
+  "computer-networking--network-protocols-explained--t-ip-the-internet-s-addressing-system": {
+    "summary": "IP assigns a unique numerical address to every device on a network, enabling routers to forward packets to the correct destination across the internet. IPv4 uses 32-bit addresses while IPv6 uses 128-bit addresses to solve the exhaustion of the four-billion IPv4 address space.",
+    "whyItMatters": "IP addressing is the foundation of all internet communication. Every packet of data you send or receive is routed based on IP addresses, making this the most fundamental networking concept.",
+    "takeaways": [
+      "IPv4 addresses use 32 bits, providing about 4.3 billion addresses",
+      "IPv6 expands to 128 bits for virtually unlimited addresses",
+      "Routers use IP addresses to forward packets hop by hop"
+    ],
+    "keywords": [
+      "IP address",
+      "IPv4",
+      "IPv6",
+      "network addressing",
+      "packet routing"
+    ],
+    "faq": [
+      {
+        "question": "Why is IPv4 running out of addresses?",
+        "answer": "IPv4 provides about 4.3 billion addresses, which seemed sufficient when designed in 1981. The explosion of smartphones, IoT devices, and cloud services exhausted the pool. NAT extended IPv4's life by sharing one public address among many devices, but IPv6 is the long-term solution."
+      },
+      {
+        "question": "What does an IPv6 address look like?",
+        "answer": "IPv6 addresses are written as eight groups of four hexadecimal digits separated by colons, like 2001:0db8:85a3:0000:0000:8a2e:0370:7334. Leading zeros in each group can be omitted, and consecutive groups of zeros can be replaced with a double colon for brevity."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-tcp-reliable-transport": {
+    "summary": "TCP provides reliable, ordered, error-checked delivery of data between applications over IP networks. It establishes connections with a three-way handshake, tracks every byte with sequence numbers, retransmits lost packets, and uses flow control to prevent overwhelming receivers.",
+    "whyItMatters": "TCP carries the vast majority of internet traffic including web pages, email, and file transfers. Its reliability guarantees are what make the unreliable internet feel dependable to applications.",
+    "takeaways": [
+      "TCP uses a three-way handshake to establish connections",
+      "Sequence numbers and acknowledgments ensure every byte arrives",
+      "Flow control and congestion control prevent network overload"
+    ],
+    "keywords": [
+      "TCP",
+      "reliable transport",
+      "three-way handshake",
+      "congestion control"
+    ],
+    "faq": [
+      {
+        "question": "How does TCP handle lost packets?",
+        "answer": "TCP assigns sequence numbers to every byte and requires acknowledgment from the receiver. If an acknowledgment does not arrive within a timeout period, the sender retransmits the data. Fast retransmit triggers resending after three duplicate acknowledgments without waiting for the timeout."
+      },
+      {
+        "question": "What is the TCP three-way handshake?",
+        "answer": "The client sends a SYN packet, the server responds with SYN-ACK, and the client replies with ACK. This three-step process establishes sequence numbers for both directions and confirms both sides are ready to communicate. It adds one round-trip of latency before data transfer begins."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-udp-lightweight-and-fast": {
+    "summary": "UDP sends datagrams without establishing connections, tracking delivery, or guaranteeing order. This minimal overhead makes it ideal for time-sensitive applications like video streaming, online gaming, and DNS lookups where speed matters more than guaranteed delivery of every packet.",
+    "whyItMatters": "UDP powers the real-time applications that users care about most. Understanding when to use UDP versus TCP is a fundamental network design decision.",
+    "takeaways": [
+      "UDP sends datagrams with no connection setup or delivery guarantee",
+      "Lower overhead means less latency than TCP for each packet",
+      "Video streaming and gaming prefer UDP for real-time performance"
+    ],
+    "keywords": [
+      "UDP",
+      "datagram",
+      "connectionless",
+      "real-time protocol"
+    ],
+    "faq": [
+      {
+        "question": "When should you use UDP instead of TCP?",
+        "answer": "Use UDP when speed matters more than reliability: live video, voice calls, online gaming, and DNS queries. A dropped video frame is better than a delayed one. TCP's retransmissions add latency that ruins real-time experiences. Many modern protocols build their own reliability on top of UDP."
+      },
+      {
+        "question": "Is the UDP protocol unreliable?",
+        "answer": "UDP itself does not guarantee delivery, order, or duplicate protection. But applications can build reliability features on top of UDP as needed. QUIC, for example, runs over UDP and provides reliability comparable to TCP. UDP gives applications the freedom to choose their own trade-offs."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-http-the-language-of-the-web": {
+    "summary": "HTTP is a request-response protocol that defines how web browsers and servers communicate. Clients send requests with methods like GET and POST, and servers respond with status codes and content. HTTP is stateless, meaning each request is independent with no memory of previous interactions.",
+    "whyItMatters": "HTTP carries virtually all web traffic and is the foundation of REST APIs, web applications, and microservice communication. Understanding HTTP is essential for any web development or networking role.",
+    "takeaways": [
+      "HTTP uses request methods like GET, POST, PUT, and DELETE",
+      "Status codes like 200, 404, and 500 indicate response outcomes",
+      "HTTP is stateless — each request is completely independent"
+    ],
+    "keywords": [
+      "HTTP",
+      "request-response",
+      "status codes",
+      "web protocol"
+    ],
+    "faq": [
+      {
+        "question": "What are the most common HTTP methods?",
+        "answer": "GET retrieves resources without side effects. POST submits data to create resources. PUT updates resources by replacing them entirely. DELETE removes resources. PATCH makes partial updates. HEAD retrieves only response headers. These methods form the basis of RESTful API design."
+      },
+      {
+        "question": "Why is HTTP stateless?",
+        "answer": "Each HTTP request contains all the information needed to process it, so servers do not need to remember previous requests. This simplifies server design and enables load balancing across many servers. Cookies, tokens, and sessions add statefulness on top of the stateless protocol when needed."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-https-and-tls": {
+    "summary": "HTTPS wraps HTTP inside a TLS encrypted tunnel, protecting data confidentiality, integrity, and server authenticity. TLS uses certificates to verify server identity and asymmetric cryptography to establish a shared secret, then encrypts all traffic with fast symmetric ciphers.",
+    "whyItMatters": "HTTPS is now the baseline for all web communication. Without it, passwords, personal data, and financial information travel in plain text visible to anyone on the network path.",
+    "takeaways": [
+      "TLS encrypts all HTTP traffic between browser and server",
+      "Certificates verify the server is who it claims to be",
+      "Modern TLS 1.3 completes the handshake in a single round trip"
+    ],
+    "keywords": [
+      "HTTPS",
+      "TLS",
+      "encryption",
+      "certificates",
+      "secure web"
+    ],
+    "faq": [
+      {
+        "question": "How does the TLS handshake work?",
+        "answer": "The client sends supported cipher suites, the server responds with its certificate and chosen cipher. The client verifies the certificate chain and they exchange key material to derive shared encryption keys. TLS 1.3 completes this in one round trip, while TLS 1.2 requires two."
+      },
+      {
+        "question": "Is HTTPS required for all websites?",
+        "answer": "Browsers now mark HTTP sites as insecure and may block certain features. Search engines rank HTTPS sites higher. Let's Encrypt provides free certificates, eliminating cost barriers. Every website should use HTTPS, even if it serves only static content, to protect user privacy."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-dns-names-to-numbers": {
+    "summary": "DNS translates human-readable domain names like example.com into IP addresses that computers use to route traffic. The hierarchical system of root servers, TLD servers, and authoritative name servers resolves billions of queries daily, with caching at every level for speed.",
+    "whyItMatters": "DNS is the first step of almost every internet interaction. A DNS failure or slowdown makes the entire internet appear broken, even when servers are perfectly healthy.",
+    "takeaways": [
+      "DNS resolves domain names to IP addresses hierarchically",
+      "Recursive resolvers cache answers to speed up repeated queries",
+      "TTL values control how long DNS answers are cached"
+    ],
+    "keywords": [
+      "DNS",
+      "domain name resolution",
+      "name server",
+      "DNS cache"
+    ],
+    "faq": [
+      {
+        "question": "What happens during a DNS lookup?",
+        "answer": "Your device asks a recursive resolver, which checks its cache. If not cached, it queries a root server for the TLD server, then the TLD server for the authoritative name server, then the authoritative server for the IP address. Each answer is cached per its TTL value."
+      },
+      {
+        "question": "What is a DNS TTL value?",
+        "answer": "Time-to-live tells resolvers how long to cache a DNS answer in seconds. A short TTL like 60 seconds allows fast changes but increases query load. A long TTL like 86400 seconds reduces load but delays propagation of changes. Most sites use TTLs between 300 and 3600 seconds."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-dhcp-automatic-network-setup": {
+    "summary": "DHCP automatically assigns IP addresses, subnet masks, gateways, and DNS server addresses to devices when they join a network. This eliminates manual configuration and prevents address conflicts. DHCP leases addresses temporarily, reclaiming them when devices leave the network.",
+    "whyItMatters": "DHCP makes networks work automatically for end users. Without it, every device would need manual IP configuration, making networks impractical for anything beyond a handful of devices.",
+    "takeaways": [
+      "DHCP assigns IP addresses automatically when devices connect",
+      "Leases are temporary and reclaimed when devices disconnect",
+      "The four-step DORA process handles address assignment"
+    ],
+    "keywords": [
+      "DHCP",
+      "IP assignment",
+      "network configuration",
+      "address lease"
+    ],
+    "faq": [
+      {
+        "question": "What is the DHCP DORA process?",
+        "answer": "Discover: the client broadcasts a request for an address. Offer: the DHCP server offers an available address. Request: the client accepts the offer. Acknowledge: the server confirms the lease. This four-step exchange typically completes in milliseconds when a device connects to the network."
+      },
+      {
+        "question": "What happens when a DHCP lease expires?",
+        "answer": "Devices attempt to renew their lease at 50 percent of the lease time. If renewal fails, they try again at 87.5 percent. If the lease expires completely, the device must restart the DORA process. Short leases reclaim addresses faster but generate more DHCP traffic."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-arp-finding-hardware-addresses": {
+    "summary": "ARP maps IP addresses to MAC hardware addresses on a local network so frames can be delivered to the correct physical device. When a device needs to communicate with a local IP address, it broadcasts an ARP request and the target responds with its MAC address, which is then cached.",
+    "whyItMatters": "ARP is the glue between the logical IP layer and the physical network. Without ARP, devices could not translate IP addresses into the MAC addresses needed to actually deliver frames on Ethernet.",
+    "takeaways": [
+      "ARP maps IP addresses to MAC addresses on the local network",
+      "ARP requests are broadcast to all devices on the segment",
+      "ARP caches store mappings to avoid repeated broadcasts"
+    ],
+    "keywords": [
+      "ARP",
+      "MAC address",
+      "address resolution",
+      "Ethernet addressing"
+    ],
+    "faq": [
+      {
+        "question": "What is an ARP cache?",
+        "answer": "The ARP cache stores recently resolved IP-to-MAC mappings so devices do not need to broadcast ARP requests for every packet. Entries typically expire after a few minutes. You can view the ARP cache on most systems with the arp -a command."
+      },
+      {
+        "question": "What is ARP spoofing?",
+        "answer": "ARP spoofing sends fake ARP replies to associate an attacker's MAC address with a legitimate IP address. This redirects traffic through the attacker, enabling man-in-the-middle attacks. Dynamic ARP Inspection on managed switches prevents this by validating ARP packets against trusted bindings."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-icmp-ping-and-diagnostics": {
+    "summary": "ICMP carries error messages and diagnostic information between network devices. Ping uses ICMP echo requests and replies to test reachability and measure round-trip time. Traceroute uses ICMP to map the path packets take through the network, identifying each router along the way.",
+    "whyItMatters": "ICMP is the primary tool for network troubleshooting. Ping and traceroute are the first commands every network engineer runs when diagnosing connectivity problems.",
+    "takeaways": [
+      "Ping uses ICMP echo to test if a host is reachable",
+      "Traceroute maps each hop between source and destination",
+      "ICMP error messages report unreachable hosts and network problems"
+    ],
+    "keywords": [
+      "ICMP",
+      "ping",
+      "traceroute",
+      "network diagnostics"
+    ],
+    "faq": [
+      {
+        "question": "How does traceroute work?",
+        "answer": "Traceroute sends packets with incrementing TTL values starting at 1. Each router decrements the TTL and discards packets when it reaches zero, sending back an ICMP time-exceeded message. This reveals each hop's IP address and round-trip time, mapping the entire path to the destination."
+      },
+      {
+        "question": "Why do some hosts not respond to ping?",
+        "answer": "Many firewalls and servers block ICMP echo requests for security reasons. Cloud providers often disable ping by default. A host that does not respond to ping may still be fully operational and reachable on other ports. Use TCP-based checks when ICMP is blocked."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-smtp-sending-email": {
+    "summary": "SMTP is the protocol that transfers email messages from sender to recipient across the internet. It routes messages through mail servers using MX DNS records, authenticates senders with mechanisms like SPF and DKIM, and queues messages for retry if the destination server is temporarily unavailable.",
+    "whyItMatters": "SMTP has powered email since 1982 and remains the only standard for sending email between servers. Understanding SMTP explains why email delivery is complex and why spam filtering exists.",
+    "takeaways": [
+      "SMTP transfers email between mail servers across the internet",
+      "MX records in DNS direct email to the correct server",
+      "SPF and DKIM authenticate senders to prevent email spoofing"
+    ],
+    "keywords": [
+      "SMTP",
+      "email protocol",
+      "mail server",
+      "SPF",
+      "DKIM"
+    ],
+    "faq": [
+      {
+        "question": "How does email get from sender to recipient?",
+        "answer": "Your email client sends the message via SMTP to your mail server. Your server looks up the recipient's domain MX record in DNS to find their mail server. It then transfers the message via SMTP to that server. The recipient retrieves the message using IMAP or POP3."
+      },
+      {
+        "question": "Why does email sometimes end up in spam?",
+        "answer": "Spam filters check SPF, DKIM, and DMARC records to verify the sender's authenticity. Missing or misconfigured authentication records cause legitimate email to be flagged. Content analysis also scores messages for spam-like patterns. Proper DNS configuration is essential for email deliverability."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-imap-vs-pop3-retrieving-email": {
+    "summary": "IMAP and POP3 are protocols for retrieving email from a mail server. IMAP synchronizes messages across multiple devices by keeping mail on the server, while POP3 downloads messages to a single device. IMAP has become the dominant protocol as users access email from phones, laptops, and browsers.",
+    "whyItMatters": "Understanding the difference between IMAP and POP3 explains why emails appear or disappear across devices. IMAP's multi-device synchronization is what users expect from modern email.",
+    "takeaways": [
+      "IMAP keeps email on the server and syncs across all devices",
+      "POP3 downloads email to one device and optionally deletes from server",
+      "IMAP supports server-side folders, search, and flags"
+    ],
+    "keywords": [
+      "IMAP",
+      "POP3",
+      "email retrieval",
+      "mail synchronization"
+    ],
+    "faq": [
+      {
+        "question": "Should I use IMAP or POP3?",
+        "answer": "Use IMAP for access from multiple devices — it keeps all messages synchronized on the server. POP3 is only useful if you want to download email to a single offline device or have very limited server storage. Nearly all modern email services default to IMAP."
+      },
+      {
+        "question": "Does IMAP use more storage than POP3?",
+        "answer": "IMAP stores messages on the server, consuming server storage. POP3 downloads and can delete server copies, using local storage instead. With modern cloud email providing gigabytes of free storage, server space is rarely a concern. IMAP's convenience outweighs storage considerations."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-ftp-classic-file-transfer": {
+    "summary": "FTP transfers files between a client and server using separate control and data connections. Created in 1971, it remains in use for legacy systems, but its lack of encryption makes it insecure. Modern alternatives like SFTP and SCP provide encrypted file transfer over SSH.",
+    "whyItMatters": "FTP's legacy is still visible in many enterprise and web hosting environments. Understanding its weaknesses explains why secure alternatives like SFTP have replaced it for most use cases.",
+    "takeaways": [
+      "FTP uses separate control and data connections on different ports",
+      "Passwords and data are transmitted in plain text without encryption",
+      "SFTP and SCP provide encrypted alternatives over SSH tunnels"
+    ],
+    "keywords": [
+      "FTP",
+      "file transfer",
+      "SFTP",
+      "SCP",
+      "legacy protocol"
+    ],
+    "faq": [
+      {
+        "question": "Why is FTP insecure?",
+        "answer": "FTP transmits usernames, passwords, and all file data in unencrypted plain text. Anyone monitoring the network can intercept credentials and file contents. It also uses dynamic ports for data transfer, complicating firewall configurations. SFTP solves these issues by running over encrypted SSH."
+      },
+      {
+        "question": "What is the difference between SFTP and FTPS?",
+        "answer": "SFTP runs file transfer over an SSH tunnel using a single encrypted connection. FTPS adds TLS encryption to the original FTP protocol but retains its dual-connection architecture. SFTP is simpler to firewall and deploy, making it the preferred choice for most secure file transfers."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-ssh-secure-remote-access": {
+    "summary": "SSH provides encrypted remote access to servers and network devices, replacing insecure protocols like Telnet. It authenticates using passwords or cryptographic key pairs and creates an encrypted tunnel for all commands and data. SSH also supports secure file transfer and port forwarding.",
+    "whyItMatters": "SSH is the standard way to manage servers and network infrastructure remotely. Every system administrator and developer relies on SSH daily for secure command-line access.",
+    "takeaways": [
+      "SSH encrypts all traffic between client and remote server",
+      "Key-based authentication is more secure than password login",
+      "SSH tunneling forwards ports securely through encrypted connections"
+    ],
+    "keywords": [
+      "SSH",
+      "secure shell",
+      "remote access",
+      "key authentication"
+    ],
+    "faq": [
+      {
+        "question": "How do SSH keys work?",
+        "answer": "You generate a key pair: a private key kept secret on your machine and a public key placed on the server. When connecting, the server challenges you with a puzzle only your private key can solve. This proves identity without transmitting a password. Keys can also be protected with a passphrase."
+      },
+      {
+        "question": "What is SSH port forwarding?",
+        "answer": "SSH tunneling forwards a local port through the encrypted SSH connection to a remote destination. This lets you securely access services like databases behind firewalls. Local forwarding brings remote services to your machine; remote forwarding exposes local services to the remote network."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-tls-in-depth": {
+    "summary": "TLS secures communication by combining asymmetric cryptography for key exchange, symmetric ciphers for bulk encryption, and certificates for identity verification. TLS 1.3 simplified the handshake to one round trip, removed outdated cipher suites, and mandates forward secrecy for all connections.",
+    "whyItMatters": "TLS protects nearly all sensitive internet traffic. Understanding its layered security model reveals how data remains confidential and tamper-proof across untrusted networks.",
+    "takeaways": [
+      "TLS 1.3 completes the handshake in a single round trip",
+      "Forward secrecy ensures past traffic stays secure if keys leak",
+      "Certificate chains build trust from root CAs to individual sites"
+    ],
+    "keywords": [
+      "TLS",
+      "transport layer security",
+      "cipher suite",
+      "forward secrecy"
+    ],
+    "faq": [
+      {
+        "question": "What is forward secrecy?",
+        "answer": "Forward secrecy uses ephemeral key exchange so that each session generates unique encryption keys. Even if the server's long-term private key is later compromised, recorded past sessions cannot be decrypted. TLS 1.3 mandates forward secrecy by requiring ephemeral Diffie-Hellman key exchange."
+      },
+      {
+        "question": "Why was TLS 1.3 a major improvement?",
+        "answer": "TLS 1.3 removed support for vulnerable cipher suites like RC4 and CBC mode, reduced the handshake from two round trips to one, mandated forward secrecy, and simplified the protocol. Zero round-trip resumption enables even faster reconnections to previously visited servers."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-http-2-and-multiplexing": {
+    "summary": "HTTP/2 introduced binary framing, multiplexing, header compression, and server push to dramatically improve web performance over HTTP/1.1. Multiplexing allows multiple requests and responses to share a single TCP connection simultaneously, eliminating the head-of-line blocking problem.",
+    "whyItMatters": "HTTP/2 doubled web page loading speed for many sites by eliminating the inefficiencies of HTTP/1.1's serial request model. It is now the default protocol for the majority of web traffic.",
+    "takeaways": [
+      "Multiplexing sends multiple requests over one TCP connection",
+      "Header compression with HPACK reduces overhead significantly",
+      "Binary framing replaces text-based HTTP/1.1 for efficiency"
+    ],
+    "keywords": [
+      "HTTP/2",
+      "multiplexing",
+      "header compression",
+      "binary framing"
+    ],
+    "faq": [
+      {
+        "question": "What is head-of-line blocking?",
+        "answer": "In HTTP/1.1, requests on a single connection are processed sequentially. A slow response blocks all subsequent requests. HTTP/2 multiplexing interleaves request and response frames so a slow resource does not block others. However, TCP-level head-of-line blocking can still occur with packet loss."
+      },
+      {
+        "question": "Does HTTP/2 require HTTPS?",
+        "answer": "The HTTP/2 specification allows unencrypted connections, but all major browsers only support HTTP/2 over TLS. In practice, you need a valid HTTPS certificate to use HTTP/2 in browsers. This effectively made TLS mandatory for modern web performance."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-http-3-the-future-of-the-web": {
+    "summary": "HTTP/3 replaces TCP with QUIC as its transport layer, eliminating TCP's head-of-line blocking and reducing connection setup time. QUIC builds encryption, multiplexing, and reliability directly into the transport layer over UDP, enabling faster page loads especially on unreliable mobile networks.",
+    "whyItMatters": "HTTP/3 solves the last major performance bottleneck of web communication. By moving to QUIC over UDP, it delivers faster connections and better resilience on mobile and lossy networks.",
+    "takeaways": [
+      "HTTP/3 uses QUIC over UDP instead of TCP for transport",
+      "Zero-RTT connection resumption enables instant reconnections",
+      "Per-stream error recovery eliminates head-of-line blocking"
+    ],
+    "keywords": [
+      "HTTP/3",
+      "QUIC",
+      "UDP transport",
+      "zero-RTT"
+    ],
+    "faq": [
+      {
+        "question": "How is HTTP/3 faster than HTTP/2?",
+        "answer": "HTTP/2 over TCP suffers head-of-line blocking when a single packet is lost, stalling all streams. HTTP/3 uses QUIC where each stream is independent, so one lost packet only affects its own stream. QUIC also combines the TLS handshake with connection setup, saving a round trip."
+      },
+      {
+        "question": "Is HTTP/3 widely supported?",
+        "answer": "All major browsers and many CDNs support HTTP/3. Google, Cloudflare, and Facebook already serve significant traffic over HTTP/3. Adoption is growing rapidly. Server software like Nginx and Caddy support it natively, and cloud load balancers are adding HTTP/3 termination."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-quic-udp-meets-reliability": {
+    "summary": "QUIC is a transport protocol built on UDP that provides reliable, encrypted, multiplexed connections with lower latency than TCP and TLS combined. It integrates encryption into the transport layer, supports connection migration when IP addresses change, and eliminates head-of-line blocking.",
+    "whyItMatters": "QUIC is replacing TCP as the transport for web traffic through HTTP/3. Its design solves fundamental TCP limitations that have constrained internet performance for decades.",
+    "takeaways": [
+      "QUIC provides reliability over UDP with built-in encryption",
+      "Connection migration keeps sessions alive during network changes",
+      "Independent streams prevent one lost packet from blocking others"
+    ],
+    "keywords": [
+      "QUIC",
+      "transport protocol",
+      "connection migration",
+      "UDP reliability"
+    ],
+    "faq": [
+      {
+        "question": "How does QUIC handle connection migration?",
+        "answer": "QUIC identifies connections by a connection ID rather than the IP address and port tuple that TCP uses. When a phone switches from Wi-Fi to cellular, the IP changes but the connection ID stays the same, so the QUIC session continues without interruption or a new handshake."
+      },
+      {
+        "question": "Why is QUIC built on UDP instead of creating a new protocol?",
+        "answer": "Deploying a new transport protocol would require updating every router and firewall on the internet. By running over UDP, QUIC works through existing network infrastructure. UDP passes through almost all firewalls and NAT devices, allowing QUIC to deploy without waiting for network upgrades."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-websocket-persistent-connections": {
+    "summary": "WebSocket provides a persistent, full-duplex communication channel over a single TCP connection between a browser and server.",
+    "whyItMatters": "WebSocket makes real-time web applications possible. Without it, features like live chat, stock tickers, and collaborative editing would require inefficient polling techniques.",
+    "takeaways": [
+      "WebSocket enables two-way communication over a single connection",
+      "An HTTP upgrade handshake initiates the persistent connection",
+      "Messages flow in both directions without request-response overhead"
+    ],
+    "keywords": [
+      "WebSocket",
+      "full-duplex",
+      "real-time",
+      "persistent connection"
+    ],
+    "faq": [
+      {
+        "question": "How does WebSocket differ from regular HTTP?",
+        "answer": "HTTP is request-response: the client asks, the server answers. WebSocket allows both sides to send messages independently at any time over a persistent connection. There is no need for the client to repeatedly poll the server. This reduces latency and bandwidth for real-time applications."
+      },
+      {
+        "question": "When should you use WebSocket vs Server-Sent Events?",
+        "answer": "Use WebSocket when both client and server need to send data in real time, like chat or gaming. Use Server-Sent Events when only the server pushes updates to the client, like news feeds or dashboards. SSE is simpler, auto-reconnects, and works over standard HTTP."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-webrtc-browser-to-browser": {
+    "summary": "WebRTC enables peer-to-peer audio, video, and data communication directly between browsers without requiring plugins or server relay for media. It uses STUN and TURN servers for NAT traversal, DTLS for encryption, and adaptive bitrate algorithms to handle varying network conditions in real time.",
+    "whyItMatters": "WebRTC powers video calls, screen sharing, and file transfer directly in the browser. It eliminated the need for plugins like Flash, making real-time communication accessible on every device.",
+    "takeaways": [
+      "WebRTC connects browsers directly for peer-to-peer media",
+      "STUN and TURN servers help traverse NATs and firewalls",
+      "All WebRTC media is encrypted with DTLS and SRTP by default"
+    ],
+    "keywords": [
+      "WebRTC",
+      "peer-to-peer",
+      "video calling",
+      "NAT traversal"
+    ],
+    "faq": [
+      {
+        "question": "How does WebRTC work through firewalls?",
+        "answer": "WebRTC uses ICE to find connectivity paths. STUN servers help peers discover their public IP addresses. If direct connection fails due to restrictive NATs, TURN servers relay media traffic through a server. Most connections succeed with STUN alone; TURN is the fallback for about 15 percent of cases."
+      },
+      {
+        "question": "Does WebRTC always send data directly between peers?",
+        "answer": "WebRTC tries peer-to-peer first, which works in most cases. When both peers are behind restrictive firewalls, a TURN relay server forwards the traffic. For group calls with many participants, SFU servers receive and distribute streams more efficiently than full mesh peer connections."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-graphql-query-what-you-need": {
+    "summary": "GraphQL is an API query language that lets clients request exactly the data they need in a single request, unlike REST where each endpoint returns a fixed structure. Clients define the shape of the response, eliminating over-fetching and under-fetching problems common in REST APIs.",
+    "whyItMatters": "GraphQL solves real performance problems for frontend applications that need data from multiple resources. It reduces network requests and bandwidth by letting clients specify precisely what they need.",
+    "takeaways": [
+      "Clients define the exact shape and fields of each response",
+      "A single request can fetch data from multiple related resources",
+      "Eliminates the over-fetching and under-fetching of REST APIs"
+    ],
+    "keywords": [
+      "GraphQL",
+      "API query language",
+      "schema",
+      "data fetching"
+    ],
+    "faq": [
+      {
+        "question": "How does GraphQL differ from REST?",
+        "answer": "REST exposes fixed endpoints that return predetermined data structures. GraphQL exposes a single endpoint where clients specify what data they want. REST often requires multiple requests to assemble related data, while GraphQL fetches everything in one query with exactly the requested fields."
+      },
+      {
+        "question": "What are the downsides of GraphQL?",
+        "answer": "GraphQL adds complexity to the server with schema definition and resolver implementation. Caching is harder than REST because queries are dynamic. Deeply nested queries can cause performance problems without rate limiting. Some teams find REST's simplicity more appropriate for straightforward APIs."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-grpc-high-performance-apis": {
+    "summary": "gRPC is a high-performance remote procedure call framework that uses Protocol Buffers for serialization and HTTP/2 for transport. It supports unary calls, server streaming, client streaming, and bidirectional streaming, making it ideal for microservice communication where low latency matters.",
+    "whyItMatters": "gRPC is the dominant protocol for internal microservice communication in modern architectures. Its binary serialization and HTTP/2 streaming deliver performance that JSON-based REST cannot match.",
+    "takeaways": [
+      "Protocol Buffers serialize data in a compact binary format",
+      "HTTP/2 streaming enables four communication patterns",
+      "Strong typing with generated code catches API errors at compile time"
+    ],
+    "keywords": [
+      "gRPC",
+      "Protocol Buffers",
+      "RPC",
+      "microservice communication"
+    ],
+    "faq": [
+      {
+        "question": "When should you use gRPC instead of REST?",
+        "answer": "Use gRPC for internal service-to-service communication where performance matters, when you need streaming, or when strong typing is valuable. Use REST for public APIs, browser-facing endpoints, and when human readability of requests is important. Many systems use gRPC internally and REST externally."
+      },
+      {
+        "question": "Can browsers use gRPC directly?",
+        "answer": "Browsers cannot make native gRPC calls because they lack HTTP/2 trailer support. gRPC-Web is a variant that works in browsers with a proxy. Alternatively, many teams expose REST or GraphQL APIs to browsers while using gRPC between backend services."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-mqtt-messaging-for-iot": {
+    "summary": "MQTT is a lightweight publish-subscribe messaging protocol designed for constrained devices and unreliable networks. Clients publish messages to topics and subscribe to receive messages from topics, with a broker handling all routing. Three QoS levels balance reliability against bandwidth.",
+    "whyItMatters": "MQTT is the dominant protocol for IoT communication, connecting billions of sensors and devices. Its minimal overhead makes it work on devices with limited processing power and bandwidth.",
+    "takeaways": [
+      "Publish-subscribe model decouples message senders from receivers",
+      "Three QoS levels offer at-most-once to exactly-once delivery",
+      "Minimal protocol overhead suits constrained IoT devices"
+    ],
+    "keywords": [
+      "MQTT",
+      "IoT messaging",
+      "publish-subscribe",
+      "message broker"
+    ],
+    "faq": [
+      {
+        "question": "How does MQTT's publish-subscribe model work?",
+        "answer": "Devices publish messages to named topics through a central broker. Other devices subscribe to topics they care about. The broker routes messages from publishers to all matching subscribers. This decoupling means publishers and subscribers do not need to know about each other."
+      },
+      {
+        "question": "What are MQTT QoS levels?",
+        "answer": "QoS 0 delivers messages at most once with no confirmation. QoS 1 ensures at-least-once delivery with acknowledgment but may duplicate. QoS 2 guarantees exactly-once delivery using a four-step handshake. Higher QoS uses more bandwidth, so IoT devices often use QoS 0 or 1."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-ntp-keeping-clocks-in-sync": {
+    "summary": "NTP synchronizes computer clocks to within milliseconds of Coordinated Universal Time by exchanging timestamps with a hierarchy of time servers. Accurate time is critical for security certificates, log correlation, database replication, and distributed system coordination.",
+    "whyItMatters": "Synchronized clocks are invisible infrastructure that everything depends on. Security protocols, logging, transactions, and distributed systems all break when clocks drift apart.",
+    "takeaways": [
+      "NTP synchronizes clocks across networks to millisecond accuracy",
+      "A stratum hierarchy distributes time from atomic clock sources",
+      "Modern systems use NTP pools with multiple servers for reliability"
+    ],
+    "keywords": [
+      "NTP",
+      "time synchronization",
+      "network time",
+      "clock accuracy"
+    ],
+    "faq": [
+      {
+        "question": "Why does accurate time matter for networks?",
+        "answer": "TLS certificates have validity windows checked against system time. Security logs must be correlated across servers using consistent timestamps. Distributed databases use timestamps for consistency. Authentication tokens expire based on time. Clock errors cause failures across all these systems."
+      },
+      {
+        "question": "What is the NTP stratum hierarchy?",
+        "answer": "Stratum 0 devices are atomic clocks and GPS receivers. Stratum 1 servers connect directly to stratum 0 sources. Each additional stratum is one hop further from the reference clock. Most devices use stratum 2 or 3 servers. The maximum is stratum 15; stratum 16 means unsynchronized."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-sip-setting-up-calls": {
+    "summary": "SIP establishes, modifies, and terminates multimedia communication sessions like voice and video calls over IP networks. It handles signaling such as ringing, call transfer, and conference setup, while the actual media flows through separate RTP streams between the participants.",
+    "whyItMatters": "SIP powers VoIP phone systems used by millions of businesses worldwide. Understanding SIP explains how voice calls work over the internet and why call quality varies.",
+    "takeaways": [
+      "SIP handles call signaling while RTP carries the actual media",
+      "SIP uses text-based messages similar to HTTP for communication",
+      "It supports call transfer, forwarding, and multi-party conferencing"
+    ],
+    "keywords": [
+      "SIP",
+      "VoIP",
+      "call signaling",
+      "session initiation"
+    ],
+    "faq": [
+      {
+        "question": "How does a SIP call get established?",
+        "answer": "The caller sends an INVITE message to the recipient's SIP proxy. The proxy rings the recipient's device, which returns a 180 Ringing response. When answered, a 200 OK with SDP media details is sent. The caller acknowledges and media flows directly between endpoints via RTP."
+      },
+      {
+        "question": "Why do SIP calls sometimes have quality issues?",
+        "answer": "SIP signaling and RTP media use different network paths. NAT traversal problems can cause one-way audio. Insufficient bandwidth causes choppy voice. Jitter and packet loss degrade quality. Proper QoS configuration prioritizing voice traffic over data resolves most SIP quality issues."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-rtp-streaming-media": {
+    "summary": "RTP delivers audio and video streams over IP networks in real time, carrying media payloads with timestamps and sequence numbers for synchronized playback. Working alongside RTCP for quality feedback, RTP enables VoIP calls, video conferencing, and live streaming applications.",
+    "whyItMatters": "RTP is the standard for real-time media delivery across the internet. Every video call and voice conversation uses RTP to deliver audio and video with timing precision.",
+    "takeaways": [
+      "RTP carries timestamped media packets for real-time playback",
+      "RTCP provides quality feedback for adaptive streaming",
+      "Sequence numbers detect packet loss and reordering"
+    ],
+    "keywords": [
+      "RTP",
+      "real-time streaming",
+      "media transport",
+      "RTCP"
+    ],
+    "faq": [
+      {
+        "question": "How does RTP handle packet loss?",
+        "answer": "RTP itself does not retransmit lost packets because retransmission adds latency unacceptable for real-time media. Instead, codecs use techniques like forward error correction and packet loss concealment to mask gaps. RTCP reports lost packets so the sender can reduce bitrate if needed."
+      },
+      {
+        "question": "What is the relationship between RTP and SIP?",
+        "answer": "SIP handles call setup and teardown signaling. Once a call is established, RTP carries the actual audio and video between participants. SDP negotiated during SIP setup specifies which codecs and ports to use for RTP. SIP manages the session; RTP delivers the media."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-ipsec-securing-the-network-layer": {
+    "summary": "IPsec encrypts and authenticates IP packets at the network layer, providing security transparent to applications above it. It operates in transport mode for end-to-end protection or tunnel mode for VPN connectivity between networks, using IKE to negotiate encryption keys automatically.",
+    "whyItMatters": "IPsec protects data at the network layer without requiring application changes. It is the foundation of site-to-site VPNs that securely connect corporate offices across the internet.",
+    "takeaways": [
+      "IPsec encrypts IP packets transparently at the network layer",
+      "Tunnel mode creates VPN connections between entire networks",
+      "IKE automatically negotiates encryption keys and algorithms"
+    ],
+    "keywords": [
+      "IPsec",
+      "VPN",
+      "network encryption",
+      "IKE",
+      "tunnel mode"
+    ],
+    "faq": [
+      {
+        "question": "What is the difference between transport and tunnel mode?",
+        "answer": "Transport mode encrypts only the IP packet payload, protecting data between two hosts while leaving IP headers visible. Tunnel mode encrypts the entire original IP packet and wraps it in a new IP header, creating a secure tunnel between networks. VPNs use tunnel mode."
+      },
+      {
+        "question": "How does IPsec relate to VPNs?",
+        "answer": "Most site-to-site VPNs use IPsec in tunnel mode to create encrypted connections between office networks over the internet. The tunnel makes remote networks appear directly connected. IPsec VPNs encrypt all traffic between sites transparently, regardless of the applications generating it."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-dns-over-https-private-lookups": {
+    "summary": "DNS-over-HTTPS encrypts DNS queries inside HTTPS connections, preventing ISPs, network operators, and eavesdroppers from seeing which domains you visit.",
+    "whyItMatters": "Traditional DNS queries are sent in plain text, revealing every website you visit to your network operator. DNS-over-HTTPS closes this major privacy gap in internet communication.",
+    "takeaways": [
+      "DoH encrypts DNS queries inside standard HTTPS connections",
+      "Network operators cannot see which domains are being resolved",
+      "Major browsers enable DoH by default with trusted resolvers"
+    ],
+    "keywords": [
+      "DNS-over-HTTPS",
+      "DoH",
+      "encrypted DNS",
+      "DNS privacy"
+    ],
+    "faq": [
+      {
+        "question": "What is the difference between DoH and DoT?",
+        "answer": "DNS-over-HTTPS sends queries over port 443 mixed with regular web traffic, making it nearly impossible to block. DNS-over-TLS uses a dedicated port 853, which is easier for networks to identify and block. DoH provides stronger privacy but makes network-level DNS filtering more difficult."
+      },
+      {
+        "question": "Does DoH affect network security?",
+        "answer": "DoH prevents network administrators from seeing DNS queries, which can bypass security filters and content policies. Organizations may need to configure endpoint policies to use internal DNS resolvers. The privacy benefits for users must be balanced against organizational security requirements."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-dnssec-trusting-dns-answers": {
+    "summary": "DNSSEC adds cryptographic signatures to DNS records, allowing resolvers to verify that responses are authentic and have not been tampered with. Each zone signs its records with a private key, and parent zones vouch for child zones through a chain of trust anchored at the DNS root.",
+    "whyItMatters": "Without DNSSEC, attackers can forge DNS responses to redirect users to malicious sites. DNSSEC prevents cache poisoning and ensures DNS answers genuinely come from the authorized source.",
+    "takeaways": [
+      "DNSSEC signs DNS records with cryptographic signatures",
+      "A chain of trust from the root verifies signature authenticity",
+      "Resolvers reject responses that fail signature validation"
+    ],
+    "keywords": [
+      "DNSSEC",
+      "DNS security",
+      "digital signatures",
+      "DNS authentication"
+    ],
+    "faq": [
+      {
+        "question": "How does DNSSEC prevent DNS spoofing?",
+        "answer": "Every DNS zone signs its records with a private key. Resolvers verify signatures using the corresponding public key, which is authenticated through a chain of trust to the DNS root. Forged or tampered responses fail verification and are discarded, preventing attackers from redirecting users."
+      },
+      {
+        "question": "Why is DNSSEC not universally deployed?",
+        "answer": "DNSSEC adds complexity to DNS management, increases response sizes, and requires careful key rotation. Misconfigured DNSSEC causes domain outages because resolvers reject unsigned or incorrectly signed responses. Many domain operators find the operational risk outweighs the security benefit."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-wpa3-securing-wi-fi": {
+    "summary": "WPA3 replaces WPA2 with stronger Wi-Fi security, using Simultaneous Authentication of Equals for password-based key exchange that protects against offline dictionary attacks.",
+    "whyItMatters": "WPA2's vulnerabilities like KRACK showed that Wi-Fi security needed a fundamental upgrade. WPA3 protects even weak passwords from offline cracking and secures previously unprotected open networks.",
+    "takeaways": [
+      "SAE key exchange resists offline dictionary attacks on passwords",
+      "Open networks get individual encryption via OWE",
+      "Enterprise mode mandates 192-bit cryptographic strength"
+    ],
+    "keywords": [
+      "WPA3",
+      "Wi-Fi security",
+      "SAE",
+      "wireless encryption"
+    ],
+    "faq": [
+      {
+        "question": "How does WPA3 protect against password cracking?",
+        "answer": "WPA3 uses SAE, a zero-knowledge proof protocol that verifies the password without transmitting or deriving a crackable hash. Each authentication attempt must happen interactively with the access point, making offline dictionary attacks impossible. Even simple passwords get strong protection."
+      },
+      {
+        "question": "Do I need new hardware for WPA3?",
+        "answer": "Some older devices received WPA3 through firmware updates, but most require hardware that includes WPA3 support. Wi-Fi 6 devices generally support WPA3 natively. WPA3-transition mode allows WPA2 and WPA3 devices to coexist on the same network during the upgrade period."
+      }
+    ]
+  },
+  "computer-networking--network-protocols-explained--t-oauth-delegated-authorization": {
+    "summary": "OAuth is an authorization framework that lets applications access user resources on other services without sharing passwords.",
+    "whyItMatters": "OAuth enables the modern connected web where applications securely share data. Every time you log in with Google or connect apps to your accounts, OAuth is the mechanism making it safe.",
+    "takeaways": [
+      "OAuth issues tokens instead of sharing user passwords",
+      "Scopes limit what an application can access",
+      "Access tokens expire and refresh tokens enable renewal"
+    ],
+    "keywords": [
+      "OAuth",
+      "authorization",
+      "access tokens",
+      "delegated access"
+    ],
+    "faq": [
+      {
+        "question": "What is the difference between OAuth and OpenID Connect?",
+        "answer": "OAuth handles authorization — granting access to resources. OpenID Connect builds on OAuth to add authentication — verifying who the user is. When you sign in with Google, OpenID Connect proves your identity. When an app requests access to your Google Drive, OAuth grants that access."
+      },
+      {
+        "question": "What are OAuth scopes?",
+        "answer": "Scopes define the specific permissions an application requests, like read-only email access or full calendar management. Users see the requested scopes in the consent screen and can approve or deny. Well-designed applications request only the minimum scopes needed for their functionality."
+      }
+    ]
+  }
+}

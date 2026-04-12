@@ -1,0 +1,765 @@
+{
+  "computer-networking--the-world-wide-web--t-tim-berners-lee-s-invention": {
+    "summary": "Tim Berners-Lee invented the World Wide Web in 1989 at CERN, creating HTML for documents, HTTP for transfer, and URLs for addressing. He built the first web browser and server, then made the technology freely available, enabling the explosive growth of the web as an open platform.",
+    "whyItMatters": "The decision to make the web open and free shaped the modern internet. Understanding its origins explains why the web is document-centric, link-based, and built on open standards anyone can use.",
+    "takeaways": [
+      "Berners-Lee created HTML, HTTP, and URLs as a unified system",
+      "The first website went live in 1991 at CERN in Switzerland",
+      "Making the web freely available enabled its explosive adoption"
+    ],
+    "keywords": [
+      "Tim Berners-Lee",
+      "World Wide Web",
+      "CERN",
+      "web history"
+    ],
+    "faq": [
+      {
+        "question": "What problem did the World Wide Web solve?",
+        "answer": "CERN researchers needed to share documents across different computer systems. Berners-Lee combined hypertext with the internet to create a universal document system. Anyone with a browser could access any document via its URL, regardless of what computer hosted it."
+      },
+      {
+        "question": "Why did Berners-Lee give the web away for free?",
+        "answer": "CERN released the web technology into the public domain in 1993. Berners-Lee believed the web's value came from being universal — a proprietary standard would have fragmented it into competing systems. This decision is considered one of the most consequential in technology history."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-how-urls-work": {
+    "summary": "URLs provide a universal addressing scheme for every resource on the web, combining a protocol, domain name, path, and optional parameters into a single string. They enable direct linking to any page, image, or API endpoint on the internet with a human-readable and shareable format.",
+    "whyItMatters": "URLs are one of the three foundational web technologies. Understanding their structure is essential for web development, SEO, API design, and debugging connectivity issues.",
+    "takeaways": [
+      "URL components include scheme, domain, port, path, and query string",
+      "Path segments organize resources hierarchically on the server",
+      "Query parameters pass data in key-value pairs after the question mark"
+    ],
+    "keywords": [
+      "URL",
+      "URI",
+      "web addressing",
+      "query string",
+      "URL structure"
+    ],
+    "faq": [
+      {
+        "question": "What is the difference between a URL and a URI?",
+        "answer": "A URI is a universal resource identifier that uniquely names a resource. A URL is a type of URI that also specifies how to locate and access the resource using a protocol like HTTPS. In practice, the terms are used interchangeably for web addresses, but technically all URLs are URIs."
+      },
+      {
+        "question": "What does URL encoding do?",
+        "answer": "URL encoding replaces unsafe characters with percent-encoded equivalents. Spaces become %20 or +. Special characters like & and = have reserved meanings in URLs. Encoding ensures that data passed in URLs does not break the URL structure."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-html-the-web-s-language": {
+    "summary": "HTML is the markup language that structures web content using nested elements defined by tags. Headings, paragraphs, links, images, and forms are all built with HTML elements. Semantic HTML communicates the meaning of content to browsers, search engines, and assistive technologies.",
+    "whyItMatters": "HTML is the foundation of every web page. Writing semantic HTML improves accessibility, SEO, and maintainability — it tells machines what content means, not just how it looks.",
+    "takeaways": [
+      "HTML structures content with nested elements defined by tags",
+      "Semantic elements like article, nav, and aside convey meaning",
+      "The DOM tree representation enables JavaScript interaction"
+    ],
+    "keywords": [
+      "HTML",
+      "markup language",
+      "semantic HTML",
+      "DOM",
+      "web structure"
+    ],
+    "faq": [
+      {
+        "question": "What is semantic HTML?",
+        "answer": "Semantic HTML uses elements that describe content meaning rather than appearance. A nav element indicates navigation, article wraps a self-contained composition, and aside marks supplementary content. This helps search engines understand page structure and screen readers navigate content."
+      },
+      {
+        "question": "How does a browser process HTML?",
+        "answer": "The browser parses HTML into a Document Object Model tree, where each element becomes a node. It then applies CSS styles to calculate layout and paints pixels to the screen. JavaScript can modify the DOM dynamically. This parse-style-layout-paint pipeline runs for every page load."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-css-styling-the-web": {
+    "summary": "CSS controls the visual presentation of HTML content, defining colors, fonts, layouts, spacing, and responsive behavior through selectors and declarations. The cascade mechanism resolves conflicts when multiple rules target the same element, using specificity, source order, and importance.",
+    "whyItMatters": "CSS separates design from content, enabling consistent visual styling across entire websites. Modern CSS layouts with Flexbox and Grid replaced fragile float-based techniques with powerful, intuitive systems.",
+    "takeaways": [
+      "CSS selectors target HTML elements for styling declarations",
+      "Flexbox and Grid provide powerful two-dimensional layout systems",
+      "Media queries enable responsive designs that adapt to screen size"
+    ],
+    "keywords": [
+      "CSS",
+      "styling",
+      "Flexbox",
+      "CSS Grid",
+      "responsive design"
+    ],
+    "faq": [
+      {
+        "question": "What is the CSS cascade?",
+        "answer": "When multiple CSS rules target the same element, the cascade determines which wins. It considers source order, specificity of selectors, and the !important flag. Inline styles beat stylesheets. ID selectors beat class selectors. Later rules beat earlier ones at equal specificity."
+      },
+      {
+        "question": "How does responsive design work?",
+        "answer": "Media queries apply different CSS rules at different screen widths. Mobile-first design starts with styles for small screens and adds complexity for larger ones. Flexible units like percentages, viewport units, and CSS clamp adapt elements fluidly."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-http-the-web-s-protocol": {
+    "summary": "HTTP defines how web browsers request resources from servers and how servers respond. It uses a simple request-response model with methods, headers, status codes, and body content. HTTP is stateless — each request is independent, with cookies and tokens adding statefulness when needed.",
+    "whyItMatters": "HTTP is the protocol underlying all web communication. Understanding its request-response model, methods, and status codes is essential for web development and API design.",
+    "takeaways": [
+      "HTTP uses a request-response model with methods and status codes",
+      "Headers carry metadata like content type and authentication tokens",
+      "Stateless design enables simple scaling across many servers"
+    ],
+    "keywords": [
+      "HTTP",
+      "request-response",
+      "web protocol",
+      "status codes"
+    ],
+    "faq": [
+      {
+        "question": "What do HTTP status codes mean?",
+        "answer": "200 series indicates success. 301 and 302 are redirects. 400 means bad request, 401 unauthorized, 403 forbidden, 404 not found. 500 series indicates server errors. Status codes tell the client whether the request succeeded and what to do next if it did not."
+      },
+      {
+        "question": "What are HTTP headers used for?",
+        "answer": "Headers carry metadata about the request or response. Content-Type specifies the data format. Authorization carries authentication credentials. Cache-Control directs caching behavior. Custom headers exchange application-specific information. Headers are key-value pairs sent before the body."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-https-and-tls": {
+    "summary": "HTTPS encrypts all web communication using TLS, protecting data from eavesdropping and tampering between browser and server. TLS authenticates the server's identity using certificates and establishes encryption keys through a handshake before any application data is exchanged.",
+    "whyItMatters": "HTTPS is now mandatory for the modern web. Browsers mark HTTP sites as insecure, search engines penalize them, and many web features are only available over HTTPS.",
+    "takeaways": [
+      "TLS encrypts all data between browser and server",
+      "Certificates verify the server is who it claims to be",
+      "Let's Encrypt provides free certificates for every website"
+    ],
+    "keywords": [
+      "HTTPS",
+      "TLS",
+      "web encryption",
+      "certificates",
+      "secure web"
+    ],
+    "faq": [
+      {
+        "question": "Is HTTPS required for all websites?",
+        "answer": "While not technically required, every modern website should use HTTPS. Browsers show security warnings for HTTP sites. Many APIs like geolocation and service workers require HTTPS. Google ranks HTTPS sites higher in search results. Free certificates from Let's Encrypt remove cost as a barrier."
+      },
+      {
+        "question": "What is mixed content?",
+        "answer": "Mixed content occurs when an HTTPS page loads resources like images or scripts over HTTP. This undermines the page's security because those HTTP resources can be intercepted. Browsers block active mixed content like scripts and warn about passive mixed content like images."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-http-2-and-http-3": {
+    "summary": "HTTP/2 introduced multiplexing, header compression, and binary framing to speed up the web. HTTP/3 replaces TCP with QUIC over UDP, eliminating head-of-line blocking and reducing connection setup latency.",
+    "whyItMatters": "HTTP/2 and HTTP/3 fundamentally changed web performance. Understanding them explains why modern sites load faster and helps developers optimize for these protocols.",
+    "takeaways": [
+      "HTTP/2 multiplexes multiple requests over a single TCP connection",
+      "HTTP/3 uses QUIC over UDP to eliminate TCP head-of-line blocking",
+      "Both are backward-compatible and negotiated automatically"
+    ],
+    "keywords": [
+      "HTTP/2",
+      "HTTP/3",
+      "QUIC",
+      "web performance",
+      "multiplexing"
+    ],
+    "faq": [
+      {
+        "question": "Do developers need to change code for HTTP/2 or HTTP/3?",
+        "answer": "No code changes are required. Browsers and servers negotiate the protocol version automatically. However, some HTTP/1.1 optimization techniques like domain sharding and sprite sheets become unnecessary or counterproductive."
+      },
+      {
+        "question": "Why does HTTP/3 use UDP instead of TCP?",
+        "answer": "TCP's head-of-line blocking means one lost packet stalls all streams on the connection. QUIC over UDP handles each stream independently, so packet loss affects only the impacted stream. QUIC also combines the TLS handshake with connection setup, saving a round trip."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-from-url-to-rendered-page": {
+    "summary": "When you enter a URL, the browser resolves DNS, opens a TCP connection, performs a TLS handshake, sends an HTTP request, receives HTML, parses it into a DOM, fetches CSS and JavaScript, computes styles and layout, and paints pixels. This pipeline completes in milliseconds for fast sites.",
+    "whyItMatters": "Understanding the critical rendering path reveals where performance bottlenecks occur. Each step offers optimization opportunities that determine whether a page loads instantly or frustratingly slowly.",
+    "takeaways": [
+      "DNS, TCP, TLS, and HTTP happen before the first byte arrives",
+      "HTML parsing, CSS styling, layout, and paint produce visible content",
+      "Render-blocking resources delay the first meaningful paint"
+    ],
+    "keywords": [
+      "critical rendering path",
+      "page load",
+      "browser rendering",
+      "first paint"
+    ],
+    "faq": [
+      {
+        "question": "What is the critical rendering path?",
+        "answer": "The critical rendering path is the sequence of steps a browser takes to convert HTML, CSS, and JavaScript into visible pixels. It includes DOM construction, CSSOM construction, render tree building, layout, and paint."
+      },
+      {
+        "question": "What are render-blocking resources?",
+        "answer": "CSS files and synchronous JavaScript block rendering because the browser needs them to calculate visual layout. The browser pauses rendering until these resources are downloaded and processed. Deferring non-critical JavaScript, inlining critical CSS, and using async loading minimize render blocking."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-cookies-and-sessions": {
+    "summary": "Cookies are small data packets that servers store in browsers to maintain state across HTTP's stateless request model. Session cookies track login status, preference cookies remember settings, and tracking cookies follow users across sites. Privacy regulations now require transparent cookie consent.",
+    "whyItMatters": "Cookies are the primary mechanism for maintaining user sessions on the web. Understanding their security attributes and privacy implications is essential for web development.",
+    "takeaways": [
+      "Cookies maintain state across stateless HTTP requests",
+      "HttpOnly and Secure flags protect cookies from common attacks",
+      "SameSite attribute limits cross-site cookie transmission"
+    ],
+    "keywords": [
+      "cookies",
+      "web sessions",
+      "session management",
+      "SameSite"
+    ],
+    "faq": [
+      {
+        "question": "What are the security risks of cookies?",
+        "answer": "Cross-site scripting can steal cookies if HttpOnly is not set. Cross-site request forgery uses cookies to perform unauthorized actions. Session hijacking intercepts cookies to impersonate users. Secure, HttpOnly, and SameSite attributes mitigate these risks."
+      },
+      {
+        "question": "What is the SameSite cookie attribute?",
+        "answer": "SameSite controls whether cookies are sent with cross-site requests. Strict sends cookies only to the same site. Lax allows cookies on top-level navigations like clicking a link. None allows all cross-site requests but requires Secure. Chrome defaults to Lax, blocking most cross-site cookie abuse."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-browser-caching": {
+    "summary": "Browser caching stores copies of web resources locally to avoid re-downloading them. Cache-Control headers tell browsers how long resources stay fresh. Conditional requests check if cached resources have changed using ETags.",
+    "whyItMatters": "Caching is the most impactful web performance optimization. A well-cached site loads in milliseconds on return visits because most resources come from the local disk instead of the network.",
+    "takeaways": [
+      "Cache-Control max-age sets how long browsers keep resources fresh",
+      "ETags enable conditional requests that check for changes",
+      "Immutable file names with hashes enable aggressive long-term caching"
+    ],
+    "keywords": [
+      "browser cache",
+      "Cache-Control",
+      "ETag",
+      "web caching"
+    ],
+    "faq": [
+      {
+        "question": "How does Cache-Control work?",
+        "answer": "Cache-Control is an HTTP header that directs caching behavior. max-age=3600 means the resource is fresh for one hour. no-cache forces revalidation before each use. no-store prevents caching entirely. public allows shared caches; private restricts to the user's browser only."
+      },
+      {
+        "question": "What is cache busting?",
+        "answer": "Cache busting forces browsers to download a new version of a changed resource. The most common technique adds a content hash to the filename, like styles.a1b2c3.css. When the file changes, the hash changes, creating a new URL that bypasses the old cached version completely."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-content-delivery-networks": {
+    "summary": "CDNs distribute copies of web content to edge servers worldwide, serving each user from the nearest location. They reduce latency by minimizing physical distance, handle traffic spikes through distributed capacity, and protect origin servers from DDoS attacks.",
+    "whyItMatters": "CDNs make websites feel fast for users everywhere. They are essential infrastructure for any web application serving a global audience or expecting traffic spikes.",
+    "takeaways": [
+      "Content is cached at edge servers near users worldwide",
+      "Latency drops from hundreds of milliseconds to single digits",
+      "CDNs absorb traffic spikes and DDoS attacks at the edge"
+    ],
+    "keywords": [
+      "CDN",
+      "content delivery",
+      "edge caching",
+      "Cloudflare",
+      "CloudFront"
+    ],
+    "faq": [
+      {
+        "question": "What can CDNs cache?",
+        "answer": "CDNs cache static content like images, CSS, JavaScript, video, and fonts most effectively. Dynamic content can benefit from CDN features like connection optimization, edge computing, and smart routing. Some CDNs cache API responses at the edge with short TTLs for semi-dynamic content."
+      },
+      {
+        "question": "Do CDNs help with small websites?",
+        "answer": "Yes. Even small sites benefit from CDN edge serving, DDoS protection, and SSL termination. Free CDN tiers from Cloudflare and others provide caching, HTTPS, and basic protection at no cost. The performance improvement is especially noticeable for visitors far from the origin server."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-rest-apis": {
+    "summary": "REST APIs use standard HTTP methods to perform operations on resources identified by URLs. GET retrieves data, POST creates resources, PUT updates them, and DELETE removes them. REST's simplicity, statelessness, and use of web standards make it the dominant API architecture for web services.",
+    "whyItMatters": "REST APIs power the modern web. Understanding REST conventions is essential for integrating with any web service, building backends, and designing APIs that other developers can use.",
+    "takeaways": [
+      "REST maps CRUD operations to HTTP methods on URL resources",
+      "Stateless design means each request contains all needed context",
+      "JSON is the standard data format for REST request and response bodies"
+    ],
+    "keywords": [
+      "REST API",
+      "RESTful",
+      "web API",
+      "CRUD",
+      "HTTP methods"
+    ],
+    "faq": [
+      {
+        "question": "What makes an API RESTful?",
+        "answer": "REST APIs use URLs to identify resources, HTTP methods for operations, standard status codes for responses, and are stateless. Truly RESTful APIs also use HATEOAS, where responses include links to related resources. In practice, most REST APIs follow conventions rather than strict REST constraints."
+      },
+      {
+        "question": "When should you use REST vs GraphQL?",
+        "answer": "REST works well for simple CRUD operations, public APIs, and when caching is important. GraphQL suits complex data requirements where clients need to fetch related data in one request or when different clients need different data shapes from the same endpoint."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-graphql-explained": {
+    "summary": "GraphQL lets API clients define exactly what data they need in a structured query language, receiving a response that matches the requested shape precisely.",
+    "whyItMatters": "GraphQL solves real problems with REST APIs for frontend applications. It reduces network requests, eliminates unused data transfer, and gives clients precise control over the data they receive.",
+    "takeaways": [
+      "Clients query a single endpoint with a typed schema language",
+      "Responses match the exact shape the client requested",
+      "Nested queries fetch related resources in one round trip"
+    ],
+    "keywords": [
+      "GraphQL",
+      "query language",
+      "API schema",
+      "data fetching"
+    ],
+    "faq": [
+      {
+        "question": "How does GraphQL handle relationships between data?",
+        "answer": "GraphQL schemas define types with fields that reference other types. A query can traverse these relationships to any depth, fetching a user, their posts, and each post's comments in a single request. Resolvers on the server fetch data for each field independently and assemble the response."
+      },
+      {
+        "question": "What are GraphQL subscriptions?",
+        "answer": "Subscriptions provide real-time updates by maintaining a WebSocket connection between client and server. When data changes, the server pushes updates matching the subscription query to all subscribed clients. This enables real-time features like live feeds and collaborative editing."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-websockets-for-real-time": {
+    "summary": "WebSockets establish a persistent, full-duplex connection between browser and server after an HTTP upgrade handshake. Both sides can send messages at any time without the overhead of new HTTP requests. This enables real-time features like chat, live dashboards, and multiplayer games.",
+    "whyItMatters": "WebSockets transformed the web from request-response only into a platform for real-time applications. They power the live, interactive experiences that modern users expect.",
+    "takeaways": [
+      "Full-duplex communication lets both sides send messages freely",
+      "An HTTP upgrade handshake transitions to the WebSocket protocol",
+      "Persistent connections eliminate per-message HTTP overhead"
+    ],
+    "keywords": [
+      "WebSocket",
+      "real-time web",
+      "full-duplex",
+      "persistent connection"
+    ],
+    "faq": [
+      {
+        "question": "When should you use WebSockets vs polling?",
+        "answer": "Use WebSockets when data flows frequently in both directions: chat, gaming, collaborative editing. Use long polling or Server-Sent Events for lower-frequency one-directional updates: notifications, live feeds."
+      },
+      {
+        "question": "How do WebSockets scale?",
+        "answer": "Each WebSocket holds a persistent TCP connection, consuming server memory. Scaling to millions of connections requires efficient event-driven servers, connection pooling, and pub/sub systems like Redis to distribute messages across server instances."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-javascript-engines": {
+    "summary": "JavaScript engines like V8, SpiderMonkey, and JavaScriptCore compile and execute JavaScript code in browsers. V8 uses just-in-time compilation to translate JavaScript to optimized machine code at runtime, achieving performance that approaches compiled languages for many workloads.",
+    "whyItMatters": "JavaScript engines determine the performance of every web application. Understanding their optimization strategies helps developers write code that runs faster in the browser.",
+    "takeaways": [
+      "JIT compilation converts JavaScript to optimized machine code at runtime",
+      "V8 powers Chrome, Node.js, and Deno with high performance",
+      "Hidden classes and inline caching optimize property access speed"
+    ],
+    "keywords": [
+      "JavaScript engine",
+      "V8",
+      "JIT compilation",
+      "SpiderMonkey"
+    ],
+    "faq": [
+      {
+        "question": "How does just-in-time compilation work?",
+        "answer": "JIT compilers monitor which code runs frequently and compile it to optimized machine code. Cold code is interpreted quickly. Hot code is compiled with optimizations based on observed types and patterns."
+      },
+      {
+        "question": "Why are there multiple JavaScript engines?",
+        "answer": "Each browser vendor builds their own engine: V8 for Chrome, SpiderMonkey for Firefox, JavaScriptCore for Safari. Competition drives performance improvements. They all implement the same ECMAScript standard but differ in optimization strategies."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-service-workers": {
+    "summary": "Service workers are JavaScript scripts that run in the background between the browser and network, intercepting requests, caching resources, and enabling offline functionality.",
+    "whyItMatters": "Service workers transform websites into app-like experiences that work offline, load instantly on repeat visits, and receive push notifications. They bridge the gap between web and native applications.",
+    "takeaways": [
+      "Service workers intercept network requests as a programmable proxy",
+      "Cached resources enable offline functionality and instant loads",
+      "Push notifications and background sync work without an open tab"
+    ],
+    "keywords": [
+      "service worker",
+      "PWA",
+      "offline web",
+      "cache API",
+      "push notifications"
+    ],
+    "faq": [
+      {
+        "question": "How do service workers enable offline functionality?",
+        "answer": "Service workers intercept every network request from the page. A caching strategy determines whether to serve from cache, network, or a combination. The cache-first strategy serves cached resources instantly and updates them in the background. This makes previously visited pages available offline."
+      },
+      {
+        "question": "What is a progressive web app?",
+        "answer": "A PWA is a website that uses service workers, a manifest file, and responsive design to deliver an app-like experience. PWAs can be installed on the home screen, work offline, send push notifications, and load instantly. They use web technologies but feel like native applications."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-webassembly-wasm": {
+    "summary": "WebAssembly is a low-level binary format that runs in browsers at near-native speed alongside JavaScript.",
+    "whyItMatters": "WebAssembly makes the browser a platform for applications that previously required native installation. It brings compiled-language performance to the web without sacrificing security.",
+    "takeaways": [
+      "Wasm runs compiled code at near-native speed in browsers",
+      "C, C++, Rust, and other languages compile to WebAssembly",
+      "Sandboxed execution ensures security despite native-level speed"
+    ],
+    "keywords": [
+      "WebAssembly",
+      "Wasm",
+      "browser performance",
+      "compiled web"
+    ],
+    "faq": [
+      {
+        "question": "Does WebAssembly replace JavaScript?",
+        "answer": "No. WebAssembly and JavaScript are complementary. JavaScript handles DOM manipulation, event handling, and orchestration. WebAssembly handles compute-intensive tasks like image processing, physics simulation, and cryptography."
+      },
+      {
+        "question": "What applications use WebAssembly?",
+        "answer": "Figma runs its design tool in Wasm for performance. AutoCAD ported its desktop application to the web via Wasm. Google Earth uses it. Game engines like Unity export to Wasm. Video codecs, database engines, and AI inference also benefit from Wasm's near-native execution speed."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-browser-developer-tools": {
+    "summary": "Browser developer tools inspect, debug, and profile web pages in real time. The Elements panel examines the DOM and CSS, the Network panel shows all HTTP traffic, the Console executes JavaScript, and the Performance panel identifies rendering bottlenecks.",
+    "whyItMatters": "Developer tools are the most important debugging instrument for web developers. They provide deep visibility into every aspect of page behavior from DOM to network to performance.",
+    "takeaways": [
+      "Elements panel inspects and edits DOM and CSS live",
+      "Network panel shows all requests with timing and response data",
+      "Performance panel identifies rendering and JavaScript bottlenecks"
+    ],
+    "keywords": [
+      "developer tools",
+      "DevTools",
+      "web debugging",
+      "browser inspector"
+    ],
+    "faq": [
+      {
+        "question": "What can you debug with the Network panel?",
+        "answer": "The Network panel shows every request the page makes including URL, method, status code, response time, and size. Waterfall charts reveal loading sequence and bottlenecks. You can inspect request and response headers, preview response bodies, simulate slow networks, and identify failed requests."
+      },
+      {
+        "question": "How does the Performance panel work?",
+        "answer": "The Performance panel records CPU activity, rendering, and JavaScript execution over time. Flame charts show which functions consume the most time. Long tasks blocking the main thread are highlighted. Layout shifts and paint operations are visualized."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-core-web-vitals": {
+    "summary": "Core Web Vitals are Google's three metrics measuring real-world user experience: Largest Contentful Paint for loading speed, Interaction to Next Paint for responsiveness, and Cumulative Layout Shift for visual stability. They are ranking factors for Google search and guide performance optimization.",
+    "whyItMatters": "Core Web Vitals quantify user experience into measurable scores that affect search rankings. Optimizing them improves both the user experience and a site's visibility in Google search results.",
+    "takeaways": [
+      "LCP measures how fast the main content becomes visible",
+      "INP measures how quickly the page responds to interactions",
+      "CLS measures unexpected layout shifts during page load"
+    ],
+    "keywords": [
+      "Core Web Vitals",
+      "LCP",
+      "INP",
+      "CLS",
+      "web performance"
+    ],
+    "faq": [
+      {
+        "question": "What are good Core Web Vitals scores?",
+        "answer": "Good LCP is under 2.5 seconds. Good INP is under 200 milliseconds. Good CLS is under 0.1. These are measured at the 75th percentile of real user experiences. Google's PageSpeed Insights and Chrome User Experience Report provide real-world data for any public URL."
+      },
+      {
+        "question": "How do Core Web Vitals affect SEO?",
+        "answer": "Core Web Vitals are a confirmed Google ranking factor since 2021. They serve as a tiebreaker when content relevance is similar between pages. Sites with poor vitals may rank lower than equivalent sites with good vitals."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-image-optimization": {
+    "summary": "Image optimization reduces file sizes without visible quality loss using modern formats like WebP and AVIF, responsive sizing, lazy loading, and compression. Images often account for the majority of page weight, making optimization the highest-impact performance improvement for most websites.",
+    "whyItMatters": "Images are typically the largest resources on a web page. Optimizing them often provides more performance improvement than any other single optimization technique.",
+    "takeaways": [
+      "WebP and AVIF reduce file sizes 30 to 50 percent over JPEG",
+      "Responsive images serve different sizes for different screens",
+      "Lazy loading defers offscreen images until they are needed"
+    ],
+    "keywords": [
+      "image optimization",
+      "WebP",
+      "AVIF",
+      "responsive images",
+      "lazy loading"
+    ],
+    "faq": [
+      {
+        "question": "Which image format should I use?",
+        "answer": "Use AVIF for best compression where supported, with WebP fallback. Use WebP for broad compatibility with good compression. Use JPEG as the final fallback. PNG for images requiring transparency. SVG for icons and logos that scale infinitely. The picture element enables format fallback chains."
+      },
+      {
+        "question": "What is responsive image serving?",
+        "answer": "The srcset attribute provides multiple image sizes so the browser selects the best one for the viewport width and device pixel ratio. A 400-pixel-wide phone does not download a 4000-pixel desktop image."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-lazy-loading": {
+    "summary": "Lazy loading defers downloading of offscreen resources until the user scrolls near them. Native browser lazy loading uses the loading=lazy attribute on images and iframes. For JavaScript modules, dynamic import() loads code only when needed.",
+    "whyItMatters": "Users rarely scroll through an entire page immediately. Lazy loading avoids wasting bandwidth and processing time on content the user may never see, dramatically improving initial load.",
+    "takeaways": [
+      "loading=lazy on images defers downloading until near the viewport",
+      "Dynamic import() loads JavaScript modules on demand",
+      "Initial page weight drops significantly on long content pages"
+    ],
+    "keywords": [
+      "lazy loading",
+      "deferred loading",
+      "loading=lazy",
+      "code splitting"
+    ],
+    "faq": [
+      {
+        "question": "Should all images use lazy loading?",
+        "answer": "No. Images visible in the initial viewport should load eagerly because lazy loading them could delay LCP. Apply lazy loading only to images below the fold that users must scroll to see. The first visible image should use loading=eager or simply omit the attribute for default eager behavior."
+      },
+      {
+        "question": "What is code splitting?",
+        "answer": "Code splitting breaks JavaScript bundles into smaller chunks loaded on demand. Only the code needed for the current page ships initially. Additional code loads when the user navigates or triggers features."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-cors-explained": {
+    "summary": "Cross-Origin Resource Sharing is a browser security mechanism that controls which websites can make requests to a different origin. Servers declare allowed origins, methods, and headers via CORS response headers.",
+    "whyItMatters": "CORS protects users from malicious cross-site requests while enabling legitimate API access from different domains. Misconfigured CORS is one of the most common sources of web development frustration.",
+    "takeaways": [
+      "Browsers block cross-origin requests unless the server permits them",
+      "Access-Control-Allow-Origin specifies which origins can access the API",
+      "Preflight OPTIONS requests check permissions for complex requests"
+    ],
+    "keywords": [
+      "CORS",
+      "cross-origin",
+      "same-origin policy",
+      "preflight request"
+    ],
+    "faq": [
+      {
+        "question": "What triggers a CORS preflight request?",
+        "answer": "Browsers send a preflight OPTIONS request for non-simple requests: those using methods other than GET, HEAD, or POST, requests with custom headers, or POST requests with content types other than form-urlencoded, multipart/form-data, or text/plain."
+      },
+      {
+        "question": "How do you fix CORS errors?",
+        "answer": "Add Access-Control-Allow-Origin with the requesting origin to the API server's responses. For credentials, set Access-Control-Allow-Credentials to true with a specific origin — wildcards are not allowed with credentials. Set Access-Control-Allow-Methods and Allow-Headers for preflight requests."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-cross-site-scripting-xss": {
+    "summary": "Cross-site scripting injects malicious JavaScript into web pages that other users then execute in their browsers. Stored XSS persists in databases, reflected XSS bounces off server responses, and DOM-based XSS exploits client-side scripts.",
+    "whyItMatters": "XSS is one of the most prevalent web vulnerabilities. It can steal session cookies, redirect users, and perform actions as the victim. Understanding XSS prevention is essential for secure web development.",
+    "takeaways": [
+      "XSS injects malicious scripts that execute in victim browsers",
+      "Output encoding converts special characters to harmless text",
+      "Content Security Policy restricts which scripts can execute"
+    ],
+    "keywords": [
+      "XSS",
+      "cross-site scripting",
+      "web security",
+      "Content Security Policy"
+    ],
+    "faq": [
+      {
+        "question": "What is the difference between stored and reflected XSS?",
+        "answer": "Stored XSS saves the malicious script in the server's database, like a comment field, attacking every user who views the page. Reflected XSS includes the script in a URL parameter that the server echoes back."
+      },
+      {
+        "question": "How does Content Security Policy prevent XSS?",
+        "answer": "CSP tells browsers which sources of scripts are trusted. A policy like script-src 'self' only allows scripts from the site's own origin. Inline scripts are blocked by default unless explicitly allowed with hashes or nonces."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-sql-injection": {
+    "summary": "SQL injection attacks insert malicious database queries through web form inputs, URL parameters, or any other user-controlled data that reaches a database query. Successful injection can dump entire databases, modify data, bypass authentication, or execute system commands on the database server.",
+    "whyItMatters": "SQL injection has been a top web vulnerability for over two decades. A single vulnerable input can expose an entire database of user data, making prevention through parameterized queries non-negotiable.",
+    "takeaways": [
+      "User input included in SQL queries without parameterization is vulnerable",
+      "Parameterized queries separate code from data, preventing injection",
+      "Web application firewalls add defense in depth but are not sufficient alone"
+    ],
+    "keywords": [
+      "SQL injection",
+      "database security",
+      "parameterized queries",
+      "web vulnerability"
+    ],
+    "faq": [
+      {
+        "question": "How does a SQL injection attack work?",
+        "answer": "An attacker enters SQL code into a form field. If the server builds a query by concatenating that input directly into SQL, the injected code executes as part of the query. For example, entering ' OR '1'='1 into a login form might bypass authentication by making the WHERE clause always true."
+      },
+      {
+        "question": "What is the best defense against SQL injection?",
+        "answer": "Use parameterized queries or prepared statements, which separate SQL structure from user data. The database engine treats parameters as literal values, never as executable SQL. ORMs that use parameterized queries internally also protect against injection."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-oauth-and-web-authentication": {
+    "summary": "OAuth 2.0 enables secure delegated authorization where users grant third-party applications limited access to their accounts without sharing passwords. OpenID Connect adds an identity layer for authentication. Together they power sign-in-with-Google, social logins, and API access across the web.",
+    "whyItMatters": "OAuth and OIDC are the security foundation of the connected web. Every social login, API integration, and third-party app authorization relies on these protocols.",
+    "takeaways": [
+      "OAuth grants limited access tokens instead of sharing passwords",
+      "OpenID Connect adds authentication to OAuth's authorization framework",
+      "Scopes restrict what permissions applications receive"
+    ],
+    "keywords": [
+      "OAuth",
+      "OpenID Connect",
+      "web authentication",
+      "access tokens"
+    ],
+    "faq": [
+      {
+        "question": "What is the OAuth authorization code flow?",
+        "answer": "The user clicks login, the app redirects to the authorization server, the user authenticates and consents, the server redirects back with a short-lived code, the app exchanges this code for access and refresh tokens server-side. This flow keeps tokens off the browser for better security."
+      },
+      {
+        "question": "What are the risks of OAuth?",
+        "answer": "Misconfigured redirect URIs can leak tokens. Overly broad scopes grant more access than needed. Token theft enables account takeover. CSRF attacks can trick users into linking attacker accounts. PKCE extension mitigates several attacks for public clients like mobile and SPA applications."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-edge-computing-and-the-web": {
+    "summary": "Edge computing runs server-side code at CDN edge locations near users instead of in centralized data centers. Platforms like Cloudflare Workers and Vercel Edge Functions execute JavaScript and Wasm at the edge, personalizing content and reducing latency to single-digit milliseconds globally.",
+    "whyItMatters": "Edge computing brings server-side processing close to every user worldwide. It enables personalization and dynamic content with the latency profile of a static CDN.",
+    "takeaways": [
+      "Code runs at CDN edge locations near users worldwide",
+      "Response times drop to single-digit milliseconds globally",
+      "Edge functions personalize content without round-tripping to origin"
+    ],
+    "keywords": [
+      "edge computing",
+      "edge functions",
+      "Cloudflare Workers",
+      "edge runtime"
+    ],
+    "faq": [
+      {
+        "question": "What can run at the edge?",
+        "answer": "Authentication checks, A/B testing, personalization, geolocation routing, URL rewriting, and lightweight API endpoints all suit edge execution. Functions run in V8 isolates or Wasm for fast cold starts. Full database queries or long-running computations still need centralized servers."
+      },
+      {
+        "question": "How is edge computing different from serverless?",
+        "answer": "Serverless functions run in a few cloud regions. Edge functions run at hundreds of locations worldwide. Edge functions have stricter resource limits and shorter execution times but provide dramatically lower latency."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-microservices-and-the-web": {
+    "summary": "Microservices architecture decomposes web applications into small, independent services that communicate over HTTP and messaging. Each service owns its data and can be deployed, scaled, and updated independently. This enables large teams to work in parallel without coordination bottlenecks.",
+    "whyItMatters": "Microservices enable the scale and velocity that large web applications require. Understanding their trade-offs explains why companies like Netflix and Amazon adopted this architecture.",
+    "takeaways": [
+      "Each service is independently deployable and scalable",
+      "Services communicate over HTTP/REST, gRPC, or message queues",
+      "Independent deployment enables frequent releases without coordination"
+    ],
+    "keywords": [
+      "microservices",
+      "distributed architecture",
+      "service decomposition",
+      "API gateway"
+    ],
+    "faq": [
+      {
+        "question": "When are microservices the right choice?",
+        "answer": "Microservices suit large applications with multiple teams where independent deployment and scaling are needed. For small teams and simple applications, a monolith is faster to develop and operate. Most projects should start as monoliths and extract services only when complexity demands it."
+      },
+      {
+        "question": "What are the downsides of microservices?",
+        "answer": "Distributed systems are fundamentally harder to debug, monitor, and test. Network calls between services add latency. Data consistency across service boundaries requires careful design. Operational complexity increases with more services. These overhead costs only pay off at significant scale."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-web-accessibility": {
+    "summary": "Web accessibility ensures websites work for people with disabilities, including visual, auditory, motor, and cognitive impairments. WCAG guidelines define standards for accessible design. Semantic HTML, ARIA attributes, keyboard navigation, and color contrast are essential accessibility techniques.",
+    "whyItMatters": "About 15 percent of the world's population has a disability. Accessible web design ensures these users can fully participate in the digital world and is legally required in many jurisdictions.",
+    "takeaways": [
+      "WCAG provides testable guidelines for web accessibility",
+      "Semantic HTML and ARIA provide meaning for screen readers",
+      "Keyboard navigation must work for all interactive elements"
+    ],
+    "keywords": [
+      "web accessibility",
+      "WCAG",
+      "ARIA",
+      "screen reader",
+      "a11y"
+    ],
+    "faq": [
+      {
+        "question": "What is WCAG accessibility?",
+        "answer": "The Web Content Accessibility Guidelines are the international standard for web accessibility published by W3C. WCAG defines success criteria at three levels: A, AA, and AAA. Level AA is the standard most laws and policies require."
+      },
+      {
+        "question": "How does a screen reader use a web page?",
+        "answer": "Screen readers interpret the DOM and ARIA attributes to create an audio representation of the page. Headings provide structure for navigation. Alt text describes images. Labels identify form fields. Landmark roles like main and navigation help users jump between page sections efficiently."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-web3-and-decentralization": {
+    "summary": "Web3 envisions a decentralized internet built on blockchain technology, where users control their own data and identity without relying on centralized platforms. Smart contracts execute code on distributed networks.",
+    "whyItMatters": "Web3 represents one vision of the internet's future where power shifts from platforms to users. Understanding its promises and limitations helps evaluate whether it will reshape the web.",
+    "takeaways": [
+      "Web3 builds applications on decentralized blockchain networks",
+      "Users control their data and identity through crypto wallets",
+      "Smart contracts execute trustless logic without central servers"
+    ],
+    "keywords": [
+      "Web3",
+      "decentralization",
+      "blockchain",
+      "dApps",
+      "smart contracts"
+    ],
+    "faq": [
+      {
+        "question": "How does Web3 differ from the current web?",
+        "answer": "The current web relies on centralized servers, platforms, and databases controlled by companies. Web3 stores data on distributed blockchains, authenticates users with crypto wallets instead of passwords, and uses smart contracts instead of centralized backend logic."
+      },
+      {
+        "question": "What are the challenges facing Web3?",
+        "answer": "Blockchain transactions are slow and expensive compared to traditional databases. User experience is complex with wallets and gas fees. Scalability remains a fundamental challenge. Regulatory uncertainty, energy consumption concerns, and speculation in token markets complicate mainstream adoption."
+      }
+    ]
+  },
+  "computer-networking--the-world-wide-web--t-ai-and-the-future-of-the-web": {
+    "summary": "AI is transforming the web through personalized content, conversational interfaces, AI-generated media, and intelligent search. Large language models power chatbots and content creation. AI-driven recommendations shape what billions of users see.",
+    "whyItMatters": "AI is reshaping how people find, consume, and create web content. Understanding this transformation helps developers build for a web where AI is a core interaction layer, not just a feature.",
+    "takeaways": [
+      "LLMs power conversational interfaces and content generation",
+      "AI search is shifting from links to direct AI-generated answers",
+      "Personalization algorithms shape the web experience for each user"
+    ],
+    "keywords": [
+      "AI web",
+      "LLM",
+      "AI search",
+      "personalization",
+      "generative AI"
+    ],
+    "faq": [
+      {
+        "question": "How is AI changing web search?",
+        "answer": "AI-powered search engines generate direct answers instead of listing links. Google's AI Overviews and Perplexity synthesize information from multiple sources. This reduces click-through to websites, potentially reshaping the web's economic model built on advertising-supported content."
+      },
+      {
+        "question": "What does AI mean for web developers?",
+        "answer": "AI code assistants accelerate development. AI content generation changes how pages are created. Structured data becomes more important as AI systems consume web content. Developers need to build AI integrations, design for conversational interfaces, and consider how AI crawlers access their content."
+      }
+    ]
+  }
+}

@@ -45,5 +45,30 @@
       "Adds a digital signature to the message"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "TLS encrypts email in transit between servers using STARTTLS, which upgrades a plain SMTP connection to encrypted. Without TLS, email travels as readable plain text across the internet. Most major email providers now encrypt server-to-server connections, but enforcement is not universal.",
+    "whyItMatters": "Without TLS, every email you send can be read by anyone who intercepts the network traffic. TLS encryption protects email content during transmission between servers.",
+    "takeaways": [
+      "STARTTLS upgrades plain SMTP to encrypted connections",
+      "Without TLS, email is readable plain text on the network",
+      "Most major providers encrypt server-to-server email by default"
+    ],
+    "keywords": [
+      "TLS",
+      "STARTTLS",
+      "email encryption",
+      "transport security"
+    ],
+    "faq": [
+      {
+        "question": "Is TLS the same as end-to-end email encryption?",
+        "answer": "No. TLS encrypts email between servers during transit, but each server decrypts it. The email is readable at each relay point. End-to-end encryption like PGP encrypts the message so only the recipient can read it. TLS protects the pipe; end-to-end encryption protects the message."
+      },
+      {
+        "question": "What happens if the receiving server doesn't support TLS?",
+        "answer": "Most servers fall back to unencrypted delivery rather than failing. This means a malicious server can strip TLS by pretending not to support it. MTA-STS is a newer standard that tells senders to require TLS and refuse unencrypted delivery for specific domains."
+      }
+    ]
   }
 }

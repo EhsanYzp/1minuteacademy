@@ -45,5 +45,30 @@
       "A coordinated hacking attack"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "In June 2021, a customer configuration change triggered a bug in Fastly's CDN software, taking down major websites including The New York Times, Amazon, Reddit, and Twitch for about an hour. A single edge computing platform bug wiped out access to a significant chunk of the internet.",
+    "whyItMatters": "The Fastly outage showed how CDN concentration creates systemic risk. When one CDN provider fails, thousands of seemingly unrelated websites go down together.",
+    "takeaways": [
+      "A software bug in Fastly's CDN took down major websites",
+      "A customer config change triggered a latent software defect",
+      "CDN concentration creates correlated failure risk"
+    ],
+    "keywords": [
+      "Fastly outage",
+      "CDN failure",
+      "edge computing",
+      "2021"
+    ],
+    "faq": [
+      {
+        "question": "How did one customer's change affect the entire CDN?",
+        "answer": "The customer's valid configuration change triggered a latent bug in Fastly's software that had been deployed weeks earlier. The bug caused 85 percent of Fastly's network to return errors. The configuration was valid; the software had an undiscovered defect."
+      },
+      {
+        "question": "Should companies use multiple CDN providers?",
+        "answer": "Multi-CDN strategies reduce single-provider risk but add complexity and cost. After the Fastly incident, many organizations adopted multi-CDN with automatic failover. The trade-off is between operational simplicity and resilience against provider-level failures."
+      }
+    ]
   }
 }

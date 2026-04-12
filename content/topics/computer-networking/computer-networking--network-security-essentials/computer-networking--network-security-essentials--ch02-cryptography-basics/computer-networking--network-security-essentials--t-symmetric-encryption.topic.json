@@ -45,5 +45,30 @@
       "It can only encrypt small amounts of data"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Symmetric encryption uses the same secret key for both encrypting and decrypting data. Algorithms like AES process data in blocks using mathematical transformations that are extremely fast in hardware. The main challenge is securely distributing the shared key to all authorized parties.",
+    "whyItMatters": "Symmetric encryption is the workhorse of data protection, encrypting everything from disk drives to network traffic. AES alone protects most of the world's encrypted data.",
+    "takeaways": [
+      "One key encrypts and decrypts — both parties share the same key",
+      "AES-256 is the standard for government and commercial encryption",
+      "Symmetric encryption is much faster than asymmetric encryption"
+    ],
+    "keywords": [
+      "symmetric encryption",
+      "AES",
+      "secret key",
+      "block cipher"
+    ],
+    "faq": [
+      {
+        "question": "Why is AES the most widely used encryption algorithm?",
+        "answer": "AES won a public competition evaluated by the world's cryptographers in 2001. It is efficient in both hardware and software, resistant to all known attacks, and approved for top-secret government data."
+      },
+      {
+        "question": "How do you securely share symmetric keys?",
+        "answer": "In practice, asymmetric encryption or Diffie-Hellman key exchange establishes the shared symmetric key over an insecure channel. TLS uses this approach: the handshake exchanges keys asymmetrically, then the session uses fast symmetric encryption for the actual data transfer."
+      }
+    ]
   }
 }

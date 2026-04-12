@@ -45,5 +45,30 @@
       "It replaces TCP for all internet traffic"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "MQTT is a lightweight publish-subscribe messaging protocol designed for constrained devices and unreliable networks. Clients publish messages to topics and subscribe to receive messages from topics, with a broker handling all routing. Three QoS levels balance reliability against bandwidth.",
+    "whyItMatters": "MQTT is the dominant protocol for IoT communication, connecting billions of sensors and devices. Its minimal overhead makes it work on devices with limited processing power and bandwidth.",
+    "takeaways": [
+      "Publish-subscribe model decouples message senders from receivers",
+      "Three QoS levels offer at-most-once to exactly-once delivery",
+      "Minimal protocol overhead suits constrained IoT devices"
+    ],
+    "keywords": [
+      "MQTT",
+      "IoT messaging",
+      "publish-subscribe",
+      "message broker"
+    ],
+    "faq": [
+      {
+        "question": "How does MQTT's publish-subscribe model work?",
+        "answer": "Devices publish messages to named topics through a central broker. Other devices subscribe to topics they care about. The broker routes messages from publishers to all matching subscribers. This decoupling means publishers and subscribers do not need to know about each other."
+      },
+      {
+        "question": "What are MQTT QoS levels?",
+        "answer": "QoS 0 delivers messages at most once with no confirmation. QoS 1 ensures at-least-once delivery with acknowledgment but may duplicate. QoS 2 guarantees exactly-once delivery using a four-step handshake. Higher QoS uses more bandwidth, so IoT devices often use QoS 0 or 1."
+      }
+    ]
   }
 }

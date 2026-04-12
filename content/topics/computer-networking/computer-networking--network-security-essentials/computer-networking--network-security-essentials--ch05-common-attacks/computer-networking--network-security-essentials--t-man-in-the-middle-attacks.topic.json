@@ -45,5 +45,30 @@
       "It scans incoming packets for malware"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Man-in-the-middle attacks secretly intercept and potentially alter communication between two parties who believe they are talking directly to each other. Attackers position themselves between victim and server using ARP spoofing, DNS hijacking, or rogue Wi-Fi access points.",
+    "whyItMatters": "MitM attacks can capture passwords, session tokens, and sensitive data even when users think they are connected securely. TLS and certificate verification are the primary defenses.",
+    "takeaways": [
+      "Attackers intercept traffic between two communicating parties",
+      "ARP spoofing and rogue Wi-Fi are common MitM techniques",
+      "HTTPS and certificate pinning prevent most MitM attacks"
+    ],
+    "keywords": [
+      "man-in-the-middle",
+      "MitM",
+      "traffic interception",
+      "ARP spoofing"
+    ],
+    "faq": [
+      {
+        "question": "How does a man-in-the-middle attack work?",
+        "answer": "The attacker positions themselves between the victim and the destination, often by poisoning ARP tables or running a rogue Wi-Fi access point. Traffic flows through the attacker who can read, modify, or inject content. Without encryption, all data including passwords is visible to the attacker."
+      },
+      {
+        "question": "Does HTTPS prevent man-in-the-middle attacks?",
+        "answer": "HTTPS prevents most MitM attacks because TLS encryption makes intercepted traffic unreadable and certificate verification confirms server identity. However, if the attacker can install a trusted root certificate on the victim's device, they can decrypt HTTPS traffic."
+      }
+    ]
   }
 }

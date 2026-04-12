@@ -45,5 +45,30 @@
       "Blocks DDoS attacks automatically"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Network redundancy means having multiple independent paths for data so that the failure of any single component does not cause an outage. Every major outage teaches the same lesson: systems that seemed redundant had hidden single points of failure.",
+    "whyItMatters": "Redundancy is the fundamental principle of reliable networking. Understanding where your real single points of failure hide is the difference between planned resilience and unexpected disaster.",
+    "takeaways": [
+      "Redundancy requires truly independent failure domains",
+      "Hidden shared dependencies defeat apparent redundancy",
+      "Regular failure testing reveals gaps in redundancy design"
+    ],
+    "keywords": [
+      "redundancy",
+      "fault tolerance",
+      "high availability",
+      "failure domains"
+    ],
+    "faq": [
+      {
+        "question": "What is the most common mistake in redundancy design?",
+        "answer": "Assuming systems are independent when they share a hidden dependency. Two servers in the same rack share power. Two network paths through the same building share a fiber entrance. True redundancy requires mapping all shared dependencies and eliminating each one."
+      },
+      {
+        "question": "How do companies test whether their redundancy works?",
+        "answer": "Chaos engineering practices like Netflix's Chaos Monkey deliberately kill components in production to verify that redundancy works. Game day exercises simulate major failures. Companies that do not regularly test their failover often discover it is broken during real incidents."
+      }
+    ]
   }
 }

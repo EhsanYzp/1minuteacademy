@@ -45,5 +45,30 @@
       "CSV"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "gRPC is a high-performance remote procedure call framework that uses Protocol Buffers for serialization and HTTP/2 for transport. It supports unary calls, server streaming, client streaming, and bidirectional streaming, making it ideal for microservice communication where low latency matters.",
+    "whyItMatters": "gRPC is the dominant protocol for internal microservice communication in modern architectures. Its binary serialization and HTTP/2 streaming deliver performance that JSON-based REST cannot match.",
+    "takeaways": [
+      "Protocol Buffers serialize data in a compact binary format",
+      "HTTP/2 streaming enables four communication patterns",
+      "Strong typing with generated code catches API errors at compile time"
+    ],
+    "keywords": [
+      "gRPC",
+      "Protocol Buffers",
+      "RPC",
+      "microservice communication"
+    ],
+    "faq": [
+      {
+        "question": "When should you use gRPC instead of REST?",
+        "answer": "Use gRPC for internal service-to-service communication where performance matters, when you need streaming, or when strong typing is valuable. Use REST for public APIs, browser-facing endpoints, and when human readability of requests is important. Many systems use gRPC internally and REST externally."
+      },
+      {
+        "question": "Can browsers use gRPC directly?",
+        "answer": "Browsers cannot make native gRPC calls because they lack HTTP/2 trailer support. gRPC-Web is a variant that works in browsers with a proxy. Alternatively, many teams expose REST or GraphQL APIs to browsers while using gRPC between backend services."
+      }
+    ]
   }
 }

@@ -45,5 +45,30 @@
       "Billing, charging customers incorrectly"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "On February 29, 2012, a leap year date calculation bug in Microsoft Azure's guest agent caused widespread outages across Azure's cloud platform. The agent generated certificates with invalid expiration dates, preventing virtual machines from starting. The outage lasted approximately 12 hours.",
+    "whyItMatters": "Azure's leap year bug showed that edge cases in date handling can bring down entire cloud platforms. Time and date logic remains one of computing's most persistent sources of errors.",
+    "takeaways": [
+      "A leap year date bug crashed Azure's certificate generation",
+      "Virtual machines could not start with invalid certificates",
+      "Date handling bugs remain a persistent source of outages"
+    ],
+    "keywords": [
+      "Azure",
+      "leap year bug",
+      "certificate error",
+      "2012 outage"
+    ],
+    "faq": [
+      {
+        "question": "How did a leap year cause a cloud outage?",
+        "answer": "Azure's guest agent created certificates valid for one year by adding 365 days to the current date. On February 29, adding one year produced an invalid date of February 29 of the following non-leap year. The invalid certificate prevented VMs from authenticating and starting."
+      },
+      {
+        "question": "Are leap year bugs still a problem today?",
+        "answer": "Yes. Date handling errors continue to cause outages across the industry. Leap seconds, daylight saving time transitions, and year boundary calculations all produce periodic failures. Testing for edge case dates is often overlooked in development and QA processes."
+      }
+    ]
   }
 }

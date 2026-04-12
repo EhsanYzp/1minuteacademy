@@ -45,5 +45,30 @@
       "By blocking all form submissions"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "SQL injection inserts malicious SQL code into application inputs that get included in database queries. A successful attack can read, modify, or delete database contents, bypass authentication, or execute operating system commands. It remains one of the most common and dangerous web vulnerabilities.",
+    "whyItMatters": "SQL injection can give attackers complete control of an application's database. Despite being well-understood for decades, it remains prevalent because developers continue writing vulnerable code.",
+    "takeaways": [
+      "Malicious SQL is injected through unsanitized user inputs",
+      "Parameterized queries prevent SQL injection completely",
+      "WAFs provide additional defense but are not a substitute for secure code"
+    ],
+    "keywords": [
+      "SQL injection",
+      "database attack",
+      "parameterized queries",
+      "web vulnerability"
+    ],
+    "faq": [
+      {
+        "question": "How do parameterized queries prevent SQL injection?",
+        "answer": "Parameterized queries separate SQL code from user data by sending them to the database separately. The database engine treats parameters strictly as data values, never as executable SQL. Even if a user inputs malicious SQL code, it is treated as a literal string, not a command."
+      },
+      {
+        "question": "Can SQL injection affect modern applications?",
+        "answer": "Yes. Any application that constructs SQL queries using string concatenation with user input is vulnerable. ORMs generally protect against injection but raw queries or improperly used ORM features can still be vulnerable. Regular code review and automated scanning help catch these issues."
+      }
+    ]
   }
 }

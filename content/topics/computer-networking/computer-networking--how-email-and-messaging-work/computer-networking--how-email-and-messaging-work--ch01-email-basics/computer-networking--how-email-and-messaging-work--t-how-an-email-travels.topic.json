@@ -45,5 +45,30 @@
       "CNAME record"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "When you send an email, your client connects to an SMTP server, which resolves the recipient's domain via DNS, finds the mail server through MX records, and delivers the message. The email may pass through multiple servers and security checks before reaching the recipient's inbox.",
+    "whyItMatters": "Understanding how email travels reveals why delivery is not instant and why messages sometimes disappear. Each hop introduces potential for delay, filtering, or failure.",
+    "takeaways": [
+      "Email travels through multiple SMTP servers from sender to recipient",
+      "MX records in DNS direct mail to the correct server",
+      "Each server can delay, filter, or reject the message"
+    ],
+    "keywords": [
+      "email delivery",
+      "SMTP relay",
+      "MX records",
+      "mail routing"
+    ],
+    "faq": [
+      {
+        "question": "Why does email delivery sometimes take minutes instead of seconds?",
+        "answer": "Each relay server can queue messages, run spam checks, apply virus scanning, and verify authenticity. If a receiving server is temporarily unavailable, the sending server retries for hours or days. Greylisting intentionally delays first-time senders to filter spam."
+      },
+      {
+        "question": "What happens if the recipient's mail server is down?",
+        "answer": "The sending server queues the message and retries delivery at increasing intervals, typically for up to five days. If delivery fails after all retries, the sender receives a bounce-back notification explaining the failure. MX records can list backup servers."
+      }
+    ]
   }
 }

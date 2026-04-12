@@ -45,5 +45,30 @@
       "Replacing DNS for faster lookups"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Content Delivery Networks distribute copies of website content to servers around the world so users load data from a nearby location instead of a distant origin server. CDNs reduce latency, handle traffic spikes, and protect against DDoS attacks. Most of the web is served through CDNs.",
+    "whyItMatters": "CDNs make the web feel fast regardless of your location. Without them, users far from the origin server would experience much slower page loads.",
+    "takeaways": [
+      "CDNs cache content at edge servers near users worldwide",
+      "They reduce latency by serving from the closest location",
+      "CDNs absorb traffic spikes and mitigate DDoS attacks"
+    ],
+    "keywords": [
+      "CDN",
+      "edge server",
+      "content caching",
+      "web performance"
+    ],
+    "faq": [
+      {
+        "question": "How does a CDN know which server to use for a request?",
+        "answer": "CDNs use DNS-based routing and anycast to direct users to the nearest edge server. When you request a CDN-hosted resource, DNS resolves to the closest server's IP based on your geographic location. Some CDNs also consider server load and network conditions."
+      },
+      {
+        "question": "What happens when a CDN edge server doesn't have the content?",
+        "answer": "The edge server fetches the content from the origin server, caches it, and serves it to the user. Subsequent requests for the same content are served from the cache. This is called a cache miss on the first request and a cache hit on following ones."
+      }
+    ]
   }
 }

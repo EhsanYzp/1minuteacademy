@@ -45,5 +45,30 @@
       "Increases the speed of internet connections"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Network Address Translation allows multiple devices on a private network to share a single public IP address. Your home router uses NAT to let all your devices access the internet through one IP. NAT helped delay IPv4 exhaustion but complicates peer-to-peer connections and some protocols.",
+    "whyItMatters": "NAT is why your home network works with a single internet connection. It extended IPv4's life by decades but introduced complexity that still affects applications today.",
+    "takeaways": [
+      "NAT maps private IP addresses to a single public address",
+      "It allows many devices to share one public IP via port mapping",
+      "NAT complicates peer-to-peer and inbound connections"
+    ],
+    "keywords": [
+      "NAT",
+      "private IP",
+      "public IP",
+      "port mapping"
+    ],
+    "faq": [
+      {
+        "question": "Why does NAT make peer-to-peer connections difficult?",
+        "answer": "NAT hides devices behind a single IP. External devices cannot directly reach a specific device behind NAT. Techniques like STUN, TURN, and hole punching help establish peer-to-peer connections through NAT. This is why video calls sometimes require relay servers."
+      },
+      {
+        "question": "Will IPv6 eliminate the need for NAT?",
+        "answer": "IPv6 provides enough addresses for every device to have a public address, making NAT technically unnecessary. However, some networks still use NAT with IPv6 for security by hiding internal network structure. Full IPv6 adoption would reduce but not completely eliminate NAT."
+      }
+    ]
   }
 }

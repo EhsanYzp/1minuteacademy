@@ -45,5 +45,31 @@
       "It cannot transfer files larger than 1 GB"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "FTP transfers files between a client and server using separate control and data connections. Created in 1971, it remains in use for legacy systems, but its lack of encryption makes it insecure. Modern alternatives like SFTP and SCP provide encrypted file transfer over SSH.",
+    "whyItMatters": "FTP's legacy is still visible in many enterprise and web hosting environments. Understanding its weaknesses explains why secure alternatives like SFTP have replaced it for most use cases.",
+    "takeaways": [
+      "FTP uses separate control and data connections on different ports",
+      "Passwords and data are transmitted in plain text without encryption",
+      "SFTP and SCP provide encrypted alternatives over SSH tunnels"
+    ],
+    "keywords": [
+      "FTP",
+      "file transfer",
+      "SFTP",
+      "SCP",
+      "legacy protocol"
+    ],
+    "faq": [
+      {
+        "question": "Why is FTP insecure?",
+        "answer": "FTP transmits usernames, passwords, and all file data in unencrypted plain text. Anyone monitoring the network can intercept credentials and file contents. It also uses dynamic ports for data transfer, complicating firewall configurations. SFTP solves these issues by running over encrypted SSH."
+      },
+      {
+        "question": "What is the difference between SFTP and FTPS?",
+        "answer": "SFTP runs file transfer over an SSH tunnel using a single encrypted connection. FTPS adds TLS encryption to the original FTP protocol but retains its dual-connection architecture. SFTP is simpler to firewall and deploy, making it the preferred choice for most secure file transfers."
+      }
+    ]
   }
 }

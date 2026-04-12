@@ -45,5 +45,30 @@
       "IP addresses and port numbers"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "RTP delivers audio and video streams over IP networks in real time, carrying media payloads with timestamps and sequence numbers for synchronized playback. Working alongside RTCP for quality feedback, RTP enables VoIP calls, video conferencing, and live streaming applications.",
+    "whyItMatters": "RTP is the standard for real-time media delivery across the internet. Every video call and voice conversation uses RTP to deliver audio and video with timing precision.",
+    "takeaways": [
+      "RTP carries timestamped media packets for real-time playback",
+      "RTCP provides quality feedback for adaptive streaming",
+      "Sequence numbers detect packet loss and reordering"
+    ],
+    "keywords": [
+      "RTP",
+      "real-time streaming",
+      "media transport",
+      "RTCP"
+    ],
+    "faq": [
+      {
+        "question": "How does RTP handle packet loss?",
+        "answer": "RTP itself does not retransmit lost packets because retransmission adds latency unacceptable for real-time media. Instead, codecs use techniques like forward error correction and packet loss concealment to mask gaps. RTCP reports lost packets so the sender can reduce bitrate if needed."
+      },
+      {
+        "question": "What is the relationship between RTP and SIP?",
+        "answer": "SIP handles call setup and teardown signaling. Once a call is established, RTP carries the actual audio and video between participants. SDP negotiated during SIP setup specifies which codecs and ports to use for RTP. SIP manages the session; RTP delivers the media."
+      }
+    ]
   }
 }

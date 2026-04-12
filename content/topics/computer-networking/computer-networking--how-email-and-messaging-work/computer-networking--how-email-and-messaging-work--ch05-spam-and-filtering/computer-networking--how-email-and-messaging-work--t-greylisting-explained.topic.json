@@ -45,5 +45,30 @@
       "It blocks all IPs from unknown countries"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Greylisting temporarily rejects email from unknown senders and waits for them to retry. Legitimate mail servers always retry delivery, but many spam tools send once and move on. This simple delay-based filter is surprisingly effective at reducing spam from unsophisticated senders.",
+    "whyItMatters": "Greylisting exploits a behavioral difference between legitimate servers and spam bots. It adds delay but requires no content analysis or reputation databases.",
+    "takeaways": [
+      "Greylisting rejects first-time senders and waits for retry",
+      "Legitimate servers retry; many spam tools do not",
+      "It adds minutes of delay to first emails from new senders"
+    ],
+    "keywords": [
+      "greylisting",
+      "spam defense",
+      "SMTP retry",
+      "email filtering"
+    ],
+    "faq": [
+      {
+        "question": "Why doesn't greylisting catch all spam?",
+        "answer": "Sophisticated spam operations use proper mail servers that retry delivery. Once a sending IP has been seen, greylisting allows future messages through. It is most effective against low-effort spam campaigns and botnets that spray messages once without retrying."
+      },
+      {
+        "question": "Does greylisting cause problems for legitimate email?",
+        "answer": "It delays the first message from any new sender by the retry interval, typically 5 to 30 minutes. Time-sensitive emails from new contacts are delayed. Whitelisting known senders and domains minimizes the impact on legitimate communication."
+      }
+    ]
   }
 }

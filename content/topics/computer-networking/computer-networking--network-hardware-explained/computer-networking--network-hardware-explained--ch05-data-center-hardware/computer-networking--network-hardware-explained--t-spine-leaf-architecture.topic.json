@@ -45,5 +45,30 @@
       "One hop"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Spine-leaf architecture uses two layers of switches where every leaf switch connects to every spine switch, creating a fabric with predictable latency and equal bandwidth between any two servers.",
+    "whyItMatters": "Modern applications generate massive server-to-server traffic. Spine-leaf architecture provides consistent performance for this east-west traffic, which traditional hierarchical designs cannot match.",
+    "takeaways": [
+      "Every leaf connects to every spine for equal-cost paths",
+      "Latency is predictable: always exactly two hops between any servers",
+      "Scales horizontally by adding more spine or leaf switches"
+    ],
+    "keywords": [
+      "spine-leaf",
+      "data center fabric",
+      "CLOS network",
+      "east-west traffic"
+    ],
+    "faq": [
+      {
+        "question": "How does spine-leaf differ from a three-tier network?",
+        "answer": "Three-tier networks use core, distribution, and access layers with potential bottlenecks at higher tiers. Spine-leaf uses just two layers where every leaf connects to every spine, ensuring consistent one-hop latency between any two leaf switches. It scales better for server-to-server traffic."
+      },
+      {
+        "question": "When should you use spine-leaf architecture?",
+        "answer": "Spine-leaf is ideal for data centers with significant east-west traffic between servers, which includes most modern application architectures. Small networks under 100 servers may not need this complexity. Campus networks typically still use traditional hierarchical designs."
+      }
+    ]
   }
 }

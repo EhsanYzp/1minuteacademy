@@ -45,5 +45,30 @@
       "When a cable is physically damaged"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "In June 2019, a small Pennsylvania ISP called Allegheny Technologies accidentally leaked BGP routes through Level 3, causing traffic for major services including Cloudflare and Amazon to be misrouted through a network far too small to handle it. The incident caused hours of degraded service.",
+    "whyItMatters": "A tiny ISP brought down parts of the internet by leaking routes through a major transit provider. BGP's trust model means any network can accidentally disrupt global traffic flow.",
+    "takeaways": [
+      "A small ISP's route leak disrupted major internet services",
+      "Level 3 propagated the bad routes without filtering them",
+      "Route filtering by transit providers is not consistently applied"
+    ],
+    "keywords": [
+      "BGP route leak",
+      "Level 3",
+      "routing incident",
+      "2019"
+    ],
+    "faq": [
+      {
+        "question": "How can a small ISP affect global internet routing?",
+        "answer": "When a small ISP announces routes it should not, its upstream transit provider propagates those routes globally. If the transit provider does not filter announcements, the internet treats the small ISP as a valid path. Traffic floods in and the small network collapses."
+      },
+      {
+        "question": "Why don't transit providers filter BGP announcements?",
+        "answer": "Many transit providers do filter, but enforcement is inconsistent. Maintaining accurate route filters requires constant updates and coordination. Some providers trust their customers' announcements to reduce operational burden, creating vulnerability to accidental leaks."
+      }
+    ]
   }
 }

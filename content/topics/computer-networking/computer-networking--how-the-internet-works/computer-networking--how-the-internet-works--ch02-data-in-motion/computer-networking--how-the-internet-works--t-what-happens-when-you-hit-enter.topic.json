@@ -45,5 +45,30 @@
       "The server sends a push notification"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Typing a URL and pressing Enter triggers a cascade: DNS resolves the domain to an IP, TCP establishes a connection via three-way handshake, TLS negotiates encryption, HTTP sends the request, and the server responds with HTML that the browser renders into a visible page.",
+    "whyItMatters": "This single action involves dozens of protocols and systems working in milliseconds. Understanding the chain explains slow loads, errors, and security.",
+    "takeaways": [
+      "DNS resolution converts the domain name to an IP address",
+      "TCP and TLS establish a secure connection before data flows",
+      "The browser parses HTML, CSS, and JavaScript to render the page"
+    ],
+    "keywords": [
+      "URL request",
+      "DNS resolution",
+      "page load",
+      "browser rendering"
+    ],
+    "faq": [
+      {
+        "question": "How long does this entire process typically take?",
+        "answer": "A simple page load takes 100 to 500 milliseconds. DNS lookup takes 10 to 100ms, TCP handshake adds one round trip, TLS adds another. The server response and rendering take the rest. CDNs and caching reduce these times by serving content from nearby locations."
+      },
+      {
+        "question": "What is the most common cause of slow page loads?",
+        "answer": "Server response time and large page resources are the most common causes. Too many JavaScript files, unoptimized images, and render-blocking resources slow page display. DNS lookup delays and distant servers add latency. Browser caching eliminates much of this on repeat visits."
+      }
+    ]
   }
 }

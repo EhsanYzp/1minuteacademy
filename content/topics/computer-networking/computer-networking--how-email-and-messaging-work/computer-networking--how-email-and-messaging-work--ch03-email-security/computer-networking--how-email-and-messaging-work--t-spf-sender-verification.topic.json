@@ -45,5 +45,30 @@
       "In the SMTP server's config file"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Sender Policy Framework is a DNS-based email authentication method that specifies which servers are authorized to send email for a domain. Receiving servers check SPF records to verify that incoming mail actually comes from an authorized source, helping detect forged sender addresses.",
+    "whyItMatters": "SPF is the first layer of email authentication. Without it, anyone can send email pretending to be from your domain. SPF does not stop all spoofing but makes basic forgery detectable.",
+    "takeaways": [
+      "SPF publishes authorized sending servers in DNS TXT records",
+      "Receiving servers check if the sending IP matches the SPF record",
+      "SPF alone is insufficient; it works best with DKIM and DMARC"
+    ],
+    "keywords": [
+      "SPF",
+      "sender verification",
+      "email authentication",
+      "DNS TXT record"
+    ],
+    "faq": [
+      {
+        "question": "How does an SPF check work?",
+        "answer": "When an email arrives, the receiving server extracts the sending domain from the envelope. It queries DNS for the domain's SPF record, which lists authorized IP addresses. If the sending server's IP matches, SPF passes. If not, the server can reject or flag the message."
+      },
+      {
+        "question": "Why isn't SPF sufficient for email security?",
+        "answer": "SPF only checks the envelope sender, not the From header displayed to users. An attacker can use a legitimate envelope sender while spoofing the visible From address. DKIM adds cryptographic verification and DMARC ties SPF and DKIM to the visible domain."
+      }
+    ]
   }
 }

@@ -45,5 +45,30 @@
       "X-Frame-Options"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Cross-Origin Resource Sharing is a browser security mechanism that controls which websites can make requests to a different origin. Servers declare allowed origins, methods, and headers via CORS response headers.",
+    "whyItMatters": "CORS protects users from malicious cross-site requests while enabling legitimate API access from different domains. Misconfigured CORS is one of the most common sources of web development frustration.",
+    "takeaways": [
+      "Browsers block cross-origin requests unless the server permits them",
+      "Access-Control-Allow-Origin specifies which origins can access the API",
+      "Preflight OPTIONS requests check permissions for complex requests"
+    ],
+    "keywords": [
+      "CORS",
+      "cross-origin",
+      "same-origin policy",
+      "preflight request"
+    ],
+    "faq": [
+      {
+        "question": "What triggers a CORS preflight request?",
+        "answer": "Browsers send a preflight OPTIONS request for non-simple requests: those using methods other than GET, HEAD, or POST, requests with custom headers, or POST requests with content types other than form-urlencoded, multipart/form-data, or text/plain."
+      },
+      {
+        "question": "How do you fix CORS errors?",
+        "answer": "Add Access-Control-Allow-Origin with the requesting origin to the API server's responses. For credentials, set Access-Control-Allow-Credentials to true with a specific origin — wildcards are not allowed with credentials. Set Access-Control-Allow-Methods and Allow-Headers for preflight requests."
+      }
+    ]
   }
 }

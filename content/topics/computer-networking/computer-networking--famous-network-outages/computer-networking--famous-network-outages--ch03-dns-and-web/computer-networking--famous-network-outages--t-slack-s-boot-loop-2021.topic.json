@@ -45,5 +45,30 @@
       "An expired SSL certificate"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "In January 2021, Slack experienced a major outage when millions of users returned to work after the holidays simultaneously. The surge in connections overwhelmed Slack's infrastructure, creating a boot loop where servers crashed, restarted, and crashed again under the reconnection flood.",
+    "whyItMatters": "Slack's outage demonstrated the thundering herd problem: when millions of clients reconnect simultaneously, the recovery traffic can be worse than the original failure.",
+    "takeaways": [
+      "Millions of simultaneous reconnections overwhelmed Slack",
+      "The thundering herd problem amplified the initial failure",
+      "Slack added exponential backoff and progressive reconnection"
+    ],
+    "keywords": [
+      "Slack outage",
+      "thundering herd",
+      "boot loop",
+      "connection surge"
+    ],
+    "faq": [
+      {
+        "question": "What is the thundering herd problem?",
+        "answer": "When a service recovers from a failure, all disconnected clients try to reconnect simultaneously. This reconnection flood can exceed the original traffic that caused the failure, crashing the service again. The cycle repeats until the herd is managed with staggered reconnection."
+      },
+      {
+        "question": "How did Slack prevent this from happening again?",
+        "answer": "They implemented progressive reconnection with randomized delays so clients do not all reconnect at once. They added capacity headroom for peak reconnection scenarios and improved their load shedding to gracefully reject excess connections during recovery."
+      }
+    ]
   }
 }

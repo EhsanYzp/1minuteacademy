@@ -45,5 +45,30 @@
       "A DDoS attack overwhelmed S3's capacity"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "In February 2017, a typo in a maintenance command took down Amazon S3 in the US-East-1 region for about four hours. Because countless websites and services depended on S3, a huge portion of the internet was disrupted. The incident revealed extreme concentration risk in cloud infrastructure.",
+    "whyItMatters": "The S3 outage showed that modern internet infrastructure has dangerous single points of failure. One human error in one cloud region can cascade across millions of services.",
+    "takeaways": [
+      "A single mistyped command caused a four-hour S3 outage",
+      "Thousands of websites and services went down simultaneously",
+      "AWS added safeguards to prevent similar cascading failures"
+    ],
+    "keywords": [
+      "AWS S3 outage",
+      "cloud dependency",
+      "single point of failure",
+      "2017"
+    ],
+    "faq": [
+      {
+        "question": "What exactly caused the AWS S3 outage?",
+        "answer": "An engineer running a maintenance script accidentally removed more servers than intended from the S3 subsystem. The remaining servers could not handle the load, and the recovery process was slow because S3 had not been fully restarted in years. The system had grown beyond its restart capacity."
+      },
+      {
+        "question": "Why did one AWS outage affect so many websites?",
+        "answer": "S3 is used by millions of websites for hosting images, files, and static content. Many services also use S3 for configuration and health checks. Even AWS's own status dashboard was hosted on S3, so it could not report the outage accurately."
+      }
+    ]
   }
 }

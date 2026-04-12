@@ -45,5 +45,31 @@
       "Assigns IP addresses to web servers"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Digital certificates bind a public key to an identity, signed by a certificate authority that vouches for the binding. Trust chains connect end-entity certificates through intermediate CAs to a root CA that browsers and operating systems trust, creating a verifiable path of authority.",
+    "whyItMatters": "Certificate trust chains are how your browser knows a website is genuine. This system enables billions of secure HTTPS connections daily by establishing identity without prior relationships.",
+    "takeaways": [
+      "Certificates bind public keys to verified identities",
+      "CA signatures create chains of trust to pre-trusted root CAs",
+      "Certificate revocation handles compromised or expired certificates"
+    ],
+    "keywords": [
+      "certificate authority",
+      "trust chain",
+      "X.509",
+      "PKI",
+      "root CA"
+    ],
+    "faq": [
+      {
+        "question": "What happens when a certificate is compromised?",
+        "answer": "The certificate is revoked by the issuing CA and added to a Certificate Revocation List. Browsers check OCSP responders for real-time revocation status. Once revoked, browsers show security warnings when visiting the site. The site must generate new keys and obtain a new certificate."
+      },
+      {
+        "question": "How does Let's Encrypt work?",
+        "answer": "Let's Encrypt is a free, automated CA that issues domain-validated certificates. It uses the ACME protocol to automatically verify domain ownership, issue certificates, and renew them every 90 days. This eliminated cost and complexity as barriers to HTTPS adoption."
+      }
+    ]
   }
 }

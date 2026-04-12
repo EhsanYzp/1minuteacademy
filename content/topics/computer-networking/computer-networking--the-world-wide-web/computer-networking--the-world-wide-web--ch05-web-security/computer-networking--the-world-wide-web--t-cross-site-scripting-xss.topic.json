@@ -45,5 +45,30 @@
       "Users from accessing pages without logging in"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Cross-site scripting injects malicious JavaScript into web pages that other users then execute in their browsers. Stored XSS persists in databases, reflected XSS bounces off server responses, and DOM-based XSS exploits client-side scripts.",
+    "whyItMatters": "XSS is one of the most prevalent web vulnerabilities. It can steal session cookies, redirect users, and perform actions as the victim. Understanding XSS prevention is essential for secure web development.",
+    "takeaways": [
+      "XSS injects malicious scripts that execute in victim browsers",
+      "Output encoding converts special characters to harmless text",
+      "Content Security Policy restricts which scripts can execute"
+    ],
+    "keywords": [
+      "XSS",
+      "cross-site scripting",
+      "web security",
+      "Content Security Policy"
+    ],
+    "faq": [
+      {
+        "question": "What is the difference between stored and reflected XSS?",
+        "answer": "Stored XSS saves the malicious script in the server's database, like a comment field, attacking every user who views the page. Reflected XSS includes the script in a URL parameter that the server echoes back."
+      },
+      {
+        "question": "How does Content Security Policy prevent XSS?",
+        "answer": "CSP tells browsers which sources of scripts are trusted. A policy like script-src 'self' only allows scripts from the site's own origin. Inline scripts are blocked by default unless explicitly allowed with hashes or nonces."
+      }
+    ]
   }
 }

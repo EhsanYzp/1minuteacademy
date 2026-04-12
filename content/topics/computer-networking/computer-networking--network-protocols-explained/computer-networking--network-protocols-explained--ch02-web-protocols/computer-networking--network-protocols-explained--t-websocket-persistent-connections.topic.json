@@ -45,5 +45,30 @@
       "It encrypts data without needing TLS"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "WebSocket provides a persistent, full-duplex communication channel over a single TCP connection between a browser and server.",
+    "whyItMatters": "WebSocket makes real-time web applications possible. Without it, features like live chat, stock tickers, and collaborative editing would require inefficient polling techniques.",
+    "takeaways": [
+      "WebSocket enables two-way communication over a single connection",
+      "An HTTP upgrade handshake initiates the persistent connection",
+      "Messages flow in both directions without request-response overhead"
+    ],
+    "keywords": [
+      "WebSocket",
+      "full-duplex",
+      "real-time",
+      "persistent connection"
+    ],
+    "faq": [
+      {
+        "question": "How does WebSocket differ from regular HTTP?",
+        "answer": "HTTP is request-response: the client asks, the server answers. WebSocket allows both sides to send messages independently at any time over a persistent connection. There is no need for the client to repeatedly poll the server. This reduces latency and bandwidth for real-time applications."
+      },
+      {
+        "question": "When should you use WebSocket vs Server-Sent Events?",
+        "answer": "Use WebSocket when both client and server need to send data in real time, like chat or gaming. Use Server-Sent Events when only the server pushes updates to the client, like news feeds or dashboards. SSE is simpler, auto-reconnects, and works over standard HTTP."
+      }
+    ]
   }
 }

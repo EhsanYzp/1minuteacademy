@@ -45,5 +45,31 @@
       "They encrypt passwords with a secret key"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "Hashing transforms any input into a fixed-length output called a digest or hash that uniquely identifies the original data. Even a single-bit change produces a completely different hash. Hashes verify data integrity, store passwords safely, and underpin digital signatures and blockchain.",
+    "whyItMatters": "Hashing is the foundation of data integrity verification across all of computing. Password storage, file verification, digital signatures, and blockchain all depend on the properties of hash functions.",
+    "takeaways": [
+      "Hash functions produce fixed-length outputs from any size input",
+      "Even tiny input changes produce completely different hash values",
+      "SHA-256 is the current standard for cryptographic hashing"
+    ],
+    "keywords": [
+      "hashing",
+      "SHA-256",
+      "digest",
+      "data integrity",
+      "cryptographic hash"
+    ],
+    "faq": [
+      {
+        "question": "How are passwords stored using hashes?",
+        "answer": "Systems store the hash of your password, not the password itself. When you log in, the system hashes your input and compares it to the stored hash. Even if the database is stolen, attackers get hashes, not passwords. Salting adds random data before hashing to prevent precomputed attacks."
+      },
+      {
+        "question": "Can two different inputs produce the same hash?",
+        "answer": "Theoretically yes — this is called a collision. Secure hash functions like SHA-256 make collisions so astronomically unlikely that finding one intentionally would take more energy than the sun produces. Older algorithms like MD5 and SHA-1 have known collision vulnerabilities and should not be used."
+      }
+    ]
   }
 }

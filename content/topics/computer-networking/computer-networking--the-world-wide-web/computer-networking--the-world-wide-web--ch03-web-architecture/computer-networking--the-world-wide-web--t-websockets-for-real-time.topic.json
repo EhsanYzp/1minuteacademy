@@ -45,5 +45,30 @@
       "As a UDP packet sent to the server"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "WebSockets establish a persistent, full-duplex connection between browser and server after an HTTP upgrade handshake. Both sides can send messages at any time without the overhead of new HTTP requests. This enables real-time features like chat, live dashboards, and multiplayer games.",
+    "whyItMatters": "WebSockets transformed the web from request-response only into a platform for real-time applications. They power the live, interactive experiences that modern users expect.",
+    "takeaways": [
+      "Full-duplex communication lets both sides send messages freely",
+      "An HTTP upgrade handshake transitions to the WebSocket protocol",
+      "Persistent connections eliminate per-message HTTP overhead"
+    ],
+    "keywords": [
+      "WebSocket",
+      "real-time web",
+      "full-duplex",
+      "persistent connection"
+    ],
+    "faq": [
+      {
+        "question": "When should you use WebSockets vs polling?",
+        "answer": "Use WebSockets when data flows frequently in both directions: chat, gaming, collaborative editing. Use long polling or Server-Sent Events for lower-frequency one-directional updates: notifications, live feeds."
+      },
+      {
+        "question": "How do WebSockets scale?",
+        "answer": "Each WebSocket holds a persistent TCP connection, consuming server memory. Scaling to millions of connections requires efficient event-driven servers, connection pooling, and pub/sub systems like Redis to distribute messages across server instances."
+      }
+    ]
   }
 }

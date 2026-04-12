@@ -45,5 +45,30 @@
       "Logs the email but delivers it normally"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "DMARC builds on SPF and DKIM by letting domain owners publish a policy for how receivers should handle email that fails authentication. A domain can instruct receivers to monitor, quarantine, or reject unauthenticated messages, providing the enforcement layer that SPF and DKIM lack alone.",
+    "whyItMatters": "DMARC closes the gap between detection and action. Without it, SPF and DKIM can detect forgery but receivers have no guidance on what to do about it.",
+    "takeaways": [
+      "DMARC publishes a policy for handling authentication failures",
+      "Policies range from monitoring to quarantine to reject",
+      "DMARC reports give domain owners visibility into abuse"
+    ],
+    "keywords": [
+      "DMARC",
+      "email policy",
+      "authentication enforcement",
+      "domain protection"
+    ],
+    "faq": [
+      {
+        "question": "How do DMARC policies work?",
+        "answer": "The domain owner publishes a DMARC DNS record specifying a policy: none for monitoring, quarantine for spam folder, or reject for blocking. Receivers check SPF and DKIM results, verify alignment with the From domain, and apply the published policy to failures."
+      },
+      {
+        "question": "What are DMARC reports?",
+        "answer": "Receivers send aggregate reports to the domain owner showing how many messages passed or failed authentication. These reports reveal unauthorized use of the domain, misconfigured legitimate senders, and the effectiveness of the authentication setup. They are essential for tuning policy."
+      }
+    ]
   }
 }

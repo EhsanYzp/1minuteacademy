@@ -45,5 +45,30 @@
       "SYN → ACK → SYN-ACK"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "TCP establishes connections through a three-way handshake: the client sends SYN, the server replies with SYN-ACK, and the client confirms with ACK. This exchange synchronizes sequence numbers and confirms both sides are ready to communicate before any data is sent.",
+    "whyItMatters": "Every TCP connection starts with this handshake. It adds one round trip of latency to every new connection, which is why connection reuse and HTTP/2 matter for performance.",
+    "takeaways": [
+      "SYN, SYN-ACK, ACK is the three-step connection establishment",
+      "The handshake synchronizes sequence numbers between endpoints",
+      "It adds one round-trip time of latency to new connections"
+    ],
+    "keywords": [
+      "three-way handshake",
+      "SYN",
+      "TCP connection",
+      "connection establishment"
+    ],
+    "faq": [
+      {
+        "question": "Why does TCP need a three-way handshake instead of just two steps?",
+        "answer": "Two messages would only confirm one direction works. The third message confirms the server's response reached the client, verifying both directions can communicate. It also prevents old duplicate connection requests from accidentally opening unwanted connections."
+      },
+      {
+        "question": "How do SYN flood attacks exploit the handshake?",
+        "answer": "Attackers send thousands of SYN packets without completing the handshake. The server allocates memory for each half-open connection, exhausting resources. SYN cookies defend against this by encoding connection state in the SYN-ACK response, avoiding memory allocation until the handshake completes."
+      }
+    ]
   }
 }

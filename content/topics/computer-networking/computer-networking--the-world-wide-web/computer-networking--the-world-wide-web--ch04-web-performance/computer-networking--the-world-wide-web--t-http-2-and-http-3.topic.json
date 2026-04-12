@@ -45,5 +45,31 @@
       "SCTP over IP"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "HTTP/2 introduced multiplexing, header compression, and binary framing to speed up the web. HTTP/3 replaces TCP with QUIC over UDP, eliminating head-of-line blocking and reducing connection setup latency.",
+    "whyItMatters": "HTTP/2 and HTTP/3 fundamentally changed web performance. Understanding them explains why modern sites load faster and helps developers optimize for these protocols.",
+    "takeaways": [
+      "HTTP/2 multiplexes multiple requests over a single TCP connection",
+      "HTTP/3 uses QUIC over UDP to eliminate TCP head-of-line blocking",
+      "Both are backward-compatible and negotiated automatically"
+    ],
+    "keywords": [
+      "HTTP/2",
+      "HTTP/3",
+      "QUIC",
+      "web performance",
+      "multiplexing"
+    ],
+    "faq": [
+      {
+        "question": "Do developers need to change code for HTTP/2 or HTTP/3?",
+        "answer": "No code changes are required. Browsers and servers negotiate the protocol version automatically. However, some HTTP/1.1 optimization techniques like domain sharding and sprite sheets become unnecessary or counterproductive."
+      },
+      {
+        "question": "Why does HTTP/3 use UDP instead of TCP?",
+        "answer": "TCP's head-of-line blocking means one lost packet stalls all streams on the connection. QUIC over UDP handles each stream independently, so packet loss affects only the impacted stream. QUIC also combines the TLS handshake with connection setup, saving a round trip."
+      }
+    ]
   }
 }

@@ -45,5 +45,30 @@
       "Encrypting API requests automatically"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "GraphQL lets API clients define exactly what data they need in a structured query language, receiving a response that matches the requested shape precisely.",
+    "whyItMatters": "GraphQL solves real problems with REST APIs for frontend applications. It reduces network requests, eliminates unused data transfer, and gives clients precise control over the data they receive.",
+    "takeaways": [
+      "Clients query a single endpoint with a typed schema language",
+      "Responses match the exact shape the client requested",
+      "Nested queries fetch related resources in one round trip"
+    ],
+    "keywords": [
+      "GraphQL",
+      "query language",
+      "API schema",
+      "data fetching"
+    ],
+    "faq": [
+      {
+        "question": "How does GraphQL handle relationships between data?",
+        "answer": "GraphQL schemas define types with fields that reference other types. A query can traverse these relationships to any depth, fetching a user, their posts, and each post's comments in a single request. Resolvers on the server fetch data for each field independently and assemble the response."
+      },
+      {
+        "question": "What are GraphQL subscriptions?",
+        "answer": "Subscriptions provide real-time updates by maintaining a WebSocket connection between client and server. When data changes, the server pushes updates matching the subscription query to all subscribed clients. This enables real-time features like live feeds and collaborative editing."
+      }
+    ]
   }
 }

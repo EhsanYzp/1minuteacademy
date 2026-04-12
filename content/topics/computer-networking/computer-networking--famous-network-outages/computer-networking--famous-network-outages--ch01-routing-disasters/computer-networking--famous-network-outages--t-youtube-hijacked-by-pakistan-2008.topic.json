@@ -45,5 +45,30 @@
       "By launching a DDoS attack on YouTube's servers"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "In 2008, Pakistan Telecom attempted to block YouTube domestically by announcing a BGP route for YouTube's IP space. The false route leaked globally, redirecting YouTube traffic worldwide into a black hole for about two hours. It exposed a critical weakness in internet routing trust.",
+    "whyItMatters": "This incident showed that a single misconfigured BGP announcement can hijack traffic for a major website globally, revealing the internet's fragile trust-based routing system.",
+    "takeaways": [
+      "A false BGP announcement redirected YouTube traffic worldwide",
+      "BGP relies on trust with no built-in authentication",
+      "The incident accelerated work on BGP security standards"
+    ],
+    "keywords": [
+      "BGP hijack",
+      "YouTube",
+      "Pakistan Telecom",
+      "routing security"
+    ],
+    "faq": [
+      {
+        "question": "How did Pakistan accidentally take down YouTube globally?",
+        "answer": "Pakistan Telecom announced a more specific BGP route for YouTube's IP prefix. BGP prefers more specific routes, so routers worldwide began sending YouTube traffic to Pakistan instead of Google. The traffic hit a dead end and YouTube became unreachable for two hours."
+      },
+      {
+        "question": "Has BGP routing been secured since this incident?",
+        "answer": "Partially. RPKI (Resource Public Key Infrastructure) was developed to cryptographically verify BGP announcements. Adoption is growing but still incomplete. Many networks still accept unverified routes, meaning BGP hijacks remain possible today."
+      }
+    ]
   }
 }

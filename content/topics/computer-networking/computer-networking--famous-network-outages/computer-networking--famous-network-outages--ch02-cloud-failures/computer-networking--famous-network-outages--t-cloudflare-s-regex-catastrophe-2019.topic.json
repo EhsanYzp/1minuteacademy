@@ -45,5 +45,30 @@
       "A database query that locked all tables"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "In July 2019, a regular expression deployed to Cloudflare's WAF caused CPU usage to spike to 100 percent across every server in every data center simultaneously. The outage lasted 27 minutes and affected millions of websites that use Cloudflare for protection and CDN services.",
+    "whyItMatters": "A single poorly written regex brought down a service protecting millions of websites. It demonstrated how a tiny code change can have global impact in centralized infrastructure.",
+    "takeaways": [
+      "One regex caused 100% CPU across all Cloudflare servers",
+      "The outage affected millions of websites for 27 minutes",
+      "Cloudflare added regex complexity limits after the incident"
+    ],
+    "keywords": [
+      "Cloudflare outage",
+      "regex catastrophe",
+      "WAF",
+      "catastrophic backtracking"
+    ],
+    "faq": [
+      {
+        "question": "How can a regular expression cause a global outage?",
+        "answer": "The regex contained a pattern that caused catastrophic backtracking. When the regex engine could not find a match, it explored exponentially many possibilities before giving up. The WAF rules ran on every request across all servers, so CPU consumption hit 100% globally."
+      },
+      {
+        "question": "What did Cloudflare change after this incident?",
+        "answer": "They added automated regex complexity analysis to prevent deployment of backtracking-prone patterns. They also implemented staged rollouts for WAF rule changes and added CPU usage circuit breakers that automatically revert changes when consumption spikes."
+      }
+    ]
   }
 }

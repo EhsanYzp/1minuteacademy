@@ -45,5 +45,30 @@
       "Server-side rendering of web pages"
     ],
     "correct": 0
+  },
+  "details": {
+    "summary": "WebRTC enables peer-to-peer audio, video, and data communication directly between browsers without requiring plugins or server relay for media. It uses STUN and TURN servers for NAT traversal, DTLS for encryption, and adaptive bitrate algorithms to handle varying network conditions in real time.",
+    "whyItMatters": "WebRTC powers video calls, screen sharing, and file transfer directly in the browser. It eliminated the need for plugins like Flash, making real-time communication accessible on every device.",
+    "takeaways": [
+      "WebRTC connects browsers directly for peer-to-peer media",
+      "STUN and TURN servers help traverse NATs and firewalls",
+      "All WebRTC media is encrypted with DTLS and SRTP by default"
+    ],
+    "keywords": [
+      "WebRTC",
+      "peer-to-peer",
+      "video calling",
+      "NAT traversal"
+    ],
+    "faq": [
+      {
+        "question": "How does WebRTC work through firewalls?",
+        "answer": "WebRTC uses ICE to find connectivity paths. STUN servers help peers discover their public IP addresses. If direct connection fails due to restrictive NATs, TURN servers relay media traffic through a server. Most connections succeed with STUN alone; TURN is the fallback for about 15 percent of cases."
+      },
+      {
+        "question": "Does WebRTC always send data directly between peers?",
+        "answer": "WebRTC tries peer-to-peer first, which works in most cases. When both peers are behind restrictive firewalls, a TURN relay server forwards the traffic. For group calls with many participants, SFU servers receive and distribute streams more efficiently than full mesh peer connections."
+      }
+    ]
   }
 }
